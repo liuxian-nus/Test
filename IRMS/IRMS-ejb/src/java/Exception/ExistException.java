@@ -3,11 +3,11 @@
  * and open the template in the editor.
  */
 
-package exception;
+package Exception;
 import javax.ejb.ApplicationException;
 /**
  *
- * @author liudazhi
+ * @author liuxian
  */
 @ApplicationException(rollback=true)
 public class ExistException extends Exception{

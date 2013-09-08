@@ -21,7 +21,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class MemberSessionBean {
- @PersistenceContext
+    @PersistenceContext
     private EntityManager em ;
  
     MemberEntity member = new MemberEntity();
@@ -31,9 +31,10 @@ public class MemberSessionBean {
 
     //member registration
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addMember(String memberEmail,String memberPassword, String memberName,String memberHP, String gender, String nationality, Date memberDob, boolean maritalStatus, boolean isSubscriber) {
+    public MemberEntity addMember(String memberEmail,String memberPassword, String memberName,String memberHP, String gender, String nationality, Date memberDob, boolean maritalStatus, boolean isSubscriber) {
         member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
         em.persist(member);
+        return member;
     }
 
     public boolean login(String memberEmail, String memberPassword){
@@ -57,7 +58,7 @@ public class MemberSessionBean {
     
     //update member profile & password
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void updateMember(String memberEmail,String memberPassword, String memberName,String memberHP, String gender, String nationality, Date memberDob, boolean maritalStatus) throws ExistException{
+    public MemberEntity updateMember(String memberEmail,String memberPassword, String memberName,String memberHP, String gender, String nationality, Date memberDob, boolean maritalStatus) throws ExistException{
         member = em.find(MemberEntity.class, memberEmail);
         if(member==null) throw new ExistException ("Member doesn't exist!");
         if (!(member.getMemberPassword().equals(memberPassword))) throw new ExistException("Wrong ID or password");
@@ -69,6 +70,7 @@ public class MemberSessionBean {
         member.setMemberDob(memberDob);
         member.setMaritalStatus(maritalStatus);
         em.merge(member);
+        return member;
     }
     
     //member subscribe/unsubscribe from email list

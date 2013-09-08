@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package CRMS;
+package CRMS.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -45,9 +45,9 @@ public class MemberEntity implements Serializable {
         this.setMemberDob(memberDob);
         this.setMaritalStatus(maritalStatus);
         this.setIsSubscriber(isSubscriber);
-        this.setIsVIP(false);
-        this.setPoint(Long.valueOf(0));
-        this.setCoin(Long.valueOf(0));
+        this.setIsVIP(false); //initial status
+        this.setPoint(Long.valueOf(0)); //initial number
+        this.setCoin(Long.valueOf(0)); //initial number
     }
     
     public String getMemberEmail() {

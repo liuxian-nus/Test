@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ACMS;
+package ACMS.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -16,24 +16,15 @@ import javax.persistence.Id;
 public class RoomServiceEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    private Long roomServiceId;
-    private String roomServiceType;
+    private String roomServiceName;
     private double roomServicePrice;
 
-    public Long getRoomServiceId() {
-        return roomServiceId;
+    public String getRoomServiceName() {
+        return roomServiceName;
     }
 
-    public void setRoomServiceId(Long roomServiceId) {
-        this.roomServiceId = roomServiceId;
-    }
-
-    public String getRoomServiceType() {
-        return roomServiceType;
-    }
-
-    public void setRoomServiceType(String roomServiceType) {
-        this.roomServiceType = roomServiceType;
+    public void setRoomServiceName(String roomServiceName) {
+        this.roomServiceName = roomServiceName;
     }
 
     public double getRoomServicePrice() {
@@ -49,7 +40,7 @@ public class RoomServiceEntity implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (roomServiceId != null ? roomServiceId.hashCode() : 0);
+        hash += (roomServiceName != null ? roomServiceName.hashCode() : 0);
         return hash;
     }
 
@@ -60,7 +51,7 @@ public class RoomServiceEntity implements Serializable {
             return false;
         }
         RoomServiceEntity other = (RoomServiceEntity) object;
-        if ((this.roomServiceId == null && other.roomServiceId != null) || (this.roomServiceId != null && !this.roomServiceId.equals(other.roomServiceId))) {
+        if ((this.roomServiceName == null && other.roomServiceName != null) || (this.roomServiceName != null && !this.roomServiceName.equals(other.roomServiceName))) {
             return false;
         }
         return true;
@@ -68,7 +59,7 @@ public class RoomServiceEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "ACMS.RoomServiceEntity[ id=" + roomServiceId + " ]";
+        return "ACMS.RoomServiceEntity[ id=" + roomServiceName + " ]";
     }
     
 }
