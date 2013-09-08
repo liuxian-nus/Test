@@ -4,7 +4,6 @@
  */
 package ACMS.entity;
 
-import Exception.ExistException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -26,17 +25,18 @@ public class RoomEntity implements Serializable {
     private int roomId;
     private double roomPrice;
     private String roomType;
-    private String roomStatus; //reserved, occupied or available
+    private String roomStatus = "available"; //reserved, occupied or available
     private int roomHotel;
     private int roomLevel;
     private int roomNo;
-    private boolean hasBreakfast;
+    private boolean hasBreakfast = false;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date checkInDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date checkOutDate;
     @ManyToMany(cascade={CascadeType.PERSIST})
-    public Set<RoomServiceEntity> roomService = new HashSet<RoomServiceEntity> ();
+    private Set<RoomServiceEntity> roomService = new HashSet<RoomServiceEntity> ();
+    private double roomServiceCharge = 0;
 
     public int getRoomId() {
         return roomId;
@@ -128,8 +128,16 @@ public class RoomEntity implements Serializable {
 
     public void addRoomService(RoomServiceEntity newRoomService){
        this.roomService.add(newRoomService);
-       System.out.println("new service added:" + newRoomService.getRoomServiceName());
-       System.out.println("new account receivable" + newRoomService.getRoomServicePrice());
+       System.out.println("RoomEntity-->new service added:" + newRoomService.getRoomServiceName());
+    }
+
+    public double getRoomServiceCharge() {
+        return roomServiceCharge;
+    }
+    
+    public void addRoomServiceCharge(double newRoomServiceCharge) {
+        this.roomServiceCharge += newRoomServiceCharge;
+        System.out.println("RoomEntity-->new account receivable generated:" + newRoomServiceCharge);
     }
     
     @Override
