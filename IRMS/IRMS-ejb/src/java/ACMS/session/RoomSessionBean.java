@@ -4,6 +4,7 @@ package ACMS.session;
 import ACMS.entity.RoomEntity;
 import ACMS.entity.RoomServiceEntity;
 import Exception.ExistException;
+import Exception.RoomException;
 import java.util.Date;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -75,10 +76,25 @@ public class RoomSessionBean implements RoomSessionRemote {
     
     //member check-in
     @Override
-    public RoomEntity checkIn(int roomId,Date checkInDate, Date checkOutDate) {
+    public RoomEntity checkIn(int roomId,Date checkInDate, Date checkOutDate) throws RoomException {
         room = em.find(RoomEntity.class, roomId);
+        if("reserved".equals(room.getRoomStatus())) System.out.println("RoomSessionBean-->Warning! the room is reserved!");
+        else if("occupied".equals(room.getRoomStatus())) throw new RoomException("RoomSessionBean-->RoomException-->The room is occupied, cannot check-in");
         room.setCheckInDate(checkInDate);
         room.setCheckOutDate(checkOutDate);
+        room.setRoomStatus("occupied");
+        System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is now occupied");
         return room;
     }
+    
+    @Override
+    public void checkOut(int roomId) throws RoomException{
+        room = em.find(RoomEntity.class, roomId);
+        if(room.getRoomServiceCharge()!= 0) throw new RoomException ("RoomSessionBean-->RoomException-->There is uncleared room service charge!");
+        room.setCheckInDate(null);
+        room.setCheckOutDate(null);
+        room.setRoomStatus("available");
+        System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
+    }
+    
 }
