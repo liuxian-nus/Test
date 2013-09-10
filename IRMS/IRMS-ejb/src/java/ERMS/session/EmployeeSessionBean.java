@@ -64,7 +64,7 @@ public class EmployeeSessionBean {
            }
            }
         }
-    
+    //泥煤的不要再报错了！
     public EmployeeEntity getEmployeeById(Long employeeId) throws ExistException{
         employee = em.find(EmployeeEntity.class, employeeId);
         if(employee == null)  throw new ExistException("Employee does not exist!");
