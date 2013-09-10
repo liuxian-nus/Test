@@ -5,10 +5,12 @@
 package ERMS.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -19,34 +21,19 @@ public class EmployeeEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String employeeId;
-    private String employeeLastName;
-    private String employeeFirstName;
+    private Long employeeId;
+    private String employeeName;
     private String employeeGender;
-    private Integer employeeBirthyear;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date employeeDob;
     private String employeePassword;
     private String employeeDepartment;
-    private String employeePosition;
+    private String employeeRole;
     private Integer employeeSchedule; //there are 3 shifts in a day represented by 1/2/3
 
     public EmployeeEntity() {
     }
 
-    public String getEmployeeLastName() {
-        return employeeLastName;
-    }
-
-    public void setEmployeeLastName(String employeeLastName) {
-        this.employeeLastName = employeeLastName;
-    }
-
-    public String getEmployeeFirstName() {
-        return employeeFirstName;
-    }
-
-    public void setEmployeeFirstName(String employeeFirstName) {
-        this.employeeFirstName = employeeFirstName;
-    }
 
     public String getEmployeeGender() {
         return employeeGender;
@@ -56,15 +43,7 @@ public class EmployeeEntity implements Serializable {
         this.employeeGender = employeeGender;
     }
 
-    public Integer getEmployeeBirthyear() {
-        return employeeBirthyear;
-    }
-
-    public void setEmployeeBirthyear(Integer employeeBirthyear) {
-        this.employeeBirthyear = employeeBirthyear;
-    }
-
-    
+  
    /* public boolean create(String employeeId,String employeePassword,String employeeDepartment,String employeePosition,Integer employeeSchedule){
         this.setEmployeeDepartment(employeeDepartment);
         this.setEmployeePassword(employeePassword);
@@ -78,6 +57,24 @@ public class EmployeeEntity implements Serializable {
         return true;
     }
     */
+    
+    
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public Date getEmployeeDob() {
+        return employeeDob;
+    }
+
+    public void setEmployeeDob(Date employeeDob) {
+        this.employeeDob = employeeDob;
+    }
+
     public String getEmployeePassword() {
         return employeePassword;
     }
@@ -94,12 +91,12 @@ public class EmployeeEntity implements Serializable {
         this.employeeDepartment = employeeDepartment;
     }
 
-    public String getEmployeePosition() {
-        return employeePosition;
+    public String getEmployeeRole() {
+        return employeeRole;
     }
 
-    public void setEmployeePosition(String employeePosition) {
-        this.employeePosition = employeePosition;
+    public void setEmployeeRole(String employeeRole) {
+        this.employeeRole = employeeRole;
     }
 
     public Integer getEmployeeSchedule() {
@@ -111,11 +108,11 @@ public class EmployeeEntity implements Serializable {
     }
     
 
-    public String getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
 

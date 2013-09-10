@@ -6,6 +6,7 @@ package ERMS.session;
 
 import ERMS.entity.EmployeeEntity;
 import Exception.ExistException;
+import java.util.Date;
 import java.util.Set;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
@@ -19,21 +20,19 @@ public interface EmployeeSessionRemote {
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     boolean addEmployee(EmployeeEntity employee);
-
+    
     Set<EmployeeEntity> getEmployees();
-
+    
     boolean login(String employeeId, String employeePassword);
-
-    void persist(Object object);
-
+    
     @Remove
     void remove();
-
+    
     boolean removeEmployee(String employeeId) throws ExistException;
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    
+    public EmployeeEntity getEmployeeById(Long employeeId) throws ExistException;
+    
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    boolean updateEmployee(String employeeId, String employeeLastName, String employeeFirstName, Integer employeeBirthYear, String employeeDepartment, Integer employeeSchedule, String employeePosition, String employeeGender, String employeePassword) throws ExistException;
+    boolean updateEmployee(Long employeeId, String employeeName,Date employeeDob, String employeeDepartment, Integer employeeSchedule, String employeeRole,String employeeGender,String employeePassword) throws ExistException;
     
 }
