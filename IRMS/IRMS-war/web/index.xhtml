@@ -1,82 +1,35 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
 
-    <body>
-        <p:layout fullPage="true">
-            <ui:composition template="./Template/generalTemplate.xhtml">
+    <ui:define name="bottom">
+        <p:messages id="statusMessages"/>
+    </ui:define>
 
-                <ui:define name="content">
+    <ui:define name="content">
+        <h:form id="login">
+            <p:panel id="Home" header="Home" style="height:440px;">
+                <div style="margin-top:120px;font-weight:bold;font-size: 2em;text-align:center;">
+                    Welcome to Coral Island Resort
+                </div> 
+            </p:panel>
+        </h:form>
 
+       <!-- <h:form id ="logIn" rendered ="#{indexManagementManagedBean.loginRender}">
+            <p:commandButton value="Sign in" actionListener ="#{loginManagementManagedBean.goLogin}"/>
+            <a href="/IRMS-war/resetPassword.xhtml" style="margin-left:10px;"> 
+                Forget My Password 
+            </a>
+            <h:outputText value="#{indexManagementManagedBean.message}" style="position:relative;float:right;margin-right:20px;margin-top:5px;" />
+        </h:form>
 
-
-                    <h:form> 
-                        <p:megaMenu>  
-                            <p:submenu label="HOTEL" icon="ui-icon-home">  
-                                <p:column>  
-                                    <p:submenu label="HOTEL.1">  
-                                        <p:menuitem value="HOTEL.1.1" url="#" />  
-                                        <p:menuitem value="HOTEL.1.2" url="#" />  
-                                    </p:submenu>  
-                                </p:column>   
-
-                                <p:column>  
-                                    <strong>Sopranos</strong>  
-                                    <p:graphicImage value="/images/sopranos/sopranos1.jpg" width="200"/>  
-                                </p:column>  
-                            </p:submenu>  
-
-                            <p:submenu label="ATTRACTION" icon="ui-icon-image">  
-
-                                <p:column>  
-                                    <p:submenu label="ATTRACTION.1">  
-                                        <p:menuitem value="ATTRACTION.1.1" url="#" />  
-                                        <p:menuitem value="ATTRACTION.1.2" url="#" />  
-                                    </p:submenu>  
-                                    <p:submenu label="ATTRACTION.2">  
-                                        <p:menuitem value="ATTRACTION.2.1" url="#" />  
-                                        <p:menuitem value="ATTRACTION.2.2" url="#" />  
-                                        <p:menuitem value="ATTRACTION.2.3" url="#" />  
-                                    </p:submenu>  
-                                </p:column>  
-                            </p:submenu>  
-
-                            <p:submenu label="ENTERTAINMENT" icon="ui-icon-heart">  
-                                <p:column>  
-                                    <p:submenu label="Entertainment.1">  
-                                        <p:menuitem value="Entertainment.1.1" url="#" />  
-                                        <p:menuitem value="Entertainment.1.2" url="#" />  
-                                    </p:submenu>  
-                                </p:column>  
-                            </p:submenu>  
-                            
-                            <p:submenu label="CONVENTIONS" icon="ui-icon-star">  
-                            </p:submenu>  
-                            
-                            <p:submenu label="SHOPPING" icon="ui-icon-cart">  
-                            </p:submenu> 
-                            
-                            <p:submenu label="RESTAURANTS" icon="ui-icon-person">  
-                            </p:submenu> 
-                            
-
-                            <p:menuitem value="Quit" url="http://www.primefaces.org" icon="ui-icon-close" />  
-                        </p:megaMenu>  
-
-                    </h:form>  
-
-
-
-                </ui:define>
-
-                <ui:define name="bottom">
-
-                </ui:define>
-            </ui:composition>
-        </p:layout>
-    </body>
-
-</html>
+        <h:form id="logOut" rendered ="#{indexManagementManagedBean.logoutRender}" >
+            <p:commandButton value= "Sign out" actionListener ="#{logoutManagementManagedBean.doLogout}"/>
+            <h:outputText value="#{indexManagementManagedBean.message}" style="position:relative;float:right;margin-right:20px;margin-top:5px;" />
+        </h:form>-->
+    </ui:define>
+    
+</ui:composition>

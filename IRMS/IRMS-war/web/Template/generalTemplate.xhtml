@@ -2,43 +2,46 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Integrated Resort Management System for Coral Island Resort</title>
-        <link rel="stylesheet" type="text/css" href="${request.contextPath}/resources/css/default.css"/>
-        <link rel="stylesheet" type="text/css" href="${request.contextPath}/resources/css/cssLayout.css"/>
+        <title>Integrated Resort Management System for Coral Island Resort</title>  
     </h:head>
 
     <h:body>
-        
-        <div id="top">
-            <ui:insert name="top">
-                Coral Island Resort
-            </ui:insert>
-        </div>
 
-        <div id="container">
-            <div id="left">
-                <ui:insert name="left">
-                    Menu
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <ui:insert name="top">
+                    Coral Island Resort Integrated Resort Management System
                 </ui:insert>
-            </div>
-            
-            <div id="content">
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="80" resizable="true" closable="true" collapsible="true">
+                <ui:insert name="bottom">                 
+                </ui:insert>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="245" resizable="true" collapsible="true">
+                <ui:insert name="left"> 
+                    <h:form>
+                        <p:menu style="width:170px;" model="#{menu1ManagedBean.model}" />
+                    </h:form>
+                </ui:insert>
+            </p:layoutUnit>
+
+            <!--<p:layoutUnit position="east" size="245" resizable="true" header="Right" collapsible="true">
+                <ui:insert name="right">
+                </ui:insert>
+            </p:layoutUnit>-->
+
+            <p:layoutUnit position="center">
                 <ui:insert name="content">
-                    content
                 </ui:insert>
-            </div>
-        </div>
-
-        <div id="bottom">
-            <ui:insert name="bottom">
-                bottom
-            </ui:insert>
-        </div>
-
+            </p:layoutUnit>
+        </p:layout>
     </h:body>
 </html>
 
