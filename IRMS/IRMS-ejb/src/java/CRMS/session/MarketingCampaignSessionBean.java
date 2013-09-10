@@ -42,8 +42,8 @@ public class MarketingCampaignSessionBean {
         
         @Override
         public void run(){
-            System.out.println("The marketing campaign has reached the end ");
             
+            System.out.println("The marketing campaign has reached the end ");            
         }
     }
     public void addMarketingCampaign(Date startDate,Date endDate,String remarks,Set<MemberEntity> memberTargets){
