@@ -87,6 +87,7 @@ public class RoomSessionBean implements RoomSessionRemote {
         return room;
     }
     
+    //hotel room check-out
     @Override
     public void checkOut(int roomId) throws RoomException{
         room = em.find(RoomEntity.class, roomId);
