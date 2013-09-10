@@ -4,6 +4,7 @@
  */
 package CRMS.session;
 
+import CRMS.entity.MemberTransactionEntity;
 import Exception.ExistException;
 import java.util.Date;
 
@@ -26,7 +27,7 @@ public interface MemberTransactionSessionRemote {
      * @return
      * @throws ExistException
      */
-    double addMemberTransaction(String memberEmail, double mtAmount, Date mtDate, String mtDepartment, boolean mtMode, boolean coinPay) throws ExistException;
+    double addMemberTransaction(String memberEmail,MemberTransactionEntity mt,Boolean coinPay) throws ExistException;
 
     void addPoint(String memberEmail, double mtAmount) throws ExistException;
     

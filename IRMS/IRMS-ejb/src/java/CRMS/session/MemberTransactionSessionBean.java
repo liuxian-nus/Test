@@ -34,11 +34,10 @@ public class MemberTransactionSessionBean implements MemberTransactionSessionRem
     public MemberTransactionSessionBean() {
     }
     
-    @Override
-    public double addMemberTransaction(String memberEmail,double mtAmount,Date mtDate,String mtDepartment,boolean mtMode,boolean coinPay) throws ExistException{
+        public double addMemberTransaction(String memberEmail,MemberTransactionEntity mt,Boolean coinPay) throws ExistException{
       member = em.find(MemberEntity.class, memberEmail);
       if(member==null) throw new ExistException("Member does not exist!");
-      mt.create(mtDate, mtAmount, mtDepartment, mtMode);
+     // mt.create(mtDate, mtAmount, mtDepartment, mtMode);
       em.persist(mt);
       Set temp = member.getMemberTransactions();
       System.out.println("The transaction record of "+memberEmail+"has been retrieved successfully!");
@@ -46,17 +45,17 @@ public class MemberTransactionSessionBean implements MemberTransactionSessionRem
           member.setMemberTransactions(temp);
       mt.setMember(member);
       if(!coinPay){
-      addPoint(memberEmail,mtAmount);
-      addCoin(memberEmail,mtAmount);
+      addPoint(memberEmail,mt.getMtAmount());
+      addCoin(memberEmail,mt.getMtAmount());
       updateVIP(member.getPoint());
       System.out.println("Transaction of "+memberEmail+"has been added successfully");
-      return mtAmount;
+      return mt.getMtAmount();
       }
       else{
           double tempCoin = member.getCoin();
           member.setCoin(0);
           System.out.println("Transaction of "+memberEmail+"has been added successfully");
-          return(mtAmount - tempCoin);
+          return(mt.getMtAmount() - tempCoin);
         }
      
     }

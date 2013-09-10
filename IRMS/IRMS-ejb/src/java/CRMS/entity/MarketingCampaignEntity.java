@@ -44,7 +44,7 @@ public class MarketingCampaignEntity implements Serializable {
     @ManyToMany(cascade = {CascadeType.ALL})
     private Set<MemberEntity> mcMemberTargets;
 
-    public void create(Date startDate, Date endDate, String remarks, Set<MemberEntity> memberTargets) {
+  /*  public void create(Date startDate, Date endDate, String remarks, Set<MemberEntity> memberTargets) {
         this.setMcEndDate(endDate);
         this.setMcStartDate(startDate);
         this.setMcMemberTargets(memberTargets);
@@ -64,7 +64,7 @@ public class MarketingCampaignEntity implements Serializable {
 
         System.out.println("MarketingCampaignEntity: a new marketing campaign has been added!");
     }
-
+*/
     public Date getMcStartDate() {
         return mcStartDate;
     }

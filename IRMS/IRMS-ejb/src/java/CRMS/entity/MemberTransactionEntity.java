@@ -29,6 +29,9 @@ public class MemberTransactionEntity implements Serializable {
     private String mtDepartment; //6 AAUs
     private boolean mtMode; //either payment by cash or by card, false is cash, true is card
     private String mtPromotion;
+    @ManyToOne
+    private MemberEntity member = new MemberEntity();
+    
 
     public String getMtPromotion() {
         return mtPromotion;
@@ -38,8 +41,7 @@ public class MemberTransactionEntity implements Serializable {
         this.mtPromotion = mtPromotion;
     }
     
-    @ManyToOne
-    private MemberEntity member = new MemberEntity();
+  
 
     public MemberEntity getMember() {
         return member;
@@ -54,12 +56,12 @@ public class MemberTransactionEntity implements Serializable {
         setMtId (System.nanoTime());
     }
     
-    public void create(Date mtDate,double mtAmount,String mtDepartment,boolean mtMode) {
+   /* public void create(Date mtDate,double mtAmount,String mtDepartment,boolean mtMode) {
         this.setMtDate(mtDate);
         this.setMtAmount(mtAmount);
         this.setMtDepartment(mtDepartment);
         this.setMtMode(mtMode);
-    }
+    }*/
 
     public Long getMtId() {
         return mtId;
