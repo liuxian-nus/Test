@@ -16,7 +16,7 @@ import javax.ejb.TransactionAttributeType;
  *
  * @author Diana Wang
  */
-public interface MemberSessionBeanRemote {
+public interface MemberSessionRemote {
 
     //member registration
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)

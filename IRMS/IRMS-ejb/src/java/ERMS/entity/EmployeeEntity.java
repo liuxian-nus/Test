@@ -65,7 +65,7 @@ public class EmployeeEntity implements Serializable {
     }
 
     
-    public boolean create(String employeeId,String employeePassword,String employeeDepartment,String employeePosition,Integer employeeSchedule){
+   /* public boolean create(String employeeId,String employeePassword,String employeeDepartment,String employeePosition,Integer employeeSchedule){
         this.setEmployeeDepartment(employeeDepartment);
         this.setEmployeePassword(employeePassword);
         this.setEmployeePosition(employeePosition);
@@ -77,6 +77,7 @@ public class EmployeeEntity implements Serializable {
         this.setEmployeeLastName(employeeLastName);
         return true;
     }
+    */
     public String getEmployeePassword() {
         return employeePassword;
     }
@@ -110,12 +111,12 @@ public class EmployeeEntity implements Serializable {
     }
     
 
-    public String getId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setId(String id) {
-        this.employeeId = id;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     @Override

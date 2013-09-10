@@ -24,7 +24,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class MemberTransactionSessionBean implements MemberTransactionSessionBeanRemote {
+public class MemberTransactionSessionBean implements MemberTransactionSessionRemote {
  @PersistenceContext
     private EntityManager em ;
     

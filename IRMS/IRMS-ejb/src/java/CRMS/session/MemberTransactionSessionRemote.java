@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Diana Wang
  */
-public interface MemberTransactionSessionBeanRemote {
+public interface MemberTransactionSessionRemote {
 
     void addCoin(String memberEmail, double mtAmount) throws ExistException;
 

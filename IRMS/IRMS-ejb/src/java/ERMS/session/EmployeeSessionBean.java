@@ -9,7 +9,6 @@ import Exception.ExistException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import javax.ejb.Remove;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,28 +19,25 @@ import javax.persistence.Query;
  * @author Diana Wang
  */
 @Stateless
-@LocalBean
 public class EmployeeSessionBean {
-    @PersistenceContext(unitName = "IRMS-ejbPU")
+    @PersistenceContext(unitName = "Employee")
     private EntityManager em;
     
-    EmployeeEntity employee = new EmployeeEntity();
+    EmployeeEntity employee;// = new EmployeeEntity();
 
     public EmployeeSessionBean() {
     }
     
     
-    public boolean addEmployee(String employeeId, String employeeLastName,String employeeFirstName,String employeeGender,String employeePassword, String employeeDepartment, String employeePosition, Integer employeeBirthyear, Integer employeeSchedule){
-
-        employee.create(employeeId, employeePassword, employeeDepartment, employeePosition, employeeSchedule);
+    public EmployeeEntity addEmployee(EmployeeEntity employee){
+        //employee.create(employeeId, employeePassword, employeeDepartment, employeePosition, employeeSchedule);
         em.persist(employee);
-        return true;
+        return employee;
     }
     
     public boolean removeEmployee(String employeeId)throws ExistException {
         employee = em.find(EmployeeEntity.class, employeeId);
         if(employee == null) {
-            System.out.println("The member does not exist!");
             throw new ExistException("Member does not exist!");
         }
         em.remove(employee);
