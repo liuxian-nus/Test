@@ -20,7 +20,7 @@ public interface MemberSessionRemote {
 
     //member registration
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    void addMember(String memberEmail, String memberPassword, String memberName, String memberHP, String gender, String nationality, Date memberDob, boolean maritalStatus, boolean isSubscriber);
+    void addMember(MemberEntity member);
 
     Set<MemberEntity> getMember();
 

@@ -18,7 +18,7 @@ import javax.ejb.TransactionAttributeType;
 public interface EmployeeSessionRemote {
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    boolean addEmployee(String employeeId, String employeeLastName, String employeeFirstName, String employeeGender, String employeePassword, String employeeDepartment, String employeePosition, Integer employeeBirthyear, Integer employeeSchedule);
+    boolean addEmployee(EmployeeEntity employee);
 
     Set<EmployeeEntity> getEmployees();
 

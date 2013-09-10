@@ -24,15 +24,15 @@ public class MemberSessionBean {
     @PersistenceContext
     private EntityManager em ;
  
-    MemberEntity member = new MemberEntity();
+    MemberEntity member;// = new MemberEntity();
 
     //create new instance of managerBean
     public MemberSessionBean() { }
 
     //member registration
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public MemberEntity addMember(String memberEmail,String memberPassword, String memberName,String memberHP, String gender, String nationality, Date memberDob, boolean maritalStatus, boolean isSubscriber) {
-        member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
+    public MemberEntity addMember(MemberEntity member) {
+        //member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
         em.persist(member);
         return member;
     }

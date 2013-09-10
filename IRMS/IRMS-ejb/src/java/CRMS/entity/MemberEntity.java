@@ -60,7 +60,7 @@ public class MemberEntity implements Serializable {
     }
     
     //create a new MemberEntity instance
-    public void create(String memberEmail,String memberName,String memberPassword,String memberHP,String gender,String nationality,Date memberDob,boolean maritalStatus,boolean isSuscriber) {
+   /* public void create(String memberEmail,String memberName,String memberPassword,String memberHP,String gender,String nationality,Date memberDob,boolean maritalStatus,boolean isSuscriber) {
         this.setMemberEmail(memberEmail);
         this.setMemberPassword(memberPassword);
         this.setMemberName(memberName);
@@ -74,6 +74,7 @@ public class MemberEntity implements Serializable {
         this.setPoint(0); //initial number
         this.setCoin(0); //initial number
     }
+    */
     
     public String getMemberEmail() {
         return memberEmail;
