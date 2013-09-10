@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -27,6 +28,27 @@ public class MemberTransactionEntity implements Serializable {
     private double mtAmount;
     private String mtDepartment; //6 AAUs
     private boolean mtMode; //either payment by cash or by card, false is cash, true is card
+    private String mtPromotion;
+
+    public String getMtPromotion() {
+        return mtPromotion;
+    }
+
+    public void setMtPromotion(String mtPromotion) {
+        this.mtPromotion = mtPromotion;
+    }
+    
+    @ManyToOne
+    private MemberEntity member = new MemberEntity();
+
+    public MemberEntity getMember() {
+        return member;
+    }
+
+    public void setMember(MemberEntity member) {
+        this.member = member;
+    }
+    
     
     public MemberTransactionEntity(){
         setMtId (System.nanoTime());

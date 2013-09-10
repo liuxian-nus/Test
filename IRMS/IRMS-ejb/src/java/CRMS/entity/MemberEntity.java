@@ -8,6 +8,10 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -18,7 +22,8 @@ import javax.persistence.Temporal;
 public class MemberEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    protected String memberEmail;private String memberName;
+    protected String memberEmail;
+    private String memberName;
     private String memberPassword;
     private String memberHP;
     private String gender;
@@ -28,9 +33,29 @@ public class MemberEntity implements Serializable {
     private boolean maritalStatus;
     private boolean isVIP;
     private boolean isSubscriber;
-    private Long point;
-    private Long coin;
-    
+    private double point;
+    private double coin;
+    @OneToMany(cascade ={CascadeType.ALL},mappedBy = "member")
+    private Set <MemberTransactionEntity> MemberTransactions;
+    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "memberTargets")
+    private Set <MarketingCampaignEntity> MarketingCampaigns;
+
+    public Set<MarketingCampaignEntity> getMarketingCampaigns() {
+        return MarketingCampaigns;
+    }
+
+    public void setMarketingCampaigns(Set<MarketingCampaignEntity> MarketingCampaigns) {
+        this.MarketingCampaigns = MarketingCampaigns;
+    }
+
+    public Set<MemberTransactionEntity> getMemberTransactions() {
+        return MemberTransactions;
+    }
+
+    public void setMemberTransactions(Set<MemberTransactionEntity> MemberTransactions) {
+        this.MemberTransactions = MemberTransactions;
+    }
+
     public MemberEntity(){
     }
     
@@ -46,8 +71,8 @@ public class MemberEntity implements Serializable {
         this.setMaritalStatus(maritalStatus);
         this.setIsSubscriber(isSubscriber);
         this.setIsVIP(false); //initial status
-        this.setPoint(Long.valueOf(0)); //initial number
-        this.setCoin(Long.valueOf(0)); //initial number
+        this.setPoint(0); //initial number
+        this.setCoin(0); //initial number
     }
     
     public String getMemberEmail() {
@@ -132,19 +157,19 @@ public class MemberEntity implements Serializable {
         this.isSubscriber = isSubscriber;
     }
 
-    public Long getPoint() {
+    public double getPoint() {
         return point;
     }
 
-    public void setPoint(Long point) {
+    public void setPoint(double point) {
         this.point = point;
     }
 
-    public Long getCoin() {
+    public double getCoin() {
         return coin;
     }
 
-    public void setCoin(Long coin) {
+    public void setCoin(double coin) {
         this.coin = coin;
     }
 
