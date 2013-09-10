@@ -23,12 +23,12 @@ public interface EmployeeSessionRemote {
     
     Set<EmployeeEntity> getEmployees();
     
-    boolean login(String employeeId, String employeePassword);
+    boolean login(Long employeeId, String employeePassword);
     
     @Remove
     void remove();
     
-    boolean removeEmployee(String employeeId) throws ExistException;
+    boolean removeEmployee(Long employeeId) throws ExistException;
     
     public EmployeeEntity getEmployeeById(Long employeeId) throws ExistException;
     
