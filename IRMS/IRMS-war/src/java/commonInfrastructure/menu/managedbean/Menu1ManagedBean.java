@@ -82,7 +82,6 @@ public class Menu1ManagedBean implements Serializable {
             submenu.getChildren().add(item);
 
             model.addSubmenu(submenu);    
-//        }
         return model;
     }  
 }
