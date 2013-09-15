@@ -17,11 +17,11 @@ import sun.misc.BASE64Encoder;
  */
 @Stateless
 @LocalBean
-public class PasswordHashSessionBean {
+public class EPasswordHashSessionBean {
 
-      CRMS.session.PasswordHashSessionBean instance;
+      CRMS.session.CPasswordHashSessionBean instance;
 
-    private void PasswordHashSessionBean() {
+    private void EPasswordHashSessionBean() {
     }
 
     public String hashPassword(String pwd) {
@@ -40,10 +40,10 @@ public class PasswordHashSessionBean {
         return hash;  
     }
 
-    public CRMS.session.PasswordHashSessionBean getInstance()  
+    public CRMS.session.CPasswordHashSessionBean getInstance()  
     {
         if (instance == null) {
-            instance = new CRMS.session.PasswordHashSessionBean();
+            instance = new CRMS.session.CPasswordHashSessionBean();
         }
         return instance;
     }
