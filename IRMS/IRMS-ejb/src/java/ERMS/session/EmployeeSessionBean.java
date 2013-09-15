@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ERMS.session;
 
 import ERMS.entity.EmployeeEntity;
@@ -12,6 +9,7 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.Remove;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -21,10 +19,10 @@ import javax.persistence.Query;
  */
 @Stateless
 public class EmployeeSessionBean {
-    @PersistenceContext(unitName = "Employee")
+    @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     
-    EmployeeEntity employee;// = new EmployeeEntity();
+    EmployeeEntity employee;
 
     public EmployeeSessionBean() {
     }
@@ -71,7 +69,7 @@ public class EmployeeSessionBean {
         return employee;
     }
     
-    public Set<EmployeeEntity> getEmployees(){
+    public Set<EmployeeEntity> getAllEmployees() throws NoResultException{
         Query q = em.createQuery("SELECT m FROM EmployeeEntity m");
         Set stateSet = new HashSet<EmployeeEntity>();
          for (Object o: q.getResultList()) { 
