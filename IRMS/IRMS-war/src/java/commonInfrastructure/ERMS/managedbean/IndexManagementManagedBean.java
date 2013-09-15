@@ -29,7 +29,7 @@ public class IndexManagementManagedBean {
     HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
     Boolean isLogin = (Boolean)request.getSession().getAttribute("isLogin");
     //Boolean isLogin = true;
-    if(isLogin == true){
+    if(isLogin != null && isLogin == true){
         String userId = request.getSession().getAttribute("userId").toString();
         logoutRender = true;
         return "Welcome, you user ID is " + userId;

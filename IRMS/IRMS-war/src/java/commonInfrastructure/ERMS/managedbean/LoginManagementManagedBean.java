@@ -6,7 +6,7 @@ package commonInfrastructure.ERMS.managedbean;
 
 import ERMS.entity.EmployeeEntity;
 import ERMS.session.EmployeeSessionBean;
-import ERMS.session.PasswordHashSessionBean;
+import ERMS.session.EPasswordHashSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -29,7 +29,7 @@ public class LoginManagementManagedBean {
     @EJB
     EmployeeSessionBean employeeManager;
     @EJB
-    PasswordHashSessionBean passwordHashSessionBean;
+    EPasswordHashSessionBean passwordHashSessionBean;
     private Long employeeId;
     private String employeePassword;
 

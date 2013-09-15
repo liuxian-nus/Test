@@ -23,8 +23,8 @@ import org.primefaces.model.MenuModel;
 public class Menu1ManagedBean implements Serializable {
 
     private MenuModel model;
-    @EJB
-    EmployeeSessionBean employee;
+    //@EJB
+    //EmployeeSessionBean employee;
 
     public Menu1ManagedBean() {
     }
