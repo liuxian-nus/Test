@@ -5,6 +5,7 @@
 package FBMS.session;
 
 import FBMS.entity.RestaurantEntity;
+import FBMS.entity.IndReservationEntity;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.Stateless;
@@ -82,7 +83,26 @@ public class IndReservationSessionBean {
     public void persist(Object object) {
         em.persist(object);
     }
-
+    
+    /*E.1.1.2 View restaurant details*/
+    public Set<RestaurantEntity> viewRestaurantDetails(Long restId){
+        Query q = em.createQuery("SELECT r FROM RestaurantEntity r");
+        Set stateSet = new HashSet<RestaurantEntity>();
+        for (Object o: q.getResultList()) {
+            RestaurantEntity r = (RestaurantEntity) o;
+            if(r.getRestId()==restId){
+                stateSet.add(r);
+                break;
+            }
+        }
+        return stateSet;
+    }
+    
+    /*E.1.1.3 Check Availability*/
+    public boolean checkAvailability (IndReservationEntity indRes){
+        Query q=em.createQuery("SELECT indRes FROM IndReservationEntity IndRes");
+        int 
+    }
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
