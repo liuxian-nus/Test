@@ -142,7 +142,7 @@ public class MemberEntity implements Serializable {
         this.maritalStatus = maritalStatus;
     }
 
-    public boolean isIsVIP() {
+    public boolean isVIP() {
         return isVIP;
     }
 
@@ -150,7 +150,7 @@ public class MemberEntity implements Serializable {
         this.isVIP = isVIP;
     }
 
-    public boolean isIsSubscriber() {
+    public boolean isSubscriber() {
         return isSubscriber;
     }
 
