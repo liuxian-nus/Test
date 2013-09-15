@@ -117,7 +117,7 @@ public class EmployeeEntity implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public boolean isIsFirstTimeLogin() {
+    public boolean isFirstTimeLogin() {
         return isFirstTimeLogin;
     }
 
