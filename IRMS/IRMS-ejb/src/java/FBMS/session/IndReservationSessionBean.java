@@ -127,6 +127,7 @@ public class IndReservationSessionBean {
         else return false;
     }
     
+    
     public boolean makeReservation(Date indReservationDateTime, Long restId,Integer numberPeople, String title, String name, String email,String mobile, String notes ){
         System.out.println("IndReservationSessionBean: make reservation starts!");
             IndReservationEntity ire = new IndReservationEntity();
