@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    
+    <ui:define name="bottom">
+        <p:messages id="statusMessages"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form> 
+            <p:panel id="loginP" header="Login" style="height:495px;">
+                <div style="margin-top:100px;margin-left:350px;">
+                    <h:panelGrid id="login" columns="3">
+                        <h:outputText value ="User Account: "/>
+                        <h:inputText value ="#{loginManagementManagedBean.employeeId}"/>
+                        <br/>
+                        <h:outputText value ="Password: "/>
+                        <h:inputSecret value="#{loginManagementManagedBean.employeePassword}"/>
+                        <br/> 
+                        <p:commandButton value ="Submit" ajax ="true" update ="statusMessages" actionListener = "#{loginManagementManagedBean.doLogin}" />
+                    </h:panelGrid>
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
