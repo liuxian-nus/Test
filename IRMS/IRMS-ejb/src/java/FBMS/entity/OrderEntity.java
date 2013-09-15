@@ -4,8 +4,8 @@
  */
 package FBMS.entity;
 
+import CRMS.entity.MemberEntity;
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -27,14 +28,33 @@ public class OrderEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date orderDate;
-    private Time orderTime;
+    private Date orderDateTime;
     @OneToMany (cascade ={CascadeType.ALL},mappedBy = "order")
     private Set <DishEntity> Dishes;
-    private boolean status;
+    private String status;
+    @ManyToOne (cascade = {CascadeType.ALL})
+    private MemberEntity member;
     
     public OrderEntity(){}
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    
+    public Date getOrderDateTime() {
+        return orderDateTime;
+    }
+
+    public void setOrderDateTime(Date orderDateTime) {
+        this.orderDateTime = orderDateTime;
+    }
+
+    
     public Long getOrderId() {
         return orderId;
     }
@@ -43,21 +63,6 @@ public class OrderEntity implements Serializable {
         this.orderId = orderId;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public Time getOrderTime() {
-        return orderTime;
-    }
-
-    public void setOrderTime(Time orderTime) {
-        this.orderTime = orderTime;
-    }
 
     public Set<DishEntity> getDishes() {
         return Dishes;
@@ -66,17 +71,7 @@ public class OrderEntity implements Serializable {
     public void setDishes(Set<DishEntity> Dishes) {
         this.Dishes = Dishes;
     }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
     
-    
-
     public Long getId() {
         return orderId;
     }
