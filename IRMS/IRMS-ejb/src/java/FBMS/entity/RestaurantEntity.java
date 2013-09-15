@@ -24,9 +24,19 @@ public class RestaurantEntity implements Serializable {
     private String restTypeOfPlace;
     private String restCuisine;
     private String restName;
+    private Integer restQuota;
     
     public RestaurantEntity(){};
 
+    public Integer getRestQuota() {
+        return restQuota;
+    }
+
+    public void setRestQuota(Integer restQuota) {
+        this.restQuota = restQuota;
+    }
+
+    
     public Long getRestId() {
         return restId;
     }

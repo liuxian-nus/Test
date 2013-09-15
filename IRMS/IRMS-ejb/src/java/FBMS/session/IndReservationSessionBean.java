@@ -53,9 +53,29 @@ public class IndReservationSessionBean {
            }      
            }
         if(restCuisine != null){
-            
-            
+            for(Object o : stateSet){
+                RestaurantEntity re = (RestaurantEntity)o;
+                if(!re.getRestCuisine().equalsIgnoreCase(restCuisine))
+                    stateSet.remove(re);
+            }
+               
         }
+        if(restTypeOfPlace != null){
+            for (Object o :stateSet){
+                RestaurantEntity re = (RestaurantEntity)o;
+                if(!re.getRestTypeOfPlace().equalsIgnoreCase(restTypeOfPlace))
+                    stateSet.remove(re);
+            }
+        }
+        
+        if(restKeyword!= null){
+            for(Object o: stateSet){
+                RestaurantEntity re = (RestaurantEntity)o;
+                if(!re.getRestName().contains(restKeyword))
+                    stateSet.remove(re);
+            }
+    }
+        
         
      return stateSet;
     }

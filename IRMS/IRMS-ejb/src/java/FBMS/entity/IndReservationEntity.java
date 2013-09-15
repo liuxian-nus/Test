@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -26,7 +27,7 @@ public class IndReservationEntity implements Serializable {
     private Long indReservationId;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date indReservationDateTime;
-    @OneToOne(cascade ={CascadeType.ALL},mappedBy = "indReservation")
+    @ManyToOne(cascade ={CascadeType.ALL})
     private RestaurantEntity restaurant;
     private Integer numberPeople;
     private String title;
