@@ -77,13 +77,7 @@ public class RestaurantEntity implements Serializable {
         this.restName = restName;
     }
     
-    public Integer getRestQuota(){
-        return restQuota;
-    }
-    
-    public void setRestQuota(Integer restQuota){
-        this.restQuota=restQuota;
-    }
+
     
 
    

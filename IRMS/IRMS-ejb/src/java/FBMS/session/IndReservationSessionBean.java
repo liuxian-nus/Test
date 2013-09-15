@@ -6,6 +6,7 @@ package FBMS.session;
 
 import FBMS.entity.RestaurantEntity;
 import FBMS.entity.IndReservationEntity;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.Stateless;
@@ -80,6 +81,8 @@ public class IndReservationSessionBean {
         
      return stateSet;
     }
+    
+    
     public void persist(Object object) {
         em.persist(object);
     }
@@ -104,6 +107,33 @@ public class IndReservationSessionBean {
         int 
     }
     
+    public boolean makeReservation(Date indReservationDateTime, Long restId,Integer numberPeople, String title, String name, String email,String mobile, String notes ){
+        System.out.println("IndReservationSessionBean: make reservation starts!");
+            IndReservationEntity ire = new IndReservationEntity();
+                ire.setIndReservationDateTime(indReservationDateTime);
+                ire.setEmail(email);
+                ire.setMobile(mobile);
+                ire.setName(name);
+                ire.setNotes(notes);
+                ire.setTitle(title);
+                ire.setNumberPeople(numberPeople);
+                ire.setRestaurant(em.find(RestaurantEntity.class, restId));
+              //  ire.setStatus("Confirmed");
+            
+                System.out.println("IndReservationSessionBean: reservation updated successfully!");
+                
+                em.persist(ire);
+                System.out.println("IndReservationSessionBean: reservation is made successfully!");
+                  
+        return true;
+    }
+    
+    public boolean confirmReservation(IndReservationEntity ire){
+        
+        ire.setStatus("Confirmed");
+        System.out.println("IndReservationSessionBean: Reservation has been confirmed successfully!");
+        return true;
+    }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
