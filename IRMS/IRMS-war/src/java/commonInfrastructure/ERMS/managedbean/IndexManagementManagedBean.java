@@ -4,6 +4,7 @@
  */
 package commonInfrastructure.ERMS.managedbean;
 
+import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -39,7 +40,11 @@ public class IndexManagementManagedBean {
         return "You are not login, Pls do login First";
     }
 }
-
+    
+ /*     public void goAddEmployee() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/IRMS-war/AddEmployee.xhtml");
+    }
+*/
     public String getMessage() {
         return message;
     }
