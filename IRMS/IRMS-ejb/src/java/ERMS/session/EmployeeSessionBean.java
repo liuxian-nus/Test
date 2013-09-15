@@ -82,10 +82,6 @@ public class EmployeeSessionBean {
         return stateSet;     
     }
 
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
     public boolean updateEmployee(Long employeeId, String employeeName,Date employeeDob, String employeeDepartment, Integer employeeSchedule, String employeeRole,String employeeGender,String employeePassword) throws ExistException {
        employee = em.find(EmployeeEntity.class, employeeId);
        if(employee == null){

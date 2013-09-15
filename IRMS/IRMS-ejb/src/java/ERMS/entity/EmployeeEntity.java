@@ -30,6 +30,7 @@ public class EmployeeEntity implements Serializable {
     private String employeeDepartment;
     private String employeeRole;
     private Integer employeeSchedule; //there are 3 shifts in a day represented by 1/2/3
+    private boolean isFirstTimeLogin = true;
 
     public EmployeeEntity() {
     }
@@ -116,13 +117,22 @@ public class EmployeeEntity implements Serializable {
         this.employeeId = employeeId;
     }
 
+    public boolean isIsFirstTimeLogin() {
+        return isFirstTimeLogin;
+    }
+
+    public void setIsFirstTimeLogin(boolean isFirstTimeLogin) {
+        this.isFirstTimeLogin = isFirstTimeLogin;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (employeeId != null ? employeeId.hashCode() : 0);
         return hash;
     }
-
+ 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

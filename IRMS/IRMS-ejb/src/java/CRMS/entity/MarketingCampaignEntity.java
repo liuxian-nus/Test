@@ -26,7 +26,7 @@ public class MarketingCampaignEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long mcId;
+    private Long mcId;//marketing campaign id
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date mcStartDate;
     @Temporal(javax.persistence.TemporalType.DATE)
