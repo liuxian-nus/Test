@@ -102,9 +102,29 @@ public class IndReservationSessionBean {
     }
     
     /*E.1.1.3 Check Availability*/
-    public boolean checkAvailability (IndReservationEntity indRes){
+    public boolean checkAvailability (RestaurantEntity restaurant, int numberPeople, Date date){
+        
+        Integer totalNum=0;
+        Integer restQuota=restaurant.getRestQuota();
+        
         Query q=em.createQuery("SELECT indRes FROM IndReservationEntity IndRes");
-        int 
+  
+        System.out.println("FBMS,IndReservationSessionBean, checkAvailability, starts!");
+        for(Object o:q.getResultList()){
+            IndReservationEntity indReservation=(IndReservationEntity) o;
+            if(indReservation.getRestaurant().equals(restaurant)){
+                if(indReservation.getStatus().equals("Confirmed")&&indReservation.getIndReservationDateTime().equals(date)){
+                    totalNum+=indReservation.getNumberPeople();
+                }
+                totalNum+=indReservation.getNumberPeople();
+            }
+        }
+        
+        totalNum+=numberPeople;
+        System.out.println("FBMS,IndReservationSessionBean, checkAvailability, ends!");
+        
+        if(totalNum<=restQuota) return true;
+        else return false;
     }
     
     public boolean makeReservation(Date indReservationDateTime, Long restId,Integer numberPeople, String title, String name, String email,String mobile, String notes ){
