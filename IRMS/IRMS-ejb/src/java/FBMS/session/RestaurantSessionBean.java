@@ -5,15 +5,10 @@ import FBMS.entity.RestaurantEntity;
 import Exception.ExistException;
 
 import javax.ejb.Stateless;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -21,17 +16,19 @@ import javax.persistence.Query;
  */
 
 @Stateless
-public class RestaurantSessionBean{
+public class RestaurantSessionBean implements RestaurantSessionBeanRemote{
     
-    @PersistenceContext
-    private EntityManager em;
+    
     private RestaurantEntity restaurant;
+    @PersistenceContext(unitName = "IRMS-ejbPU")
+    private EntityManager em;
     
     public RestaurantSessionBean (){
     }
     
     /*E.4.2.1 Create restaurant*/
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public RestaurantEntity addRestaurant(RestaurantEntity restaurant) {
         em.persist(restaurant);
         return restaurant;
@@ -39,6 +36,7 @@ public class RestaurantSessionBean{
     
     /*E.4.2.2 Update restaurant information*/
     @TransactionAttribute(TransactionAttributeType.REQUIRED)   
+    @Override
     public RestaurantEntity updateRestaurant(Long restId,String restNeighbourhood,
             String restTypeOfPlace, String restCuisine,String restName) throws ExistException{
         
@@ -53,6 +51,11 @@ public class RestaurantSessionBean{
         
         em.merge(restaurant);
         return restaurant;
+    }
+
+    @Override
+    public void persist(Object object) {
+        em.persist(object);
     }
     
 }
