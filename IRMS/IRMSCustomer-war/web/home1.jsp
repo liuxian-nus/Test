@@ -8,13 +8,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-
-<title>Slate Theme - Free CSS Template</title>
-<meta name="keywords" content="slate, theme, darkcyan, teal color, free templates, web design, CSS, HTML" />
-<meta name="description" content="Slate Theme is using darkcyan or teal color free template by templatemo.com" />
-<link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
-
-<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
+    <title>Slate Theme - Free CSS Template</title>
+    <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
 
 <script language="javascript" type="text/javascript">
 function clearText(field){
@@ -55,13 +51,13 @@ ddsmoothmenu.init({
     <body>
         <div id="templatemo_wrapper">
 	<div id="templatemo_header">
-    	<div id="site_title"><h1><a href="http://www.templatemo.com">Free CSS Templates</a></h1></div>
+    	<div id="site_title"><h1>Free CSS Templates</h1></div>
         <div class="cleaner"></div>
     </div> <!-- end of header -->
     <div id="templatemo_menu" class="ddsmoothmenu">
         <ul>
-            <li><a href="index.html" class="selected">Home</a></li>
-            <li><a href="about.html" >Hotel</a>
+            <li><a href="home.jsp" class="selected">Home</a></li>
+            <li><a href="hotel.jsp" >Hotel</a>
                 <ul>
                     <li><a href="#">Sub menu 1</a></li>
                     <li><a href="#">Sub menu 2</a></li>
@@ -69,21 +65,21 @@ ddsmoothmenu.init({
                    <li><a href="#">Sub menu 1</a></li>
               	</ul>
           </li>
-            <li><a href="portfolio.html">Restaurant</a>
+            <li><a href="restaurant.html">Restaurant</a>
                 <ul>
-                    <li><a href="http://www.templatemo.com/page/1">Sub menu 1</a></li>
-                    <li><a href="http://www.templatemo.com/page/2">Sub menu 2</a></li>
-                    <li><a href="http://www.templatemo.com/page/3">Sub menu 3</a></li>
-                    <li><a href="http://www.templatemo.com/page/4">Sub menu 4</a></li>
-                    <li><a href="http://www.templatemo.com/page/5">Sub menu 5</a></li>
+                    <li><a href="#">Sub menu 1</a></li>
+                    <li><a href="#">Sub menu 2</a></li>
+                    <li><a href="#">Sub menu 3</a></li>
+                    <li><a href="#">Sub menu 4</a></li>
+                    <li><a href="#">Sub menu 5</a></li>
               	</ul>
             </li>
-            <li><a href="blog.html" >Entertainment</a></li>
-            <li><a href="contact.html">Attraction</a></li>
-             <li><a href="blog.html" >Shopping</a></li>
-           <li><a href="blog.html" >Restaurant</a></li>
-            <li><a href="blog.html" >Conventions</a></li>
-            <li><a href="blog.html">Memebers</a></li>
+            <li><a href="entertainment.jsp" >Entertainment</a></li>
+            <li><a href="attraction.jsp">Attraction</a></li>
+             <li><a href="shopping.jsp" >Shopping</a></li>
+           <li><a href="restaurant.jsp" >Restaurant</a></li>
+            <li><a href="conventions.jsp" >Conventions</a></li>
+            <li><a href="members.html">Members</a></li>
         </ul>
         </div>
         
@@ -144,8 +140,8 @@ ddsmoothmenu.init({
     <div id="templatemo_main">
     	<div class="col one_third">
         	<h2>Welcome To Slate</h2>
-            <p><em>Sed dignissim ligula eu dolor rhoncus. Sed ac nulla vitae enim eleifend aliquam sed velit.</em></p>
-            <p><a href="http://www.templatemo.com" target="_parent">Slate Theme</a> is free css template provided by <a href="http://www.templatemo.com" target="_parent">templatemo.com</a> for your personal or commercial websites. Credit goes to <a href="http://www.photovaco.com/" target="_blank">Free Photos</a> for photos. Duis dolor nisi, commodo eu auctor vehicula, condimentum quis risus. Nunc id lacus vel risus interdum mollis. Aenean leo ipsum, vulputate ac cursus eu, volutpat vel ante.</p>
+            <p>Coral Island Resort is an integrated resort on the island of Coral, off the southern coast of Singapore. The key attractions include one of Singapore's two casinos, a Universal Studios theme park and Marine Life Park, which includes the world's largest oceanarium.</p>
+           
             <a href="#" class="more">More</a>
         </div>
         <div class="col one_third">
