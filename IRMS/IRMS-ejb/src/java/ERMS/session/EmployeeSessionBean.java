@@ -3,8 +3,10 @@ package ERMS.session;
 
 import ERMS.entity.EmployeeEntity;
 import Exception.ExistException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.Remove;
@@ -69,30 +71,20 @@ public class EmployeeSessionBean {
         return employee;
     }
     
-    public Set<EmployeeEntity> getAllEmployees() throws NoResultException{
+    public List<EmployeeEntity> getAllEmployees() throws NoResultException{
         Query q = em.createQuery("SELECT m FROM EmployeeEntity m");
-        Set stateSet = new HashSet<EmployeeEntity>();
+        List employeeList = new ArrayList<EmployeeEntity>();
          for (Object o: q.getResultList()) { 
             EmployeeEntity m = (EmployeeEntity) o; 
-            stateSet.add(m); 
+            employeeList.add(m); 
         } 
-         
-        return stateSet;     
+        return employeeList;     
     }
-
-    public boolean updateEmployee(Long employeeId, String employeeName,Date employeeDob, String employeeDepartment, Integer employeeSchedule, String employeeRole,String employeeGender,String employeePassword) throws ExistException {
-       employee = em.find(EmployeeEntity.class, employeeId);
-       if(employee == null){
-           throw new ExistException("Employee does not exist!");
-             }
-       if(employee.getEmployeePassword().equals(employeePassword)!=true) throw new ExistException("Password is incorrect!");
-            employee.setEmployeeDob(employeeDob);
-            employee.setEmployeeDepartment(employeeDepartment);
-            employee.setEmployeeGender(employeeGender);
-            employee.setEmployeeName(employeeName);
-            employee.setEmployeeRole(employeeRole);
-            employee.setEmployeeSchedule(employeeSchedule);
-            em.persist(employee);
+    
+     public boolean updateEmployee(EmployeeEntity employee)
+    {
+        em.merge(employee);
+        System.out.println("EmployeeSessionBean: employee " + employee.getEmployeeId() + " is successfully updated");
         return true;
     }
 

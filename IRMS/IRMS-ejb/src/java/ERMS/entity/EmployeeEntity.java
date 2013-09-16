@@ -5,11 +5,15 @@
 package ERMS.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -28,9 +32,19 @@ public class EmployeeEntity implements Serializable {
     private Date employeeDob;
     private String employeePassword;
     private String employeeDepartment;
-    private String employeeRole;
     private Integer employeeSchedule; //there are 3 shifts in a day represented by 1/2/3
     private boolean isFirstTimeLogin = true;
+    
+    @OneToMany(targetEntity = RoleEntity.class, cascade = {CascadeType.MERGE})
+    private List<RoleEntity> roles = new ArrayList<RoleEntity>();
+
+    public List<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleEntity> roles) {
+        this.roles = roles;
+    }
 
     public EmployeeEntity() {
     }
@@ -90,14 +104,6 @@ public class EmployeeEntity implements Serializable {
 
     public void setEmployeeDepartment(String employeeDepartment) {
         this.employeeDepartment = employeeDepartment;
-    }
-
-    public String getEmployeeRole() {
-        return employeeRole;
-    }
-
-    public void setEmployeeRole(String employeeRole) {
-        this.employeeRole = employeeRole;
     }
 
     public Integer getEmployeeSchedule() {
