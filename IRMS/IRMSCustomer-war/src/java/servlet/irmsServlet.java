@@ -5,10 +5,12 @@ package servlet;
  * and open the template in the editor.
  */
 
+
 import FBMS.session.IndReservationSessionBeanRemote;
 import FBMS.session.RestaurantSessionBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -25,9 +27,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/irmsServlet"})
 public class irmsServlet extends HttpServlet {
     @EJB
-    private IndReservationSessionBeanRemote irm;
+    private IndReservationSessionBeanRemote indReservationSessionBean;
     @EJB
-    private RestaurantSessionBeanRemote rm;
+    private RestaurantSessionBeanRemote restaurantSessionBean;
+    private ArrayList data=null;
+  
     
 
     /**
@@ -62,7 +66,21 @@ public class irmsServlet extends HttpServlet {
             if("restaurant".equals(page)){
             
                //data = irm.searchRestaurant(null)
+            } else{
+                page="Error";
             }
+            dispatcher=servletContext.getNamedDispatcher(page);
+            if(dispatcher==null){
+                dispatcher=servletContext.getNamedDispatcher("Error");
+            }
+            dispatcher.forward(request, response);
+            
+        }catch (Exception e){
+            log("Exception in irmsServlet.processRequest()");
+        }
+    }
+    
+    private ArrayList 
             
             /* TODO output your page here. You may use following sample code. */
             /*
@@ -76,9 +94,10 @@ public class irmsServlet extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
             * */
-        } finally {            
+        /*} finally {            
             out.close();
-        }
+        }*/
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
