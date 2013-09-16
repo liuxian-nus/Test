@@ -37,7 +37,7 @@ public class IndexManagementManagedBean {
     }
     else{
             loginRender = true;
-        return "You are not login, Pls do login First";
+        return "You are not login, please login first";
     }
 }
     
