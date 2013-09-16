@@ -5,8 +5,10 @@
 package ERMS.session;
 
 import ERMS.entity.EmployeeEntity;
+import ERMS.entity.RoleEntity;
 import Exception.ExistException;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
@@ -33,6 +35,6 @@ public interface EmployeeSessionRemote {
     
     public EmployeeEntity getEmployeeById(Long employeeId) throws ExistException;
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    boolean updateEmployee(Long employeeId, String employeeName,Date employeeDob, String employeeDepartment, Integer employeeSchedule, String employeeRole,String employeeGender,String employeePassword) throws ExistException;
+    boolean updateEmployee(Long employeeId, String employeeName,Date employeeDob, String employeeDepartment, Integer employeeSchedule, List<RoleEntity> employeeRole,String employeeGender,String employeePassword) throws ExistException;
     
 }
