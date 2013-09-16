@@ -147,8 +147,12 @@ public class IndReservationSessionBean {
                 System.out.println("IndReservationSessionBean: reservation is made successfully!");
                   
         return true;
+    } 
+    public boolean makeReservation (IndReservationEntity ire){
+        em.persist(ire);
+        System.out.println("IndReservationSessionBean: reservation has been made!");
+        return true;
     }
-    
     public boolean confirmReservation(IndReservationEntity ire){
         
         ire.setStatus("Confirmed");
@@ -157,5 +161,30 @@ public class IndReservationSessionBean {
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    
+    public IndReservationEntity viewReservation (Long indReservationId){
 
+        IndReservationEntity ire = em.find(IndReservationEntity.class,indReservationId);
+        System.out.println("IndReservationSessionBean: the reservation has been found!");
+        return ire;
+}
+    
+    public boolean modifyReservation (String status,Long restId, Date indReservationDateTime, Long indReservationId,Integer numberPeople, String title, String name, String email,String mobile, String notes){
+        System.out.println("IndReservationSessionBean: reservation modification starts!");
+        
+        IndReservationEntity ire = em.find(IndReservationEntity.class,indReservationId);
+        RestaurantEntity re = em.find(RestaurantEntity.class, restId);
+        ire.setEmail(email);
+        ire.setIndReservationDateTime(indReservationDateTime);
+        ire.setMobile(mobile);
+        ire.setName(name);
+        ire.setNotes(notes);
+        ire.setNumberPeople(numberPeople);
+        ire.setRestaurant(re);
+        ire.setTitle(title);
+        ire.setStatus(status);
+        
+        System.out.println("IndReservationSessionBean: reservation modification successful!");
+        return true;
+    }
 }
