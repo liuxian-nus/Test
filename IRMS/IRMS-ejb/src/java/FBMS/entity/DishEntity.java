@@ -5,10 +5,12 @@
 package FBMS.entity;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -23,9 +25,20 @@ public class DishEntity implements Serializable {
     private String dishName;
     private Integer dishQuantity;
     private Integer dishCost;
+    @ManyToOne (cascade ={CascadeType.ALL})
+    private OrderEntity order;
     
     public DishEntity(){}
 
+    public OrderEntity getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderEntity order) {
+        this.order = order;
+    }
+
+    
     public Long getDishId() {
         return dishId;
     }
