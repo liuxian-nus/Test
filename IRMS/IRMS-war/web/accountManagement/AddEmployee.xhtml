@@ -7,19 +7,6 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="top">
-        top
-    </ui:define>
-
-    <ui:define name="bottom">
-        bottom
-    </ui:define>
-
-    <ui:define name="left">
-        left
-    </ui:define>
-
-
     <ui:define name="content">
         <h:form id="Register">
             <p:panel id="Home" header="Home" style="height:440px;">
@@ -46,10 +33,10 @@
                     <p:inputText required="true" value="#{addEmployeeManagedBean.employee.employeeGender}" requiredMessage="Gender is required for emloyee's initial password receiving"/>
                     <br/>
 
-                   <!-- <h:panelGrid id="grid" columns="3">-->
-                        <h:panelGrid id ="grid" columns="3" style="margin-bottom:10px" cellpadding="5">  
-                        
-                            <h:outputText value="Department*:"/>
+                    <!-- <h:panelGrid id="grid" columns="3">-->
+                    <h:panelGrid id ="grid" columns="3" style="margin-bottom:10px" cellpadding="5">  
+
+                        <h:outputText value="Department*:"/>
                         <h:selectOneMenu value ="#{addEmployeeManagedBean.employee.employeeDepartment}" required ="true" requiredMessage="Department cannot be empty">
                             <f:selectItem itemLabel="Select Department" itemValue="" />  
                             <f:selectItem itemLabel="Hotel" itemValue="Hotel" />  
@@ -88,15 +75,15 @@
                             <f:selectItem itemLabel="Afternoon Shift" itemValue="2" />  
                             <f:selectItem itemLabel="Night Shift" itemValue="3" />  
                         </h:selectOneRadio> 
-                            <br/>
+                        <br/>
 
-                               </h:panelGrid>  
+                    </h:panelGrid>  
 
-                            <p:commandButton value="Save" ajax="true" update="statusMessages addEmployee" actionListener="#{addEmployeeManagedBean.saveNewEmployee}"/>
-                           <!-- <p:commandButton value="Add More Employees"    actionListener="#{addEmployeeManagedBean.oneMore}" rendered="#{addEmployeeManagedBean.show}"/> -->
-                            </div>
-                            </p:panel>
-                            </h:form>
-                            </ui:define>
+                    <p:commandButton value="Save" ajax="true" actionListener="#{addEmployeeManagedBean.saveNewEmployee}"/>
+                   <!-- <p:commandButton value="Add More Employees"    actionListener="#{addEmployeeManagedBean.oneMore}" rendered="#{addEmployeeManagedBean.show}"/> -->
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
 
-                            </ui:composition>
+</ui:composition>
