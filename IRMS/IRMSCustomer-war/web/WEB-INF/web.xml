@@ -7,7 +7,7 @@
     <servlet>
         <description>home page</description>
         <servlet-name>home</servlet-name>
-        <jsp-file>/home.jsp</jsp-file>
+        <jsp-file>home.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>hotel</servlet-name>
