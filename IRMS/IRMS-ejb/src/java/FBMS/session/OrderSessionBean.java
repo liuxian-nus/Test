@@ -10,7 +10,6 @@ import CRMS.entity.MemberEntity;
 import FBMS.entity.InvoiceEntity;
 import FBMS.entity.MenuEntity;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -58,15 +57,15 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
     }
     
     /*E.2.1.3 place order*/
-    @Override
-    public boolean placeOrder(Date orderDateTime, MenuEntity menu, MemberEntity member, InvoiceEntity invoice){
+        @Override
+        public boolean placeOrder(Date orderDateTime, MenuEntity menu, MemberEntity member){
         System.out.println("OrderSessionBean: place order starts!");
         
-        OrderEntity order=new OrderEntity();
+        order=new OrderEntity();
         order.setOrderDateTime(orderDateTime);
         order.setMenu(menu);
         order.setMember(member);
-        order.setInvoice(invoice);
+       // order.setInvoice(invoice);
         
         em.persist(order);
         System.out.println("OrderSessionBean: place order is successful!");
@@ -99,6 +98,16 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         return this_order;
     }
     
+    public boolean modifyOrder (Long orderId,Date orderDateTime, MenuEntity menu, MemberEntity member){
+        OrderEntity current = em.find(OrderEntity.class, orderId);
+        current.setMember(member);
+        current.setMenu(menu);
+        current.setOrderDateTime(orderDateTime);
+        em.merge(current);
+        System.out.println("OrderSessionBean: Order has been modified!");
+       
+        return true;
+    }
 
     @Override
     public void persist(Object object) {

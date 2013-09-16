@@ -29,7 +29,7 @@ public interface OrderSessionBeanRemote {
     void persist(Object object);
 
     /*E.2.1.3 place order*/
-    boolean placeOrder(Date orderDateTime, MenuEntity menu, MemberEntity member, InvoiceEntity invoice);
+    boolean placeOrder(Date orderDateTime, MenuEntity menu, MemberEntity member);
 
     boolean placeOrder(OrderEntity order);
     

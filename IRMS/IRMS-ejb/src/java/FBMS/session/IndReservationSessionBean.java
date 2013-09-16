@@ -192,6 +192,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
         ire.setTitle(title);
         ire.setStatus(status);
         
+        em.merge(ire);
         System.out.println("IndReservationSessionBean: reservation modification successful!");
         return true;
     }
