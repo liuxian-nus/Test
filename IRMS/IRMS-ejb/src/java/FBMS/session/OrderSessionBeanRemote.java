@@ -35,4 +35,7 @@ public interface OrderSessionBeanRemote {
     
     OrderEntity viewOrder(Long orderId);
     
+    boolean modifyOrder (Long orderId,Date orderDateTime, MenuEntity menu, MemberEntity member);
+    
+    
 }

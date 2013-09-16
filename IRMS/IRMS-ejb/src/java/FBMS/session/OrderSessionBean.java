@@ -7,7 +7,6 @@ package FBMS.session;
 import FBMS.entity.OrderEntity;
 import FBMS.entity.DishEntity;
 import CRMS.entity.MemberEntity;
-import FBMS.entity.InvoiceEntity;
 import FBMS.entity.MenuEntity;
 import java.util.Date;
 import java.util.Set;
