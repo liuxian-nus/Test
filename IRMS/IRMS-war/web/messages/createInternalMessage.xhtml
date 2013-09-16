@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form>                      
+            <p:panel id="msg" header="Write Internal Message" style="height:495px;">
+                <div style="margin-left:200px;margin-top:40px;">
+                    <div style="margin-bottom: 15px;">
+                        <h:outputText value="To:" /><p:spacer width="10px"/>
+
+                        <p:autoComplete id="receiver" value="#{createInternalMsgManagedBean.receiver}" required="true" requiredMessage="Who do you want to send to?"  
+                                        completeMethod="#{createInternalMsgManagedBean.complete}"/>
+
+                        <h:outputText value="Title:" style="margin-left:30px;margin-right:10px;"/>
+                        <h:inputText value="#{createInternalMsgManagedBean.title}" />
+
+                    </div>
+                    <p:editor value="#{createInternalMsgManagedBean.msg}" widgetVar="editor" width="600"/>  
+
+                    <h:panelGrid columns="2" style="margin-top:10px">  
+                        <p:commandButton value="Send" image="ui-icon ui-icon-mail-closed" actionListener="#{createInternalMsgManagedBean.sendMsg}" />  
+                        <p:commandButton type="button" value="Clear" onclick="editor.clear()" image="ui-icon ui-icon-close" />  
+                    </h:panelGrid> 
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

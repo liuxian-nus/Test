@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form id="form">
+            <f:view beforePhase="#{viewMsgManagedBean.initView}">
+                <p:panel id="viewMsg" header="View Message" style="height:495px;">
+                    <div style="margin-top:35px;margin-left:200px;margin-right:50px;margin-bottom:20px;">
+                        <table style="border:solid #AFAFAF 2px;width:600px;height:300px;">
+                            <tr>
+                                <th colspan="2" style="font-weight:bold;text-align:center;background-color:#dddddd;height:50px;">
+                                    #{viewMsgManagedBean.title}
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="height:50px;width:200px;padding-left:30px;border-bottom:solid #dddddd 2px;">
+                                    From: <h:outputText value ="#{viewMsgManagedBean.sender}" />
+                                </td>
+                                <td style="height:50px;width:200px;padding-left:30px;border-bottom:solid #dddddd 2px;">
+                                    Sent time: <h:outputText value ="#{viewMsgManagedBean.sendTime}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td algin="center" colspan="2" style="overflow:auto;padding:50px;text-align:center;">
+                                    <h:outputText value ="#{viewMsgManagedBean.content}"/>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <br />
+                        <p:commandButton value="Back"  ajax="false" actionListener="#{viewMsgManagedBean.goBack}" />
+                    </div>
+                </p:panel>
+            </f:view>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
