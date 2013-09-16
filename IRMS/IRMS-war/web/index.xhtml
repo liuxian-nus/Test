@@ -20,9 +20,7 @@
 
        <h:form id ="logIn" rendered ="#{indexManagementManagedBean.loginRender}">
             <p:commandButton value="Sign in" actionListener ="#{loginManagementManagedBean.goLogin}"/>
-            <a href="/IRMS-war/resetPassword.xhtml" style="margin-left:10px;"> 
-                Forget My Password 
-            </a>
+            
             <h:outputText value="#{indexManagementManagedBean.message}" style="position:relative;float:right;margin-right:20px;margin-top:5px;" />
         </h:form>
 
