@@ -14,7 +14,7 @@
                <li><a href="#">Sub menu 1</a></li>
             </ul>
         </li>
-        <li><a href="restaurant.html">Restaurant</a>
+        <li><a href="restaurant.jsp">Restaurant</a>
             <ul>
                 <li><a href="#">Sub menu 1</a></li>
                 <li><a href="#">Sub menu 2</a></li>
@@ -26,7 +26,6 @@
         <li><a href="entertainment.jsp" >Entertainment</a></li>
         <li><a href="attraction.jsp">Attraction</a></li>
         <li><a href="shopping.jsp" >Shopping</a></li>
-        <li><a href="restaurant.jsp" >Restaurant</a></li>
         <li><a href="conventions.jsp" >Conventions</a></li>
         <li><a href="members.html">Members</a></li>
     </ul>

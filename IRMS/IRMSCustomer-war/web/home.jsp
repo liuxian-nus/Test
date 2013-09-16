@@ -49,40 +49,8 @@ ddsmoothmenu.init({
         
     </head>
     <body>
-        <div id="templatemo_wrapper">
-	<div id="templatemo_header">
-    	<div id="site_title"><h1>Free CSS Templates</h1></div>
-        <div class="cleaner"></div>
-    </div> <!-- end of header -->
-    <div id="templatemo_menu" class="ddsmoothmenu">
-        <ul>
-            <li><a href="home.jsp" class="selected">Home</a></li>
-            <li><a href="hotel.jsp" >Hotel</a>
-                <ul>
-                    <li><a href="#">Sub menu 1</a></li>
-                    <li><a href="#">Sub menu 2</a></li>
-                    <li><a href="#">Sub menu 3</a></li>
-                   <li><a href="#">Sub menu 1</a></li>
-              	</ul>
-          </li>
-            <li><a href="restaurant.html">Restaurant</a>
-                <ul>
-                    <li><a href="#">Sub menu 1</a></li>
-                    <li><a href="#">Sub menu 2</a></li>
-                    <li><a href="#">Sub menu 3</a></li>
-                    <li><a href="#">Sub menu 4</a></li>
-                    <li><a href="#">Sub menu 5</a></li>
-              	</ul>
-            </li>
-            <li><a href="entertainment.jsp" >Entertainment</a></li>
-            <li><a href="attraction.jsp">Attraction</a></li>
-             <li><a href="shopping.jsp" >Shopping</a></li>
-           <li><a href="restaurant.jsp" >Restaurant</a></li>
-            <li><a href="conventions.jsp" >Conventions</a></li>
-            <li><a href="members.html">Members</a></li>
-        </ul>
-        </div>
-        
+    
+        <jsp:include page="header.jsp"></jsp:include>
        <!-- <div id="search_box">
             <form action="#" method="get">
                 <input type="text" value="Search" name="q" size="10" id="searchfield" title="searchfield" onfocus="clearText(this)" onblur="clearText(this)" />
