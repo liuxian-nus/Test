@@ -7,12 +7,23 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
 
+    <ui:define name="top">
+        top
+    </ui:define>
+
+    <ui:define name="bottom">
+        bottom
+    </ui:define>
+
+    <ui:define name="left">
+        left
+    </ui:define>
+
+
     <ui:define name="content">
         <h:form id="Register">
-            <p:panel id="Home" header="Home" style="height:440px;">
-                <div style="margin-top:120px;font-weight:bold;font-size: 2em;text-align:center;">
-
-
+            <p:panel id="Home" header="Add New Employee" style="height:440px;">
+                
                     <h:outputText value="Name*:"/>
                     <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{addEmployeeManagedBean.employee.employeeName}"/>
                     <br/>                       
@@ -30,11 +41,13 @@
                     <br/>
 
                     <h:outputText value="Gender*:"/>
-                    <p:inputText required="true" value="#{addEmployeeManagedBean.employee.employeeGender}" requiredMessage="Gender is required for emloyee's initial password receiving"/>
-                    <br/>
+                    <p:selectOneRadio id="options" value="#{addEmployeeManagedBean.employee.employeeGender}" requiredMessage="Gender is required for emloyee's initial password receiving">  
+                        <f:selectItem itemLabel="Female" itemValue="Female" />  
+                        <f:selectItem itemLabel="Male" itemValue="Male" />  
+                    </p:selectOneRadio>  
 
                     <!-- <h:panelGrid id="grid" columns="3">-->
-                    <h:panelGrid id ="grid" columns="3" style="margin-bottom:10px" cellpadding="5">  
+                   <!-- <h:panelGrid id ="grid" columns="3" style="margin-bottom:10px" cellpadding="5">  -->
 
                         <h:outputText value="Department*:"/>
                         <h:selectOneMenu value ="#{addEmployeeManagedBean.employee.employeeDepartment}" required ="true" requiredMessage="Department cannot be empty">
@@ -62,7 +75,8 @@
                             <f:selectItem itemLabel="Hotel Employee Manager" itemValue="HEmployeeManager" />  
                             <f:selectItem itemLabel="Hotel Front Desk" itemValue="HFrontDesk" />
                             <f:selectItem itemLabel="Hotel Service Manager" itemValue="HServiceManager" />  
-                            <f:selectItem itemLabel="CRM Admin" itemValue="CRMAdmin" />  
+                            <f:selectItem itemLabel="CRM Admin" itemValue="CRMAdmin" /> 
+                            <f:selectItem itemLabel="System Administration" itemValue="SystemAdministration" /> 
 
                         </h:selectOneMenu> 
                         <br/>
@@ -70,18 +84,14 @@
 
                         <h:outputText value="Schedule:"/>
                         <h:selectOneRadio value ="#{addEmployeeManagedBean.employee.employeeSchedule}" required ="true" requiredMessage="Schedule cannot be empty">
-                            <f:selectItem itemLabel="Select Schedule" itemValue="" />  
                             <f:selectItem itemLabel="Morning Shift" itemValue="1" />  
                             <f:selectItem itemLabel="Afternoon Shift" itemValue="2" />  
                             <f:selectItem itemLabel="Night Shift" itemValue="3" />  
                         </h:selectOneRadio> 
                         <br/>
 
-                    </h:panelGrid>  
-
-                    <p:commandButton value="Save" ajax="true" actionListener="#{addEmployeeManagedBean.saveNewEmployee}"/>
+                    <p:commandButton value="Save" ajax="true"  actionListener="#{addEmployeeManagedBean.saveNewEmployee}"/>
                    <!-- <p:commandButton value="Add More Employees"    actionListener="#{addEmployeeManagedBean.oneMore}" rendered="#{addEmployeeManagedBean.show}"/> -->
-                </div>
             </p:panel>
         </h:form>
     </ui:define>
