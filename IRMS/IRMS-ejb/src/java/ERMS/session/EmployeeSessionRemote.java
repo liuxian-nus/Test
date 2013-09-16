@@ -35,6 +35,6 @@ public interface EmployeeSessionRemote {
     
     public EmployeeEntity getEmployeeById(Long employeeId) throws ExistException;
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    boolean updateEmployee(Long employeeId, String employeeName,Date employeeDob, String employeeDepartment, Integer employeeSchedule, List<RoleEntity> employeeRole,String employeeGender,String employeePassword) throws ExistException;
+    boolean updateEmployee(EmployeeEntity employee) throws ExistException;
     
 }

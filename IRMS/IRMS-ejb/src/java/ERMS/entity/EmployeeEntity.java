@@ -34,6 +34,8 @@ public class EmployeeEntity implements Serializable {
     private String employeeDepartment;
     private Integer employeeSchedule; //there are 3 shifts in a day represented by 1/2/3
     private boolean isFirstTimeLogin = true;
+    private String securityQuestion;
+    private String answer;
     
     @OneToMany(targetEntity = RoleEntity.class, cascade = {CascadeType.MERGE})
     private List<RoleEntity> roles = new ArrayList<RoleEntity>();
@@ -129,6 +131,22 @@ public class EmployeeEntity implements Serializable {
 
     public void setIsFirstTimeLogin(boolean isFirstTimeLogin) {
         this.isFirstTimeLogin = isFirstTimeLogin;
+    }
+
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     
