@@ -5,10 +5,7 @@
 package ERMS.session;
 
 import ERMS.entity.EmployeeEntity;
-import ERMS.entity.RoleEntity;
 import Exception.ExistException;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
