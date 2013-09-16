@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -29,7 +28,7 @@ public class CreateInternalMsgManagedBean implements Serializable {
 
     private MessageEntity message;
     private String msg;
-    private String receiver;
+    private Long receiver;
     private String msgType;
     private String title;
     @EJB
@@ -44,7 +43,7 @@ public class CreateInternalMsgManagedBean implements Serializable {
     public List<String> complete(String query) {
         List<String> results = new ArrayList<String>();
 
-        Set<EmployeeEntity> employeeList = employee.getAllEmployees();
+        List<EmployeeEntity> employeeList = employee.getAllEmployees();
 
         for (Object o : employeeList) {
             EmployeeEntity emp = (EmployeeEntity) o;
@@ -62,16 +61,16 @@ public class CreateInternalMsgManagedBean implements Serializable {
         EmployeeEntity user = employee.getEmployeeById(senderId);
         List<String> userType = new ArrayList<String>();
 
-        for (int i = 0; i < user.getEmployeeRoles().size(); i++) {
-            userType.add(user.getEmployeeRoles().get(i).getRoleName());
+        for (int i = 0; i < user.getRoles().size(); i++) {
+            userType.add(user.getRoles().get(i).getRoleName());
         }
 
-        if (receiver.equals("000")) {          //All
+        if (receiver.equals(0)) {          //All
             if (!userType.contains("SystemMsg")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "You have no such right", ""));
                 return;
             } else {
-                Set<EmployeeEntity> employeeList = employee.getAllEmployees();
+                List<EmployeeEntity> employeeList = employee.getAllEmployees();
                 List<Long> idList = new ArrayList<Long>();
                 for (int i = 0; i < employeeList.size(); i++) {
                     idList.add(employeeList.get(i).getEmployeeId());
@@ -81,7 +80,7 @@ public class CreateInternalMsgManagedBean implements Serializable {
             }
         } 
         
-        else if (receiver.equals("001")) {      //Admin
+        else if (receiver.equals(1)) {      //Admin
             if (!userType.contains("SystemMsg")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "You have no such right", ""));
                 return;
@@ -89,8 +88,8 @@ public class CreateInternalMsgManagedBean implements Serializable {
                 List<EmployeeEntity> employeeList = employee.getAllEmployees();
                 List<Long> idList = new ArrayList<Long>();
                 for (int i = 0; i < employeeList.size(); i++) {
-                    if (employeeList.get(i).getDepartment().equals("Admin")) {
-                        idList.add(employeeList.get(i).getId());
+                    if (employeeList.get(i).getEmployeeDepartment().equals("Admin")) {
+                        idList.add(employeeList.get(i).getEmployeeId());
                     }
                 }
                 type = "Broadcast";
@@ -106,8 +105,8 @@ public class CreateInternalMsgManagedBean implements Serializable {
                 List<EmployeeEntity> employeeList = employee.getAllEmployees();
                 List<Long> idList = new ArrayList<Long>();
                 for (int i = 0; i < employeeList.size(); i++) {
-                    if (employeeList.get(i).getDepartment().equals("Sales")) {
-                        idList.add(employeeList.get(i).getId());
+                    if (employeeList.get(i).getEmployeeDepartment().equals("Sales")) {
+                        idList.add(employeeList.get(i).getEmployeeId());
                     }
                 }
                 type = "Broadcast";
@@ -117,7 +116,7 @@ public class CreateInternalMsgManagedBean implements Serializable {
         
         else {
             try {
-                Long receiverId = employee.getEmployeeByUserName(receiver).getId();
+                Long receiverId = employee.getEmployeeById(receiver).getEmployeeId();
                 type = "Private";
                 messageManager.addPrivateMessage(senderId, receiverId, title, msg, type);
             } 
@@ -146,17 +145,14 @@ public class CreateInternalMsgManagedBean implements Serializable {
         this.msgType = msgType;
     }
 
-    public String getReceiver() {
+    public Long getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(String receiver) {
+    public void setReceiver(Long receiver) {
         this.receiver = receiver;
     }
 
-    /**
-     * @return the title
-     */
     public String getTitle() {
         return title;
     }
