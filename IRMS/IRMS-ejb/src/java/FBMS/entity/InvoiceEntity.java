@@ -30,11 +30,22 @@ public class InvoiceEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date invoiceDate;
     private double invoiceValue;
+    @OneToOne (cascade = {CascadeType.ALL})
+    private ReceiptEntity receipt;
     
     
     
     public InvoiceEntity(){}
 
+    public ReceiptEntity getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(ReceiptEntity receipt) {
+        this.receipt = receipt;
+    }
+
+    
     public Long getInvoiceId() {
         return invoiceId;
     }
