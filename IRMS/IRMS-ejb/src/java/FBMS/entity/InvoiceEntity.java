@@ -25,7 +25,7 @@ public class InvoiceEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long invoiceId;
     
-    @OneToOne (cascade ={CascadeType.ALL},mappedBy = "order")
+    @OneToOne (cascade ={CascadeType.ALL},mappedBy = "invoice")
     private OrderEntity order;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date invoiceDate;

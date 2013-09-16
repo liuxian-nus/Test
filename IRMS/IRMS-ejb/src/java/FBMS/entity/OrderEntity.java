@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -34,9 +35,28 @@ public class OrderEntity implements Serializable {
     private String status;
     @ManyToOne (cascade = {CascadeType.ALL})
     private MemberEntity member;
+    @OneToOne (cascade = {CascadeType.ALL})
+    private InvoiceEntity invoice;
     
     public OrderEntity(){}
 
+    public MemberEntity getMember() {
+        return member;
+    }
+
+    public void setMember(MemberEntity member) {
+        this.member = member;
+    }
+
+    public InvoiceEntity getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(InvoiceEntity invoice) {
+        this.invoice = invoice;
+    }
+
+    
     public String getStatus() {
         return status;
     }
