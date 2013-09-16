@@ -51,7 +51,7 @@ public class ViewInfoManagedBean {
     
     public void saveChanges(ActionEvent event) throws ExistException
     {
-        em.updateEmployee(selectedEmployee.getEmployeeId(),selectedEmployee.getEmployeeName(),selectedEmployee.getEmployeeDob(),selectedEmployee.getEmployeeDepartment(),selectedEmployee.getEmployeeSchedule(),selectedEmployee.getRoles(),selectedEmployee.getEmployeeGender(),selectedEmployee.getEmployeePassword());
+        em.updateEmployee(selectedEmployee);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));        
     }
 
