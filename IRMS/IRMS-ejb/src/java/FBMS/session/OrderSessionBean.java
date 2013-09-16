@@ -5,7 +5,6 @@
 package FBMS.session;
 
 import FBMS.entity.OrderEntity;
-import FBMS.entity.RestaurantEntity;
 import FBMS.entity.DishEntity;
 import CRMS.entity.MemberEntity;
 import FBMS.entity.InvoiceEntity;
@@ -17,7 +16,6 @@ import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 /**
  *
  * @author Jieqiong
@@ -94,6 +92,12 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         return true;
     }
     
+    @Override
+    public OrderEntity viewOrder(Long orderId){
+        OrderEntity this_order = em.find(OrderEntity.class,orderId);
+        System.out.println("OrderSessionBean: the order has been found!");
+        return this_order;
+    }
     
 
     @Override

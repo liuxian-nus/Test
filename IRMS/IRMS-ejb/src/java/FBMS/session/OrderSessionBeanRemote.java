@@ -33,4 +33,6 @@ public interface OrderSessionBeanRemote {
 
     boolean placeOrder(OrderEntity order);
     
+    OrderEntity viewOrder(Long orderId);
+    
 }
