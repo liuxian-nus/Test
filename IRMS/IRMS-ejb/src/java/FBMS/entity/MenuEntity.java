@@ -39,6 +39,15 @@ public class MenuEntity implements Serializable {
         menuId = id;
     }
 
+    public OrderEntity getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderEntity order) {
+        this.order = order;
+    }
+
+    
    public Set<DishEntity> getDishes(){
        return dishes;
    }
