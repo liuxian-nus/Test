@@ -37,7 +37,7 @@ public class MemberEntity implements Serializable {
     private double coin;
     @OneToMany(cascade ={CascadeType.ALL},mappedBy = "member")
     private Set <MemberTransactionEntity> MemberTransactions;
-    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "memberTargets")
+    @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "mcMemberTargets")
     private Set <MarketingCampaignEntity> MarketingCampaigns;
 
     public Set<MarketingCampaignEntity> getMarketingCampaigns() {

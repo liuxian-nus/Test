@@ -34,6 +34,7 @@ public class MarketingCampaignEntity implements Serializable {
     private String mcRemarks;
     private String mcPromotionCode;
 
+
     public String getMcPromotionCode() {
         return mcPromotionCode;
     }
