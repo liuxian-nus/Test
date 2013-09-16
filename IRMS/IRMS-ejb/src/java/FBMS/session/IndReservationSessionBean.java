@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Remote;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -20,8 +21,7 @@ import javax.persistence.Query;
  * @author Diana Wang
  */
 @Stateless
-@LocalBean
-public class IndReservationSessionBean {
+public class IndReservationSessionBean implements IndReservationSessionBeanRemote {
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
 
@@ -29,6 +29,7 @@ public class IndReservationSessionBean {
     
     public IndReservationSessionBean(){}
     
+    @Override
     public RestaurantEntity createRestaurantEntity(String restNeighbourhood, String restTypeOfPlace,String restCuisine,String keyword ){
         RestaurantEntity r = new RestaurantEntity();
             r.setRestCuisine(restCuisine);
@@ -38,6 +39,7 @@ public class IndReservationSessionBean {
         return r;
     }
     
+    @Override
     public Set<RestaurantEntity> searchRestaurant(RestaurantEntity r){
         String restNeighbourhood = r.getRestNeighbourhood();
         String restCuisine = r.getRestCuisine();
@@ -83,11 +85,13 @@ public class IndReservationSessionBean {
     }
     
     
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
     
     /*E.1.1.2 View restaurant details*/
+    @Override
     public Set<RestaurantEntity> viewRestaurantDetails(Long restId){
         Query q = em.createQuery("SELECT r FROM RestaurantEntity r");
         Set stateSet = new HashSet<RestaurantEntity>();
@@ -102,6 +106,7 @@ public class IndReservationSessionBean {
     }
     
     /*E.1.1.3 Check Availability*/
+    @Override
     public boolean checkAvailability (RestaurantEntity restaurant, int numberPeople, Date date){
         
         Integer totalNum=0;
@@ -128,6 +133,7 @@ public class IndReservationSessionBean {
     }
     
     
+    @Override
     public boolean makeReservation(Date indReservationDateTime, Long restId,Integer numberPeople, String title, String name, String email,String mobile, String notes ){
         System.out.println("IndReservationSessionBean: make reservation starts!");
             IndReservationEntity ire = new IndReservationEntity();
@@ -153,6 +159,8 @@ public class IndReservationSessionBean {
         System.out.println("IndReservationSessionBean: reservation has been made!");
         return true;
     }
+    
+    @Override
     public boolean confirmReservation(IndReservationEntity ire){
         
         ire.setStatus("Confirmed");

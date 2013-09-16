@@ -25,17 +25,18 @@ public class DishEntity implements Serializable {
     private String dishName;
     private Integer dishQuantity;
     private Integer dishCost;
-    @ManyToOne (cascade ={CascadeType.ALL})
-    private OrderEntity order;
+    @ManyToOne(cascade={CascadeType.ALL})
+    private MenuEntity menu;
+ 
     
     public DishEntity(){}
 
-    public OrderEntity getOrder() {
-        return order;
+    public MenuEntity getMenu() {
+        return menu;
     }
 
-    public void setOrder(OrderEntity order) {
-        this.order = order;
+    public void setMenu(MenuEntity menu) {
+        this.menu = menu;
     }
 
     

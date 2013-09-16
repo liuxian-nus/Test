@@ -5,6 +5,7 @@
 package FBMS.entity;
 
 import CRMS.entity.MemberEntity;
+import FBMS.entity.MenuEntity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -30,9 +31,11 @@ public class OrderEntity implements Serializable {
     private Long orderId;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date orderDateTime;
-    @OneToMany (cascade ={CascadeType.ALL},mappedBy = "order")
-    private Set <DishEntity> Dishes;
-    private String status;
+    //@OneToMany (cascade ={CascadeType.ALL},mappedBy = "order")
+    //private Set <DishEntity> Dishes;
+    @OneToOne (cascade = {CascadeType.ALL},mappedBy="order")
+    private MenuEntity menu;
+    private String status="In Process";
     @ManyToOne (cascade = {CascadeType.ALL})
     private MemberEntity member;
     @OneToOne (cascade = {CascadeType.ALL})
@@ -84,12 +87,12 @@ public class OrderEntity implements Serializable {
     }
 
 
-    public Set<DishEntity> getDishes() {
-        return Dishes;
+    public MenuEntity getMenu() {
+        return menu;
     }
 
-    public void setDishes(Set<DishEntity> Dishes) {
-        this.Dishes = Dishes;
+    public void setMenu(MenuEntity menu) {
+        this.menu = menu;
     }
     
     public Long getId() {
