@@ -6,15 +6,16 @@ package FBMS.session;
 
 import FBMS.entity.IndReservationEntity;
 import FBMS.entity.RestaurantEntity;
-import javax.ejb.Remote;
+
 import java.util.Date;
 import java.util.Set;
+import javax.ejb.Local;
 
 /**
  *
  * @author Administrator
  */
-@Remote
+@Local
 public interface IndReservationSessionBeanRemote {
 
     /*E.1.1.3 Check Availability*/

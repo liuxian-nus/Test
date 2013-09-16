@@ -6,6 +6,7 @@ package servlet;
  */
 
 
+import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import FBMS.session.RestaurantSessionBeanRemote;
 import java.io.IOException;
@@ -67,12 +68,19 @@ public class irmsServlet extends HttpServlet {
             page = page.substring(1);
             
             if("restaurant".equals(page)){
+<<<<<<< Updated upstream
             } else if ("MakeReservation".equals(page)){
                 data=makeReservation(request);
                 request.setAttribute("data", data);
             }
                //data = irm.searchRestaurant(null)
               else{
+=======
+            
+               data = searchRestaurant(request);
+               request.setAttribute("data", data);
+            } else{
+>>>>>>> Stashed changes
                 page="Error";
             }
             dispatcher=servletContext.getNamedDispatcher(page);
@@ -86,6 +94,7 @@ public class irmsServlet extends HttpServlet {
         }
     }
     
+<<<<<<< Updated upstream
     private ArrayList makeReservation(HttpServletRequest request){
         DateFormat formatter =new SimpleDateFormat("dd/MM/yy");
         ArrayList reservations=new ArrayList();
@@ -93,6 +102,8 @@ public class irmsServlet extends HttpServlet {
         
     }
     
+=======
+>>>>>>> Stashed changes
             
             /* TODO output your page here. You may use following sample code. */
             /*
@@ -110,7 +121,7 @@ public class irmsServlet extends HttpServlet {
             out.close();
         }*/
     
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -152,4 +163,18 @@ public class irmsServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private ArrayList searchRestaurant(HttpServletRequest request) {
+        
+        ArrayList al = new ArrayList();
+        String restNeighbourhood = request.getParameter("restNeighbourhood");
+        String restTypeOfPlace   = request.getParameter("restTypeOfPlace");
+        String restCuisine       = request.getParameter("restCuisine");
+        String keyword           = request.getParameter("keyword");
+        
+        RestaurantEntity re = indReservationSessionBean.createRestaurantEntity(restNeighbourhood, restTypeOfPlace, restCuisine, keyword);
+               
+        return al;
+        //To change body of generated methods, choose Tools | Templates.
+    }
 }
