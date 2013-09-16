@@ -10,7 +10,10 @@ import FBMS.session.IndReservationSessionBeanRemote;
 import FBMS.session.RestaurantSessionBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -64,9 +67,12 @@ public class irmsServlet extends HttpServlet {
             page = page.substring(1);
             
             if("restaurant".equals(page)){
-            
+            } else if ("MakeReservation".equals(page)){
+                data=makeReservation(request);
+                request.setAttribute("data", data);
+            }
                //data = irm.searchRestaurant(null)
-            } else{
+              else{
                 page="Error";
             }
             dispatcher=servletContext.getNamedDispatcher(page);
@@ -80,7 +86,13 @@ public class irmsServlet extends HttpServlet {
         }
     }
     
-    private ArrayList 
+    private ArrayList makeReservation(HttpServletRequest request){
+        DateFormat formatter =new SimpleDateFormat("dd/MM/yy");
+        ArrayList reservations=new ArrayList();
+        Date indReservationDateTime=formatter.parse(request.getParameter("indReservationDateTime"));
+        
+    }
+    
             
             /* TODO output your page here. You may use following sample code. */
             /*
