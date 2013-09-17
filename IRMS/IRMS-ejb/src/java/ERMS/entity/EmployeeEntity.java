@@ -36,6 +36,7 @@ public class EmployeeEntity implements Serializable {
     private boolean isFirstTimeLogin = true;
     private String securityQuestion;
     private String answer;
+    private String employeeEmail; 
     
     @OneToMany(targetEntity = RoleEntity.class, cascade = {CascadeType.MERGE})
     private List<RoleEntity> roles = new ArrayList<RoleEntity>();
@@ -147,6 +148,14 @@ public class EmployeeEntity implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+    
+      public String getEmployeeEmail() {
+        return employeeEmail;
+    }
+
+    public void setEmployeeEmail(String employeeEmail) {
+        this.employeeEmail = employeeEmail;
     }
 
     
