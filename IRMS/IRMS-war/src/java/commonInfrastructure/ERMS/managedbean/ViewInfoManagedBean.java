@@ -27,7 +27,7 @@ public class ViewInfoManagedBean {
     @EJB
     private EmployeeEntity selectedEmployee;
     private boolean editMode;
-    private Long id;
+    private String employeeId;
     
     /** Creates a new instance of ViewInfoManagedBean */
     public ViewInfoManagedBean() {
@@ -40,13 +40,13 @@ public class ViewInfoManagedBean {
     
     public EmployeeEntity getEmployees() throws ExistException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        Long loginId = (Long) request.getSession().getAttribute("userId");
+        String loginId = (String) request.getSession().getAttribute("userId");
         return em.getEmployeeById(loginId);
     }
 
     public void deleteEmployee(ActionEvent event) throws ExistException {
-        setId((Long)event.getComponent().getAttributes().get("code1"));
-        getEm().removeEmployee(getId());
+        setEmployeeId((String) event.getComponent().getAttributes().get("code1"));
+        getEm().removeEmployee(getEmployeeId());
     }
     
     public void saveChanges(ActionEvent event) throws ExistException
@@ -75,11 +75,11 @@ public class ViewInfoManagedBean {
         this.editMode = editMode;
     }
 
-    public Long getId() {
-        return id;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 }
