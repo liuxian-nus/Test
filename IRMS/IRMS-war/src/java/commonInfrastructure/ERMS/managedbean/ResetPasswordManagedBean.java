@@ -6,6 +6,7 @@ package commonInfrastructure.ERMS.managedbean;
 
 import ERMS.entity.EmployeeEntity;
 import ERMS.session.EPasswordHashSessionBean;
+import ERMS.session.EmailSessionBean;
 import ERMS.session.EmployeeSessionRemote;
 import Exception.ExistException;
 import java.io.IOException;
