@@ -5,6 +5,7 @@
 package commonInfrastructure.ERMS.managedbean;
 
 import ERMS.entity.EmployeeEntity;
+import ERMS.session.EmployeeSessionBean;
 import ERMS.session.EmployeeSessionRemote;
 import Exception.ExistException;
 import javax.ejb.EJB;
@@ -23,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 @ViewScoped
 public class ViewInfoManagedBean {
     @EJB
-    private EmployeeSessionRemote em;
-    @EJB
+    private EmployeeSessionBean em;
+  
     private EmployeeEntity selectedEmployee;
     private boolean editMode;
     private String employeeId;
@@ -41,6 +42,7 @@ public class ViewInfoManagedBean {
     public EmployeeEntity getEmployees() throws ExistException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String loginId = (String) request.getSession().getAttribute("userId");
+       
         return em.getEmployeeById(loginId);
     }
 
@@ -55,11 +57,11 @@ public class ViewInfoManagedBean {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));        
     }
 
-    public EmployeeSessionRemote getEm() {
+    public EmployeeSessionBean getEm() {
         return em;
     }
 
-    public void setEm(EmployeeSessionRemote em) {
+    public void setEm(EmployeeSessionBean em) {
         this.em = em;
     }
 
