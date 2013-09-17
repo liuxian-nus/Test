@@ -20,14 +20,13 @@
 
        <h:form id ="logIn" rendered ="#{indexManagementManagedBean.loginRender}">
             <p:commandButton value="Sign in" actionListener ="#{loginManagementManagedBean.goLogin}"/>
-            
             <h:outputText value="#{indexManagementManagedBean.message}" style="position:relative;float:right;margin-right:20px;margin-top:5px;" />
         </h:form>
 
-        <!--<h:form id="logOut" rendered ="#{indexManagementManagedBean.logoutRender}" >
+        <h:form id="logOut" rendered ="#{indexManagementManagedBean.logoutRender}" >
             <p:commandButton value= "Sign out" actionListener ="#{logoutManagementManagedBean.doLogout}"/>
             <h:outputText value="#{indexManagementManagedBean.message}" style="position:relative;float:right;margin-right:20px;margin-top:5px;" />
-        </h:form>-->
+        </h:form>
     </ui:define>
     
 </ui:composition>
