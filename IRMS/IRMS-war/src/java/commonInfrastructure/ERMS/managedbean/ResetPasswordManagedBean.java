@@ -29,13 +29,13 @@ public class ResetPasswordManagedBean {
     private EmployeeSessionRemote employeeSessionRemote;
     @EJB
     private EPasswordHashSessionBean passowordHashSessionBean;
-//    @EJB
-//    private EmailSessionBean emailSessionBean;
+    @EJB
+    private EmailSessionBean emailSessionBean;
     private Long employeeId;
     private String employeeDob;
     private EmployeeEntity employee;
     private String securityQuestion;
-    private String ans;
+    private String answer;
 
     public ResetPasswordManagedBean() {
     }
@@ -47,7 +47,7 @@ public class ResetPasswordManagedBean {
 
         } else {
 
-            if (employee.getEmployeeDob().toString().equals(employeeDob) && employee.getSecurityQuestion().equals(securityQuestion) && employee.getAnswer().equals(ans)) {
+            if (employee.getEmployeeDob().toString().equals(employeeDob) && employee.getSecurityQuestion().equals(securityQuestion) && employee.getAnswer().equals(answer)) {
                 //send email to private email
                 String uuid = UUID.randomUUID().toString();
                 String[] sArray = uuid.split("-");
@@ -55,8 +55,8 @@ public class ResetPasswordManagedBean {
                 employee.setEmployeePassword(initialPwd);
                 employee.setEmployeePassword(passowordHashSessionBean.hashPassword(employee.getEmployeePassword()));
                 employee.setIsFirstTimeLogin(true);
-//                employeeSessionRemote.updateEmployee(employee);
-//                emailSessionBean.emailInitialPassward(employee.getPersonalEmail(), initialPwd); //send email
+                employeeSessionRemote.updateEmployee(employee);
+                emailSessionBean.emailInitialPassward(employee.getEmployeeEmail(), initialPwd); //send email
                   FacesContext.getCurrentInstance().getExternalContext().redirect("resetPasswordResult.xhtml");
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Verification Failed.", ""));
@@ -108,12 +108,12 @@ public class ResetPasswordManagedBean {
         this.securityQuestion = securityQuestion;
     }
 
-    public String getAns() {
-        return ans;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setAns(String ans) {
-        this.ans = ans;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }
 
