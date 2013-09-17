@@ -4,15 +4,21 @@
  */
 package commonInfrastructure.menu.managedbean;
 
+import ERMS.entity.EmployeeEntity;
 import ERMS.session.EmployeeSessionBean;
+import Exception.ExistException;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,40 +29,47 @@ import org.primefaces.model.MenuModel;
 public class Menu1ManagedBean implements Serializable {
 
     private MenuModel model;
-    //@EJB
-    //EmployeeSessionBean employee;
+    @EJB
+    EmployeeSessionBean employee;
 
     public Menu1ManagedBean() {
     }
 
-    public MenuModel getModel() {
-        
+    public MenuModel getModel() throws ExistException {
+
         model = new DefaultMenuModel();
 
-//        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-//        Boolean isLogin = (Boolean) request.getSession().getAttribute("isLogin");
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        Boolean isLogin = (Boolean) request.getSession().getAttribute("isLogin");
+        
+        if (isLogin==null){
+            isLogin = false;
+        }
+        
+        System.out.println("isLogin value = "+isLogin);
+        
+        if (isLogin == true) {
+            String loginId = (String) request.getSession().getAttribute("userId");
+            EmployeeEntity user = employee.getEmployeeById(loginId);
+            System.out.println("Employee ID = "+user.getEmployeeId());
+            List<String> userType;
+            userType = new ArrayList<String>();
 
-
-//        if (isLogin == true) {
-//            Long loginId = (Long) request.getSession().getAttribute("userId");
-//            EmployeeEntity user = employee.getEmployeeById(loginId);
-//            List<String> userType = new ArrayList<String>();
-//
-//            for (int i=0;i<user.getRoles().size();i++){
-//                userType.add(user.getRoles().get(i).getRoleName());
-//            }
+            for (int i = 0; i < user.getRoles().size(); i++) {
+                userType.add(user.getRoles().get(i).getRoleName());
+            }
 
             //First submenu
             Submenu submenu = new Submenu();
             submenu.setLabel("My Menu");
 
-            
+
             MenuItem item = new MenuItem();
             item.setValue("Home");
             item.setUrl("/");
             item.setIcon("ui-icon ui-icon-home");
             submenu.getChildren().add(item);
-            
+
             item = new MenuItem();
             item.setValue("My Info");
             item.setUrl("/utility/ViewInfo.xhtml");
@@ -81,7 +94,9 @@ public class Menu1ManagedBean implements Serializable {
             item.setIcon("ui-icon ui-icon-mail-closed");
             submenu.getChildren().add(item);
 
-            model.addSubmenu(submenu);    
+            model.addSubmenu(submenu);
+
+        }
         return model;
-    }  
+    }
 }
