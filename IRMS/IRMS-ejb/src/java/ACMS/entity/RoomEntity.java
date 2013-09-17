@@ -12,6 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -23,7 +24,6 @@ public class RoomEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private int roomId;
-    private double roomPrice;
     private String roomType;
     private String roomStatus = "available"; //reserved, occupied or available
     private int roomHotel;
@@ -34,10 +34,12 @@ public class RoomEntity implements Serializable {
     private Date checkInDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date checkOutDate;
+    private double roomServiceCharge = 0;
     @ManyToMany(cascade={CascadeType.PERSIST})
     private Set<RoomServiceEntity> roomService = new HashSet<RoomServiceEntity> ();
-    private double roomServiceCharge = 0;
-
+    @ManyToOne(cascade={CascadeType.PERSIST})
+    private PriceEntity roomPrice = new PriceEntity();
+   
     public int getRoomId() {
         return roomId;
     }
@@ -46,11 +48,11 @@ public class RoomEntity implements Serializable {
         this.roomId = roomHotel*1000 + roomLevel*100 + roomNo;
     }
 
-    public double getRoomPrice() {
+    public PriceEntity getRoomPrice() {
         return roomPrice;
     }
 
-    public void setRoomPrice(double roomPrice) {
+    public void setRoomPrice(PriceEntity roomPrice) {
         this.roomPrice = roomPrice;
     }
 
