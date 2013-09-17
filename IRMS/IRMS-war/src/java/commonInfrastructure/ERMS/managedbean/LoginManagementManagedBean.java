@@ -66,7 +66,7 @@ public class LoginManagementManagedBean {
                 }
 
                 request.getSession().setAttribute("isLogin", true);
-                Long systemUserId = systemUser.getEmployeeId();
+                String systemUserId = systemUser.getEmployeeId();
                 request.getSession().setAttribute("userId", systemUserId);
 
                 if (employeeManager.getEmployeeById(systemUserId).isFirstTimeLogin() == true) { //first time log in
