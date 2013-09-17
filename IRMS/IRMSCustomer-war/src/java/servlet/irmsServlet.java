@@ -12,9 +12,11 @@ import FBMS.session.RestaurantSessionBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -68,19 +70,14 @@ public class irmsServlet extends HttpServlet {
             page = page.substring(1);
             
             if("restaurant".equals(page)){
-<<<<<<< Updated upstream
+                data= searchRestaurant(request);
+                request.setAttribute("data", data);
+                //data = irm.searchRestaurant(null)
             } else if ("MakeReservation".equals(page)){
                 data=makeReservation(request);
                 request.setAttribute("data", data);
             }
-               //data = irm.searchRestaurant(null)
-              else{
-=======
-            
-               data = searchRestaurant(request);
-               request.setAttribute("data", data);
-            } else{
->>>>>>> Stashed changes
+             else{
                 page="Error";
             }
             dispatcher=servletContext.getNamedDispatcher(page);
@@ -94,16 +91,14 @@ public class irmsServlet extends HttpServlet {
         }
     }
     
-<<<<<<< Updated upstream
-    private ArrayList makeReservation(HttpServletRequest request){
+    private ArrayList makeReservation(HttpServletRequest request) throws ParseException{
         DateFormat formatter =new SimpleDateFormat("dd/MM/yy");
-        ArrayList reservations=new ArrayList();
+        ArrayList al=new ArrayList();
         Date indReservationDateTime=formatter.parse(request.getParameter("indReservationDateTime"));
         
+        return al;
+        
     }
-    
-=======
->>>>>>> Stashed changes
             
             /* TODO output your page here. You may use following sample code. */
             /*
@@ -173,7 +168,13 @@ public class irmsServlet extends HttpServlet {
         String keyword           = request.getParameter("keyword");
         
         RestaurantEntity re = indReservationSessionBean.createRestaurantEntity(restNeighbourhood, restTypeOfPlace, restCuisine, keyword);
-               
+        Set <RestaurantEntity> res =   indReservationSessionBean.searchRestaurant(re);  
+        
+        al.addAll(res);
+        al.add("Restaurant Search has been performed!");
+        
+        System.out.println("irmsServlet: restaurant search has been completed!");
+
         return al;
         //To change body of generated methods, choose Tools | Templates.
     }
