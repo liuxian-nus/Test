@@ -67,7 +67,7 @@ public class ReceiverInfoSessionBean {
         return query.getResultList();
     }
     
-    public List<ReceiverInfoEntity> getRecInfoBySender(Long id){
+    public List<ReceiverInfoEntity> getRecInfoBySender(String id){
         Query query = em.createQuery("SELECT s1 FROM ReceiverInfoEntity s1 WHERE s1.senderId = :inRecId");
         query.setParameter("inRecId", id);
         List<ReceiverInfoEntity> recInfo = null;
@@ -83,7 +83,7 @@ public class ReceiverInfoSessionBean {
         
     }
     
-    public List<MessageEntity> getMessageBySender(Long id){
+    public List<MessageEntity> getMessageBySender(String id){
         List<ReceiverInfoEntity> recInfo = getRecInfoBySender(id);
         int i = 0;
         List<MessageEntity> msg = new ArrayList<MessageEntity>();
@@ -94,7 +94,7 @@ public class ReceiverInfoSessionBean {
         return msg;
     }
 
-    public List<ReceiverInfoEntity> getRecInfoByReceiver(Long id){
+    public List<ReceiverInfoEntity> getRecInfoByReceiver(String id){
         Query query = em.createQuery("SELECT s1 FROM ReceiverInfoEntity s1 WHERE s1.receiverId = :inRecId");
         query.setParameter("inRecId", id);
         List<ReceiverInfoEntity> recInfo = null;
@@ -109,7 +109,7 @@ public class ReceiverInfoSessionBean {
         return recInfo;
     }
     
-    public List<MessageEntity> getMessageByReceiver(Long id){
+    public List<MessageEntity> getMessageByReceiver(String id){
         List<ReceiverInfoEntity> recInfo = getRecInfoByReceiver(id);
         List<MessageEntity> msg = new ArrayList<MessageEntity>();
         for (int i=0;i<recInfo.size();i++) {

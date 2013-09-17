@@ -26,18 +26,18 @@ public class FunctionalityEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
-    private Long id;
+    private Long functionalityId;
     private String funcName;
     private String funcId;
     /*@ManyToOne(targetEntity=Role.class,cascade={CascadeType.ALL},fetch=FetchType.EAGER)
     private Role roleEntity;
     */
-    public Long getId() {
-        return id;
+    public Long getFunctionalityId() {
+        return functionalityId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setFunctionalityId(Long functionalityId) {
+        this.functionalityId = functionalityId;
     }
 
     /**

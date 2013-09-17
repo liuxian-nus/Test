@@ -22,8 +22,8 @@ public class ReceiverInfoEntity implements Serializable {
     private Long receiveMsgId;
     private boolean deleted;
     private boolean opened;
-    private Long receiverId;
-    private Long senderId;
+    private String receiverId;
+    private String senderId;
     @ManyToOne (targetEntity = MessageEntity.class)
     private MessageEntity message;
 
@@ -91,28 +91,28 @@ public class ReceiverInfoEntity implements Serializable {
     /**
      * @return the senderId
      */
-    public Long getSenderId() {
+    public String getSenderId() {
         return senderId;
     }
 
     /**
      * @param senderId the senderId to set
      */
-    public void setSenderId(Long senderId) {
+    public void setSenderId(String senderId) {
         this.senderId = senderId;
     }
 
     /**
      * @return the receiverId
      */
-    public Long getReceiverId() {
+    public String getReceiverId() {
         return receiverId;
     }
 
     /**
      * @param receiverId the receiverId to set
      */
-    public void setReceiverId(Long receiverId) {
+    public void setReceiverId(String receiverId) {
         this.receiverId = receiverId;
     }
 

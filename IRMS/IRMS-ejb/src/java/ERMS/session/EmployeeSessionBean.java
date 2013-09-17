@@ -36,7 +36,7 @@ public class EmployeeSessionBean {
         return employee;
     }
     
-    public boolean removeEmployee(Long employeeId)throws ExistException {
+    public boolean removeEmployee(String employeeId)throws ExistException {
         employee = em.find(EmployeeEntity.class, employeeId);
         if(employee == null) {
             throw new ExistException("Employee does not exist!");
@@ -45,7 +45,7 @@ public class EmployeeSessionBean {
         return true;
     } 
     
-    public boolean login (Long employeeId, String employeePassword){
+    public boolean login (String employeeId, String employeePassword){
     
         employee = em.find(EmployeeEntity.class, employeeId);
         System.out.println("logging in....");
@@ -65,7 +65,7 @@ public class EmployeeSessionBean {
            }
         }
     //泥煤的不要再报错了！再来！
-    public EmployeeEntity getEmployeeById(Long employeeId) throws ExistException{
+    public EmployeeEntity getEmployeeById(String employeeId) throws ExistException{
         employee = em.find(EmployeeEntity.class, employeeId);
         if(employee == null)  throw new ExistException("Employee does not exist!");
         return employee;

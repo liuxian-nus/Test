@@ -41,7 +41,7 @@ public class MessageSessionBean {
         return message;
     }
     
-    public void addPrivateMessage(Long senderId,Long receiverId,String title,String msg,String type)
+    public void addPrivateMessage(String senderId,String receiverId,String title,String msg,String type)
     {
         System.out.println("MessageSessionBean-->creating a new message....");
         MessageEntity message = new MessageEntity();
@@ -77,7 +77,7 @@ public class MessageSessionBean {
         em.persist(message);
     }
     
-    public void addSystemMessage(Long senderId,List<Long> idList,String title,String msg,String type)
+    public void addSystemMessage(String senderId,List<String> idList,String title,String msg,String type)
     {
         System.out.println("MessageSessionBean-->generating a new system message....");
         MessageEntity message = new MessageEntity();
@@ -124,9 +124,9 @@ public class MessageSessionBean {
     }
     
 
-    public void removeMessage(Long MessageId, Long receiverId)throws ExistException
+    public void removeMessage(Long messageId, String receiverId)throws ExistException
     {
-        MessageEntity message = em.find(MessageEntity.class, MessageId);
+        MessageEntity message = em.find(MessageEntity.class, messageId);
 //        List<ReceiverInfo> infoList = message.getRecInfo();
         if(message == null) {
             throw new ExistException("Message does not exist!");

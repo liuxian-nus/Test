@@ -23,14 +23,14 @@ public interface EmployeeSessionRemote {
     
     Set<EmployeeEntity> getAllEmployees() throws NoResultException;
     
-    boolean login(Long employeeId, String employeePassword);
+    boolean login(String employeeId, String employeePassword);
     
     @Remove
     void remove();
     
-    boolean removeEmployee(Long employeeId) throws ExistException;
+    boolean removeEmployee(String employeeId) throws ExistException;
     
-    public EmployeeEntity getEmployeeById(Long employeeId) throws ExistException;
+    public EmployeeEntity getEmployeeById(String employeeId) throws ExistException;
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     boolean updateEmployee(EmployeeEntity employee) throws ExistException;
     

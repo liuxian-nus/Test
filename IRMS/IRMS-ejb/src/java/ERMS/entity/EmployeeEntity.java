@@ -25,7 +25,7 @@ public class EmployeeEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long employeeId;
+    private String employeeId;
     private String employeeName;
     private String employeeGender;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -118,11 +118,11 @@ public class EmployeeEntity implements Serializable {
     }
     
 
-    public Long getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 
