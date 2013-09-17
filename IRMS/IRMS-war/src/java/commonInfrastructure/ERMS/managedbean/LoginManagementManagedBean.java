@@ -47,24 +47,24 @@ public class LoginManagementManagedBean {
 
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-
-        EmployeeEntity systemUser = employeeManager.getEmployeeById(getEmployeeId());
-        System.out.println("HELLO,"+ employeeId+"LOGIN HERE!!!");
+    
+        EmployeeEntity systemUser = employeeManager.getEmployeeById(employeeId);
+        System.out.println("1");
         if (systemUser == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid EmployeeId", ""));
         } else {
-            setEmployeePassword(passwordHashSessionBean.hashPassword(employeeId + getEmployeePassword()));
-            
+           // setEmployeePassword(passwordHashSessionBean.hashPassword(employeeId + getEmployeePassword()));
+System.out.println("2");
             //Valid login
             if (systemUser.getEmployeePassword().equals(getEmployeePassword())) {
                 String previousPage = "";
 
                 if (request.getSession().getAttribute("lastAction") == null) {
                     previousPage = "/index.xhtml";
+                    
                 } else {
                     previousPage = request.getSession().getAttribute("lastAction").toString();
                 }
-
                 request.getSession().setAttribute("isLogin", true);
                 String systemUserId = systemUser.getEmployeeId();
                 request.getSession().setAttribute("userId", systemUserId);
@@ -73,6 +73,7 @@ public class LoginManagementManagedBean {
 
                     FacesContext.getCurrentInstance().getExternalContext().getFlash().put("employeeFirstTimeLogin", systemUser);
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/IRMS-war/commonInfrastructure/firstTimeLoginPwdChange.xhtml");
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Welcome", "<p></p>Welcome login"));
                 } else {//not first time login
                     FacesContext.getCurrentInstance().getExternalContext().getFlash().put("systemUserId", systemUserId);
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/IRMS-war" + previousPage);
