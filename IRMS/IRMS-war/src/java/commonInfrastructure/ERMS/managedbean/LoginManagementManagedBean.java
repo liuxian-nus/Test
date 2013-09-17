@@ -30,12 +30,12 @@ public class LoginManagementManagedBean {
     EmployeeSessionBean employeeManager;
     @EJB
     EPasswordHashSessionBean passwordHashSessionBean;
-    private Long employeeId;
+    private String employeeId;
     private String employeePassword;
 
 //private String message;
     public LoginManagementManagedBean() {
-        employeeId = null;
+        employeeId = "";
         employeePassword = "";
     }
 
@@ -49,6 +49,7 @@ public class LoginManagementManagedBean {
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
         EmployeeEntity systemUser = employeeManager.getEmployeeById(getEmployeeId());
+        System.out.println("HELLO,"+ employeeId+"LOGIN HERE!!!");
         if (systemUser == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid EmployeeId", ""));
         } else {
@@ -86,11 +87,11 @@ public class LoginManagementManagedBean {
         FacesContext.getCurrentInstance().getExternalContext().redirect("./commonInfrastructure/login.xhtml");
     }
 
-    public Long getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 
