@@ -14,40 +14,52 @@
                     <p:dataTable id="employees" value="#{viewInfoManagedBean.getEmployees()}" var="employeeList">
 
                         <p:column headerText="name">
-                            <h:outputText value="#{employeeList.name}"/>
+                            <h:outputText value="#{employeeList.employeeName}"/>
+                        </p:column>
+                        <p:column headerText="Department">
+                            <h:outputText value="#{employeeList.employeeDepartment}"/>
+                        </p:column>
+                        <p:column headerText="Gender">
+                            <h:outputText value="#{employeeList.employeeGender}"/>
                         </p:column>
 
                         <p:column style="width:40px">  
-                            <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit">  
+                            <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
                                 <f:setPropertyActionListener value="#{employeeList}" target="#{viewInfoManagedBean.selectedEmployee}" />  
                                 <f:setPropertyActionListener value="#{true}" target="#{viewInfoManagedBean.editMode}" />  
                             </p:commandButton> 
                         </p:column>  
+
                     </p:dataTable>
 
-                    
+
                     <p:dialog header="Edit Password" widgetVar="pwDialog" resizable="false" id="pwDlg"
                               showEffect="fade" hideEffect="explode" modal="ture" width="500">
                     </p:dialog>
 
                     <p:dialog header="Edit Employee" widgetVar="carDialog" resizable="false" id="carDlg"  
-                              showEffect="fade" hideEffect="explode" modal="true" width="500">  
+                              showEffect="fade" hideEffect="explode" modal="false" width="500">  
 
                         <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
                             <h:outputText value="Name" />  
                             <h:panelGroup>  
-                                <h:outputText value="#{viewInfoManagedBean.selectedEmployee.employeeName}" style="font-weight:bold" rendered="#{!viewInfoManagedBean.editMode}"/>  
-                                <p:inputText id="name"   requiredMessage="Address cannot be empty" value="#{viewInfoManagedBean.selectedEmployee.employeeName}" rendered="#{viewInfoManagedBean.editMode}" required="true" label="Name"/>  
+                                <h:outputText value="#{viewInfoManagedBean.selectedEmployee.employeeName}" style="font-weight:bold" rendered="#{!viewInfoManagedBean.editMode}"/> 
+                                <p:inputText id="name"   requiredMessage="Name cannot be empty" value="#{viewInfoManagedBean.selectedEmployee.employeeName}" rendered="#{viewInfoManagedBean.editMode}" required="true" label="Name"/>  
                                 <p:message for="name"/>
-                            </h:panelGroup>  
+                            </h:panelGroup>
+                            <h:outputText value="Department" /> 
+                            <h:panelGroup>
+                                <h:outputText value="#{viewInfoManagedBean.selectedEmployee.employeeDepartment}" style="font-weight:bold" rendered="#{!viewInfoManagedBean.editMode}"/>
+                                <p:inputText id="department"   requiredMessage="Department cannot be empty" value="#{viewInfoManagedBean.selectedEmployee.employeeDepartment}" rendered="#{viewInfoManagedBean.editMode}" required="true" label="Department"/>  
+                                <p:message for="department"/>
+                            </h:panelGroup>
 
 
                             <f:facet name="footer">  
                                 <p:outputPanel rendered="#{viewInfoManagedBean.editMode}" layout="block" style="text-align:right">  
                                     <p:commandButton value="Save" update="employees msgs" actionListener="#{viewInfoManagedBean.saveChanges}"   
-                                                     oncomplete="carDialog.hide()" image="ui-icon ui-icon-check"/>  
-                                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" image="ui-icon ui-icon-close"/>  
-
+                                                     oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
+                                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
                                 </p:outputPanel>  
                             </f:facet>  
                         </h:panelGrid>  
