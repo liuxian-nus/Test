@@ -32,7 +32,7 @@ public class ResetPasswordManagedBean {
     private EPasswordHashSessionBean passowordHashSessionBean;
     @EJB
     private EmailSessionBean emailSessionBean;
-    private Long employeeId;
+    private String employeeId;
     private String employeeDob;
     private EmployeeEntity employee;
     private String securityQuestion;
@@ -77,11 +77,11 @@ public class ResetPasswordManagedBean {
         employee = employeeSessionRemote.getEmployeeById(employeeId);
     }
 
-    public Long getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 
