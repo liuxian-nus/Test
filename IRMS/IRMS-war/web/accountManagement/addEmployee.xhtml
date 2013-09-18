@@ -27,17 +27,13 @@
                 <h:panelGrid columns="2" >  
                     <h:outputText value="Name*:"/>
                     <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{addEmployeeManagedBean.employee.employeeName}"/>
-                                        
 
-                    <h:outputLabel for="pwd1" value="Password*:" />  
-                    <p:password id="pwd1" value="#{addEmployeeManagedBean.employee.employeePassword}" match="pwd2" label="Password 1" feedback="true" requiredMessage="Password cannot be empty" required="true"/>  
-
-                    <h:outputLabel for="pwd2" value="Verify your password*: " />  
-                    <p:password id="pwd2" value="#{addEmployeeManagedBean.employee.employeePassword}" feedback="false" label="Password 2" required="true" requiredMessage="Please verify your password" /> 
+                    <h:outputText value="ID*:"/>
+                    <h:inputText required ="true" requiredMessage="ID cannot be empty" value="#{addEmployeeManagedBean.employee.employeeId}"/>
 
                     <h:outputText value="DOB(DD-MM-YYYY)*:"/>
-                    <p:inputMask required ="true" requiredMessage="DOB cannot be empty" value="#{addEmployeeManagedBean.employee.employeeDob}" mask="99-99-9999"/>
-
+                    <p:calendar pattern="yyyy-MM-dd" yearRange="-70" showButtonPanel="true" navigator="true" id="customCal" value="#{addEmployeeManagedBean.employee.employeeDob}" /> 
+                   
                     <h:outputText value="Gender*:"/>
                     <p:selectOneRadio id="options" value="#{addEmployeeManagedBean.employee.employeeGender}" requiredMessage="Gender is required for emloyee's initial password receiving">  
                         <f:selectItem itemLabel="Female" itemValue="Female" />  
@@ -54,9 +50,8 @@
                         <f:selectItem itemLabel="Entertainmant" itemValue="Entertainment" />  
                         <f:selectItem itemLabel="Attraction" itemValue="Attraction" /> 
                     </h:selectOneMenu> 
-
-                    <h:outputText value="Posistion:"/>
-                    <h:selectOneMenu value ="#{addEmployeeManagedBean.employee.employeePosition}" required ="true" requiredMessage="Position cannot be empty">
+                  <!--  <h:outputText value="Posistion:"/>
+                    <h:selectOneMenu value ="" required ="true" requiredMessage="Position cannot be empty">
                         <f:selectItem itemLabel="Select Position" itemValue="" />  
                         <f:selectItem itemLabel="Entertainment Show Manager" itemValue="ShowManager" />  
                         <f:selectItem itemLabel="Entertainment Ticket Front Desk" itemValue="TicketFrontDest" />  
@@ -71,19 +66,16 @@
                         <f:selectItem itemLabel="Hotel Service Manager" itemValue="HServiceManager" />  
                         <f:selectItem itemLabel="CRM Admin" itemValue="CRMAdmin" /> 
                         <f:selectItem itemLabel="System Administration" itemValue="SystemAdministration" /> 
-                    </h:selectOneMenu> 
-                    
+                    </h:selectOneMenu> -->
                     <h:outputText value="Schedule:"/>
                     <h:selectOneRadio value ="#{addEmployeeManagedBean.employee.employeeSchedule}" required ="true" requiredMessage="Schedule cannot be empty">
                         <f:selectItem itemLabel="Morning Shift" itemValue="1" />  
                         <f:selectItem itemLabel="Afternoon Shift" itemValue="2" />  
                         <f:selectItem itemLabel="Night Shift" itemValue="3" />  
                     </h:selectOneRadio> 
-                    
+
                 </h:panelGrid>
-                <!--<h:outputText value ="#{addEmplpyeeManagedBean.msg}"/>-->
                 <p:commandButton value="Save" ajax="true"  actionListener="#{addEmployeeManagedBean.saveNewEmployee}"/>
-               <!-- <p:commandButton value="Add More Employees"    actionListener="#{addEmployeeManagedBean.oneMore}" rendered="#{addEmployeeManagedBean.show}"/> -->
             </p:panel>
         </h:form>
     </ui:define>
