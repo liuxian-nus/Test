@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
  * @author liuxian
  */
 @Stateless
-public class RoomSessionBean implements RoomSessionRemote {
+public class RoomSessionBean {
     @PersistenceContext
     private EntityManager em ;
     
@@ -47,7 +47,7 @@ public class RoomSessionBean implements RoomSessionRemote {
     
     //room include or dis-include breakfast 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    @Override
+
     public RoomEntity updateRoom(int roomId,boolean hasBreakfast)throws ExistException{
         room = em.find(RoomEntity.class, roomId);
         if(room==null) throw new ExistException ("RoomSessionBean-->ExistException-->Member doesn't exist!");
@@ -61,7 +61,7 @@ public class RoomSessionBean implements RoomSessionRemote {
     
     //add new charged service
      @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    @Override
+
      public RoomServiceEntity addRoomService(int roomId, String roomServiceName)throws ExistException{
          room = em.find(RoomEntity.class, roomId);
          roomService = em.find(RoomServiceEntity.class, roomServiceName);
@@ -75,7 +75,7 @@ public class RoomSessionBean implements RoomSessionRemote {
     }
     
     //member check-in
-    @Override
+
     public RoomEntity checkIn(int roomId,Date checkInDate, Date checkOutDate) throws RoomException {
         room = em.find(RoomEntity.class, roomId);
         if("reserved".equals(room.getRoomStatus())) System.out.println("RoomSessionBean-->Warning! the room is reserved!");
@@ -87,8 +87,7 @@ public class RoomSessionBean implements RoomSessionRemote {
         return room;
     }
     
-    //hotel room check-out
-    @Override
+
     public void checkOut(int roomId) throws RoomException{
         room = em.find(RoomEntity.class, roomId);
         if(room.getRoomServiceCharge()!= 0) throw new RoomException ("RoomSessionBean-->RoomException-->There is uncleared room service charge!");

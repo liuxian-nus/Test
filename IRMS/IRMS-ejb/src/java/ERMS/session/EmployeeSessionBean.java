@@ -71,14 +71,25 @@ public class EmployeeSessionBean {
         return employee;
     }
     
-    public List<EmployeeEntity> getAllEmployees() throws NoResultException{
+    public List<EmployeeEntity> getAllEmployees() throws ExistException{
         Query q = em.createQuery("SELECT m FROM EmployeeEntity m");
         List employeeList = new ArrayList<EmployeeEntity>();
          for (Object o: q.getResultList()) { 
             EmployeeEntity m = (EmployeeEntity) o; 
             employeeList.add(m); 
         } 
+        if(employee == null)  throw new ExistException("Employee database is empty!");
         return employeeList;     
+    }
+    
+     public List<EmployeeEntity> getEmployeeByName(String employeeName)throws ExistException
+    {
+        Query query = em.createQuery("SELECT u FROM EmployeeEntity u WHERE u.name = :inEmployeeName");
+        query.setParameter("inEmployeeName", employeeName);
+        List<EmployeeEntity> employee = null;
+        employee = query.getResultList();
+        if(employee == null)  throw new ExistException("Employee does not exist!");
+        return employee;
     }
     
      public boolean updateEmployee(EmployeeEntity employee)
