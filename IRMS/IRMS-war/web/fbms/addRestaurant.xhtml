@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="addRest" header="AddRestaurant" style="height:495px;">
+                <div style="margin-top:100px;margin-left:350px;">
+                    <h:panelGrid id="AddRestaurant" columns="6">
+                        <h:outputText value="Restaurant Name: "/>
+                        <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{addRestaurantManagedBean.restaurant.restName}"/>
+                        <br/>
+                        <h:outputText value="Restaurant Type of Place: "/>
+                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restTypeOfPlace}"/>
+                        <br/>
+                        <h:outputText value="Restaurant Cuisine: "/>
+                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restCuisine}"/>
+                        <br/>
+                        <h:outputText value="Restaurant Neighbourhood: "/>
+                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restNeighbourhood}"/>
+                        <br/>
+                        <h:outputText value="Restaurant Customer Maximum Quota: "/>
+                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restQuota}"/>
+                        <br/>
+                    </h:panelGrid>
+                    <p:commandButton value ="Save" ajax ="true" actionListener = "#{addRestaurantManagedBean.saveNewRestaurant}" />
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
