@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <jsp:include page="base.jsp"></jsp:include>
+    <head>
         <script>
             $(document).ready(function() {
                 $("#reg-form").submit(function() {
@@ -17,12 +17,26 @@
                 });
             });
         </script>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <link rel="stylesheet" href="/IRMSCustomer-war/css/foundation.min.css" type="text/css" media="screen" />
+    <link href="/IRMSCustomer-war/css/templatemo_style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/IRMSCustomer-war/css/ddsmoothmenu.css" />
+    <link rel="stylesheet" href="/IRMSCustomer-war/css/nivo-slider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/IRMSCustomer-war/css/normalize.css" type="text/css" media="screen" />
+
+
+    <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
+    <script type="text/javascript" src="/IRMSCustomer-war/js/jquery.js"></script>
+    <script type="text/javascript" src="/IRMSCustomer-war/js/ddsmoothmenu.js"></script>
+    <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
+    </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
 
             <div class="row">
                 <div class="large-12 columns">
-                    <form id="search-form" action="restaurantSearch.jsp" method="POST">
+                    <form id="search-form" action="restaurantSearch" method="POST">
                         <fieldset>
                             <legend>Search a restaurant</legend>
 
