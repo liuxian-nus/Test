@@ -28,7 +28,9 @@ public class EmployeeSessionBean {
 
     public EmployeeSessionBean() {
         //insert test case
-         Query q = em.createQuery("SELECT m FROM EmployeeEntity m");
+         Query q1 = em.createQuery("INSERT INTO employeeentity(EMPLOYEEID,ANSWER,EMPLOYEEDEPARTMENT,EMPLOYEEDOB,EMPLOYEEGENDER,EMPLOYEENAME,EMPLOYEEPASSWORD,EMPLOYEESCHEDULE,ISFIRSTTIMELOGIN,SECURITYQUESTION)VALUES (100000,'Coral Island Resort','Admin',01/01/1990,'Male','Tan Wk','0000','0',false,'Where do you have your first job?')");
+         Query q2 = em.createQuery("INSERT INTO employeeentity(EMPLOYEEID,ANSWER,EMPLOYEEDEPARTMENT,EMPLOYEEDOB,EMPLOYEEGENDER,EMPLOYEENAME,EMPLOYEEPASSWORD,EMPLOYEESCHEDULE,ISFIRSTTIMELOGIN,SECURITYQUESTION)VALUES (201001, 'John','Hotel',01/01/1990,'Male','Tester','0000','1',false,'Who is your best friend?')");
+
     }
     
     
