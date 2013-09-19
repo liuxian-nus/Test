@@ -5,8 +5,8 @@
 
 <div id="templatemo_menu" class="ddsmoothmenu">
     <ul>
-        <li><a href="home.jsp" >Home</a></li>
-        <li><a href="hotel.jsp" >Hotel</a>
+        <li><a href="home" >Home</a></li>
+        <li><a href="hotel" >Hotel</a>
             <ul>
                 <li><a href="#">Sub menu 1</a></li>
                 <li><a href="#">Sub menu 2</a></li>
@@ -14,7 +14,7 @@
                <li><a href="#">Sub menu 1</a></li>
             </ul>
         </li>
-        <li><a href="restaurant.jsp">Restaurant</a>
+        <li><a href="irmsServlet/restaurant">Restaurant</a>
             <ul>
                 <li><a href="#">Sub menu 1</a></li>
                 <li><a href="#">Sub menu 2</a></li>
@@ -29,4 +29,5 @@
         <li><a href="conventions.jsp" >Conventions</a></li>
         <li><a href="members.html">Members</a></li>
     </ul>
+
 </div>
