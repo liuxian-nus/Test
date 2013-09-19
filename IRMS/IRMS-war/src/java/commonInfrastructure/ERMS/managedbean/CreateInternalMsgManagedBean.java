@@ -40,7 +40,7 @@ public class CreateInternalMsgManagedBean implements Serializable {
     public CreateInternalMsgManagedBean() {
     }
 
-    public List<String> complete(String query) {
+    public List<String> complete(String query) throws ExistException {
         List<String> results = new ArrayList<String>();
 
         List<EmployeeEntity> employeeList = employee.getAllEmployees();
