@@ -39,13 +39,13 @@ public class EmailSessionBean {
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("IRMS.IT09", "1qaz@WSX");
+                return new PasswordAuthentication("cookiewxy", "YAMAshita##1991");
             }
         });
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("is3102_it09@live.com"));
+            message.setFrom(new InternetAddress("cookiewxy@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAdress));
             message.setSubject("Initial Password");
