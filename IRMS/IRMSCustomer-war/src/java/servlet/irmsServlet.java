@@ -6,9 +6,9 @@ package servlet;
  */
 
 
+
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
-import FBMS.session.RestaurantSessionBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -30,12 +30,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author lionetdd
  */
-@WebServlet(urlPatterns = {"/irmsServlet"})
+
+
+@WebServlet(urlPatterns = {"/irmsServlet", "/irmsServlet/*"})
 public class irmsServlet extends HttpServlet {
-    @EJB
+   @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
-    @EJB
-    private RestaurantSessionBeanRemote restaurantSessionBean;
+  
+   
     private ArrayList data=null;
   
     
@@ -60,36 +62,66 @@ public class irmsServlet extends HttpServlet {
             throws ServletException, IOException {
         System.out.println("irmsSERVLET: processRequest()");
         
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+       /* response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();*/
         try {
             RequestDispatcher dispatcher;
             ServletContext servletContext = getServletContext();
             
+            String temp = request.getServletPath();
+            
             String page = request.getPathInfo();
             page = page.substring(1);
+            System.out.println(page);
             
-            if("restaurant".equals(page)){
-                data= searchRestaurant(request);
-                request.setAttribute("data", data);
-                //data = irm.searchRestaurant(null)
-            } else if ("MakeReservation".equals(page)){
+
+            if("restaurantSearch".equals(page)){
+                
+                System.out.println("Current page is restaurant!");
+                //data = searchRestaurant(request);
+                System.out.println("data search has been performed and result has been returned by bean");
+                //request.setAttribute("data",data);
+                System.out.println("data has been returned");
+                request.getRequestDispatcher("/restaurantSearch.jsp").forward(request, response);
+
+            } 
+            else if ("MakeReservation".equals(page)){
                 data=makeReservation(request);
                 request.setAttribute("data", data);
             }
-             else{
-                page="Error";
+            else if ("restaurant".equals(page)){
+                System.out.println("***restaurant page***");
+                request.getRequestDispatcher("/restaurant.jsp").forward(request, response);
+
             }
-            dispatcher=servletContext.getNamedDispatcher(page);
-            if(dispatcher==null){
-                dispatcher=servletContext.getNamedDispatcher("Error");
+            else if ("home".equals(page))
+            {
+                System.out.println("***home page***");
+                request.getRequestDispatcher("/home.jsp").forward(request, response);
+
             }
-            dispatcher.forward(request, response);
+            else{
+                System.out.println("other page");
+            }
+//          
+//             
+//            dispatcher=servletContext.getNamedDispatcher(page);
+//            System.out.println("dispatcher set up");
+//            System.out.println(dispatcher);
+//            if(dispatcher==null){
+//                dispatcher=servletContext.getNamedDispatcher("Error");
+//            }
+//            System.out.println("Before push content");
+//            dispatcher.forward(request, response);
+//            System.out.println("After push content");
             
         }catch (Exception e){
+            System.out.println(e);
             log("Exception in irmsServlet.processRequest()");
+            //System.out.println(e);
         }
     }
+
     
     private ArrayList makeReservation(HttpServletRequest request) throws ParseException{
         DateFormat formatter =new SimpleDateFormat("dd/MM/yy");
@@ -101,6 +133,10 @@ public class irmsServlet extends HttpServlet {
     }
             
             /* TODO output your page here. You may use following sample code. */
+
+              
+         /* TODO output your page here. You may use following sample code. */
+
             /*
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -128,11 +164,8 @@ public class irmsServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+   
+    
 
     /**
      * Handles the HTTP
@@ -143,11 +176,8 @@ public class irmsServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+    
+    
 
     /**
      * Returns a short description of the servlet.
@@ -168,14 +198,40 @@ public class irmsServlet extends HttpServlet {
         String keyword           = request.getParameter("keyword");
         
         RestaurantEntity re = indReservationSessionBean.createRestaurantEntity(restNeighbourhood, restTypeOfPlace, restCuisine, keyword);
+
         Set <RestaurantEntity> res =   indReservationSessionBean.searchRestaurant(re);  
+
+
         
         al.addAll(res);
         al.add("Restaurant Search has been performed!");
         
         System.out.println("irmsServlet: restaurant search has been completed!");
 
+
+
         return al;
         //To change body of generated methods, choose Tools | Templates.
     }
+
+    
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+    
+    @Override
+    public void destroy(){
+        System.out.println("irmsServlet: destroy()");
+    }
+    
+    
 }
