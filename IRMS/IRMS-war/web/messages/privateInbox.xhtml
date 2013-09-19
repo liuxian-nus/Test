@@ -10,7 +10,7 @@
         <h:form id="form">
             <p:panel id="msgInbox" header="Private Message Inbox" style="height:495px;">
                 <div style="margin-top:20px;margin-left:70px;margin-right:70px;margin-bottom:20px;"> 
-                    <p:dataTable id="privateMsg"  emptyMessage="No Message in your box" value="#{msgInboxManagedBean.getPrivateMessages()}" var ="messages" paginator="true" rows="7">
+                    <p:dataTable id="privateMsg" emptyMessage="No Message in your box" value="#{msgInboxManagedBean.getPrivateMessages()}" var ="messages" paginator="true" rows="7">
 <!--dynamic="true"-->
                         <p:column>
                             <f:facet name="header">Title</f:facet>
