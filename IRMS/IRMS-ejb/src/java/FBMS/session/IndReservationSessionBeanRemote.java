@@ -6,7 +6,7 @@ package FBMS.session;
 
 import FBMS.entity.IndReservationEntity;
 import FBMS.entity.RestaurantEntity;
-
+import javax.ejb.Local;
 import java.util.Date;
 import java.util.Set;
 import javax.ejb.Local;
