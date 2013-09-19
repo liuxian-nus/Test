@@ -5,18 +5,6 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="top">
-        top
-    </ui:define>
-
-    <ui:define name="bottom">
-        bottom
-    </ui:define>
-
-    <ui:define name="left">
-        left
-    </ui:define>
-
     <ui:define name="content">
         <h:form>
             <p:panel id="search" header="Search Employee" style="height:495px;">
@@ -25,8 +13,8 @@
                     <p:autoComplete id="name" value="#{searchManagedBean.searchName}" required="true" requiredMessage="Name Cannot be Null"  
                                     completeMethod="#{searchManagedBean.complete}" />
                     <p:spacer width="20"/>
-                    <p:commandButton value="Search" ajax="true" update="statusMessages" actionListener="#{searchManagedBean.searchByName}"/>
-                    <p:message for="name"/>
+                    <p:commandButton value="Search" ajax="true" actionListener="#{searchManagedBean.searchByName}"/>
+                    <p:message for="name"/><!-- update="statusMessages"-->
                 </div>
             </p:panel>
         </h:form>
