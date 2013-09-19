@@ -8,13 +8,8 @@
 <!DOCTYPE html>
 <html>
    <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Slate Theme, Portfolio Theme</title>
-<meta name="keywords" content="slate, portfolio theme, darkcyan, teal color, free templates, website design, CSS, HTML" />
-<meta name="description" content="Slate Portfolio, free web design template provided by templatemo.com" />
-<link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
+        <jsp:include page="base.jsp"></jsp:include>
 
-<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
 
 <script language="javascript" type="text/javascript">
 function clearText(field){
@@ -25,18 +20,8 @@ function clearText(field){
 }
 </script>
 
-<link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
 
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/ddsmoothmenu.js">
 
-/***********************************************
-* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
-* This notice MUST stay intact for legal use
-* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
-***********************************************/
-
-</script>
 
 <script type="text/javascript">
 
@@ -86,34 +71,7 @@ $(document).ready(function() {
         <div class="cleaner"></div>
     </div> <!-- end of header -->
     <!--Start of menu bar-->
-       <div id="templatemo_menu" class="ddsmoothmenu">
-        <ul>
-            <li><a href="home.jsp" >Home</a></li>
-            <li><a href="hotel.jsp" class="selected">Hotel</a>
-                <ul>
-                    <li><a href="#">Sub menu 1</a></li>
-                    <li><a href="#">Sub menu 2</a></li>
-                    <li><a href="#">Sub menu 3</a></li>
-                   <li><a href="#">Sub menu 1</a></li>
-              	</ul>
-          </li>
-            <li><a href="restaurant.html">Restaurant</a>
-                <ul>
-                    <li><a href="#">Sub menu 1</a></li>
-                    <li><a href="#">Sub menu 2</a></li>
-                    <li><a href="#">Sub menu 3</a></li>
-                    <li><a href="#">Sub menu 4</a></li>
-                    <li><a href="#">Sub menu 5</a></li>
-              	</ul>
-            </li>
-            <li><a href="entertainment.jsp" >Entertainment</a></li>
-            <li><a href="attraction.jsp">Attraction</a></li>
-             <li><a href="shopping.jsp" >Shopping</a></li>
-           <li><a href="restaurant.jsp" >Restaurant</a></li>
-            <li><a href="conventions.jsp" >Conventions</a></li>
-            <li><a href="members.html">Members</a></li>
-        </ul>
-        </div> <!-- end of templatemo_menu -->
+    <jsp:include page="header.jsp"></jsp:include>
     
     <div id="templatemo_main">
     	<div class="gallery_box">
