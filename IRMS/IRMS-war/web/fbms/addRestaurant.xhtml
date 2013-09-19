@@ -8,11 +8,11 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panel id="addRest" header="AddRestaurant" style="height:495px;">
+            <p:panel id="addRest" header="Add Restaurant" style="height:495px;">
                 <div style="margin-top:100px;margin-left:350px;">
                     <h:panelGrid id="AddRestaurant" columns="6">
                         <h:outputText value="Restaurant Name: "/>
-                        <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{addRestaurantManagedBean.restaurant.restName}"/>
+                        <h:inputText id="restName" required ="true" requiredMessage="Name cannot be empty" value="#{addRestaurantManagedBean.restaurant.restName}"/>
                         <br/>
                         <h:outputText value="Restaurant Type of Place: "/>
                         <h:inputText value="#{addRestaurantManagedBean.restaurant.restTypeOfPlace}"/>
