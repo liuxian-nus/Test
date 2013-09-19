@@ -20,7 +20,7 @@ import javax.faces.event.ActionEvent;
  */
 @ManagedBean
 @RequestScoped
-public class AddRestaurantManagedBean implements Serializable{
+public final class AddRestaurantManagedBean implements Serializable{
 
     @EJB
     private RestaurantSessionBeanRemote restaurantSessionRemote;
@@ -47,13 +47,18 @@ public class AddRestaurantManagedBean implements Serializable{
     public void saveNewRestaurant (ActionEvent event) throws IOException{
         try{
             System.out.println("into AddRestaurantManagedBean");
-            restaurantSessionRemote.addRestaurant(restaurant);
+            restaurantSessionRemote.addRestaurant(getRestaurant());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Functionality Saved.", ""));
             System.out.println("out AddRestaurantManagedBean");
         }catch (Exception e){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding a new restaurant", ""));
             return;
         }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New restaurant saved.", ""));
-        restaurant=new RestaurantEntity();
+        //restaurant=new RestaurantEntity();
     }
+    
+    
 }
+
+
+
