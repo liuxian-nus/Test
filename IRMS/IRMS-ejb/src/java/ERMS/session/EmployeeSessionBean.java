@@ -27,6 +27,8 @@ public class EmployeeSessionBean {
     EmployeeEntity employee;
 
     public EmployeeSessionBean() {
+        //insert test case
+         Query q = em.createQuery("SELECT m FROM EmployeeEntity m");
     }
     
     

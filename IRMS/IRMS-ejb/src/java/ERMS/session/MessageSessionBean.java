@@ -5,6 +5,7 @@
 package ERMS.session;
 
 
+import ERMS.entity.EmployeeEntity;
 import ERMS.entity.MessageEntity;
 import ERMS.entity.ReceiverInfoEntity;
 import Exception.ExistException;
@@ -51,8 +52,10 @@ public class MessageSessionBean {
         receiver.setOpened(false);
         receiver.setReceiverId(receiverId);
         receiver.setSenderId(senderId);
-        
         receiver.setMessage(message);
+        //retrieve senderName from employee table
+        EmployeeEntity sender = em.find(EmployeeEntity.class,senderId);
+        message.setSenderName(sender.getEmployeeName());
         
         List<ReceiverInfoEntity> infoList = new ArrayList<ReceiverInfoEntity>();
         infoList.add(receiver);
