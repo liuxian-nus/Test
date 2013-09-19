@@ -8,9 +8,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <title>Slate Theme - Free CSS Template</title>
-    <link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
+        
+    <title>Coral Island Resort</title>
+    <link href="/IRMSCustomer-war/css/templatemo_style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/IRMSCustomer-war/css/nivo-slider.css" type="text/css" media="screen" />
 
 <script language="javascript" type="text/javascript">
 function clearText(field){
@@ -21,10 +22,15 @@ function clearText(field){
 }
 </script>
 
-<link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+<!--<link rel="stylesheet" href="/IRMSCustomer-war/css/foundation.min.css" type="text/css" media="screen" />-->
+<link href="/IRMSCustomer-war/css/templatemo_style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/IRMSCustomer-war/css/ddsmoothmenu.css" />
+<link rel="stylesheet" href="/IRMSCustomer-war/css/nivo-slider.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/IRMSCustomer-war/css/normalize.css" type="text/css" media="screen" />
 
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/ddsmoothmenu.js">
+
+<script type="text/javascript" src="/IRMSCustomer-war/js/jquery.min.js"></script>
+<script type="text/javascript" src="/IRMSCustomer-war/js/ddsmoothmenu.js">
 
 /***********************************************
 * Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
@@ -45,9 +51,9 @@ ddsmoothmenu.init({
 })
 
 </script>
-
         
-    </head>
+        
+</head>
     <body>
     
         <jsp:include page="header.jsp"></jsp:include>
@@ -62,16 +68,16 @@ ddsmoothmenu.init({
     <div id="templatemo_slider">
    
         <div id="slider" class="nivoSlider">
-            <img src="images/slider/01.jpg" alt="Slider 01" title="Nam porttitor, felis ac posuere sagittis, diam nisl convallis." />
-            <a href="#"><img src="images/slider/02.jpg" alt="Slider 02" title="Fusce sagittis, arcu a condimentum gravida." /></a>
-            <img src="images/slider/03.jpg" alt="Slider 03" title="Donec purus eros, dictum nec accumsan quis, auctor non eros."/>
-            <img src="images/slider/04.jpg" alt="Slider 04" title="Donec dignissim imperdiet orci sit amet posuere." />
+            <img src="/IRMSCustomer-war/images/slider/01.jpg" alt="Slider 01" title="Nam porttitor, felis ac posuere sagittis, diam nisl convallis." />
+            <a href="#"><img src="/IRMSCustomer-war/images/slider/02.jpg" alt="Slider 02" title="Fusce sagittis, arcu a condimentum gravida." /></a>
+            <img src="/IRMSCustomer-war/images/slider/03.jpg" alt="Slider 03" title="Donec purus eros, dictum nec accumsan quis, auctor non eros."/>
+            <img src="/IRMSCustomer-war/images/slider/04.jpg" alt="Slider 04" title="Donec dignissim imperdiet orci sit amet posuere." />
         </div>
         <div id="htmlcaption" class="nivo-html-caption">
             <strong>This</strong> is an example of a <em>HTML</em> caption with <a href="#">a link</a>.
         </div>
-        <script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>
-		<script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/jquery-1.4.3.min.js"></script>
+		<script type="text/javascript" src="/IRMSCustomer-war/js/jquery.nivo.slider.pack.js"></script>
         <script type="text/javascript">
         $(window).load(function() {
 			$('#slider').nivoSlider({
@@ -107,7 +113,7 @@ ddsmoothmenu.init({
     
     <div id="templatemo_main">
     	<div class="col one_third">
-        	<h2>Welcome To Slate</h2>
+        	<h2>Coral Island Resort</h2>
             <p>Coral Island Resort is an integrated resort on the island of Coral, off the southern coast of Singapore. The key attractions include one of Singapore's two casinos, a Universal Studios theme park and Marine Life Park, which includes the world's largest oceanarium.</p>
            
             <a href="#" class="more">More</a>
@@ -126,7 +132,7 @@ ddsmoothmenu.init({
         </div>
         <div class="col one_third last_box">
         	<h2>Coral Membership</h2>
-            <img src="images/templatemo_image_01.jpg" alt="Image 01" class="image_frame" />
+            <img src="/IRMSCustomer-war/images/templatemo_image_01.jpg" alt="Image 01" class="image_frame" />
             <p><em>Curabitur turpis sapien, auctor sit amet tincidunt et, vestibulum amet dapibus eros.</em></p>
             <a href="#" class="more">More</a>	
         </div>
@@ -135,22 +141,22 @@ ddsmoothmenu.init({
         
     	<div class="col one_fourth">
         	<h3>Promotion1</h3>
-            <img src="images/templatemo_image_05.jpg" alt="Image 01" class="image_frame" />
+            <img src="/IRMSCustomer-war/images/templatemo_image_05.jpg" alt="Image 01" class="image_frame" />
         	Aliquam semper lacus a eros commodo vestibulum interdum mi pretium. Aliquam ac risus leo.
 		</div>
         <div class="col one_fourth">
         	<h3>Promotion2</h3>
-            <img src="images/templatemo_image_02.jpg" alt="Image 02" class="image_frame" />
+            <img src="/IRMSCustomer-war/images/templatemo_image_02.jpg" alt="Image 02" class="image_frame" />
         	Phasellus aliquet enim sed ligula faucibus nec tempus turpis bibendum. Duis vitae vel elit accumsan.
         </div>
         <div class="col one_fourth">
         	<h3>Promotion3</h3>
-            <img src="images/templatemo_image_03.jpg" alt="Image 03" class="image_frame" />
+            <img src="/IRMSCustomer-war/images/templatemo_image_03.jpg" alt="Image 03" class="image_frame" />
         	Donec eleifend erat sed enim sodales tincidunt suscipit metus ornare inceptos himenaeos.
         </div>
         <div class="col one_fourth last_box">
         	<h3>Promotion4</h3>
-            <img src="images/templatemo_image_04.jpg" alt="Image 04" class="image_frame" />
+            <img src="/IRMSCustomer-war/images/templatemo_image_04.jpg" alt="Image 04" class="image_frame" />
         	Fusce malesuada interdum facilisis. Donec accumsan lectus id posuere. Morbi vel dictum purus. 
         </div>
         <div class="cleaner"></div>
@@ -201,12 +207,12 @@ ddsmoothmenu.init({
     </div>
     
     <div id="templatemo_footer">
-    	Copyright © 2048 Your Company Name | Designed by <a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a>
+    	Copyright Â© 2048 Your Company Name | Designed by <a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a>
     </div>
 </div>
 
 
-<script type='text/javascript' src='js/logging.js'></script>
+<script type='text/javascript' src='/IRMSCustomer-war/js/logging.js'></script>
     </body>
 </html>
 

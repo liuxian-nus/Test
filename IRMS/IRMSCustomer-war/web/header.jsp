@@ -14,7 +14,7 @@
                <li><a href="#">Sub menu 1</a></li>
             </ul>
         </li>
-        <li><a href="irmsServlet/restaurant">Restaurant</a>
+        <li><a href="restaurant">Restaurant</a>
             <ul>
                 <li><a href="#">Sub menu 1</a></li>
                 <li><a href="#">Sub menu 2</a></li>
@@ -23,11 +23,11 @@
                 <li><a href="#">Sub menu 5</a></li>
             </ul>
         </li>
-        <li><a href="entertainment.jsp" >Entertainment</a></li>
-        <li><a href="attraction.jsp">Attraction</a></li>
-        <li><a href="shopping.jsp" >Shopping</a></li>
-        <li><a href="conventions.jsp" >Conventions</a></li>
-        <li><a href="members.html">Members</a></li>
+        <li><a href="entertainment" >Entertainment</a></li>
+        <li><a href="attraction">Attraction</a></li>
+        <li><a href="shopping" >Shopping</a></li>
+        <li><a href="conventions" >Conventions</a></li>
+        <li><a href="members">Members</a></li>
     </ul>
 
 </div>
