@@ -6,8 +6,10 @@ package FBMS.session;
 
 import Exception.ExistException;
 import FBMS.entity.RestaurantEntity;
+import java.util.List;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -35,4 +37,5 @@ public interface RestaurantSessionBeanRemote {
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     RestaurantEntity updateRestaurant(Long restId, String restNeighbourhood, String restTypeOfPlace, String restCuisine, String restName) throws ExistException;
     
+    public List<RestaurantEntity> getAllRestaurants() throws NoResultException;
 }

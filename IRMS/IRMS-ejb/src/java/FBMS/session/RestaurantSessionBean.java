@@ -3,12 +3,15 @@ package FBMS.session;
 
 import FBMS.entity.RestaurantEntity;
 import Exception.ExistException;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -56,6 +59,11 @@ public class RestaurantSessionBean implements RestaurantSessionBeanRemote{
     @Override
     public void persist(Object object) {
         em.persist(object);
+    }
+    
+    public List<RestaurantEntity> getAllRestaurants() throws NoResultException{
+        Query query = em.createQuery("SELECT r FROM RestaurantEntity r");
+        return query.getResultList();
     }
     
 }
