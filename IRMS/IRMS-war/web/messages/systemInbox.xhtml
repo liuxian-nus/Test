@@ -40,28 +40,29 @@
                         <p:column style="width:70px;">
                             <f:facet name="header">Action</f:facet>
 
-                            <p:commandButton action ="#{msgInboxManagedBean.viewSystemMsg(messages)}" image="ui-icon ui-icon-search" title="View" />  
+                            <p:commandButton action ="#{msgInboxManagedBean.viewSystemMsg(messages)}" icon="ui-icon ui-icon-search" title="View" />  
 
-                            <p:commandButton update=":form:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete" >
+                            <p:commandButton oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete" >
                                 <f:setPropertyActionListener value="#{messages}" target="#{msgInboxManagedBean.selectedMessage}" />  
-                            </p:commandButton>
+                            </p:commandButton><!--update=":form:display"-->
 
                         </p:column>
 
 
                     </p:dataTable>
 
-                    <p:confirmDialog message="Are you sure to delete?" 
-                                     showEffect="explode" hideEffect="explode"  
-                                     header="Confirm" severity="alert" widgetVar="confirmation">  
+                    <p:dialog showEffect="explode" hideEffect="explode"  
+                              header="Confirm" widgetVar="confirmation" resizable="false" modal="false" width="500">
 
-                        <p:commandButton value="Confirm" update="systemMsg" actionListener="#{msgInboxManagedBean.deleteMsg}" oncomplete="confirmation.hide()">  
-                            <f:attribute name="deleteMsg" value="#{msgInboxManagedBean.selectedMessage.id}" />
-                        </p:commandButton>
+                        <h:outputText value="Are you sure to delete?" />
+                        <p:outputPanel layout="block" style="text-align:right">  
+                            <p:commandButton value="Confirm" update="systemMsg" oncomplete="confirmation.hide()"  actionListener="#{msgInboxManagedBean.deleteMsg}">  
+                                <f:attribute name="deleteMsg" value="#{msgInboxManagedBean.selectedMessage.messageId}"/>
+                            </p:commandButton>
 
-                        <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button" />  
-
-                    </p:confirmDialog>
+                            <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button" />  
+                        </p:outputPanel>
+                    </p:dialog>
                 </div>
             </p:panel>
         </h:form>
