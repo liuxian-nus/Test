@@ -26,7 +26,8 @@ public class RestaurantEntity implements Serializable {
     private String restName;
     private Integer restQuota;
     
-    public RestaurantEntity(){};
+    public RestaurantEntity(){
+    }
 
     public Integer getRestQuota() {
         return restQuota;
