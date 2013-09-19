@@ -5,6 +5,7 @@
 package commonInfrastructure.ERMS.managedbean;
 
 import ERMS.entity.EmployeeEntity;
+import ERMS.session.EmailSessionBean;
 import ERMS.session.EmployeeSessionBean;
 import java.io.IOException;
 import java.io.Serializable;
@@ -24,9 +25,13 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @RequestScoped
 public class AddEmployeeManagedBean implements Serializable {
+    @EJB
+    private EmailSessionBean emailSessionBean;
 
     @EJB
     private EmployeeSessionBean employeeSessionBean;
+    
+    
     private EmployeeEntity employee;
     
     
@@ -70,6 +75,7 @@ public class AddEmployeeManagedBean implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Employee saved.", ""));
 //            emailSessionBean.emailInitialPassward(employee.getPersonalEmail(), initialPwd); //send email
+        emailSessionBean.emailInitialPassward(employee.getEmployeeEmail(), initialPwd);
         employee = new EmployeeEntity();
     }
 }
