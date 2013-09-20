@@ -53,8 +53,9 @@ public class LoginManagementManagedBean {
         if (systemUser == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid EmployeeId", ""));
         } else {
-            // setEmployeePassword(passwordHashSessionBean.hashPassword(employeeId + getEmployeePassword()));
-            System.out.println("2");
+            setEmployeePassword(passwordHashSessionBean.hashPassword( getEmployeePassword()));//employeeId +
+            System.out.println("2"+getEmployeePassword());
+            System.out.println("3"+systemUser.getEmployeePassword());
             //Valid login
             if (systemUser.getEmployeePassword().equals(getEmployeePassword())) {
                 String previousPage = "";

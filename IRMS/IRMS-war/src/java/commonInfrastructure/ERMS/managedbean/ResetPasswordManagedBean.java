@@ -43,6 +43,7 @@ public class ResetPasswordManagedBean {
 
     public void doVerify(ActionEvent event) throws IOException, ExistException {
         employee = employeeSessionRemote.getEmployeeById(employeeId);
+        System.out.println(employee.getEmployeeId());
         if (employee == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid UserName", ""));
 
