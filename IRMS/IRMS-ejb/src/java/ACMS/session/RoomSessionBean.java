@@ -75,7 +75,6 @@ public class RoomSessionBean {
     }
     
     //member check-in
-
     public RoomEntity checkIn(int roomId,Date checkInDate, Date checkOutDate) throws RoomException {
         room = em.find(RoomEntity.class, roomId);
         if("reserved".equals(room.getRoomStatus())) System.out.println("RoomSessionBean-->Warning! the room is reserved!");

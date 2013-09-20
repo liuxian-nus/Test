@@ -28,7 +28,6 @@ public class FunctionalityEntity implements Serializable {
     @GeneratedValue
     private Long functionalityId;
     private String funcName;
-    private String funcId;
     /*@ManyToOne(targetEntity=Role.class,cascade={CascadeType.ALL},fetch=FetchType.EAGER)
     private Role roleEntity;
     */
@@ -69,15 +68,6 @@ public class FunctionalityEntity implements Serializable {
     /**
      * @return the funcId
      */
-    public String getFuncId() {
-        return funcId;
-    }
-
-    /**
-     * @param funcId the funcId to set
-     */
-    public void setFuncId(String funcId) {
-        this.funcId = funcId;
-    }
+   
 
 }
