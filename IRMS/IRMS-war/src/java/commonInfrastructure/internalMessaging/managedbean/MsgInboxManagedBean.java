@@ -116,8 +116,11 @@ public class MsgInboxManagedBean implements Serializable {
     public void deleteMsg(ActionEvent event) throws ExistException{
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String receiverId = (String) request.getSession().getAttribute("userId");
-        
+        System.out.println("Delete Message for employee "+ receiverId.toString());
         Long id=(Long)event.getComponent().getAttributes().get("deleteMsg");
+        
+        System.out.println("Delete Message number "+ id.toString());
+        
         messageManager.removeMessage(id,receiverId);
         selectedMessage = new MessageEntity();
     }
