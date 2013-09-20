@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="addFunc" header="Add New Functionality" style="height:495px;">
+                <div style="margin-left:350px;margin-top:100px;">
+                    <h:panelGrid id="grid" columns="3">
+                        <h:outputText value="Functionality Name:"/>
+                        <h:inputText required ="true" requiredMessage ="Functionality Name cannot be empty" value="#{addFunctionalityManagedBean.functionality.funcName}"/>
+                        <br/>
+                        <h:outputText value="Functionality ID:"/>
+                        <h:inputText required ="true" requiredMessage ="Functionality ID cannot be empty" value="#{addFunctionalityManagedBean.functionality.functionalityId}"/>
+                        <br/>
+                    </h:panelGrid>
+                    <br />
+                    <p:commandButton value="Save" ajax="true" update="statusMessages addFunc" actionListener="#{addFunctionalityManagedBean.saveNewFunctionality}"/>
+                    <p:commandButton value="Add More Functionalities" actionListener="#{addFunctionalityManagedBean.oneMore}" />
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

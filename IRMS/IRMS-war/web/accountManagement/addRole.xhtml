@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="addRole" header="Add New Role" style="height:495px;">
+                <div style="margin-left:330px;margin-top:60px;">
+                    <h:panelGrid id="grid" columns="3">
+                        <h:outputText value="Role Name" />
+                        <h:inputText required="true" requiredMessage="Role name cannot be empty" value="#{addRoleManagedBean.role.roleName}" style="margin-bottom:10px;"/>
+                        <br/>
+                        <h:outputText value="Functionalities" style="margin-right: 20px;"/>
+                        <h:selectManyMenu value="#{addRoleManagedBean.selectedFunc}" style="height:150px;width:175px;margin-bottom:10px;">  
+                            <f:selectItems value="#{addRoleManagedBean.fm.allFunctionalities}"  
+                                           var="allFunc" itemLabel="#{allFunc.funcName}" 
+                                           itemValue="#{allFunc.functionalityId}" />  
+                        </h:selectManyMenu>  
+                        <br />
+                        <p:commandButton value="Save" ajax="true" update="statusMessages" actionListener="#{addRoleManagedBean.saveNewRole}"/>
+                        <p:commandButton value="Add More Roles" ajax="true" update="statusMessages" actionListener="#{addRoleManagedBean.oneMore}"/>
+                    </h:panelGrid>
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
