@@ -19,23 +19,14 @@
         </script>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
-    <link rel="stylesheet" href="/IRMSCustomer-war/css/foundation.min.css" type="text/css" media="screen" />
-    <link href="/IRMSCustomer-war/css/templatemo_style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/IRMSCustomer-war/css/ddsmoothmenu.css" />
-    <link rel="stylesheet" href="/IRMSCustomer-war/css/nivo-slider.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="/IRMSCustomer-war/css/normalize.css" type="text/css" media="screen" />
-
-
-    <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
-    <script type="text/javascript" src="/IRMSCustomer-war/js/jquery.js"></script>
-    <script type="text/javascript" src="/IRMSCustomer-war/js/ddsmoothmenu.js"></script>
-    <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
+ <jsp:include page="base.jsp"></jsp:include>
     </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
 
             <div class="row">
-                <div class="large-12 columns">
+                <div clas="large-9" colums></div>
+                <div class="large-3" columns>
                     <form id="search-form" action="restaurantSearch" method="POST">
                         <fieldset>
                             <legend>Search a restaurant</legend>
@@ -46,9 +37,9 @@
                                     <input id="input-name" type="text" placeholder="restaurant name" name="keyword">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="large-4 columns">
-
+                          
+                                <div class="row">
+                                    <div class="large-12 columns">
                                     <label for="customDropdown">Type of place</label>
                                     <select id="customDropdown" name="restTypeOfPlace">
                                         <option DISABLED>This is a dropdown</option>
@@ -56,9 +47,10 @@
                                         <option>Restaurant</option>
                                         <option>Pub/Bar</option>
                                     </select>
+                                    </div>
                                 </div>
-                                <div class="large-4 columns">
-
+                                <div class="row">
+                                     <div class="large-12 columns">
                                     <label for="customDropdown">Neighborhood</label>
                                     <select id="customDropdown" name="restNeighbourhood">
                                         <option DISABLED>This is a dropdown</option>
@@ -69,10 +61,11 @@
                                         <option>Northern Singapore</option>
                                         <option>Southern Singapore</option>
                                     </select>
+                                     </div>
                                 </div>
 
-                                <div class="large-4 columns">
-
+                                <div class="row">
+                                    <div class="large-12 columns"> 
                                     <label for="customDropdown">Cuisine</label>
                                     <select id="customDropdown" name="restCuisine">
                                         <option DISABLED>This is a dropdown</option>
@@ -81,19 +74,16 @@
                                         <option>Western</option>
                                         <option>Hala</option>
                                     </select>
+                                    </div>
                                 </div>
-                            </div>
+                            <br>
                             <div class="row">
-                                
+                                 <div class="large-12 columns">
+                                <input type="submit" class="tiny button, button secondary" value="Search">
+                            
+                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="large-4 columns">
-
-                                <input type="submit" class="small button" value="Search">
-                                </div>
-                            </div>
-                        </fieldset>
-                       
+                        </fieldset>         
                     </form>
                 </div>
             </div>
