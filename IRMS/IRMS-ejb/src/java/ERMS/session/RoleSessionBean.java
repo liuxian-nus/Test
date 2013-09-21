@@ -25,7 +25,7 @@ public class RoleSessionBean {
     private EntityManager em;
     
     
-    public RoleEntity getRole(Long RoleId)
+    public RoleEntity getRole(int RoleId)
     {
         Query query = em.createQuery("SELECT u FROM RoleEntity u WHERE u.id = :inRoleId");
         query.setParameter("inRoleId", RoleId);
@@ -64,7 +64,7 @@ public class RoleSessionBean {
         em.merge(role);
     }
     
-    public void removeRole(Long RoleId)
+    public void removeRole(int RoleId)
     {
         RoleEntity role = em.find(RoleEntity.class, RoleId);
         em.remove(role);

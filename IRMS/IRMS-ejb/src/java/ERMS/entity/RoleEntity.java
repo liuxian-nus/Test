@@ -39,7 +39,7 @@ public class RoleEntity implements Serializable {
     
      // @return the RoleName
     public String getRoleName() {
-        return roleName;
+        return roleName; 
     }
 
 

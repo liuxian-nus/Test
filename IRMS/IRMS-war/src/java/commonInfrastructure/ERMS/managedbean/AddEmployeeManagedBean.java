@@ -55,16 +55,17 @@ public class AddEmployeeManagedBean implements Serializable {
      * Creates a new instance of AddEmployeeManagedBean
      */
     public AddEmployeeManagedBean() {
-        employee = new EmployeeEntity();
     }
     
     public void saveAdmin(ActionEvent event) throws IOException {
+        superAdmin = new RoleEntity();
         //add admin role
         superAdmin.setRoleId(0);
         superAdmin.setRoleName("SuperAdmin");
         superAdmin.addFunctionality(null);//functionalities to be discussed here!!!!!!!!!!!!!!!!!!!!!!!!!
        
         //add admin employee
+        employee = new EmployeeEntity();
         employee.setEmployeePassword("0000");
         employee.setEmployeeId("0000");
         employee.setEmployeeName("SuperAdmin");
@@ -85,6 +86,7 @@ public class AddEmployeeManagedBean implements Serializable {
     } 
 
     public void saveNewEmployee(ActionEvent event) throws IOException {
+        employee = new EmployeeEntity();
         String initialPwd = "";
         String uuid = UUID.randomUUID().toString();
         String[] sArray = uuid.split("-");
