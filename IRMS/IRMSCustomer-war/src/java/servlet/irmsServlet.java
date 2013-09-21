@@ -36,9 +36,11 @@ import javax.servlet.http.HttpServletResponse;
 public class irmsServlet extends HttpServlet {
    @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
+    private ArrayList data = null;
+
   
    
-    private ArrayList data=null;
+    //private String keyword=null;
   
     
 
@@ -69,7 +71,7 @@ public class irmsServlet extends HttpServlet {
             ServletContext servletContext = getServletContext();
             
             String temp = request.getServletPath();
-            
+
             String page = request.getPathInfo();
             page = page.substring(1);
             System.out.println(page);
@@ -78,19 +80,21 @@ public class irmsServlet extends HttpServlet {
             if("restaurantSearch".equals(page)){
                 
                 System.out.println("Current page is restaurant!");
-                //data = searchRestaurant(request);
+                data = searchRestaurant(request);
                 System.out.println("data search has been performed and result has been returned by bean");
-                //request.setAttribute("data",data);
-                System.out.println("data has been returned");
+                System.out.println(request.getParameter("keyword"));
                 request.getRequestDispatcher("/restaurantSearch.jsp").forward(request, response);
 
             } 
             else if ("MakeReservation".equals(page)){
-                data=makeReservation(request);
-                request.setAttribute("data", data);
+                //data=makeReservation(request);
+                //request.setAttribute("data", data);
             }
             else if ("restaurant".equals(page)){
                 System.out.println("***restaurant page***");
+               
+                //System.out.println(request.getParameterValues("keyword"));
+       
                 request.getRequestDispatcher("/restaurant.jsp").forward(request, response);
 
             }
@@ -106,10 +110,22 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/hotel.jsp").forward(request, response);
 
             }    
-            else if ("entertainment".equals(page))
+       else if ("entertainment".equals(page))
             {
                 System.out.println("***entertainment page***");
                 request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
+
+            }
+       else if ("entertainment".equals(page))
+            {
+                System.out.println("***entertainment page***");
+                request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
+
+            }
+              else if ("member".equals(page))
+            {
+                System.out.println("***member page***");
+                request.getRequestDispatcher("/member.jsp").forward(request, response);
 
             }
             else{
@@ -126,6 +142,8 @@ public class irmsServlet extends HttpServlet {
 //            System.out.println("Before push content");
 //            dispatcher.forward(request, response);
 //            System.out.println("After push content");
+
+
             
         }catch (Exception e){
             System.out.println(e);
@@ -133,8 +151,8 @@ public class irmsServlet extends HttpServlet {
             //System.out.println(e);
         }
     }
-
     
+
     private ArrayList makeReservation(HttpServletRequest request) throws ParseException{
         DateFormat formatter =new SimpleDateFormat("dd/MM/yy");
         ArrayList al=new ArrayList();
@@ -205,10 +223,13 @@ public class irmsServlet extends HttpServlet {
         
         ArrayList al = new ArrayList();
         String restNeighbourhood = request.getParameter("restNeighbourhood");
+        System.out.println(restNeighbourhood);
         String restTypeOfPlace   = request.getParameter("restTypeOfPlace");
+        System.out.println(restTypeOfPlace);
         String restCuisine       = request.getParameter("restCuisine");
+        System.out.println(restCuisine);
         String keyword           = request.getParameter("keyword");
-        
+        System.out.println(keyword);
         RestaurantEntity re = indReservationSessionBean.createRestaurantEntity(restNeighbourhood, restTypeOfPlace, restCuisine, keyword);
 
         Set <RestaurantEntity> res =   indReservationSessionBean.searchRestaurant(re);  
