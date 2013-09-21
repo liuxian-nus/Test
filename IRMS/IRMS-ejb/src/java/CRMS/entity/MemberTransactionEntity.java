@@ -28,6 +28,7 @@ public class MemberTransactionEntity implements Serializable {
     private double mtAmount;
     private String mtDepartment; //6 AAUs
     private boolean mtMode; //either payment by cash or by card, false is cash, true is card
+    private boolean paymentStatus;
     private String mtPromotion;
     @ManyToOne
     private MemberEntity member = new MemberEntity();
@@ -103,8 +104,14 @@ public class MemberTransactionEntity implements Serializable {
         this.mtMode = mtMode;
     }
 
-    
-    
+    public boolean isPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(boolean paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

@@ -5,9 +5,11 @@
 package CRMS.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
@@ -35,6 +37,8 @@ public class MemberEntity implements Serializable {
     private boolean isSubscriber;
     private double point;
     private double coin;
+    private List<String> preferences = new ArrayList<String>();
+    
     @OneToMany(cascade ={CascadeType.ALL},mappedBy = "member")
     private Set <MemberTransactionEntity> MemberTransactions;
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "mcMemberTargets")
@@ -174,7 +178,22 @@ public class MemberEntity implements Serializable {
         this.coin = coin;
     }
 
+    public List<String> getPreferences() {
+        return preferences;
+    }
 
+    public void setPreferences(List<String> preferences) {
+        this.preferences = preferences;
+    }
+
+    public void addPreferences(String newPreference) {
+        this.preferences.add(newPreference);
+    }
+    
+    public void removePreferences(String oldPreference) {
+        this.preferences.remove(oldPreference);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

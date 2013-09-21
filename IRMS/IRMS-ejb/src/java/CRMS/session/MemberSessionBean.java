@@ -24,7 +24,7 @@ public class MemberSessionBean {
     @PersistenceContext
     private EntityManager em ;
  
-    MemberEntity member;// = new MemberEntity();
+    MemberEntity member = new MemberEntity();
 
     //create new instance of managerBean
     public MemberSessionBean() { }

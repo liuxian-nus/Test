@@ -5,6 +5,7 @@
 package ERMS.session;
 
 import ERMS.entity.FunctionalityEntity;
+import Exception.ExistException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -24,18 +25,10 @@ public class FunctionalitySessionBean {
     @PersistenceContext
     private EntityManager em;
     
-    public FunctionalityEntity getFunctionality(Long FunctionalityId)
+    public FunctionalityEntity getFunctionality(Long functionalityId) throws ExistException
     {
-        Query query = em.createQuery("SELECT u FROM FunctionalityEntity u WHERE u.id = :inFunctionalityId");
-        query.setParameter("inFunctionalityId", FunctionalityId);
-        
-        FunctionalityEntity functionality = null;
-        try{
-            functionality = (FunctionalityEntity)query.getSingleResult();
-        }
-        catch(NoResultException ex){
-            ex.printStackTrace();
-        }
+        FunctionalityEntity functionality = em.find(FunctionalityEntity.class, functionalityId);
+         if(functionality==null) throw new ExistException ("FunctionalitySessionBean-->ExistException-->Function doesn't exist!");
         return functionality;
     }
        public FunctionalityEntity getFunctionalityByName(String funcName)
