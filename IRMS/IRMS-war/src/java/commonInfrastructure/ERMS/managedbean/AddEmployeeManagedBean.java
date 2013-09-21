@@ -106,7 +106,7 @@ public class AddEmployeeManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Employee saved.", ""));
 //            emailSessionBean.emailInitialPassward(employee.getPersonalEmail(), initialPwd); //send email
         emailSessionBean.emailInitialPassward(employee.getEmployeeEmail(), initialPwd);
-        System.out.println("email sent already");
+        System.out.println("email already sent");
         employee = new EmployeeEntity();
     }
 }
