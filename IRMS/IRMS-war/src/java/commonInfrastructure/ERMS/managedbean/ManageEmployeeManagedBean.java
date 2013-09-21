@@ -140,14 +140,14 @@ public class ManageEmployeeManagedBean {
 
     public void pushToRoles(EmployeeEntity selectedEmployee) {
         int i = 0;
-        Long id;
-        id = Long.valueOf(selectedRoles.get(i));
+        int id;
+        id = Integer.valueOf(selectedRoles.get(i));
         selectedEmployee.getRoles().add(getRm().getRole(id));
         System.out.println(selectedRoles.get(i));
 
         while (i < (selectedRoles.size() - 1)) {
             i++;
-            id = Long.valueOf(selectedRoles.get(i));
+            id = Integer.valueOf(selectedRoles.get(i));
             selectedEmployee.getRoles().add(getRm().getRole(id));
             System.out.println(selectedRoles.get(i));
         }
@@ -174,7 +174,7 @@ public class ManageEmployeeManagedBean {
         int n = 0;
 
         while (n < selectedRoles.size()) {
-            sb.append(rm.getRole(Long.valueOf(selectedRoles.get(n))).getRoleName());
+            sb.append(rm.getRole(Integer.valueOf(selectedRoles.get(n))).getRoleName());
             sb.append(";");
             n++;
         }
