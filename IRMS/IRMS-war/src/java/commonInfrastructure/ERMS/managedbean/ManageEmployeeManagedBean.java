@@ -60,7 +60,7 @@ public class ManageEmployeeManagedBean {
     }
 
     public void saveChanges(ActionEvent event) {
-        selectedEmployee.setRoles(new ArrayList<RoleEntity>());
+        selectedEmployee.setRole(new RoleEntity());
         pushToRoles(selectedEmployee);
         em.updateEmployee(selectedEmployee);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));
@@ -142,13 +142,15 @@ public class ManageEmployeeManagedBean {
         int i = 0;
         Long id;
         id = Long.valueOf(selectedRoles.get(i));
-        selectedEmployee.getRoles().add(getRm().getRole(id));
+        //selectedEmployee.getRoles().add(getRm().getRole(id));
+        selectedEmployee.setRole(getRm().getRole(id));
         System.out.println(selectedRoles.get(i));
 
         while (i < (selectedRoles.size() - 1)) {
             i++;
             id = Long.valueOf(selectedRoles.get(i));
-            selectedEmployee.getRoles().add(getRm().getRole(id));
+           // selectedEmployee.getRoles().add(getRm().getRole(id));
+            selectedEmployee.setRole(getRm().getRole(id));
             System.out.println(selectedRoles.get(i));
         }
 
@@ -163,9 +165,9 @@ public class ManageEmployeeManagedBean {
 
         StringBuffer sb = new StringBuffer();
         String msg;
-        List<RoleEntity> roles = new ArrayList<RoleEntity>();
+        RoleEntity role = new RoleEntity();
 
-        roles = selectedEmployee.getRoles();
+        role = selectedEmployee.getRole();
 
         System.out.println("Msg initiated");
 

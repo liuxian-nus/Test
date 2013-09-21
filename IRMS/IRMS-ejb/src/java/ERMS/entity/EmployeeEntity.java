@@ -5,15 +5,13 @@
 package ERMS.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -38,20 +36,17 @@ public class EmployeeEntity implements Serializable {
     private String answer;
     private String employeeEmail; 
     
-    @OneToMany(targetEntity = RoleEntity.class, cascade = {CascadeType.MERGE})
-    private List<RoleEntity> roles = new ArrayList<RoleEntity>();
+    @ManyToOne(targetEntity = RoleEntity.class, cascade = {CascadeType.MERGE})
+    private RoleEntity role = new RoleEntity();
 
-    public List<RoleEntity> getRoles() {
-        return roles;
+    public RoleEntity getRole() {
+        return role;
     }
 
-    public void setRoles(List<RoleEntity> roles) {
-        this.roles = roles;
+    public void setRole(RoleEntity role) {
+        this.role = role;
     }
-    
-    public void addRole(RoleEntity role) {
-        this.roles.add(role);
-    }
+   
 
     public EmployeeEntity() {
     }
