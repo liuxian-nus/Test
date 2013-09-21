@@ -4,14 +4,10 @@ package ERMS.session;
 import ERMS.entity.EmployeeEntity;
 import Exception.ExistException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.Remove;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 

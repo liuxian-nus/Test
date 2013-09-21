@@ -39,6 +39,7 @@ public class RoomEntity implements Serializable {
     private Set<RoomServiceEntity> roomService = new HashSet<RoomServiceEntity> ();
     @ManyToOne(cascade={CascadeType.PERSIST})
     private PriceEntity roomPrice = new PriceEntity();
+    private double overbookingLoss = 0;
    
     public int getRoomId() {
         return roomId;
@@ -140,6 +141,14 @@ public class RoomEntity implements Serializable {
     public void addRoomServiceCharge(double newRoomServiceCharge) {
         this.roomServiceCharge += newRoomServiceCharge;
         System.out.println("RoomEntity-->new account receivable generated:" + newRoomServiceCharge);
+    }
+
+    public double getOverbookingLoss() {
+        return overbookingLoss;
+    }
+
+    public void setOverbookingLoss(double overbookingLoss) {
+        this.overbookingLoss = overbookingLoss;
     }
     
     @Override

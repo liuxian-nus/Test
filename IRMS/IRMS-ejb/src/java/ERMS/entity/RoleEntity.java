@@ -23,17 +23,17 @@ public class RoleEntity implements Serializable {
      private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roleId;
+    private int roleId;
     private String roleName;
     
     @OneToMany(targetEntity = FunctionalityEntity.class, cascade = {CascadeType.MERGE})
     private List<FunctionalityEntity> functionalities = new ArrayList<FunctionalityEntity>();
 
-    public Long getRoleId() {
+    public int getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
     
@@ -59,26 +59,9 @@ public class RoleEntity implements Serializable {
     public void setFunctionalities(List<FunctionalityEntity> functionalities) {
         this.functionalities = functionalities;
     }
-
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (roleId != null ? roleId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RoleEntity)) {
-            return false;
-        }
-        RoleEntity other = (RoleEntity) object;
-        if ((this.roleId == null && other.roleId != null) || (this.roleId != null && !this.roleId.equals(other.roleId))) {
-            return false;
-        }
-        return true;
+    
+    public void addFunctionality(FunctionalityEntity functionality) {
+        this.functionalities.add(functionality);
     }
 
     @Override

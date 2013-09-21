@@ -48,6 +48,10 @@ public class EmployeeEntity implements Serializable {
     public void setRoles(List<RoleEntity> roles) {
         this.roles = roles;
     }
+    
+    public void addRole(RoleEntity role) {
+        this.roles.add(role);
+    }
 
     public EmployeeEntity() {
     }

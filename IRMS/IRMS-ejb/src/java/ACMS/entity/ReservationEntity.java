@@ -50,6 +50,87 @@ public class ReservationEntity implements Serializable {
         return hash;
     }
 
+    public Long getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(Long reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    public String getRcName() {
+        return rcName;
+    }
+
+    public void setRcName(String rcName) {
+        this.rcName = rcName;
+    }
+
+    public String getRcEmail() {
+        return rcEmail;
+    }
+
+    public void setRcEmail(String rcEmail) {
+        this.rcEmail = rcEmail;
+    }
+
+    public String getRcHP() {
+        return rcHP;
+    }
+
+    public void setRcHP(String rcHP) {
+        this.rcHP = rcHP;
+    }
+
+    public String getRcCreditCardNo() {
+        return rcCreditCardNo;
+    }
+
+    public void setRcCreditCardNo(String rcCreditCardNo) {
+        this.rcCreditCardNo = rcCreditCardNo;
+    }
+
+    public Date getRcCheckInDate() {
+        return rcCheckInDate;
+    }
+
+    public void setRcCheckInDate(Date rcCheckInDate) {
+        this.rcCheckInDate = rcCheckInDate;
+    }
+
+    public Date getRcCheckOutDate() {
+        return rcCheckOutDate;
+    }
+
+    public void setRcCheckOutDate(Date rcCheckOutDate) {
+        this.rcCheckOutDate = rcCheckOutDate;
+    }
+
+    public int getReservationHotelNo() {
+        return reservationHotelNo;
+    }
+
+    public void setReservationHotelNo(int reservationHotelNo) {
+        this.reservationHotelNo = reservationHotelNo;
+    }
+
+    public int getReservationRoomCount() {
+        return reservationRoomCount;
+    }
+
+    public void setReservationRoomCount(int reservationRoomCount) {
+        this.reservationRoomCount = reservationRoomCount;
+    }
+
+    public int getReservationGuestCount() {
+        return reservationGuestCount;
+    }
+
+    public void setReservationGuestCount(int reservationGuestCount) {
+        this.reservationGuestCount = reservationGuestCount;
+    }
+
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the reservationId fields are not set

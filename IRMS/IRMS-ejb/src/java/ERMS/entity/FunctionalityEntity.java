@@ -38,7 +38,7 @@ public class FunctionalityEntity implements Serializable {
     public void setFunctionalityId(Long functionalityId) {
         this.functionalityId = functionalityId;
     }
-
+   
     /**
      * @return the FuncName
      */

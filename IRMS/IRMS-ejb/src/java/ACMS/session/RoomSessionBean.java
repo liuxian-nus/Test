@@ -5,12 +5,15 @@ import ACMS.entity.RoomEntity;
 import ACMS.entity.RoomServiceEntity;
 import Exception.ExistException;
 import Exception.RoomException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 
 /**
@@ -47,7 +50,6 @@ public class RoomSessionBean {
     
     //room include or dis-include breakfast 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-
     public RoomEntity updateRoom(int roomId,boolean hasBreakfast)throws ExistException{
         room = em.find(RoomEntity.class, roomId);
         if(room==null) throw new ExistException ("RoomSessionBean-->ExistException-->Member doesn't exist!");
@@ -61,7 +63,6 @@ public class RoomSessionBean {
     
     //add new charged service
      @TransactionAttribute(TransactionAttributeType.REQUIRED)
-
      public RoomServiceEntity addRoomService(int roomId, String roomServiceName)throws ExistException{
          room = em.find(RoomEntity.class, roomId);
          roomService = em.find(RoomServiceEntity.class, roomServiceName);
@@ -86,7 +87,7 @@ public class RoomSessionBean {
         return room;
     }
     
-
+    //individual member checkout
     public void checkOut(int roomId) throws RoomException{
         room = em.find(RoomEntity.class, roomId);
         if(room.getRoomServiceCharge()!= 0) throw new RoomException ("RoomSessionBean-->RoomException-->There is uncleared room service charge!");
@@ -96,4 +97,17 @@ public class RoomSessionBean {
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
     }
     
+    //list of all rooms -- for floor plan
+    //information displayed: availability, roomSchedule,roomName, roomType, roomService, accumulated charge
+      public List<RoomEntity> getAllRooms() throws ExistException{
+        Query q = em.createQuery("SELECT r FROM RoomEntity r");
+        List roomList = new ArrayList<RoomEntity>();
+         for (Object o: q.getResultList()) { 
+            RoomEntity r = (RoomEntity) o; 
+            roomList.add(r); 
+        } 
+        if(roomList == null)  throw new ExistException("RoomEntity database is empty!");
+        return roomList;     
+    }
+      
 }

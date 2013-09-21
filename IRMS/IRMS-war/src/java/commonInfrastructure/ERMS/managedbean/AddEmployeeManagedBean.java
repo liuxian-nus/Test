@@ -5,7 +5,7 @@
 package commonInfrastructure.ERMS.managedbean;
 
 import ERMS.entity.EmployeeEntity;
-import ERMS.session.EPasswordHashSessionBean;
+import ERMS.entity.RoleEntity;
 import ERMS.session.EmailSessionBean;
 import ERMS.session.EmployeeSessionBean;
 import java.io.IOException;
@@ -27,13 +27,14 @@ import javax.faces.event.ActionEvent;
 @RequestScoped
 public class AddEmployeeManagedBean implements Serializable {
     @EJB
-    private EPasswordHashSessionBean ePasswordHashSessionBean;
-    @EJB
     private EmailSessionBean emailSessionBean;
+
     @EJB
     private EmployeeSessionBean employeeSessionBean;
     
+    private RoleEntity admin;
     private EmployeeEntity employee;
+    
     
     @PostConstruct
     public void init()
@@ -56,6 +57,32 @@ public class AddEmployeeManagedBean implements Serializable {
     public AddEmployeeManagedBean() {
         employee = new EmployeeEntity();
     }
+    
+    public void saveAdmin(ActionEvent event) throws IOException {
+        //add admin role
+        admin.setRoleId(0);
+        admin.setRoleName("SuperAdmin");
+        admin.addFunctionality(null);//functionalities to be discussed here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+       
+        //add admin employee
+        employee.setEmployeePassword("0000");
+        employee.setEmployeeId("0000");
+        employee.setEmployeeName("SuperAdmin");
+        employee.addRole(admin);
+        employee.setEmployeeEmail("admin.cir@gmail.com");
+        employee.setIsFirstTimeLogin(false);
+        employee.setEmployeeGender("male");
+        try {
+            System.out.println("Saving Admin....");
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("Admin saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Admin saved.", ""));
+        employee = new EmployeeEntity();
+    } 
 
     public void saveNewEmployee(ActionEvent event) throws IOException {
         String initialPwd = "";
@@ -63,7 +90,7 @@ public class AddEmployeeManagedBean implements Serializable {
         String[] sArray = uuid.split("-");
         initialPwd = sArray[0];
         employee.setEmployeePassword(initialPwd);
-        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword(employee.getEmployeePassword())); 
+//      employee.setEmployeePassword(EPasswordHashSessionBean.hashPassword(employee.getEmployeePassword())); 
         
         try {
             System.out.println("we are in SavaNewEmployee in managedbean");
