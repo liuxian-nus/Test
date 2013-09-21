@@ -128,6 +128,18 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/member.jsp").forward(request, response);
 
             }
+             else if ("memberInfo".equals(page))
+            {
+                System.out.println("***member page***");
+                request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
+
+            }
+             else if ("memberRegister".equals(page))
+            {
+                System.out.println("***member page***");
+                request.getRequestDispatcher("/memberRegister.jsp").forward(request, response);
+
+            }
             else{
                 System.out.println("other page");
             }
