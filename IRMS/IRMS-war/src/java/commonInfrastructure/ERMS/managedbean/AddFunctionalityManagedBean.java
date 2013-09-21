@@ -49,7 +49,7 @@ public class AddFunctionalityManagedBean {
     }
     
     public void oneMore(ActionEvent event) throws IOException{
-        FacesContext.getCurrentInstance().getExternalContext().redirect("AddFunctionality.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("addFunctionality.xhtml");
     }
 
     /**
