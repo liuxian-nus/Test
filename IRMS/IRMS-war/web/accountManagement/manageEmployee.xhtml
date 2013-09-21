@@ -53,15 +53,6 @@
                                 <p:message for="name"/>
                             </h:panelGroup>  
 
-                            <h:outputText value="Password" />  
-                            <h:panelGroup>  
-                                <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.employeePassword}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>  
-                                <h:outputText id="password" value="#{manageEmployeeManagedBean.selectedEmployee.employeePassword}" rendered="#{manageEmployeeManagedBean.editMode}">  
-                                </h:outputText>
-
-                            </h:panelGroup>  
-
-
                             <h:outputText value="DOB(DD-MM-YYYY)" />  
                             <h:panelGroup> 
                                 <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.employeeDob}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>  
@@ -81,20 +72,18 @@
                             <f:facet name="footer">  
                                 <p:outputPanel rendered="#{manageEmployeeManagedBean.editMode}" layout="block" style="text-align:right">  
                                     <p:commandButton value="Save" update="employees msgs" actionListener="#{manageEmployeeManagedBean.saveChanges}"   
-                                                     oncomplete="carDialog.hide()" image="ui-icon ui-icon-check"/>  
-                                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" image="ui-icon ui-icon-close"/>  
+                                                     oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
+                                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
                                 </p:outputPanel>  
                             </f:facet>  
                         </h:panelGrid>  
 
                     </p:dialog>
 
-                    <p:confirmDialog message="Are you sure?" width="200"  
-                                     showEffect="explode" hideEffect="explode"  
-                                     header="Confirm" severity="alert" widgetVar="confirmation">  
+                    <p:confirmDialog appendToBody="true" message="Are you sure?" header="Confirmation" width="300" showEffect="explode" hideEffect="explode" widgetVar="confirmation">  
 
                         <p:commandButton value="Yes" update="employees" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
-                            <f:attribute name="code1" value="#{manageEmployeeManagedBean.selectedEmployee.id}" />
+                            <f:attribute name="code1" value="#{manageEmployeeManagedBean.selectedEmployee.employeeId}" />
                         </p:commandButton>
                         <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
 
