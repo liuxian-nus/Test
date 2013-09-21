@@ -21,8 +21,8 @@
                                            itemValue="#{allFunc.functionalityId}" />  
                         </h:selectManyMenu>  
                         <br />
-                        <p:commandButton value="Save" ajax="true" update="statusMessages" actionListener="#{addRoleManagedBean.saveNewRole}"/>
-                        <p:commandButton value="Add More Roles" ajax="true" update="statusMessages" actionListener="#{addRoleManagedBean.oneMore}"/>
+                        <p:commandButton value="Save" ajax="true" actionListener="#{addRoleManagedBean.saveNewRole}"/>
+                        <p:commandButton value="Add More Roles" ajax="true" actionListener="#{addRoleManagedBean.oneMore}"/>
                     </h:panelGrid>
                 </div>
             </p:panel>

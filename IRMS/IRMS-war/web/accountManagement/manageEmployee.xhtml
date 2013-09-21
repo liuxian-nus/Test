@@ -13,16 +13,13 @@
                     <p:growl id="msgs" showDetail="true" /> 
                     <p:dataTable id="employees" value="#{manageEmployeeManagedBean.getEmployees()}" var="employeeList" paginator="true" rows="6">
                         <p:column headerText="Name">
-                            <h:outputText value="#{employeeList.name}"/>
+                            <h:outputText value="#{employeeList.employeeName}"/>
                         </p:column>
                         <p:column headerText="DOB(DD-MM-YYYY)">
-                            <h:outputText value="#{employeeList.DOB}"/>
+                            <h:outputText value="#{employeeList.employeeDob}"/>
                         </p:column>
                         <p:column headerText="Department">
-                            <h:outputText value="#{employeeList.department}"/>
-                        </p:column>
-                        <p:column headerText="Contact Number">
-                            <h:outputText value="#{employeeList.contactNumber}"/>
+                            <h:outputText value="#{employeeList.employeeDepartment}"/>
                         </p:column>
                         <p:column headerText="Roles">
                             <h:outputText value="#{manageEmployeeManagedBean.toSentence(employeeList.roles)}"/>
@@ -51,15 +48,15 @@
                         <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
                             <h:outputText value="Name" />  
                             <h:panelGroup>  
-                                <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.name}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>  
-                                <p:inputText id="name"   requiredMessage="Address cannot be empty" value="#{manageEmployeeManagedBean.selectedEmployee.name}" rendered="#{manageEmployeeManagedBean.editMode}" required="true" label="Name"/>  
+                                <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.employeeName}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>  
+                                <p:inputText id="name"   requiredMessage="Address cannot be empty" value="#{manageEmployeeManagedBean.selectedEmployee.employeeName}" rendered="#{manageEmployeeManagedBean.editMode}" required="true" label="Name"/>  
                                 <p:message for="name"/>
                             </h:panelGroup>  
 
                             <h:outputText value="Password" />  
                             <h:panelGroup>  
-                                <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.password}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>  
-                                <h:outputText id="password" value="#{manageEmployeeManagedBean.selectedEmployee.password}" rendered="#{manageEmployeeManagedBean.editMode}">  
+                                <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.employeePassword}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>  
+                                <h:outputText id="password" value="#{manageEmployeeManagedBean.selectedEmployee.employeePassword}" rendered="#{manageEmployeeManagedBean.editMode}">  
                                 </h:outputText>
 
                             </h:panelGroup>  
@@ -67,24 +64,17 @@
 
                             <h:outputText value="DOB(DD-MM-YYYY)" />  
                             <h:panelGroup> 
-                                <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.DOB}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>  
-                                <p:inputMask mask="99-99-9999" id="DOB"   requiredMessage="DOB cannot be empty" value="#{manageEmployeeManagedBean.selectedEmployee.DOB}" rendered="#{manageEmployeeManagedBean.editMode}" required="true" label="Contact Person Name"/>  
+                                <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.employeeDob}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>  
+                                <p:inputMask mask="99-99-9999" id="DOB"   requiredMessage="DOB cannot be empty" value="#{manageEmployeeManagedBean.selectedEmployee.employeeDob}" rendered="#{manageEmployeeManagedBean.editMode}" required="true" label="Contact Person Name"/>  
                                 <p:message for="DOB"/>
                             </h:panelGroup>  
-
-                            <h:outputText value="Contact Number" />  
-                            <h:panelGroup>  
-                                <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.contactNumber}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>  
-                                <p:inputMask id="contactNumber"   requiredMessage="Contact Number cannot be empty" value="#{manageEmployeeManagedBean.selectedEmployee.contactNumber}" rendered="#{manageEmployeeManagedBean.editMode}" required="true" label="Contact Number" mask="(99)99999999"/>  
-                                <p:message for="contactNumber"/>
-                            </h:panelGroup>
 
                             <h:outputText value="Roles"/>
                             <h:outputText value="#{manageEmployeeManagedBean.toSentence(manageEmployeeManagedBean.selectedEmployee.roles)}"/>
                             <h:selectManyMenu value="#{manageEmployeeManagedBean.selectedRoles}" style="height:100px">  
                                 <f:selectItems value="#{manageEmployeeManagedBean.rm.allRoles}"  
                                                var="allRoles" itemLabel="#{allRoles.roleName}" 
-                                               itemValue="#{allRoles.id}" />  
+                                               itemValue="#{allRoles.roleId}" />  
                             </h:selectManyMenu>
 
 
