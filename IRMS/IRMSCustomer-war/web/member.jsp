@@ -17,7 +17,7 @@
                     <div class="row">
                 <div clas="large-9" colums></div>
                 <div class="large-3" columns>
-                    <form id="member" action="restaurantSearch" method="POST">
+                    <form id="member" action="memberRegister" method="POST">
                         <fieldset>
                             <legend>Member</legend>
 
@@ -37,20 +37,13 @@
                           
 
                             <br>
-                            <div class="row">
-                                 <div class="large-12 columns">
-                                <input type="submit" class="tiny button, button secondary" value="Login">
-                            
-                                 </div>
-                            </div>
+                            <ul class="button-group">
 
-                            <br>
-                            <div class="row">
-                                 <div class="large-12 columns">
-                                <input type="submit" class="tiny button" value="Register New Member">
-                            
-                                 </div>
-                            </div>
+                                  <li><a href="memberInfo" class="small button">Login</a></li>
+                                  <li><a href="memberRegister" class="small button">Register</a></li>
+    
+                            </ul>
+ 
                         </fieldset>         
                     </form>
                 </div>

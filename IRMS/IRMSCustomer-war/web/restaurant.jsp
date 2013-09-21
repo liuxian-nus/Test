@@ -42,10 +42,14 @@
                                     <div class="large-12 columns">
                                     <label for="customDropdown">Type of place</label>
                                     <select id="customDropdown" name="restTypeOfPlace">
-                                        <option DISABLED>This is a dropdown</option>
+                                        
+                                        <option></option>
                                         <option>Fast food</option>
                                         <option>Restaurant</option>
-                                        <option>Pub/Bar</option>
+                                        <option>Bar</option>
+                                        <option>Dessert</option>
+                                        <option></option>
+                                        
                                     </select>
                                     </div>
                                 </div>
@@ -53,7 +57,7 @@
                                      <div class="large-12 columns">
                                     <label for="customDropdown">Neighborhood</label>
                                     <select id="customDropdown" name="restNeighbourhood">
-                                        <option DISABLED>This is a dropdown</option>
+                                        <option></option>
                                         <option>Whole Singapore</option>
                                         <option>Central Singapore</option>
                                         <option>Western Singapore</option>
@@ -68,11 +72,13 @@
                                     <div class="large-12 columns"> 
                                     <label for="customDropdown">Cuisine</label>
                                     <select id="customDropdown" name="restCuisine">
-                                        <option DISABLED>This is a dropdown</option>
-                                        <option>Asian</option>
+                                        <option></option>
+                                        <option>Japanese</option>
                                         <option>Chinese</option>
                                         <option>Western</option>
-                                        <option>Hala</option>
+                                        <option>Halal</option>
+                                        <option>Thai</option>
+                                        <option>Vegetarian</option>
                                     </select>
                                     </div>
                                 </div>
