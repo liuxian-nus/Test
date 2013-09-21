@@ -32,7 +32,7 @@ public class AddEmployeeManagedBean implements Serializable {
     @EJB
     private EmployeeSessionBean employeeSessionBean;
     
-    private RoleEntity admin;
+    private RoleEntity superAdmin;
     private EmployeeEntity employee;
     
     
@@ -60,15 +60,15 @@ public class AddEmployeeManagedBean implements Serializable {
     
     public void saveAdmin(ActionEvent event) throws IOException {
         //add admin role
-        admin.setRoleId(0);
-        admin.setRoleName("SuperAdmin");
-        admin.addFunctionality(null);//functionalities to be discussed here!!!!!!!!!!!!!!!!!!!!!!!!!
+        superAdmin.setRoleId(0);
+        superAdmin.setRoleName("SuperAdmin");
+        superAdmin.addFunctionality(null);//functionalities to be discussed here!!!!!!!!!!!!!!!!!!!!!!!!!
        
         //add admin employee
         employee.setEmployeePassword("0000");
         employee.setEmployeeId("0000");
         employee.setEmployeeName("SuperAdmin");
-        employee.addRole(admin);
+        employee.addRole(superAdmin);
         employee.setEmployeeEmail("admin.cir@gmail.com");
         employee.setIsFirstTimeLogin(false);
         employee.setEmployeeGender("male");
