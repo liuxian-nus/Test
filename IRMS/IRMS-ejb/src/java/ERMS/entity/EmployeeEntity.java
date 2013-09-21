@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -38,7 +38,7 @@ public class EmployeeEntity implements Serializable {
     private String answer;
     private String employeeEmail; 
     
-    @OneToMany(targetEntity = RoleEntity.class, cascade = {CascadeType.MERGE})
+    @ManyToMany(targetEntity = RoleEntity.class, cascade = {CascadeType.MERGE})
     private List<RoleEntity> roles = new ArrayList<RoleEntity>();
 
     public List<RoleEntity> getRoles() {

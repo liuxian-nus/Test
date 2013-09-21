@@ -78,7 +78,7 @@ public class EmployeeSessionBean {
             EmployeeEntity m = (EmployeeEntity) o; 
             employeeList.add(m); 
         } 
-        if(employee == null)  throw new ExistException("Employee database is empty!");
+        if(employeeList.isEmpty())  throw new ExistException("Employee database is empty!");
         return employeeList;     
     }
     
