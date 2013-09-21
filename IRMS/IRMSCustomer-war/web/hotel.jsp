@@ -64,12 +64,7 @@ $(document).ready(function() {
 </head>
 
 <body>
-
-<div id="templatemo_wrapper">
-	<div id="templatemo_header">
-    	<div id="site_title"><h1>Free CSS Templates</a></h1></div>
-        <div class="cleaner"></div>
-    </div> <!-- end of header -->
+ <!-- end of header -->
     <!--Start of menu bar-->
     <jsp:include page="header.jsp"></jsp:include>
     
