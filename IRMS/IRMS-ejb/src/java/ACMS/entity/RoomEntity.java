@@ -37,14 +37,17 @@ public class RoomEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date checkOutDate;
     private double roomServiceCharge = 0;
+    
     @ManyToMany(cascade={CascadeType.PERSIST})
     private Set<RoomServiceEntity> roomService = new HashSet<RoomServiceEntity> ();
     @ManyToOne(cascade={CascadeType.PERSIST})
     private PriceEntity roomPrice = new PriceEntity();
     private double overbookingLoss = 0;
-    @OneToOne(cascade = {CascadeType.PERSIST})
-    private MemberEntity membership = new MemberEntity();
-   
+    @ManyToOne(cascade={CascadeType.PERSIST})
+    private ReservationEntity reservation = new ReservationEntity();
+    @OneToOne(cascade={CascadeType.PERSIST})
+    private MemberEntity roomMember = new MemberEntity();
+    
     public int getRoomId() {
         return roomId;
     }
@@ -155,12 +158,20 @@ public class RoomEntity implements Serializable {
         this.overbookingLoss = overbookingLoss;
     }
 
-    public MemberEntity getMembership() {
-        return membership;
+    public ReservationEntity getReservation() {
+        return reservation;
     }
 
-    public void setMembership(MemberEntity membership) {
-        this.membership = membership;
+    public void setReservation(ReservationEntity reservation) {
+        this.reservation = reservation;
+    }
+
+    public MemberEntity getRoomMember() {
+        return roomMember;
+    }
+
+    public void setRoomMember(MemberEntity roomMember) {
+        this.roomMember = roomMember;
     }
     
     @Override

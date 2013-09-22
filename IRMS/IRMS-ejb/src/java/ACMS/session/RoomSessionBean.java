@@ -1,5 +1,6 @@
 package ACMS.session;
 
+import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
 import ACMS.entity.RoomServiceEntity;
 import CRMS.entity.MemberEntity;
@@ -25,8 +26,8 @@ public class RoomSessionBean {
     @PersistenceContext
     private EntityManager em;
     RoomEntity room = new RoomEntity();
-    MemberEntity thisMember = new MemberEntity();
     RoomServiceEntity roomService = new RoomServiceEntity();
+    ReservationEntity reservation = new ReservationEntity();
 
     public RoomSessionBean() {
     }
@@ -54,7 +55,7 @@ public class RoomSessionBean {
     public RoomEntity updateRoom(int roomId, boolean hasBreakfast) throws ExistException {
         room = em.find(RoomEntity.class, roomId);
         if (room == null) {
-            throw new ExistException("RoomSessionBean-->ExistException-->Member doesn't exist!");
+            throw new ExistException("RoomSessionBean-->ExistException-->Room doesn't exist!");
         }
         room.setHasBreakfast(hasBreakfast);
         if (hasBreakfast == true) {
@@ -71,7 +72,7 @@ public class RoomSessionBean {
     public RoomServiceEntity addRoomService(int roomId, String roomServiceName) throws ExistException {
         room = em.find(RoomEntity.class, roomId);
         roomService = em.find(RoomServiceEntity.class, roomServiceName);
-        if (roomServiceName == null) {
+        if (roomService == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->Invalid room service name!");
         }
         room.addRoomService(roomService);
@@ -83,19 +84,24 @@ public class RoomSessionBean {
     }
 
     //member check-in
-    public void checkIn(int roomId, Date checkInDate, Date checkOutDate, String thisEmail) throws RoomException {
+    public void checkIn(int roomId, Long reservationId) throws RoomException, ExistException {
+        ReservationEntity reservation = new ReservationEntity();
+        reservation = em.find(ReservationEntity.class, reservationId);
+         if (reservation == null) {
+            throw new ExistException("RoomSessionBean-->ExistException-->This Reservation doesn't exist!");
+        }
         room = em.find(RoomEntity.class, roomId);
         if ("reserved".equals(room.getRoomStatus())) {
             System.out.println("RoomSessionBean-->Warning! the room is reserved!");
         } else if ("occupied".equals(room.getRoomStatus())) {
             throw new RoomException("RoomSessionBean-->RoomException-->The room is occupied, cannot check-in");
         }
-        room.setCheckInDate(checkInDate);
-        room.setCheckOutDate(checkOutDate);
+        room.setCheckInDate(reservation.getRcCheckInDate());
+        room.setCheckOutDate(reservation.getRcCheckOutDate());
         room.setRoomStatus("occupied");
-        if (thisEmail != null) {
-            thisMember = em.find(MemberEntity.class, thisEmail);
-            room.setMembership(thisMember);
+        MemberEntity thisMember = reservation.getRcMember();
+        if (thisMember != null) {
+            room.setRoomMember(thisMember);
             System.out.println("RoomSessionBean-->Welcome! " + thisMember.getMemberName());
         }
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is now occupied");
@@ -130,7 +136,7 @@ public class RoomSessionBean {
 
     public void addMembership(int roomId, MemberEntity thisMember) {
         room = em.find(RoomEntity.class, roomId);
-        room.setMembership(thisMember);
+        room.setRoomMember(thisMember);
         em.merge(room);
         System.out.println("RoomSessionBean --> welcome: " + thisMember.getMemberName());
     }

@@ -4,6 +4,7 @@
  */
 package CRMS.entity;
 
+import ACMS.entity.ReservationEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.Entity;
@@ -39,6 +40,8 @@ public class MemberEntity implements Serializable {
     private double coin;
     private List<String> preferences = new ArrayList<String>();
     
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "rcMember")
+    private Set<ReservationEntity> hotelReservation;
     @OneToMany(cascade ={CascadeType.ALL},mappedBy = "member")
     private Set <MemberTransactionEntity> MemberTransactions;
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "mcMemberTargets")
@@ -192,6 +195,14 @@ public class MemberEntity implements Serializable {
     
     public void removePreferences(String oldPreference) {
         this.preferences.remove(oldPreference);
+    }
+
+    public Set<ReservationEntity> getHotelReservation() {
+        return hotelReservation;
+    }
+
+    public void setHotelReservation(Set<ReservationEntity> hotelReservation) {
+        this.hotelReservation = hotelReservation;
     }
     
     @Override

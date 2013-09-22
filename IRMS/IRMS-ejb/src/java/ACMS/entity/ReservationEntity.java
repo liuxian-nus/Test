@@ -4,17 +4,20 @@
  */
 package ACMS.entity;
 
+import CRMS.entity.MemberEntity;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
  *
- * @author liudazhi
+ * @author liuxian
  */
 @Entity
 public class ReservationEntity implements Serializable {
@@ -34,6 +37,8 @@ public class ReservationEntity implements Serializable {
     private int reservationRoomCount;
     private int reservationGuestCount;
     //to be continued;
+     @ManyToOne(cascade={CascadeType.PERSIST})
+     private MemberEntity rcMember;
 
     public Long getId() {
         return reservationId;
@@ -130,7 +135,14 @@ public class ReservationEntity implements Serializable {
         this.reservationGuestCount = reservationGuestCount;
     }
 
-    
+    public MemberEntity getRcMember() {
+        return rcMember;
+    }
+
+    public void setRcMember(MemberEntity rcMember) {
+        this.rcMember = rcMember;
+    }
+ 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the reservationId fields are not set
@@ -148,5 +160,5 @@ public class ReservationEntity implements Serializable {
     public String toString() {
         return "ACMS.entity.ReservationEntity[ reservationId=" + reservationId + " ]";
     }
-    
+
 }
