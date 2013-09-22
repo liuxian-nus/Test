@@ -109,4 +109,13 @@ public class AddEmployeeManagedBean implements Serializable {
         System.out.println("email already sent");
         employee = new EmployeeEntity();
     }
+    
+    public void oneMore(ActionEvent event) throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("addEmployee.xhtml");
+    }
+    
+    public boolean isHotel() {
+        return ("Hotel".equals(employee.getEmployeeDepartment()));
+    }
+    
 }
