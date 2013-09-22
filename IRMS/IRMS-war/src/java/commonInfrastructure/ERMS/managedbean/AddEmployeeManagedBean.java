@@ -5,6 +5,7 @@
 package commonInfrastructure.ERMS.managedbean;
 
 import ERMS.entity.EmployeeEntity;
+import ERMS.session.EPasswordHashSessionBean;
 import ERMS.entity.RoleEntity;
 import ERMS.session.EmailSessionBean;
 import ERMS.session.EmployeeSessionBean;
@@ -30,6 +31,8 @@ public class AddEmployeeManagedBean implements Serializable {
 
     @EJB
     private EmailSessionBean emailSessionBean;
+    @EJB
+    private EPasswordHashSessionBean ePasswordHashSessionBean;
     @EJB
     private EmployeeSessionBean employeeSessionBean;
     private RoleEntity superAdmin;
@@ -90,7 +93,7 @@ public class AddEmployeeManagedBean implements Serializable {
         String[] sArray = uuid.split("-");
         initialPwd = sArray[0];
         employee.setEmployeePassword(initialPwd);
-//      employee.setEmployeePassword(EPasswordHashSessionBean.hashPassword(employee.getEmployeePassword())); 
+      employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword(employee.getEmployeePassword())); 
 
         try {
             System.out.println("we are in SavaNewEmployee in managedbean");
