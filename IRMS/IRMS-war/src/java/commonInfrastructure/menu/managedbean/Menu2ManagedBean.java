@@ -58,7 +58,7 @@ public class Menu2ManagedBean implements Serializable {
             Submenu submenu = new Submenu();
             MenuItem item = new MenuItem();
            
-            if (userType.contains("Admin")) {
+            if (userType.contains("SuperAdmin")) {
                     
                 submenu = new Submenu();
                 submenu.setLabel("Account");
@@ -108,6 +108,17 @@ public class Menu2ManagedBean implements Serializable {
                 
                 model.addSubmenu(submenu);
             }
+             if ((userType.contains("ACMSAdmin")) || (userType.contains("ACMSFrontDesk")) || (userType.contains("ACMSRoomService"))) {
+                
+                submenu = new Submenu();
+                submenu.setLabel("Hotel");
+                submenu.setIcon("ui-icon ui-icon-contact");
+                
+                item = new MenuItem();
+                item.setValue("Hotel");
+                item.setUrl("/acms/hotelManagement.xhtml");
+                submenu.getChildren().add(item);
+             }
         }
         return model;
     }
