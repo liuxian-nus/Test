@@ -7,7 +7,7 @@ package commonInfrastructure.ERMS.managedbean;
 import ERMS.entity.EmployeeEntity;
 import ERMS.session.EPasswordHashSessionBean;
 import ERMS.session.EmailSessionBean;
-import ERMS.session.EmployeeSessionRemote;
+import ERMS.session.EmployeeSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.UUID;
@@ -25,15 +25,16 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @ViewScoped
 public class ResetPasswordManagedBean {
-
+    
     @EJB
-    private EmployeeSessionRemote employeeSessionRemote;
+    private EmployeeSessionBean employeeSessionBean;
     @EJB
     private EPasswordHashSessionBean passowordHashSessionBean;
     @EJB
     private EmailSessionBean emailSessionBean;
     private String employeeId;
     private String employeeDob;
+    
     private EmployeeEntity employee;
     private String securityQuestion;
     private String answer;
@@ -42,7 +43,7 @@ public class ResetPasswordManagedBean {
     }
 
     public void doVerify(ActionEvent event) throws IOException, ExistException {
-        employee = employeeSessionRemote.getEmployeeById(employeeId);
+        employee = employeeSessionBean.getEmployeeById(employeeId);
         System.out.println(employee.getEmployeeId());
         if (employee == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid UserName", ""));
@@ -57,25 +58,25 @@ public class ResetPasswordManagedBean {
                 employee.setEmployeePassword(initialPwd);
                 employee.setEmployeePassword(passowordHashSessionBean.hashPassword(employee.getEmployeePassword()));
                 employee.setIsFirstTimeLogin(true);
-                employeeSessionRemote.updateEmployee(employee);
+                employeeSessionBean.updateEmployee(employee);
                 emailSessionBean.emailInitialPassward(employee.getEmployeeEmail(), initialPwd); //send email
-                  FacesContext.getCurrentInstance().getExternalContext().redirect("resetPasswordResult.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("resetPasswordResult.xhtml");
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Verification Failed.", ""));
             }
         }
     }
 
-    public EmployeeSessionRemote getEmployeeManagerSessionRemote() {
-        return employeeSessionRemote;
+    public EmployeeSessionBean getEmployeeManagerSessionBean() {
+        return employeeSessionBean;
     }
 
-    public void setEmployeeManagerSessionRemote(EmployeeSessionRemote employeeManagerSessionRemote) {
-        this.employeeSessionRemote = employeeManagerSessionRemote;
+    public void setEmployeeManagerSessionRemote(EmployeeSessionBean employeeManagerSessionRemote) {
+        this.employeeSessionBean = employeeManagerSessionRemote;
     }
 
     public void retrieveEmployee() throws ExistException {
-        employee = employeeSessionRemote.getEmployeeById(employeeId);
+        employee = employeeSessionBean.getEmployeeById(employeeId);
     }
 
     public String getEmployeeId() {
@@ -118,4 +119,3 @@ public class ResetPasswordManagedBean {
         this.answer = answer;
     }
 }
-
