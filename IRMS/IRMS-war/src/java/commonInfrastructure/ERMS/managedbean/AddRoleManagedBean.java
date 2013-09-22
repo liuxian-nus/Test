@@ -7,6 +7,7 @@ package commonInfrastructure.ERMS.managedbean;
 import ERMS.entity.RoleEntity;
 import ERMS.session.FunctionalitySessionBean;
 import ERMS.session.RoleSessionBean;
+import Exception.ExistException;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -38,7 +39,7 @@ public class AddRoleManagedBean {
         role = new RoleEntity();
     }
     
-    public void saveNewRole(ActionEvent event)
+    public void saveNewRole(ActionEvent event) throws ExistException
     {
         pushToFunc();
         rm.addRole(getRole());
@@ -64,7 +65,7 @@ public class AddRoleManagedBean {
         this.selectedFunc = selectedFunc;
     }
     
-     public void pushToFunc(){
+     public void pushToFunc() throws ExistException{
         int i = 0;
         Long id;
         System.out.println("haha");
