@@ -18,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -26,22 +27,18 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @RequestScoped
 public class AddEmployeeManagedBean implements Serializable {
-    @EJB
-    private EmailSessionBean emailSessionBean;
 
     @EJB
+    private EmailSessionBean emailSessionBean;
+    @EJB
     private EmployeeSessionBean employeeSessionBean;
-    
     private RoleEntity superAdmin;
     private EmployeeEntity employee;
-    
-    
+
     @PostConstruct
-    public void init()
-    {
+    public void init() {
         FacesContext.getCurrentInstance().getExternalContext().getSession(true);
     }
-    
 
     public EmployeeEntity getEmployee() {
         return employee;
@@ -57,7 +54,7 @@ public class AddEmployeeManagedBean implements Serializable {
     public AddEmployeeManagedBean() {
         employee = new EmployeeEntity();
     }
-    
+
     public void saveAdmin(ActionEvent event) throws IOException {
         superAdmin = new RoleEntity();
         //add admin role
@@ -65,7 +62,7 @@ public class AddEmployeeManagedBean implements Serializable {
         superAdmin.setRoleId(0);
         superAdmin.setRoleName("SuperAdmin");
         superAdmin.addFunctionality(null);//functionalities to be discussed here!!!!!!!!!!!!!!!!!!!!!!!!!
-       
+
         //add admin employee
         employee = new EmployeeEntity();
         employee.setEmployeePassword("0000");
@@ -85,7 +82,7 @@ public class AddEmployeeManagedBean implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Admin saved.", ""));
         employee = new EmployeeEntity();
-    } 
+    }
 
     public void saveNewEmployee(ActionEvent event) throws IOException {
         String initialPwd = "";
@@ -94,7 +91,7 @@ public class AddEmployeeManagedBean implements Serializable {
         initialPwd = sArray[0];
         employee.setEmployeePassword(initialPwd);
 //      employee.setEmployeePassword(EPasswordHashSessionBean.hashPassword(employee.getEmployeePassword())); 
-        
+
         try {
             System.out.println("we are in SavaNewEmployee in managedbean");
             employeeSessionBean.addEmployee(employee);
@@ -109,13 +106,12 @@ public class AddEmployeeManagedBean implements Serializable {
         System.out.println("email already sent");
         employee = new EmployeeEntity();
     }
-    
+
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("addEmployee.xhtml");
     }
-    
+
     public boolean isHotel() {
         return ("Hotel".equals(employee.getEmployeeDepartment()));
     }
-    
 }
