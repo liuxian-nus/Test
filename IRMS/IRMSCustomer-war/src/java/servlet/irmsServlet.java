@@ -10,7 +10,6 @@ package servlet;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -234,8 +233,10 @@ public class irmsServlet extends HttpServlet {
     private ArrayList searchRestaurant(HttpServletRequest request) {
         
         ArrayList al = new ArrayList();
+        System.out.println("method invoked");
         String restNeighbourhood = request.getParameter("restNeighbourhood");
         System.out.println(restNeighbourhood);
+        System.out.println("restNeighbourhood retrieved");
         String restTypeOfPlace   = request.getParameter("restTypeOfPlace");
         System.out.println(restTypeOfPlace);
         String restCuisine       = request.getParameter("restCuisine");
@@ -243,6 +244,8 @@ public class irmsServlet extends HttpServlet {
         String keyword           = request.getParameter("keyword");
         System.out.println(keyword);
         RestaurantEntity re = indReservationSessionBean.createRestaurantEntity(restNeighbourhood, restTypeOfPlace, restCuisine, keyword);
+        
+        System.out.println(re.getRestNeighbourhood()+re.getRestCuisine()+re.getRestTypeOfPlace());
 
         Set <RestaurantEntity> res =   indReservationSessionBean.searchRestaurant(re);  
 
@@ -251,6 +254,7 @@ public class irmsServlet extends HttpServlet {
         al.addAll(res);
         al.add("Restaurant Search has been performed!");
         
+      //  System.out.println(al.get(0));
         System.out.println("irmsServlet: restaurant search has been completed!");
 
 
