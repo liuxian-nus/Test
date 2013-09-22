@@ -23,30 +23,37 @@
     <ui:define name="content">
         <h:form id="Register">
             <p:growl id="growl" showDetail="true" sticky="true" /> 
-            
+
             <p:panel id="Home" header="Add New Employee" style="height:440px;">
 
-                <h:panelGrid columns="2" >  
+                <h:panelGrid columns="3" >  
                     <h:outputText value="Name*:"/>
-                    <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{addEmployeeManagedBean.employee.employeeName}"/>
-                    
+                    <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{addEmployeeManagedBean.employee.employeeName}"/>                                   
+                    <h:outputText value=""/>
+
                     <h:outputText value="Email*:"/>
-                    <h:inputText required ="true" requiredMessage="Email cannot be empty" value="#{addEmployeeManagedBean.employee.employeeEmail}"/>
+                    <h:inputText id ="email" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Email cannot be empty" validatorMessage="Email is not valid"  value="#{addEmployeeManagedBean.employee.employeeEmail}">
+                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                    </h:inputText>
+                    <p:message for="email" />
 
                     <h:outputText value="ID*:"/>
                     <h:inputText required ="true" requiredMessage="ID cannot be empty" value="#{addEmployeeManagedBean.employee.employeeId}"/>
+                    <h:outputText value=""/>
 
                     <h:outputText value="DOB(DD-MM-YYYY)*:"/>
                     <p:calendar pattern="yyyy-MM-dd" yearRange="-70" showButtonPanel="true" navigator="true" id="customCal" value="#{addEmployeeManagedBean.employee.employeeDob}" /> 
+                    <h:outputText value=""/>
 
                     <h:outputText value="Gender*:"/>
                     <p:selectOneRadio id="options" value="#{addEmployeeManagedBean.employee.employeeGender}" requiredMessage="Gender is required for emloyee's initial password receiving">  
                         <f:selectItem itemLabel="Female" itemValue="Female" />  
                         <f:selectItem itemLabel="Male" itemValue="Male" />  
                     </p:selectOneRadio>  
+                    <h:outputText value=""/>
 
                     <h:outputText value="Department*:"/>
-                    <h:selectOneMenu value ="#{addEmployeeManagedBean.employee.employeeDepartment}" required ="true" requiredMessage="Department cannot be empty">
+                    <h:selectOneMenu value ="#{addEmployeeManagedBean.employee.employeeDepartment}" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Department cannot be empty">
                         <f:selectItem itemLabel="Select Department" itemValue="" />  
                         <f:selectItem itemLabel="Hotel" itemValue="Hotel" />  
                         <f:selectItem itemLabel="Convention" itemValue="Convention" />  
@@ -55,34 +62,38 @@
                         <f:selectItem itemLabel="Entertainmant" itemValue="Entertainment" />  
                         <f:selectItem itemLabel="Attraction" itemValue="Attraction" /> 
                     </h:selectOneMenu> 
-                    <!--  <h:outputText value="Posistion:"/>
-                      <h:selectOneMenu value ="" required ="true" requiredMessage="Position cannot be empty">
-                          <f:selectItem itemLabel="Select Position" itemValue="" />  
-                          <f:selectItem itemLabel="Entertainment Show Manager" itemValue="ShowManager" />  
-                          <f:selectItem itemLabel="Entertainment Ticket Front Desk" itemValue="TicketFrontDest" />  
-                          <f:selectItem itemLabel="Contract Manager" itemValue="ContractManager" />  
-                          <f:selectItem itemLabel="Contract Operator" itemValue="ContractOperator" />  
-                          <f:selectItem itemLabel="Shopping Mall Staff" itemValue="ShoppingMallStaff" />  
-                          <f:selectItem itemLabel="Restaurant Outlet Operator" itemValue="ROutletOperator" /> 
-                          <f:selectItem itemLabel="Restaurant Warehousing Manager" itemValue="RWarehousingManager" />  
-                          <f:selectItem itemLabel="Restaurant Outlet Information Manager" itemValue="ROutletInformationManager" />  
-                          <f:selectItem itemLabel="Hotel Employee Manager" itemValue="HEmployeeManager" />  
-                          <f:selectItem itemLabel="Hotel Front Desk" itemValue="HFrontDesk" />
-                          <f:selectItem itemLabel="Hotel Service Manager" itemValue="HServiceManager" />  
-                          <f:selectItem itemLabel="CRM Admin" itemValue="CRMAdmin" /> 
-                          <f:selectItem itemLabel="System Administration" itemValue="SystemAdministration" /> 
-                      </h:selectOneMenu> -->
-                    <h:outputText value="Schedule:"/>
-                    <h:selectOneRadio value ="#{addEmployeeManagedBean.employee.employeeSchedule}" required ="true" requiredMessage="Schedule cannot be empty">
+                    <h:outputText value=""/>
+
+                    <h:outputText rendered="#{addEmployeeManagedBean.isHotel()}" value="Schedule:"/>
+                    <h:selectOneRadio value ="#{addEmployeeManagedBean.employee.employeeSchedule}" rendered="#{addEmployeeManagedBean.isHotel()}" required ="true" requiredMessage="Schedule cannot be empty">
                         <f:selectItem itemLabel="Morning Shift" itemValue="1" />  
                         <f:selectItem itemLabel="Afternoon Shift" itemValue="2" />  
                         <f:selectItem itemLabel="Night Shift" itemValue="3" />  
                     </h:selectOneRadio> 
+                    <h:outputText value=""/>
 
                 </h:panelGrid>
                 <p:commandButton value="Save" ajax="true"  actionListener="#{addEmployeeManagedBean.saveNewEmployee}" update="growl"/>
+                <p:commandButton value="Add More Employee" actionListener="#{addEmployeeManagedBean.oneMore}" />
             </p:panel>
         </h:form>
     </ui:define>
 
 </ui:composition>
+<!--  <h:outputText value="Posistion:"/>
+                     <h:selectOneMenu value ="" required ="true" requiredMessage="Position cannot be empty">
+                         <f:selectItem itemLabel="Select Position" itemValue="" />  
+                         <f:selectItem itemLabel="Entertainment Show Manager" itemValue="ShowManager" />  
+                         <f:selectItem itemLabel="Entertainment Ticket Front Desk" itemValue="TicketFrontDest" />  
+                         <f:selectItem itemLabel="Contract Manager" itemValue="ContractManager" />  
+                         <f:selectItem itemLabel="Contract Operator" itemValue="ContractOperator" />  
+                         <f:selectItem itemLabel="Shopping Mall Staff" itemValue="ShoppingMallStaff" />  
+                         <f:selectItem itemLabel="Restaurant Outlet Operator" itemValue="ROutletOperator" /> 
+                         <f:selectItem itemLabel="Restaurant Warehousing Manager" itemValue="RWarehousingManager" />  
+                         <f:selectItem itemLabel="Restaurant Outlet Information Manager" itemValue="ROutletInformationManager" />  
+                         <f:selectItem itemLabel="Hotel Employee Manager" itemValue="HEmployeeManager" />  
+                         <f:selectItem itemLabel="Hotel Front Desk" itemValue="HFrontDesk" />
+                         <f:selectItem itemLabel="Hotel Service Manager" itemValue="HServiceManager" />  
+                         <f:selectItem itemLabel="CRM Admin" itemValue="CRMAdmin" /> 
+                         <f:selectItem itemLabel="System Administration" itemValue="SystemAdministration" /> 
+                     </h:selectOneMenu> -->
