@@ -2,11 +2,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <link rel="stylesheet" href="/IRMSCustomer-war/css/foundation.min.css" type="text/css" media="screen" />
+     <link rel="stylesheet" href="/IRMSCustomer-war/css/foundation.css" type="text/css" media="screen" />
     <link href="/IRMSCustomer-war/css/templatemo_style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/IRMSCustomer-war/css/ddsmoothmenu.css" />
     <link rel="stylesheet" href="/IRMSCustomer-war/css/nivo-slider.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="/IRMSCustomer-war/css/normalize.css" type="text/css" media="screen" />
-
+   
     <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
     <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
     <script type="text/javascript" src="/IRMSCustomer-war/js/jquery.js"></script>
