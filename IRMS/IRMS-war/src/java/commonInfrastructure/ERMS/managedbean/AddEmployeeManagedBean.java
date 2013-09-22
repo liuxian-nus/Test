@@ -59,7 +59,7 @@ public class AddEmployeeManagedBean implements Serializable {
         superAdmin = new RoleEntity();
         //add admin role
         /* superAdmin = new RoleEntity();*/
-        superAdmin.setRoleId(0);
+  //      superAdmin.setRoleId(0);
         superAdmin.setRoleName("SuperAdmin");
         superAdmin.addFunctionality(null);//functionalities to be discussed here!!!!!!!!!!!!!!!!!!!!!!!!!
 

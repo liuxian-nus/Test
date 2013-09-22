@@ -57,6 +57,14 @@ public class RestaurantSessionBean implements RestaurantSessionBeanRemote{
         em.merge(restaurant);
         return restaurant;
     }
+    
+    @Override
+    public boolean updateRestaurant(RestaurantEntity restaurant)
+    {
+        em.merge(restaurant);
+        System.out.println("RestaurantSessionBean: rest " + restaurant.getRestId() + " is successfully updated");
+        return true;
+    }
 
     @Override
     public void persist(Object object) {
@@ -89,10 +97,29 @@ public class RestaurantSessionBean implements RestaurantSessionBeanRemote{
         return restaurants;*/
         
     }
+    
+    @Override
+    public RestaurantEntity getRestaurantById(String restId) throws ExistException{
+        restaurant = em.find(RestaurantEntity.class, restId);
+        if(restaurant == null)  throw new ExistException("Restaurant does not exist!");
+        return restaurant;
+    }
 
     @Override
     public RestaurantEntity updateRestaurant(Long restId, String restNeighbourhood, String restTypeOfPlace, String restCuisine, String restName) throws ExistException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public boolean removeRestaurant(String restId)throws ExistException {
+        restaurant = em.find(RestaurantEntity.class, restId);
+        if(restaurant == null) {
+            throw new ExistException("Restaurant does not exist!");
+        }
+        em.remove(restaurant);
+        return true;
+    } 
+    
+    
     
 }

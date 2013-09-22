@@ -38,4 +38,10 @@ public interface RestaurantSessionBeanRemote {
     RestaurantEntity updateRestaurant(Long restId, String restNeighbourhood, String restTypeOfPlace, String restCuisine, String restName) throws ExistException;
     
     public List<RestaurantEntity> getAllRestaurants() throws NoResultException;
+
+    public RestaurantEntity getRestaurantById(String restId) throws ExistException;
+
+    public boolean updateRestaurant(RestaurantEntity restaurant);
+
+    public boolean removeRestaurant(String restId) throws ExistException;
 }
