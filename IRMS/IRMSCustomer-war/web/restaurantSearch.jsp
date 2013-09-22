@@ -15,6 +15,13 @@
     <body>
         <jsp:include page="header.jsp"></jsp:include>
         <h1>Restaurant Search Result!</h1>
+            <table>
+        <c:forEach items="${users}" var="user">
+            <tr>
+                <td>${user.userEmail}</td>
+            </tr>
+        </c:forEach>
+            </table>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>
