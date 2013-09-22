@@ -6,6 +6,7 @@ package ACMS.managedbean;
 
 import ACMS.entity.RoomEntity;
 import ACMS.session.RoomSessionBean;
+import CRMS.entity.MemberEntity;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class RoomManagedBean {
     private List<RoomEntity> roomList;
     private List<RoomEntity> selectRoom;
     private RoomSessionBean rm;
+    private String memberEmail;
 
     public RoomManagedBean() throws ExistException {
         roomList = new ArrayList<RoomEntity>();
@@ -67,7 +69,7 @@ public class RoomManagedBean {
         Date checkInDate = null;
         Date checkOutDate = null;
         try {
-            rm.checkIn(thisRoom.getRoomId(), checkInDate, checkOutDate);
+            rm.checkIn(thisRoom.getRoomId(), checkInDate, checkOutDate, memberEmail);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when checking in", ""));
             return;

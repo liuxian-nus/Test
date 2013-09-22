@@ -43,7 +43,7 @@ public class MemberEntity implements Serializable {
     private Set <MemberTransactionEntity> MemberTransactions;
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "mcMemberTargets")
     private Set <MarketingCampaignEntity> MarketingCampaigns;
-
+    
     public Set<MarketingCampaignEntity> getMarketingCampaigns() {
         return MarketingCampaigns;
     }

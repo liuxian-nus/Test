@@ -4,6 +4,7 @@
  */
 package ACMS.entity;
 
+import CRMS.entity.MemberEntity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -40,6 +42,8 @@ public class RoomEntity implements Serializable {
     @ManyToOne(cascade={CascadeType.PERSIST})
     private PriceEntity roomPrice = new PriceEntity();
     private double overbookingLoss = 0;
+    @OneToOne(cascade = {CascadeType.PERSIST})
+    private MemberEntity membership = new MemberEntity();
    
     public int getRoomId() {
         return roomId;
@@ -149,6 +153,14 @@ public class RoomEntity implements Serializable {
 
     public void setOverbookingLoss(double overbookingLoss) {
         this.overbookingLoss = overbookingLoss;
+    }
+
+    public MemberEntity getMembership() {
+        return membership;
+    }
+
+    public void setMembership(MemberEntity membership) {
+        this.membership = membership;
     }
     
     @Override
