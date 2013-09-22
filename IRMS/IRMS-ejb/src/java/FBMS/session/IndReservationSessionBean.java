@@ -41,15 +41,21 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
     
     @Override
     public Set<RestaurantEntity> searchRestaurant(RestaurantEntity r){
+        Query q;
+        
         String restNeighbourhood = r.getRestNeighbourhood();
+        System.out.println(restNeighbourhood);
+        
         String restCuisine = r.getRestCuisine();
         String restTypeOfPlace = r.getRestTypeOfPlace();
         String restKeyword = r.getRestName();
         Set stateSet = new HashSet <RestaurantEntity>();
         
-       if(restNeighbourhood != null){
-           Query q = em.createQuery("SELECT r FROM RestaurantEntity r WHERE r.restNeighbourhood ='" + restNeighbourhood + "'");
-          // q.setParameter("restNeighbourhood", restNeighbourhood);
+       if(restNeighbourhood.equals("")==false){ 
+           q = em.createQuery("SELECT r FROM RestaurantEntity r WHERE r.restNeighbourhood ='" + restNeighbourhood + "'");
+       }
+       else q = em.createQuery("SELECT r FROM RestaurantEntity r");
+           // q.setParameter("restNeighbourhood", restNeighbourhood);
            
            System.out.println(q);
            for (Object o :q.getResultList())
@@ -57,8 +63,8 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
                RestaurantEntity re = (RestaurantEntity)o;
                stateSet.add(re);
            }      
-           }
-        if(restCuisine != null){
+           
+        if(restCuisine.equals("")==false){
             for(Object o : stateSet){
                 RestaurantEntity re = (RestaurantEntity)o;
                 if(!re.getRestCuisine().equalsIgnoreCase(restCuisine))
@@ -66,7 +72,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
             }
                
         }
-        if(restTypeOfPlace != null){
+        if(restTypeOfPlace.equals("")==false){
             for (Object o :stateSet){
                 RestaurantEntity re = (RestaurantEntity)o;
                 if(!re.getRestTypeOfPlace().equalsIgnoreCase(restTypeOfPlace))
@@ -74,7 +80,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
             }
         }
         
-        if(restKeyword!= null){
+        if(restKeyword.equals("")==false){
             for(Object o: stateSet){
                 RestaurantEntity re = (RestaurantEntity)o;
                 if(!re.getRestName().contains(restKeyword))
