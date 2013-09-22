@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+        <h:form id="form">  
+
+            <p:growl id="roomAvailable" showDetail="true"/>  
+
+            <p:dataTable id="roomAvailableList" var="room" value="#{roomManagedBean.getAvailableRooms()}">  
+
+                <p:ajax event="rowToggle" listener="#{tableBean.onRowToggle}" update=":form:roomMgt" />  
+
+                <f:facet name="header">  
+                    All Available Rooms
+                </f:facet>  
+
+                <p:column style="width:2%">  
+                    <p:rowToggler />  
+                </p:column>  
+
+                <p:column style="width:19.6%">  
+                    <f:facet name="header">  
+                        Room ID 
+                    </f:facet>  
+                    <h:outputText value="#{roomManagedBean.getAvailableRooms().getRoomId()}" />  
+                </p:column>  
+
+                <p:column style="width:19.6%">  
+                    <f:facet name="header">  
+                        Hotel 
+                    </f:facet>  
+                    <h:outputText value="#{roomManagedBean.getAvailableRooms().getRoomHotel()}" />  
+                </p:column>  
+
+                <p:column style="width:19.6%">  
+                    <f:facet name="header">  
+                        Availability
+                    </f:facet>  
+                    <h:outputText value="#{roomManagedBean.getAvailableRooms().getRoomStatus()}" />  
+                </p:column>  
+
+                <p:column style="width:19.6%">  
+                    <f:facet name="header">  
+                        RoomType 
+                    </f:facet>  
+                    <h:outputText value="#{roomManagedBean.getAvailableRooms().getRoomType()}" />  
+                </p:column>  
+
+                <p:column style="width:19.6%">  
+                    <f:facet name="header">  
+                        Price 
+                    </f:facet>  
+                    <h:outputText value="#{roomManagedBean.getAvailableRooms().getRoomPrice()}" />  
+                </p:column>  
+
+                <p:rowExpansion>  
+                    <h:panelGrid id="display" columns="2" cellpadding="4" style="width:300px;"  
+                                 styleClass=" ui-widget-content grid">  
+
+                        <f:facet name="header">  
+                            Room Information
+                        </f:facet>  
+
+                        <h:outputText value="Room ID:" />  
+                        <h:outputText id="roomId" value="#{roomManagedBean.getAvailableRooms().getRoomId()}" />  
+
+                        <h:outputText value="Room Type:" />  
+                        <h:outputText id="roomType" value="#{roomManagedBean.getAvailableRooms().getRoomType()}" />
+                        
+                        <h:outputText value="Hotel:" />  
+                        <h:outputText id="roomHotel" value="#{roomManagedBean.getAvailableRooms().getRoomHotel()}" />  
+
+                        <h:outputText value="Level:" />  
+                        <h:outputText id="roomLevel" value="#{roomManagedBean.getAvailableRooms().getRoomLevel()}" />  
+                        
+                        <h:outputText value="Number:" />  
+                        <h:outputText id="roomNo" value="#{roomManagedBean.getAvailableRooms().getRoomNo()}" />  
+                        
+                        <h:outputText value="Availability:" />  
+                        <h:outputText id="roomAvailability" value="#{roomManagedBean.getAvailableRooms().getRoomStatus()}" />  
+
+                    </h:panelGrid>  
+
+                </p:rowExpansion>  
+            </p:dataTable>  
+        </h:form>  
+    </ui:define>
+
+</ui:composition>
