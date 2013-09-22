@@ -88,7 +88,7 @@
                             <br>
                             <div class="row">
                                  <div class="large-12 columns">
-                                <input type="submit" class="tiny button, button secondary" value="Search">
+                                <input type="submit" class="small button" value="Search">
                             
                                  </div>
                             </div>
