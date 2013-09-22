@@ -48,6 +48,8 @@
                                         <option>Restaurant</option>
                                         <option>Bar</option>
                                         <option>Dessert</option>
+                                        <option>Cafe</option>
+                                        <option>Food Stall</option>
                                         <option></option>
                                         
                                     </select>
@@ -58,12 +60,12 @@
                                     <label for="customDropdown">Neighborhood</label>
                                     <select id="customDropdown" name="restNeighbourhood">
                                         <option></option>
-                                        <option>Whole Singapore</option>
-                                        <option>Central Singapore</option>
-                                        <option>Western Singapore</option>
-                                        <option>Eastern Singapore</option>
-                                        <option>Northern Singapore</option>
-                                        <option>Southern Singapore</option>
+                                        <option>Whole</option>
+                                        <option>Central</option>
+                                        <option>West</option>
+                                        <option>East</option>
+                                        <option>North</option>
+                                        <option>South</option>
                                     </select>
                                      </div>
                                 </div>
@@ -79,6 +81,7 @@
                                         <option>Halal</option>
                                         <option>Thai</option>
                                         <option>Vegetarian</option>
+                                        <option>Korean</option>
                                     </select>
                                     </div>
                                 </div>
