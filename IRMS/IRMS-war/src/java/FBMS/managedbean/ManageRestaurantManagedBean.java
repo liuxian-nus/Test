@@ -77,7 +77,8 @@ public class ManageRestaurantManagedBean {
     }
 
     public RestaurantEntity getSelectedRestaurant() {
-        return selectedRestaurant;
+        System.out.println("get selectedRestaurant");
+        return selectedRestaurant;    
     }
 
     public void setSelectedRestaurant(RestaurantEntity selectedRestaurant) {

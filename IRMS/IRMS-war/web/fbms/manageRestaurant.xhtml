@@ -5,11 +5,12 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
+   
 
 
     
      <ui:define name="content">
-        <h:form id="form">
+        <h:form id="myForm">
                     <p:panel id="restMgt" header="Restaurant Information" style="height:495px;">
                         <div style="margin-top:20px;margin-left:65px;margin-right:50px;margin-bottom:20px;">
                             <p:growl id="Msg" showDetail="true" /> 
@@ -31,15 +32,77 @@
                                     <h:outputText value="#{restList.restQuota}"/>
                                 </p:column>
                                 
-                                <p:column style="width:40px">  
-                                    <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                <p:column style="width:100px">  
+                                    <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
+                                    <p:commandButton update=":myForm:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit">  
                                         <f:setPropertyActionListener value="#{restList}" target="#{manageRestaurantManagedBean.selectedRestaurant}" />  
                                         <f:setPropertyActionListener value="#{true}" target="#{manageRestaurantManagedBean.editMode}" /> 
+                                    </p:commandButton>
+                                    <p:commandButton update=":myForm:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete">  
+                                        <f:setPropertyActionListener value="#{restList}" target="#{manageRestaurantManagedBean.selectedRestaurant}" />  
                                     </p:commandButton> 
+                                    </h:panelGrid>
                                 </p:column> 
                                 
-                                
                             </p:dataTable>
+                            
+                            
+                            
+                            <p:dialog header="Edit Restaurant" widgetVar="carDialog" resizable="false" id="carDlg"  
+                              showEffect="fade" hideEffect="explode" modal="true" width="500">  
+
+                            <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
+                            <h:outputText value="Restaurant Name" />  
+                            <h:panelGroup>  
+                                <h:outputText value="#{manageRestaurantManagedBean.selectedRestaurant.restName}" style="font-weight:bold" rendered="#{!manageRestaurantManagedBean.editMode}"/>  
+                                <p:inputText id="name"   requiredMessage="Name cannot be empty" value="#{manageRestaurantManagedBean.selectedRestaurant.restName}" rendered="#{manageRestaurantManagedBean.editMode}" required="true" label="Name"/>  
+                                <p:message for="name"/>
+                            </h:panelGroup>  
+
+                            <h:outputText value="Restaurant Type of Place" />  
+                            <h:panelGroup> 
+                                <h:outputText value="#{manageRestaurantManagedBean.selectedRestaurant.restTypeOfPlace}" style="font-weight:bold" rendered="#{!manageRestaurantManagedBean.editMode}"/>  
+                                <p:inputText id="typeOfPlace"   requiredMessage="Type of Place cannot be empty" value="#{manageRestaurantManagedBean.selectedRestaurant.restTypeOfPlace}" rendered="#{manageRestaurantManagedBean.editMode}" required="true" label="Restaurant Type Of Place"/>  
+                                <p:message for="typeOfPlace"/>
+                            </h:panelGroup>  
+                            
+                            <h:panelGroup>  
+                                <h:outputText value="#{manageRestaurantManagedBean.selectedRestaurant.restCuisine}" style="font-weight:bold" rendered="#{!manageRestaurantManagedBean.editMode}"/>  
+                                <p:inputText id="cuisine"   requiredMessage="Cuisine cannot be empty" value="#{manageRestaurantManagedBean.selectedRestaurant.restCuisine}" rendered="#{manageRestaurantManagedBean.editMode}" required="true" label="Cuisine"/>  
+                                <p:message for="cuisine"/>
+                            </h:panelGroup> 
+
+                         <!--   <h:outputText value="Roles"/>
+                            <h:outputText value="#{manageEmployeeManagedBean.toSentence(manageEmployeeManagedBean.selectedEmployee.roles)}"/>
+                            <h:selectManyMenu value="#{manageEmployeeManagedBean.selectedRoles}" style="height:100px">  
+                                <f:selectItems value="#{manageEmployeeManagedBean.rm.allRoles}"  
+                                               var="allRoles" itemLabel="#{allRoles.roleName}" 
+                                               itemValue="#{allRoles.roleId}" />  
+                            </h:selectManyMenu>-->
+
+
+                            <f:facet name="footer">  
+                                <p:outputPanel rendered="#{manageRestaurantManagedBean.editMode}" layout="block" style="text-align:right">  
+                                    <p:commandButton value="Save" actionListener="#{manageRestaurantManagedBean.saveChanges}"   
+                                                     oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
+                                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
+                                </p:outputPanel>  
+                            </f:facet>  
+                        </h:panelGrid>  
+
+                    </p:dialog>
+
+                    <p:confirmDialog appendToBody="true" message="Are you sure?" header="Confirmation" width="300" showEffect="explode" hideEffect="explode" widgetVar="confirmation">  
+
+                        <p:commandButton value="Yes" update="restaurants" actionListener="#{manageRestaurantManagedBean.deleteRestaurant}" oncomplete="confirmation.hide()">  
+                            <f:attribute name="code1" value="#{manageRestaurantManagedBean.selectedRestaurant.restId}" />
+                        </p:commandButton>
+                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
+
+                    </p:confirmDialog>  
+                            
+                            
+                            
                         </div>
                     </p:panel>
         </h:form>  
