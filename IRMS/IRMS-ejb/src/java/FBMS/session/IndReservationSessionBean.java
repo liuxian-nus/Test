@@ -48,8 +48,8 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
         Set stateSet = new HashSet <RestaurantEntity>();
         
        if(restNeighbourhood != null){
-           Query q = em.createQuery("SELECT r FROM RestaurantEntity r WHERE r.restNeighbourhood = :restNeighbourhood");
-           q.setParameter("restNeighbourhood", restNeighbourhood);
+           Query q = em.createQuery("SELECT r FROM RestaurantEntity r WHERE r.restNeighbourhood ='" + restNeighbourhood + "'");
+          // q.setParameter("restNeighbourhood", restNeighbourhood);
            
            System.out.println(q);
            for (Object o :q.getResultList())
