@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -35,7 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 public class irmsServlet extends HttpServlet {
    @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
-    private ArrayList data = null;
+    private Set<RestaurantEntity> data = null;
 
   
    
@@ -82,6 +83,7 @@ public class irmsServlet extends HttpServlet {
                 data = searchRestaurant(request);
                 System.out.println("data search has been performed and result has been returned by bean");
                 System.out.println(request.getParameter("keyword"));
+                System.out.println(data.isEmpty());
                 request.setAttribute("data", data);
                 request.getRequestDispatcher("/restaurantSearch.jsp").forward(request, response);
 
@@ -231,9 +233,9 @@ public class irmsServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private ArrayList searchRestaurant(HttpServletRequest request) {
+    private Set<RestaurantEntity> searchRestaurant(HttpServletRequest request) {
         
-        ArrayList al = new ArrayList();
+        Set <RestaurantEntity> al = new HashSet <RestaurantEntity>();
         System.out.println("method invoked");
         String restNeighbourhood = request.getParameter("restNeighbourhood");
         System.out.println(restNeighbourhood);
@@ -249,11 +251,8 @@ public class irmsServlet extends HttpServlet {
         System.out.println(re.getRestNeighbourhood()+re.getRestCuisine()+re.getRestTypeOfPlace());
 
         Set <RestaurantEntity> res =   indReservationSessionBean.searchRestaurant(re);  
-
-
         
         al.addAll(res);
-        al.add("Restaurant Search has been performed!");
         
       //  System.out.println(al.get(0));
         System.out.println("irmsServlet: restaurant search has been completed!");
