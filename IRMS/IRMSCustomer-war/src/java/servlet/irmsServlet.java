@@ -82,6 +82,7 @@ public class irmsServlet extends HttpServlet {
                 data = searchRestaurant(request);
                 System.out.println("data search has been performed and result has been returned by bean");
                 System.out.println(request.getParameter("keyword"));
+                request.setAttribute("data", data);
                 request.getRequestDispatcher("/restaurantSearch.jsp").forward(request, response);
 
             } 
