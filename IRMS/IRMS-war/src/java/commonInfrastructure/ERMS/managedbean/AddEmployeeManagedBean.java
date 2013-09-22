@@ -62,7 +62,7 @@ public class AddEmployeeManagedBean implements Serializable {
         superAdmin = new RoleEntity();
         //add admin role
         /* superAdmin = new RoleEntity();*/
-  //      superAdmin.setRoleId(0);
+        //      superAdmin.setRoleId(0);
         superAdmin.setRoleName("SuperAdmin");
         superAdmin.addFunctionality(null);//functionalities to be discussed here!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -93,7 +93,9 @@ public class AddEmployeeManagedBean implements Serializable {
         String[] sArray = uuid.split("-");
         initialPwd = sArray[0];
         employee.setEmployeePassword(initialPwd);
-      employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword(employee.getEmployeePassword())); 
+        System.out.println("add new employe hash password!");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword(employee.getEmployeePassword()));
+        System.out.println("finished hashing");
 
         try {
             System.out.println("we are in SavaNewEmployee in managedbean");
