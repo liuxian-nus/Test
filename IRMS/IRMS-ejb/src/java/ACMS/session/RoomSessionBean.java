@@ -76,7 +76,7 @@ public class RoomSessionBean {
     }
     
     //member check-in
-    public RoomEntity checkIn(int roomId,Date checkInDate, Date checkOutDate) throws RoomException {
+    public void checkIn(int roomId,Date checkInDate, Date checkOutDate) throws RoomException {
         room = em.find(RoomEntity.class, roomId);
         if("reserved".equals(room.getRoomStatus())) System.out.println("RoomSessionBean-->Warning! the room is reserved!");
         else if("occupied".equals(room.getRoomStatus())) throw new RoomException("RoomSessionBean-->RoomException-->The room is occupied, cannot check-in");
@@ -84,7 +84,7 @@ public class RoomSessionBean {
         room.setCheckOutDate(checkOutDate);
         room.setRoomStatus("occupied");
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is now occupied");
-        return room;
+        return;
     }
     
     //individual member checkout
