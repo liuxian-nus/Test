@@ -100,7 +100,7 @@ public class CRMServlet extends HttpServlet {
                 System.out.println(password);
                 
                 System.out.println(isLogin);
-                isLogin=memberSession.login(email, password);
+                isLogin=memberSession.login(email,password);
                 System.out.println(isLogin);
                 
                 request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);

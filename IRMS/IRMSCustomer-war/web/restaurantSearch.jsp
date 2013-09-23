@@ -25,6 +25,13 @@
                 <td>${data.restNeighbourhood}</td>
                 <td>${data.restTypeOfPlace}</td>
                 <td>${data.restCuisine}</td>
+                <td>
+                    <form action="restaurantBook"><input type="submit" value ="book"/>
+                    <input type="hidden" name="restId" value="${data.restId}"/>
+                    </form> 
+                   
+                </td>
+                
                  
             </tr>
         </c:forEach>

@@ -86,7 +86,7 @@ public class FBMSServlet extends HttpServlet {
                 System.out.println(request.getParameter("restId"));//to be modified
                 System.out.println(data.isEmpty());
                 request.setAttribute("data", data);
-                //getRequestDispatcher........
+                request.getRequestDispatcher("/restaurantBook.jsp").forward(request,response);
             }
             else 
             {
@@ -134,6 +134,7 @@ public class FBMSServlet extends HttpServlet {
     }
     private boolean checkAvailability (HttpServletRequest request) 
         {
+            System.out.println("FBMSServlet CheckAvailability: method invoked");
             
             return true;
         }

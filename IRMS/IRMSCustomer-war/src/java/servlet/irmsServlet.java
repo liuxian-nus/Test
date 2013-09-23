@@ -95,6 +95,15 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/restaurant.jsp").forward(request, response);
 
             }
+            else if ("restaurantBook".equals(page)){
+                System.out.println("***restaurantBook page***");
+                System.out.println(request.getParameter("restId"));
+               
+                //System.out.println(request.getParameterValues("keyword"));
+       
+                request.getRequestDispatcher("/FBMSServlet/restaurantBook").forward(request, response);
+
+            }
             else if ("home".equals(page))
             {
                 System.out.println("***home page***");
