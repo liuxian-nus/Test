@@ -7,6 +7,7 @@ package commonInfrastructure.menu.managedbean;
 import ERMS.entity.EmployeeEntity;
 import ERMS.session.EmployeeSessionBean;
 import Exception.ExistException;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -19,6 +20,9 @@ import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.application.NavigationHandler;
 
 /**
  *
@@ -95,8 +99,21 @@ public class Menu1ManagedBean implements Serializable {
             submenu.getChildren().add(item);
 
             model.addSubmenu(submenu);
-
+            
         }
         return model;
+    }
+        
+     public void redirect(){   
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/IRMS-war/commonInfrastructure/AccessDeniedPage.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(Menu1ManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        NavigationHandler nh = ctx.getApplication().getNavigationHandler();
+        nh.handleNavigation(ctx, null, "accessDenied");
+ 
     }
 }
