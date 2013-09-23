@@ -79,14 +79,9 @@ public class irmsServlet extends HttpServlet {
 
             if("restaurantSearch".equals(page)){
                 
-                System.out.println("Current page is restaurant!");
-                data = searchRestaurant(request);
-                System.out.println("data search has been performed and result has been returned by bean");
-                System.out.println(request.getParameter("keyword"));
-                System.out.println(data.isEmpty());
-                request.setAttribute("data", data);
-                request.getRequestDispatcher("/restaurantSearch.jsp").forward(request, response);
-
+                System.out.println("irmsServlet: restaurantSearch method invoked");
+                request.getRequestDispatcher("/FBMSServlet/restaurantSearch").forward(request, response);
+                
             } 
             else if ("MakeReservation".equals(page)){
                 //data=makeReservation(request);
