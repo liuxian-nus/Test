@@ -96,6 +96,7 @@ public class RoomSessionBean {
         } else if ("occupied".equals(room.getRoomStatus())) {
             throw new RoomException("RoomSessionBean-->RoomException-->The room is occupied, cannot check-in");
         }
+        room.setReservation(reservation);
         room.setCheckInDate(reservation.getRcCheckInDate());
         room.setCheckOutDate(reservation.getRcCheckOutDate());
         room.setRoomStatus("occupied");
