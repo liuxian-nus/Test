@@ -42,4 +42,8 @@ public class ReservationSessionBean {
         if(reservation == null)throw new ExistException("Reservation does not exist!");
         return reservation;
         }
+    
+    public void addReservation(ReservationEntity newReservation) {
+        em.persist(newReservation);
+    }
     }

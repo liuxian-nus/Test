@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -28,13 +29,14 @@ import org.primefaces.event.ToggleEvent;
 @RequestScoped
 public class RoomManagedBean {
 
-    private List<RoomEntity> roomList;
+    private List<RoomEntity> roomList = new ArrayList<RoomEntity>();
     private List<RoomEntity> selectRoom;
     private RoomSessionBean rm;
+    @EJB
     private Long reservationId;
-
+    
     public RoomManagedBean() throws ExistException {
-        roomList = new ArrayList<RoomEntity>();
+        roomList = rm.getAllRooms();
     }
 
     public void initView(PhaseEvent event) {
