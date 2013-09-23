@@ -7,6 +7,7 @@ import Exception.ExistException;
 import javax.ejb.Stateless;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
@@ -32,6 +33,28 @@ public class MemberSessionBean {
     //member registration
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public MemberEntity addMember(MemberEntity member) {
+        //member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
+        em.persist(member);
+        return member;
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public MemberEntity addMember(String memberEmail, String memberName, String memberPassword, 
+    String memberHP, String gender, String nationality, Date memberDob, String maritalStatus, boolean isVIP,
+    boolean isSubscriber, double point, double coin, List<String> preferences) {
+        member.setMemberEmail(memberEmail);
+        member.setMemberName(memberName);
+        member.setMemberPassword(memberPassword);
+        member.setMemberHP(memberHP);
+        member.setGender(gender);
+        member.setNationality(nationality);
+        member.setMemberDob(memberDob);
+        member.setMaritalStatus(maritalStatus);
+        member.setIsVIP(isVIP);
+        member.setIsSubscriber(isSubscriber);
+        member.setPoint(point);
+        member.setCoin(coin);
+        member.setPreferences(preferences);      
         //member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
         em.persist(member);
         return member;
