@@ -18,11 +18,17 @@
         <jsp:include page="header.jsp"></jsp:include>
         <h1>Restaurant Search Result!</h1>
             <table>
+                <tbody>
         <c:forEach items="${data}" var="data">
             <tr>
                 <td>${data.restName}</td>
+                <td>${data.restNeighborhood}</td>
+                <td>${data.restTypeOfPlace}</td>
+                <td>${data.restCuisine}</td>
+                 
             </tr>
         </c:forEach>
+            </tbody>
             </table>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
