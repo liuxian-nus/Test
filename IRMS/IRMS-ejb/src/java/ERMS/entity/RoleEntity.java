@@ -26,7 +26,7 @@ public class RoleEntity implements Serializable {
     private int roleId;
     private String roleName;
     
-    @OneToMany(targetEntity = FunctionalityEntity.class, cascade = {CascadeType.MERGE})
+    @OneToMany(targetEntity = FunctionalityEntity.class, cascade = {CascadeType.ALL})
     private List<FunctionalityEntity> functionalities = new ArrayList<FunctionalityEntity>();
 
     public int getRoleId() {

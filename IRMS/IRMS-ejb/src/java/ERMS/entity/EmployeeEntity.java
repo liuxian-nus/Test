@@ -38,7 +38,7 @@ public class EmployeeEntity implements Serializable {
     private String answer;
     private String employeeEmail; 
     
-    @ManyToMany(targetEntity = RoleEntity.class, cascade = {CascadeType.MERGE})
+    @ManyToMany(targetEntity = RoleEntity.class, cascade = {CascadeType.ALL})
     private List<RoleEntity> roles = new ArrayList<RoleEntity>();
 
     public List<RoleEntity> getRoles() {
