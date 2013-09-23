@@ -20,10 +20,13 @@ import org.primefaces.component.submenu.Submenu;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 
+
 /**
  *
  * @author Ser3na
  */
+import javax.faces.application.NavigationHandler;
+
 @ManagedBean
 @ViewScoped
 public class Menu2ManagedBean implements Serializable {
