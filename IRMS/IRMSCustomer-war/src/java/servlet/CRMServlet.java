@@ -7,6 +7,7 @@ package servlet;
 
 
 
+import CRMS.entity.MemberEntity;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import CRMS.session.MemberSessionBean;
@@ -34,10 +35,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
-   @EJB
+    @EJB
+    private MemberSessionBean memberSession;
+    @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
     private ArrayList data = null;
-    private MemberSessionBean memberSession;
+    private MemberEntity member;
+    
     boolean isLogin = false;
 
   
@@ -99,9 +103,10 @@ public class CRMServlet extends HttpServlet {
                 System.out.println(email);
                 System.out.println(password);
                 
+                isLogin=memberSession.login(email, password);
                 System.out.println(isLogin);
-                isLogin=memberSession.login(email,password);
-                System.out.println(isLogin);
+                
+                
                 
                 request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
 
