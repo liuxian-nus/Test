@@ -22,7 +22,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="text" placeholder="username">
+                                <input type="text" placeholder="username" name="username">
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="text" placeholder="e-mail">
+                                <input type="text" placeholder="e-mail" name="e-mail">
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="password">
+                                <input type="password" name="password">
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="password">
+                                <input type="password" name="password2">
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="text" placeholder="mobile phone number">
+                                <input type="text" name="mobile"placeholder="mobile phone number">
                             </div>
                         </div>
                     </div>
