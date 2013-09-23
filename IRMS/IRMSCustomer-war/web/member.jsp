@@ -39,8 +39,9 @@
                             <br>
                             <ul class="button-group">
 
-                                  <li><input type="submit" class="small button" value="Login"></li>
-                                  <li><a href="memberRegister" class="small button">Register</a></li>
+                                  <li><input type="submit" class="button" value="Login"></li>
+                                  <li><a href="memberRegister" class="button">Register</a></li>
+                                  <li><a href="memberForgetPassword" >Forget Password</a></li>
     
                             </ul>
  
