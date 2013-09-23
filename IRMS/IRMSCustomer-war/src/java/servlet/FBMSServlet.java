@@ -6,8 +6,10 @@ package servlet;
 
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
+import FBMS.session.OrderSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.EJB;
@@ -26,8 +28,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "FBMSServlet", urlPatterns = {"/FBMSServlet","/FBMSServlet/*"})
 public class FBMSServlet extends HttpServlet {
     @EJB
+    private OrderSessionBean orderSessionBean;
+    @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
 
+    
     
     private Set<RestaurantEntity> data = null;
     private boolean data1;
@@ -77,6 +82,12 @@ public class FBMSServlet extends HttpServlet {
             {
                 System.out.println("*****MakeReservation*****");
                 System.out.println("FBMSServlet: Current page is makeReservation");
+                data1 = makeReservation(request);
+                System.out.println("FBMSServlet: Reservation has been made");
+                System.out.println(data1);
+                request.setAttribute("data", data1);
+                //request..........
+                
                 
             }
             else if ("checkAvailability".equalsIgnoreCase(page))
@@ -86,8 +97,8 @@ public class FBMSServlet extends HttpServlet {
                 data1 = checkAvailability(request);
                 System.out.println("availability has been checked for the restaurant");
                 System.out.println(request.getParameter("restId"));//to be modified
-                System.out.println(data.isEmpty());
-                request.setAttribute("data", data);
+                System.out.println(data1);
+                request.setAttribute("data", data1);
                 request.getRequestDispatcher("/restaurantBook.jsp").forward(request,response);
             }
             else 
@@ -137,13 +148,97 @@ public class FBMSServlet extends HttpServlet {
     private boolean checkAvailability (HttpServletRequest request) 
         {
             System.out.println("FBMSServlet CheckAvailability: method invoked");
+            
             Long restId = Long.parseLong(request.getParameter("restId"));
             System.out.println("The booking restaurant Id is "+ restId);
+            
+            Integer numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
+            System.out.println("The booking numberPeople is "+numberPeople);
+            
+            Integer year = Integer.parseInt(request.getParameter("year"));
+            System.out.println("The booking year is "+ year);
+            
+            Integer month = Integer.parseInt(request.getParameter("month"));
+            System.out.println("The booking month is "+ month);
+            
+            Integer date = Integer.parseInt(request.getParameter("date"));
+            System.out.println("The booking date is "+ date);
+            
+            Integer hour = Integer.parseInt(request.getParameter("hour"));
+            System.out.println("The booking hour is "+hour);
+            
+            int min = 0;
+            
+            Date newDate;
+            newDate = new Date(year,month,date,hour,min); //this one needs to be modified later
+            
             RestaurantEntity re = indReservationSessionBean.getRestaurantEntity(restId);
-            //Boolean isAvailable = indReservationSessionBean.checkAvailability(re, numberPeople, null)
-            return true;
+            Boolean isAvailable = indReservationSessionBean.checkAvailability(re, numberPeople, newDate);
+            
+            System.out.println("FBMSServlet CheckAvailability function: the restaurant availability is "+ isAvailable);
+            return isAvailable;
         }
+    private boolean makeReservation (HttpServletRequest request)
+    {
+        System.out.println("FBMSServlet makeReservation method invoked ");
+        
+            Integer year = Integer.parseInt(request.getParameter("year"));
+            System.out.println("The booking year is "+ year);
+            
+            Integer month = Integer.parseInt(request.getParameter("month"));
+            System.out.println("The booking month is "+ month);
+            
+            Integer date = Integer.parseInt(request.getParameter("date"));
+            System.out.println("The booking date is "+ date);
+            
+            Integer hour = Integer.parseInt(request.getParameter("hour"));
+            System.out.println("The booking hour is "+hour);
+            
+            int min = 0;
+            
+            Date thisDate;
+            thisDate = new Date(year,month,date,hour,min);
+        
+        System.out.println("FBMSServlet makeReservation: date has been retrieved!");
+            
+            Long restId = Long.parseLong(request.getParameter("restId"));
+            System.out.println("The booking restaurant Id is "+ restId);
+            
+            Integer numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
+            System.out.println("The booking numberPeople is "+numberPeople);
+            
+        System.out.println("FBMSServlet makeReservation: rest and number has been retrieved!");
+        
+        String title = request.getParameter("title");
+        System.out.println("The booking people title is "+title);
+        
+        String name = request.getParameter("name");
+        System.out.println("The booking people name is "+name);
+        
+        String email = request.getParameter("email");
+        System.out.println("The booking people email is "+email);
+        
+        String mobile = request.getParameter("mobile");
+        System.out.println("The booking people mobile is "+mobile);
+        
+        String notes = request.getParameter("notes");
+        System.out.println("The booking people's notes is "+notes);
+        
+       // RestaurantEntity re = indReservationSessionBean.getRestaurantEntity(restId);
+        
+        boolean correctBooking = indReservationSessionBean.makeReservation(thisDate, restId, numberPeople, title, name, email, mobile, notes);
+        
+        System.out.println("The restaurant booking made? "+correctBooking );
+        
+        return correctBooking;
+    }
 
+    private boolean configureMenu (HttpServletRequest request)
+    {
+        System.out.println("FBMSServlet ConfigureMenu Method Invoked!");
+        
+        return true;
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP

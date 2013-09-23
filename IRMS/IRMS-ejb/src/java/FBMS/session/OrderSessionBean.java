@@ -97,6 +97,7 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         return this_order;
     }
     
+    @Override
     public boolean modifyOrder (Long orderId,Date orderDateTime, MenuEntity menu, MemberEntity member){
         OrderEntity current = em.find(OrderEntity.class, orderId);
         current.setMember(member);
