@@ -36,6 +36,15 @@ public class ReservationEntity implements Serializable {
     private int reservationHotelNo;
     private int reservationRoomCount;
     private int reservationGuestCount;
+    private String reservationRoomType;
+
+    public String getReservationRoomType() {
+        return reservationRoomType;
+    }
+
+    public void setReservationRoomType(String reservationRoomType) {
+        this.reservationRoomType = reservationRoomType;
+    }
     //to be continued;
      @ManyToOne(cascade={CascadeType.PERSIST})
      private MemberEntity rcMember;
