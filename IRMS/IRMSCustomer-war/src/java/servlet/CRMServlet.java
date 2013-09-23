@@ -96,6 +96,12 @@ public class CRMServlet extends HttpServlet {
                 request.getRequestDispatcher("/memberRegister.jsp").forward(request, response);
 
             }
+             else if ("memberForgetPassword".equals(page))
+            {
+                System.out.println("***memberForgetPassword page***");
+                request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
+
+            }
             else{
                 System.out.println("other page");
             }
