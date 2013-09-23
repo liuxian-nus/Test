@@ -9,6 +9,7 @@ package servlet;
 
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
+import CRMS.session.MemberSessionBean;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author lionetdd
+ * @author lionetdd, Jieqiong
  */
 
 
@@ -36,6 +37,8 @@ public class CRMServlet extends HttpServlet {
    @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
     private ArrayList data = null;
+    private MemberSessionBean memberSession;
+    boolean isLogin = false;
 
   
    
@@ -59,6 +62,7 @@ public class CRMServlet extends HttpServlet {
     public void init(){
         System.out.println("CRMSERVLET: init()");
     }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("CRMSERVLET: processRequest()");
@@ -73,26 +77,38 @@ public class CRMServlet extends HttpServlet {
 
             String page = request.getPathInfo();
             page = page.substring(1);
-            System.out.println(page);
+            System.out.println("CRMSServlet page: "+page);
             
 
              if ("member".equals(page))
             {
-                System.out.println("***member page***");
-       
+                System.out.println("***member page***"); 
                 request.getRequestDispatcher("/member.jsp").forward(request, response);
 
             }
              else if ("memberInfo".equals(page))
             {
-                System.out.println("***member page***");
+                System.out.println("***memberInfo page***");
+                
                 System.out.println(request.getParameter("email"));
+                System.out.println(request.getParameter("password"));
+                
+                String email=request.getParameter("email");
+                String password=request.getParameter("password");
+                
+                System.out.println(email);
+                System.out.println(password);
+                
+                System.out.println(isLogin);
+                isLogin=memberSession.login(email, password);
+                System.out.println(isLogin);
+                
                 request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
 
             }
              else if ("memberRegister".equals(page))
             {
-                System.out.println("***member page***");
+                System.out.println("***memberRegister page***");
                 request.getRequestDispatcher("/memberRegister.jsp").forward(request, response);
 
             }
