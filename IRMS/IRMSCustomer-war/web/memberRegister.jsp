@@ -12,8 +12,8 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <form>
-                <fieldset>
+        <form id="member" action="memberRegister" method="POST">
+          <fieldset>
                     <legend>Member Registration</legend>
 
                     <div class="row">
@@ -324,24 +324,28 @@
                                     <option value="244">Others</option>
 
                                 </select>
-
-                                <div class="row">
-                                    <div class="small-2 columns">
-                                        <label for="right-label" class="left-align,inline"><strong>Mobile phone</label>
-                                    </div>
-                                    <div>
-                                        <div class="small-10 columns">
-                                            <input type="text" placeholder="mobile phone number">
-                                        </div>
-                                    </div>
-                                </div>
-
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br>
+                    <div class="row">
+                        <div class="small-2 columns">
+                            <label for="right-label" class="left-align,inline"><strong>Mobile phone</label>
+                        </div>
+                        <div>
+                            <div class="small-10 columns">
+                                <input type="text" placeholder="mobile phone number">
                             </div>
                         </div>
                     </div>
 
-                </fieldset>
-            </form>
+    
+
+                </fieldset>  
+            
+        </form>
+                
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

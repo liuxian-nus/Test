@@ -15,7 +15,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -32,11 +31,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 
-@WebServlet(urlPatterns = {"/irmsServlet", "/irmsServlet/*"})
-public class irmsServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
+public class CRMServlet extends HttpServlet {
    @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
-    private Set<RestaurantEntity> data = null;
+    private ArrayList data = null;
 
   
    
@@ -58,11 +57,11 @@ public class irmsServlet extends HttpServlet {
     
     @Override
     public void init(){
-        System.out.println("irmsSERVLET: init()");
+        System.out.println("CRMSERVLET: init()");
     }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("irmsSERVLET: processRequest()");
+        System.out.println("CRMSERVLET: processRequest()");
         
        /* response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();*/
@@ -77,68 +76,24 @@ public class irmsServlet extends HttpServlet {
             System.out.println(page);
             
 
-            if("restaurantSearch".equals(page)){
-                
-                System.out.println("Current page is restaurant!");
-                data = searchRestaurant(request);
-                System.out.println("data search has been performed and result has been returned by bean");
-                System.out.println(request.getParameter("keyword"));
-                System.out.println(data.isEmpty());
-                request.setAttribute("data", data);
-                request.getRequestDispatcher("/restaurantSearch.jsp").forward(request, response);
-
-            } 
-            else if ("MakeReservation".equals(page)){
-                //data=makeReservation(request);
-                //request.setAttribute("data", data);
-            }
-            else if ("restaurant".equals(page)){
-                System.out.println("***restaurant page***");
-               
-                //System.out.println(request.getParameterValues("keyword"));
+             if ("member".equals(page))
+            {
+                System.out.println("***member page***");
        
-                request.getRequestDispatcher("/restaurant.jsp").forward(request, response);
+                request.getRequestDispatcher("/member.jsp").forward(request, response);
 
             }
-            else if ("home".equals(page))
+             else if ("memberInfo".equals(page))
             {
-                System.out.println("***home page***");
-                request.getRequestDispatcher("/home.jsp").forward(request, response);
-
-            }
-            else if ("hotel".equals(page))
-            {
-                System.out.println("***hotel page***");
-                request.getRequestDispatcher("/hotel.jsp").forward(request, response);
-
-            }    
-       else if ("entertainment".equals(page))
-            {
-                System.out.println("***entertainment page***");
-                request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
-
-            }
-       else if ("entertainment".equals(page))
-            {
-                System.out.println("***entertainment page***");
-                request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
-
-            }
-              else if ("member".equals(page))
-            {
+                System.out.println("***member page***");
                 System.out.println(request.getParameter("email"));
-                request.getRequestDispatcher("/CRMServlet/member").forward(request, response);
-
-            }
-            else if ("memberInfo".equals(page))
-            {
-                System.out.println(request.getParameter("email"));
-                request.getRequestDispatcher("/CRMServlet/memberInfo").forward(request, response);
+                request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
 
             }
              else if ("memberRegister".equals(page))
             {
-                request.getRequestDispatcher("/CRMServlet/memberRegister").forward(request, response);
+                System.out.println("***member page***");
+                request.getRequestDispatcher("/memberRegister.jsp").forward(request, response);
 
             }
             else{
@@ -160,7 +115,7 @@ public class irmsServlet extends HttpServlet {
             
         }catch (Exception e){
             System.out.println(e);
-            log("Exception in irmsServlet.processRequest()");
+            log("Exception in CRMServlet.processRequest()");
             //System.out.println(e);
         }
     }
@@ -232,9 +187,9 @@ public class irmsServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private Set<RestaurantEntity> searchRestaurant(HttpServletRequest request) {
+    private ArrayList searchRestaurant(HttpServletRequest request) {
         
-        Set <RestaurantEntity> al = new HashSet <RestaurantEntity>();
+        ArrayList al = new ArrayList();
         System.out.println("method invoked");
         String restNeighbourhood = request.getParameter("restNeighbourhood");
         System.out.println(restNeighbourhood);
@@ -250,11 +205,14 @@ public class irmsServlet extends HttpServlet {
         System.out.println(re.getRestNeighbourhood()+re.getRestCuisine()+re.getRestTypeOfPlace());
 
         Set <RestaurantEntity> res =   indReservationSessionBean.searchRestaurant(re);  
+
+
         
         al.addAll(res);
+        al.add("Restaurant Search has been performed!");
         
       //  System.out.println(al.get(0));
-        System.out.println("irmsServlet: restaurant search has been completed!");
+        System.out.println("CRMServlet: restaurant search has been completed!");
 
 
 
@@ -278,7 +236,7 @@ public class irmsServlet extends HttpServlet {
     
     @Override
     public void destroy(){
-        System.out.println("irmsServlet: destroy()");
+        System.out.println("CRMServlet: destroy()");
     }
     
     

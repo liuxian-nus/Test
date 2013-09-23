@@ -17,14 +17,14 @@
                     <div class="row">
                 <div clas="large-9" colums></div>
                 <div class="large-3" columns>
-                    <form id="member" action="memberRegister" method="POST">
+                    <form id="member" action="memberInfo" method="POST">
                         <fieldset>
                             <legend>Member</legend>
 
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label>E-mail</label>
-                                    <input id="input-name" type="text" name="keyword">
+                                    <input id="input-name" type="text" name="email">
                                 </div>
                             </div>
                              
@@ -39,7 +39,7 @@
                             <br>
                             <ul class="button-group">
 
-                                  <li><a href="memberInfo" class="small button">Login</a></li>
+                                  <li><input type="submit" class="small button" value="Login"></li>
                                   <li><a href="memberRegister" class="small button">Register</a></li>
     
                             </ul>
