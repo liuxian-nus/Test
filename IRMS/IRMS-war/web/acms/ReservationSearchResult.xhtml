@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+   
+    <ui:define name="content">
+        <f:view beforePhase="#{reservationSearchResult.initViewSelect}"> 
+            <h:form id="form">
+                <p:panel id="search" header="Search Result" style="height:495px;">
+                    <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
+                        <p:growl id="msgs" showDetail="true" /> 
+                        <p:dataTable id="employees" value="#{reservationSearchResult.selectReservation}" var="reservation" paginator="true" rows="6">
+                            <p:column headerText="Reservation ID">
+                                <h:outputText value="#{reservation.reservationId}"/>
+                            </p:column>
+                            <p:column headerText="Customer Name">
+                                <h:outputText value="#{reservationList.rcName}"/>
+                            </p:column>
+                            <p:column headerText="Customer Email">
+                                <h:outputText value="#{reservationList.rcEmail}"/>
+                            </p:column>
+                            <p:column headerText="CheckIn Date">
+                                <h:outputText value="#{reservationList.rcCheckInDate}"/>
+                            </p:column>
+                            <p:column headerText="CheckOut Date">
+                                <h:outputText value="#{reservationList.rcCheckOutDate}"/>
+                            </p:column>
+                            <p:column headerText="Room Type">
+                                <h:outputText value="#{reservationList.reservationRoomType}"/>
+                            </p:column>
+                            <p:column headerText="Hotel">
+                                <h:outputText value="#{reservationList.reservationHotelNo}"/>
+                            </p:column>
+                             <p:column headerText="Number of rooms">
+                                <h:outputText value="#{reservationList.reservationRoomCount}"/>
+                            </p:column>
+                             <p:column headerText="Number of guests">
+                                <h:outputText value="#{reservationList.reservationGuestCount}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </p:panel>
+            </h:form>
+        </f:view>
+    </ui:define>
+
+</ui:composition>
+
+<!--<p:dataTable id="employees" value="" var="employeeList" paginator="true" rows="6">
+                    <p:column headerText="Reservation ID">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Customer Name">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="CheckIn Date">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="CheckOut Date">
+                        <h:outputText value=""/>
+                    </p:column>
+                     <p:column headerText="Room Type">
+                        <h:outputText value=""/>
+                    </p:column>
+                </p:dataTable>
+-->
