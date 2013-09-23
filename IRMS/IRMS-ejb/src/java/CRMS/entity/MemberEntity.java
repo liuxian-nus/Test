@@ -33,7 +33,7 @@ public class MemberEntity implements Serializable {
     private String nationality;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date memberDob;
-    private boolean maritalStatus;
+    private String maritalStatus;
     private boolean isVIP;
     private boolean isSubscriber;
     private double point;
@@ -141,11 +141,11 @@ public class MemberEntity implements Serializable {
         this.memberDob = memberDob;
     }
 
-    public boolean isMaritalStatus() {
+    public String isMaritalStatus() {
         return maritalStatus;
     }
 
-    public void setMaritalStatus(boolean maritalStatus) {
+    public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 
