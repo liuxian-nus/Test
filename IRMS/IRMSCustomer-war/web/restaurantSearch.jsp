@@ -22,7 +22,7 @@
         <c:forEach items="${data}" var="data">
             <tr>
                 <td>${data.restName}</td>
-                <td>${data.restNeighborhood}</td>
+                <td>${data.restNeighbourhood}</td>
                 <td>${data.restTypeOfPlace}</td>
                 <td>${data.restCuisine}</td>
                  
