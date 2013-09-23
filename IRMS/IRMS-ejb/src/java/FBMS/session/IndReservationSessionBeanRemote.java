@@ -18,6 +18,8 @@ import javax.ejb.Local;
 @Local
 public interface IndReservationSessionBeanRemote {
 
+    
+    RestaurantEntity getRestaurantEntity(Long restId);
     /*E.1.1.3 Check Availability*/
     boolean checkAvailability(RestaurantEntity restaurant, int numberPeople, Date date);
 

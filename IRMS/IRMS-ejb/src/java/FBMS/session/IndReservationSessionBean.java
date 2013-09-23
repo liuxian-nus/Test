@@ -30,6 +30,13 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
     public IndReservationSessionBean(){}
     
     @Override
+    public RestaurantEntity getRestaurantEntity(Long restId)
+    {
+        RestaurantEntity re = em.find(RestaurantEntity.class, restId);
+        return re;
+    }
+    
+    @Override
     public RestaurantEntity createRestaurantEntity(String restNeighbourhood, String restTypeOfPlace,String restCuisine,String keyword ){
         RestaurantEntity r = new RestaurantEntity();
             r.setRestCuisine(restCuisine);

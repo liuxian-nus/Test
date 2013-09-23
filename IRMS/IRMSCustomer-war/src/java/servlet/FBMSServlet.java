@@ -28,8 +28,10 @@ public class FBMSServlet extends HttpServlet {
     @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
 
+    
     private Set<RestaurantEntity> data = null;
     private boolean data1;
+    
     
     /**
      * Processes requests for both HTTP
@@ -135,7 +137,10 @@ public class FBMSServlet extends HttpServlet {
     private boolean checkAvailability (HttpServletRequest request) 
         {
             System.out.println("FBMSServlet CheckAvailability: method invoked");
-            
+            Long restId = Long.parseLong(request.getParameter("restId"));
+            System.out.println("The booking restaurant Id is "+ restId);
+            RestaurantEntity re = indReservationSessionBean.getRestaurantEntity(restId);
+            //Boolean isAvailable = indReservationSessionBean.checkAvailability(re, numberPeople, null)
             return true;
         }
 
