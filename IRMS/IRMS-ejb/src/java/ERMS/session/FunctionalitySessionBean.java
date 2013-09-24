@@ -25,25 +25,10 @@ public class FunctionalitySessionBean {
     @PersistenceContext
     private EntityManager em;
     
-    public FunctionalityEntity getFunctionality(Long functionalityId) throws ExistException
+    public FunctionalityEntity getFunctionality(String funcName) throws ExistException
     {
-        FunctionalityEntity functionality = em.find(FunctionalityEntity.class, functionalityId);
+        FunctionalityEntity functionality = em.find(FunctionalityEntity.class, funcName);
          if(functionality==null) throw new ExistException ("FunctionalitySessionBean-->ExistException-->Function doesn't exist!");
-        return functionality;
-    }
-       public FunctionalityEntity getFunctionalityByName(String funcName)
-    {   
-
-        Query query = em.createQuery("SELECT u FROM FunctionalityEntity u WHERE u.funcName = :inUserFunctionalityName");
-        query.setParameter("inUserFunctionalityName", funcName);
-
-        FunctionalityEntity functionality = null;
-        try{
-            functionality = (FunctionalityEntity)query.getSingleResult();
-        }
-        catch(NoResultException ex){
-            ex.printStackTrace();
-        }
         return functionality;
     }
     
@@ -55,11 +40,10 @@ public class FunctionalitySessionBean {
     {
         em.merge(functionality);
     }
-    
 
-    public void removeFunctionality(Long FunctionalityId)
+    public void removeFunctionality(String funcName)
     {
-        FunctionalityEntity functionality = em.find(FunctionalityEntity.class, FunctionalityId);
+        FunctionalityEntity functionality = em.find(FunctionalityEntity.class, funcName);
         em.remove(functionality);
     }
     

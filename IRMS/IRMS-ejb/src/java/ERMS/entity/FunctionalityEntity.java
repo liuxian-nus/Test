@@ -17,28 +17,16 @@ import javax.persistence.UniqueConstraint;
  * @author liuxian
  */
 @Entity
-@Table(
-        uniqueConstraints=
-            @UniqueConstraint(columnNames={"funcId"})
-    )
 public class FunctionalityEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue
-    private Long functionalityId;
     private String funcName;
+    private String funcDescription;
     /*@ManyToOne(targetEntity=Role.class,cascade={CascadeType.ALL},fetch=FetchType.EAGER)
     private Role roleEntity;
     */
-    public Long getFunctionalityId() {
-        return functionalityId;
-    }
 
-    public void setFunctionalityId(Long functionalityId) {
-        this.functionalityId = functionalityId;
-    }
-   
     /**
      * @return the FuncName
      */
@@ -51,6 +39,14 @@ public class FunctionalityEntity implements Serializable {
      */
     public void setFuncName(String FuncName) {
         this.funcName = FuncName;
+    }
+
+    public String getFuncDescription() {
+        return funcDescription;
+    }
+
+    public void setFuncDescription(String funcDescription) {
+        this.funcDescription = funcDescription;
     }
 
     /*
