@@ -21,6 +21,7 @@ public class EmployeeSessionBean {
     private EntityManager em;
     
     EmployeeEntity employee;
+    
 
     public EmployeeSessionBean() {
         //insert test case

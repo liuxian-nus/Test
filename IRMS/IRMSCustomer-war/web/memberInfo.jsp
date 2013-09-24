@@ -8,9 +8,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
+        <jsp:include page="base.jsp"></jsp:include>
+        </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
         <h1>Member Info!</h1>

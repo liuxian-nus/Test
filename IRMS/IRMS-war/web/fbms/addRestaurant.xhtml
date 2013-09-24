@@ -3,7 +3,8 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="./../Template/generalTemplate.xhtml"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
 
 
     <ui:define name="content">
@@ -17,20 +18,57 @@
                         <h:outputText value="Restaurant Name*: "/>
                         <h:inputText id="restName" required ="true" requiredMessage="Name cannot be empty" value="#{addRestaurantManagedBean.restaurant.restName}"/>
                         
-                        <h:outputText value="Restaurant Type of Place: "/>
-                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restTypeOfPlace}"/>
+                 <!--      <h:outputText value="Restaurant Type of Place: "/>
+                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restTypeOfPlace}"/> -->
                         
-                        <h:outputText value="Restaurant Cuisine: "/>
-                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restCuisine}"/>
+                        <h:outputText value="Restaurant Type of Place:"/>
+                            <h:selectOneMenu value ="#{addRestaurantManagedBean.restaurant.restTypeOfPlace}" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Type of Place cannot be empty">
+                            <f:selectItem itemLabel="Select Type of Place" itemValue="" />  
+                            <f:selectItem itemLabel="Bar" itemValue="Bar" />  
+                            <f:selectItem itemLabel="Cafe" itemValue="Convention" />  
+                            <f:selectItem itemLabel="Desert" itemValue="Desert" />  
+                            <f:selectItem itemLabel="Fast Food" itemValue="Fast Food" />  
+                            <f:selectItem itemLabel="Food store" itemValue="Food store" />  
+                            <f:selectItem itemLabel="Restaurant" itemValue="Restaurant" /> 
+                            </h:selectOneMenu> 
+                        <h:outputText value=""/>
                         
-                        <h:outputText value="Restaurant Neighbourhood: "/>
-                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restNeighbourhood}"/>
+                                    
+                 <!--       <h:outputText value="Restaurant Cuisine: "/>
+                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restCuisine}"/>-->
+                        
+                        <h:outputText value="Restaurant Neighbourhood:"/>
+                            <h:selectOneMenu value ="#{addRestaurantManagedBean.restaurant.restCuisine}" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Neighbourhood cannot be empty">
+                            <f:selectItem itemLabel="Select Neighbourhood" itemValue="" />  
+                            <f:selectItem itemLabel="Whole" itemValue="Whole" />  
+                            <f:selectItem itemLabel="Central" itemValue="Central" />  
+                            <f:selectItem itemLabel="West" itemValue="West" />  
+                            <f:selectItem itemLabel="East" itemValue="East" />  
+                            <f:selectItem itemLabel="North" itemValue="North" />  
+                            <f:selectItem itemLabel="South" itemValue="South" /> 
+                            </h:selectOneMenu> 
+                        <h:outputText value=""/>
+                     
+                        
+                        <h:outputText value="Restaurant Cuisine:"/>
+                            <h:selectOneMenu value ="#{addRestaurantManagedBean.restaurant.restCuisine}" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Cuisine cannot be empty">
+                            <f:selectItem itemLabel="Select Cuisine" itemValue="" />  
+                            <f:selectItem itemLabel="Japanese" itemValue="Japanese" />  
+                            <f:selectItem itemLabel="Chinese" itemValue="Chinese" />  
+                            <f:selectItem itemLabel="Western" itemValue="Western" />  
+                            <f:selectItem itemLabel="Halah" itemValue="Halah" />  
+                            <f:selectItem itemLabel="Thai" itemValue="Thai" />  
+                            <f:selectItem itemLabel="Vegetarian" itemValue="Vegetarian" /> 
+                            <f:selectItem itemLabel="Korean" itemValue="Korean" /> 
+                            </h:selectOneMenu> 
+                        <h:outputText value=""/>
                         
                         <h:outputText value="Restaurant Customer Maximum Quota*: "/>
-                        <h:inputText required ="true" requiredMessage="ID cannot be empty" value="#{addRestaurantManagedBean.restaurant.restQuota}"/>
+                        <h:inputText required ="true" requiredMessage="Maximum quota cannot be empty" value="#{addRestaurantManagedBean.restaurant.restQuota}" onchange="this.form.submit()"/>
                         
                     </h:panelGrid>
-                    <p:commandButton value ="Save" ajax ="true" actionListener = "#{addRestaurantManagedBean.saveNewRestaurant}" update="growl" />
+                    <p:commandButton value ="Save" ajax ="true" actionListener = "#{addRestaurantManagedBean.saveNewRestaurant}" update="growl" icon="ui-icon-check"/>
+                    <p:commandButton value="Add More Employee" actionListener="#{addRestaurantManagedBean.oneMore}" />
 
             </p:panel>
         </h:form>

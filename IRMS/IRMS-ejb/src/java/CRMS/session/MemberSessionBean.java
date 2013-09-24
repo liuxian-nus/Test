@@ -2,16 +2,23 @@
 package CRMS.session;
 
 import CRMS.entity.MemberEntity;
+import ERMS.session.EPasswordHashSessionBean;
 import Exception.ExistException;
+import java.io.IOException;
 
 import javax.ejb.Stateless;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -22,8 +29,11 @@ import javax.persistence.Query;
  */
 @Stateless
 public class MemberSessionBean {
+    @EJB
+    private EPasswordHashSessionBean ePasswordHashSessionBean;
     @PersistenceContext
     private EntityManager em ;
+    
  
     MemberEntity member = new MemberEntity();
 
@@ -120,6 +130,13 @@ public class MemberSessionBean {
         return member;
     }
     
+    public boolean updateMember(MemberEntity member)
+    {
+        em.merge(member);
+        System.out.println("MemberSessionBean: member " + member.getMemberEmail() + " is successfully updated");
+        return true;
+    }
+    
     //member subscribe/unsubscribe from email list
      @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void updateSubscription(String memberEmail,boolean isSubscriber) throws ExistException{
@@ -138,10 +155,16 @@ public class MemberSessionBean {
         }
         return stateSet;
     }
+    
+    
 
     @Remove
     public void remove() {
         System.out.println("MemberManagerBean: remove()");
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
     }
 }
 

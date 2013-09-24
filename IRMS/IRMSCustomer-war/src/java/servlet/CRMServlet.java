@@ -8,6 +8,7 @@ package servlet;
 
 
 import CRMS.entity.MemberEntity;
+import CRMS.session.MemberResetPasswordSessionBean;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import CRMS.session.MemberSessionBean;
@@ -36,7 +37,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
     @EJB
+    private MemberResetPasswordSessionBean memberResetPasswordSessionBean;
+    @EJB
     private MemberSessionBean memberSession;
+    
+
+  
     @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
     private ArrayList data = null;
@@ -147,6 +153,7 @@ public class CRMServlet extends HttpServlet {
              else if ("memberForgetPassword".equals(page))
             {
                 System.out.println("***memberForgetPassword page***");
+                memberResetPasswordSessionBean.ResetPassword("leijq369@gmail.com");
                 request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
 
             }

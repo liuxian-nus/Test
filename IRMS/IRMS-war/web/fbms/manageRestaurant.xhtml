@@ -10,7 +10,7 @@
 
     
      <ui:define name="content">
-        <h:form id="myForm">
+        <h:form id="form">
                     <p:panel id="restMgt" header="Restaurant Information" style="height:495px;">
                         <div style="margin-top:20px;margin-left:65px;margin-right:50px;margin-bottom:20px;">
                             <p:growl id="Msg" showDetail="true" /> 
@@ -34,11 +34,11 @@
                                 
                                 <p:column style="width:100px">  
                                     <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
-                                    <p:commandButton update=":myForm:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit">  
+                                    <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit">  
                                         <f:setPropertyActionListener value="#{restList}" target="#{manageRestaurantManagedBean.selectedRestaurant}" />  
                                         <f:setPropertyActionListener value="#{true}" target="#{manageRestaurantManagedBean.editMode}" /> 
                                     </p:commandButton>
-                                    <p:commandButton update=":myForm:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete">  
+                                    <p:commandButton update=":form:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete">  
                                         <f:setPropertyActionListener value="#{restList}" target="#{manageRestaurantManagedBean.selectedRestaurant}" />  
                                     </p:commandButton> 
                                     </h:panelGrid>
@@ -72,13 +72,6 @@
                                 <p:message for="cuisine"/>
                             </h:panelGroup> 
 
-                         <!--   <h:outputText value="Roles"/>
-                            <h:outputText value="#{manageEmployeeManagedBean.toSentence(manageEmployeeManagedBean.selectedEmployee.roles)}"/>
-                            <h:selectManyMenu value="#{manageEmployeeManagedBean.selectedRoles}" style="height:100px">  
-                                <f:selectItems value="#{manageEmployeeManagedBean.rm.allRoles}"  
-                                               var="allRoles" itemLabel="#{allRoles.roleName}" 
-                                               itemValue="#{allRoles.roleId}" />  
-                            </h:selectManyMenu>-->
 
 
                             <f:facet name="footer">  
@@ -91,21 +84,26 @@
                         </h:panelGrid>  
 
                     </p:dialog>
-
-                    <p:confirmDialog appendToBody="true" message="Are you sure?" header="Confirmation" width="300" showEffect="explode" hideEffect="explode" widgetVar="confirmation">  
-
-                        <p:commandButton value="Yes" update="restaurants" actionListener="#{manageRestaurantManagedBean.deleteRestaurant}" oncomplete="confirmation.hide()">  
-                            <f:attribute name="code1" value="#{manageRestaurantManagedBean.selectedRestaurant.restId}" />
-                        </p:commandButton>
-                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
-
-                    </p:confirmDialog>  
-                            
-                            
-                            
-                        </div>
-                    </p:panel>
+                        
+                 </div>
+             </p:panel>
         </h:form>  
+         
+         
+         <h:form id="confirmDialogForm">
+            <p:dialog header="Confirmation" width="300" showEffect="explode" hideEffect="explode" widgetVar="confirmation">  
+                
+                <h:outputText value="Are you sure to delete?" />
+                <br/>
+                <br/>
+                
+                <p:commandButton value="Yes" update=":form:restaurants" actionListener="#{manageRestaurantManagedBean.deleteRestaurant}" oncomplete="confirmation.hide()">  
+                    
+                </p:commandButton>
+                <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
+
+            </p:dialog>  
+        </h:form>
         
         
     </ui:define>
