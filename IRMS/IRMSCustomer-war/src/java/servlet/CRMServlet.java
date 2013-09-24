@@ -144,8 +144,12 @@ public class CRMServlet extends HttpServlet {
                 System.out.println(this_date);
                 Date date=new SimpleDateFormat("dd-MMMMM-yyyy").parse("01-July-2013");
                 System.out.println(date);
-                   
-                member=memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe);
+                String securityQuestion=request.getParameter("securityQuestion");
+                String answer=request.getParameter("answer");
+                System.out.println("userName: "+userName);
+                
+                member=memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe,
+                        securityQuestion,answer);
                 
                 request.getRequestDispatcher("/memberRegisterResult.jsp").forward(request, response);
             }

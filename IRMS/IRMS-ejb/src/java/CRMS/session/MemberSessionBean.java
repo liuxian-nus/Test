@@ -51,10 +51,10 @@ public class MemberSessionBean {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public MemberEntity addMember(String memberEmail, String memberName, String memberPassword, String memberPassword2,
     String memberHP, String gender, String nationality, Date memberDob, String maritalStatus, 
-    boolean isSubscriber) {
-        
+    boolean isSubscriber, String question, String answer) {
+   
         System.out.println("into MemberSessionBean: addMember");
-        member = em.find(MemberEntity.class, memberEmail);
+    /*    member = em.find(MemberEntity.class, memberEmail);
         if(member!=null) {
             System.out.println(member.getMemberEmail());
             System.out.println("You have registered already. Please log in.");
@@ -63,23 +63,46 @@ public class MemberSessionBean {
         if(!memberPassword.equals(memberPassword2)){
             System.out.println("Two passwords are not the same. Please register again.");
             return member;
-        }
+        }*/
         
-        System.out.println(memberEmail);
+  //      System.out.println(memberEmail);
         member.setMemberEmail(memberEmail);
         
+ //       System.out.println(memberName);
         member.setMemberName(memberName);
+        
+//        System.out.println(memberPassword);
         member.setMemberPassword(memberPassword);
+        
+  //      System.out.println(memberHP);
         member.setMemberHP(memberHP);
+        
+ //       System.out.println(gender);
         member.setGender(gender);
+        
+  //      System.out.println(nationality);
         member.setNationality(nationality);
+        
+  //      System.out.println(memberDob);
         member.setMemberDob(memberDob);
+        
+  //      System.out.println(maritalStatus);
         member.setMaritalStatus(maritalStatus);
+        
         member.setIsVIP(false);
+        
+        System.out.println(isSubscriber);
         member.setIsSubscriber(isSubscriber);
+        
         member.setPoint(0);
         member.setCoin(0);
         member.setPreferences(null);      
+        
+        System.out.println(question);
+        member.setSecurityQuestion(question);
+        
+        System.out.println(answer);
+        member.setAnswer(answer);
         //member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
         em.persist(member);
         System.out.println("new member add successfully!");

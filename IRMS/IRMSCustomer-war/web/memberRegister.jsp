@@ -531,6 +531,34 @@
                     </div>
                     <br>
                     
+                    
+                        
+                    <div class="row">
+                        <div class="small-2 columns">
+                            <label for="right-label" class="left-align,inline"><strong>Security question</label>
+                        </div>
+                        <div class="small-10 columns"> 
+
+                            <select id="customDropdown" name="securityQuestion">
+                                <option value="question1">What is your mother's original surname?</option>
+                                <option value="question2">What is the name of your primary school?</option>
+                                <option value="question3">What is your best friend's name?</option>
+                                <option value="question4">What is your favourite food?</option>
+                            </select>
+                        </div>          
+                    </div>
+                    
+                    <div class="row">
+                            <div class="small-2 columns">
+                                <label for="right-label" class="left-align,inline"><strong>Answer</label>
+                            </div>
+                            <div class="small-10 columns"> 
+
+                               <input type="text" placeholder="Security Question Answer" name="answer">
+                            </div>
+
+                   </div>
+                    
                     <div class="row">
                         <div class="small-1 columns">
                     <input type="checkbox" name="subscribe" value="true">
@@ -538,8 +566,10 @@
                         <div class="small-11 columns"> 
                     <strong><label><strong>I want to subscribe latest updates.</label>
                         </div>
-                        
                     </div>
+                    
+                    <br>
+                    
                     <div class="row">
                     <input type="submit" class="small button" value="Submit">
                     </div>

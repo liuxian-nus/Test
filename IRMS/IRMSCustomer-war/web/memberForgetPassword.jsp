@@ -28,9 +28,9 @@
                             <div class="small-10 columns"> 
 
                                 <select id="customDropdown" name="question">
-                                    <option value="question1">What's your mother's orignal surname?</option>
-                                    <option value="question2">What's the name of your primary school?</option>
-                                    <option value="question3">What's your best friend's name?</option>
+                                    <option value="question1">What is your mother's original surname?</option>
+                                    <option value="question2">What is the name of your primary school?</option>
+                                    <option value="question3">What is your best friend's name?</option>
                                     <option value="question4">What is your favourite food?</option>
                                 </select>
                             </div>
