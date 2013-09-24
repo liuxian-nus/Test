@@ -62,7 +62,7 @@ public class ReservationManagedBean implements Serializable {
 
         System.out.println("NO6 we are in searchById function " + searchId);
         try {
-            setSelectReservation(rm.getReservationById(getSearchId()));
+            setSelectReservation(rm.getReservationById(Long.valueOf(getSearchId())));
             System.out.println("we are after search");
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
             System.out.println("we are after setting parameter");
@@ -96,8 +96,8 @@ public class ReservationManagedBean implements Serializable {
         List<ReservationEntity> reservationList = reservationSessionBean.getAllReservations();
         for (Object o : reservationList) {
             ReservationEntity rve = (ReservationEntity) o;
-            if (rve.getReservationId().startsWith(query)) {
-                results.add(rve.getReservationId());
+            if ((rve.getReservationId()).toString().startsWith(query)) {
+                results.add((rve.getReservationId()).toString());
             }
         }
         System.out.println("NO5: we are in complete bean AFTER");
