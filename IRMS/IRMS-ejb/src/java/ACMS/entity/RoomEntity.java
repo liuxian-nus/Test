@@ -31,6 +31,7 @@ public class RoomEntity implements Serializable {
     private int roomHotel;
     private int roomLevel;
     private int roomNo;
+    private String guestName;
     private boolean hasBreakfast = false;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date checkInDate;
@@ -173,7 +174,14 @@ public class RoomEntity implements Serializable {
     public void setRoomMember(MemberEntity roomMember) {
         this.roomMember = roomMember;
     }
-    
+
+    public String getGuestName() {
+        return guestName;
+    }
+
+    public void setGuestName(String guestName) {
+        this.guestName = guestName;
+    }
     @Override
     public String toString() {
         return "ACMS.RoomEntity[ id=" + roomId + " ]";
