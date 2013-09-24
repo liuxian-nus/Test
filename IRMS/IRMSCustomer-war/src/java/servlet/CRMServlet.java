@@ -104,6 +104,9 @@ public class CRMServlet extends HttpServlet {
                 
                 boolean isLogin=memberSession.login(email, password);
                 System.out.println(isLogin);
+                member=memberSession.getMemberByEmail(email);
+                System.out.println(member.getMemberName());
+                
                 
                 
                 
@@ -136,7 +139,7 @@ public class CRMServlet extends HttpServlet {
                 Date date=new SimpleDateFormat("dd-MMMMM-yyyy").parse("01-July-2013");
                 System.out.println(date);
                    
-                member=memberSession.addMember(email, userName, password1, mobile, gender, nationality, date, maritalStatus, subscribe);
+                member=memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe);
                 
                 request.getRequestDispatcher("/memberRegisterResult.jsp").forward(request, response);
             }
