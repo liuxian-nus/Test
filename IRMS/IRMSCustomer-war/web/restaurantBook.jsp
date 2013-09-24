@@ -12,7 +12,7 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <h1>Restaurant book!</h1>
+            <h1>Restaurant book for ${data.restName}!</h1>
             <form action="restaurantCheck" method="POST">
                 <fieldset>
                     <legend>Book Restaurant</legend>
@@ -114,14 +114,14 @@
                             </select>
                         </div>
                     </div>
-
+                    <br>
                     <div class="row">
                         <div class="small-2 columns">
                             <label for="right-label" class="left-align,inline"><strong>Number of People</label>
                         </div>
                         <div class="small-10 columns">
-                            <input id="input-name" type="text" placeholder="restaurant name" name="numberPeople">
-                            <select name="dateMonth" id="button dropdown">
+                       
+                            <select name="numberPeople" id="button dropdown">
      
                                 <option value="1">1 People</option>
                                 <option value="2">2 People</option>
