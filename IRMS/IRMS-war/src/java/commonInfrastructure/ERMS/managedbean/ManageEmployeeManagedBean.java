@@ -61,7 +61,7 @@ public class ManageEmployeeManagedBean {
         getEm().removeEmployee(selectedEmployee.getEmployeeId());
     }
 
-    public void saveChanges(ActionEvent event) {
+    public void saveChanges(ActionEvent event) throws ExistException {
         selectedEmployee.setRoles(new ArrayList<RoleEntity>());
         pushToRoles(selectedEmployee);
         em.updateEmployee(selectedEmployee);
@@ -141,17 +141,17 @@ public class ManageEmployeeManagedBean {
         this.selectedRoles = selectedRoles;
     }
 
-    public void pushToRoles(EmployeeEntity selectedEmployee) {
+    public void pushToRoles(EmployeeEntity selectedEmployee) throws ExistException {
         int i = 0;
         int id;
         id = Integer.valueOf(selectedRoles.get(i));
-        selectedEmployee.getRoles().add(getRm().getRole(id));
+        selectedEmployee.getRoles().add(getRm().getRoleById(id));
         System.out.println(selectedRoles.get(i));
 
         while (i < (selectedRoles.size() - 1)) {
             i++;
             id = Integer.valueOf(selectedRoles.get(i));
-            selectedEmployee.getRoles().add(getRm().getRole(id));
+            selectedEmployee.getRoles().add(getRm().getRoleById(id));
             System.out.println(selectedRoles.get(i));
         }
 
@@ -177,7 +177,7 @@ public class ManageEmployeeManagedBean {
         int n = 0;
 
         while (n < selectedRoles.size()) {
-            sb.append(rm.getRole(Integer.valueOf(selectedRoles.get(n))).getRoleName());
+            sb.append(rm.getRoleById(Integer.valueOf(selectedRoles.get(n))).getRoleName());
             sb.append(";");
             n++;
         }
