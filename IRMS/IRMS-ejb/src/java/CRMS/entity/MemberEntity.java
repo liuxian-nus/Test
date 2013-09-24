@@ -41,7 +41,6 @@ public class MemberEntity implements Serializable {
     private List<String> preferences = new ArrayList<String>();
     private String securityQuestion;
     private String answer;
-    private boolean isMachineGeneratedPwd;
     
     
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "rcMember")
@@ -223,15 +222,6 @@ public class MemberEntity implements Serializable {
     
     public void setAnswer(String answer){
         this.answer=answer;
-    }
-    
-    
-    public boolean getIsMachineGeneratedPwd(){
-        return isMachineGeneratedPwd;
-    }
-    
-    public void setIsMachineGeneratedPwd(boolean isMachineGeneratedPwd){
-        this.isMachineGeneratedPwd=isMachineGeneratedPwd;
     }
     
     @Override

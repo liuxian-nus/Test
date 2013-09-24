@@ -8,7 +8,7 @@ package servlet;
 
 
 import CRMS.entity.MemberEntity;
-import CRMS.session.MemberResetPasswordSessionBean;
+import CRMS.session.MemberManagementSessionBean;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import CRMS.session.MemberSessionBean;
@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
     @EJB
-    private MemberResetPasswordSessionBean memberResetPasswordSessionBean;
+    private MemberManagementSessionBean memberManagementSessionBean;
     @EJB
     private MemberSessionBean memberSession;
     
@@ -152,16 +152,25 @@ public class CRMServlet extends HttpServlet {
              
              else if ("memberForgetPassword".equals(page))
             {
-                System.out.println("***memberForgetPassword page***");
-                String question=request.getParameter()
-                String email=request.getParameter("email");
-                memberResetPasswordSessionBean.ResetPassword(email);
-           //     memberResetPasswordSessionBean.ResetPassword("leijq369@gmail.com");
+                System.out.println("***memberForgetPassword page***");   
                 request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
-
+                
             }
              else if("memberInfoEdition".equals(page)){
-                 System.out.println("***memberInfoEdition page***");
+                System.out.println("***memberInfoEdition page***");
+                 
+                String email=request.getParameter("email");  
+                String question=request.getParameter("question");
+                String answer=request.getParameter("answer");
+                boolean correctAnswer=memberManagementSessionBean.checkAnswer(email,answer);
+                if(correctAnswer){
+                    memberManagementSessionBean.ResetPassword(email);
+                    request.getRequestDispatcher("/memberInfoEdition.jsp").forward(request, response);
+                }
+                else 
+                    request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
+                
+         //       memberManagementSessionBean.ResetPassword("leijq369@gmail.com");
                  
              }
             else{
