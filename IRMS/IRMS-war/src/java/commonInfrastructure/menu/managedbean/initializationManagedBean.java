@@ -7,6 +7,8 @@ package commonInfrastructure.menu.managedbean;
 import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
 import ACMS.session.RoomSessionBean;
+import CRMS.entity.MemberEntity;
+import CRMS.session.MemberSessionBean;
 import ERMS.entity.EmployeeEntity;
 import ERMS.entity.RoleEntity;
 import ERMS.session.EPasswordHashSessionBean;
@@ -44,10 +46,13 @@ public class initializationManagedBean implements Serializable {
     private ReservationSessionBean reSessionBean;
     @EJB
     private RoomSessionBean rmSessionBean;
+    @EJB
+    private MemberSessionBean mmSessionBean;
     
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
+    private MemberEntity member;
 //    private MemberEntity member;
 
     @PostConstruct
@@ -143,7 +148,6 @@ public class initializationManagedBean implements Serializable {
         Date codate = new Date(2014, 10, 5);
 
         reservation = new ReservationEntity();
-        reservation.setReservationId(Long.valueOf(1));
         reservation.setRcName("Danny");
         System.out.println("create reservation: welcome " + reservation.getRcName());
         reservation.setRcEmail("chrislx.nus@gmail.com");
@@ -169,6 +173,33 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Reservation into database");
 
         addMessage("Reservation Created!");
+    }
+    
+    public void createMember() {
+        System.err.println("go to create member page...");       
+        Date qqdate = new Date(1991,03,11);
+        
+        member = new MemberEntity();
+        member.setMemberEmail("xinqi-wang@yahoo.com");
+        member.setMemberName("dayanqi");
+        System.out.println("Create a new member: welcome! " + member.getMemberName());
+        member.setMemberHP("92728760");
+        member.setNationality("China");
+        member.setMemberDob(qqdate);
+        member.setGender("female");
+        member.setMaritalStatus("single");
+        member.setIsVIP(false);
+        member.setIsSubscriber(true);
+        
+        try {
+            System.out.println("Creating new member....");
+            mmSessionBean.addMember(member);
+            System.out.println("Member created....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding member", ""));
+            return;
+        }
+        System.err.println("Insert Dayanqi member into database");
     }
 
     public void createRoom() {

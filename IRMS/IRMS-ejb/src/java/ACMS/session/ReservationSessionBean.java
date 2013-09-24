@@ -50,5 +50,4 @@ public class ReservationSessionBean {
     public ReservationEntity getReservationById(String searchId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     }
