@@ -6,6 +6,7 @@ import ACMS.entity.RoomServiceEntity;
 import CRMS.entity.MemberEntity;
 import Exception.ExistException;
 import Exception.RoomException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -51,7 +53,6 @@ public class RoomSessionBean {
      @ManyToMany(cascade={CascadeType.PERSIST})
      public Set<RoomServiceEntity> roomService = new HashSet<RoomServiceEntity> ();
      */
-    
     //room include or dis-include breakfast 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public RoomEntity updateRoom(int roomId, boolean hasBreakfast) throws ExistException {
@@ -69,6 +70,22 @@ public class RoomSessionBean {
         return room;
     }
 
+//    public List<RoomEntity> getAvailableRooms() throws ExistException, IOException {
+//        int i = 0;
+//        RoomEntity oneRoom;
+//        oneRoom = roomList.get(i);
+//        if (oneRoom.getRoomStatus().equals("available")) {
+//            selectRoom.add(oneRoom);
+//        }
+//        while (i < (roomList.size() - 1)) {
+//            i++;
+//            oneRoom = roomList.get(i);
+//            if (oneRoom.getRoomStatus().equals("available")) {
+//                selectRoom.add(oneRoom);
+//            }//end of if
+//        }
+//        return roomList;
+//    }
     //add new charged service
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public RoomServiceEntity addRoomService(int roomId, String roomServiceName) throws ExistException {
@@ -89,7 +106,7 @@ public class RoomSessionBean {
     public void checkIn(int roomId, Long reservationId) throws RoomException, ExistException {
         ReservationEntity reservation = new ReservationEntity();
         reservation = em.find(ReservationEntity.class, reservationId);
-         if (reservation == null) {
+        if (reservation == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->This Reservation doesn't exist!");
         }
         room = em.find(RoomEntity.class, roomId);
@@ -101,6 +118,7 @@ public class RoomSessionBean {
         room.setReservation(reservation);
         room.setCheckInDate(reservation.getRcCheckInDate());
         room.setCheckOutDate(reservation.getRcCheckOutDate());
+        //room.setGuestName(reservation.getRcName());
         room.setRoomStatus("occupied");
         MemberEntity thisMember = reservation.getRcMember();
         if (thisMember != null) {
@@ -125,6 +143,7 @@ public class RoomSessionBean {
     //list of all rooms -- for floor plan
     //information displayed: availability, roomSchedule,roomName, roomType, roomService, accumulated charge
     public List<RoomEntity> getAllRooms() throws ExistException {
+        System.err.println("in gerallrooms sessionbean");
         Query q = em.createQuery("SELECT r FROM RoomEntity r");
         List roomList = new ArrayList<RoomEntity>();
         for (Object o : q.getResultList()) {
@@ -134,6 +153,7 @@ public class RoomSessionBean {
         if (roomList == null) {
             throw new ExistException("RoomEntity database is empty!");
         }
+        System.err.println("in gerallrooms sessionbean"+roomList.size());
         return roomList;
     }
 
@@ -143,7 +163,7 @@ public class RoomSessionBean {
         em.merge(room);
         System.out.println("RoomSessionBean --> welcome: " + thisMember.getMemberName());
     }
-    
+
     public void createTestRoom() {
         try {
             Query query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
