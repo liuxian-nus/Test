@@ -4,6 +4,9 @@
  */
 package ACMS.managedbean;
 
+import ACMS.entity.RoomEntity;
+import java.io.Serializable;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -13,11 +16,10 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class RoomSearchResultManagementBean {
+public class RoomSearchResultManagementBean implements Serializable{
 
-    /**
-     * Creates a new instance of RoomSearchResultManagementBean
-     */
+    private RoomEntity selectRoom;
+    private List<RoomEntity> rooms;
     public RoomSearchResultManagementBean() {
     }
 }

@@ -1,10 +1,39 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../Template/generalTemplate.xhtml">
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        content
+        <f:view beforePhase="#{roomSearchResultManagedBean.initViewSelect}"> 
+            <h:form id="form">
+                <p:panel id="search" header="Search Result" style="height:495px;">
+                     <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
+                        <h:outputText value="Room ID: " />  
+                        <h:outputText value="#{roomSearchResultManagedBean.selectRoom.roomId}" style="font-weight:bold" /> 
+                        <h:outputText value="Guest Name: " /> 
+                        <h:outputText value="#{roomSearchResultManagedBean.selectRoom.guestName}" style="font-weight:bold" />
+                        <h:outputText value="RoomType: " />  
+                        <h:outputText value="#{roomSearchResultManagedBean.selectRoom.roomType}" style="font-weight:bold" /> 
+                        <h:outputText value="Room Price: " />  
+                        <h:outputText value="#{roomSearchResultManagedBean.selectRoom.roomPrice}" style="font-weight:bold" /> 
+                        <h:outputText value="Check In Date: " />  
+                        <h:outputText value="#{roomSearchResultManagedBean.selectRoom.checkInDate}" style="font-weight:bold" /> 
+                        <h:outputText value="Check Out Date: " />  
+                        <h:outputText value="#{roomSearchResultManagedBean.selectRoom.checkOutDate}" style="font-weight:bold" /> 
+                        <h:outputText value="Room Service Charge: " />  
+                        <h:outputText value="#{roomSearchResultManagedBean.selectRoom.roomServiceCharge}" style="font-weight:bold" /> 
+                        <h:outputText value="Breakfast: " />  
+                        <h:outputText value="#{roomSearchResultManagedBean.selectRoom.hasBreakfast}" style="font-weight:bold" /> 
+                        <h:outputText value="Number of Guests: " />  
+                        <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationGuestCount}" style="font-weight:bold" /> 
+                        <p:commandButton  value="Check Available Rooms" ajax="true" actionListener="#{roomManagedBean.getAvailableRooms}" /> 
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>   
+        </f:view>  
     </ui:define>
 
 </ui:composition>
