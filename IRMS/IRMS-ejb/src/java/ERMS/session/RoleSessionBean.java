@@ -5,6 +5,7 @@
 package ERMS.session;
 
 import ERMS.entity.RoleEntity;
+import Exception.ExistException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -25,24 +26,16 @@ public class RoleSessionBean {
     private EntityManager em;
     
     
-    public RoleEntity getRole(int RoleId)
-    {
-        Query query = em.createQuery("SELECT u FROM RoleEntity u WHERE u.id = :inRoleId");
-        query.setParameter("inRoleId", RoleId);
-        
-        RoleEntity role = null;
-        try{
-            role = (RoleEntity)query.getSingleResult();
-        }
-        catch(NoResultException ex){
-            ex.printStackTrace();
-        }
+    public RoleEntity getRoleById(int roleId) throws ExistException {
+        RoleEntity role = em.find(RoleEntity.class, roleId);
+        if(role == null) throw new ExistException("This role does not exist!");
+       
         return role;
     }
     
     public RoleEntity getRoleByName(String name){
-        Query query = em.createQuery("SELECT u FROM RoleEntity u WHERE u.roleName = :inRoleName");
-        query.setParameter("inRoleName",name);
+        Query query = em.createQuery("SELECT u FROM RoleEntity u WHERE u.roleName = '" + name +"'");
+        query.setParameter("roleName",name);
         
         RoleEntity role = null;
         try{

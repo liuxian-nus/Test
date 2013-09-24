@@ -44,6 +44,7 @@ public class OverbookingSessionBean {
         double cs = price.getPrice();
         ce = compensation;
         sl = cs/(cs + ce);
+        //calculate quota given the probability sl
         return suggestedQuota;
     }
     
