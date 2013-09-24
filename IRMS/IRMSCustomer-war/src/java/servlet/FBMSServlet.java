@@ -138,7 +138,7 @@ public class FBMSServlet extends HttpServlet {
         al.addAll(res);
         
       //  System.out.println(al.get(0));
-        System.out.println("irmsServlet: restaurant search has been completed!");
+        System.out.println("FBMSServlet: restaurant search has been completed!");
 
 
 

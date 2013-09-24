@@ -8,6 +8,7 @@ import FBMS.entity.RestaurantEntity;
 import FBMS.entity.IndReservationEntity;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -56,7 +57,9 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
         String restCuisine = r.getRestCuisine();
         String restTypeOfPlace = r.getRestTypeOfPlace();
         String restKeyword = r.getRestName();
-        Set stateSet = new HashSet <RestaurantEntity>();
+        Set <RestaurantEntity> stateSet = new HashSet <RestaurantEntity>();
+        
+        
         
        if(restNeighbourhood.equals("")==false){ 
            q = em.createQuery("SELECT r FROM RestaurantEntity r WHERE r.restNeighbourhood ='" + restNeighbourhood + "'");
@@ -71,27 +74,61 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
                stateSet.add(re);
            }      
            
+           
         if(restCuisine.equals("")==false){
-            for(Object o : stateSet){
+         /*   for(Object o : stateSet){
                 RestaurantEntity re = (RestaurantEntity)o;
                 if(!re.getRestCuisine().equalsIgnoreCase(restCuisine))
                     stateSet.remove(re);
+            }*/
+            System.out.println("Iterator has been invoked "+restCuisine);
+            Iterator <RestaurantEntity> itr = stateSet.iterator();
+            
+            //below is test
+            System.out.println(itr.hasNext());
+            while (itr.hasNext())
+            {
+                RestaurantEntity re = (RestaurantEntity)itr.next();
+                if(!re.getRestCuisine().equalsIgnoreCase(restCuisine))
+                    //stateSet.remove(re);
+                    itr.remove();
+            }
+           
+            //below is testing
+            while(itr.hasNext())
+            {
+                System.out.println(itr.next().toString());
             }
                
         }
         if(restTypeOfPlace.equals("")==false){
-            for (Object o :stateSet){
+           /* for (Object o :stateSet){
                 RestaurantEntity re = (RestaurantEntity)o;
                 if(!re.getRestTypeOfPlace().equalsIgnoreCase(restTypeOfPlace))
                     stateSet.remove(re);
+            } */
+            Iterator <RestaurantEntity> itr = stateSet.iterator();
+            while(itr.hasNext())
+            {
+                RestaurantEntity re = (RestaurantEntity)itr.next();
+                if(!re.getRestTypeOfPlace().equalsIgnoreCase(restTypeOfPlace))
+                   // stateSet.remove(re);
+                    itr.remove();
             }
         }
         
         if(restKeyword.equals("")==false){
-            for(Object o: stateSet){
+            /* for(Object o: stateSet){
                 RestaurantEntity re = (RestaurantEntity)o;
                 if(!re.getRestName().contains(restKeyword))
                     stateSet.remove(re);
+            } */
+            Iterator <RestaurantEntity> itr = stateSet.iterator();
+            while(itr.hasNext()){
+                
+                RestaurantEntity re = (RestaurantEntity)itr.next();
+                if(!re.getRestName().equalsIgnoreCase(restKeyword))
+                    itr.remove();
             }
     }
         
