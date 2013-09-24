@@ -21,7 +21,7 @@
                         <h:selectManyMenu value="#{addRoleManagedBean.selectedFunc}" style="height:150px;width:175px;margin-bottom:10px;">  
                             <f:selectItems value="#{addRoleManagedBean.fm.allFunctionalities}"  
                                            var="allFunc" itemLabel="#{allFunc.funcName}" 
-                                           itemValue="#{allFunc.functionalityId}" />  
+                                           itemValue="#{allFunc.funcName}"/>  
                         </h:selectManyMenu>  
                         <br />
                         <p:commandButton value="Save" ajax="true" actionListener="#{addRoleManagedBean.saveNewRole}"/>
