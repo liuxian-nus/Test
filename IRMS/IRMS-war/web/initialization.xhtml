@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Initialization Page</title>
+    </h:head>
+
+
+    <h:body>
+        <h:form id="form"> 
+            <p:growl id="messages"/> 
+            <p:commandButton value="Create Super Admin" actionListener="#{initializationManagedBean.createSuperAdmin}" update="messages" icon="ui-icon-disk"/>
+
+            <br/>
+            <p:commandButton value="Create System User" actionListener="#{initializationManagedBean.createSystemUser}" update="messages" icon="ui-icon-disk"/>
+            
+            <br/><br/>
+            <a href="/IRMS-war/index.xhtml" style="margin-left:10px;"> 
+                Index Page
+            </a>
+        </h:form>
+    </h:body>
+
+</html>
+
