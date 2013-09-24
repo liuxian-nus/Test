@@ -5,17 +5,18 @@
 package ACMS.managedbean;
 
 import ACMS.entity.ReservationEntity;
-import ACMS.entity.RoomEntity;
 import ACMS.session.ReservationSessionBean;
-import ACMS.session.RoomSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -23,48 +24,61 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class ReservationManagedBean {
+public class ReservationManagedBean implements Serializable {
 
     @EJB
-    private ReservationSessionBean reservationSessionBean;
-    private List<ReservationEntity> reservatioinList;
+    private ReservationSessionBean rm;
+    @EJB
+    ReservationSessionBean reservationSessionBean;
+    private List<ReservationEntity> reservationList;
     private ReservationEntity selectReservation;
-    private Long searchId;
+    private String searchId;
 
-    public Long getSearchId() {
+    public String getSearchId() {
+        System.out.println("No3: we are in setearchId" + searchId);
         return searchId;
     }
 
-    public void setSearchId(Long searchId) {
+    public void setSearchId(String searchId) {
         this.searchId = searchId;
+    }
+
+    public ReservationSessionBean getRm() {
+        return rm;
+    }
+
+    public void setRm(ReservationSessionBean rm) {
+        this.rm = rm;
     }
 
     /**
      * Creates a new instance of ReservationManagedBean
      */
     public ReservationManagedBean() {
-        selectReservation = new ReservationEntity();
-
+        this.selectReservation = new ReservationEntity();
     }
 
-    public void searchById() throws IOException, ExistException {
+    public void searchById(ActionEvent event) throws IOException, ExistException {
 
-        selectReservation = reservationSessionBean.getReservationById(searchId);
-        System.out.println(searchId);
-        if (selectReservation == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No reservation found", ""));
-        } else {
+        System.out.println("NO6 we are in searchById function " + searchId);
+        try {
+            setSelectReservation(rm.getReservationById(getSearchId()));
+            System.out.println("we are after search");
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
+            System.out.println("we are after setting parameter");
             FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
         }
     }
 
     public List<ReservationEntity> getReservatioinList() {
-        return reservatioinList;
+        return reservationList;
     }
 
     public void setReservatioinList(List<ReservationEntity> reservatioinList) {
-        this.reservatioinList = reservatioinList;
+        this.reservationList = reservatioinList;
     }
 
     public ReservationEntity getSelectReservation() {
@@ -73,5 +87,20 @@ public class ReservationManagedBean {
 
     public void setSelectReservation(ReservationEntity selectReservation) {
         this.selectReservation = selectReservation;
+    }
+
+    public List<String> complete(String query) throws ExistException {
+        System.out.println("NO4: we are in complete bean BEFORE");
+        List<String> results = new ArrayList<String>();
+
+        List<ReservationEntity> reservationList = reservationSessionBean.getAllReservations();
+        for (Object o : reservationList) {
+            ReservationEntity rve = (ReservationEntity) o;
+            if (rve.getReservationId().startsWith(query)) {
+                results.add(rve.getReservationId());
+            }
+        }
+        System.out.println("NO5: we are in complete bean AFTER");
+        return results;
     }
 }
