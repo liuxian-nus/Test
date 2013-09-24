@@ -119,7 +119,8 @@ public class Menu2ManagedBean implements Serializable {
                 
                 item = new MenuItem();
                 item.setValue("Hotel");
-                item.setUrl("/acms/hotelManagement.xhtml");
+                item.setUrl("/acms/checkIncheckOut.xhtml");
+//                item.setUrl("/acms/listRooms.xhtml");
                 submenu.getChildren().add(item);
                 
                 model.addSubmenu(submenu);
