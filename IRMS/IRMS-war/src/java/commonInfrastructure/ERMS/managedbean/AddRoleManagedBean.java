@@ -67,16 +67,16 @@ public class AddRoleManagedBean {
     
      public void pushToFunc() throws ExistException{
         int i = 0;
-        Long id;
-        System.out.println("haha");
-        id = Long.valueOf(selectedFunc.get(i));
-        role.getFunctionalities().add(getFm().getFunctionality(id));
+        String funcName;
+        System.err.println("pushToFunc");
+        funcName = String.valueOf(selectedFunc.get(i));
+        role.getFunctionalities().add(getFm().getFunctionality(funcName));
         System.out.println(selectedFunc.get(i));
         
         while(i < (selectedFunc.size()-1)){
             i++;
-            id = Long.valueOf(selectedFunc.get(i));
-            role.getFunctionalities().add(getFm().getFunctionality(id));
+            funcName = String.valueOf(selectedFunc.get(i));
+            role.getFunctionalities().add(getFm().getFunctionality(funcName));
             System.out.println(selectedFunc.get(i));
         }
         
