@@ -6,6 +6,7 @@ package commonInfrastructure.menu.managedbean;
 
 import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
+import ACMS.session.RoomSessionBean;
 import ERMS.entity.EmployeeEntity;
 import ERMS.entity.RoleEntity;
 import ERMS.session.EPasswordHashSessionBean;
@@ -31,17 +32,19 @@ import javax.persistence.Query;
 @RequestScoped
 public class initializationManagedBean implements Serializable {
 
-    @PersistenceContext
-    private EntityManager em;
+//    @PersistenceContext
+//    private EntityManager em;
     @EJB
     private EmployeeSessionBean employeeSessionBean = new EmployeeSessionBean();
-    ;
     @EJB
     private RoleSessionBean roleSessionBean;
     @EJB
     private EPasswordHashSessionBean ePasswordHashSessionBean;
     @EJB
     private ReservationSessionBean reSessionBean;
+    @EJB
+    private RoomSessionBean rmSessionBean;
+    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -170,6 +173,7 @@ public class initializationManagedBean implements Serializable {
 
     public void createRoom() {
         try {
+            /*
             Query query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
                     + "VALUES (1,1,1,'Deluxe');");
             query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
@@ -182,6 +186,8 @@ public class initializationManagedBean implements Serializable {
                     + "VALUES (1,1,5,'Deluxe');");
             query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
                     + "VALUES (1,1,6,'Deluxe');");
+                    */
+        rmSessionBean.createTestRoom();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room to Orchard Hotel", ""));
             return;
