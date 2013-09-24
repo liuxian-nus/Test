@@ -14,6 +14,9 @@
                         <h:outputText value="Role Name" />
                         <h:inputText required="true" requiredMessage="Role name cannot be empty" value="#{addRoleManagedBean.role.roleName}" style="margin-bottom:10px;"/>
                         <br/>
+                        <h:outputText value="Role ID" />
+                        <h:inputText required="true" requiredMessage="Role ID cannot be empty" value="#{addRoleManagedBean.role.roleId}" style="margin-bottom:10px;"/>
+                        <br/>
                         <h:outputText value="Functionalities" style="margin-right: 20px;"/>
                         <h:selectManyMenu value="#{addRoleManagedBean.selectedFunc}" style="height:150px;width:175px;margin-bottom:10px;">  
                             <f:selectItems value="#{addRoleManagedBean.fm.allFunctionalities}"  

@@ -30,19 +30,19 @@
 
 
                         <p:column style="width:100px">  
-                            <h:panelGrid columns="2" styleClass="actions" cellpadding="2">  
-                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
-                                    <f:setPropertyActionListener value="#{employeeList}" target="#{manageEmployeeManagedBean.selectedEmployee}" />  
-                                    <f:setPropertyActionListener value="#{true}" target="#{manageEmployeeManagedBean.editMode}" />  
+                            <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
+
+                                <p:commandButton update=":form:display" ajax="true" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                    <f:setPropertyActionListener target="#{manageEmployeeManagedBean.selectedEmployee}" value="#{employeeList}"/>  
+                                    <f:setPropertyActionListener target="#{manageEmployeeManagedBean.editMode}" value="true"/>  
                                 </p:commandButton>  
-                                <p:commandButton update=":form:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
-                                    <f:setPropertyActionListener value="#{employeeList}" target="#{manageEmployeeManagedBean.selectedEmployee}" />  
+                                <p:commandButton update=":form:display" ajax="true" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                    <f:setPropertyActionListener target="#{manageEmployeeManagedBean.selectedEmployee}" value="#{employeeList}"/>  
                                 </p:commandButton>  
                             </h:panelGrid>  
                         </p:column>  
 
                     </p:dataTable>  
-
 
 
                     <p:dialog header="Edit Employee" widgetVar="carDialog" resizable="false" id="carDlg"  
@@ -103,24 +103,31 @@
 
                     </p:dialog>
 
+                    <p:confirmDialog message="Are you sure?" width="200"  
+                                     showEffect="explode" hideEffect="explode"  
+                                     header="Confirm" severity="alert" widgetVar="confirmation">  
 
+                        <p:commandButton value="Yes" update="employees" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
+                            <f:attribute name="code1" value="#{manageEmployeeManagedBean.selectedEmployee.employeeId}" />
+                        </p:commandButton>
+                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
+
+                    </p:confirmDialog>
                 </div>
             </p:panel>
         </h:form> 
 
-        <h:form id="confirmDialogForm">
+
+        <!--<h:form id="confirmDialogForm">
             <p:dialog header="Confirmation" width="300" showEffect="explode" hideEffect="explode" widgetVar="confirmation">  
 
                 <h:outputText value="Are you sure to delete?" />
                 <br/>
                 <br/>
 
-                <p:commandButton value="Yes" update=":form:employees" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
-
-                </p:commandButton>
-                <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
-
+                <p:commandButton value="Yes" update=":form:employees" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()"/>
+                <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />
             </p:dialog>  
-        </h:form>
+        </h:form>-->
     </ui:define>
 </ui:composition>
