@@ -55,8 +55,10 @@ public class ManageEmployeeManagedBean {
     }
 
     public void deleteEmployee(ActionEvent event) throws ExistException {
-        setId((String) event.getComponent().getAttributes().get("code1"));
-        getEm().removeEmployee(getId());
+       
+        System.err.println("Delete Employee:" + selectedEmployee.getEmployeeId());
+        
+        getEm().removeEmployee(selectedEmployee.getEmployeeId());
     }
 
     public void saveChanges(ActionEvent event) {
