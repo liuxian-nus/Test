@@ -153,10 +153,17 @@ public class CRMServlet extends HttpServlet {
              else if ("memberForgetPassword".equals(page))
             {
                 System.out.println("***memberForgetPassword page***");
-                memberResetPasswordSessionBean.ResetPassword("leijq369@gmail.com");
+                String question=request.getParameter()
+                String email=request.getParameter("email");
+                memberResetPasswordSessionBean.ResetPassword(email);
+           //     memberResetPasswordSessionBean.ResetPassword("leijq369@gmail.com");
                 request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
 
             }
+             else if("memberInfoEdition".equals(page)){
+                 System.out.println("***memberInfoEdition page***");
+                 
+             }
             else{
                 System.out.println("other page");
             }
