@@ -12,7 +12,9 @@
         </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <h1>Member Info!</h1>
+        <h5> Welcome back, dear ${data.memberName}</h5>
+        
+         
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

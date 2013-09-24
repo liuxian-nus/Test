@@ -20,7 +20,7 @@
                     <form id="member" action="memberInfo" method="POST">
                         <fieldset>
                             <legend>Member</legend>
-
+                                  <p>${data}</p>
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label>E-mail</label>
@@ -42,6 +42,8 @@
                                   <li><input type="submit" class="button" value="Login"></li>
                                   <li><a href="memberRegister" class="button">Register</a></li>
                                   <li><a href="memberForgetPassword" >Forget Password</a></li>
+                                  
+                            
     
                             </ul>
  
