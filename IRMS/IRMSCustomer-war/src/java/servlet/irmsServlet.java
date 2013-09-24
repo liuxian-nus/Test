@@ -145,6 +145,11 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/CRMServlet/memberRegister").forward(request, response);
 
             }
+              else if ("memberRegisterResult".equals(page))
+            {
+                request.getRequestDispatcher("/CRMServlet/memberRegisterResult").forward(request, response);
+
+            }
              else if ("memberForgetPassword".equals(page))
             {
                 request.getRequestDispatcher("/CRMServlet/memberForgetPassword").forward(request, response);
