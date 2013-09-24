@@ -9,7 +9,7 @@ import ERMS.session.FunctionalitySessionBean;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean; 
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -21,25 +21,30 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @RequestScoped
 public class AddFunctionalityManagedBean {
- /** Creates a new instance of AddEmployeeManagedBean */
-        
+
+    /**
+     * Creates a new instance of AddEmployeeManagedBean
+     */
     @EJB
     FunctionalitySessionBean functionalityManager;
-    
     private FunctionalityEntity functionality;
     private boolean show = false;
-    
+
     public AddFunctionalityManagedBean() {
         functionality = new FunctionalityEntity();
     }
-    
-    public void saveNewFunctionality(ActionEvent event)
-    {
+
+    public void saveNewFunctionality(ActionEvent event) {
         show = true;
-        functionalityManager.addFunctionality(getFunctionality());
+        try {
+            functionalityManager.addFunctionality(getFunctionality());
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new employee", ""));
+            return;
+        }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Functionality Saved.", ""));
     }
-    
+
     public FunctionalityEntity getFunctionality() {
         return functionality;
     }
@@ -47,8 +52,16 @@ public class AddFunctionalityManagedBean {
     public void setFunctionality(FunctionalityEntity functionality) {
         this.functionality = functionality;
     }
-    
-    public void oneMore(ActionEvent event) throws IOException{
+
+    public void oneMore(ActionEvent event) throws IOException {
+        show = true;
+        try {
+            functionalityManager.addFunctionality(getFunctionality());
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new employee", ""));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Functionality Saved.", ""));
         FacesContext.getCurrentInstance().getExternalContext().redirect("addFunctionality.xhtml");
     }
 

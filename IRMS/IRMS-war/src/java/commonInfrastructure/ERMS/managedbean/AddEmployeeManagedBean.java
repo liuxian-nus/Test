@@ -6,7 +6,6 @@ package commonInfrastructure.ERMS.managedbean;
 
 import ERMS.entity.EmployeeEntity;
 import ERMS.session.EPasswordHashSessionBean;
-import ERMS.entity.RoleEntity;
 import ERMS.session.EmailSessionBean;
 import ERMS.session.EmployeeSessionBean;
 import java.io.IOException;
@@ -19,7 +18,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import org.primefaces.context.RequestContext;
 
 /**
  *

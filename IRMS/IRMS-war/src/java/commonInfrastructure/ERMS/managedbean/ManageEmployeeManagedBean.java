@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ManagedBean
 @ViewScoped
+//@SessionScoped
 public class ManageEmployeeManagedBean {
 
     @EJB
@@ -47,6 +48,7 @@ public class ManageEmployeeManagedBean {
     }
 
     public boolean isEditMode() {
+        System.err.println("1Edit mode: " + editMode);
         return editMode;
     }
 
@@ -55,10 +57,13 @@ public class ManageEmployeeManagedBean {
     }
 
     public void deleteEmployee(ActionEvent event) throws ExistException {
-       
+
         System.err.println("Delete Employee:" + selectedEmployee.getEmployeeId());
         
-        getEm().removeEmployee(selectedEmployee.getEmployeeId());
+        setId((String)event.getComponent().getAttributes().get("code1"));
+        getEm().removeEmployee(getId());
+
+        //getEm().removeEmployee(selectedEmployee.getEmployeeId());
     }
 
     public void saveChanges(ActionEvent event) throws ExistException {
@@ -86,7 +91,7 @@ public class ManageEmployeeManagedBean {
      * @return the selectedEmployee
      */
     public EmployeeEntity getSelectedEmployee() {
-        System.out.println("SelectedEmployee: "+ selectedEmployee.getEmployeeName());
+        System.out.println("3SelectedEmployee getSelected: " + selectedEmployee.getEmployeeName());
         return selectedEmployee;
     }
 
@@ -94,6 +99,7 @@ public class ManageEmployeeManagedBean {
      * @param selectedEmployee the selectedEmployee to set
      */
     public void setSelectedEmployee(EmployeeEntity selectedEmployee) {
+        System.out.println("4Set SelectedEmployee: " + selectedEmployee.getEmployeeName());
         this.selectedEmployee = selectedEmployee;
     }
 
@@ -102,6 +108,8 @@ public class ManageEmployeeManagedBean {
      */
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+        System.err.println("2SetEdit mode: " + editMode);
+
     }
 
     /**
@@ -118,7 +126,6 @@ public class ManageEmployeeManagedBean {
         this.id = id;
     }
 
-    
     public String toSentence(List<RoleEntity> roles) {
         String output = null;
         StringBuffer sb = new StringBuffer();
@@ -211,6 +218,7 @@ public class ManageEmployeeManagedBean {
     public void setMm(MessageSessionBean mm) {
         this.mm = mm;
     }
+
     public boolean isHotel() {
         return ("Hotel".equals(selectedEmployee.getEmployeeDepartment()));
     }
