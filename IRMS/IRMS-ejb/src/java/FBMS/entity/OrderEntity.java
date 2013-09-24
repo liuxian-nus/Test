@@ -29,7 +29,7 @@ public class OrderEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date orderDateTime;
     //@OneToMany (cascade ={CascadeType.ALL},mappedBy = "order")
     //private Set <DishEntity> Dishes;

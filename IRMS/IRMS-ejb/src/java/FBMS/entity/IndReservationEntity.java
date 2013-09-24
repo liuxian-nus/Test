@@ -24,7 +24,7 @@ public class IndReservationEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long indReservationId;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date indReservationDateTime;
     @ManyToOne(cascade ={CascadeType.ALL})
     private RestaurantEntity restaurant;

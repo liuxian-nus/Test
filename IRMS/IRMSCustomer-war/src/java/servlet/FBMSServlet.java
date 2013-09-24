@@ -36,6 +36,7 @@ public class FBMSServlet extends HttpServlet {
     
     private Set<RestaurantEntity> data = null;
     private boolean data1;
+    private RestaurantEntity data2 = null;
     
     
     /**
@@ -92,15 +93,28 @@ public class FBMSServlet extends HttpServlet {
             }
             else if ("checkAvailability".equalsIgnoreCase(page))
             {
-                System.out.println("*****CheckAvailability*****");
+                System.out.println("*****checkAvailability*****");
                 System.out.println("FBMSServlet: Current page is checkAvailability");
                 data1 = checkAvailability(request);
                 System.out.println("availability has been checked for the restaurant");
                 System.out.println(request.getParameter("restId"));//to be modified
                 System.out.println(data1);
                 request.setAttribute("data", data1);
-                request.getRequestDispatcher("/restaurantBook.jsp").forward(request,response);
+                request.getRequestDispatcher("/restaurantCheck.jsp").forward(request,response);
             }
+            else if ("restaurantBook".equalsIgnoreCase(page))
+            {
+                System.out.println("*****restaurantBook******");
+                System.out.println("FBMSServlet: Current page is restaurantBook");
+                Long restId = Long.parseLong(request.getParameter("restId"));
+                System.out.println("FBMSServlet: the restaurant ID is "+restId);
+                data2 = indReservationSessionBean.getRestaurantEntity(restId);
+                System.out.println("FBMSServlet: the restaurant has been returned");
+                request.setAttribute("data", data2);
+                request.getRequestDispatcher("/restaurantBook.jsp").forward(request, response);
+                
+            }
+            
             else 
             {
                 System.out.println("other page");
