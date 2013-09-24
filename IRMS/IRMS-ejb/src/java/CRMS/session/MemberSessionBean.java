@@ -18,7 +18,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author liuxian
+ * @author liuxian, Jieqiong
  */
 @Stateless
 public class MemberSessionBean {
@@ -40,8 +40,8 @@ public class MemberSessionBean {
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public MemberEntity addMember(String memberEmail, String memberName, String memberPassword, 
-    String memberHP, String gender, String nationality, Date memberDob, String maritalStatus, boolean isVIP,
-    boolean isSubscriber, double point, double coin, List<String> preferences) {
+    String memberHP, String gender, String nationality, Date memberDob, String maritalStatus, 
+    boolean isSubscriber) {
         member.setMemberEmail(memberEmail);
         member.setMemberName(memberName);
         member.setMemberPassword(memberPassword);
@@ -50,18 +50,20 @@ public class MemberSessionBean {
         member.setNationality(nationality);
         member.setMemberDob(memberDob);
         member.setMaritalStatus(maritalStatus);
-        member.setIsVIP(isVIP);
+        member.setIsVIP(false);
         member.setIsSubscriber(isSubscriber);
-        member.setPoint(point);
-        member.setCoin(coin);
-        member.setPreferences(preferences);      
+        member.setPoint(0);
+        member.setCoin(0);
+      //  member.setPreferences(preferences);      
         //member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
         em.persist(member);
         return member;
     }
 
     public boolean login(String memberEmail, String memberPassword){
+        System.out.println("memberEmail: "+memberEmail);
         member = em.find(MemberEntity.class, memberEmail);
+        System.out.println(member.getMemberEmail());
         System.out.println("logging in....");
         if (member==null) System.out.println("MemberEmail is wrong!");
         else
