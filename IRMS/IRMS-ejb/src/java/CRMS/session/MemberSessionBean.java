@@ -133,7 +133,10 @@ public class MemberSessionBean {
     public boolean updateMember(MemberEntity member)
     {
         em.merge(member);
+        member=em.find(MemberEntity.class, "leijq369@gmail.com");
+        System.out.println(member.getMemberPassword());
         System.out.println("MemberSessionBean: member " + member.getMemberEmail() + " is successfully updated");
+        System.out.println("MemberSessionBean: member updated password:"+member.getMemberPassword());
         return true;
     }
     
