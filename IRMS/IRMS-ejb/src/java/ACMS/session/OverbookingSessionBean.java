@@ -61,7 +61,7 @@ public class OverbookingSessionBean {
         
         
         final_z=Math.floor(z);
-    
+        //suggestedQuota = integer value of final_z
         //calculate quota given the probability sl
         return suggestedQuota;
     }
