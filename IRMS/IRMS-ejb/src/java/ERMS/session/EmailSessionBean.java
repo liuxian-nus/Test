@@ -51,7 +51,7 @@ public class EmailSessionBean {
             message.setSubject("Initial Password");
             message.setText("Greeting from Coral Island Resort!"
                     + "\nHere is your initial password:" + initialPassword +
-                    "\nPlease login immediately to change your password.");
+                    "\nPlease login immediately to change your password.\n\n\nBest Regards,\nThe Coral Island Management Team");
                     
 
             Transport.send(message);
