@@ -6,7 +6,6 @@ package commonInfrastructure.menu.managedbean;
 
 import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
-import CRMS.entity.MemberEntity;
 import ERMS.entity.EmployeeEntity;
 import ERMS.entity.RoleEntity;
 import ERMS.session.EPasswordHashSessionBean;
@@ -23,7 +22,6 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.Temporal;
 
 /**
  *
