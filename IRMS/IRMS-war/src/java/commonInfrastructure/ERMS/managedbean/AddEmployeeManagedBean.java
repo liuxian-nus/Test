@@ -35,7 +35,6 @@ public class AddEmployeeManagedBean implements Serializable {
     private EPasswordHashSessionBean ePasswordHashSessionBean;
     @EJB
     private EmployeeSessionBean employeeSessionBean;
-    private RoleEntity superAdmin;
     private EmployeeEntity employee;
 
     @PostConstruct
@@ -55,35 +54,6 @@ public class AddEmployeeManagedBean implements Serializable {
      * Creates a new instance of AddEmployeeManagedBean
      */
     public AddEmployeeManagedBean() {
-        employee = new EmployeeEntity();
-    }
-
-    public void saveAdmin(ActionEvent event) throws IOException {
-        superAdmin = new RoleEntity();
-        //add admin role
-        /* superAdmin = new RoleEntity();*/
-        //      superAdmin.setRoleId(0);
-        superAdmin.setRoleName("SuperAdmin");
-        superAdmin.addFunctionality(null);//functionalities to be discussed here!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        //add admin employee
-        employee = new EmployeeEntity();
-        employee.setEmployeePassword("0000");
-        employee.setEmployeeId("0000");
-        employee.setEmployeeName("SuperAdmin");
-        employee.addRole(superAdmin);
-        employee.setEmployeeEmail("admin.cir@gmail.com");
-        employee.setIsFirstTimeLogin(false);
-        employee.setEmployeeGender("male");
-        try {
-            System.out.println("Saving Admin....");
-            employeeSessionBean.addEmployee(employee);
-            System.out.println("Admin saved.....");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
-            return;
-        }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Admin saved.", ""));
         employee = new EmployeeEntity();
     }
 

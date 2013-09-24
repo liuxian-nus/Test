@@ -86,6 +86,7 @@ public class ManageEmployeeManagedBean {
      * @return the selectedEmployee
      */
     public EmployeeEntity getSelectedEmployee() {
+        System.out.println("SelectedEmployee: "+ selectedEmployee.getEmployeeName());
         return selectedEmployee;
     }
 
@@ -209,5 +210,8 @@ public class ManageEmployeeManagedBean {
 
     public void setMm(MessageSessionBean mm) {
         this.mm = mm;
+    }
+    public boolean isHotel() {
+        return ("Hotel".equals(selectedEmployee.getEmployeeDepartment()));
     }
 }
