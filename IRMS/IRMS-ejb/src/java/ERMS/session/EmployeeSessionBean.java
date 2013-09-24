@@ -21,7 +21,6 @@ public class EmployeeSessionBean {
     private EntityManager em;
     
     EmployeeEntity employee;
-    
 
     public EmployeeSessionBean() {
         //insert test case
@@ -39,6 +38,7 @@ public class EmployeeSessionBean {
     
     public boolean removeEmployee(String employeeId)throws ExistException {
         employee = em.find(EmployeeEntity.class, employeeId);
+        System.err.println("remove employee: "+employee.getEmployeeId());
         if(employee == null) {
             throw new ExistException("Employee does not exist!");
         }
