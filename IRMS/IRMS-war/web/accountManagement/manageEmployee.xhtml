@@ -43,7 +43,7 @@
                     </p:dataTable>  
 
                     <p:dialog header="Edit Employee" widgetVar="carDialog" resizable="false" id="carDlg"  
-                              showEffect="fade" hideEffect="explode" modal="true" width="500">  
+                              showEffect="fade" hideEffect="explode" width="500">  <!--modal="true" -->
 
                         <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
                             <h:outputText value="Name" />  
@@ -80,16 +80,24 @@
 
                     </p:dialog>
 
-                    <p:confirmDialog appendToBody="true" message="Are you sure?" header="Confirmation" width="300" showEffect="explode" hideEffect="explode" widgetVar="confirmation">  
 
-                        <p:commandButton value="Yes" update="employees" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
-                            <f:attribute name="code1" value="#{manageEmployeeManagedBean.selectedEmployee.employeeId}" />
-                        </p:commandButton>
-                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
-
-                    </p:confirmDialog>  
                 </div>
             </p:panel>
         </h:form> 
+
+        <h:form id="confirmDialogForm">
+            <p:dialog header="Confirmation" width="300" showEffect="explode" hideEffect="explode" widgetVar="confirmation">  
+                
+                <h:outputText value="Are you sure to delete?" />
+                <br/>
+                <br/>
+                
+                <p:commandButton value="Yes" update=":form:employees" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
+                    
+                </p:commandButton>
+                <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
+
+            </p:dialog>  
+        </h:form>
     </ui:define>
 </ui:composition>
