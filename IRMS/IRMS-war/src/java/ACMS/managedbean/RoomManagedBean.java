@@ -9,6 +9,7 @@ import ACMS.session.RoomSessionBean;
 import ACMS.entity.ReservationEntity;
 import Exception.ExistException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,59 +27,32 @@ import org.primefaces.event.ToggleEvent;
  */
 @ManagedBean
 @ViewScoped
-public class RoomManagedBean {
-    
+public class RoomManagedBean implements Serializable {
+
     @EJB
     private RoomSessionBean rm;
-
-    private List<RoomEntity> roomList = new ArrayList<RoomEntity>();
-    private List<RoomEntity> selectRoom;
-    private List<RoomEntity> roomList2 = new ArrayList<RoomEntity>();
-
-    public List<RoomEntity> getRoomList2() {
-        return roomList2;
-    }
-
-    public void setRoomList2(List<RoomEntity> roomList2) {
-        this.roomList2 = roomList2;
-    }
-    
+    private List<RoomEntity> selectRoom = new ArrayList<RoomEntity>();
     private Long reservationId;
-    
+
+    public List<RoomEntity> getSelectRoom() {
+        return selectRoom;
+    }
+
+    public void setSelectRoom(List<RoomEntity> selectRoom) {
+        this.selectRoom = selectRoom;
+    }
+
     public RoomManagedBean() throws ExistException {
-        roomList = rm.getAllRooms();
-    }
-
-    public void initViewAll(PhaseEvent event) {
-        roomList = (List<RoomEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("AllRooms");
-    }
-    
-    public void initViewAvailable(PhaseEvent event) {
-        roomList2 = (List<RoomEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("AllRooms");
-    }
-
-    public List<RoomEntity> getRooms() throws ExistException {
-        return roomList;
     }
 
     public void getAvailableRooms(ActionEvent event) throws ExistException, IOException {
-        int i = 0;
-        RoomEntity oneRoom;
-        oneRoom = roomList.get(i);
-        if (oneRoom.getRoomStatus().equals("available")) {
-            selectRoom.add(oneRoom);
-        }
-        while (i < (roomList.size() - 1)) {
-            i++;
-            oneRoom = roomList.get(i);
-            if (oneRoom.getRoomStatus().equals("available")) {
-                selectRoom.add(oneRoom);
-            }//end of if
-        }//end of while
         System.err.println("in Getavailable rooms");
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("AvailableRooms", selectRoom);
+        setSelectRoom(rm.getAllRooms());
+        System.err.println("after getavailable rooms");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("AllRooms", selectRoom);
+        System.err.println("after setting selectRoom");
         FacesContext.getCurrentInstance().getExternalContext().redirect("listAvailableRooms.xhtml");
-       
+
     }//end of getAvailableRooms()
 
     //capture member transaction missing.....
