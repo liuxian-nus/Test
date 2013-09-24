@@ -19,6 +19,7 @@ import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.lang.Math;
 
 /**
  *
@@ -44,6 +45,23 @@ public class OverbookingSessionBean {
         double cs = price.getPrice();
         ce = compensation;
         sl = cs/(cs + ce);
+        double z=0.0;
+        double p=0.5;
+        double n=0.0;
+        double final_z;
+        
+        while(p<sl){
+            n=1/(Math.pow(2,0.5)*Math.PI)*Math.exp(-0.5*Math.pow(z, 2));
+            p=n*0.01;  
+            z+=0.01;
+            System.out.println(n);
+            System.out.println(p);
+            System.out.println(z);
+        }
+        
+        
+        final_z=Math.floor(z);
+    
         //calculate quota given the probability sl
         return suggestedQuota;
     }
@@ -52,5 +70,9 @@ public class OverbookingSessionBean {
         overbooking.setQuota(quota);
         em.merge(overbooking);
         return overbooking.getQuota();
+    }
+
+    private double pow(int i, double z) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
