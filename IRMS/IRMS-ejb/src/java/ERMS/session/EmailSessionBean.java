@@ -39,18 +39,20 @@ public class EmailSessionBean {
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("cookiewxy", "YAMAshita##1991");
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
             }
         });
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("cookiewxy@gmail.com"));
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAdress));
             message.setSubject("Initial Password");
             message.setText("Greeting from Coral Island Resort!"
-                    + "\n\n Here is your initial password:" + initialPassword);
+                    + "\nHere is your initial password:" + initialPassword +
+                    "\nPlease login immediately to change your password.");
+                    
 
             Transport.send(message);
 

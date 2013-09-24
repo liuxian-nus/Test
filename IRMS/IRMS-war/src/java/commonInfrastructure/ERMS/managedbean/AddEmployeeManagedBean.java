@@ -55,6 +55,8 @@ public class AddEmployeeManagedBean implements Serializable {
      */
     public AddEmployeeManagedBean() {
         employee = new EmployeeEntity();
+        System.out.println("In constructor....");
+
     }
 
     public void saveNewEmployee(ActionEvent event) throws IOException {
@@ -68,7 +70,7 @@ public class AddEmployeeManagedBean implements Serializable {
         System.out.println("finished hashing");
 
         try {
-            System.out.println("we are in SavaNewEmployee in managedbean");
+            System.out.println("we are in SavaNewEmployee in managedbean" + employee.getEmployeeId());
             employeeSessionBean.addEmployee(employee);
             System.out.println("we are after employee in managedbean");
         } catch (Exception e) {

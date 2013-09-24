@@ -24,7 +24,7 @@ public class ReservationEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long reservationId;
+    private String reservationId;
     private String rcName; //reservation customer name
     private String rcEmail;
     private String rcHP;
@@ -49,11 +49,11 @@ public class ReservationEntity implements Serializable {
      @ManyToOne(cascade={CascadeType.PERSIST})
      private MemberEntity rcMember;
 
-    public Long getId() {
+    public String getId() {
         return reservationId;
     }
 
-    public void setId(Long reservationId) {
+    public void setId(String reservationId) {
         this.reservationId = reservationId;
     }
 
@@ -64,11 +64,11 @@ public class ReservationEntity implements Serializable {
         return hash;
     }
 
-    public Long getReservationId() {
+    public String getReservationId() {
         return reservationId;
     }
 
-    public void setReservationId(Long reservationId) {
+    public void setReservationId(String reservationId) {
         this.reservationId = reservationId;
     }
 
