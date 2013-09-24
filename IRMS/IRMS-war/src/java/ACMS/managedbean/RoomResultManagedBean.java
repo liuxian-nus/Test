@@ -58,7 +58,7 @@ private List<RoomEntity> availableRooms;
     }
 
     public void initViewAvailable(PhaseEvent event) {
-        availableRooms = (List<RoomEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("AllRooms");
+        availableRooms = (List<RoomEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("AvailableRooms");
     }
     
 }

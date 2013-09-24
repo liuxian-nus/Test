@@ -18,7 +18,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.PhaseEvent;
 import org.primefaces.event.ToggleEvent;
 
 /**
@@ -45,14 +44,10 @@ public class RoomManagedBean implements Serializable {
     public RoomManagedBean() throws ExistException {
     }
 
-    public void getAvailableRooms(ActionEvent event) throws ExistException, IOException {
-        System.err.println("in Getavailable rooms");
-        setSelectRoom(rm.getAllRooms());
-        System.err.println("after getavailable rooms");
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("AllRooms", selectRoom);
-        System.err.println("after setting selectRoom");
-        FacesContext.getCurrentInstance().getExternalContext().redirect("listAvailableRooms.xhtml");
-
+    public List<RoomEntity> getAllRooms() throws ExistException, IOException {
+        System.err.println("in getAll rooms");
+        return rm.getAllRooms();
+    
     }//end of getAvailableRooms()
 
     //capture member transaction missing.....
