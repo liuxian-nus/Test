@@ -68,8 +68,6 @@ public class MemberResetPasswordSessionBean {
         
         System.out.println("member updated!!!!");
         
- //       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Member update saved.", ""));
-//            emailSessionBean.emailInitialPassward(employee.getPersonalEmail(), initialPwd); //send email
         emailSessionBean.emailInitialPassward(member.getMemberEmail(), initialPwd);
         System.out.println("email already sent");
         member = new MemberEntity();
