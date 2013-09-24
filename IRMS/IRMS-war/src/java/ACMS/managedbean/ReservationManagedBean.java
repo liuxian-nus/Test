@@ -103,4 +103,8 @@ public class ReservationManagedBean implements Serializable {
         System.out.println("NO5: we are in complete bean AFTER");
         return results;
     }
+    
+//     public boolean containReservation() {
+//        return ("Hotel".equals(employee.getEmployeeDepartment()));
+//    }
 }
