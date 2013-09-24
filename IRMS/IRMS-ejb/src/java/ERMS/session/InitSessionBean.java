@@ -7,6 +7,7 @@ package ERMS.session;
 import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
 import CRMS.entity.MemberEntity;
+import CRMS.session.CPasswordHashSessionBean;
 import CRMS.session.MemberSessionBean;
 import ERMS.entity.EmployeeEntity;
 import ERMS.entity.RoleEntity;
@@ -34,6 +35,8 @@ public class InitSessionBean {
     private EmployeeSessionBean employeeSessionBean;
     @EJB
     private EPasswordHashSessionBean ePasswordHashSessionBean;
+    @EJB
+    private CPasswordHashSessionBean cPasswordHashSessionBean;
     @EJB
     private ReservationSessionBean reSessionBean;
     @EJB
@@ -147,7 +150,8 @@ public class InitSessionBean {
         
         member = new MemberEntity();
         member.setMemberEmail("xinqi-wang@yahoo.com");
-        member.setMemberName("DaYan-Wang");
+        member.setMemberName("dayan-wang");
+        member.setMemberPassword(cPasswordHashSessionBean.hashPassword("dayan-wang"));
         System.out.println("Create a new member: welcome! " + member.getMemberName());
         member.setMemberHP("92728760");
         member.setNationality("China");
@@ -165,6 +169,6 @@ public class InitSessionBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding member", ""));
             return;
         }
-        System.err.println("Insert DaYan-Wang member into database");
+        System.err.println("Insert dayan-wang member into database");
     }
 }
