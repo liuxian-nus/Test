@@ -25,7 +25,7 @@
         <jsp:include page="header.jsp"></jsp:include>
 
             <div class="row">
-                <div clas="large-9" colums></div>
+        
                 <div class="large-3" columns>
                     <form id="search-form" action="restaurantSearch" method="POST">
                         <fieldset>
@@ -95,6 +95,38 @@
                                 </div>
                             </div>
                         </fieldset>         
+                    </form>
+                </div>
+                <div class="large-3" columns>
+                    <form id="search-form" action="restaurantIndModify" method="POST">
+                        <fieldset>
+                             <legend>Modify your reservation</legend>
+                             
+                             <div class="row">
+                                 <div class="large-12 columns">
+                                      <label>Input your reservation confirmation number here</label>
+                                       <input id="input-name" type="text" placeholder="confirmation number" name="reservationId">
+                                       
+                                 </div> 
+                             </div>
+                             
+                             <div class="row">
+                                 <div class="large-12 columns">
+                                   <label for="customDropdown">Type of Order</label> 
+                                   <select id="customDropdown" name="type">
+                                       <option>Individual</option>
+                                       <option>Catering</option>
+                                   </select>
+                                 </div>  
+                             </div>
+                             <br>
+                              <div class="row">
+                                <div class="large-12 columns">
+                                    <input type="submit" class="small button" value="Search">
+
+                                </div>
+                            </div>
+                        </fieldset>
                     </form>
                 </div>
             </div>

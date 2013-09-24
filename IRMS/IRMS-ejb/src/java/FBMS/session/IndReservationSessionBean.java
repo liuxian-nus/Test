@@ -222,6 +222,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     
+    @Override
     public IndReservationEntity viewReservation (Long indReservationId){
 
         IndReservationEntity ire = em.find(IndReservationEntity.class,indReservationId);
@@ -229,6 +230,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
         return ire;
 }
     
+    @Override
     public boolean modifyReservation (String status,Long restId, Date indReservationDateTime, Long indReservationId,Integer numberPeople, String title, String name, String email,String mobile, String notes){
         System.out.println("IndReservationSessionBean: reservation modification starts!");
         

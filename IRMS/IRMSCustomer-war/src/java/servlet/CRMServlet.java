@@ -8,7 +8,7 @@ package servlet;
 
 
 import CRMS.entity.MemberEntity;
-import CRMS.session.MemberManagementSessionBean;
+import CRMS.session.MemberResetPasswordSessionBean;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import CRMS.session.MemberSessionBean;
@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
     @EJB
-    private MemberManagementSessionBean memberManagementSessionBean;
+    private MemberResetPasswordSessionBean memberResetPasswordSessionBean;
     @EJB
     private MemberSessionBean memberSession;
     
@@ -144,37 +144,24 @@ public class CRMServlet extends HttpServlet {
                 System.out.println(this_date);
                 Date date=new SimpleDateFormat("dd-MMMMM-yyyy").parse("01-July-2013");
                 System.out.println(date);
-                String securityQuestion=request.getParameter("securityQuestion");
-                String answer=request.getParameter("answer");
-                System.out.println("userName: "+userName);
-                
-                member=memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe,
-                        securityQuestion,answer);
+                   
+                member=memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe);
                 
                 request.getRequestDispatcher("/memberRegisterResult.jsp").forward(request, response);
             }
              
              else if ("memberForgetPassword".equals(page))
             {
-                System.out.println("***memberForgetPassword page***");   
+                System.out.println("***memberForgetPassword page***");
+//                String question=request.getParameter()
+                String email=request.getParameter("email");
+                memberResetPasswordSessionBean.ResetPassword(email);
+           //     memberResetPasswordSessionBean.ResetPassword("leijq369@gmail.com");
                 request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
-                
+
             }
              else if("memberInfoEdition".equals(page)){
-                System.out.println("***memberInfoEdition page***");
-                 
-                String email=request.getParameter("email");  
-                String question=request.getParameter("question");
-                String answer=request.getParameter("answer");
-                boolean correctAnswer=memberManagementSessionBean.checkAnswer(email,answer);
-                if(correctAnswer){
-                    memberManagementSessionBean.ResetPassword(email);
-                    request.getRequestDispatcher("/memberInfoEdition.jsp").forward(request, response);
-                }
-                else 
-                    request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
-                
-         //       memberManagementSessionBean.ResetPassword("leijq369@gmail.com");
+                 System.out.println("***memberInfoEdition page***");
                  
              }
             else{

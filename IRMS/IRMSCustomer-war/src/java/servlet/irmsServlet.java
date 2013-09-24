@@ -101,6 +101,13 @@ public class irmsServlet extends HttpServlet {
                 System.out.println(request.getParameter("restId"));
                 request.getRequestDispatcher("/FBMSServlet/restaurantBook").forward(request, response);
             }
+            else if("restaurantIndModify".equalsIgnoreCase(page))
+            {
+                System.out.println("irmsServlet: *****restaurantIndModify*****");
+                System.out.println(request.getParameter("type"));
+                System.out.println(request.getParameter("reservationId"));
+                request.getRequestDispatcher("/FBMSServlet/restaurantIndModify").forward(request, response);
+            }
             else if ("checkAvailability".equals(page)){
                 System.out.println("***checkAvailability page***");
                 System.out.println(request.getParameter("restId"));
@@ -167,6 +174,21 @@ public class irmsServlet extends HttpServlet {
              }
             else{
                 System.out.println("other page");
+                
+                //Below is testing
+                /*
+                Integer Date = Integer.parseInt(request.getParameter("date"));
+                System.out.println("The value passed in for date is : "+Date);
+                
+                Integer Month = Integer.parseInt(request.getParameter("month"));
+                System.out.println("The value passed in for month is : "+Month);
+                
+                Integer Year = Integer.parseInt(request.getParameter("year"));
+                System.out.println("The value passed in for year is : "+Year);
+                
+                Integer Time = Integer.parseInt(request.getParameter("time"));
+                System.out.println("The value passed in for year is : "+Time);
+                */
             }
 //          
 //             

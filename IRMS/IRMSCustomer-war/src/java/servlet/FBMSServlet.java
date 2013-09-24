@@ -4,6 +4,7 @@
  */
 package servlet;
 
+import FBMS.entity.IndReservationEntity;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import FBMS.session.OrderSessionBean;
@@ -37,6 +38,7 @@ public class FBMSServlet extends HttpServlet {
     private Set<RestaurantEntity> data = null;
     private boolean data1;
     private RestaurantEntity data2 = null;
+    private IndReservationEntity data3 = null;
     
     
     /**
@@ -104,7 +106,7 @@ public class FBMSServlet extends HttpServlet {
             }
             else if ("restaurantBook".equalsIgnoreCase(page))
             {
-                System.out.println("*****restaurantBook******");
+                System.out.println("*****restaurantBook*****");
                 System.out.println("FBMSServlet: Current page is restaurantBook");
                 Long restId = Long.parseLong(request.getParameter("restId"));
                 System.out.println("FBMSServlet: the restaurant ID is "+restId);
@@ -113,6 +115,18 @@ public class FBMSServlet extends HttpServlet {
                 request.setAttribute("data", data2);
                 request.getRequestDispatcher("/restaurantBook.jsp").forward(request, response);
                 
+            }
+            else if ("restaurantIndModify".equalsIgnoreCase(page))
+            {
+                System.out.println("*****restaurantIndModify*****");
+                System.out.println("FBMSServlet: Current page is restaurantIndModify");
+                Long reservationId = Long.parseLong(request.getParameter("reservationId"));
+                System.out.println("FBMSServlet: the reservation confirmation nubmer is "+reservationId);
+                data3 = indReservationSessionBean.viewReservation(reservationId);
+                System.out.println("FBMSServlet: the individual reservation has been returned");
+                request.setAttribute("data", data3);
+                request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
+            
             }
             
             else 
