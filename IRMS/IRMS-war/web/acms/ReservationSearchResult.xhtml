@@ -8,14 +8,14 @@
 
    
     <ui:define name="content">
-        <f:view beforePhase="#{reservationSearchResult.initViewSelect}"> 
+        <f:view beforePhase="#{reservationSearchResultManagedBean.initViewSelect}"> 
             <h:form id="form">
                 <p:panel id="search" header="Search Result" style="height:495px;">
                     <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
                         <p:growl id="msgs" showDetail="true" /> 
-                        <p:dataTable id="employees" value="#{reservationSearchResult.selectReservation}" var="reservation" paginator="true" rows="6">
+                        <p:dataTable id="employees" value="#{reservationSearchResultManagedBean.selectReservation}" var="reservationList" paginator="true" rows="6">
                             <p:column headerText="Reservation ID">
-                                <h:outputText value="#{reservation.reservationId}"/>
+                                <h:outputText value="#{reservationList.reservationId}"/>
                             </p:column>
                             <p:column headerText="Customer Name">
                                 <h:outputText value="#{reservationList.rcName}"/>

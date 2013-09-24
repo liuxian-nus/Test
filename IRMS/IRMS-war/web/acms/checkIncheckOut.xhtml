@@ -9,17 +9,19 @@
         <p:tabView id="tabView">  
 
             <p:tab id="tab1" title="Check In">  
-                <h:panelGrid columns="2" cellpadding="10">  
-                    <h:outputText value="Reservation ID: " style="margin-right: 10px;"/>
-                    <h:inputText id ="reservation" value ="#{reservationManagedBean.searchId}" />
-                    <p:spacer width="20"/>
-                    <p:commandButton value="Search" ajax="true" actionListener="#{reservationManagedBean.searchById()}"/>
-                    <p:message for="reservation"/>
-                </h:panelGrid> 
-
+                <h:form id="formCheckIn">
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <h:outputText value="Reservation ID: " style="margin-right: 10px;"/>
+                        <p:autoComplete id="reservation" value="#{reservationManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"  
+                                        completeMethod="#{reservationManagedBean.complete}" />
+                        <p:spacer width="20"/>
+                        <p:commandButton value="Search" ajax="true" actionListener="#{reservationManagedBean.searchById}"/>
+                        <p:message for="reservation"/>
+                    </h:panelGrid> 
+                </h:form>
             </p:tab>  
-            
-<!-- check out tab starts!! -->
+
+            <!-- check out tab starts!! -->
             <p:tab id="tab2" title="Check out">  
                 <h:panelGrid columns="2" cellpadding="10">  
                     <h:outputText id="tab2Text" value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.  
