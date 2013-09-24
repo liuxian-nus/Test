@@ -39,10 +39,25 @@ public class MemberSessionBean {
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public MemberEntity addMember(String memberEmail, String memberName, String memberPassword, 
+    public MemberEntity addMember(String memberEmail, String memberName, String memberPassword, String memberPassword2,
     String memberHP, String gender, String nationality, Date memberDob, String maritalStatus, 
     boolean isSubscriber) {
+        
+        System.out.println("into MemberSessionBean: addMember");
+        member = em.find(MemberEntity.class, memberEmail);
+        if(member!=null) {
+            System.out.println(member.getMemberEmail());
+            System.out.println("You have registered already. Please log in.");
+            return member;
+        }
+        if(!memberPassword.equals(memberPassword2)){
+            System.out.println("Two passwords are not the same. Please register again.");
+            return member;
+        }
+        
+        System.out.println(memberEmail);
         member.setMemberEmail(memberEmail);
+        
         member.setMemberName(memberName);
         member.setMemberPassword(memberPassword);
         member.setMemberHP(memberHP);
@@ -54,9 +69,10 @@ public class MemberSessionBean {
         member.setIsSubscriber(isSubscriber);
         member.setPoint(0);
         member.setCoin(0);
-      //  member.setPreferences(preferences);      
+        member.setPreferences(null);      
         //member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
         em.persist(member);
+        System.out.println("new member add successfully!");
         return member;
     }
 
@@ -71,6 +87,12 @@ public class MemberSessionBean {
         if (member == null || !(member.getMemberPassword().equals(memberPassword)))
             return false;
         else return true;
+    }
+    
+    public MemberEntity getMemberByEmail(String email){
+        member = em.find(MemberEntity.class, email);
+        System.out.println("member name: "+member.getMemberName());
+        return member;
     }
     
     //cancel membership
