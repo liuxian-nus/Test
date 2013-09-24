@@ -17,10 +17,10 @@
                 });
             });
         </script>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
- <jsp:include page="base.jsp"></jsp:include>
-    </head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <script type="text/javascript" src="/IRMSCustomer-war/js/bootstrap-datepicker.js"></script>
+        <jsp:include page="base.jsp"></jsp:include>
+        </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
 
@@ -35,14 +35,16 @@
                                 <div class="large-12 columns">
                                     <label>Search restaurants,bars&pubs</label>
                                     <input id="input-name" type="text" placeholder="restaurant name" name="keyword">
+                                     <script type="text/javascript">
+                                    </script>
                                 </div>
                             </div>
-                          
-                                <div class="row">
-                                    <div class="large-12 columns">
+
+                            <div class="row">
+                                <div class="large-12 columns">
                                     <label for="customDropdown">Type of place</label>
                                     <select id="customDropdown" name="restTypeOfPlace">
-                                        
+
                                         <option></option>
                                         <option>Fast food</option>
                                         <option>Restaurant</option>
@@ -51,12 +53,12 @@
                                         <option>Cafe</option>
                                         <option>Food Stall</option>
                                         <option></option>
-                                        
+
                                     </select>
-                                    </div>
                                 </div>
-                                <div class="row">
-                                     <div class="large-12 columns">
+                            </div>
+                            <div class="row">
+                                <div class="large-12 columns">
                                     <label for="customDropdown">Neighborhood</label>
                                     <select id="customDropdown" name="restNeighbourhood">
                                         <option></option>
@@ -67,11 +69,11 @@
                                         <option>North</option>
                                         <option>South</option>
                                     </select>
-                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="row">
-                                    <div class="large-12 columns"> 
+                            <div class="row">
+                                <div class="large-12 columns"> 
                                     <label for="customDropdown">Cuisine</label>
                                     <select id="customDropdown" name="restCuisine">
                                         <option></option>
@@ -83,14 +85,14 @@
                                         <option>Vegetarian</option>
                                         <option>Korean</option>
                                     </select>
-                                    </div>
                                 </div>
+                            </div>
                             <br>
                             <div class="row">
-                                 <div class="large-12 columns">
-                                <input type="submit" class="small button" value="Search">
-                            
-                                 </div>
+                                <div class="large-12 columns">
+                                    <input type="submit" class="small button" value="Search">
+
+                                </div>
                             </div>
                         </fieldset>         
                     </form>
