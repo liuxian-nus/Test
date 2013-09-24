@@ -41,8 +41,6 @@ public class CRMServlet extends HttpServlet {
     private IndReservationSessionBeanRemote indReservationSessionBean;
     private ArrayList data = null;
     private MemberEntity member;
-    
-    boolean isLogin = false;
 
   
    
@@ -103,7 +101,8 @@ public class CRMServlet extends HttpServlet {
                 System.out.println(email);
                 System.out.println(password);
                 
-                isLogin=memberSession.login(email, password);
+                
+                boolean isLogin=memberSession.login(email, password);
                 System.out.println(isLogin);
                 
                 
@@ -113,10 +112,35 @@ public class CRMServlet extends HttpServlet {
             }
              else if ("memberRegister".equals(page))
             {
-                System.out.println("***memberRegister page***");
+                System.out.println("***memberRegister page***");    
                 request.getRequestDispatcher("/memberRegister.jsp").forward(request, response);
 
+            }else if ("memberRegisterResult".equals(page)){
+                
+                System.out.println("***memberRegisterResult page***");
+                
+                String userName=request.getParameter("username");
+                String email=request.getParameter("e-mail");
+                String password1=request.getParameter("password");
+                String password2=request.getParameter("password2");
+                String mobile=request.getParameter("mobile");
+                String nationality=request.getParameter("nationality");
+                String day=request.getParameter("dateDay");
+                String month=request.getParameter("dateMonth");
+                String year=request.getParameter("dateYear");
+                String maritalStatus=request.getParameter("marital");
+                String gender=request.getParameter("gender");
+                Boolean subscribe=Boolean.valueOf(request.getParameter("subscribe"));
+                String this_date=day+"-"+month+"-"+year;
+                System.out.println(this_date);
+                Date date=new SimpleDateFormat("dd-MMMMM-yyyy").parse("01-July-2013");
+                System.out.println(date);
+                   
+                member=memberSession.addMember(email, userName, password1, mobile, gender, nationality, date, maritalStatus, subscribe);
+                
+                request.getRequestDispatcher("/memberRegisterResult.jsp").forward(request, response);
             }
+             
              else if ("memberForgetPassword".equals(page))
             {
                 System.out.println("***memberForgetPassword page***");
