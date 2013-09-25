@@ -206,14 +206,14 @@
 
                     <div clas="row">
                         <div class="large-12 columns">
-                            <input type="submit" class="small button" value="Search">
+                            <input type="submit" class="small button" value="Confirm">
                         </div>
                     </div>
 
 
                 </fieldset>
             </form>
-                     $(document).foundation();
+                     
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>
