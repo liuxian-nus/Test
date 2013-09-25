@@ -85,8 +85,9 @@ public class EmployeeSessionBean {
     
      public List<EmployeeEntity> getEmployeeByName(String employeeName)throws ExistException
     {
-        Query query = em.createQuery("SELECT e FROM EmployeeEntity e WHERE e.name ='" + employeeName + "'");
-        query.setParameter("employeeName", employeeName);
+        Query query = em.createQuery("SELECT r FROM EmployeeEntity r WHERE r.employeeName ='" + employeeName + "'");
+        System.err.println("getEmployeeByName: "+employeeName);
+        //query.setParameter("employeeName", employeeName);
         List<EmployeeEntity> employee = null;
         employee = query.getResultList();
         if(employee == null)  throw new ExistException("Employee does not exist!");
