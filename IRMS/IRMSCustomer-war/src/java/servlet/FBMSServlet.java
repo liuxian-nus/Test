@@ -39,6 +39,7 @@ public class FBMSServlet extends HttpServlet {
     private boolean data1;
     private RestaurantEntity data2 = null;
     private IndReservationEntity data3 = null;
+    private String message=null;
     
     
     /**
@@ -125,6 +126,7 @@ public class FBMSServlet extends HttpServlet {
                 data3 = makeReservation(request);
                 if(data3!=null){
                 System.out.println("data is not null, go to check page");
+                request.setAttribute("data", data3);
                 request.getRequestDispatcher("/restaurantCheck.jsp").forward(request, response);
                 
                 }else{
@@ -139,12 +141,20 @@ public class FBMSServlet extends HttpServlet {
                 System.out.println("*****restaurantIndModify*****");
                 System.out.println("FBMSServlet: Current page is restaurantIndModify");
                 Long reservationId = Long.parseLong(request.getParameter("reservationId"));
-                System.out.println("FBMSServlet: the reservation confirmation nubmer is "+reservationId);
+                System.out.println("FBMSServlet: the reservation confirmation nubmer is "+reservationId); 
                 data3 = indReservationSessionBean.viewReservation(reservationId);
+                if(data3!=null){
                 System.out.println("FBMSServlet: the individual reservation has been returned");
                 request.setAttribute("data", data3);
-                request.getRequestDispatcher("/restaurantCheck.jsp").forward(request, response);
-            
+                request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
+                }
+                else{
+                message="Wrong booking Id entered";
+                request.setAttribute("message", message);
+                System.out.println(message);
+                request.getRequestDispatcher("/restaurant.jsp").forward(request, response);
+                }
+                    
             }
             
             else 
