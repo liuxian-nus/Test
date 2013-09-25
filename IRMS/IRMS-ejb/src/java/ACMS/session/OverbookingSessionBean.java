@@ -26,50 +26,65 @@ import java.lang.Math;
  * @author liuxian
  */
 @Stateless
-@LocalBean
 public class OverbookingSessionBean {
+
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
-    
-    public int suggestedQuota=0;
+    public int suggestedQuota = 0;
     public OverbookingQuotaEntity overbooking = new OverbookingQuotaEntity();
     public double cs;
     public double ce;
     public double sl;
-    
+
     //compensation to be discussed, now assume as direct human input
-    public int calculateSeggestedQuota(String priceType,double compensation){
-        
+    public int calculateSeggestedQuota() {
+
         //algorithm missing here.
-        PriceEntity price = em.find(PriceEntity.class, priceType);
+        overbooking = em.find(OverbookingQuotaEntity.class,1);
+        String roomType = overbooking.getRoomType();
+        PriceEntity price = em.find(PriceEntity.class, roomType);
         double cs = price.getPrice();
-        ce = compensation;
-        sl = cs/(cs + ce);
-        double z=0.0;
-        double p=0.5;
-        double n=0.0;
+        ce = overbooking.getCompensation1();
+        sl = cs / (cs + ce);
+        double z = 0.0;
+        double p = 0.5;
+        double n = 0.0;
         double final_z;
-        
-        while(p<sl){
-            n=1/(Math.pow(2,0.5)*Math.PI)*Math.exp(-0.5*Math.pow(z, 2));
-            p=n*0.01;  
-            z+=0.01;
+
+        while (p < sl) {
+            n = 1 / (Math.pow(2, 0.5) * Math.PI) * Math.exp(-0.5 * Math.pow(z, 2));
+            p = n * 0.01;
+            z += 0.01;
             System.out.println(n);
             System.out.println(p);
             System.out.println(z);
         }
-        
-        
-        final_z=Math.floor(z);
+
+
+        final_z = Math.floor(z);
         //suggestedQuota = integer value of final_z
         //calculate quota given the probability sl
+        overbooking.setSuggestedQuota(suggestedQuota);
+        em.merge(overbooking);
         return suggestedQuota;
     }
-    
-    public int resetQuota(int quota){
+
+    public int resetQuota(int quota) {
         overbooking.setQuota(quota);
         em.merge(overbooking);
         return overbooking.getQuota();
+    }
+
+    public OverbookingQuotaEntity getQuota() {
+        int id = 1;
+        OverbookingQuotaEntity overbooking = em.find(OverbookingQuotaEntity.class, id);
+        return overbooking;
+    }
+
+    public void setQuota(int newQuota) {
+        int id = 1;
+        OverbookingQuotaEntity quota = em.find(OverbookingQuotaEntity.class, id);
+        quota.setQuota(newQuota);
     }
 
     private double pow(int i, double z) {

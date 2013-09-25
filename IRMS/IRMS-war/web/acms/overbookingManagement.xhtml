@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        <p:tabView id="tabView">  
+            <p:tab id="tab3" title="Overbooking Mgt">  
+             <p:growl id="messages"/> 
+                <h:form id="formCheckIn">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <h:outputText value ="SystemSuggestedQuota: "/>
+                        <h:outputText value ="#{overbookingManagedBean.getSuggestedQuota}"/>
+                        <br/>
+                        <h:outputText value ="Quota: "/>
+                        <h:inputText value ="#{overbookingManagedBean.setQuota}"/>
+                        <br/>
+                        <p:commandButton  value="Save" ajax="true" actionListener="#{reservationManagedBean.doUpdate}" update="messages" icon="ui-icon-disk" />
+                        <p:message for="confirmation"/>
+                    </h:panelGrid> 
+                </h:form>
+            </p:tab> 
+        </p:tabView>
+    </ui:define>
+
+</ui:composition>
