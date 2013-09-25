@@ -11,13 +11,16 @@
             <p:panel id="info" header="My Info" style="height:495px;">
                 <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
                     <p:growl id="msgs" showDetail="true" />
-                    <p:dataTable id="employees" value="#{viewInfoManagedBean.getEmployees()}" var="employeeList">
+                    <p:dataTable id="employees" value="#{viewInfoManagedBean.getEmployees()}" var="employeeList" draggableColumns="true">
 
                         <p:column headerText="name">
                             <h:outputText value="#{employeeList.employeeName}"/>
                         </p:column>
-                        <p:column headerText="Department">
-                            <h:outputText value="#{employeeList.employeeDepartment}"/>
+                        <p:column headerText="Email">
+                            <h:outputText value="#{employeeList.employeeEmail}"/>
+                        </p:column>
+                        <p:column headerText="Date of Birth">
+                            <h:outputText value="#{employeeList.employeeDob}"/>
                         </p:column>
                         <p:column headerText="Gender">
                             <h:outputText value="#{employeeList.employeeGender}"/>
@@ -37,8 +40,8 @@
                               showEffect="fade" hideEffect="explode" modal="true" width="500">
                     </p:dialog>
 
-                    <p:dialog header="Edit Employee" widgetVar="carDialog" resizable="false" id="carDlg"  
-                              showEffect="fade" hideEffect="explode" modal="true" width="500">  
+                    <p:dialog header="Edit Employee" widgetVar="carDialog" resizable="true" id="carDlg"  
+                              showEffect="fade" hideEffect="explode" width="600">  
 
                         <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
                             <h:outputText value="Name" />  
@@ -47,16 +50,27 @@
                                 <p:inputText id="name"   requiredMessage="Name cannot be empty" value="#{viewInfoManagedBean.selectedEmployee.employeeName}" rendered="#{viewInfoManagedBean.editMode}" required="true" label="Name"/>  
                                 <p:message for="name"/>
                             </h:panelGroup>
-                            <h:outputText value="Department" /> 
-                            <h:panelGroup>
-                                <h:outputText value="#{viewInfoManagedBean.selectedEmployee.employeeDepartment}" style="font-weight:bold" rendered="#{!viewInfoManagedBean.editMode}"/>
-                                <p:inputText id="department"   requiredMessage="Department cannot be empty" value="#{viewInfoManagedBean.selectedEmployee.employeeDepartment}" rendered="#{viewInfoManagedBean.editMode}" required="true" label="Department"/>  
-                                <p:message for="department"/>
+
+                            <h:outputText value="Date of Birth" />  
+                            <p:calendar pattern="yyyy-MM-dd" yearRange="-70" showButtonPanel="true" navigator="true" id="customCal" value="#{viewInfoManagedBean.selectedEmployee.employeeDob}" /> 
+                            
+
+                            <h:outputText value="Email" />  
+                            <h:panelGroup >  
+                                <h:outputText value="#{viewInfoManagedBean.selectedEmployee.employeeEmail}" style="font-weight:bold" rendered="#{!viewInfoManagedBean.editMode}"/> 
+                                <p:inputText id="email" requiredMessage="Email cannot be empty" value="#{viewInfoManagedBean.selectedEmployee.employeeEmail}" rendered="#{viewInfoManagedBean.editMode}" required="true" label="Email" style="width: 300px;"/>  
+                                <p:message for="email"/>
                             </h:panelGroup>
 
+                            <h:outputText value="Gender:"/>
+                            <p:selectOneRadio id="options" value="#{viewInfoManagedBean.selectedEmployee.employeeGender}" requiredMessage="Gender is required">  
+                                <f:selectItem itemLabel="Female" itemValue="Female" />  
+                                <f:selectItem itemLabel="Male" itemValue="Male" />  
+                            </p:selectOneRadio>  
+                            <h:outputText value=""/>
 
                             <f:facet name="footer">  
-                                <p:outputPanel rendered="#{viewInfoManagedBean.editMode}" layout="block" style="text-align:right">  
+                                <p:outputPanel rendered="#{viewInfoManagedBean.editMode}" layout="block" style="text-align:center">  
                                     <p:commandButton value="Save" update="employees msgs" actionListener="#{viewInfoManagedBean.saveChanges}"   
                                                      oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
                                     <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
@@ -65,16 +79,15 @@
                         </h:panelGrid>  
                     </p:dialog>
 
-                    <p:confirmDialog message="Are you sure?" width="200"  
-                                     showEffect="explode" hideEffect="explode"  
-                                     header="Confirm" severity="alert" widgetVar="confirmation">  
-
+                    <p:dialog width="200" showEffect="explode" hideEffect="explode" header="Confirm" widgetVar="confirmation">  
+                        <br/>
+                        Are you sure to delete?
+                        <br/><br/> 
                         <p:commandButton value="Yes" update="employees" actionListener="#{viewInfoManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
                             <f:attribute name="code1" value="#{viewInfoManagedBean.selectedEmployee.employeeId}" />
                         </p:commandButton>
-                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
-
-                    </p:confirmDialog>
+                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />   
+                    </p:dialog>
                 </div>
             </p:panel>
         </h:form>
