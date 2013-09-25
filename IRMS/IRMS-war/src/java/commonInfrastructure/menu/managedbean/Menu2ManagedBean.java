@@ -144,6 +144,21 @@ public class Menu2ManagedBean implements Serializable {
                 
                 model.addSubmenu(submenu);
              }
+             
+             if (userType.contains("CRMSAdmin")){ 
+                System.out.println("CRMSAdmin menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("VIP management");
+                submenu.setIcon("ui-icon ui-icon-contact");
+                
+                item = new MenuItem();
+                item.setValue("search VIP");
+                item.setUrl("/crms/searchVIP.xhtml");
+                submenu.getChildren().add(item);
+                
+                
+                model.addSubmenu(submenu);
+             }
         }
         return model;
     }
