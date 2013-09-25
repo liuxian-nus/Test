@@ -37,12 +37,68 @@
                                     <input type ="text" value="${data.indReservationId}"/>
                                 </div>
                             </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Reservation customer title</label>
+                                    <input type="text" value="${data.title}"/>
+                                </div>   
+                            </div>
+                                
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Reservation customer name</label>
+                                    <input type="text" value="${data.name}"/>
+                                </div> 
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Reservation customer mobile</label>
+                                    <input type="text" value="${data.mobile}"/>
+                                </div> 
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Reservation number of people</label>
+                                    <input type="text" value="${data.numberPeople}"/>
+                                </div> 
+                            </div>
+                                
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Reservation date</label>
+                                    <input type="text" value ="${data.indReservationDateTime}"/>
+                                </div>                                        
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Reservation email</label>
+                                    <input type ="text" value ="${data.email}"/>
+                                </div>  
+                            </div>
+                            
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Reservation notes</label>
+                                    <input type ="text" value ="${data.notes}"/>
+                                </div> 
+                            </div>
+                            
+                             <div class="row">
+                                <div class="large-12 columns">
+                                    <input type="submit" class="small button" value="Confirm">
+
+                                </div>
+                            </div>
                         </fieldset>
                         
                     </form>
                     
                 </div>
          </div>
-        <h1>Hello World!</h1>
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

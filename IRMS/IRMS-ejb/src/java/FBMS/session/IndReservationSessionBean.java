@@ -86,6 +86,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
             
             //below is test
             System.out.println(itr.hasNext());
+            
             while (itr.hasNext())
             {
                 RestaurantEntity re = (RestaurantEntity)itr.next();
@@ -186,7 +187,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
     
     
     @Override
-    public boolean makeReservation(Date indReservationDateTime, Long restId,Integer numberPeople, String title, String name, String email,String mobile, String notes ){
+        public IndReservationEntity makeReservation(Date indReservationDateTime, Long restId,Integer numberPeople, String title, String name, String email,String mobile, String notes ){
         System.out.println("IndReservationSessionBean: make reservation starts!");
             IndReservationEntity ire = new IndReservationEntity();
                 ire.setIndReservationDateTime(indReservationDateTime);
@@ -204,7 +205,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
                 em.persist(ire);
                 System.out.println("IndReservationSessionBean: reservation is made successfully!");
                   
-        return true;
+        return ire;
     } 
     public boolean makeReservation (IndReservationEntity ire){
         em.persist(ire);

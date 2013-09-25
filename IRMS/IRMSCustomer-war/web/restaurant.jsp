@@ -124,6 +124,9 @@
                                 <div class="large-12 columns">
                                     <input type="submit" class="small button" value="Search">
 
+                                    <script type ="text/javascript">
+                                        
+                                    </script>
                                 </div>
                             </div>
                         </fieldset>

@@ -85,7 +85,7 @@ public class FBMSServlet extends HttpServlet {
             {
                 System.out.println("*****MakeReservation*****");
                 System.out.println("FBMSServlet: Current page is makeReservation");
-                data1 = makeReservation(request);
+                data3 = makeReservation(request);
                 System.out.println("FBMSServlet: Reservation has been made");
                 System.out.println(data1);
                 request.setAttribute("data", data1);
@@ -115,6 +115,14 @@ public class FBMSServlet extends HttpServlet {
                 request.setAttribute("data", data2);
                 request.getRequestDispatcher("/restaurantBook.jsp").forward(request, response);
                 
+            }
+            else if ("restaurantCheck".equalsIgnoreCase(page))
+            {
+                System.out.println("*****restaurantCheck*****");
+                System.out.println("FBMSServlet: Current page is restaurantCheck");
+                Long restId = Long.parseLong(request.getParameter("restId"));
+                System.out.println("FBMSServlet: the restaurant ID is "+restId);
+                data3 = makeReservation(request);
             }
             else if ("restaurantIndModify".equalsIgnoreCase(page))
             {
@@ -206,7 +214,7 @@ public class FBMSServlet extends HttpServlet {
             System.out.println("FBMSServlet CheckAvailability function: the restaurant availability is "+ isAvailable);
             return isAvailable;
         }
-    private boolean makeReservation (HttpServletRequest request)
+    private IndReservationEntity makeReservation (HttpServletRequest request)
     {
         System.out.println("FBMSServlet makeReservation method invoked ");
         
@@ -254,7 +262,7 @@ public class FBMSServlet extends HttpServlet {
         
        // RestaurantEntity re = indReservationSessionBean.getRestaurantEntity(restId);
         
-        boolean correctBooking = indReservationSessionBean.makeReservation(thisDate, restId, numberPeople, title, name, email, mobile, notes);
+        IndReservationEntity correctBooking = indReservationSessionBean.makeReservation(thisDate, restId, numberPeople, title, name, email, mobile, notes);
         
         System.out.println("The restaurant booking made? "+correctBooking );
         

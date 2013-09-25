@@ -24,13 +24,14 @@ public interface IndReservationSessionBeanRemote {
     boolean checkAvailability(RestaurantEntity restaurant, int numberPeople, Date date);
 
     boolean confirmReservation(IndReservationEntity ire);
+    
+    IndReservationEntity makeReservation(Date indReservationDateTime, Long restId,Integer numberPeople, String title, String name, String email,String mobile, String notes );
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
     RestaurantEntity createRestaurantEntity(String restNeighbourhood, String restTypeOfPlace, String restCuisine, String keyword);
 
-    boolean makeReservation(Date indReservationDateTime, Long restId, Integer numberPeople, String title, String name, String email, String mobile, String notes);
-
+   
     void persist(Object object);
 
     Set<RestaurantEntity> searchRestaurant(RestaurantEntity r);
