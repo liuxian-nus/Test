@@ -4125,7 +4125,7 @@ ul.pagination {
   border-color: #d9d9d9;
   margin-bottom: 1.25em;
   padding: 1.25em;
-  background: #f2f2f2; }
+  background: #d6e5e4; }
   .panel > :first-child {
     margin-top: 0; }
   .panel > :last-child {
@@ -4466,7 +4466,7 @@ ul.pagination {
 
 /* Tables */
 table {
-  background: white;
+  background: #d6e5e4;
   margin-bottom: 1.25em;
   border: solid 1px #dddddd; }
   table thead,
