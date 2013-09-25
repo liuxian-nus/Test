@@ -7,10 +7,12 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        <f:view beforePhase="#{roomSearchResultManagedBean.initViewSelect}"> 
-            <h:form id="form">
-                <p:panel id="search" header="Search Result" style="height:495px;">
-                     <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
+
+        <h:form id="form">
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:panel id="search" header="Search Result" style="height:495px;">
+                <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
+                    <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
                         <h:outputText value="Room ID: " />  
                         <h:outputText value="#{roomSearchResultManagedBean.selectRoom.roomId}" style="font-weight:bold" /> 
                         <h:outputText value="Guest Name: " /> 
@@ -29,11 +31,23 @@
                         <h:outputText value="#{roomSearchResultManagedBean.selectRoom.hasBreakfast}" style="font-weight:bold" /> 
                         <h:outputText value="Number of Guests: " />  
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationGuestCount}" style="font-weight:bold" /> 
-                        <p:commandButton  value="Check Available Rooms" ajax="true" actionListener="#{roomManagedBean.getAvailableRooms}" /> 
+                        <p:commandButton  oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Check Out" title="Check Out">  
+                            <f:setPropertyActionListener target="#{roomManagedBean.thisRoom}" value="#{rooms}"/>  
+                        </p:commandButton>                      
                     </h:panelGrid>
-                </p:panel>
-            </h:form>   
-        </f:view>  
+                </div>
+            </p:panel>
+      
+            <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                <br/>
+                Sure to Check Out?
+                <br/><br/>
+                <p:commandButton value="Yes" update="growl" action="#{roomManagedBean.checkOut}" oncomplete="confirmation.hide()">  
+                </p:commandButton>
+                <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
+            </p:dialog>  
+            
+        </h:form>   
     </ui:define>
 
 </ui:composition>
