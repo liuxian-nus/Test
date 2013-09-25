@@ -12,7 +12,7 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <form id="member" action="memberRegisterResult" method="POST">
+            <form data-abide id="member" action="memberRegisterResult" method="POST">
                 <fieldset>
                     <legend>Member Registration</legend>
 
@@ -22,7 +22,8 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="text" placeholder="username" name="username">
+                                <input required type="text" placeholder="username" name="username">
+                                 <small class="error">Name is required and must be a string.</small>
                             </div>
                         </div>
                     </div>
@@ -70,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="small-2 columns">
                             <label for="right-label" class="left-align,inline"><strong>Nationality</label>
@@ -495,9 +496,9 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <br>
-                    
+
                     <div class="row">
                         <div class="small-2 columns">
                             <label for="right-label" class="left-align,inline"><strong>Marital Status</label>
@@ -513,8 +514,8 @@
                             </select>
                         </div>
                     </div>
-                    
-                        <div class="row">
+
+                    <div class="row">
                         <div class="small-2 columns">
                             <label for="right-label" class="left-align,inline"><strong>Gender</label>
                         </div>
@@ -527,12 +528,12 @@
                                 <option value="3">Others</option>
                             </select>
                         </div>
-                            
+
                     </div>
                     <br>
-                    
-                    
-                        
+
+
+
                     <div class="row">
                         <div class="small-2 columns">
                             <label for="right-label" class="left-align,inline"><strong>Security question</label>
@@ -547,36 +548,45 @@
                             </select>
                         </div>          
                     </div>
-                    
+
                     <div class="row">
-                            <div class="small-2 columns">
-                                <label for="right-label" class="left-align,inline"><strong>Answer</label>
-                            </div>
-                            <div class="small-10 columns"> 
+                        <div class="small-2 columns">
+                            <label for="right-label" class="left-align,inline"><strong>Answer</label>
+                        </div>
+                        <div class="small-10 columns"> 
 
-                               <input type="text" placeholder="Security Question Answer" name="answer">
-                            </div>
+                            <input type="text" placeholder="Security Question Answer" name="answer">
+                        </div>
 
-                   </div>
-                    
+                    </div>
+
                     <div class="row">
                         <div class="small-1 columns">
-                    <input type="checkbox" name="subscribe" value="true">
+                            <input type="checkbox" name="subscribe" value="true">
                         </div>
                         <div class="small-11 columns"> 
-                    <strong><label><strong>I want to subscribe latest updates.</label>
+                            <strong><label><strong>I want to subscribe latest updates.</label>
                         </div>
                     </div>
-                    
+
                     <br>
-                    
+
                     <div class="row">
-                    <input type="submit" class="small button" value="Submit">
+                        <input type="submit" class="small button" value="Submit">
                     </div>
                 </fieldset>  
 
             </form>
 
         <jsp:include page="footer.jsp"></jsp:include>
+        <script>
+            document.write('<script src=' +
+                    ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+                    '.js><\/script>')
+        </script>
+        <script src="js/foundation.min.js"></script>
+        <script>
+                    $(document).foundation();
+        </script>
     </body>
 </html>
