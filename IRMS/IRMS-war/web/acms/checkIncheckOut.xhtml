@@ -30,6 +30,21 @@
                                   killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."/>  
                 </h:panelGrid>  
             </p:tab> 
+            
+            <p:tab id="tab3" title="Overbooking Mgt">  
+             <p:growl id="messages"/> 
+                <h:form id="formCheckIn">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <h:outputText value ="SystemSuggestedQuota: "/>
+                        <h:outputText value ="#{overbookingManagedBean.suggestedQuota}"/>
+                        <br/>
+                        <h:outputText value ="Quota: "/>
+                        <h:inputText value ="#{overbookingManagedBean.newQuota}"/>
+                        <br/>
+                        <p:commandButton  value="Save" ajax="true" actionListener="#{oberbookingManagedBean.doUpdate}" update="messages" icon="ui-icon-disk" />
+                    </h:panelGrid> 
+                </h:form>
+            </p:tab> 
 
         </p:tabView>
     </ui:define>
