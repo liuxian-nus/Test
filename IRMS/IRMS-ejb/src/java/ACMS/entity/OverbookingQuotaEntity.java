@@ -18,8 +18,7 @@ import javax.persistence.Id;
 public class OverbookingQuotaEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long overbookingId;
+    private int overbookingId = 1;
     private int quota;
 
     public int getQuota() {
@@ -31,33 +30,14 @@ public class OverbookingQuotaEntity implements Serializable {
     }
 
     
-    public Long getOverbookingId() {
+    public int getOverbookingId() {
         return overbookingId;
     }
 
-    public void setOverbookingId(Long overbookingId) {
+    public void setOverbookingId(int overbookingId) {
         this.overbookingId = overbookingId;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (overbookingId != null ? overbookingId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OverbookingQuotaEntity)) {
-            return false;
-        }
-        OverbookingQuotaEntity other = (OverbookingQuotaEntity) object;
-        if ((this.overbookingId == null && other.overbookingId != null) || (this.overbookingId != null && !this.overbookingId.equals(other.overbookingId))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {
