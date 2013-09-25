@@ -20,7 +20,8 @@
                     <form id="member" action="memberInfo" method="POST">
                         <fieldset>
                             <legend>Member</legend>
-                                  <p>${data}</p>
+                                  <p>${message}</p>
+                        
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label>E-mail</label>
