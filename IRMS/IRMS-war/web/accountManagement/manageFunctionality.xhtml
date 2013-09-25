@@ -20,9 +20,9 @@
                         <p:column headerText="Name">
                             <h:outputText value="#{funcList.funcName}"/>
                         </p:column>
-                        <!--<p:column headerText="Description">
+                        <p:column headerText="Description">
                             <h:outputText value="#{funcList.funcDescription}"/>
-                        </p:column>-->
+                        </p:column>
 
 
 
@@ -42,7 +42,7 @@
                     </p:dataTable>  
 
                     <p:dialog header="Edit Functionality" widgetVar="carDialog" resizable="false" id="carDlg"  
-                              showEffect="fade" hideEffect="explode" modal="true" width="500">  
+                              showEffect="fade" hideEffect="explode" width="500">  
 
                         <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
 
@@ -55,12 +55,12 @@
                                 <p:message for="funcName"/>
                             </h:panelGroup>  
 
-                            <!--<h:outputText value="Functionality Description" />  
+                            <h:outputText value="Functionality Description" />  
                             <h:panelGroup>  
                                 <h:outputText value="#{manageFunctionalityManagedBean.selectedFunctionality.funcDescription}" style="font-weight:bold" rendered="#{!manageFunctionalityManagedBean.editMode}"/>  
-                                <p:inputText id="funcID" required="true" requiredMessage="Functionality Description cannot be empty" value="#{manageFunctionalityManagedBean.selectedFunctionality.funcDescription}" rendered="#{manageFunctionalityManagedBean.editMode}"  label="Functionality Description"/>  
+                                <p:inputText id="funcDescription" required="true" requiredMessage="Functionality Description cannot be empty" value="#{manageFunctionalityManagedBean.selectedFunctionality.funcDescription}" rendered="#{manageFunctionalityManagedBean.editMode}"  label="Functionality Description"/>  
                                 <p:message for="funcDescription"/>
-                            </h:panelGroup>-->  
+                            </h:panelGroup>
 
 
                             <f:facet name="footer">  
@@ -75,16 +75,15 @@
 
                     </p:dialog>
 
-                    <p:confirmDialog message="Are you sure?" width="200"  
-                                     showEffect="explode" hideEffect="explode"  
-                                     header="Confirm" severity="alert" widgetVar="confirmation">  
-
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
+                        <br/>
+                        Are you sure to delete?
+                        <br/><br/>
                         <p:commandButton value="Yes" update="functionalities" actionListener="#{manageFunctionalityManagedBean.deleteFunctionality}" oncomplete="confirmation.hide()">  
                             <f:attribute name="code1" value="#{manageFunctionalityManagedBean.selectedFunctionality.funcId}" />
                         </p:commandButton>
                         <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
-
-                    </p:confirmDialog>  
+                    </p:dialog>  
                 </div>
             </p:panel>
         </h:form>  
