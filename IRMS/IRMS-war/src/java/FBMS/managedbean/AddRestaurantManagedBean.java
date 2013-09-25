@@ -55,10 +55,11 @@ public final class AddRestaurantManagedBean implements Serializable{
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Restaurant Saved.", ""));
         restaurant=new RestaurantEntity();
+ //       FacesContext.getCurrentInstance().getExternalContext().redirect("manageRestaurant.xhtml");
     }
     
-    public void oneMore(ActionEvent event) throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("addRestaurant.xhtml");
+    public void manageRestaurant(ActionEvent event) throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("manageRestaurant.xhtml");
     }
     
 }

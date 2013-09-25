@@ -133,9 +133,13 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setIcon("ui-icon ui-icon-contact");
                 
                 item = new MenuItem();
-                item.setValue("Restaurant");
+                item.setValue("Create Restaurant");
                 item.setUrl("/fbms/addRestaurant.xhtml");
-//                item.setUrl("/acms/listRooms.xhtml");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("View Restaurants");
+                item.setUrl("/fbms/manageRestaurant.xhtml");
                 submenu.getChildren().add(item);
                 
                 model.addSubmenu(submenu);

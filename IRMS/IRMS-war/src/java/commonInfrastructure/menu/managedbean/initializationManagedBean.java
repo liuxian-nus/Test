@@ -184,7 +184,7 @@ public class initializationManagedBean implements Serializable {
         addMessage("Reservation Created!");
     }
     
-    public void createRestaurant() {
+    public void createFBMSAdmin() {
         System.out.println("go to create FBMS page");
 
         role = new RoleEntity();
@@ -195,7 +195,7 @@ public class initializationManagedBean implements Serializable {
         employee = new EmployeeEntity();
         employee.setEmployeeId("E0000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("FBMSAdmin");
-        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0000"));
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("E0000"));
         System.out.println("finished hashing");
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);

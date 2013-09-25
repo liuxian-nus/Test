@@ -17,12 +17,9 @@
                         
                         <h:outputText value="Restaurant Name*: "/>
                         <h:inputText id="restName" required ="true" requiredMessage="Name cannot be empty" value="#{addRestaurantManagedBean.restaurant.restName}"/>
-                        
-                 <!--      <h:outputText value="Restaurant Type of Place: "/>
-                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restTypeOfPlace}"/> -->
-                        
+                      
                         <h:outputText value="Restaurant Type of Place:"/>
-                            <h:selectOneMenu value ="#{addRestaurantManagedBean.restaurant.restTypeOfPlace}" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Type of Place cannot be empty">
+                            <h:selectOneMenu value ="#{addRestaurantManagedBean.restaurant.restTypeOfPlace}"  required ="true" requiredMessage="Type of Place cannot be empty">
                             <f:selectItem itemLabel="Select Type of Place" itemValue="" />  
                             <f:selectItem itemLabel="Bar" itemValue="Bar" />  
                             <f:selectItem itemLabel="Cafe" itemValue="Convention" />  
@@ -31,14 +28,10 @@
                             <f:selectItem itemLabel="Food store" itemValue="Food store" />  
                             <f:selectItem itemLabel="Restaurant" itemValue="Restaurant" /> 
                             </h:selectOneMenu> 
-                        <h:outputText value=""/>
                         
-                                    
-                 <!--       <h:outputText value="Restaurant Cuisine: "/>
-                        <h:inputText value="#{addRestaurantManagedBean.restaurant.restCuisine}"/>-->
                         
                         <h:outputText value="Restaurant Neighbourhood:"/>
-                            <h:selectOneMenu value ="#{addRestaurantManagedBean.restaurant.restCuisine}" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Neighbourhood cannot be empty">
+                            <h:selectOneMenu value ="#{addRestaurantManagedBean.restaurant.restCuisine}"  required ="true" requiredMessage="Neighbourhood cannot be empty">
                             <f:selectItem itemLabel="Select Neighbourhood" itemValue="" />  
                             <f:selectItem itemLabel="Whole" itemValue="Whole" />  
                             <f:selectItem itemLabel="Central" itemValue="Central" />  
@@ -47,11 +40,10 @@
                             <f:selectItem itemLabel="North" itemValue="North" />  
                             <f:selectItem itemLabel="South" itemValue="South" /> 
                             </h:selectOneMenu> 
-                        <h:outputText value=""/>
                      
                         
                         <h:outputText value="Restaurant Cuisine:"/>
-                            <h:selectOneMenu value ="#{addRestaurantManagedBean.restaurant.restCuisine}" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Cuisine cannot be empty">
+                            <h:selectOneMenu value ="#{addRestaurantManagedBean.restaurant.restCuisine}"  required ="true" requiredMessage="Cuisine cannot be empty">
                             <f:selectItem itemLabel="Select Cuisine" itemValue="" />  
                             <f:selectItem itemLabel="Japanese" itemValue="Japanese" />  
                             <f:selectItem itemLabel="Chinese" itemValue="Chinese" />  
@@ -61,14 +53,13 @@
                             <f:selectItem itemLabel="Vegetarian" itemValue="Vegetarian" /> 
                             <f:selectItem itemLabel="Korean" itemValue="Korean" /> 
                             </h:selectOneMenu> 
-                        <h:outputText value=""/>
                         
                         <h:outputText value="Restaurant Customer Maximum Quota*: "/>
-                        <h:inputText required ="true" requiredMessage="Maximum quota cannot be empty" value="#{addRestaurantManagedBean.restaurant.restQuota}" onchange="this.form.submit()"/>
+                        <h:inputText required ="true" requiredMessage="Maximum quota cannot be empty" value="#{addRestaurantManagedBean.restaurant.restQuota}" />
                         
                     </h:panelGrid>
                     <p:commandButton value ="Save" ajax ="true" actionListener = "#{addRestaurantManagedBean.saveNewRestaurant}" update="growl" icon="ui-icon-check"/>
-                    <p:commandButton value="Add More Employee" actionListener="#{addRestaurantManagedBean.oneMore}" />
+                    <p:commandButton value="Check all restaurants" actionListener="#{addRestaurantManagedBean.manageRestaurant}" />
 
             </p:panel>
         </h:form>
