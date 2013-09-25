@@ -23,7 +23,7 @@
                         <div>
                             <div class="small-10 columns">
                                 <input required type="text" placeholder="username" name="username">
-                                 <small class="error">Name is required and must be a string.</small>
+                                 <small class="error">Please enter your name.</small>
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,8 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="text" placeholder="e-mail" name="e-mail">
+                                <input type="email" required placeholder="e-mail" name="e-mail" >
+                                <small class="error">Please enter a valid e-mail address.</small>
                             </div>
                         </div>
                     </div>
@@ -45,7 +46,8 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="password" name="password">
+                                <input required type="password" name="password">
+                                <small class="error">Please enter a password.</small>
                             </div>
                         </div>
                     </div>
@@ -56,7 +58,8 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="password" name="password2">
+                                <input required type="password" name="password2">
+                                <small class="error">Please confirm your password.</small>
                             </div>
                         </div>
                     </div>
@@ -67,7 +70,8 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="text" name="mobile"placeholder="mobile phone number">
+                                <input required type="number" name="mobile" placeholder="mobile phone number">
+                                <small class="error">Please enter a mobile number.</small>
                             </div>
                         </div>
                     </div>
@@ -78,7 +82,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <select name="nationality" id="customDropdown">
+                                <select required name="nationality" id="customDropdown">
                                     <option value="1">Afghan</option>
                                     <option value="2">Swedish</option>
                                     <option value="3">Albanian</option>
@@ -336,7 +340,7 @@
                         </div>
 
                         <div class="small-3 columns">
-                            <select name="dateDay" class="customDropdown">
+                            <select required name="dateDay" class="customDropdown">
                                 <option value="0">Day</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -372,7 +376,7 @@
                             </select>
                         </div>
                         <div class="small-3 columns">
-                            <select name="dateMonth" id="button dropdown">
+                            <select required name="dateMonth" id="button dropdown">
                                 <option value="0">Month</option>
                                 <option value="1">Jan</option>
                                 <option value="2">Feb</option>
@@ -390,7 +394,7 @@
                         </div>
 
                         <div class="small-4 columns">
-                            <select name="dateYear" id="customDropdown">
+                            <select required name="dateYear" id="customDropdown">
                                 <option value="0">Year</option>
                                 <option value="2013">2013</option>
                                 <option value="2012">2012</option>
@@ -505,7 +509,7 @@
                         </div>
                         <div class="small-10 columns"> 
 
-                            <select id="customDropdown" name="marital">
+                            <select required id="customDropdown" name="marital">
                                 <option value="0">- Select -</option>
                                 <option value="1">Single</option>
                                 <option value="2">Married</option>
@@ -521,7 +525,7 @@
                         </div>
                         <div class="small-10 columns"> 
 
-                            <select id="customDropdown" name="gender">
+                            <select required id="customDropdown" name="gender">
                                 <option value="0">- Select -</option>
                                 <option value="1">Male</option>
                                 <option value="2">Female</option>
@@ -540,7 +544,7 @@
                         </div>
                         <div class="small-10 columns"> 
 
-                            <select id="customDropdown" name="securityQuestion">
+                            <select required id="customDropdown" name="securityQuestion">
                                 <option value="question1">What is your mother's original surname?</option>
                                 <option value="question2">What is the name of your primary school?</option>
                                 <option value="question3">What is your best friend's name?</option>
@@ -555,7 +559,8 @@
                         </div>
                         <div class="small-10 columns"> 
 
-                            <input type="text" placeholder="Security Question Answer" name="answer">
+                            <input required type="text" placeholder="Security Question Answer" name="answer">
+                        <small class="error">Please enter your security question answer.</small>
                         </div>
 
                     </div>
