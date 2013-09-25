@@ -10,34 +10,34 @@
         <h:form id="form">
             <p:panel id="employeeMgt" header="Employee Management" style="height:495px;">
                 <div style="margin-top:20px;margin-left:65px;margin-right:50px;margin-bottom:20px;">
-                    <p:growl id="msgs" showDetail="true" /> 
-                    <p:dataTable id="employees" value="#{manageEmployeeManagedBean.getEmployees()}" var="employeeList" paginator="true" rows="6">
-                        <p:column headerText="Name">
-                            <h:outputText value="#{employeeList.employeeName}"/>
-                        </p:column>
+                    <p:growl id="message" showDetail="true" /> 
+
+                    <p:dataTable id="employees" value="#{manageEmployeeManagedBean.getEmployees()}" var="employeeList" paginator="true" rows="6" draggableColumns="true">
+
                         <p:column headerText="User ID">
                             <h:outputText value="#{employeeList.employeeId}"/>
                         </p:column>
-                        <p:column headerText="Schedule">
-                            <h:outputText value="#{employeeList.employeeSchedule}"/>
-                        </p:column>
-                        <p:column headerText="Department">
-                            <h:outputText value="#{employeeList.employeeDepartment}"/>
+                        <p:column headerText="Name">
+                            <h:outputText value="#{employeeList.employeeName}"/>
                         </p:column>
                         <p:column headerText="Roles">
                             <h:outputText value="#{manageEmployeeManagedBean.toSentence(employeeList.roles)}"/>
                         </p:column>
-
+                        <p:column headerText="Department">
+                            <h:outputText value="#{employeeList.employeeDepartment}"/>
+                        </p:column>
+                        <!--<p:column headerText="User Schedule">
+                            <h:outputText value="#{employeeList.employeeSchedule}"/>
+                        </p:column>-->
 
                         <p:column style="width:100px">  
                             <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
-
-                                <p:commandButton update=":form:display" ajax="true" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
-                                    <f:setPropertyActionListener target="#{manageEmployeeManagedBean.selectedEmployee}" value="#{employeeList}"/>  
-                                    <f:setPropertyActionListener target="#{manageEmployeeManagedBean.editMode}" value="true"/>  
+                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                    <f:setPropertyActionListener value="#{employeeList}" target="#{manageEmployeeManagedBean.selectedEmployee}" />  
+                                    <f:setPropertyActionListener value="#{true}" target="#{manageEmployeeManagedBean.editMode}" />  
                                 </p:commandButton>  
-                                <p:commandButton update=":form:display" ajax="true" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
-                                    <f:setPropertyActionListener target="#{manageEmployeeManagedBean.selectedEmployee}" value="#{employeeList}"/>  
+                                <p:commandButton update=":form:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                    <f:setPropertyActionListener value="#{employeeList}" target="#{manageEmployeeManagedBean.selectedEmployee}" />  
                                 </p:commandButton>  
                             </h:panelGrid>  
                         </p:column>  
@@ -45,89 +45,58 @@
                     </p:dataTable>  
 
 
-                    <p:dialog header="Edit Employee" widgetVar="carDialog" resizable="false" id="carDlg"  
-                              showEffect="fade" hideEffect="explode" width="500">  
+
+                    <p:dialog header="Edit Employee" widgetVar="carDialog" resizable="true" id="carDlg"  
+                              showEffect="fade" hideEffect="explode" width="700">  
 
                         <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
-                            <h:outputText value="Name"/>  
+                            <h:outputText value="Employee Name" />  
                             <h:panelGroup>  
                                 <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.employeeName}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>  
-                                <p:inputText id="name"   requiredMessage="Name cannot be empty" value="#{manageEmployeeManagedBean.selectedEmployee.employeeName}" rendered="#{manageEmployeeManagedBean.editMode}" required="true" label="Name"/>  
+                                <p:inputText id="name" required="true" requiredMessage="Employee Name cannot be empty" value="#{manageEmployeeManagedBean.selectedEmployee.employeeName}" rendered="#{manageEmployeeManagedBean.editMode}" label="Employee Name"/>  
                                 <p:message for="name"/>
                             </h:panelGroup>  
 
-                            <h:outputText value="User ID"/>
-                            <h:panelGroup>
-                                <h:outputText value="#{manageEmployeeManagedBean.selectedEmployee.employeeId}" style="font-weight:bold" rendered="#{!manageEmployeeManagedBean.editMode}"/>
-                                <p:inputText id="id"   requiredMessage="User ID cannot be empty" value="#{manageEmployeeManagedBean.selectedEmployee.employeeId}" rendered="#{manageEmployeeManagedBean.editMode}" required="true" label="Id"/>  
-                                <p:message for="id"/>
-                            </h:panelGroup>
-
-                            <h:outputText value="Department" />  
-                            <h:panelGroup>
-                                <h:selectOneMenu value ="#{manageEmployeeManagedBean.selectedEmployee.employeeDepartment}" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Department cannot be empty">
-                                    <f:selectItem itemLabel="Select Department" itemValue="" />  
-                                    <f:selectItem itemLabel="Hotel" itemValue="Hotel" />  
-                                    <f:selectItem itemLabel="Convention" itemValue="Convention" />  
-                                    <f:selectItem itemLabel="Food and Beverage" itemValue="FoodAndBeverage" />  
-                                    <f:selectItem itemLabel="Shopping Mall" itemValue="ShoppingMall" />  
-                                    <f:selectItem itemLabel="Entertainmant" itemValue="Entertainment" />  
-                                    <f:selectItem itemLabel="Attraction" itemValue="Attraction" /> 
-                                </h:selectOneMenu> 
-                            </h:panelGroup>
-
-                            <h:outputText rendered="#{manageEmployeeManagedBean.isHotel()}" value="Schedule:"/>
-                            <h:selectOneRadio value ="#{manageEmployeeManagedBean.selectedEmployee.employeeSchedule}" rendered="#{manageEmployeeManagedBean.isHotel()}" required ="true" requiredMessage="Schedule cannot be empty">
-                                <f:selectItem itemLabel="Morning Shift" itemValue="1" />  
-                                <f:selectItem itemLabel="Afternoon Shift" itemValue="2" />  
-                                <f:selectItem itemLabel="Night Shift" itemValue="3" />  
-                            </h:selectOneRadio>
+                            <h:outputText value="Department:"/>
+                            <p:selectOneMenu value="#{manageEmployeeManagedBean.selectedEmployee.employeeDepartment}">
+                                <f:selectItem itemLabel="Select Department" itemValue="" />  
+                                <f:selectItem itemLabel="Hotel" itemValue="Hotel"/>  
+                                <f:selectItem itemLabel="Convention" itemValue="Convention" />  
+                                <f:selectItem itemLabel="Food and Beverage" itemValue="Food And Beverage" />  
+                                <f:selectItem itemLabel="Shopping Mall" itemValue="Shopping Mall" />  
+                                <f:selectItem itemLabel="Entertainmant" itemValue="Entertainment" />  
+                                <f:selectItem itemLabel="Attraction" itemValue="Attraction" />
+                            </p:selectOneMenu> 
 
                             <h:outputText value="Roles"/>
-                            <h:outputText value="#{manageEmployeeManagedBean.toSentence(manageEmployeeManagedBean.selectedEmployee.roles)}"/>
-                            <h:selectManyMenu value="#{manageEmployeeManagedBean.selectedRoles}" style="height:100px">  
+                            <p:selectManyMenu value="#{manageEmployeeManagedBean.selectedRoles}" style="height:200px;width:200px;" showCheckbox="true">  
                                 <f:selectItems value="#{manageEmployeeManagedBean.rm.allRoles}"  
                                                var="allRoles" itemLabel="#{allRoles.roleName}" 
                                                itemValue="#{allRoles.roleId}" />  
-                            </h:selectManyMenu>
+                            </p:selectManyMenu>
 
 
-                            <f:facet name="footer">  
-                                <p:outputPanel rendered="#{manageEmployeeManagedBean.editMode}" layout="block" style="text-align:right">  
-                                    <p:commandButton value="Save" update="employees msgs" actionListener="#{manageEmployeeManagedBean.saveChanges}"   
-                                                     oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
-                                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
-                                </p:outputPanel>  
-                            </f:facet>  
+                            <p:outputPanel rendered="#{manageEmployeeManagedBean.editMode}" layout="block" style="text-align:left;">  
+                                <p:commandButton value="Save" update="employees" actionListener="#{manageEmployeeManagedBean.saveChanges}"   
+                                                 oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
+                                <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
+                            </p:outputPanel>  
+
                         </h:panelGrid>  
-
                     </p:dialog>
 
-                    <p:confirmDialog message="Are you sure?" width="200"  
-                                     showEffect="explode" hideEffect="explode"  
-                                     header="Confirm" severity="alert" widgetVar="confirmation">  
 
-                        <p:commandButton value="Yes" update="employees" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                        <br/>
+                        Are you sure to delete?
+                        <br/><br/>
+                        <p:commandButton value="Yes" update="message" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
                             <f:attribute name="code1" value="#{manageEmployeeManagedBean.selectedEmployee.employeeId}" />
                         </p:commandButton>
-                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
-
-                    </p:confirmDialog>
+                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
+                    </p:dialog>  
                 </div>
             </p:panel>
         </h:form> 
-
-
-        <!--<h:form id="confirmDialogForm">
-            <p:dialog header="Confirmation" width="300" showEffect="explode" hideEffect="explode" widgetVar="confirmation">  
-
-                <h:outputText value="Are you sure to delete?" />
-                <br/>
-                <br/>
-
-                <p:commandButton value="Yes" update=":form:employees" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()"/>
-                <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />
-            </p:dialog>  
-        </h:form>-->
     </ui:define>
 </ui:composition>

@@ -10,6 +10,7 @@ import ERMS.session.EmployeeSessionBean;
 import ERMS.session.MessageSessionBean;
 import ERMS.session.RoleSessionBean;
 import Exception.ExistException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 @ManagedBean
 @ViewScoped
 //@SessionScoped
-public class ManageEmployeeManagedBean {
+public class ManageEmployeeManagedBean implements Serializable {
 
     @EJB
     private EmployeeSessionBean em;
@@ -57,13 +58,8 @@ public class ManageEmployeeManagedBean {
     }
 
     public void deleteEmployee(ActionEvent event) throws ExistException {
-
-        System.err.println("Delete Employee:" + selectedEmployee.getEmployeeId());
-        
         setId((String)event.getComponent().getAttributes().get("code1"));
         getEm().removeEmployee(getId());
-
-        //getEm().removeEmployee(selectedEmployee.getEmployeeId());
     }
 
     public void saveChanges(ActionEvent event) throws ExistException {
@@ -91,7 +87,7 @@ public class ManageEmployeeManagedBean {
      * @return the selectedEmployee
      */
     public EmployeeEntity getSelectedEmployee() {
-        System.out.println("3SelectedEmployee getSelected: " + selectedEmployee.getEmployeeName());
+        System.err.println("SelectedEmployee.getDepartment: " + selectedEmployee.getEmployeeDepartment());
         return selectedEmployee;
     }
 
