@@ -8,38 +8,50 @@
 
 
     <ui:define name="content">
-            <h:form id="form"> 
-                <p:panel id="search" header="Search Result" style="height:495px;">
-                    <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
-                        <p:growl id="msgs" showDetail="true" /> 
-                        <p:dataTable id="rooms" value="#{roomManagedBean.getAvailableRooms()}" var="rooms" paginator="true" rows="6">
-                            <p:column headerText="Room ID: ">
-                                <h:outputText value="#{rooms.roomId}"/>
-                            </p:column>
-                            <p:column headerText="Room Type: ">
-                                <h:outputText value="#{rooms.roomType}"/>
-                            </p:column>
-                            <p:column headerText="Hotel: ">
-                                <h:outputText value="#{rooms.roomHotel}"/>
-                            </p:column>
-                            <p:column headerText="Level: ">
-                                <h:outputText value="#{rooms.roomLevel}"/>
-                            </p:column>
-                            <p:column headerText="Number: ">
-                                <h:outputText value="#{rooms.roomNo}"/>
-                            </p:column>
-                            <p:column headerText="Status: ">
-                                <h:outputText value="#{rooms.roomStatus}"/>
-                            </p:column>
-                            <p:column style="width:100px">  
-                                <p:commandButton  ajax="true"  icon="ui-icon ui-icon-pencil" value ="Check In" action="#{roomManagedBean.checkIn}">  
-                                    <f:setPropertyActionListener target="#{roomManagedBean.thisRoom}" value="#{rooms}"/>  
-                                </p:commandButton>  
-                            </p:column>  
-                        </p:dataTable>
-                    </div>
-                </p:panel>
-            </h:form>  
+       
+        <h:form id="form"> 
+             <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:panel id="search" header="Search Result" style="height:495px;">
+                <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
+                    <p:growl id="msgs" showDetail="true" /> 
+                    <p:dataTable id="rooms" value="#{roomManagedBean.getAvailableRooms()}" var="rooms" paginator="true" rows="6">
+                        <p:column headerText="Room ID: ">
+                            <h:outputText value="#{rooms.roomId}"/>
+                        </p:column>
+                        <p:column headerText="Room Type: ">
+                            <h:outputText value="#{rooms.roomType}"/>
+                        </p:column>
+                        <p:column headerText="Hotel: ">
+                            <h:outputText value="#{rooms.roomHotel}"/>
+                        </p:column>
+                        <p:column headerText="Level: ">
+                            <h:outputText value="#{rooms.roomLevel}"/>
+                        </p:column>
+                        <p:column headerText="Number: ">
+                            <h:outputText value="#{rooms.roomNo}"/>
+                        </p:column>
+                        <p:column headerText="Status: ">
+                            <h:outputText value="#{rooms.roomStatus}"/>
+                        </p:column>
+                        <p:column style="width:100px">  
+                            <p:commandButton  oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Check In" title="Check In">  
+                                <f:setPropertyActionListener target="#{roomManagedBean.thisRoom}" value="#{rooms}"/>  
+                            </p:commandButton>  
+                        </p:column>  
+                    </p:dataTable>
+                </div>
+            </p:panel>
+    <!--    </h:form>
+        <h:form> -->
+            <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                <br/>
+                Are you sure to Check In?
+                <br/><br/>
+                <p:commandButton value="Yes" update="growl" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
+                </p:commandButton>
+                <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
+            </p:dialog>  
+        </h:form>  
     </ui:define>
 
 </ui:composition>
