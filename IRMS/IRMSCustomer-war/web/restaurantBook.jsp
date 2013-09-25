@@ -154,9 +154,9 @@
                         </div>
                         <div class="small-3 columns">
                             <select name="title" id="customDropdown">
-                                <option value="0">Mr.</option>
-                                <option value="1">Miss</option>
-                                <option value="2">Mrs.</option>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Miss">Miss</option>
+                                <option value="Mrs.">Mrs.</option>
                             </select>
                         </div>
                         <div class="small-2 columns">
@@ -175,7 +175,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="text" placeholder="e-mail" name="e-mail">
+                                <input type="text" placeholder="email" name="email">
                             </div>
                         </div>
                     </div>
