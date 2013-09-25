@@ -39,9 +39,11 @@ public class AddRoleManagedBean {
         role = new RoleEntity();
     }
     
-    public void saveNewRole(ActionEvent event) throws ExistException
-    {
+    public void saveNewRole(ActionEvent event) throws ExistException{
+        System.err.println("Saving New Role...");
         pushToFunc();
+        System.err.println("SaveNewRole ID: "+role.getRoleId());
+        System.err.println("SaveNewRole Name: "+getRole().getRoleName());
         rm.addRole(getRole());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Role saved.", ""));
     }
@@ -54,7 +56,7 @@ public class AddRoleManagedBean {
         this.role = role;
     }
     public void oneMore(ActionEvent event) throws IOException{
-        FacesContext.getCurrentInstance().getExternalContext().redirect("AddRole.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("addRole.xhtml");
     }
 
     public List<String> getSelectedFunc() {
@@ -67,18 +69,19 @@ public class AddRoleManagedBean {
     
      public void pushToFunc() throws ExistException{
         int i = 0;
-        String funcName;
-        System.err.println("pushToFunc");
-        funcName = String.valueOf(selectedFunc.get(i));
-        role.getFunctionalities().add(getFm().getFunctionality(funcName));
+        Long id;
+        System.out.println("pushToFunc...");
+        id = Long.valueOf(selectedFunc.get(i));
+        role.getFunctionalities().add(getFm().getFunctionality(id));
         System.out.println(selectedFunc.get(i));
         
         while(i < (selectedFunc.size()-1)){
             i++;
-            funcName = String.valueOf(selectedFunc.get(i));
-            role.getFunctionalities().add(getFm().getFunctionality(funcName));
+            id = Long.valueOf(selectedFunc.get(i));
+            role.getFunctionalities().add(getFm().getFunctionality(id));
             System.out.println(selectedFunc.get(i));
         }
+        
         
     }
 

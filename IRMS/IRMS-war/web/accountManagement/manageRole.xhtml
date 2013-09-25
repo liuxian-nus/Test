@@ -37,37 +37,31 @@
 
                     </p:dataTable>  
 
-                    <p:dialog header="Edit Role" widgetVar="carDialog" resizable="false" id="carDlg"  
-                              showEffect="fade" hideEffect="explode" modal="true" width="700">  
+                    <p:dialog header="Edit Role" widgetVar="carDialog" resizable="true" id="carDlg"  
+                              showEffect="fade" hideEffect="explode" width="700">  
 
-                        <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
-
-
-
+                        <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
                             <h:outputText value="Role Name" />  
                             <h:panelGroup>  
                                 <h:outputText value="#{manageRoleManagedBean.selectedRole.roleName}" style="font-weight:bold" rendered="#{!manageRoleManagedBean.editMode}"/>  
                                 <p:inputText id="roleName" required="true" requiredMessage="Role Name cannot be empty" value="#{manageRoleManagedBean.selectedRole.roleName}" rendered="#{manageRoleManagedBean.editMode}"  label="Role Name"/>  
                                 <p:message for="roleName"/>
                             </h:panelGroup>  
-                            <h:outputText value="Roles"/>
-                            <h:outputText value="#{manageRoleManagedBean.toSentence(manageRoleManagedBean.selectedRole.functionalities)}"/>
-
-                            <h:outputText value="Select New Roles"/>
-                            <h:selectManyMenu value="#{manageRoleManagedBean.selectedFunc}" style="height:100px">  
+                            
+                            
+ 
+                            <h:outputText value="Select Functionalities"/>
+                            <p:selectManyMenu value="#{manageRoleManagedBean.selectedFunc}" style="height:200px;width:200px;" showCheckbox="true">  
                                 <f:selectItems value="#{manageRoleManagedBean.fm.getAllFunctionalities()}"  
                                                var="allFunc" itemLabel="#{allFunc.funcName}" 
                                                itemValue="#{allFunc.funcId}" />  
-                            </h:selectManyMenu>
-
-
-
-
+                            </p:selectManyMenu>
+                            <h:outputText value=""/>
 
                             <p:outputPanel rendered="#{manageRoleManagedBean.editMode}" layout="block" style="text-align:left;">  
                                 <p:commandButton value="Save" update="roles msgs" actionListener="#{manageRoleManagedBean.saveChanges}"   
-                                                 oncomplete="carDialog.hide()" image="ui-icon ui-icon-check"/>  
-                                <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" image="ui-icon ui-icon-close"/>  
+                                                 oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
+                                <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
 
                             </p:outputPanel>  
 
@@ -75,16 +69,16 @@
 
                     </p:dialog>
 
-                    <p:confirmDialog message="Are you sure?" width="200"  
-                                     showEffect="explode" hideEffect="explode"  
-                                     header="Confirm" severity="alert" widgetVar="confirmation">  
-
+                    <p:dialog  width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
+                        <br/>
+                        Are you sure?
+                        <br/><br/>
                         <p:commandButton value="Yes" update="roles" actionListener="#{manageRoleManagedBean.deleteRole}" oncomplete="confirmation.hide()">  
                             <f:attribute name="code1" value="#{manageRoleManagedBean.selectedRole.roleId}" />
                         </p:commandButton>
                         <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
 
-                    </p:confirmDialog>  
+                    </p:dialog>  
                 </div>
             </p:panel>
         </h:form> 

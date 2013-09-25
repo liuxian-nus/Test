@@ -8,6 +8,7 @@
 
     <ui:define name="content">
         <h:form>
+            <p:growl id="message" showDetail="true" sticky="true" />
             <p:panel id="addRole" header="Add New Role" style="height:495px;">
                 <div style="margin-left:330px;margin-top:60px;">
                     <h:panelGrid id="grid" columns="3">
@@ -18,18 +19,18 @@
                         <h:inputText required="true" requiredMessage="Role ID cannot be empty" value="#{addRoleManagedBean.role.roleId}" style="margin-bottom:10px;"/>
                         <br/>
                         <h:outputText value="Functionalities" style="margin-right: 20px;"/>
-                        <h:selectManyMenu value="#{addRoleManagedBean.selectedFunc}" style="height:150px;width:175px;margin-bottom:10px;">  
-                            <f:selectItems value="#{addRoleManagedBean.fm.allFunctionalities}"  
-                                           var="allFunc" itemLabel="#{allFunc.funcName}" 
-                                           itemValue="#{allFunc.funcName}"/>  
-                        </h:selectManyMenu>  
+
+                        <p:selectManyMenu value="#{addRoleManagedBean.selectedFunc}" style="width:200px;height:175px;margin-bottom:10px;" showCheckbox="true">  
+                            <f:selectItems value="#{addRoleManagedBean.fm.allFunctionalities}" var="allFunc" itemLabel="#{allFunc.funcName}" itemValue="#{allFunc.funcId}" />  
+                        </p:selectManyMenu>  
+
                         <br />
-                        <p:commandButton value="Save" ajax="true" actionListener="#{addRoleManagedBean.saveNewRole}"/>
-                        <p:commandButton value="Add More Roles" ajax="true" actionListener="#{addRoleManagedBean.oneMore}"/>
+                        <p:commandButton value="Save" ajax="true" actionListener="#{addRoleManagedBean.saveNewRole}" update="message"/>
+
+                        <p:commandButton value="Add More Roles" ajax="true" actionListener="#{addRoleManagedBean.oneMore}" update="message"/>
                     </h:panelGrid>
                 </div>
             </p:panel>
         </h:form>
     </ui:define>
-
 </ui:composition>

@@ -54,14 +54,6 @@ public class AddFunctionalityManagedBean {
     }
 
     public void oneMore(ActionEvent event) throws IOException {
-        show = true;
-        try {
-            functionalityManager.addFunctionality(getFunctionality());
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new employee", ""));
-            return;
-        }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Functionality Saved.", ""));
         FacesContext.getCurrentInstance().getExternalContext().redirect("addFunctionality.xhtml");
     }
 
