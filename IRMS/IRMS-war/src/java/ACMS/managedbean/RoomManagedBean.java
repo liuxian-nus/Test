@@ -122,8 +122,8 @@ public class RoomManagedBean implements Serializable {
         System.err.println("we are in check out");
 
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        Long getRerservationId = (Long) request.getSession().getAttribute("roomId");
-
+        int roomId = (Integer) request.getSession().getAttribute("roomId");
+ 
         try {
             System.err.println("room ID" + thisRoom.getRoomId());
             rm.checkOut(thisRoom.getRoomId());
