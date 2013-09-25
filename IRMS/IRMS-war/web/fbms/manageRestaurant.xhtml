@@ -66,11 +66,40 @@
                                 <p:message for="typeOfPlace"/>
                             </h:panelGroup>  
                             
-                            <h:panelGroup>  
+                            <h:outputText value="Restaurant Neighbourhood" />  
+                            <h:panelGroup> 
+                                <h:outputText value="#{manageRestaurantManagedBean.selectedRestaurant.restNeighbourhood}" style="font-weight:bold" rendered="#{!manageRestaurantManagedBean.editMode}"/>  
+                                <p:inputText id="neighbourhood"   requiredMessage="Neighbourhood cannot be empty" value="#{manageRestaurantManagedBean.selectedRestaurant.restNeighbourhood}" rendered="#{manageRestaurantManagedBean.editMode}" required="true" label="Restaurant Neighbourhood"/>  
+                                <p:message for="neighbourhood"/>
+                            </h:panelGroup>  
+                            
+                            <h:outputText value="Restaurant Cuisine" />  
+                            <h:panelGroup> 
                                 <h:outputText value="#{manageRestaurantManagedBean.selectedRestaurant.restCuisine}" style="font-weight:bold" rendered="#{!manageRestaurantManagedBean.editMode}"/>  
-                                <p:inputText id="cuisine"   requiredMessage="Cuisine cannot be empty" value="#{manageRestaurantManagedBean.selectedRestaurant.restCuisine}" rendered="#{manageRestaurantManagedBean.editMode}" required="true" label="Cuisine"/>  
+                                <p:inputText id="cuisine"   requiredMessage="Cuisine cannot be empty" value="#{manageRestaurantManagedBean.selectedRestaurant.restCuisine}" rendered="#{manageRestaurantManagedBean.editMode}" required="true" label="Restaurant Type Of Place"/>  
                                 <p:message for="cuisine"/>
-                            </h:panelGroup> 
+                            </h:panelGroup>
+                            
+                            <h:outputText value="Restaurant Maximum Quota of Customers" />  
+                            <h:panelGroup> 
+                                <h:outputText value="#{manageRestaurantManagedBean.selectedRestaurant.restQuota}" style="font-weight:bold" rendered="#{!manageRestaurantManagedBean.editMode}"/>  
+                                <p:inputText id="quota"   requiredMessage="Quota cannot be empty" value="#{manageRestaurantManagedBean.selectedRestaurant.restQuota}" rendered="#{manageRestaurantManagedBean.editMode}" required="true" label="Restaurant Quota"/>  
+                                <p:message for="quota"/>
+                            </h:panelGroup>
+                     <!--       
+                            <h:outputText value="Restaurant Cuisine" />  
+                            <h:panelGroup>  
+                                <h:selectOneMenu value ="#{manageRestaurantManagedBean.selectedRestaurant.restCuisine}"  required ="true" requiredMessage="Cuisine cannot be empty">
+                                    <f:selectItem itemLabel="Select Cuisine" itemValue="" />  
+                                    <f:selectItem itemLabel="Japanese" itemValue="Japanese" />  
+                                    <f:selectItem itemLabel="Chinese" itemValue="Chinese" />  
+                                    <f:selectItem itemLabel="Western" itemValue="Western" />  
+                                    <f:selectItem itemLabel="Halah" itemValue="Halah" />  
+                                    <f:selectItem itemLabel="Thai" itemValue="Thai" />  
+                                    <f:selectItem itemLabel="Vegetarian" itemValue="Vegetarian" /> 
+                                    <f:selectItem itemLabel="Korean" itemValue="Korean" /> 
+                                </h:selectOneMenu>
+                            </h:panelGroup>-->
 
 
 
