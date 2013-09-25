@@ -2286,7 +2286,7 @@ label.error {
 .section-container.vertical-nav,
 .section-container.horizontal-nav,
 .section-container.accordion {
-  border-top: 1px solid #cccccc; }
+  border-top: 1px solid #c0cecd; }
   .section-container.auto > section > .title, .section-container.auto > .section > .title,
   .section-container.vertical-tabs > section > .title,
   .section-container.vertical-tabs > .section > .title,
@@ -2296,9 +2296,9 @@ label.error {
   .section-container.horizontal-nav > .section > .title,
   .section-container.accordion > section > .title,
   .section-container.accordion > .section > .title {
-    background-color: #efefef;
+    background-color: #d6e5e4;
     cursor: pointer;
-    border: solid 1px #cccccc; }
+    border: solid 1px #c0cecd; }
     .section-container.auto > section > .title a, .section-container.auto > .section > .title a,
     .section-container.vertical-tabs > section > .title a,
     .section-container.vertical-tabs > .section > .title a,
@@ -2321,7 +2321,7 @@ label.error {
     .section-container.horizontal-nav > .section > .title:hover,
     .section-container.accordion > section > .title:hover,
     .section-container.accordion > .section > .title:hover {
-      background-color: #e2e2e2; }
+      background-color: #d6e5e4; }
   .section-container.auto > section > .content, .section-container.auto > .section > .content,
   .section-container.vertical-tabs > section > .content,
   .section-container.vertical-tabs > .section > .content,
@@ -2333,7 +2333,7 @@ label.error {
   .section-container.accordion > .section > .content {
     padding: 0.9375em;
     background-color: white;
-    border: solid 1px #cccccc; }
+    border: solid 1px #c0cecd; }
     .section-container.auto > section > .content > *:last-child, .section-container.auto > .section > .content > *:last-child,
     .section-container.vertical-tabs > section > .content > *:last-child,
     .section-container.vertical-tabs > .section > .content > *:last-child,
@@ -2373,7 +2373,7 @@ label.error {
   .section-container.horizontal-nav > .section.active > .title,
   .section-container.accordion > section.active > .title,
   .section-container.accordion > .section.active > .title {
-    background: #d5d5d5; }
+    background: #d6e5e4; }
     .section-container.auto > section.active > .title a, .section-container.auto > .section.active > .title a,
     .section-container.vertical-tabs > section.active > .title a,
     .section-container.vertical-tabs > .section.active > .title a,
@@ -2433,20 +2433,20 @@ label.error {
 .section-container.tabs {
   border: none; }
   .section-container.tabs > section > .title, .section-container.tabs > .section > .title {
-    background-color: #efefef;
+    background-color: #d6e5e4;
     cursor: pointer;
-    border: solid 1px #cccccc; }
+    border: solid 1px #c0cecd; }
     .section-container.tabs > section > .title a, .section-container.tabs > .section > .title a {
       padding: 0.9375em;
       color: #333333;
       font-size: 0.875em;
       background: none; }
     .section-container.tabs > section > .title:hover, .section-container.tabs > .section > .title:hover {
-      background-color: #e2e2e2; }
+      background-color: #c0cecd; }
   .section-container.tabs > section > .content, .section-container.tabs > .section > .content {
     padding: 0.9375em;
-    background-color: white;
-    border: solid 1px #cccccc; }
+    background-color: #d6e5e4;
+    border: solid 1px #c0cecd; }
     .section-container.tabs > section > .content > *:last-child, .section-container.tabs > .section > .content > *:last-child {
       margin-bottom: 0; }
     .section-container.tabs > section > .content > *:first-child, .section-container.tabs > .section > .content > *:first-child {
@@ -2491,20 +2491,20 @@ label.error {
   .section-container.auto {
     border: none; }
     .section-container.auto > section > .title, .section-container.auto > .section > .title {
-      background-color: #efefef;
+      background-color: #d6e5e4;
       cursor: pointer;
-      border: solid 1px #cccccc; }
+      border: solid 1px #c0cecd; }
       .section-container.auto > section > .title a, .section-container.auto > .section > .title a {
         padding: 0.9375em;
         color: #333333;
         font-size: 0.875em;
         background: none; }
       .section-container.auto > section > .title:hover, .section-container.auto > .section > .title:hover {
-        background-color: #e2e2e2; }
+        background-color: #c0cecd; }
     .section-container.auto > section > .content, .section-container.auto > .section > .content {
       padding: 0.9375em;
       background-color: white;
-      border: solid 1px #cccccc; }
+      border: solid 1px #c0cecd; }
       .section-container.auto > section > .content > *:last-child, .section-container.auto > .section > .content > *:last-child {
         margin-bottom: 0; }
       .section-container.auto > section > .content > *:first-child, .section-container.auto > .section > .content > *:first-child {
@@ -2559,20 +2559,20 @@ label.error {
   .section-container.vertical-tabs {
     border: none; }
     .section-container.vertical-tabs > section > .title, .section-container.vertical-tabs > .section > .title {
-      background-color: #efefef;
+      background-color: #d6e5e4;
       cursor: pointer;
-      border: solid 1px #cccccc; }
+      border: solid 1px #c0cecd; }
       .section-container.vertical-tabs > section > .title a, .section-container.vertical-tabs > .section > .title a {
         padding: 0.9375em;
         color: #333333;
         font-size: 0.875em;
         background: none; }
       .section-container.vertical-tabs > section > .title:hover, .section-container.vertical-tabs > .section > .title:hover {
-        background-color: #e2e2e2; }
+        background-color: #c0cecd; }
     .section-container.vertical-tabs > section > .content, .section-container.vertical-tabs > .section > .content {
       padding: 0.9375em;
       background-color: white;
-      border: solid 1px #cccccc; }
+      border: solid 1px #c0cecd; }
       .section-container.vertical-tabs > section > .content > *:last-child, .section-container.vertical-tabs > .section > .content > *:last-child {
         margin-bottom: 0; }
       .section-container.vertical-tabs > section > .content > *:first-child, .section-container.vertical-tabs > .section > .content > *:first-child {
@@ -2580,7 +2580,7 @@ label.error {
       .section-container.vertical-tabs > section > .content > *:last-child:not(.flex-video), .section-container.vertical-tabs > .section > .content > *:last-child:not(.flex-video) {
         padding-bottom: 0; }
     .section-container.vertical-tabs > section.active > .title, .section-container.vertical-tabs > .section.active > .title {
-      background: #d5d5d5; }
+      background: #579c98; }
       .section-container.vertical-tabs > section.active > .title a, .section-container.vertical-tabs > .section.active > .title a {
         color: #333333; }
     .section-container.vertical-tabs > section:not(.active), .section-container.vertical-tabs > .section:not(.active) {
@@ -2588,7 +2588,7 @@ label.error {
     .section-container.vertical-tabs > section.active, .section-container.vertical-tabs > .section.active {
       padding-left: 12.4375em; }
       .section-container.vertical-tabs > section.active > .title, .section-container.vertical-tabs > .section.active > .title {
-        background-color: #d5d5d5; }
+        background-color: #579c98; }
 
   [data-section='vertical-nav'], .section-container.vertical-nav {
     width: 100%;
@@ -2634,20 +2634,20 @@ label.error {
   .section-container.vertical-nav {
     border: none; }
     .section-container.vertical-nav > section > .title, .section-container.vertical-nav > .section > .title {
-      background-color: #efefef;
+      background-color:  #333333;
       cursor: pointer;
-      border: solid 1px #cccccc; }
+      border: solid 1px #c0cecd; }
       .section-container.vertical-nav > section > .title a, .section-container.vertical-nav > .section > .title a {
         padding: 0.9375em;
         color: #333333;
         font-size: 0.875em;
         background: none; }
       .section-container.vertical-nav > section > .title:hover, .section-container.vertical-nav > .section > .title:hover {
-        background-color: #e2e2e2; }
+        background-color:  #d6e5e4; }
     .section-container.vertical-nav > section > .content, .section-container.vertical-nav > .section > .content {
       padding: 0.9375em;
       background-color: white;
-      border: solid 1px #cccccc; }
+      border: solid 1px #c0cecd; }
       .section-container.vertical-nav > section > .content > *:last-child, .section-container.vertical-nav > .section > .content > *:last-child {
         margin-bottom: 0; }
       .section-container.vertical-nav > section > .content > *:first-child, .section-container.vertical-nav > .section > .content > *:first-child {
@@ -2655,7 +2655,7 @@ label.error {
       .section-container.vertical-nav > section > .content > *:last-child:not(.flex-video), .section-container.vertical-nav > .section > .content > *:last-child:not(.flex-video) {
         padding-bottom: 0; }
     .section-container.vertical-nav > section.active > .title, .section-container.vertical-nav > .section.active > .title {
-      background: #d5d5d5; }
+      background: #579c98; }
       .section-container.vertical-nav > section.active > .title a, .section-container.vertical-nav > .section.active > .title a {
         color: #333333; }
     .section-container.vertical-nav > section:not(.active), .section-container.vertical-nav > .section:not(.active) {
@@ -2704,12 +2704,12 @@ label.error {
         min-width: 12.5em; }
 
   .section-container.horizontal-nav {
-    background: #efefef;
-    border: 1px solid #cccccc; }
+    background: #d6e5e4;
+    border: 1px solid #c0cecd; }
     .section-container.horizontal-nav > section > .title, .section-container.horizontal-nav > .section > .title {
-      background-color: #efefef;
+      background-color: #d6e5e4;
       cursor: pointer;
-      border: solid 1px #cccccc; }
+      border: solid 1px #c0cecd; }
       .section-container.horizontal-nav > section > .title a, .section-container.horizontal-nav > .section > .title a {
         padding: 0.9375em;
         color: #333333;
@@ -2719,8 +2719,8 @@ label.error {
         background-color: #e2e2e2; }
     .section-container.horizontal-nav > section > .content, .section-container.horizontal-nav > .section > .content {
       padding: 0.9375em;
-      background-color: white;
-      border: solid 1px #cccccc; }
+     
+      border: solid 1px #c0cecd; }
       .section-container.horizontal-nav > section > .content > *:last-child, .section-container.horizontal-nav > .section > .content > *:last-child {
         margin-bottom: 0; }
       .section-container.horizontal-nav > section > .content > *:first-child, .section-container.horizontal-nav > .section > .content > *:first-child {
@@ -2728,7 +2728,7 @@ label.error {
       .section-container.horizontal-nav > section > .content > *:last-child:not(.flex-video), .section-container.horizontal-nav > .section > .content > *:last-child:not(.flex-video) {
         padding-bottom: 0; }
     .section-container.horizontal-nav > section.active > .title, .section-container.horizontal-nav > .section.active > .title {
-      background: #d5d5d5; }
+      background: #579c98; }
       .section-container.horizontal-nav > section.active > .title a, .section-container.horizontal-nav > .section.active > .title a {
         color: #333333; }
     .section-container.horizontal-nav > section:not(.active), .section-container.horizontal-nav > .section:not(.active) {
@@ -2762,22 +2762,22 @@ label.error {
     .no-js [data-section] > section > [data-section-title], .no-js [data-section] > section > .title, .no-js [data-section] > .section > [data-section-title], .no-js [data-section] > .section > .title, .no-js [data-section] > [data-section-region] > [data-section-title], .no-js [data-section] > [data-section-region] > .title, .no-js .section-container > section > [data-section-title], .no-js .section-container > section > .title, .no-js .section-container > .section > [data-section-title], .no-js .section-container > .section > .title, .no-js .section-container > [data-section-region] > [data-section-title], .no-js .section-container > [data-section-region] > .title {
       width: 100%; }
 .no-js .section-container {
-  border-top: 1px solid #cccccc; }
+  border-top: 1px solid #c0cecd; }
   .no-js .section-container > section > .title, .no-js .section-container > .section > .title {
-    background-color: #efefef;
+    background-color: #d6e5e4;
     cursor: pointer;
-    border: solid 1px #cccccc; }
+    border: solid 1px #c0cecd; }
     .no-js .section-container > section > .title a, .no-js .section-container > .section > .title a {
       padding: 0.9375em;
       color: #333333;
       font-size: 0.875em;
       background: none; }
     .no-js .section-container > section > .title:hover, .no-js .section-container > .section > .title:hover {
-      background-color: #e2e2e2; }
+      background-color: #579c98; }
   .no-js .section-container > section > .content, .no-js .section-container > .section > .content {
     padding: 0.9375em;
     background-color: white;
-    border: solid 1px #cccccc; }
+    border: solid 1px #c0cecd; }
     .no-js .section-container > section > .content > *:last-child, .no-js .section-container > .section > .content > *:last-child {
       margin-bottom: 0; }
     .no-js .section-container > section > .content > *:first-child, .no-js .section-container > .section > .content > *:first-child {
@@ -2785,7 +2785,7 @@ label.error {
     .no-js .section-container > section > .content > *:last-child:not(.flex-video), .no-js .section-container > .section > .content > *:last-child:not(.flex-video) {
       padding-bottom: 0; }
   .no-js .section-container > section.active > .title, .no-js .section-container > .section.active > .title {
-    background: #d5d5d5; }
+    background: #579c98; }
     .no-js .section-container > section.active > .title a, .no-js .section-container > .section.active > .title a {
       color: #333333; }
   .no-js .section-container > section:not(.active), .no-js .section-container > .section:not(.active) {
