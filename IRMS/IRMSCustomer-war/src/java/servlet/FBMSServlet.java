@@ -143,7 +143,7 @@ public class FBMSServlet extends HttpServlet {
                 data3 = indReservationSessionBean.viewReservation(reservationId);
                 System.out.println("FBMSServlet: the individual reservation has been returned");
                 request.setAttribute("data", data3);
-                request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
+                request.getRequestDispatcher("/restaurantCheck.jsp").forward(request, response);
             
             }
             
@@ -210,13 +210,13 @@ public class FBMSServlet extends HttpServlet {
             Integer date = Integer.parseInt(request.getParameter("date"));
             System.out.println("The booking date is "+ date);
             
-            Integer hour = Integer.parseInt(request.getParameter("hour"));
+            Integer hour = Integer.parseInt(request.getParameter("time"));
             System.out.println("The booking hour is "+hour);
             
             int min = 0;
             
             Date newDate;
-            newDate = new Date(year,month,date,hour,min); //this one needs to be modified later
+            newDate = new Date(year-1900,month-1,date,hour,min); //this one needs to be modified later
             
             RestaurantEntity re = indReservationSessionBean.getRestaurantEntity(restId);
             Boolean isAvailable = indReservationSessionBean.checkAvailability(re, numberPeople, newDate);
@@ -237,13 +237,13 @@ public class FBMSServlet extends HttpServlet {
             Integer date = Integer.parseInt(request.getParameter("date"));
             System.out.println("The booking date is "+ date);
             
-            Integer hour = Integer.parseInt(request.getParameter("time"));
+            Integer hour = Integer.valueOf(request.getParameter("time"));
             System.out.println("The booking hour is "+hour);
             
             int min = 0;
             
             Date thisDate;
-            thisDate = new Date(year,month,date,hour,min);
+            thisDate = new Date(year-1900,month-1,date,hour,min);
         
         System.out.println("FBMSServlet makeReservation: date has been retrieved!");
             
@@ -271,12 +271,20 @@ public class FBMSServlet extends HttpServlet {
         System.out.println("The booking people's notes is "+notes);
         
        // RestaurantEntity re = indReservationSessionBean.getRestaurantEntity(restId);
+        Boolean isAvailable = checkAvailability(request);
+        
+        if(isAvailable){
         
         IndReservationEntity correctBooking = indReservationSessionBean.makeReservation(thisDate, restId, numberPeople, title, name, email, mobile, notes);
         
-        System.out.println("The restaurant booking made? "+correctBooking );
+        Boolean thisBooking = indReservationSessionBean.confirmReservation(correctBooking);
+        System.out.println("The individual restaurant order has been confirmed? "+thisBooking);
+        System.out.println("The restaurant booking made? "+ thisBooking );
         
         return correctBooking;
+        }
+        
+        else return null;
     }
 
     private boolean configureMenu (HttpServletRequest request)

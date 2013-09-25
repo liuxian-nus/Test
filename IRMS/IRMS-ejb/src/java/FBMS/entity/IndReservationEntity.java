@@ -34,7 +34,7 @@ public class IndReservationEntity implements Serializable {
     private String email;
     private String mobile;
     private String notes;
-    private String status="In Process";
+    private String status="In process";
     
 
     public IndReservationEntity(){}

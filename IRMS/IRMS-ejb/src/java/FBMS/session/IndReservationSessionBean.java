@@ -191,6 +191,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
         System.out.println("IndReservationSessionBean: make reservation starts!");
             IndReservationEntity ire = new IndReservationEntity();
                 ire.setIndReservationDateTime(indReservationDateTime);
+                System.out.println("The booking time is "+indReservationDateTime);
                 ire.setEmail(email);
                 ire.setMobile(mobile);
                 ire.setName(name);
@@ -217,6 +218,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
     public boolean confirmReservation(IndReservationEntity ire){
         
         ire.setStatus("Confirmed");
+        em.merge(ire);
         System.out.println("IndReservationSessionBean: Reservation has been confirmed successfully!");
         return true;
     }
