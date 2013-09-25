@@ -125,6 +125,21 @@ public class Menu2ManagedBean implements Serializable {
                 
                 model.addSubmenu(submenu);
              }
+             
+             if (userType.contains("FBMSAdmin")){ 
+                System.out.println("FBMSAdmin menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("Restaurant");
+                submenu.setIcon("ui-icon ui-icon-contact");
+                
+                item = new MenuItem();
+                item.setValue("Restaurant");
+                item.setUrl("/fbms/addRestaurant.xhtml");
+//                item.setUrl("/acms/listRooms.xhtml");
+                submenu.getChildren().add(item);
+                
+                model.addSubmenu(submenu);
+             }
         }
         return model;
     }

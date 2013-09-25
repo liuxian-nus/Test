@@ -143,6 +143,8 @@ public class CRMServlet extends HttpServlet {
 
                 member = memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe,
                         securityQuestion, answer);
+                
+                
 
                 request.getRequestDispatcher("/memberRegisterResult.jsp").forward(request, response);
             } else if ("memberForgetPassword".equals(page)) {

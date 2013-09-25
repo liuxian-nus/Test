@@ -17,6 +17,7 @@ import ERMS.session.EPasswordHashSessionBean;
 import ERMS.session.EmployeeSessionBean;
 import ERMS.session.FunctionalitySessionBean;
 import ERMS.session.RoleSessionBean;
+import FBMS.entity.RestaurantEntity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.annotation.PostConstruct;
@@ -59,6 +60,8 @@ public class initializationManagedBean implements Serializable {
     private ReservationEntity reservation;
     private MemberEntity member;
     private FunctionalityEntity functionality;
+    private RestaurantEntity restaurant;
+    
 //    private MemberEntity member;
 
     @PostConstruct
@@ -180,6 +183,36 @@ public class initializationManagedBean implements Serializable {
 
         addMessage("Reservation Created!");
     }
+    
+    public void createRestaurant() {
+        System.out.println("go to create FBMS page");
+
+        role = new RoleEntity();
+        role.setRoleId(50);
+        role.setRoleName("FBMSAdmin");
+        System.out.println("Create role :" + role.getRoleName());
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("E0000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeName("FBMSAdmin");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0000"));
+        System.out.println("finished hashing");
+        employee.addRole(role);
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving FBMSAdmin....");
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("FBMSAdmin saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
+            return;
+        }
+        System.out.println("Insert Employee into database");
+        addMessage("FBMSAdmin Created!");
+    }
+
     
     public void createMember() {
         System.err.println("go to create member page...");       
