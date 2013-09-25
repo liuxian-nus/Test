@@ -1,5 +1,5 @@
 
-package commonInfrastructure.ERMS.managedbean;
+package commomInfrastructure.utility.managedbean;
 
 import java.io.IOException;
 import javax.faces.bean.ManagedBean;
