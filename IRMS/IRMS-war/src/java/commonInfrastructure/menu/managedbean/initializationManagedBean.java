@@ -5,6 +5,7 @@
 package commonInfrastructure.menu.managedbean;
 
 import ACMS.entity.ReservationEntity;
+import ACMS.entity.RoomEntity;
 import ACMS.session.ReservationSessionBean;
 import ACMS.session.RoomSessionBean;
 import CRMS.entity.MemberEntity;
@@ -209,7 +210,30 @@ public class initializationManagedBean implements Serializable {
 
     public void createRoom() {
         try {
+            System.err.println("Insert room started.....");
+            rmSessionBean.createTestRoom(1,1,1,"deluxe","available");
             /*
+            RoomEntity room1 = new RoomEntity();
+            room1.setRoomId(1, 1, 1);
+            room1.setRoomType("deluxe");
+            room1.setRoomStatus("available");
+            rmSessionBean.createTestRoom(room1);
+            RoomEntity room2 = new RoomEntity();
+            room2.setRoomId(1, 1, 2);
+            room2.setRoomType("deluxe");
+            room2.setRoomStatus("available");
+            rmSessionBean.createTestRoom(room2);
+            RoomEntity room3 = new RoomEntity();
+            room3.setRoomId(1, 1, 3);
+            room3.setRoomType("deluxe");
+            room3.setRoomStatus("reserved");
+            rmSessionBean.createTestRoom(room3);
+            RoomEntity room4 = new RoomEntity();
+            room4.setRoomId(1, 1, 4);
+            room4.setRoomType("deluxe");
+            room4.setRoomStatus("occupied");
+            rmSessionBean.createTestRoom(room4);
+            *//*
             Query query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
                     + "VALUES (1,1,1,'Deluxe');");
             query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
@@ -223,7 +247,6 @@ public class initializationManagedBean implements Serializable {
             query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
                     + "VALUES (1,1,6,'Deluxe');");
                     */
-        rmSessionBean.createTestRoom();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room to Orchard Hotel", ""));
             return;

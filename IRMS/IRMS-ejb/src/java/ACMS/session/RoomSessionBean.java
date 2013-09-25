@@ -6,16 +6,11 @@ import ACMS.entity.RoomServiceEntity;
 import CRMS.entity.MemberEntity;
 import Exception.ExistException;
 import Exception.RoomException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -164,21 +159,20 @@ public class RoomSessionBean {
         System.out.println("RoomSessionBean --> welcome: " + thisMember.getMemberName());
     }
 
-    public void createTestRoom() {
+    public void createTestRoom(int roomHotel, int roomLevel, int roomNo, String roomType, String roomStatus) {
         try {
-            Query query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-                    + "VALUES (1,1,1,'Deluxe');");
-            query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-                    + "VALUES (1,1,2,'Deluxe');");
-            query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-                    + "VALUES (1,1,3,'Deluxe');");
-            query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-                    + "VALUES (1,1,4,'Deluxe');");
-            query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-                    + "VALUES (1,1,5,'Deluxe');");
-            query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-                    + "VALUES (1,1,6,'Deluxe');");
+            System.out.println("come to create test room session bean");
+            room.setRoomId(roomHotel, roomLevel, roomNo);
+            room.setRoomType(roomType);
+            room.setRoomStatus(roomStatus);
+            System.out.println(room.getRoomId());
+            System.out.println(room.getRoomType());
+            System.out.println(room.getRoomStatus());
+            System.out.println("prepare to create");
+            em.persist(room);
         } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("create test room session bean failed");
             return;
         }
         System.out.println("Insert room into database");
