@@ -200,6 +200,8 @@
                             </div>
                         </div>
                     </div>
+                    
+                     <input type="hidden" name="restId" value="${data.restId}"/>
 
                     <div clas="row">
                         <div class="large-12 columns">
