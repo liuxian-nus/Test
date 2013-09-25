@@ -65,22 +65,56 @@ public class RoomSessionBean {
         return room;
     }
 
-//    public List<RoomEntity> getAvailableRooms() throws ExistException, IOException {
-//        int i = 0;
-//        RoomEntity oneRoom;
-//        oneRoom = roomList.get(i);
-//        if (oneRoom.getRoomStatus().equals("available")) {
-//            selectRoom.add(oneRoom);
-//        }
-//        while (i < (roomList.size() - 1)) {
-//            i++;
-//            oneRoom = roomList.get(i);
-//            if (oneRoom.getRoomStatus().equals("available")) {
-//                selectRoom.add(oneRoom);
-//            }//end of if
-//        }
-//        return roomList;
-//    }
+    public List<RoomEntity> getAvailableRooms() throws ExistException {
+        
+        System.err.println("in gerallrooms sessionbean");
+        Query q = em.createQuery("SELECT r FROM RoomEntity r");
+        List roomList = new ArrayList<RoomEntity>();
+        List selectRoom = new ArrayList<RoomEntity>();
+        for (Object o : q.getResultList()) {
+            RoomEntity r = (RoomEntity) o;
+            roomList.add(r);
+        }
+        if (roomList == null) {
+            throw new ExistException("RoomEntity database is empty!");
+        }
+        System.out.println("finish finding all room" + roomList.size());
+
+        int i = 0;
+        RoomEntity oneRoom;
+        oneRoom = (RoomEntity) roomList.get(i);
+        if (oneRoom.getRoomStatus().equals("available")) {
+            selectRoom.add(oneRoom);
+        }
+        while (i < (roomList.size() - 1)) {
+            i++;
+            oneRoom = (RoomEntity) roomList.get(i);
+            if (oneRoom.getRoomStatus().equals("available")) {
+                selectRoom.add(oneRoom);
+            }//end of if
+        }
+        System.out.println("finish the session bean method" + selectRoom.size());
+        return roomList;
+    }
+    
+    //list of all rooms -- for floor plan
+    //information displayed: availability, roomSchedule,roomName, roomType, roomService, accumulated charge
+    public List<RoomEntity> getAllRooms() throws ExistException {
+        System.err.println("in gerallrooms sessionbean");
+        Query q = em.createQuery("SELECT r FROM RoomEntity r");
+        List roomList = new ArrayList<RoomEntity>();
+        for (Object o : q.getResultList()) {
+            RoomEntity r = (RoomEntity) o;
+            roomList.add(r);
+        }
+        if (roomList == null) {
+            throw new ExistException("RoomEntity database is empty!");
+        }
+        System.err.println("in gerallrooms sessionbean"+roomList.size());
+        return roomList;
+    }
+    
+    
     //add new charged service
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public RoomServiceEntity addRoomService(int roomId, String roomServiceName) throws ExistException {
@@ -135,22 +169,6 @@ public class RoomSessionBean {
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
     }
 
-    //list of all rooms -- for floor plan
-    //information displayed: availability, roomSchedule,roomName, roomType, roomService, accumulated charge
-    public List<RoomEntity> getAllRooms() throws ExistException {
-        System.err.println("in gerallrooms sessionbean");
-        Query q = em.createQuery("SELECT r FROM RoomEntity r");
-        List roomList = new ArrayList<RoomEntity>();
-        for (Object o : q.getResultList()) {
-            RoomEntity r = (RoomEntity) o;
-            roomList.add(r);
-        }
-        if (roomList == null) {
-            throw new ExistException("RoomEntity database is empty!");
-        }
-        System.err.println("in gerallrooms sessionbean"+roomList.size());
-        return roomList;
-    }
 
     public void addMembership(int roomId, MemberEntity thisMember) {
         room = em.find(RoomEntity.class, roomId);
