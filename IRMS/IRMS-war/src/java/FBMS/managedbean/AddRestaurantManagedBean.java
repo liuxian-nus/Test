@@ -47,7 +47,8 @@ public final class AddRestaurantManagedBean implements Serializable{
     public void saveNewRestaurant (ActionEvent event) throws IOException{
         try{
             System.out.println("into AddRestaurantManagedBean");
-            restaurantSessionRemote.addRestaurant(restaurant);       
+            restaurantSessionRemote.addRestaurant(restaurant);  
+            System.out.println("neighbourhood"+restaurant.getRestNeighbourhood());
             System.out.println("out AddRestaurantManagedBean");
         }catch (Exception e){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding a new restaurant", ""));
