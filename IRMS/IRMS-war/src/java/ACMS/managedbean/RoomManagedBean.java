@@ -19,6 +19,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseEvent;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.ToggleEvent;
 
 /**
@@ -78,11 +79,16 @@ public class RoomManagedBean implements Serializable {
     //check-in, sessionScope reservationId missing..........
 
     public void checkIn() throws IOException {
+        
+        System.err.println("we are in checkin");
+        
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
+
         try {
-            System.err.println("we are in checkin");
-            System.err.println("Reservation ID" + reservationId);
+            System.err.println("Reservation ID" + getRerservationId);
             System.err.println("room ID" + thisRoom.getRoomId());
-            rm.checkIn(thisRoom.getRoomId(), reservationId);
+            rm.checkIn(thisRoom.getRoomId(), getRerservationId);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when checking in", ""));
             return;
@@ -99,10 +105,10 @@ public class RoomManagedBean implements Serializable {
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
-   public void initViewSelect(PhaseEvent event) {
-       System.err.println("in initial view function"); 
+
+    public void initViewSelect(PhaseEvent event) {
+        System.err.println("in initial view function");
         this.reservationId = (Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("ReservationId");
-   System.err.println("reservaion Id get" + reservationId); 
-   }
+        System.err.println("reservaion Id get" + reservationId);
+    }
 }

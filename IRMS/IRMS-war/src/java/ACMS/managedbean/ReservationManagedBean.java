@@ -17,6 +17,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -61,11 +63,16 @@ public class ReservationManagedBean implements Serializable {
     public void searchById(ActionEvent event) throws IOException, ExistException {
 
         System.out.println("NO6 we are in searchById function " + searchId);
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
             setSelectReservation(rm.getReservationById(Long.valueOf(getSearchId())));
             System.out.println("we are after search");
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
             System.out.println("we are after setting parameter");
+            request.getSession().setAttribute("reservationId",Long.valueOf(getSearchId()));
+            System.out.println("we are after setting reservationId session attribute");
+
             FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
@@ -103,7 +110,6 @@ public class ReservationManagedBean implements Serializable {
         System.out.println("NO5: we are in complete bean AFTER");
         return results;
     }
-    
 //     public boolean containReservation() {
 //        return ("Hotel".equals(employee.getEmployeeDepartment()));
 //    }

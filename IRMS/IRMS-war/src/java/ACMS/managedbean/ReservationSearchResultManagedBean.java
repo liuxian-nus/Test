@@ -64,15 +64,4 @@ public class ReservationSearchResultManagedBean implements Serializable {
         reservations = (List<ReservationEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("Reservations");
     }
 
-    public void redirect(ActionEvent event) {
-    
-        try {
-            System.out.println("we in redirect function" +selectReservation.getReservationId());
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("ReservationId", selectReservation.getReservationId());
-            System.err.println("we are after setting reservation ID" + selectReservation.getReservationId() );
-            FacesContext.getCurrentInstance().getExternalContext().redirect("listAvailableRooms.xhtml");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
-        }
-    }
 }
