@@ -123,6 +123,16 @@ public class FBMSServlet extends HttpServlet {
                 Long restId = Long.valueOf(request.getParameter("restId"));
                 System.out.println("FBMSServlet: the restaurant ID is "+restId);
                 data3 = makeReservation(request);
+                if(data3!=null){
+                System.out.println("data is not null, go to check page");
+                request.getRequestDispatcher("/restaurantCheck.jsp").forward(request, response);
+                
+                }else{
+                System.out.println("data is null,book again");
+                request.getRequestDispatcher("/restaurantBook.jsp").forward(request, response);
+                }
+                
+                
             }
             else if ("restaurantIndModify".equalsIgnoreCase(page))
             {
