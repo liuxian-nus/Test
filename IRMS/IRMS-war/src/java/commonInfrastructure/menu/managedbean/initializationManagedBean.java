@@ -10,9 +10,11 @@ import ACMS.session.RoomSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.session.MemberSessionBean;
 import ERMS.entity.EmployeeEntity;
+import ERMS.entity.FunctionalityEntity;
 import ERMS.entity.RoleEntity;
 import ERMS.session.EPasswordHashSessionBean;
 import ERMS.session.EmployeeSessionBean;
+import ERMS.session.FunctionalitySessionBean;
 import ERMS.session.RoleSessionBean;
 import java.io.Serializable;
 import java.util.Date;
@@ -48,11 +50,14 @@ public class initializationManagedBean implements Serializable {
     private RoomSessionBean rmSessionBean;
     @EJB
     private MemberSessionBean mmSessionBean;
+    @EJB
+    private FunctionalitySessionBean functionalitySessionBean;
     
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
     private MemberEntity member;
+    private FunctionalityEntity functionality;
 //    private MemberEntity member;
 
     @PostConstruct
@@ -226,6 +231,24 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert room into database");
         addMessage("Room Created!");
     }
+    
+    
+    public void createFunctionalities(){
+        functionality = new FunctionalityEntity();
+        functionality.setFuncName("systemMsg");
+        functionality.setFuncDescription("broadcast message to all employees");
+        
+        try {
+            System.out.println("Creating new functionality....");
+            functionalitySessionBean.addFunctionality(functionality);
+            System.out.println("Functionality created....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding functionality", ""));
+            return;
+        }
+        System.err.println("Insert systemMsg functionality into database");
+    }
         //Add new test cases below!!!!!!!!!
+    
 
 }
