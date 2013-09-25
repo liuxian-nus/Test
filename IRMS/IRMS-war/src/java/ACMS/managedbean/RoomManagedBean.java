@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseEvent;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.primefaces.event.ToggleEvent;
 
 /**
@@ -36,6 +37,7 @@ public class RoomManagedBean implements Serializable {
     private List<RoomEntity> selectRoom = new ArrayList<RoomEntity>();
     private Long reservationId;
     private RoomEntity thisRoom = new RoomEntity();
+    private int searchId;
 
     public RoomEntity getThisRoom() {
         return thisRoom;
@@ -77,6 +79,26 @@ public class RoomManagedBean implements Serializable {
     }//end of getAllRooms()
     //capture member transaction missing.....
     //check-in, sessionScope reservationId missing..........
+    
+        public void searchById(ActionEvent event) throws IOException, ExistException {
+
+        System.out.println("Check-out: searching room by Id " + searchId);
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            setThisRoom(rm.getRoomById(getSearchId()));
+            System.out.println("we are after search");
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", thisRoom);
+            System.out.println("we are after setting parameter");
+            request.getSession().setAttribute("roomId",getSearchId());
+            System.out.println("we are after setting reservationId session attribute");
+
+            FacesContext.getCurrentInstance().getExternalContext().redirect("RoomSearchResult.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
+        }
+    }
 
     public void checkIn() throws IOException {
         
@@ -111,4 +133,21 @@ public class RoomManagedBean implements Serializable {
         this.reservationId = (Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("ReservationId");
         System.err.println("reservaion Id get" + reservationId);
     }
+
+    public RoomSessionBean getRm() {
+        return rm;
+    }
+
+    public void setRm(RoomSessionBean rm) {
+        this.rm = rm;
+    }
+
+    public int getSearchId() {
+        return searchId;
+    }
+
+    public void setSearchId(int searchId) {
+        this.searchId = searchId;
+    }
+    
 }

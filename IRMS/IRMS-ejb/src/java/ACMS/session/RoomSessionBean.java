@@ -64,10 +64,19 @@ public class RoomSessionBean {
         em.merge(room);
         return room;
     }
+    
+    public RoomEntity getRoomById(int id) throws ExistException {
+        System.err.println("in get room by id sessionbean");
+        RoomEntity thisRoom = em.find(RoomEntity.class, id);
+        if (thisRoom == null) {
+            throw new ExistException("RoomSessionBean-->ExistException-->Room doesn't exist!");
+        }
+        return thisRoom;
+    }
 
     public List<RoomEntity> getAvailableRooms() throws ExistException {
-        
-        System.err.println("in gerallrooms sessionbean");
+        //get all rooms
+        System.err.println("in getallrooms sessionbean");
         Query q = em.createQuery("SELECT r FROM RoomEntity r");
         List roomList = new ArrayList<RoomEntity>();
         List selectRoom = new ArrayList<RoomEntity>();
@@ -79,18 +88,24 @@ public class RoomSessionBean {
             throw new ExistException("RoomEntity database is empty!");
         }
         System.out.println("finish finding all room" + roomList.size());
-
+        //get available rooms
         int i = 0;
         RoomEntity oneRoom;
         oneRoom = (RoomEntity) roomList.get(i);
+        System.out.println(oneRoom.getRoomId());
+        System.out.println(oneRoom.getRoomStatus());
         if (oneRoom.getRoomStatus().equals("available")) {
             selectRoom.add(oneRoom);
+            System.err.println(oneRoom.getRoomId() + "added in available room list");
         }
         while (i < (roomList.size() - 1)) {
             i++;
             oneRoom = (RoomEntity) roomList.get(i);
+            System.out.println(oneRoom.getRoomId());
+            System.out.println(oneRoom.getRoomStatus());
             if (oneRoom.getRoomStatus().equals("available")) {
                 selectRoom.add(oneRoom);
+                System.err.println(oneRoom.getRoomId() + "added in available room list");
             }//end of if
         }
         System.out.println("finish the session bean method" + selectRoom.size());
