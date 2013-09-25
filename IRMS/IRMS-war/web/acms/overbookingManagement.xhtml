@@ -12,13 +12,12 @@
                 <h:form id="formCheckIn">
                     <h:panelGrid columns="2" cellpadding="10">
                         <h:outputText value ="SystemSuggestedQuota: "/>
-                        <h:outputText value ="#{overbookingManagedBean.getSuggestedQuota}"/>
+                        <h:outputText value ="#{overbookingManagedBean.suggestedQuota}"/>
                         <br/>
                         <h:outputText value ="Quota: "/>
-                        <h:inputText value ="#{overbookingManagedBean.setQuota}"/>
+                        <h:inputText value ="#{overbookingManagedBean.newQuota}"/>
                         <br/>
-                        <p:commandButton  value="Save" ajax="true" actionListener="#{reservationManagedBean.doUpdate}" update="messages" icon="ui-icon-disk" />
-                        <p:message for="confirmation"/>
+                        <p:commandButton  value="Save" ajax="true" actionListener="#{oberbookingManagedBean.doUpdate}" update="messages" icon="ui-icon-disk" />
                     </h:panelGrid> 
                 </h:form>
             </p:tab> 

@@ -31,6 +31,7 @@ public class RoomManagedBean implements Serializable {
 
     @EJB
     private RoomSessionBean rm;
+    
     private List<RoomEntity> selectRoom = new ArrayList<RoomEntity>();
     private Long reservationId;
     private RoomEntity thisRoom = new RoomEntity();
