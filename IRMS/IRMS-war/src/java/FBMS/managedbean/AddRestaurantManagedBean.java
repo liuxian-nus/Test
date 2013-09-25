@@ -59,8 +59,8 @@ public final class AddRestaurantManagedBean implements Serializable{
  //       FacesContext.getCurrentInstance().getExternalContext().redirect("manageRestaurant.xhtml");
     }
     
-    public void manageRestaurant(ActionEvent event) throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("manageRestaurant.xhtml");
+    public void oneMore(ActionEvent event) throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("addRestaurant.xhtml");
     }
     
 }
