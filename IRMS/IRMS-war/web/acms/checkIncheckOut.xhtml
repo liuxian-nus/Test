@@ -33,14 +33,13 @@
             </p:tab> 
             
             <p:tab id="tab3" title="Overbooking Mgt">  
-                <h:form id="formCheckIn">
+                <h:form id="formOverbooking">
                     <h:panelGrid columns="2" cellpadding="10">
                         <h:outputText value ="SystemSuggestedQuota: "/>
                         <h:outputText value ="#{overbookingManagedBean.suggestedQuota}"/>
-                        <br/>
+                       
                         <h:outputText value ="Quota: "/>
                         <h:inputText value ="#{overbookingManagedBean.newQuota}"/>
-                        <br/>
                         <p:commandButton  value="Save" ajax="true" actionListener="#{overbookingManagedBean.doUpdate}" />
                     </h:panelGrid> 
                 </h:form>
