@@ -9,6 +9,7 @@
 <html>
     <head>
         <jsp:include page="base.jsp"></jsp:include>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
@@ -212,6 +213,7 @@
 
                 </fieldset>
             </form>
+                     $(document).foundation();
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>
