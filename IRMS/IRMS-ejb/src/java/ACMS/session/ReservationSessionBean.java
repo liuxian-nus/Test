@@ -44,7 +44,22 @@ public class ReservationSessionBean {
         }
     
     public void addReservation(ReservationEntity newReservation) {
-        em.persist(newReservation);
+    /*
+     * Date rcCheckInDate = null;
+        rcCheckInDate.setYear(reservation.getRcCheckInDate().getYear()-1900); 
+        rcCheckInDate.setMonth(reservation.getRcCheckInDate().getMonth()-1);
+        rcCheckInDate.setDate(reservation.getRcCheckInDate().getDate());
+        room.setCheckInDate(rcCheckInDate);
+        Date rcCheckOutDate = null;
+        rcCheckOutDate.setYear(reservation.getRcCheckOutDate().getYear()-1900); 
+        rcCheckOutDate.setMonth(reservation.getRcCheckOutDate().getMonth()-1);
+        rcCheckOutDate.setDate(reservation.getRcCheckOutDate().getDate());
+        room.setCheckOutDate(rcCheckOutDate);
+     */
+        ReservationEntity thisReservation = newReservation;
+        thisReservation.getRcCheckInDate().setYear(newReservation.getRcCheckInDate().getYear()-1900);
+        thisReservation.getRcCheckInDate().setMonth(newReservation.getRcCheckInDate().getMonth()-1);
+        em.persist(thisReservation);
     }
 
     public ReservationEntity getReservationById(String searchId) {
