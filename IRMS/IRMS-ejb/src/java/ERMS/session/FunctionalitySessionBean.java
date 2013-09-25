@@ -10,7 +10,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -25,9 +24,10 @@ public class FunctionalitySessionBean {
     @PersistenceContext
     private EntityManager em;
     
-    public FunctionalityEntity getFunctionality(String funcName) throws ExistException
+    public FunctionalityEntity getFunctionality(Long funcId) throws ExistException
     {
-        FunctionalityEntity functionality = em.find(FunctionalityEntity.class, funcName);
+        FunctionalityEntity functionality = em.find(FunctionalityEntity.class, funcId);
+        System.err.println("getFunctionality: "+functionality.getFuncId());
          if(functionality==null) throw new ExistException ("FunctionalitySessionBean-->ExistException-->Function doesn't exist!");
         return functionality;
     }
@@ -35,15 +35,17 @@ public class FunctionalitySessionBean {
     public void addFunctionality(FunctionalityEntity functionality)
     {
         em.persist(functionality);
+        em.flush();
     }
     public void updateFunctionality(FunctionalityEntity functionality)
     {
         em.merge(functionality);
+        em.flush();
     }
 
-    public void removeFunctionality(String funcName)
+    public void removeFunctionality(Long funcId)
     {
-        FunctionalityEntity functionality = em.find(FunctionalityEntity.class, funcName);
+        FunctionalityEntity functionality = em.find(FunctionalityEntity.class, funcId);
         em.remove(functionality);
     }
     

@@ -23,7 +23,7 @@ public class RoleEntity implements Serializable {
     private int roleId;
     private String roleName;
     
-    @OneToMany(targetEntity = FunctionalityEntity.class, cascade = {CascadeType.ALL})
+    @OneToMany(targetEntity = FunctionalityEntity.class, cascade = {CascadeType.MERGE})
     private List<FunctionalityEntity> functionalities = new ArrayList<FunctionalityEntity>();
 
     public int getRoleId() {
@@ -41,8 +41,8 @@ public class RoleEntity implements Serializable {
 
 
      //@param RoleName the RoleName to set
-    public void setRoleName(String RoleName) {
-        this.roleName = RoleName;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
      //@return the functionalities

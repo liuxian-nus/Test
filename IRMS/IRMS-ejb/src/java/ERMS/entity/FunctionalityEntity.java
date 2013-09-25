@@ -8,7 +8,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.DiscriminatorValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -17,28 +17,44 @@ import javax.persistence.UniqueConstraint;
  * @author liuxian
  */
 @Entity
+@Table(
+        uniqueConstraints=
+            @UniqueConstraint(columnNames={"funcName"})
+    )
 public class FunctionalityEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long funcId;
     private String funcName;
     private String funcDescription;
     /*@ManyToOne(targetEntity=Role.class,cascade={CascadeType.ALL},fetch=FetchType.EAGER)
     private Role roleEntity;
     */
+    
+    
+    
+    public Long getFuncId(){
+        return funcId;
+    }
+    
+    public void setFuncId(Long funcId){
+        this.funcId = funcId;
+    }
 
     /**
-     * @return the FuncName
+     * @return the funcName
      */
     public String getFuncName() {
         return funcName;
     }
 
     /**
-     * @param FuncName the FuncName to set
+     * @param funcName the funcName to set
      */
-    public void setFuncName(String FuncName) {
-        this.funcName = FuncName;
+    public void setFuncName(String funcName) {
+        this.funcName = funcName;
     }
 
     public String getFuncDescription() {

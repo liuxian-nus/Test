@@ -4,8 +4,10 @@
  */
 package ERMS.session;
 
+import ERMS.entity.FunctionalityEntity;
 import ERMS.entity.RoleEntity;
 import Exception.ExistException;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -50,7 +52,17 @@ public class RoleSessionBean {
     
     public void addRole(RoleEntity role)
     {
+        
+        System.err.println("roleId: "+role.getRoleId()+";   roleName:"+role.getRoleName());
+        List <FunctionalityEntity> al = role.getFunctionalities();
+        Iterator <FunctionalityEntity>itr = al.iterator();
+        while(itr.hasNext())
+        {
+            System.out.println("current element is "+itr.next());
+        }
         em.persist(role);
+        em.flush();
+        System.err.println("Role persisted");
     }
     public void updateRole(RoleEntity role)
     {
