@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel id="role" header="Role Management" style="height:495px;">
+                <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
+                    <p:growl id="msgs" showDetail="true" /> 
+                    <p:dataTable id="roles" value="#{manageRoleManagedBean.getRoles()}" var="roleList" paginator="true" rows="6">
+
+                        <p:column headerText="Role Name">
+                            <h:outputText value="#{roleList.roleName}"/>
+                        </p:column>
+                        <p:column headerText="Functionalities">
+                            <h:outputText value="#{manageRoleManagedBean.toSentence(roleList.functionalities)}"/>
+                        </p:column>
+
+
+
+                        <p:column style="width:100px">  
+                            <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
+
+                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit">  
+                                    <f:setPropertyActionListener value="#{roleList}" target="#{manageRoleManagedBean.selectedRole}" />  
+                                    <f:setPropertyActionListener value="#{true}" target="#{manageRoleManagedBean.editMode}" />  
+                                </p:commandButton>  
+                                <p:commandButton update=":form:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete">  
+                                    <f:setPropertyActionListener value="#{roleList}" target="#{manageRoleManagedBean.selectedRole}" />  
+                                </p:commandButton>  
+                            </h:panelGrid>  
+                        </p:column>  
+
+                    </p:dataTable>  
+
+                    <p:dialog header="Edit Role" widgetVar="carDialog" resizable="false" id="carDlg"  
+                              showEffect="fade" hideEffect="explode" modal="true" width="700">  
+
+                        <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
+
+
+
+                            <h:outputText value="Role Name" />  
+                            <h:panelGroup>  
+                                <h:outputText value="#{manageRoleManagedBean.selectedRole.roleName}" style="font-weight:bold" rendered="#{!manageRoleManagedBean.editMode}"/>  
+                                <p:inputText id="roleName" required="true" requiredMessage="Role Name cannot be empty" value="#{manageRoleManagedBean.selectedRole.roleName}" rendered="#{manageRoleManagedBean.editMode}"  label="Role Name"/>  
+                                <p:message for="roleName"/>
+                            </h:panelGroup>  
+                            <h:outputText value="Roles"/>
+                            <h:outputText value="#{manageRoleManagedBean.toSentence(manageRoleManagedBean.selectedRole.functionalities)}"/>
+
+                            <h:outputText value="Select New Roles"/>
+                            <h:selectManyMenu value="#{manageRoleManagedBean.selectedFunc}" style="height:100px">  
+                                <f:selectItems value="#{manageRoleManagedBean.fm.getAllFunctionalities()}"  
+                                               var="allFunc" itemLabel="#{allFunc.funcName}" 
+                                               itemValue="#{allFunc.funcId}" />  
+                            </h:selectManyMenu>
+
+
+
+
+
+                            <p:outputPanel rendered="#{manageRoleManagedBean.editMode}" layout="block" style="text-align:left;">  
+                                <p:commandButton value="Save" update="roles msgs" actionListener="#{manageRoleManagedBean.saveChanges}"   
+                                                 oncomplete="carDialog.hide()" image="ui-icon ui-icon-check"/>  
+                                <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" image="ui-icon ui-icon-close"/>  
+
+                            </p:outputPanel>  
+
+                        </h:panelGrid>  
+
+                    </p:dialog>
+
+                    <p:confirmDialog message="Are you sure?" width="200"  
+                                     showEffect="explode" hideEffect="explode"  
+                                     header="Confirm" severity="alert" widgetVar="confirmation">  
+
+                        <p:commandButton value="Yes" update="roles" actionListener="#{manageRoleManagedBean.deleteRole}" oncomplete="confirmation.hide()">  
+                            <f:attribute name="code1" value="#{manageRoleManagedBean.selectedRole.roleId}" />
+                        </p:commandButton>
+                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
+
+                    </p:confirmDialog>  
+                </div>
+            </p:panel>
+        </h:form> 
+    </ui:define>
+
+</ui:composition>
