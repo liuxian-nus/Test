@@ -5,6 +5,7 @@ import CRMS.entity.MemberEntity;
 import ERMS.session.EPasswordHashSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.ejb.Stateless;
 import java.util.Date;
@@ -172,15 +173,16 @@ public class MemberSessionBean {
         em.merge(member);
      }
    
-    public Set<MemberEntity> getMember(){
+    public List<MemberEntity> getAllMembers(){
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
-        Set stateSet = new HashSet<MemberEntity>();
+        List memberList = new ArrayList<MemberEntity>();
         for (Object o: q.getResultList()) {
             MemberEntity m = (MemberEntity) o;
-            stateSet.add(m);
+            memberList.add(m);
         }
-        return stateSet;
+        return memberList;
     }
+    
     
     
 

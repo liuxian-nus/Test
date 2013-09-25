@@ -144,7 +144,7 @@ public class MemberEntity implements Serializable {
         this.memberDob = memberDob;
     }
 
-    public String isMaritalStatus() {
+    public String getMaritalStatus() {
         return maritalStatus;
     }
 
@@ -155,6 +155,11 @@ public class MemberEntity implements Serializable {
     public boolean isVIP() {
         return isVIP;
     }
+    
+    public String isVIPString(){
+        if(isVIP) return "yes";
+        else return "no";
+    }
 
     public void setIsVIP(boolean isVIP) {
         this.isVIP = isVIP;
@@ -162,6 +167,11 @@ public class MemberEntity implements Serializable {
 
     public boolean isSubscriber() {
         return isSubscriber;
+    }
+    
+    public String isSubscriberString(){
+        if(isSubscriber) return "yes";
+        else return "no";
     }
 
     public void setIsSubscriber(boolean isSubscriber) {
