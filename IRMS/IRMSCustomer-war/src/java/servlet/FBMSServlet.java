@@ -120,7 +120,7 @@ public class FBMSServlet extends HttpServlet {
             {
                 System.out.println("*****restaurantCheck*****");
                 System.out.println("FBMSServlet: Current page is restaurantCheck");
-                Long restId = Long.parseLong(request.getParameter("restId"));
+                Long restId = Long.valueOf(request.getParameter("restId"));
                 System.out.println("FBMSServlet: the restaurant ID is "+restId);
                 data3 = makeReservation(request);
             }
@@ -227,7 +227,7 @@ public class FBMSServlet extends HttpServlet {
             Integer date = Integer.parseInt(request.getParameter("date"));
             System.out.println("The booking date is "+ date);
             
-            Integer hour = Integer.parseInt(request.getParameter("hour"));
+            Integer hour = Integer.parseInt(request.getParameter("time"));
             System.out.println("The booking hour is "+hour);
             
             int min = 0;
