@@ -18,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.PhaseEvent;
 import org.primefaces.event.ToggleEvent;
 
 /**
@@ -32,6 +33,23 @@ public class RoomManagedBean implements Serializable {
     private RoomSessionBean rm;
     private List<RoomEntity> selectRoom = new ArrayList<RoomEntity>();
     private Long reservationId;
+    private RoomEntity thisRoom = new RoomEntity();
+
+    public RoomEntity getThisRoom() {
+        return thisRoom;
+    }
+
+    public void setThisRoom(RoomEntity thisRoom) {
+        this.thisRoom = thisRoom;
+    }
+
+    public Long getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(Long reservationId) {
+        this.reservationId = reservationId;
+    }
 
     public List<RoomEntity> getSelectRoom() {
         return selectRoom;
@@ -47,14 +65,22 @@ public class RoomManagedBean implements Serializable {
     public List<RoomEntity> getAllRooms() throws ExistException, IOException {
         System.err.println("in getAll rooms");
         return rm.getAllRooms();
-    
-    }//end of getAvailableRooms()
 
+    }//end of getAllRooms()
+
+    public List<RoomEntity> getAvailableRooms() throws ExistException, IOException {
+        System.err.println("in getAvailable rooms");
+        return rm.getAvailableRooms();
+
+    }//end of getAllRooms()
     //capture member transaction missing.....
     //check-in, sessionScope reservationId missing..........
-    public void checkIn(ActionEvent event) throws IOException {
-        RoomEntity thisRoom = new RoomEntity();
+
+    public void checkIn() throws IOException {
         try {
+            System.err.println("we are in checkin");
+            System.err.println("Reservation ID" + reservationId);
+            System.err.println("room ID" + thisRoom.getRoomId());
             rm.checkIn(thisRoom.getRoomId(), reservationId);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when checking in", ""));
@@ -72,4 +98,10 @@ public class RoomManagedBean implements Serializable {
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
+    
+   public void initViewSelect(PhaseEvent event) {
+       System.err.println("in initial view function"); 
+        this.reservationId = (Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("ReservationId");
+   System.err.println("reservaion Id get" + reservationId); 
+   }
 }
