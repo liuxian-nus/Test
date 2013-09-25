@@ -10,7 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 /**
- *
+ * homepage: need pictures
  * @author Ser3na
  */
 

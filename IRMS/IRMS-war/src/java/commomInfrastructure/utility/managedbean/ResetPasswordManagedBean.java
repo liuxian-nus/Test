@@ -41,7 +41,7 @@ public class ResetPasswordManagedBean {
 
     public ResetPasswordManagedBean() {
     }
-
+//action listener
     public void doVerify(ActionEvent event) throws IOException, ExistException {
         employee = employeeSessionBean.getEmployeeById(employeeId);
         System.out.println(employee.getEmployeeId());

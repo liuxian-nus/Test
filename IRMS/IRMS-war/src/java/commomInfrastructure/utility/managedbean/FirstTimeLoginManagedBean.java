@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author liuxian
  *
- * Not Finished!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * Finished!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  */
 @ManagedBean
 @ViewScoped

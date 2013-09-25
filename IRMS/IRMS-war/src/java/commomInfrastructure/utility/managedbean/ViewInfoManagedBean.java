@@ -6,7 +6,6 @@ package commomInfrastructure.utility.managedbean;
 
 import ERMS.entity.EmployeeEntity;
 import ERMS.session.EmployeeSessionBean;
-import ERMS.session.EmployeeSessionRemote;
 import Exception.ExistException;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
