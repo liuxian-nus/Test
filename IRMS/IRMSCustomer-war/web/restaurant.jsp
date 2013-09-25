@@ -112,6 +112,7 @@
                              
                              <div class="row">
                                  <div class="large-12 columns">
+                                     <p>${message}</p>
                                    <label for="customDropdown">Type of Order</label> 
                                    <select id="customDropdown" name="type">
                                        <option>Individual</option>
