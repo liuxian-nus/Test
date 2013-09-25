@@ -33,7 +33,6 @@ public class RoomManagedBean implements Serializable {
 
     @EJB
     private RoomSessionBean rm;
-    
     private List<RoomEntity> selectRoom = new ArrayList<RoomEntity>();
     private Long reservationId;
     private RoomEntity thisRoom = new RoomEntity();
@@ -79,8 +78,8 @@ public class RoomManagedBean implements Serializable {
     }//end of getAllRooms()
     //capture member transaction missing.....
     //check-in, sessionScope reservationId missing..........
-    
-        public void searchById(ActionEvent event) throws IOException, ExistException {
+
+    public void searchById(ActionEvent event) throws IOException, ExistException {
 
         System.out.println("Check-out: searching room by Id " + searchId);
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -90,7 +89,7 @@ public class RoomManagedBean implements Serializable {
             System.out.println("we are after search");
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", thisRoom);
             System.out.println("we are after setting parameter");
-            request.getSession().setAttribute("roomId",getSearchId());
+            request.getSession().setAttribute("roomId", getSearchId());
             System.out.println("we are after setting reservationId session attribute");
 
             FacesContext.getCurrentInstance().getExternalContext().redirect("RoomSearchResult.xhtml");
@@ -101,9 +100,9 @@ public class RoomManagedBean implements Serializable {
     }
 
     public void checkIn() throws IOException {
-        
+
         System.err.println("we are in checkin");
-        
+
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
 
@@ -116,9 +115,25 @@ public class RoomManagedBean implements Serializable {
             return;
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "room checked-in.", ""));
-
     }
 
+    public void checkOut() throws IOException {
+
+        System.err.println("we are in check out");
+
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        Long getRerservationId = (Long) request.getSession().getAttribute("roomId");
+
+        try {
+            System.err.println("room ID" + thisRoom.getRoomId());
+            rm.checkOut(thisRoom.getRoomId());
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when checking out", ""));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "room checked-out successfully.", ""));
+    }
+    
     //this one copied from PrimeFace showcase
     public void onRowToggle(ToggleEvent event) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -149,5 +164,4 @@ public class RoomManagedBean implements Serializable {
     public void setSearchId(int searchId) {
         this.searchId = searchId;
     }
-    
 }
