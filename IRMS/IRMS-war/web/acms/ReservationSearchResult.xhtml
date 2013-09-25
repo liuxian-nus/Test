@@ -63,7 +63,8 @@
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationRoomCount}" style="font-weight:bold" /> 
                         <h:outputText value="Number of Guests: " />  
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationGuestCount}" style="font-weight:bold" /> 
-                        <p:commandButton  value="Check Available Rooms" ajax="true" action="/acms/listAvailableRooms.xhtml" /> 
+                        <p:commandButton  value="Check Available Rooms" ajax="true" actionListener="#{reservationSearchResultManagedBean.redirect}" /> 
+                        
                     </h:panelGrid>
                 </p:panel>
             </h:form>   
