@@ -6,7 +6,6 @@ package ACMS.managedbean;
 
 import ACMS.entity.OverbookingQuotaEntity;
 import ACMS.session.OverbookingSessionBean;
-import ERMS.entity.EmployeeEntity;
 import Exception.ExistException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -16,8 +15,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
