@@ -8,6 +8,7 @@ import Exception.ExistException;
 import FBMS.session.RestaurantSessionBeanRemote;
 import FBMS.entity.RestaurantEntity;
 import java.util.List;
+import java.lang.Number;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -15,6 +16,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
+
 
 /**
  *
@@ -28,7 +30,7 @@ public class ManageRestaurantManagedBean {
     private RestaurantEntity selectedRestaurant;
     private List<RestaurantEntity> restaurants;
     private boolean editMode;
-    private String restId;
+    private Long restId;
     
   
     
@@ -50,21 +52,23 @@ public class ManageRestaurantManagedBean {
         return editMode;  
     }
     
-    public RestaurantEntity getEmployees() throws ExistException {
+    public RestaurantEntity getRestaurants() throws ExistException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String loginId = (String) request.getSession().getAttribute("restId");
+        Long loginId = (Long) request.getSession().getAttribute("restId");
        
         return restaurantSessionRemote.getRestaurantById(loginId);
     }
 
     public void deleteRestaurant(ActionEvent event) throws ExistException {
-        setRestaurantId((String) event.getComponent().getAttributes().get("code1"));
+        setRestaurantId((Long)event.getComponent().getAttributes().get("code1"));
+        System.out.println(("restId ")+getRestaurantId());
         getEm().removeRestaurant(getRestaurantId());
     }
     
     public void saveChanges(ActionEvent event) throws ExistException
     {
-        restaurantSessionRemote.updateRestaurant(selectedRestaurant);
+        System.out.println("into ManageRestaurantManagedBean");
+        restaurantSessionRemote.updateRestaurant(getSelectedRestaurant());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));        
     }
 
@@ -89,11 +93,11 @@ public class ManageRestaurantManagedBean {
         this.editMode = editMode;
     }
 
-    public String getRestaurantId() {
+    public Long getRestaurantId() {
         return restId;
     }
 
-    public void setRestaurantId(String restId) {
+    public void setRestaurantId(Long restId) {
         this.restId = restId;
     }
 }

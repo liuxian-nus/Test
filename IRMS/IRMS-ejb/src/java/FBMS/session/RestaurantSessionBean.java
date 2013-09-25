@@ -61,7 +61,9 @@ public class RestaurantSessionBean implements RestaurantSessionBeanRemote{
     @Override
     public boolean updateRestaurant(RestaurantEntity restaurant)
     {
+        System.out.println("restaurant quota: "+restaurant.getRestQuota());
         em.merge(restaurant);
+        em.flush();
         System.out.println("RestaurantSessionBean: rest " + restaurant.getRestId() + " is successfully updated");
         return true;
     }
@@ -99,7 +101,7 @@ public class RestaurantSessionBean implements RestaurantSessionBeanRemote{
     }
     
     @Override
-    public RestaurantEntity getRestaurantById(String restId) throws ExistException{
+    public RestaurantEntity getRestaurantById(Long restId) throws ExistException{
         restaurant = em.find(RestaurantEntity.class, restId);
         if(restaurant == null)  throw new ExistException("Restaurant does not exist!");
         return restaurant;
@@ -111,7 +113,8 @@ public class RestaurantSessionBean implements RestaurantSessionBeanRemote{
     }
     
     @Override
-    public boolean removeRestaurant(String restId)throws ExistException {
+    public boolean removeRestaurant(Long restId)throws ExistException {
+        System.out.println("into removeRestaurant");
         restaurant = em.find(RestaurantEntity.class, restId);
         if(restaurant == null) {
             throw new ExistException("Restaurant does not exist!");
