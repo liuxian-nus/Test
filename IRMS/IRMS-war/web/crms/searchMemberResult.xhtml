@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+        <f:view beforePhase="#{searchMemberResultManagedBean.initView}"> 
+            <h:form id="form">
+                <p:panel id="search" header="Search Member Result" style="height:495px;">
+                    <h:panelGrid id="VIP" columns="2" cellpadding="4" style="margin:0 auto;">  
+                        <h:outputText value="Name: " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.memberName}" style="font-weight:bold" /> 
+                        <h:outputText value="Email: " /> 
+                        <h:outputText value="#{searchMemberResultManagedBean.member.memberEmail}" style="font-weight:bold" />
+                        <h:outputText value="Handphone: " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.memberHP}" style="font-weight:bold" /> 
+                        <h:outputText value="Gender: " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.gender}" style="font-weight:bold" /> 
+                        <h:outputText value="Nationality: " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.nationality}" style="font-weight:bold" /> 
+                        <h:outputText value="Date of Birth: " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.memberDob}" style="font-weight:bold" /> 
+                        <h:outputText value="Marital Status: " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.maritalStatus}" style="font-weight:bold" /> 
+                        <h:outputText value="Is he VIP? : " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.isVIPString()}" style="font-weight:bold" /> 
+                        <h:outputText value="Is he subscriber? : " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.isSubscriberString()}" style="font-weight:bold" />
+                        <h:outputText value="Preferences : " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.preferences}" style="font-weight:bold" /> 
+                        
+                        <p:column style="width:100px">  
+                            <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
+                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit" >  
+                                    <f:setPropertyActionListener value="#{true}" target="#{manageRestaurantManagedBean.editMode}" /> 
+                                </p:commandButton>
+                                <p:commandButton update=":form:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete" rendered="....">  
+                                    <f:setPropertyActionListener value="#{restList}" target="#{manageRestaurantManagedBean.selectedRestaurant}" />  
+                                </p:commandButton> 
+                                
+                            </h:panelGrid>
+                        </p:column> 
+                  </h:panelGrid>
+                    
+                    
+                    
+                </p:panel>
+            </h:form>
+   
+        </f:view>
+        
+        
+    </ui:define>
+
+</ui:composition>
