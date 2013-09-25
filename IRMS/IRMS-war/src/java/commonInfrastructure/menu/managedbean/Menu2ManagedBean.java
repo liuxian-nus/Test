@@ -65,16 +65,17 @@ public class Menu2ManagedBean implements Serializable {
                     
                 submenu = new Submenu();
                 submenu.setLabel("Account");
-                submenu.setIcon("ui-icon ui-icon-contact");
                 
                 item = new MenuItem();
-                item.setValue("Create New");
+                item.setValue("Create New Account");
                 item.setUrl("/accountManagement/addEmployee.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
                 
                 item = new MenuItem();
                 item.setValue("Manage Employees");
                 item.setUrl("/accountManagement/manageEmployee.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
                 
                 model.addSubmenu(submenu);
@@ -84,13 +85,15 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setIcon("ui-icon ui-icon-star");
                 
                 item = new MenuItem();
-                item.setValue("Create New");
+                item.setValue("Create New Role");
                 item.setUrl("/accountManagement/addRole.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
                 
                 item = new MenuItem();
                 item.setValue("Manage Roles");
                 item.setUrl("/accountManagement/manageRole.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
                 
                 model.addSubmenu(submenu);
@@ -100,13 +103,15 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setIcon("ui-icon ui-icon-wrench");
                 
                 item = new MenuItem();
-                item.setValue("Create New");
+                item.setValue("Create New Functionality");
                 item.setUrl("/accountManagement/addFunctionality.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
                 
                 item = new MenuItem();
                 item.setValue("Manage Functionality");
                 item.setUrl("/accountManagement/manageFunctionality.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
                 
                 model.addSubmenu(submenu);
