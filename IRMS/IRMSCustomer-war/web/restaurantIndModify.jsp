@@ -34,7 +34,7 @@
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label>Reservation number</label>
-                                    <input type ="text" value="${data.indReservationId}"/>
+                                    <input type ="text" value="${data.indReservationId}" name="restId"/>
                                 </div>
                             </div>
                             
