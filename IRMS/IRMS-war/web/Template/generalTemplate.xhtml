@@ -10,12 +10,18 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="/IRMS-war/resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="/IRMS-war/resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
         <title>Integrated Resort Management System for Coral Island Resort</title>  
+        <style>
+            .infoMsg {color:blue;}
+            .errorMsg {color:red;}
+        </style>
     </h:head>
 
     <h:body>
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="130" resizable="true" closable="true" collapsible="true">
+            <p:layoutUnit position="north" size="115" resizable="true" closable="true" collapsible="true">
                 <ui:insert name="top">
                     <h:graphicImage value="/images/coral_island_banner.jpg"/>
                 </ui:insert>
@@ -27,11 +33,11 @@
                 </ui:insert>
             </p:layoutUnit>
             
-            <p:layoutUnit position="west" size="230" header="Menu" resizable="true" collapsible="true">
+            <p:layoutUnit position="west" size="240" header="Menu" resizable="true" collapsible="true">
                 <ui:insert name="left"> 
                     <h:form>
-                        <p:menu style="width:200px;" model="#{menu1ManagedBean.model}" />
-                        <p:menu style="width:200px;" model="#{menu2ManagedBean.model}" />
+                        <p:menu style="width:220px;" model="#{menu1ManagedBean.model}" />
+                        <p:menu style="width:220px;" model="#{menu2ManagedBean.model}" />
                     </h:form>
                 </ui:insert>
             </p:layoutUnit>
