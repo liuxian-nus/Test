@@ -6,6 +6,7 @@ package servlet;
 
 import ERMS.session.EmailSessionBean;
 import FBMS.entity.IndReservationEntity;
+import FBMS.entity.MenuEntity;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import FBMS.session.OrderSessionBean;
@@ -44,6 +45,7 @@ public class FBMSServlet extends HttpServlet {
     private boolean data1;
     private RestaurantEntity data2 = null;
     private IndReservationEntity data3 = null;
+    private MenuEntity data4 = null;
     
     
     /**
@@ -168,6 +170,16 @@ public class FBMSServlet extends HttpServlet {
                 request.setAttribute("data", data3);
                 request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
             
+            }
+            else if("cateringConfirm".equalsIgnoreCase(page))
+            {
+                System.out.println("*****cateringConfirm*****");
+                System.out.println("FBMSServlet: Current page is cateringConfirm");
+                MenuEntity me = null;
+                data4 = me;
+                System.out.println("FBMSServlet: the menu containing a list of dishes has been returned");
+                request.setAttribute("data", data4);
+                request.getRequestDispatcher("/cateringConfirm.jsp").forward(request, response);
             }
             
             else 

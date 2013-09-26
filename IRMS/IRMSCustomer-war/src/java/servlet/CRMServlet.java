@@ -92,7 +92,8 @@ public class CRMServlet extends HttpServlet {
                 System.out.println(password);
 
 
-                boolean isLogin = memberManagementSessionBean.login(email, password);
+                request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
+               /* boolean isLogin = memberManagementSessionBean.login(email, password);
                 if (isLogin) {
                     System.out.println(isLogin);
                     member = memberSession.getMemberByEmail(email);
@@ -104,7 +105,7 @@ public class CRMServlet extends HttpServlet {
                     request.setAttribute("message",message);
                     request.getRequestDispatcher("/member.jsp").forward(request, response);
                     
-                }
+                }*/
 
 
 

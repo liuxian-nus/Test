@@ -24,7 +24,7 @@
             <section>
                 <p class="title" data-section-title><a href="#"><strong>Member Service</strong></a></p>
                 <div class="content" data-section-content>
-                    <p>Content of section 2.</p>
+                    <p>Order food for your event!</p>
                 </div>
             </section>
             <section>
