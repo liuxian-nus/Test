@@ -38,7 +38,7 @@ public class MemberEntity implements Serializable {
     private boolean isSubscriber;
     private double point;
     private double coin;
-    private List<String> preferences = new ArrayList<String>();
+    private String preferences;
     private String securityQuestion;
     private String answer;
     
@@ -194,21 +194,21 @@ public class MemberEntity implements Serializable {
         this.coin = coin;
     }
 
-    public List<String> getPreferences() {
+    public String getPreferences() {
         return preferences;
     }
 
-    public void setPreferences(List<String> preferences) {
+    public void setPreferences(String preferences) {
         this.preferences = preferences;
     }
 
-    public void addPreferences(String newPreference) {
+    /*public void addPreferences(String newPreference) {
         this.preferences.add(newPreference);
     }
     
     public void removePreferences(String oldPreference) {
         this.preferences.remove(oldPreference);
-    }
+    }*/
 
     public Set<ReservationEntity> getHotelReservation() {
         return hotelReservation;

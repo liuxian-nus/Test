@@ -73,7 +73,7 @@ public class MemberSessionBean {
         member.setMemberName(memberName);
         
 //        System.out.println(memberPassword);
-        member.setMemberPassword(memberPassword);
+        member.setMemberPassword(ePasswordHashSessionBean.hashPassword(memberPassword));
         
   //      System.out.println(memberHP);
         member.setMemberHP(memberHP);
@@ -97,7 +97,7 @@ public class MemberSessionBean {
         
         member.setPoint(0);
         member.setCoin(0);
-        member.setPreferences(null);      
+        member.setPreferences("");      
         
         System.out.println(question);
         member.setSecurityQuestion(question);
@@ -110,18 +110,7 @@ public class MemberSessionBean {
         return member;
     }
 
-    public boolean login(String memberEmail, String memberPassword){
-        System.out.println("memberEmail: "+memberEmail);
-        member = em.find(MemberEntity.class, memberEmail);
-        System.out.println(member.getMemberEmail());
-        System.out.println("logging in....");
-        if (member==null) System.out.println("MemberEmail is wrong!");
-        else
-            System.out.println("password is "+member.getMemberPassword());
-        if (member == null || !(member.getMemberPassword().equals(memberPassword)))
-            return false;
-        else return true;
-    }
+    
     
     public MemberEntity getMemberByEmail(String email){
         member = em.find(MemberEntity.class, email);

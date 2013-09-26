@@ -32,6 +32,7 @@ public class MemberTransactionSessionBean implements MemberTransactionSessionRem
     public MemberTransactionSessionBean() {
     }
 
+    @Override
     public double addMemberTransaction(String memberEmail, MemberTransactionEntity mt, Boolean coinPay) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {

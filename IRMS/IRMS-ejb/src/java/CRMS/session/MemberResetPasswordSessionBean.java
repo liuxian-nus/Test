@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Administrator
+ * @author Jieqiong
  */
 @Stateless
 @LocalBean

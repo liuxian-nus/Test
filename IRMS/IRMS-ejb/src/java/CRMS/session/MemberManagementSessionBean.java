@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Administrator
+ * @author Jieqiong
  */
 @Stateless
 @LocalBean
@@ -71,6 +71,33 @@ public class MemberManagementSessionBean {
         emailSessionBean.emailInitialPassward(member.getMemberEmail(), initialPwd);
         System.out.println("email already sent");
         member = new MemberEntity();
+    }
+    
+ /*   public boolean login(String memberEmail, String memberPassword){
+        System.out.println("memberEmail: "+memberEmail);
+        member = em.find(MemberEntity.class, memberEmail);
+        System.out.println(member.getMemberEmail());
+        System.out.println("logging in....");
+        if (member==null) System.out.println("MemberEmail is wrong!");
+        else
+            System.out.println("password is "+member.getMemberPassword());
+        if (member == null || !(member.getMemberPassword().equals(memberPassword)))
+            return false;
+        else return true;
+    }*/
+    
+    public boolean login(String memberEmail, String memberPassword){
+        System.out.println("memberEmail: "+memberEmail);
+        member = em.find(MemberEntity.class, memberEmail);
+        
+        System.out.println("logging in....");
+        System.out.println("key in password: "+memberPassword);
+        System.out.println("stored password: "+member.getMemberPassword());
+        System.out.println("key in password hash: "+ePasswordHashSessionBean.hashPassword(memberPassword));
+        
+        if(member!=null&&member.getMemberPassword().equals(ePasswordHashSessionBean.hashPassword(memberPassword)))
+            return true;
+        else return false;
     }
     
     public boolean checkAnswer(String email, String answer){
