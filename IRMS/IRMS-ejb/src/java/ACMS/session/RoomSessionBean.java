@@ -194,7 +194,7 @@ public class RoomSessionBean {
         System.out.println("RoomSessionBean --> welcome: " + thisMember.getMemberName());
     }
 
-    public void createTestRoom(int roomHotel, int roomLevel, int roomNo, String roomType, String roomStatus, MemberEntity member) {
+    public void createTestRoom(int roomHotel, int roomLevel, int roomNo, String roomType, String roomStatus, String guestName) {
         try {
             System.out.println("come to create test room session bean");
             System.err.println("create priceEntity first");
@@ -210,6 +210,7 @@ public class RoomSessionBean {
             room.setRoomPrice(price);
             room.setRoomMember(null);
             room.setReservation(null);
+            room.setGuestName(guestName);
             System.out.println(room.getRoomId());
             System.out.println(room.getRoomType());
             System.out.println(room.getRoomStatus());
