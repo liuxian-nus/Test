@@ -147,7 +147,16 @@ public class RoomSessionBean {
         System.out.println("RoomSessionBean--> " + roomId + " now has total outstanding payable: " + room.getRoomServiceCharge());
         return roomService;
     }
-
+    
+    //clear all room service charge
+    public void clearServiceCharge(int roomId) throws ExistException {
+        room = em.find(RoomEntity.class, roomId); 
+        if (room == null) {
+            throw new ExistException("RoomSessionBean-->ExistException-->Invalid room Id!");
+        }
+        room.setRoomServiceCharge(0);      
+    }
+    
     //member check-in
     public void checkIn(int roomId, Long reservationId) throws RoomException, ExistException {
         ReservationEntity reservation = new ReservationEntity();

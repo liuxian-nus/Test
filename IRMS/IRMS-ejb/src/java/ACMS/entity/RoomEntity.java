@@ -150,6 +150,11 @@ public class RoomEntity implements Serializable {
         this.roomServiceCharge += newRoomServiceCharge;
         System.out.println("RoomEntity-->new account receivable generated:" + newRoomServiceCharge);
     }
+    
+    public void setRoomServiceCharge(double setCharge) {
+        this.roomServiceCharge = setCharge;
+        System.out.println("RoomEntity-->update serviceCharge: " + setCharge);
+    }
 
     public double getOverbookingLoss() {
         return overbookingLoss;
