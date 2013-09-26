@@ -24,7 +24,7 @@ public class DishEntity implements Serializable {
     private Long dishId;
     private String dishName;
     private Integer dishQuantity;
-    private Integer dishCost;
+    private Double dishCost;
     @ManyToOne(cascade={CascadeType.ALL})
     private MenuEntity menu;
  
@@ -64,11 +64,11 @@ public class DishEntity implements Serializable {
         this.dishQuantity = dishQuantity;
     }
 
-    public Integer getDishCost() {
+    public Double getDishCost() {
         return dishCost;
     }
 
-    public void setDishCost(Integer dishCost) {
+    public void setDishCost(Double dishCost) {
         this.dishCost = dishCost;
     }
     
