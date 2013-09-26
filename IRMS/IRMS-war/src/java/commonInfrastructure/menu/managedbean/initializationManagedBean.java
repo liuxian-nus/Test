@@ -100,9 +100,16 @@ public class initializationManagedBean implements Serializable {
     public void createSuperAdmin() {
         System.out.println("go to create super admin");
 
+        functionality = new FunctionalityEntity();
+        functionality.setFuncName("addRole");
+        functionality.setFuncDescription("access right to addRole page");
+        functionalitySessionBean.addFunctionality(functionality);
+        
+        
         role = new RoleEntity();
         role.setRoleId(10);
         role.setRoleName("SuperAdmin");
+        role.addFunctionality(functionality);
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
@@ -325,8 +332,8 @@ public class initializationManagedBean implements Serializable {
       
     public void createFunctionalities(){
         functionality = new FunctionalityEntity();
-        functionality.setFuncName("systemMsg");
-        functionality.setFuncDescription("broadcast message to all employees");
+        functionality.setFuncName("addFunctionality");
+        functionality.setFuncDescription("access right to addFunctionality page");
         
         try {
             System.out.println("Creating new functionality....");
@@ -337,6 +344,7 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.err.println("Insert systemMsg functionality into database");
+        addMessage("Functionality Created!");
     }
     
     public void createOverbooking(){
