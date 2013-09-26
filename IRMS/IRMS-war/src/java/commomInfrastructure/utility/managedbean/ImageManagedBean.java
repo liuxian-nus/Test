@@ -20,11 +20,11 @@ public class ImageManagedBean {
   
     public ImageManagedBean() {  
         images = new ArrayList<String>();  
-        images.add("hotel_1.jpg");  
-        images.add("hotel_2.jpg");  
-        images.add("hotel_3.jpg");  
-        images.add("hotel_4.jpg");  
-        images.add("hotel_5.jpg"); 
+        images.add("hotel_1.png");  
+        images.add("hotel_2.png");  
+        images.add("hotel_3.png");  
+        images.add("hotel_4.png");  
+        images.add("hotel_5.png"); 
     }  
   
     public List<String> getImages() {  
