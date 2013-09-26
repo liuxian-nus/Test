@@ -33,7 +33,9 @@
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationGuestCount}" style="font-weight:bold" /> 
                         <p:commandButton  oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Check Out" title="Check Out">  
                             <f:setPropertyActionListener target="#{roomManagedBean.thisRoom}" value="#{rooms}"/>  
-                        </p:commandButton>                      
+                        </p:commandButton>
+                        <p:commandButton  oncomplete="checkService.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="checkService" title="Room Service Detail">  
+                        </p:commandButton>         
                     </h:panelGrid>
                 </div>
             </p:panel>
@@ -46,6 +48,14 @@
                 </p:commandButton>
                 <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
             </p:dialog>  
+            
+            <p:dialog width="500" showEffect="explode" hideEffect="explode" header="Room Service" widgetVar="checkService"> 
+                <br/>
+                room service check list
+                <br/><br/>
+                <p:commandButton value="Okay" oncomplete="checkService.hide()">  
+                </p:commandButton>
+            </p:dialog> 
             
         </h:form>   
     </ui:define>

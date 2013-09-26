@@ -12,11 +12,11 @@
                 <h:form id="formCheckIn">
                     <h:panelGrid columns="2" cellpadding="10">  
                         <h:outputText value="Reservation ID: " style="margin-right: 10px;"/>
-                        <p:autoComplete id="res" value="#{reservationManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"  
+                        <p:autoComplete id="reservation" value="#{reservationManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"  
                                         completeMethod="#{reservationManagedBean.complete}" />
                         <p:spacer width="20"/>
                         <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchById}" />
-                        <p:message for="res"/>                        
+                        <p:message for="reservation"/>                        
                     </h:panelGrid> 
                 </h:form>
             </p:tab>  
