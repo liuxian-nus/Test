@@ -9,6 +9,7 @@
 
     <ui:define name="content">
         <f:view beforePhase="#{searchMemberResultManagedBean.initView}"> 
+            
             <h:form id="form">
                 <p:panel id="search" header="Search Member Result" style="height:495px;">
                     <h:panelGrid id="VIP" columns="2" cellpadding="4" style="margin:0 auto;">  
@@ -30,23 +31,53 @@
                         <h:outputText value="#{searchMemberResultManagedBean.member.isVIPString()}" style="font-weight:bold" /> 
                         <h:outputText value="Is he subscriber? : " />  
                         <h:outputText value="#{searchMemberResultManagedBean.member.isSubscriberString()}" style="font-weight:bold" />
+                        <h:outputText value="Points : " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.point}" style="font-weight:bold" />
+                        <h:outputText value="Coins : " />  
+                        <h:outputText value="#{searchMemberResultManagedBean.member.coin}" style="font-weight:bold" />
+                        
                         <h:outputText value="Preferences : " />  
-                        <h:outputText value="#{searchMemberResultManagedBean.member.preferences}" style="font-weight:bold" /> 
+                        <h:outputText value="#{searchMemberResultManagedBean.member.preferences}" style="font-weight:bold" />
                         
                         <p:column style="width:100px">  
-                            <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
-                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit" >  
-                                    <f:setPropertyActionListener value="#{true}" target="#{manageRestaurantManagedBean.editMode}" /> 
-                                </p:commandButton>
-                                <p:commandButton update=":form:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete" rendered="....">  
-                                    <f:setPropertyActionListener value="#{restList}" target="#{manageRestaurantManagedBean.selectedRestaurant}" />  
-                                </p:commandButton> 
-                                
+                            <h:panelGrid columns="2"    styleClass="actions" cellpadding="2"> 
+                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" value="Edit">
+                                </p:commandButton>                                
                             </h:panelGrid>
-                        </p:column> 
-                  </h:panelGrid>
+                        </p:column>                       
+                    </h:panelGrid>
                     
-                    
+                        
+                    <p:dialog header="Edit Preferences" widgetVar="carDialog" resizable="false" id="carDlg"  
+                              showEffect="fade" hideEffect="explode" width="500">  
+
+                        <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
+                            <h:outputText value="Preferences" />  
+                            <h:panelGroup>
+                                <h:outputText value="#{searchMemberResultManagedBean.member.preferences}" />  
+                                <p:inputText id="preferences"  value="#{searchMemberResultManagedBean.member.preferences}" label="Preferences"/>  
+                            </h:panelGroup>  
+                            
+                         
+                            <f:facet name="footer">  
+                                    <p:outputPanel layout="block" style="text-align:right">  
+                                        <p:commandButton value="Save" actionListener="#{searchMemberResultManagedBean.saveChanges}"   
+                                                         oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check" update="VIP"/>  
+                                        <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
+                                    </p:outputPanel>  
+                           </f:facet> 
+                      
+                        </h:panelGrid>  
+
+                    </p:dialog>
+                        
+       
+                      
+                        
+                   
+                        
+                  
+           
                     
                 </p:panel>
             </h:form>

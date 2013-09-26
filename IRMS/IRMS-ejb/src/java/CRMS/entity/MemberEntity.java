@@ -195,6 +195,7 @@ public class MemberEntity implements Serializable {
     }
 
     public String getPreferences() {
+        System.out.println("return preferences: "+preferences);
         return preferences;
     }
 
