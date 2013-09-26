@@ -18,7 +18,7 @@ import javax.faces.event.ActionEvent;
 
 /**
  *
- * @author liudazhi
+ * @author liuxian
  */
 @ManagedBean
 @ViewScoped
@@ -61,7 +61,6 @@ public class OverbookingManagedBean implements Serializable{
     }
 
     public int getSuggestedQuota() {
-        suggestedQuota = obSessionBean.calculateSeggestedQuota();
         return suggestedQuota;
     }
 

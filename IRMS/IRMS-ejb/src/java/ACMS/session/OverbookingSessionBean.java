@@ -16,10 +16,8 @@ import ACMS.entity.OverbookingQuotaEntity;
 import ACMS.entity.PriceEntity;
 //import ACMS.entity.RoomEntity;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.lang.Math;
 
 /**
  *
@@ -41,18 +39,19 @@ public class OverbookingSessionBean {
     }
     
     public void initOverbooking(OverbookingQuotaEntity ob){
+//        ob.setSuggestedQuota(calculateSuggestedQuota());
         em.persist(ob);
     }
 
     //compensation to be discussed, now assume as direct human input
-    public int calculateSeggestedQuota() {
+    public int calculateSuggestedQuota() {
 
         //algorithm missing here.
         overbooking = em.find(OverbookingQuotaEntity.class,1);
         String roomType = overbooking.getRoomType();
         PriceEntity price = em.find(PriceEntity.class, roomType);
-//        double cs = price.getPrice();
-        double cs = 485.3;
+        double cs = price.getPrice();
+//        double cs = 485.3;
 //        ce = overbooking.getCompensation1();
         ce = 105;
         sl = cs / (cs + ce);
@@ -72,8 +71,10 @@ public class OverbookingSessionBean {
 
 
         final_z = Math.floor(z);
+        
         //suggestedQuota = integer value of final_z
         //calculate quota given the probability sl
+        System.err.println(final_z);
         overbooking.setSuggestedQuota(suggestedQuota);
         em.merge(overbooking);
         return suggestedQuota;

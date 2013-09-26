@@ -1,5 +1,6 @@
 package ACMS.session;
 
+import ACMS.entity.PriceEntity;
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
 import ACMS.entity.RoomServiceEntity;
@@ -27,6 +28,7 @@ public class RoomSessionBean {
     RoomEntity room = new RoomEntity();
     RoomServiceEntity roomService = new RoomServiceEntity();
     ReservationEntity reservation = new ReservationEntity();
+    PriceEntity price = new PriceEntity();
 
     public RoomSessionBean() {
     }
@@ -195,6 +197,10 @@ public class RoomSessionBean {
     public void createTestRoom(int roomHotel, int roomLevel, int roomNo, String roomType, String roomStatus) {
         try {
             System.out.println("come to create test room session bean");
+            System.out.println("create priceEntity first");
+            price.setPriceType(roomType);
+            price.setPrice(485.3);
+            em.persist(price);
             room.setRoomId(roomHotel, roomLevel, roomNo);
             room.setRoomType(roomType);
             room.setRoomStatus(roomStatus);

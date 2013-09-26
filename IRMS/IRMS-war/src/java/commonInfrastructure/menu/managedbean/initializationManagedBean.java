@@ -66,7 +66,7 @@ public class initializationManagedBean implements Serializable {
     private MemberEntity member;
     private FunctionalityEntity functionality;
     private RestaurantEntity restaurant;
-    private OverbookingQuotaEntity ob;
+    private OverbookingQuotaEntity overbookingQuota;
     
 //    private MemberEntity member;
 
@@ -341,16 +341,16 @@ public class initializationManagedBean implements Serializable {
     }
     
     public void createOverbooking(){
-        ob = new OverbookingQuotaEntity();
-        ob.setOverbookingId(1);
-        ob.setRoomType("deluxe");
-        ob.setQuota(0);
-        ob.setCompensation1(105);
-        ob.setCompensation2(382);
+        overbookingQuota = new OverbookingQuotaEntity();
+        overbookingQuota.setOverbookingId(1);
+        overbookingQuota.setRoomType("deluxe");
+        overbookingQuota.setQuota(0);
+        overbookingQuota.setCompensation1(105);
+        overbookingQuota.setCompensation2(382);
         
         try {
-            System.out.println("Initiating the overbooking entity...");
-            overbookingSessionBean.initOverbooking(ob);
+            System.err.println("Initiating the overbooking entity...");
+            overbookingSessionBean.initOverbooking(overbookingQuota);
             System.out.println("Overbooking record initiated");
         }catch (Exception e) {
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when initiating overbooking", ""));
