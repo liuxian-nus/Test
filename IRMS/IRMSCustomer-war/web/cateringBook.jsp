@@ -25,7 +25,7 @@
                 <section>
                     <p class="title" data-section-title><a href="#panel1"><strong>Deluxe Package</strong></a></p>
                     <div class="content" data-section-content>
-                        <form action="cateringCheck">
+                        <form action="cateringConfirm">
                             <h6><strong>Please Select Dish for your Deluxe Package</strong><h6>
                                     <p>Deluxe Package $13.99 ($14.97 w/GST)*/$14.99 ($16.04 w/GST) per Pax for 9 courses (Min:30 Pax)</p>
                                     <div class="row">
