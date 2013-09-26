@@ -22,11 +22,11 @@ import javax.mail.internet.MimeMessage;
  */
 @Stateless
 @LocalBean
-public class EmailSessionBean implements EmailSessionBeanRemote {
+public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
 
     String emailServerName = "smtp.gmail.com";
     
-    public EmailSessionBean(){}
+    public FBEmailSessionBean(){}
     
     @Override
     public boolean sendConfirmation (String toEmailAddress,IndReservationEntity ire)

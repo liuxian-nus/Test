@@ -9,6 +9,7 @@ import FBMS.entity.IndReservationEntity;
 import FBMS.entity.MenuEntity;
 import FBMS.entity.OrderEntity;
 import FBMS.entity.RestaurantEntity;
+import FBMS.session.FBEmailSessionBean;
 import FBMS.session.IndReservationSessionBeanRemote;
 import FBMS.session.OrderSessionBean;
 import java.io.IOException;
@@ -32,12 +33,15 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "FBMSServlet", urlPatterns = {"/FBMSServlet","/FBMSServlet/*"})
 public class FBMSServlet extends HttpServlet {
     @EJB
-    private FBMS.session.EmailSessionBean emailSessionBean;
+    private FBEmailSessionBean emailSessionBean;
     
     @EJB
     private OrderSessionBean orderSessionBean;
     @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
+    
+    
+    
     
 
     
@@ -346,7 +350,7 @@ public class FBMSServlet extends HttpServlet {
     {
         System.out.println("FBMSServlet ConfigureMenu Method Invoked!");
         MenuEntity me = new MenuEntity();
-        Set <DishEntity> dishes = null;
+        Set <DishEntity> dishes = new HashSet <DishEntity>();
         Integer courseNumber = Integer.parseInt(request.getParameter("courseNumber"));
         System.out.println("FBMSServlet: the course number has been retrieved to be "+courseNumber);
         int i = 1;
@@ -356,13 +360,18 @@ public class FBMSServlet extends HttpServlet {
             Long dishId = Long.parseLong(request.getParameter("dish"+i));
             System.out.println("FBMSServlet: the current dishId is "+dishId);
             DishEntity de = orderSessionBean.getDish(dishId);
+            
             if(de!=null){
+            System.out.println("FBMSServlet: the dish entity has been found "+de.getDishName());
             dishes.add(de);
             me.setDishes(dishes);
             i++;
             System.out.println("FBMSServlet: while loop has proceeded to "+i);
             }
-            else continue;
+            else {
+                i++;
+                continue;
+            }
         }
         return me;
     }

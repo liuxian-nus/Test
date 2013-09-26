@@ -10,7 +10,7 @@ import FBMS.entity.IndReservationEntity;
  *
  * @author Diana Wang
  */
-public interface EmailSessionBeanRemote {
+public interface FBEmailSessionBeanRemote {
 
     boolean sendConfirmation(String toEmailAddress, IndReservationEntity ire);
     
