@@ -123,14 +123,32 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setIcon("ui-icon ui-icon-contact");
                 
                 item = new MenuItem();
-                item.setValue("Hotel");
+                item.setValue("Front Desk");
                 item.setUrl("/acms/checkIncheckOut.xhtml");
-//                item.setUrl("/acms/listRooms.xhtml");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Room Service");
+                item.setUrl("/acms/RoomService.xhtml");
                 submenu.getChildren().add(item);
                 
                 model.addSubmenu(submenu);
              }
              
+ /*             if (userType.contains("ACMSRoomService")){ //|| (userType.contains("ACMSFrontDesk")) || (userType.contains("ACMSRoomService"))) {
+                System.out.println("ACMSRoomService menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("Room Service");
+                submenu.setIcon("ui-icon ui-icon-contact");
+                
+                item = new MenuItem();
+                item.setValue("Room Service");
+                item.setUrl("/acms/RoomService.xhtml");
+                submenu.getChildren().add(item);
+                
+                model.addSubmenu(submenu);
+             }
+     */        
              if (userType.contains("FBMSAdmin")){ 
                 System.out.println("FBMSAdmin menu bar");
                 submenu = new Submenu();
