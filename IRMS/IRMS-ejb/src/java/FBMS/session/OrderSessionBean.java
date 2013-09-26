@@ -43,6 +43,12 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         return de;
     }
     
+    public MenuEntity getMenu(Long menuId)
+    {
+        MenuEntity m = em.find(MenuEntity.class, menuId);
+        return m;
+    }
+    
     /*E.2.1.2 Configure menu*/
     @Override
     public boolean configureMenu(Set<DishEntity> dishes){

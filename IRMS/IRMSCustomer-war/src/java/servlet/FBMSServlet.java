@@ -490,10 +490,65 @@ public class FBMSServlet extends HttpServlet {
     private OrderEntity cateringReservation(HttpServletRequest request) {
         
         System.out.println("FBMSServlet: cateringReservation method invoked!");
-        OrderEntity oe = new OrderEntity();
         
+       
+        System.out.println("FBMSServlet cateringReservation method invoked ");
         
+            Integer year = Integer.parseInt(request.getParameter("year"));
+            System.out.println("The booking year is "+ year);
+            
+            Integer month = Integer.parseInt(request.getParameter("month"));
+            System.out.println("The booking month is "+ month);
+            
+            Integer date = Integer.parseInt(request.getParameter("date"));
+            System.out.println("The booking date is "+ date);
+            
+            Integer hour = Integer.valueOf(request.getParameter("time"));
+            System.out.println("The booking hour is "+hour);
+            
+            int min = 0;
+            
+            Date thisDate;
+            thisDate = new Date(year-1900,month-1,date,hour,min);
         
-        return data5;
+        System.out.println("FBMSServlet cateringReservation: date has been retrieved!");
+        
+        Integer numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
+            System.out.println("The booking numberPeople is "+numberPeople);
+       
+        Long menuId = Long.parseLong(request.getParameter("menuId"));
+            System.out.println("FBMSServlet: menuId has been retrieved "+menuId);
+            MenuEntity me = orderSessionBean.getMenu(menuId);
+            
+        String title = request.getParameter("title");
+        System.out.println("The booking people title is "+title);
+        
+        String name = request.getParameter("name");
+        System.out.println("The booking people name is "+name);
+        
+        String email = request.getParameter("email");
+        System.out.println("The booking people email is "+email);
+        
+        String mobile = request.getParameter("mobile");
+        System.out.println("The booking people mobile is "+mobile);
+        
+        String notes = request.getParameter("notes");
+        System.out.println("The booking people's notes is "+notes);  
+        
+        OrderEntity oe = new OrderEntity(thisDate,me,"Confirmed",title,name,email,mobile,notes);
+        
+        boolean isConfirmed = orderSessionBean.placeOrder(oe);
+        
+        if(isConfirmed)
+        {
+            System.out.println("The catering order has been confirmed? "+isConfirmed);
+        
+        //emailSessionBean.sendConfirmation(email, );
+            return oe;
+        }
+       
+        else return null;
+        //别忘了发email！！！
+        
     }
 }

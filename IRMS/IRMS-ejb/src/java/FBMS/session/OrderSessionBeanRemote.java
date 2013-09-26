@@ -44,4 +44,6 @@ public interface OrderSessionBeanRemote {
      */
     DishEntity getDish (Long dishId);
     
+    MenuEntity getMenu(Long menuId);
+    
 }

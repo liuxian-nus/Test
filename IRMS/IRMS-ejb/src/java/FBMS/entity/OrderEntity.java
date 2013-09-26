@@ -24,7 +24,7 @@ import javax.persistence.Temporal;
  * @author Diana Wang
  */
 @Entity
-public class OrderEntity implements Serializable {
+public final class OrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,7 +45,20 @@ public class OrderEntity implements Serializable {
     private String email;
     private String mobile;
     private String notes;
-
+    
+    public OrderEntity(){}
+    
+    public OrderEntity(Date orderDateTime,MenuEntity menu,String status,String title,String name,String email,String mobile,String notes)
+    {
+        this.setEmail(email);
+        this.setMenu(menu);
+        this.setMobile(mobile);
+        this.setName(name);
+        this.setNotes(notes);
+        this.setOrderDateTime(orderDateTime);
+        this.setStatus(status);
+        this.setTitle(title);
+    }
     public String getTitle() {
         return title;
     }
@@ -88,7 +101,6 @@ public class OrderEntity implements Serializable {
     
     
     
-    public OrderEntity(){}
 
     public MemberEntity getMember() {
         return member;
