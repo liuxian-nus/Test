@@ -41,7 +41,7 @@ public interface IndReservationSessionBeanRemote {
     
     IndReservationEntity viewReservation (Long indReservationId);
     
-    boolean modifyReservation (String status,Long restId, Date indReservationDateTime, Long indReservationId,Integer numberPeople, String title, String name, String email,String mobile, String notes);
+    IndReservationEntity modifyReservation (String status,Long restId, Date indReservationDateTime, Long indReservationId,Integer numberPeople, String title, String name, String email,String mobile, String notes);
     
     
 }

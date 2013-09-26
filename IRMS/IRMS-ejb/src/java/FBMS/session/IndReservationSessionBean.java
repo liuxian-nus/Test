@@ -234,7 +234,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
 }
     
     @Override
-    public boolean modifyReservation (String status,Long restId, Date indReservationDateTime, Long indReservationId,Integer numberPeople, String title, String name, String email,String mobile, String notes){
+    public IndReservationEntity modifyReservation (String status,Long restId, Date indReservationDateTime, Long indReservationId,Integer numberPeople, String title, String name, String email,String mobile, String notes){
         System.out.println("IndReservationSessionBean: reservation modification starts!");
         
         IndReservationEntity ire = em.find(IndReservationEntity.class,indReservationId);
@@ -251,6 +251,6 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
         
         em.merge(ire);
         System.out.println("IndReservationSessionBean: reservation modification successful!");
-        return true;
+        return ire;
     }
 }

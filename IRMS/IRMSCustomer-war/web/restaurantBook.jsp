@@ -203,6 +203,7 @@
                     </div>
                     
                      <input type="hidden" name="restId" value="${data.restId}"/>
+                     <input type="hidden" name="booking" value="true"/>
 
                     <div clas="row">
                         <div class="large-12 columns">
