@@ -7,6 +7,7 @@ package servlet;
 import FBMS.entity.DishEntity;
 import FBMS.entity.IndReservationEntity;
 import FBMS.entity.MenuEntity;
+import FBMS.entity.OrderEntity;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import FBMS.session.OrderSessionBean;
@@ -46,6 +47,7 @@ public class FBMSServlet extends HttpServlet {
     private RestaurantEntity data2 = null;
     private IndReservationEntity data3 = null;
     private MenuEntity data4 = null;
+    private OrderEntity data5 = null;
     
     
     /**
@@ -190,6 +192,10 @@ public class FBMSServlet extends HttpServlet {
             {
                 System.out.println("*****cateringCheck*****");
                 System.out.println("FBMSServlet: Current page is cateringCheck");
+                
+                data5 = cateringReservation(request);
+                System.out.println("FBMSServlet: the order has been confirmed!");
+                request.setAttribute("data", data5);
                 request.getRequestDispatcher("/cateringCheck.jsp").forward(request, response);
             }
             
@@ -471,4 +477,14 @@ public class FBMSServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private OrderEntity cateringReservation(HttpServletRequest request) {
+        
+        System.out.println("FBMSServlet: cateringReservation method invoked!");
+        OrderEntity oe = new OrderEntity();
+        
+        
+        
+        return data5;
+    }
 }
