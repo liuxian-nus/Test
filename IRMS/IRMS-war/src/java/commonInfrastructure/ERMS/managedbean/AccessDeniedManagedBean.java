@@ -1,5 +1,5 @@
 
-package commomInfrastructure.utility.managedbean;
+package commonInfrastructure.ERMS.managedbean;
 
 import java.io.IOException;
 import javax.faces.bean.ManagedBean;
@@ -19,6 +19,6 @@ public class AccessDeniedManagedBean {
     public AccessDeniedManagedBean() {
     }
     public void reDirect(ActionEvent event) throws IOException{
-         FacesContext.getCurrentInstance().getExternalContext().redirect("/index.xhtml");
+         FacesContext.getCurrentInstance().getExternalContext().redirect("/IRMS-war/index.xhtml");
     }
 }
