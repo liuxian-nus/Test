@@ -14,6 +14,7 @@ package ACMS.session;
 
 import ACMS.entity.OverbookingQuotaEntity;
 import ACMS.entity.PriceEntity;
+import java.math.BigDecimal;
 //import ACMS.entity.RoomEntity;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -70,11 +71,11 @@ public class OverbookingSessionBean {
         }
 
 
-        final_z = Math.floor(z);
-        
+        final_z = Math.floor(z);        
         //suggestedQuota = integer value of final_z
         //calculate quota given the probability sl
-        System.err.println(final_z);
+        suggestedQuota = new BigDecimal(final_z).intValueExact();
+        System.err.println(suggestedQuota);
         overbooking.setSuggestedQuota(suggestedQuota);
         em.merge(overbooking);
         return suggestedQuota;
