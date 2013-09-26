@@ -4,7 +4,6 @@
  */
 package ACMS.managedbean;
 
-import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
 import java.io.Serializable;
 import java.util.List;
@@ -59,6 +58,4 @@ public class RoomSearchResultManagementBean implements Serializable{
     public void setRoomId(int roomId) {
         this.roomId = roomId;
     }
-    
-    
 }

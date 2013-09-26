@@ -345,7 +345,7 @@ public class initializationManagedBean implements Serializable {
         overbookingQuota.setRoomType("deluxe");
         overbookingQuota.setQuota(0);
         overbookingQuota.setCompensation1(105);
-        overbookingQuota.setCompensation2(382);
+        overbookingQuota.setCompensation2(485.3);
         
         try {
             System.err.println("Initiating the overbooking entity...");
