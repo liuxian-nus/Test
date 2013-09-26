@@ -78,6 +78,15 @@ public class OverbookingManagedBean implements Serializable{
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Overbooking Quota Saved.", ""));
         }
-     
+     public void doCalculate(ActionEvent event) throws IOException, ExistException {
+         
+        try {
+            setSuggestedQuota(obSessionBean.calculateSuggestedQuota());
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when calculate quota", ""));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "System Calculated Overbooking Quota.", ""));
+        }
      
     }

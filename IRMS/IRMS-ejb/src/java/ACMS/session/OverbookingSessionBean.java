@@ -40,8 +40,8 @@ public class OverbookingSessionBean {
     }
     
     public void initOverbooking(OverbookingQuotaEntity ob){
-        ob.setSuggestedQuota(calculateSuggestedQuota());
         em.persist(ob);
+        
     }
 
     //compensation to be discussed, now assume as direct human input
@@ -77,7 +77,7 @@ public class OverbookingSessionBean {
         suggestedQuota = new BigDecimal(final_z).intValueExact();
         System.err.println(suggestedQuota);
         overbooking.setSuggestedQuota(suggestedQuota);
- //       em.merge(overbooking);
+        em.merge(overbooking);
         return suggestedQuota;
     }
 

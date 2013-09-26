@@ -6,7 +6,6 @@ package commonInfrastructure.menu.managedbean;
 
 import ACMS.entity.OverbookingQuotaEntity;
 import ACMS.entity.ReservationEntity;
-import ACMS.entity.RoomEntity;
 import ACMS.session.OverbookingSessionBean;
 import ACMS.session.ReservationSessionBean;
 import ACMS.session.RoomSessionBean;
@@ -28,9 +27,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *

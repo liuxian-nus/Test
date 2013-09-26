@@ -15,10 +15,11 @@
                         <p:autoComplete id="reservation" value="#{reservationManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"  
                                         completeMethod="#{reservationManagedBean.complete}" />
                         <p:spacer width="20"/>
-                        <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchById}" />
-                        <p:message for="reservation"/>
+                        
                     </h:panelGrid> 
                 </h:form>
+                <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchById}" />
+                        <p:message for="reservation"/>
             </p:tab>  
 
             <!-- check out tab starts!! -->
@@ -27,22 +28,25 @@
                      <h:outputText value="Room ID: " style="margin-right: 10px;"/>
                         <p:autoComplete id="room" value="#{roomManagedBean.searchId}" required="true" requiredMessage="Room ID Cannot be Null"/>
                         <p:spacer width="20"/>
-                        <p:commandButton  value="Search" ajax="true" actionListener="#{roomManagedBean.searchById}" />
-                        <p:message for="room"/>
+                        
                 </h:panelGrid>  
+                <p:commandButton  value="Search" ajax="true" actionListener="#{roomManagedBean.searchById}" />
+                        <p:message for="room"/>
             </p:tab> 
             
             <p:tab id="tab3" title="Overbooking Mgt">  
                 <h:form id="formOverbooking">
-                    <h:panelGrid columns="2" cellpadding="10">
+                    <h:panelGrid columns="3" cellpadding="10" id="suggestedQuota">
                         <h:outputText value ="SystemSuggestedQuota: "/>
                         <h:outputText value ="#{overbookingManagedBean.suggestedQuota}"/>
-                       
+                        <p:commandButton value ="Calculate" ajax ="true" actionListener="#{overbookingManagedBean.doCalculate}" update="suggestedQuota"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" cellpadding="10" id="newQuota">
                         <h:outputText value ="Quota: "/>
-                        <h:inputText value ="#{overbookingManagedBean.newQuota}"/>
-                        <p:commandButton  value="Save" ajax="true" actionListener="#{overbookingManagedBean.doUpdate}" />
+                        <h:inputText value ="#{overbookingManagedBean.newQuota}"/>                        
                     </h:panelGrid> 
                 </h:form>
+                <p:commandButton  value="Save" ajax="true" actionListener="#{overbookingManagedBean.doUpdate}" update="newQuota"/>
             </p:tab> 
 
         </p:tabView>
