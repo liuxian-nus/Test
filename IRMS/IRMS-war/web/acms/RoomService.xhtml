@@ -11,7 +11,10 @@
                 <h:form id="serviceList">
                     <p:panel id="service" header="List of Room Services" style="height:495px;">
                         <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
-                            <p:dataTable id="roomServices" value="#{roomServiceManagedBean.getAllServices()}" var="roomServices" paginator="true" rows="2">
+                            <p:dataTable id="roomServices" value="#{roomServiceManagedBean.getAllServices()}" var="roomServices" paginator="true" rows="3">
+                                 <p:column headerText="Category: ">
+                                    <h:outputText value="#{roomServices.category}"/>
+                                 </p:column>                         
                                 <p:column headerText="Room Service: ">
                                     <h:outputText value="#{roomServices.roomServiceName}"/>
                                 </p:column>
