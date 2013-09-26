@@ -6,10 +6,13 @@ package ACMS.session;
 
 import ACMS.entity.RoomServiceEntity;
 import Exception.ExistException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -43,6 +46,20 @@ public class RoomServiceSessionBean {
         rmService = em.find(RoomServiceEntity.class, roomServiceName);
         if(rmService == null) throw new ExistException("This room service doesn't exist");
         return rmService;
+    }
+
+    public List<RoomServiceEntity> getAllRoomServices() throws ExistException {
+       System.err.println("in gell all room services session bean");
+       Query q = em.createQuery("SELECT rs FROM RoomServiceEntity rs");
+       List serviceList = new ArrayList<RoomServiceEntity> ();
+       for (Object o : q.getResultList()) {
+            RoomServiceEntity rs = (RoomServiceEntity) o;
+            serviceList.add(rs);
+        }
+       if (serviceList == null) {
+           throw new ExistException("RoomServiceEntity database is empty!");
+       }
+       return serviceList;
     }
 
 }

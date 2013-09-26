@@ -13,10 +13,10 @@
                         <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
                             <p:dataTable id="roomServices" value="#{roomServiceManagedBean.getAllServices()}" var="roomServices" paginator="true" rows="2">
                                 <p:column headerText="Room Service: ">
-                                    <h:outputText value="#{rooms.roomId}"/>
+                                    <h:outputText value="#{roomServices.roomServiceName}"/>
                                 </p:column>
                                 <p:column headerText="Service Price: ">
-                                    <h:outputText value="#{rooms.roomType}"/>
+                                    <h:outputText value="#{roomServices.roomServicePrice}"/>
                                 </p:column>
                             </p:dataTable>
                         </div>
