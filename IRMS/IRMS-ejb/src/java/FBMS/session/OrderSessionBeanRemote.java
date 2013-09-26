@@ -37,5 +37,11 @@ public interface OrderSessionBeanRemote {
     
     boolean modifyOrder (Long orderId,Date orderDateTime, MenuEntity menu, MemberEntity member);
     
+     /**
+     *
+     * @param dishId
+     * @return
+     */
+    DishEntity getDish (Long dishId);
     
 }

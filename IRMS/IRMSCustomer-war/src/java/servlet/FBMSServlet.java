@@ -4,7 +4,7 @@
  */
 package servlet;
 
-import ERMS.session.EmailSessionBean;
+import FBMS.entity.DishEntity;
 import FBMS.entity.IndReservationEntity;
 import FBMS.entity.MenuEntity;
 import FBMS.entity.RestaurantEntity;
@@ -171,16 +171,28 @@ public class FBMSServlet extends HttpServlet {
                 request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
             
             }
+            else if("cateringBook".equalsIgnoreCase(page))
+            {
+                System.out.println("*****cateringBook*****");
+                System.out.println("FBMSServlet: current page is cateringBook");
+                request.getRequestDispatcher("/cateringBook.jsp").forward(request, response);
+            }
             else if("cateringConfirm".equalsIgnoreCase(page))
             {
                 System.out.println("*****cateringConfirm*****");
                 System.out.println("FBMSServlet: Current page is cateringConfirm");
-                MenuEntity me = null;
-                data4 = me;
+                data4 = configureMenu(request);
                 System.out.println("FBMSServlet: the menu containing a list of dishes has been returned");
                 request.setAttribute("data", data4);
                 request.getRequestDispatcher("/cateringConfirm.jsp").forward(request, response);
             }
+            else if("cateringCheck".equalsIgnoreCase(page))
+            {
+                System.out.println("*****cateringCheck*****");
+                System.out.println("FBMSServlet: Current page is cateringCheck");
+                request.getRequestDispatcher("/cateringCheck.jsp").forward(request, response);
+            }
+            
             
             else 
             {
@@ -324,11 +336,26 @@ public class FBMSServlet extends HttpServlet {
         else return null;
     }
 
-    private boolean configureMenu (HttpServletRequest request)
+    private MenuEntity configureMenu (HttpServletRequest request)
     {
         System.out.println("FBMSServlet ConfigureMenu Method Invoked!");
+        MenuEntity me = new MenuEntity();
+        Set <DishEntity> dishes = null;
+        Integer courseNumber = Integer.parseInt(request.getParameter("courseNumber"));
+        int i = 1;
         
-        return true;
+        while(i<=courseNumber)
+        {
+            Long dishId = Long.parseLong(request.getParameter("dish"+i));
+            DishEntity de = orderSessionBean.getDish(dishId);
+            if(de!=null){
+            dishes.add(de);
+            me.setDishes(dishes);
+            i++;
+            }
+            else continue;
+        }
+        return me;
     }
     
     private IndReservationEntity modifyReservation(HttpServletRequest request)

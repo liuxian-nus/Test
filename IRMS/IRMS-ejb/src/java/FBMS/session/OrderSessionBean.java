@@ -26,10 +26,22 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
     }
     
     OrderEntity order;
-    
+    MenuEntity menu;
     
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
+    
+    /**
+     *
+     * @param dishId
+     * @return
+     */
+    @Override
+    public DishEntity getDish (Long dishId)
+    {
+        DishEntity de = em.find(DishEntity.class, dishId);
+        return de;
+    }
     
     /*E.2.1.2 Configure menu*/
     @Override
