@@ -67,10 +67,6 @@ public class LoginManagementManagedBean {
                     previousPage = request.getSession().getAttribute("lastAction").toString();
                 }
                 request.getSession().setAttribute("isLogin", true);
-                List systemUserRole = systemUser.getRoles();
-//                if (systemUserRole.contains("SuperAdmin")) {
-//                    request.getSession().setAttribute("isAdmin", true);
-//                }
                 String systemUserId = systemUser.getEmployeeId();
                 request.getSession().setAttribute("userId", systemUserId);
 
