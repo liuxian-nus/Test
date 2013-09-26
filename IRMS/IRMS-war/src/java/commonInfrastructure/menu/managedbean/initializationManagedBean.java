@@ -6,8 +6,10 @@ package commonInfrastructure.menu.managedbean;
 
 import ACMS.entity.OverbookingQuotaEntity;
 import ACMS.entity.ReservationEntity;
+import ACMS.entity.RoomServiceEntity;
 import ACMS.session.OverbookingSessionBean;
 import ACMS.session.ReservationSessionBean;
+import ACMS.session.RoomServiceSessionBean;
 import ACMS.session.RoomSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.session.MemberSessionBean;
@@ -35,7 +37,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @RequestScoped
 public class initializationManagedBean implements Serializable {
-
+    
     //    @PersistenceContext
 //    private EntityManager em;
     @EJB
@@ -46,7 +48,8 @@ public class initializationManagedBean implements Serializable {
     private ReservationSessionBean reservationSessionBean;
     @EJB
     private RoomSessionBean roomSessionBean;
-
+    @EJB
+    private RoomServiceSessionBean roomServiceSessionBean;
     @EJB
     private EmployeeSessionBean employeeSessionBean = new EmployeeSessionBean();
     @EJB
@@ -63,6 +66,8 @@ public class initializationManagedBean implements Serializable {
     private FunctionalityEntity functionality;
     private RestaurantEntity restaurant;
     private OverbookingQuotaEntity overbookingQuota;
+    private RoomServiceEntity roomService1;
+    private RoomServiceEntity roomService2;
     
 //    private MemberEntity member;
 
@@ -243,7 +248,6 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("CRMSAdmin Created!");
     }
-
     
     public void createMember() {
         System.err.println("go to create member page...");       
@@ -318,8 +322,7 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert room into database");
         addMessage("Room Created!");
     }
-    
-    
+      
     public void createFunctionalities(){
         functionality = new FunctionalityEntity();
         functionality.setFuncName("systemMsg");
@@ -353,6 +356,40 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.err.println("Initiating overbookin entity into database");
+    }
+    
+    public void createRmService(){
+        roomService1 = new RoomServiceEntity();
+        System.out.println("Creating room service 1....");
+        
+        roomService1.setRoomServiceName("Laundry");
+        roomService1.setRoomServicePrice(0);
+        
+        try {
+            System.out.println(roomService1.getRoomServiceName());
+            System.out.println(roomService1.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService1);
+            System.err.println("roomService added");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            return;
+        }
+        
+        roomService2 = new RoomServiceEntity();
+        System.out.println("Creating room service 2....");
+        
+        roomService2.setRoomServiceName("Minibar vodka");
+        roomService2.setRoomServicePrice(11.8);
+        
+        try {
+            System.out.println(roomService2.getRoomServiceName());
+            System.out.println(roomService2.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService2);
+            System.err.println("roomService added");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            return;
+        }
     }
     //Add new test cases below!!!!!!!!!
     
