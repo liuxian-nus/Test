@@ -17,6 +17,7 @@ public class RoomServiceEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String roomServiceName;
+    private String category; //free service, room service, room food catering
     private double roomServicePrice;
 
     public String getRoomServiceName() {
@@ -35,7 +36,13 @@ public class RoomServiceEntity implements Serializable {
         this.roomServicePrice = roomServicePrice;
     }
 
-    
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
     
     @Override
     public int hashCode() {

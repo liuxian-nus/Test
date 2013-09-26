@@ -42,6 +42,15 @@ public class RoomServiceSessionBean {
         return true;
     }
     
+    public boolean updateRoomService(String roomServiceName,String category, double roomServicePrice) throws ExistException {
+        rmService = em.find(RoomServiceEntity.class, roomServiceName);
+        if(rmService == null) throw new ExistException("This room service doesn't exist");
+        rmService.setCategory(category);
+        rmService.setRoomServicePrice(roomServicePrice);
+        em.merge(rmService);
+        return true;
+    }
+    
     public RoomServiceEntity getServiceByName(String roomServiceName) throws ExistException{
         rmService = em.find(RoomServiceEntity.class, roomServiceName);
         if(rmService == null) throw new ExistException("This room service doesn't exist");
