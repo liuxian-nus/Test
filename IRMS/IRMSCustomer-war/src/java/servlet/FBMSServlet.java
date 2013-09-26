@@ -342,16 +342,19 @@ public class FBMSServlet extends HttpServlet {
         MenuEntity me = new MenuEntity();
         Set <DishEntity> dishes = null;
         Integer courseNumber = Integer.parseInt(request.getParameter("courseNumber"));
+        System.out.println("FBMSServlet: the course number has been retrieved to be "+courseNumber);
         int i = 1;
         
         while(i<=courseNumber)
         {
             Long dishId = Long.parseLong(request.getParameter("dish"+i));
+            System.out.println("FBMSServlet: the current dishId is "+dishId);
             DishEntity de = orderSessionBean.getDish(dishId);
             if(de!=null){
             dishes.add(de);
             me.setDishes(dishes);
             i++;
+            System.out.println("FBMSServlet: while loop has proceeded to "+i);
             }
             else continue;
         }
