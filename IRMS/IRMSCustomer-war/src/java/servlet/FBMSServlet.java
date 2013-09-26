@@ -4,6 +4,7 @@
  */
 package servlet;
 
+import ERMS.session.EmailSessionBean;
 import FBMS.entity.IndReservationEntity;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
@@ -29,9 +30,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "FBMSServlet", urlPatterns = {"/FBMSServlet","/FBMSServlet/*"})
 public class FBMSServlet extends HttpServlet {
     @EJB
+    private FBMS.session.EmailSessionBean emailSessionBean;
+    
+    @EJB
     private OrderSessionBean orderSessionBean;
     @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
+    
 
     
     
@@ -299,6 +304,8 @@ public class FBMSServlet extends HttpServlet {
         System.out.println("The individual restaurant order has been confirmed? "+thisBooking);
         System.out.println("The restaurant booking made? "+ thisBooking );
         
+        emailSessionBean.sendConfirmation(email, correctBooking);
+        
         return correctBooking;
         }
         
@@ -372,6 +379,8 @@ public class FBMSServlet extends HttpServlet {
         Boolean thisBooking = indReservationSessionBean.confirmReservation(correctBooking);
         System.out.println("The individual restaurant order has been confirmed? "+thisBooking);
         System.out.println("The restaurant booking made? "+ thisBooking );
+        
+        emailSessionBean.sendConfirmation(email, correctBooking);
         
         return correctBooking;
         }
