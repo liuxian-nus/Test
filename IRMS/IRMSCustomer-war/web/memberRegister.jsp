@@ -47,7 +47,7 @@
                         <div>
                             <div class="small-10 columns">
                                 <input required type="password" name="password">
-                                <small class="error">Please enter a password.</small>
+                                <small class="error">Please enter a password consists of lowercase, uppercase and number.</small>
                             </div>
                         </div>
                     </div>
