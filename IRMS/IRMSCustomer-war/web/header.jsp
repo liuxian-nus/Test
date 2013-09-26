@@ -16,8 +16,8 @@
         </li>
         <li><a href="restaurant">Restaurant</a>
             <ul>
-                <li><a href="#">Sub menu 1</a></li>
-                <li><a href="#">Sub menu 2</a></li>
+                <li><a href="#">Book Restaurant</a></li>
+                <li><a href="cateringBooking">Group Catering</a></li>
                 <li><a href="#">Sub menu 3</a></li>
                 <li><a href="#">Sub menu 4</a></li>
                 <li><a href="#">Sub menu 5</a></li>
