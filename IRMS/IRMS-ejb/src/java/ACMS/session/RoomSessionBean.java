@@ -201,6 +201,9 @@ public class RoomSessionBean {
             price.setPriceType(roomType);
             price.setPrice(485.3);
             em.persist(price);
+            room.setRoomHotel(roomHotel);
+            room.setRoomLevel(roomLevel);
+            room.setRoomNo(roomNo);
             room.setRoomId(roomHotel, roomLevel, roomNo);
             room.setRoomType(roomType);
             room.setRoomStatus(roomStatus);
