@@ -40,8 +40,17 @@ import javax.persistence.Query;
 @RequestScoped
 public class initializationManagedBean implements Serializable {
 
-//    @PersistenceContext
+    //    @PersistenceContext
 //    private EntityManager em;
+    @EJB
+    private OverbookingSessionBean overbookingSessionBean;
+    @EJB
+    private MemberSessionBean memberSessionBean;
+    @EJB
+    private ReservationSessionBean reservationSessionBean;
+    @EJB
+    private RoomSessionBean roomSessionBean;
+
     @EJB
     private EmployeeSessionBean employeeSessionBean = new EmployeeSessionBean();
     @EJB
@@ -49,16 +58,8 @@ public class initializationManagedBean implements Serializable {
     @EJB
     private EPasswordHashSessionBean ePasswordHashSessionBean;
     @EJB
-    private ReservationSessionBean reSessionBean;
-    @EJB
-    private RoomSessionBean rmSessionBean;
-    @EJB
-    private MemberSessionBean mmSessionBean;
-    @EJB
     private FunctionalitySessionBean functionalitySessionBean;
-    @EJB
-    private OverbookingSessionBean obSessionBean;
-    
+   
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -178,7 +179,7 @@ public class initializationManagedBean implements Serializable {
         try {
             System.out.println("Saving hotel reservation....");
 
-            reSessionBean.addReservation(reservation);
+            reservationSessionBean.addReservation(reservation);
             System.out.println("Hotel Reservation saved.....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding reservation", ""));
@@ -266,7 +267,7 @@ public class initializationManagedBean implements Serializable {
         
         try {
             System.out.println("Creating new member....");
-            mmSessionBean.addMember(member);
+            memberSessionBean.addMember(member);
             System.out.println("Member created....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding member", ""));
@@ -278,7 +279,7 @@ public class initializationManagedBean implements Serializable {
     public void createRoom() {
         try {
             System.err.println("Insert room started.....");
-            rmSessionBean.createTestRoom(1,1,1,"deluxe","available");
+            roomSessionBean.createTestRoom(1,1,1,"deluxe","available");
             /*
             RoomEntity room1 = new RoomEntity();
             room1.setRoomId(1, 1, 1);
@@ -349,7 +350,7 @@ public class initializationManagedBean implements Serializable {
         
         try {
             System.out.println("Initiating the overbooking entity...");
-            obSessionBean.initOverbooking(ob);
+            overbookingSessionBean.initOverbooking(ob);
             System.out.println("Overbooking record initiated");
         }catch (Exception e) {
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when initiating overbooking", ""));
