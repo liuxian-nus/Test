@@ -275,7 +275,7 @@ public class initializationManagedBean implements Serializable {
     public void createRoom() {
         try {
             System.err.println("Insert room started.....");
-            roomSessionBean.createTestRoom(1,1,1,"deluxe","available");
+            roomSessionBean.createTestRoom(1,1,1,"deluxe","available",member);
             /*
             RoomEntity room1 = new RoomEntity();
             room1.setRoomId(1, 1, 1);

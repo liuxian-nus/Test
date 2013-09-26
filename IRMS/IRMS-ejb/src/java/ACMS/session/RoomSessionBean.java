@@ -194,19 +194,22 @@ public class RoomSessionBean {
         System.out.println("RoomSessionBean --> welcome: " + thisMember.getMemberName());
     }
 
-    public void createTestRoom(int roomHotel, int roomLevel, int roomNo, String roomType, String roomStatus) {
+    public void createTestRoom(int roomHotel, int roomLevel, int roomNo, String roomType, String roomStatus, MemberEntity member) {
         try {
             System.out.println("come to create test room session bean");
-            System.out.println("create priceEntity first");
+            System.err.println("create priceEntity first");
             price.setPriceType(roomType);
             price.setPrice(485.3);
             em.persist(price);
             room.setRoomId(roomHotel, roomLevel, roomNo);
             room.setRoomType(roomType);
             room.setRoomStatus(roomStatus);
+            room.setRoomPrice(price);
+            room.setRoomMember(member);
             System.out.println(room.getRoomId());
             System.out.println(room.getRoomType());
             System.out.println(room.getRoomStatus());
+            System.out.println(room.getRoomPrice().getPrice());
             System.out.println("prepare to create");
             em.persist(room);
         } catch (Exception e) {
