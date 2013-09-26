@@ -47,7 +47,7 @@
                 <br/>
                 Are you sure to Check In?
                 <br/><br/>
-                <p:commandButton value="Yes" update="growl" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
+                <p:commandButton value="Yes" onclick="growl" update ="form" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
                 </p:commandButton>
                 <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
             </p:dialog>  
