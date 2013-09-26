@@ -51,8 +51,10 @@ public class OverbookingSessionBean {
         overbooking = em.find(OverbookingQuotaEntity.class,1);
         String roomType = overbooking.getRoomType();
         PriceEntity price = em.find(PriceEntity.class, roomType);
-        double cs = price.getPrice();
-        ce = overbooking.getCompensation1();
+//        double cs = price.getPrice();
+        double cs = 485.3;
+//        ce = overbooking.getCompensation1();
+        ce = 105;
         sl = cs / (cs + ce);
         double z = 0.0;
         double p = 0.5;
@@ -61,7 +63,7 @@ public class OverbookingSessionBean {
 
         while (p < sl) {
             n = 1 / (Math.pow(2, 0.5) * Math.PI) * Math.exp(-0.5 * Math.pow(z, 2));
-            p = n * 0.01;
+            p += n * 0.01;
             z += 0.01;
             System.out.println(n);
             System.out.println(p);

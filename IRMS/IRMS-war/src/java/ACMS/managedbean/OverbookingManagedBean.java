@@ -61,7 +61,7 @@ public class OverbookingManagedBean implements Serializable{
     }
 
     public int getSuggestedQuota() {
-        //        suggestedQuota = obSessionBean.calculateSeggestedQuota();
+        suggestedQuota = obSessionBean.calculateSeggestedQuota();
         return suggestedQuota;
     }
 
