@@ -12,7 +12,7 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <h5> Welcome back, dear ${data.memberName}</h5>
+        <h5>Catering book</h5>
 
         <div class="section-container auto" data-section>
             <section>
