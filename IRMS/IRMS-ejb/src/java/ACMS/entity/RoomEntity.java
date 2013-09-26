@@ -128,7 +128,7 @@ public class RoomEntity implements Serializable {
     public void setCheckInDate(Date checkInDate) {
         this.checkInDate = checkInDate;
     }
-
+    
     public Date getCheckOutDate() {
         return checkOutDate;
     }

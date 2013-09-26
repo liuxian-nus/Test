@@ -35,6 +35,14 @@ public class OverbookingSessionBean {
     public double cs;
     public double ce;
     public double sl;
+    
+    public OverbookingSessionBean (){
+        
+    }
+    
+    public void initOverbooking(OverbookingQuotaEntity ob){
+        em.persist(ob);
+    }
 
     //compensation to be discussed, now assume as direct human input
     public int calculateSeggestedQuota() {

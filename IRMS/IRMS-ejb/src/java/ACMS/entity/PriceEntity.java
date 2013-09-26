@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 /**
  *
- * @author liudazhi
+ * @author liuxian
  */
 @Entity
 public class PriceEntity implements Serializable {

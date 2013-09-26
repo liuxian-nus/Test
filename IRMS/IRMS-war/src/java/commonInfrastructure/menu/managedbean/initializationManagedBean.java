@@ -4,8 +4,10 @@
  */
 package commonInfrastructure.menu.managedbean;
 
+import ACMS.entity.OverbookingQuotaEntity;
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
+import ACMS.session.OverbookingSessionBean;
 import ACMS.session.ReservationSessionBean;
 import ACMS.session.RoomSessionBean;
 import CRMS.entity.MemberEntity;
@@ -54,6 +56,8 @@ public class initializationManagedBean implements Serializable {
     private MemberSessionBean mmSessionBean;
     @EJB
     private FunctionalitySessionBean functionalitySessionBean;
+    @EJB
+    private OverbookingSessionBean obSessionBean;
     
     private EmployeeEntity employee;
     private RoleEntity role;
@@ -61,6 +65,7 @@ public class initializationManagedBean implements Serializable {
     private MemberEntity member;
     private FunctionalityEntity functionality;
     private RestaurantEntity restaurant;
+    private OverbookingQuotaEntity ob;
     
 //    private MemberEntity member;
 
@@ -333,7 +338,26 @@ public class initializationManagedBean implements Serializable {
         }
         System.err.println("Insert systemMsg functionality into database");
     }
-        //Add new test cases below!!!!!!!!!
+    
+    public void createOverbooking(){
+        ob = new OverbookingQuotaEntity();
+        ob.setOverbookingId(1);
+        ob.setRoomType("deluxe");
+        ob.setQuota(0);
+        ob.setCompensation1(105);
+        ob.setCompensation2(382);
+        
+        try {
+            System.out.println("Initiating the overbooking entity...");
+            obSessionBean.initOverbooking(ob);
+            System.out.println("Overbooking record initiated");
+        }catch (Exception e) {
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when initiating overbooking", ""));
+            return;
+        }
+        System.err.println("Initiating overbookin entity into database");
+    }
+    //Add new test cases below!!!!!!!!!
     
 
 }
