@@ -3,10 +3,12 @@
 package commomInfrastructure.utility.managedbean;
 
 import ERMS.entity.EmployeeEntity;
+import ERMS.entity.RoleEntity;
 import ERMS.session.EmployeeSessionBean;
 import ERMS.session.EPasswordHashSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -51,9 +53,9 @@ public class LoginManagementManagedBean {
         if (systemUser == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid EmployeeId", ""));
         } else {
-            setEmployeePassword(passwordHashSessionBean.hashPassword( getEmployeePassword()));//employeeId +
-            System.out.println("2"+getEmployeePassword());
-            System.out.println("3"+systemUser.getEmployeePassword());
+            setEmployeePassword(passwordHashSessionBean.hashPassword(getEmployeePassword()));//employeeId +
+//            System.out.println("2"+getEmployeePassword());
+//            System.out.println("3"+systemUser.getEmployeePassword());
             //Valid login
             if (systemUser.getEmployeePassword().equals(getEmployeePassword())) {
                 String previousPage = "";
@@ -65,6 +67,10 @@ public class LoginManagementManagedBean {
                     previousPage = request.getSession().getAttribute("lastAction").toString();
                 }
                 request.getSession().setAttribute("isLogin", true);
+                List systemUserRole = systemUser.getRoles();
+//                if (systemUserRole.contains("SuperAdmin")) {
+//                    request.getSession().setAttribute("isAdmin", true);
+//                }
                 String systemUserId = systemUser.getEmployeeId();
                 request.getSession().setAttribute("userId", systemUserId);
 
