@@ -8,9 +8,9 @@
 
 
     <ui:define name="content">
-       
+
         <h:form id="form"> 
-             <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
             <p:panel id="search" header="Search Result" style="height:495px;">
                 <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
                     <p:growl id="msgs" showDetail="true" /> 
@@ -34,24 +34,28 @@
                             <h:outputText value="#{rooms.roomStatus}"/>
                         </p:column>
                         <p:column style="width:100px">  
-                            <p:commandButton  oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Check In" title="Check In">  
+                            <p:commandButton rendered="#{rooms.roomStatus == 'available'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Check In" title="Check In">  
                                 <f:setPropertyActionListener target="#{roomManagedBean.thisRoom}" value="#{rooms}"/>  
                             </p:commandButton>  
-                        </p:column>  
-                    </p:dataTable>
-                </div>
-            </p:panel>
-    <!--    </h:form>
-        <h:form> -->
-            <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
-                <br/>
-                Are you sure to Check In?
-                <br/><br/>
-                <p:commandButton value="Yes" onclick="growl" update ="form" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
-                </p:commandButton>
-                <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
-            </p:dialog>  
-        </h:form>  
-    </ui:define>
+                            <h:outputText rendered="#{rooms.roomStatus == 'occupied'}" value="Occupied" >  
+                            </h:outputText>  
+                            <h:outputText rendered="#{rooms.roomStatus == 'reserved'}" value="Reserved" >  
+                            </h:outputText> 
+                                    </p:column>  
+                                    </p:dataTable>
+                                    </div>
+                                    </p:panel>
+                                    <!--    </h:form>
+                                        <h:form> -->
+                                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                                        <br/>
+                                        Are you sure to Check In?
+                                        <br/><br/>
+                                        <p:commandButton value="Yes" onclick="growl" update ="form" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
+                                        </p:commandButton>
+                                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
+                                    </p:dialog>  
+                                    </h:form>  
+                                    </ui:define>
 
-</ui:composition>
+                                    </ui:composition>

@@ -11,29 +11,48 @@
             <h:form id="form">
                 <p:growl id="growl" showDetail="true" sticky="true" /> 
                 <p:panel id="search" header="Search Result" style="height:495px;">
-                    <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
-                        <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
+                    <div style="margin-left:10px;margin-right:50px;margin-top:30px;">
+                        <h:panelGrid id="display" columns="3" cellpadding="4" style="margin:0 auto;">  
                             <h:outputText value="Room ID: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomId}" style="font-weight:bold" /> 
+                            <h:outputText value=" " /> 
+
                             <h:outputText value="Guest Name: " /> 
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.guestName}" style="font-weight:bold" />
+                            <h:outputText value=" " /> 
+
                             <h:outputText value="RoomType: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomType}" style="font-weight:bold" /> 
+                            <h:outputText value=" " /> 
+
                             <h:outputText value="Room Price: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomPrice}" style="font-weight:bold" /> 
+                            <h:outputText value=" " /> 
+
                             <h:outputText value="Check In Date: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.checkInDate}" style="font-weight:bold" /> 
+                            <h:outputText value=" " /> 
+
                             <h:outputText value="Check Out Date: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.checkOutDate}" style="font-weight:bold" /> 
+                            <h:outputText value=" " /> 
+
                             <h:outputText value="Room Service Charge: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge}" style="font-weight:bold" /> 
+                            <p:commandButton onclick="clearConfirmation.show()" ajax="true" rendered="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge!=0.00}" icon="ui-icon ui-icon-close" value ="Clear Service Charge" title="Clear the service charge">  
+                            </p:commandButton>
+
                             <h:outputText value="Breakfast: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.hasBreakfast}" style="font-weight:bold" /> 
+                            <h:outputText value="" /> 
+
                             <h:outputText value="Number of Guests: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.reservation.reservationGuestCount}" style="font-weight:bold" /> 
+                            <h:outputText value=" " /> 
+
                             <p:commandButton  oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Check Out" title="Check Out">  
                             </p:commandButton>
-                            <p:commandButton  oncomplete="checkService.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="checkService" title="Room Service Detail">  
+                            <p:commandButton  oncomplete="checkService.show()" ajax="true"  icon="ui-icon ui-icon-search" value ="Check Service" title="Room Service Detail">  
                             </p:commandButton>         
                         </h:panelGrid>
                     </div>
@@ -55,6 +74,17 @@
                     <p:commandButton value="Okay" oncomplete="checkService.hide()">  
                     </p:commandButton>
                 </p:dialog> 
+                 
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="clearConfirmation"> 
+                    <br/>
+                    Sure to Clear Service Charge?
+                    <br/><br/>
+                    <p:commandButton value="Yes" update="display"  oncomplete="confirmation.hide()">  
+                    </p:commandButton>
+                    <p:commandButton value="Not yet" onclick="clearConfirmation.hide()" type="button"/>  
+                </p:dialog>  
+
+                
             </h:form> 
         </f:view>
     </ui:define>
