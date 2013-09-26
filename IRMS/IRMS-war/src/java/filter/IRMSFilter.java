@@ -4,10 +4,18 @@
  */
 package filter;
 
+import ERMS.entity.EmployeeEntity;
+import ERMS.entity.FunctionalityEntity;
+import ERMS.entity.RoleEntity;
+import ERMS.session.EmployeeSessionBean;
+import Exception.ExistException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -15,27 +23,31 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author Ser3na
  */
-@WebFilter(filterName = "IRMSFilter", urlPatterns = {"/*"})
+@WebFilter(filterName = "IRMSFilter", urlPatterns = {"*.xhtml"})
 public class IRMSFilter implements Filter {
-    
+
     private static final boolean debug = true;
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
+    @EJB
+    EmployeeSessionBean employeeManager;
+
     public IRMSFilter() {
-    }    
-    
+    }
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("IRMSFilter:DoBeforeProcessing");
+            //log("IRMSFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -59,12 +71,12 @@ public class IRMSFilter implements Filter {
          log(buf.toString());
          }
          */
-    }    
-    
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("IRMSFilter:DoAfterProcessing");
+            //  log("IRMSFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -98,26 +110,51 @@ public class IRMSFilter implements Filter {
      * @exception ServletException if a servlet error occurs
      */
     public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain)
-            throws IOException, ServletException {
-        
-        if (debug) {
-            log("IRMSFilter:doFilter()");
+            FilterChain chain) throws IOException, ServletException {
+
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
+
+        String pagePath = req.getServletPath();
+        if (req.getSession(true).getAttribute("isLogin") == null) {
+            req.getSession(true).setAttribute("isLogin", false);
         }
-        
         doBeforeProcessing(request, response);
-        
+
+        Boolean isLogin = (Boolean) req.getSession(true).getAttribute("isLogin");
+
         Throwable problem = null;
         try {
-            
+
             System.err.println("This is IRMS Filter");
-            //insert if else below!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!小伙伴们看这里!!!!!!!!!!!!!!!
-            
-            
-            
-            
-            
-            chain.doFilter(request, response);
+
+            if (!excludeLoginCheck(pagePath)) {
+
+                if (isLogin == true) {
+                    String employeeId = (String) req.getSession().getAttribute("userId");
+
+                    if ((!excludeRoleCheck(pagePath)) && (!excludeAdminCheck(employeeId, pagePath))) {
+
+                        if (checkAccessRight(employeeId, pagePath)) {
+                            chain.doFilter(request, response);
+                        } else {
+                            req.getRequestDispatcher("/commonInfrastructure/AccessDeniedPage.xhtml").forward(req, resp);
+                        }
+                    } else {
+                        chain.doFilter(request, response);
+                    }
+
+                } else {
+                    req.getSession(true).setAttribute("lastAction", pagePath);
+                    req.getRequestDispatcher("/commonInfrastructure/login.xhtml").forward(req, resp);
+                }
+
+
+            } else {
+                chain.doFilter(request, response);
+            }
+
+
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then
@@ -125,7 +162,7 @@ public class IRMSFilter implements Filter {
             problem = t;
             t.printStackTrace();
         }
-        
+
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
@@ -138,6 +175,103 @@ public class IRMSFilter implements Filter {
                 throw (IOException) problem;
             }
             sendProcessingError(problem, response);
+        }
+    }
+
+    private Boolean excludeAdminCheck(String employeeId, String path) throws ExistException {
+
+        System.err.println("excludeAdminCheck...");
+
+        EmployeeEntity user = employeeManager.getEmployeeById(employeeId);
+        System.err.println("excludeAdminCheck: " + user.getEmployeeName());
+        List<String> userType = new ArrayList<String>();
+
+        for (int i = 0; i < user.getRoles().size(); i++) {
+            userType.add(user.getRoles().get(i).getRoleName());
+        }
+
+
+        if (userType.contains("SuperAdmin")) {
+            if (path.contains("accountManagement")) {
+                return true;
+            }
+        }
+        if (userType.contains("ACMSAdmin")) {
+            if (path.contains("acms")) {
+                return true;
+            }
+        }
+        if (userType.contains("FBMSAdmin")) {
+            if (path.contains("fbms")) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+        return false;
+
+    }
+
+    private Boolean excludeRoleCheck(String path) {
+        if (path.contains("commonInfrastructure")
+                || path.contains("message")
+                || path.contains("utility")
+                || path.endsWith("/")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private Boolean excludeLoginCheck(String path) {
+        if (path.contains("index.xhtml")
+                || path.contains("login.xhtml")
+                || path.contains("initialization.xhtml")
+                || path.contains("AccessDeniedPage.xhtml")
+                || path.startsWith("/javax.faces.resource")
+                || path.startsWith("/resources")
+                || path.contains("resetPassword.xhtml")
+                || path.endsWith("/")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private Boolean checkAccessRight(String employeeId, String path) throws ExistException {
+        System.err.println("check access right");
+        if (path.equals("/test.xhtml") || path.equals("/error.xhtml") || path.equals("/initialization.xhtml")) {
+            return true;
+        } else {
+            EmployeeEntity employee = employeeManager.getEmployeeById(employeeId);
+            String accessRight = path.replaceAll(".xhtml", "");
+            accessRight = accessRight.substring(1);
+
+            Boolean flag = false;
+            List<RoleEntity> roleList = employee.getRoles();
+            for (RoleEntity role : roleList) {
+                System.out.println("first for loop...");
+                List<FunctionalityEntity> functionalityList = role.getFunctionalities();
+                for (FunctionalityEntity functionality : functionalityList) {
+                    System.err.println("functionality name: " + functionality.getFuncName());
+                    if (accessRight.contains(functionality.getFuncName())) {
+                        flag = true;
+                        System.err.println("flag in:" + flag);
+                        break;
+                    }
+                }
+            }
+
+
+//            EmployeeEntity user = employeeManager.getEmployeeById(employeeId);
+//            List<String> userType = new ArrayList<String>();
+//            for (int i = 0; i < user.getRoles().size(); i++) {
+//                userType.add(user.getRoles().get(i).getRoleName());
+//            }
+//            if (userType.contains("SuperAdmin")) {
+//            }
+            System.err.println("flag out:" + flag);
+            return flag;
         }
     }
 
@@ -160,17 +294,17 @@ public class IRMSFilter implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
-                log("IRMSFilter:Initializing filter");
+            if (debug) {
+                // log("IRMSFilter:Initializing filter");
             }
         }
     }
@@ -188,20 +322,20 @@ public class IRMSFilter implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -218,7 +352,7 @@ public class IRMSFilter implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -232,8 +366,8 @@ public class IRMSFilter implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
 }
