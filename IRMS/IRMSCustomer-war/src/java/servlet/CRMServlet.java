@@ -41,6 +41,7 @@ public class CRMServlet extends HttpServlet {
     //private Set<RestaurantEntity> data = null;
     private String message=null; 
     private MemberEntity member;
+    
 
     //private String keyword=null;
     /**
@@ -77,6 +78,7 @@ public class CRMServlet extends HttpServlet {
 
             if ("member".equals(page)) {
                 System.out.println("***member page***");
+                
                 request.getRequestDispatcher("/member.jsp").forward(request, response);
 
             } else if ("memberInfo".equals(page)) {
@@ -90,6 +92,11 @@ public class CRMServlet extends HttpServlet {
 
                 System.out.println(email);
                 System.out.println(password);
+                
+                member=memberSession.getMemberByEmail(email);
+             
+                System.out.println("CRMSServlet: member has been returned");
+                request.setAttribute("data", member);
 
 
                 request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
@@ -106,13 +113,6 @@ public class CRMServlet extends HttpServlet {
                     request.getRequestDispatcher("/member.jsp").forward(request, response);
                     
                 }*/
-
-
-
-
-
-
-
 
             } else if ("memberRegister".equals(page)) {
                 System.out.println("***memberRegister page***");

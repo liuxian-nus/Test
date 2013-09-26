@@ -146,10 +146,11 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/CRMServlet/member").forward(request, response);
 
             } else if ("memberInfo".equals(page)) {
-
+                System.out.println("***irmsServlet memberInfo page***");
                 request.getRequestDispatcher("/CRMServlet/memberInfo").forward(request, response);
 
             } else if ("memberRegister".equals(page)) {
+                System.out.println("***irmsServlet memberRegister page***");
                 request.getRequestDispatcher("/CRMServlet/memberRegister").forward(request, response);
 
             } else if ("memberRegisterResult".equals(page)) {
