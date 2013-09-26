@@ -214,6 +214,9 @@ public class RoomSessionBean {
             System.out.println(room.getRoomType());
             System.out.println(room.getRoomStatus());
             System.out.println(room.getRoomPrice().getPrice());
+            System.out.println(room.getRoomHotel());
+            System.out.println(room.getRoomLevel());
+            System.out.println(room.getRoomNo());
             System.out.println("prepare to create");
             em.persist(room);
         } catch (Exception e) {
