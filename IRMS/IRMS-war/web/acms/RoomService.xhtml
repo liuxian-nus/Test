@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        <p:tabView id="tabView">  
+            <p:tab id="tab1" title="List Room Service">  
+                <h:form id="serviceList">
+                    <p:panel id="service" header="List of Room Services" style="height:495px;">
+                        <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
+                            <p:dataTable id="roomServices" value="#{roomServiceManagedBean.getAllServices()}" var="roomServices" paginator="true" rows="2">
+                                <p:column headerText="Room Service: ">
+                                    <h:outputText value="#{rooms.roomId}"/>
+                                </p:column>
+                                <p:column headerText="Service Price: ">
+                                    <h:outputText value="#{rooms.roomType}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:panel>
+                </h:form>
+            </p:tab>  
+
+            <p:tab id="tab2" title="Manage Room Service">  
+                <h:form id="serviceMgt">
+                    
+                </h:form>
+            </p:tab> 
+        </p:tabView>
+    </ui:define>
+
+</ui:composition>
