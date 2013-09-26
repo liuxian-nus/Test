@@ -125,13 +125,14 @@ public class RoomManagedBean implements Serializable {
         int roomId = (Integer) request.getSession().getAttribute("roomId");
  
         try {
-            System.err.println("room ID" + thisRoom.getRoomId());
-            rm.checkOut(thisRoom.getRoomId());
+            System.err.println("room ID" + roomId);
+            rm.checkOut(roomId);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when checking out", ""));
             return;
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "room checked-out successfully.", ""));
+        FacesContext.getCurrentInstance().getExternalContext().redirect("listAllRooms.xhtml");
     }
     
     //this one copied from PrimeFace showcase

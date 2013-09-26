@@ -18,13 +18,13 @@ import javax.faces.event.PhaseEvent;
  */
 @ManagedBean
 @RequestScoped
-public class RoomSearchResultManagementBean implements Serializable{
+public class RoomSearchResultManagedBean implements Serializable{
 
     private RoomEntity thisRoom;
     private List<RoomEntity> rooms;
     private int roomId;
     
-    public RoomSearchResultManagementBean() {
+    public RoomSearchResultManagedBean() {
     }
     
     public List<RoomEntity> getRooms() {
@@ -58,4 +58,5 @@ public class RoomSearchResultManagementBean implements Serializable{
     public void setRoomId(int roomId) {
         this.roomId = roomId;
     }
+    
 }
