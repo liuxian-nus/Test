@@ -68,10 +68,10 @@ ddsmoothmenu.init({
     <div id="templatemo_slider">
    
         <div id="slider" class="nivoSlider">
-            <img src="/IRMSCustomer-war/images/slider/01.jpg" alt="Slider 01" title="Nam porttitor, felis ac posuere sagittis, diam nisl convallis." />
-            <a href="#"><img src="/IRMSCustomer-war/images/slider/02.jpg" alt="Slider 02" title="Fusce sagittis, arcu a condimentum gravida." /></a>
-            <img src="/IRMSCustomer-war/images/slider/03.jpg" alt="Slider 03" title="Donec purus eros, dictum nec accumsan quis, auctor non eros."/>
-            <img src="/IRMSCustomer-war/images/slider/04.jpg" alt="Slider 04" title="Donec dignissim imperdiet orci sit amet posuere." />
+            <img src="/IRMSCustomer-war/images/slider/01.png" alt="Slider 01" title="we offer a spectacular showcase of local and international cuisines." />
+            <a href="#"><img src="/IRMSCustomer-war/images/slider/02.png" alt="Slider 02" title="a tropical paradise with an escapade for everyone" /></a>
+            <img src="/IRMSCustomer-war/images/slider/03.png" alt="Slider 03" title="Donec purus eros, dictum nec accumsan quis, auctor non eros."/>
+            <img src="/IRMSCustomer-war/images/slider/04.png" alt="Slider 04" title="Discover the awe-inspiring world of life in the ocean at the world’s largest aquarium." />
         </div>
         <div id="htmlcaption" class="nivo-html-caption">
             <strong>This</strong> is an example of a <em>HTML</em> caption with <a href="#">a link</a>.
