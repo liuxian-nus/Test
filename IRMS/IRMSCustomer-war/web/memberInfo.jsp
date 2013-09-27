@@ -121,6 +121,7 @@
                                 <div class="small-11 columns"> 
                                     <strong><label><strong>I want to subscribe latest updates.</label>
                                 </div>
+                                
                             </div>
                                
                                 
