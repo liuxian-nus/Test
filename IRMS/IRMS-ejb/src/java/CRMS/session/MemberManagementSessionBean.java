@@ -87,8 +87,10 @@ public class MemberManagementSessionBean {
     }*/
     
     public boolean login(String memberEmail, String memberPassword){
+        System.out.println("MemberManagementSessionBean, login function");
         System.out.println("memberEmail: "+memberEmail);
         member = em.find(MemberEntity.class, memberEmail);
+        System.out.println("member email stored: "+member.getMemberEmail());
         
         System.out.println("logging in....");
         System.out.println("key in password: "+memberPassword);
@@ -109,6 +111,37 @@ public class MemberManagementSessionBean {
             return true;
         }
         else return false;
+    }
+    
+    public boolean checkPassword(String email, String pwd){
+        System.out.println("MemberManagementSessionBean, checkPassword");
+        System.out.println("passed in email:"+email);
+        member=em.find(MemberEntity.class, email);
+        String password=member.getMemberPassword();
+        if(ePasswordHashSessionBean.hashPassword(pwd).equals(member.getMemberPassword())){
+            System.out.println("pwd:"+pwd);
+            return true;
+        }
+        else return false;
+    }
+    
+    public void resetPasswordWithNewPassword(String email, String newPwd){
+         member=em.find(MemberEntity.class, email);
+         member.setMemberPassword(ePasswordHashSessionBean.hashPassword(newPwd));
+         System.out.println("hashed password: "+member.getMemberPassword());
+         
+         try {
+            System.out.println("before merge");
+            memberSessionBean.updateMember(member);
+            System.out.println("after merge");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when updating member password", ""));
+            return;
+        }
+         
+         emailSessionBean.emailInitialPassward(email, newPwd);
+         System.out.println("email already sent");
+         member = new MemberEntity();       
     }
     
     

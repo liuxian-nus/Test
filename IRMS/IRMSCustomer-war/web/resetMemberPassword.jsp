@@ -13,7 +13,7 @@
     <body>
         <h1>reset member password</h1>
         
-         <form id="resetPassword" action="reset" method="POST">
+         <form id="resetPassword" action="resetMemberPasswordConfirmation" method="POST">
                         <fieldset>
                         
                             <div class="row">
@@ -42,7 +42,7 @@
                             <br>
                             <ul class="button-group">
 
-                                  <li><input type="submit" class="button" value="Login"></li>
+                                  <li><input type="submit" class="button" value="Submit"></li>
                                   
                             
     

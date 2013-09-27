@@ -41,6 +41,7 @@ public class CRMServlet extends HttpServlet {
     //private Set<RestaurantEntity> data = null;
     private String message = null;
     private MemberEntity member;
+    private MemberEntity data;
 
     //private String keyword=null;
     /**
@@ -118,6 +119,8 @@ public class CRMServlet extends HttpServlet {
             } else if ("resetMemberPassword".equals(page)) {
                 System.out.println("***resetMemberPassword page***");
                 String email=request.getParameter("email");
+                member=memberSession.getMemberByEmail(email);         
+                request.setAttribute("data", member);
                 
                 request.getRequestDispatcher("/resetMemberPassword.jsp").forward(request, response);
                 
@@ -153,6 +156,7 @@ public class CRMServlet extends HttpServlet {
                 String userName = request.getParameter("userName");
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
+                System.out.println("captured password: "+password);
                 String mobile = request.getParameter("mobile");
                 String nationality = request.getParameter("nationality");
                 String day = request.getParameter("date");

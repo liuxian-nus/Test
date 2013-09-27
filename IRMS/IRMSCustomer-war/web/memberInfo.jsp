@@ -36,15 +36,8 @@
                                     <input type="text" name ="email" readonly="readonly" value="${data.memberEmail}"/>
                                 </div>   
                             </div>
-
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <label>password</label>
-                                    <p>
-                                        <a href="resetMemberPassword"> Reset Password</a>
-                                    </p>
-                                </div> 
-                            </div>
+                                
+     
 
                             <div class="row">
                                 <div class="large-12 columns">
@@ -159,6 +152,8 @@
                                 </div>
 
                             </div>
+                                
+                                <input type="hidden" name="password" value="${data.memberPassword}"/>
 
 
                             <div class="row">
@@ -168,10 +163,20 @@
                                 </div>
                             </div>
 
-
                         </fieldset>
 
                     </form>
+                                    
+                                        <div class="row">
+                                            <div class="large-12 columns">
+                                                <form action="resetMemberPassword"><input type="Submit" value ="Reset Password"/>
+                                                    <input type="hidden" name="email" value="${data.memberEmail}"/>
+                                                </form>
+                                                <!--         <a href="resetMemberPassword" color="#000000"> Reset Password</a> -->
+
+                                            </div> 
+                                        </div>
+
 
                 </div> -->
             </section>
