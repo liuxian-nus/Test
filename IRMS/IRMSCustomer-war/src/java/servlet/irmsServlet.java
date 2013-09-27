@@ -161,6 +161,8 @@ public class irmsServlet extends HttpServlet {
 
             } else if ("memberInfoEdition".equals(page)) {
                 request.getRequestDispatcher("/CRMServlet/memberInfoEdition").forward(request, response);
+            } else if ("memberInfoEditionConfirmation".equals(page)) {
+                request.getRequestDispatcher("/CRMServlet/memberInfoEditionConfirmation").forward(request, response);
             } else {
                 System.out.println("other page");
 
