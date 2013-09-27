@@ -149,12 +149,13 @@ public class RoomSessionBean {
     }
     
     //clear all room service charge
-    public void clearServiceCharge(int roomId) throws ExistException {
+    public double clearServiceCharge(int roomId) throws ExistException {
         room = em.find(RoomEntity.class, roomId); 
         if (room == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->Invalid room Id!");
         }
         room.setRoomServiceCharge(0);      
+        return room.getRoomServiceCharge();
     }
     
     //member check-in
