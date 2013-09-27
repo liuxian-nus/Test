@@ -117,16 +117,36 @@ public class CRMServlet extends HttpServlet {
 
             } else if ("resetMemberPassword".equals(page)) {
                 System.out.println("***resetMemberPassword page***");
+                String email=request.getParameter("email");
+                
                 request.getRequestDispatcher("/resetMemberPassword.jsp").forward(request, response);
+                
+                
             } else if ("resetMemberPasswordConfirmation".equals(page)) {
                 System.out.println("***resetMemberPasswordConfirmation page***");
+            
+                
+               
                 String email=request.getParameter("email");
                 String oldPassword=request.getParameter("oldPwd");
                 String newPassword1=request.getParameter("newPwd1");
                 String newPassword2=request.getParameter("newPwd2");
-                memberManagementSessionBean.resetPassword
                 
-                request.getRequestDispatcher("/resetMemberPasswordConfirmation.jsp").forward(request, response);
+                Boolean correctOldPwd=memberManagementSessionBean.checkPassword(email, oldPassword);
+                if(!correctOldPwd){
+                    message="wrong password";
+                    request.setAttribute("message", message);
+                    request.getRequestDispatcher("/resetMemberPassword.jsp").forward(request, response);
+                }
+                else{
+                    memberManagementSessionBean.resetPasswordWithNewPassword(email,newPassword1);
+                    System.out.println("password saved.");
+                    
+                    request.getRequestDispatcher("/resetMemberPasswordConfirmation.jsp").forward(request, response);
+                }
+                
+                
+                
             }else if ("memberInfoEditionConfirmation".equals(page)) {
                 System.out.println("***memberInfoEdictionConfirmation page***");
 
@@ -162,6 +182,7 @@ public class CRMServlet extends HttpServlet {
 
                 member = memberSession.updateMember(email, userName, password, mobile, gender, nationality, date, maritalStatus, subscribe,
                         securityQuestion, answer);
+                System.out.println("member email before setAttribute"+member.getMemberEmail());
                 request.setAttribute("data", member);
 
                 request.getRequestDispatcher("/memberInfoEditionConfirmation.jsp").forward(request, response);
@@ -197,10 +218,9 @@ public class CRMServlet extends HttpServlet {
 
                 member = memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe,
                         securityQuestion, answer);
-
-
-
+          
                 request.getRequestDispatcher("/memberRegisterResult.jsp").forward(request, response);
+                
             } else if ("memberForgetPassword".equals(page)) {
                 System.out.println("***memberForgetPassword page***");
                 request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
