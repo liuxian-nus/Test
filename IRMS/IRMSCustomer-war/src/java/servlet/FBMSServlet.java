@@ -51,7 +51,7 @@ public class FBMSServlet extends HttpServlet {
     private boolean data1;
     private RestaurantEntity data2 = null;
     private IndReservationEntity data3 = null;
-    private MenuEntity data4 = null;
+    private Set<CourseEntity> data4 = null;
     private OrderEntity data5 = null;
     
     
@@ -347,7 +347,7 @@ public class FBMSServlet extends HttpServlet {
         else return null;
     }
 
-    private MenuEntity configureMenu (HttpServletRequest request)
+    private Set <CourseEntity> configureMenu (HttpServletRequest request)
     {
         
         System.out.println("FBMSServlet ConfigureMenu Method Invoked!");
@@ -378,13 +378,17 @@ public class FBMSServlet extends HttpServlet {
                
           //  System.out.println("FBMSServlet: the current element is "+me.getCourses().size());
                 System.out.println(courses.contains(course));
-                System.out.println(courses.add(course));
-                System.out.println(orderSessionBean.setCourse(course));
+ //               System.out.println(courses.add(course));//add course entity as POJO into the list
+ //               System.out.println(orderSessionBean.setCourse(course));//persist course entity
+                CourseEntity newCourse = orderSessionBean.setCourse(course);
+                System.out.println(newCourse);
+                System.out.println(courses.add(newCourse));
                 
                 System.out.println("FBMSServlet: courses have been added new course: "+courses.size());
                 i++;
             System.out.println("FBMSServlet: while loop has proceeded to "+i);
             //System.out.println("FBMSServlet: the current element is "+me.getDishes().size());
+            course.setMenu(me);//menu haven't been persisted, so this should be null
             }
             else {
                 i++;
@@ -392,11 +396,10 @@ public class FBMSServlet extends HttpServlet {
             }
         }
         
-        me.setCourses(courses);
-        System.out.println("FBMSServlet: menu has been configured: "+me.getCourses().size());
-        boolean isMenuSet = orderSessionBean.configureMenu(me);
+        boolean isMenuSet = orderSessionBean.configureMenu(courses);//pass a list of POJO, call next method
+//      System.out.println("FBMSServlet: menu has been configured: "+me.getCourses().size());
         System.out.println("FBMSServlet: the menu has been configured!" + isMenuSet);
-        return me;
+        return courses;
     }
     
     private IndReservationEntity modifyReservation(HttpServletRequest request)
@@ -539,12 +542,21 @@ public class FBMSServlet extends HttpServlet {
         Integer numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
             System.out.println("The booking numberPeople is "+numberPeople);
        
-        Long menuId = Long.valueOf(request.getParameter("menuId"));
-            System.out.println("FBMSServlet: menuId has been retrieved "+menuId);
-            MenuEntity me = orderSessionBean.getMenu(menuId);
+            MenuEntity me = new MenuEntity();
+            /* Long menuId = Long.valueOf(request.getParameter("menuId"));
+            System.out.println("FBMSServlet: menuId has been retrieved "+menuId);*/
+            
+           // me = orderSessionBean.getMenu(menuId);
             me.setNumberOrder(Integer.parseInt(request.getParameter("numberPeople")));
+            System.out.println("FBMSServlet: numberPeople has been set"+me.getNumberOrder());
+            
+            me.setCourses(data4);
+            System.out.println("FBMSServlet: courses has been set "+me.getCourses().size());
+            
             orderSessionBean.configureMenu(me);
             System.out.println("FBMSServlet: menu has been manipulated completely!"+ me.getNumberOrder());
+            
+            
             
             
         String title = request.getParameter("title");

@@ -65,10 +65,10 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
     }
     
     @Override
-    public boolean setCourse(CourseEntity ce)
+    public CourseEntity setCourse(CourseEntity ce)
     {
         em.persist(ce);
-        return true;
+        return ce;
     }
     
     @Override
@@ -83,10 +83,10 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         public boolean configureMenu(Set<CourseEntity> courses){
         
         System.out.println("OrderSessionBean: configure menu starts!");
-        MenuEntity menu=new MenuEntity();
-        menu.setCourses(courses);
+        MenuEntity menu=new MenuEntity(); 
+        menu.setCourses(courses);//a courseEntity list(with id)passed into a menu POJO 
         
-        em.persist(menu);
+        em.persist(menu);//menu entity persisted
         System.out.println("OrderSessionBean: configure menu is successful!");
         
         return true;

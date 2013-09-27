@@ -49,7 +49,7 @@ public interface OrderSessionBeanRemote {
     
     boolean setDish(DishEntity de);
     
-    boolean setCourse(CourseEntity ce);
+    CourseEntity setCourse(CourseEntity ce);
     
     CourseEntity getCourse(Long courseId);
     

@@ -35,10 +35,6 @@
                             <br>
                             <h6><strong>Reservation time : </strong>${data.getOrderDateTime()}</h6>
                             <br>
-                           <!-- <h6><strong>Reservation restaurant : </strong>${data.restaurant.restName} </h6> -->
-                            <br> 
-                            <h6><strong>Reservation people : </strong>${data.numberPeople}</h6>
-                            <br>
                             <h6><strong>Reservation name : </strong>${data.title}${data.name}</h6>
                             <br>
                             <h6><strong>Reservation e-mail : </strong>${data.email}</h6>

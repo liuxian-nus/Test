@@ -205,9 +205,8 @@
                         </div>
                     </div>
                     
-                    <h6><strong>The menu Id : </strong>${data.menuId}</h6>
                     
-                    <input type="hidden" name="menuId" value="${data.menuId}"/> 
+                    <input type="hidden" name="orders" value="${data}"/> 
                 
                 </fieldset>
             </form>
