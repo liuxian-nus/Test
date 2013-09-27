@@ -54,7 +54,12 @@ public class CreateInternalMsgManagedBean implements Serializable {
         }
         return results;
     }
-
+    
+    public void addMessage(String summary) {
+        FacesMessage systemMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+        FacesContext.getCurrentInstance().addMessage(null, systemMessage);
+    }
+    
     public void sendMsg(ActionEvent event) throws IOException, ExistException {
         String type;
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -74,7 +79,7 @@ public class CreateInternalMsgManagedBean implements Serializable {
             if ((!userType.contains("SuperAdmin")) && (!userType.contains("ACMSAdmin")) && (!userType.contains("FBMSAdmin"))
                     && (!userType.contains("CEMSAdmin")) && (!userType.contains("SMMSAdmin")) && (!userType.contains("ATMSAdmin"))
                     && (!userType.contains("ESMSAdmin")) && (!userType.contains("CRMSAdmin"))) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "You have no such right", ""));
+                addMessage("You have no such right");
                 return;
             } else {
                 List<EmployeeEntity> employeeList = employee.getAllEmployees();
@@ -87,7 +92,8 @@ public class CreateInternalMsgManagedBean implements Serializable {
             }
         } else if (receiver.equals("001")) {      //Admin
             if (!userType.contains("SuperAdmin")) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "You have no such right", ""));
+                System.err.println(userType.contains("SuperAdmin"));
+                addMessage("You have no such right");
                 return;
             } else {
                 List<EmployeeEntity> employeeList = employee.getAllEmployees();
@@ -109,7 +115,7 @@ public class CreateInternalMsgManagedBean implements Serializable {
                 type = "Private";
                 messageManager.addPrivateMessage(senderId, receiverId, title, msg, type);
             } catch (Exception e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No such person", ""));
+                addMessage( "No such person");
                 return;
             }
 

@@ -6,7 +6,8 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        <h:form>                      
+        <h:form>               
+            <p:growl id="statusMessage"/>
             <p:panel id="msg" header="Write Internal Message" style="height:495px;">
                 <div style="margin-left:200px;margin-top:40px;">
                     <div style="margin-bottom: 15px;">
@@ -22,8 +23,8 @@
                     <p:editor value="#{createInternalMsgManagedBean.msg}" widgetVar="editor" width="600"/>  
 
                     <h:panelGrid columns="2" style="margin-top:10px">  
-                        <p:commandButton value="Send" image="ui-icon ui-icon-mail-closed" actionListener="#{createInternalMsgManagedBean.sendMsg}" />  
-                        <p:commandButton type="button" value="Clear" onclick="editor.clear()" image="ui-icon ui-icon-close" />  
+                        <p:commandButton value="Send" update="statusMessage" icon="ui-icon ui-icon-mail-closed" actionListener="#{createInternalMsgManagedBean.sendMsg}" />  
+                        <p:commandButton type="button" value="Clear" onclick="editor.clear()" icon="ui-icon ui-icon-close" />  
                     </h:panelGrid> 
                 </div>
             </p:panel>
