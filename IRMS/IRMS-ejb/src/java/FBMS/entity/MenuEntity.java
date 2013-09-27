@@ -31,6 +31,16 @@ public class MenuEntity implements Serializable {
     @OneToOne(cascade={CascadeType.ALL},mappedBy = "menu")
     private OrderEntity order;
     
+    private Integer NumberOrder;
+
+    public Integer getNumberOrder() {
+        return NumberOrder;
+    }
+
+    public void setNumberOrder(Integer NumberOrder) {
+        this.NumberOrder = NumberOrder;
+    }
+    
     public Long getMenuId() {
         return menuId;
     }
