@@ -1,4 +1,3 @@
-
 package commonInfrastructure.internalMessaging.managedbean;
 
 import ERMS.entity.EmployeeEntity;
@@ -36,7 +35,9 @@ public class CreateInternalMsgManagedBean implements Serializable {
     @EJB
     EmployeeSessionBean employee;
 
-    /** Creates a new instance of CreateInternalMsgManagedBean */
+    /**
+     * Creates a new instance of CreateInternalMsgManagedBean
+     */
     public CreateInternalMsgManagedBean() {
     }
 
@@ -61,12 +62,18 @@ public class CreateInternalMsgManagedBean implements Serializable {
         EmployeeEntity user = employee.getEmployeeById(senderId);
         List<String> userType = new ArrayList<String>();
 
+//        for (int i = 0; i < user.getRoles().size(); i++) {
+//            userType.add(user.getRoles().get(i).getRoleName());
+//        }
         for (int i = 0; i < user.getRoles().size(); i++) {
             userType.add(user.getRoles().get(i).getRoleName());
         }
+        System.err.println("receiver: " + receiver);
 
         if (receiver.equals("000")) {          //All
-            if (!userType.contains("SystemMsg")) {
+            if ((!userType.contains("SuperAdmin")) && (!userType.contains("ACMSAdmin")) && (!userType.contains("FBMSAdmin"))
+                    && (!userType.contains("CEMSAdmin")) && (!userType.contains("SMMSAdmin")) && (!userType.contains("ATMSAdmin"))
+                    && (!userType.contains("ESMSAdmin")) && (!userType.contains("CRMSAdmin"))) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "You have no such right", ""));
                 return;
             } else {
@@ -78,49 +85,30 @@ public class CreateInternalMsgManagedBean implements Serializable {
                 type = "Broadcast";
                 messageManager.addSystemMessage(senderId, idList, title, msg, type);
             }
-        } 
-        
-        else if (receiver.equals("001")) {      //Admin
-            if (!userType.contains("SystemMsg")) {
+        } else if (receiver.equals("001")) {      //Admin
+            if (!userType.contains("SuperAdmin")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "You have no such right", ""));
                 return;
             } else {
                 List<EmployeeEntity> employeeList = employee.getAllEmployees();
                 List idList = new ArrayList();
                 for (int i = 0; i < employeeList.size(); i++) {
-                    if (employeeList.get(i).getEmployeeDepartment().equals("Admin")) {
-                        idList.add(employeeList.get(i).getEmployeeId());
+                    for (int j = 0; j < employeeList.get(i).getRoles().size(); j++) {
+                        if (employeeList.get(i).getRoles().get(j).getRoleName().contains("dmin")) {
+                            System.err.println("Role Name: "+employeeList.get(i).getRoles().get(j).getRoleName().contains("dmin"));
+                            idList.add(employeeList.get(i).getEmployeeId());
+                        }
                     }
                 }
                 type = "Broadcast";
                 messageManager.addSystemMessage(senderId, idList, title, msg, type);
             }
-        } 
-        
-        else if (receiver.equals("002")) {      //Sales
-            if (!userType.contains("SystemMsg")) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "You have no such right", ""));
-                return;
-            } else {
-                List<EmployeeEntity> employeeList = employee.getAllEmployees();
-                List idList = new ArrayList();
-                for (int i = 0; i < employeeList.size(); i++) {
-                    if (employeeList.get(i).getEmployeeDepartment().equals("Sales")) {
-                        idList.add(employeeList.get(i).getEmployeeId());
-                    }
-                }
-                type = "Broadcast";
-                messageManager.addSystemMessage(senderId, idList, title, msg, type);
-            }
-        } 
-        
-        else {
+        } else {
             try {
                 String receiverId = employee.getEmployeeById(receiver).getEmployeeId();
                 type = "Private";
                 messageManager.addPrivateMessage(senderId, receiverId, title, msg, type);
-            } 
-            catch (Exception e) {
+            } catch (Exception e) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No such person", ""));
                 return;
             }
