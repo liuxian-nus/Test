@@ -50,6 +50,13 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         return m;
     }
     
+    @Override
+    public boolean setDish(DishEntity de)
+    {
+        em.persist(de);
+        return true;
+    }
+    
     /*E.2.1.2 Configure menu*/
     @Override
     public boolean configureMenu(Set<DishEntity> dishes){
@@ -105,6 +112,7 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
     public boolean confirmOrder(OrderEntity order){
         System.out.println("OrderSessionBean: confirm order starts!"); 
         order.setStatus("Confirmed");
+        em.persist(order);
         System.out.println("OrderSessionBean: confirm order successfully!");
         return true;
     }

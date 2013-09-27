@@ -350,6 +350,7 @@ public class FBMSServlet extends HttpServlet {
     {
         System.out.println("FBMSServlet ConfigureMenu Method Invoked!");
         MenuEntity me = new MenuEntity();
+        System.out.println("FBMSServlet: The menu has been initialized "+me.getMenuId());
         Set <DishEntity> dishes = new HashSet <DishEntity>();
         Integer courseNumber = Integer.parseInt(request.getParameter("courseNumber"));
         System.out.println("FBMSServlet: the course number has been retrieved to be "+courseNumber);
@@ -363,16 +364,30 @@ public class FBMSServlet extends HttpServlet {
             
             if(de!=null){
             System.out.println("FBMSServlet: the dish entity has been found "+de.getDishName());
-            dishes.add(de);
+            DishEntity dish = new DishEntity();
+                dish.setDishCost(de.getDishCost());
+                System.out.println("FBMSServlet: the dish entity cost has been cloned"+ dish.getDishCost());
+                dish.setDishName(de.getDishName());
+                System.out.println("FBMSServlet: the dish entity name has been cloned"+dish.getDishName());
+                dish.setDishQuantity(0);
+                System.out.println("FBMSServlet: the dish entity quantity has been initialized"+dish.getDishQuantity());
+                boolean dishSettled = orderSessionBean.setDish(de);
+                
+                System.out.println("FBMSServlet: the dish entity has been cloned!"+dish.getDishId()+"  "+dishSettled);
+            
+            dishes.add(dish);
             me.setDishes(dishes);
             i++;
             System.out.println("FBMSServlet: while loop has proceeded to "+i);
+            System.out.println("FBMSServlet: the current element is "+me.getDishes().size());
             }
             else {
                 i++;
                 continue;
             }
         }
+        boolean isMenuSet = orderSessionBean.configureMenu(me);
+        System.out.println("FBMSServlet: the menu has been configured!" + isMenuSet);
         return me;
     }
     
@@ -516,11 +531,13 @@ public class FBMSServlet extends HttpServlet {
         Integer numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
             System.out.println("The booking numberPeople is "+numberPeople);
        
-        Long menuId = Long.parseLong(request.getParameter("menuId"));
+        Long menuId = Long.valueOf(request.getParameter("menuId"));
             System.out.println("FBMSServlet: menuId has been retrieved "+menuId);
             MenuEntity me = orderSessionBean.getMenu(menuId);
             me.setNumberOrder(Integer.parseInt(request.getParameter("numberPeople")));
+            orderSessionBean.configureMenu(me);
             System.out.println("FBMSServlet: menu has been manipulated completely!"+ me.getNumberOrder());
+            
             
         String title = request.getParameter("title");
         System.out.println("The booking people title is "+title);

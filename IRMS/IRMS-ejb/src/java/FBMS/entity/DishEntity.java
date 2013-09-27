@@ -11,16 +11,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.TableGenerator;
 
 /**
  *
  * @author Diana Wang
  */
 @Entity
+@TableGenerator(name="tab", initialValue = 101)
 public class DishEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = "tab")
     private Long dishId;
     private String dishName;
     private Integer dishQuantity;

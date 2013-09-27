@@ -26,7 +26,7 @@ public class MenuEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long menuId;
-    @OneToMany (cascade={CascadeType.ALL},mappedBy = "menu")
+    @OneToMany (cascade={CascadeType.ALL})
     private Set<DishEntity> dishes;
     @OneToOne(cascade={CascadeType.ALL},mappedBy = "menu")
     private OrderEntity order;
