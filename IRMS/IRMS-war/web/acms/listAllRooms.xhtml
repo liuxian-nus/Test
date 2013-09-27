@@ -19,19 +19,21 @@
                         <p:column headerText="Room ID: ">
                             <h:outputText value="#{rooms.roomId}"/>
                         </p:column>
-                        <p:column headerText="Room Type: ">
+                        <p:column sortBy="#{rooms.roomType}" headerText="Room Type: ">
                             <h:outputText value="#{rooms.roomType}"/>
                         </p:column>
-                        <p:column headerText="Hotel: ">
-                            <h:outputText value="#{rooms.roomHotel}"/>
+                        <p:column sortBy="#{rooms.roomHotel}" headerText="Hotel: ">
+                            <h:outputText rendered="#{rooms.roomHotel==1}" value="Orchard Hotel"/>
+                            <h:outputText rendered="#{rooms.roomHotel==2}" value="Beach View Hotel" />
+                            <h:outputText rendered="#{rooms.roomHotel==3}" value="Bay View Hotel" />
                         </p:column>
-                        <p:column headerText="Level: ">
+                        <p:column sortBy="#{rooms.roomLevel}" headerText="Level: ">
                             <h:outputText value="#{rooms.roomLevel}"/>
                         </p:column>
-                        <p:column headerText="Number: ">
+                        <p:column sortBy="#{rooms.roomNo}" headerText="Number: ">
                             <h:outputText value="#{rooms.roomNo}"/>
                         </p:column>
-                        <p:column headerText="Status: ">
+                        <p:column sortBy="#{rooms.roomStatus}" headerText="Status: ">
                             <h:outputText value="#{rooms.roomStatus}"/>
                         </p:column>
                         <p:column style="width:100px">  
@@ -42,21 +44,22 @@
                             </h:outputText>  
                             <h:outputText rendered="#{rooms.roomStatus == 'reserved'}" value="Reserved" >  
                             </h:outputText> 
-                                    </p:column>  
-                                    </p:dataTable>
-                                    </div>
-                                    </p:panel>
-                                    <!--    </h:form>
-                                        <h:form> -->
-                                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
-                                        <br/>
-                                        Are you sure to Check In?
-                                        <br/><br/>
-                                        <p:commandButton value="Yes" onclick="growl" update ="form" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
-                                        </p:commandButton>
-                                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
-                                    </p:dialog>  
-                                    </h:form>  
-                                    </ui:define>
+                        </p:column>  
+                    </p:dataTable>
+                </div>
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                    <br/>
+                    Are you sure to Check In?
+                    <br/><br/>
+                    <p:commandButton value="Yes" onclick="growl" update ="form" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
+                    </p:commandButton>
+                    <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
+                </p:dialog>  
+            </p:panel>
+            <!--    </h:form>
+                <h:form> -->
 
-                                    </ui:composition>
+        </h:form>  
+    </ui:define>
+
+</ui:composition>
