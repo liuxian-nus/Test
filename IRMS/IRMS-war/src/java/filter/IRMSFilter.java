@@ -195,23 +195,35 @@ public class IRMSFilter implements Filter {
             if (path.contains("accountManagement")) {
                 return true;
             }
-        }
-        if (userType.contains("ACMSAdmin")) {
+        } else if (userType.contains("ACMSAdmin")) {
             if (path.contains("acms")) {
                 return true;
             }
-        }
-        if (userType.contains("FBMSAdmin")) {
+        } else if (userType.contains("FBMSAdmin")) {
             if (path.contains("fbms")) {
                 return true;
             }
-        } 
-        if (userType.contains("CRMSAdmin")) {
+        } else if (userType.contains("CRMSAdmin")) {
             if (path.contains("crms")) {
                 return true;
             }
-        } 
-        else {
+        } else if (userType.contains("CEMSAdmin")) {
+            if (path.contains("cems")) {
+                return true;
+            }
+        } else if (userType.contains("SMMSAdmin")) {
+            if (path.contains("smms")) {
+                return true;
+            }
+        } else if (userType.contains("ATMSAdmin")) {
+            if (path.contains("atms")) {
+                return true;
+            }
+        } else if (userType.contains("ESMSAdmin")) {
+            if (path.contains("esms")) {
+                return true;
+            }
+        } else {
             return false;
         }
         return false;
