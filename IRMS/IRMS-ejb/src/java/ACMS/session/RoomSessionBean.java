@@ -221,6 +221,7 @@ public class RoomSessionBean {
             room.setRoomMember(null);
             room.setReservation(null);
             room.setGuestName(guestName);
+            room.setRoomServiceCharge(13.7);
             System.out.println(room.getRoomId());
             System.out.println(room.getRoomType());
             System.out.println(room.getRoomStatus());
