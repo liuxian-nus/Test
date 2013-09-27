@@ -372,6 +372,7 @@ public class initializationManagedBean implements Serializable {
         
         roomService1.setRoomServiceName("Laundry");
         roomService1.setRoomServicePrice(0);
+        roomService1.setCategory("free service");
         
         try {
             System.out.println(roomService1.getRoomServiceName());
@@ -388,6 +389,7 @@ public class initializationManagedBean implements Serializable {
         
         roomService2.setRoomServiceName("Minibar vodka");
         roomService2.setRoomServicePrice(11.8);
+        roomService2.setCategory("charged service");
         
         try {
             System.out.println(roomService2.getRoomServiceName());
