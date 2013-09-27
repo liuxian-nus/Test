@@ -519,6 +519,8 @@ public class FBMSServlet extends HttpServlet {
         Long menuId = Long.parseLong(request.getParameter("menuId"));
             System.out.println("FBMSServlet: menuId has been retrieved "+menuId);
             MenuEntity me = orderSessionBean.getMenu(menuId);
+            me.setNumberOrder(Integer.parseInt(request.getParameter("numberPeople")));
+            System.out.println("FBMSServlet: menu has been manipulated completely!"+ me.getNumberOrder());
             
         String title = request.getParameter("title");
         System.out.println("The booking people title is "+title);
