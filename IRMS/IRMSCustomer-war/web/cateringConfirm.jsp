@@ -205,7 +205,9 @@
                         </div>
                     </div>
                     
-                    <input type="hidden" name="menuId" value="${data.getMenuId()}"/> 
+                    <h6><strong>The menu Id : </strong>${data.menuId}</h6>
+                    
+                    <input type="hidden" name="menuId" value="${data.menuId}"/> 
                 
                 </fieldset>
             </form>
