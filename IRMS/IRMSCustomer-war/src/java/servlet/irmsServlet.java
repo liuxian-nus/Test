@@ -65,6 +65,7 @@ public class irmsServlet extends HttpServlet {
             String page = request.getPathInfo();
             page = page.substring(1);
             System.out.println("page:" + page);
+            
 
 
             if ("restaurantSearch".equals(page)) {
