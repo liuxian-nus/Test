@@ -205,7 +205,13 @@ public class IRMSFilter implements Filter {
             if (path.contains("fbms")) {
                 return true;
             }
-        } else {
+        } 
+        if (userType.contains("CRMSAdmin")) {
+            if (path.contains("crms")) {
+                return true;
+            }
+        } 
+        else {
             return false;
         }
         return false;

@@ -69,6 +69,8 @@ public class MemberEntity implements Serializable {
     public MemberEntity(){
     }
     
+
+    
     //create a new MemberEntity instance
    /* public void create(String memberEmail,String memberName,String memberPassword,String memberHP,String gender,String nationality,Date memberDob,boolean maritalStatus,boolean isSuscriber) {
         this.setMemberEmail(memberEmail);

@@ -114,6 +114,34 @@ public class CRMServlet extends HttpServlet {
                     
                 }*/
 
+            } else if("memberInfoEditionConfirmation".equals(page)){
+                System.out.println("***memberInfoEdictionConfirmation page***");
+                
+                String userName=request.getParameter("userName");
+                String email=request.getParameter("email");
+                String password=request.getParameter("password");
+                String mobile=request.getParameter("mobile");
+                String nationality=request.getParameter("nationality");
+                String day=request.getParameter("date");
+                String month=request.getParameter("month");
+                String year=request.getParameter("year");
+                String maritalStatus=request.getParameter("maritalStatus");
+                String gender = request.getParameter("gender");
+                Boolean subscribe = Boolean.valueOf(request.getParameter("subscribe"));
+                String securityQuestion=request.getParameter("securityQuestion");
+                String answer=request.getParameter("answer");
+                
+                String this_date = day + "-" + month + "-" + year;
+                System.out.println(this_date);
+                Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
+                System.out.println(date);
+                
+                member = memberSession.updateMember(email, userName, password, mobile, gender, nationality, date, maritalStatus, subscribe,
+                        securityQuestion, answer);
+                request.setAttribute("data",member);
+                
+                request.getRequestDispatcher("/memberInfoEditionConfirmation.jsp").forward(request, response);
+                
             } else if ("memberRegister".equals(page)) {
                 System.out.println("***memberRegister page***");
                 request.getRequestDispatcher("/memberRegister.jsp").forward(request, response);
@@ -134,9 +162,10 @@ public class CRMServlet extends HttpServlet {
                 String maritalStatus = request.getParameter("marital");
                 String gender = request.getParameter("gender");
                 Boolean subscribe = Boolean.valueOf(request.getParameter("subscribe"));
+                
                 String this_date = day + "-" + month + "-" + year;
                 System.out.println(this_date);
-                Date date = new SimpleDateFormat("dd-MMMMM-yyyy").parse("01-July-2013");
+                Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
                 System.out.println(date);
                 String securityQuestion = request.getParameter("securityQuestion");
                 String answer = request.getParameter("answer");

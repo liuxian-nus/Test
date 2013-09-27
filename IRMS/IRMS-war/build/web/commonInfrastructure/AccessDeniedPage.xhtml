@@ -5,10 +5,11 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:define name="content">
-        <h1><font color ="red">Sorry, Your Access Is Denied</font></h1>
+        <br/><br/>
+        <h1><font color ="red" size="5" style="margin-left:200px; margin-top:200px;">Sorry, Your Access Is Denied</font></h1>
         <bt/>
         <h:form>
-            <h:commandButton value ="Go Back" actionListener ="index.xhtml?redirect=true"/>
+            <h:commandButton value ="Go Back" actionListener ="#{accessDeniedManagedBean.reDirect}"/>
         </h:form>
     </ui:define>
 </ui:composition>
