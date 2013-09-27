@@ -136,7 +136,7 @@ ddsmoothmenu.init({
             <p><em>Curabitur turpis sapien, auctor sit amet tincidunt et, vestibulum amet dapibus eros.</em></p>
             <a href="#" class="more">More</a>	
         </div>
-        
+        <!--
         <div class="cleaner hr_divider"></div>
         
     	<div class="col one_fourth">
@@ -161,7 +161,7 @@ ddsmoothmenu.init({
         </div>
         <div class="cleaner"></div>
     </div>
-    
+    -->
     <div id="templatemo_bottom">
     	<div class="col one_fourth">
         	<h5>Recent Posts</h5>
