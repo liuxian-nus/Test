@@ -9,7 +9,6 @@ import Exception.ExistException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -58,7 +57,7 @@ public class RoomServiceSessionBean {
     }
 
     public List<RoomServiceEntity> getAllRoomServices() throws ExistException {
-       System.err.println("in gell all room services session bean");
+       System.err.println("in get all room services session bean");
        Query q = em.createQuery("SELECT rs FROM RoomServiceEntity rs");
        List serviceList = new ArrayList<RoomServiceEntity> ();
        for (Object o : q.getResultList()) {

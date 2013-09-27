@@ -7,18 +7,25 @@ package ACMS.entity;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author liuxian
  */
 @Entity
+@Table(
+        uniqueConstraints=
+            @UniqueConstraint(columnNames={"roomServiceName"})
+    )
 public class RoomServiceEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String roomServiceName;
     private String category; //free service, room service, room food catering
     private double roomServicePrice;
+    private int roomServiceQuantity = 0;
 
     public String getRoomServiceName() {
         return roomServiceName;
@@ -42,6 +49,14 @@ public class RoomServiceEntity implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getRoomServiceQuantity() {
+        return roomServiceQuantity;
+    }
+
+    public void setRoomServiceQuantity(int roomServiceQuantity) {
+        this.roomServiceQuantity = roomServiceQuantity;
     }
     
     @Override
