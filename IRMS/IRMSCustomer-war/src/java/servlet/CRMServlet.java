@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
 
+    
     @EJB
     private MemberManagementSessionBean memberManagementSessionBean;
     @EJB

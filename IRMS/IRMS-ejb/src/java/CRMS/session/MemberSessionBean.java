@@ -97,7 +97,7 @@ public class MemberSessionBean {
         
         member.setPoint(0);
         member.setCoin(0);
-        member.setPreferences("");      
+        member.setPreferences("to be set");      
         
         System.out.println(question);
         member.setSecurityQuestion(question);

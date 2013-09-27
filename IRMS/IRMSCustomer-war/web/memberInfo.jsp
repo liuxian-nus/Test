@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -143,7 +144,7 @@
 
 
                             <div class="row">
-                                <p>${message}</p>
+                
                                 <div class="small-1 columns">
                                     <input type="checkbox" name="subscribe" value="${Boolean.toString(data.isSubscriber)}"/>
                                 </div>
@@ -178,7 +179,7 @@
                                         </div>
 
 
-                </div> -->
+                </div>
             </section>
             <section>
                 <p class="title" data-section-title><a href="#"><strong>Member Service</strong></a></p>

@@ -24,6 +24,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 @LocalBean
 public class MemberManagementSessionBean {
+    
     @EJB
     private EPasswordHashSessionBean ePasswordHashSessionBean;
     @EJB
