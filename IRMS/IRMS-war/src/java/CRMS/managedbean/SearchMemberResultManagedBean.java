@@ -59,6 +59,8 @@ public class SearchMemberResultManagedBean implements Serializable{
     public void initView(PhaseEvent event) {
         System.out.println("***into initView***");
         member = (MemberEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("Member");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("Member",member);
+        
         System.out.println("initView: "+member.getPreferences());
     }
     
@@ -72,10 +74,7 @@ public class SearchMemberResultManagedBean implements Serializable{
         
         System.out.println("member Email: "+member.getMemberEmail());
         System.out.println("member preferences: "+member.getPreferences());
-        
        
- 
-        
         memberSessionBean.updateMember(getMember());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));  
     }

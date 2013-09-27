@@ -11,6 +11,7 @@
         <f:view beforePhase="#{searchMemberResultManagedBean.initView}"> 
             
             <h:form id="form" prependId="false">
+                 <p:growl id="growl" showDetail="true" sticky="true" /> 
                 <p:panel id="search" header="Search Member Result" style="height:495px;">
                     <h:panelGrid id="VIP" columns="2" cellpadding="4" style="margin:0 auto;">  
                         <h:outputText value="Name: " />  
@@ -39,12 +40,12 @@
                         <h:outputText value="#{searchMemberResultManagedBean.member.coin}" style="font-weight:bold" />
                         
                         <h:outputText value="Preferences : " />  
-                        <p:inplace id="preferences" editor="true">  
-                            <p:inputText value="#{searchMemberResultManagedBean.member.preferences}" label="preferences"/>  
+                        <p:inplace id="preferences" editor="true" style="font-weight:bold">  
+                            <p:inputText value="#{searchMemberResultManagedBean.member.preferences}" label="preferences" style="font-weight:bold"/>  
                         </p:inplace>
-                        
-                         <p:commandButton value="Edit" ajax="true" update="VIP" actionListener="#{searchMemberResultManagedBean.saveChanges}"/>
-             
+              
+                        <p:commandButton value="Edit" ajax="true" oncomplete="growl" update="form" actionListener="#{searchMemberResultManagedBean.saveChanges}"/>
+
                         </h:panelGrid>
                     
                    
