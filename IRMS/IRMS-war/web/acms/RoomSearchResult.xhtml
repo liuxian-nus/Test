@@ -40,8 +40,9 @@
 
                             <h:outputText value="Room Service Charge: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge}" style="font-weight:bold" /> 
-                            <p:commandButton onclick="clearConfirmation.show()" ajax="true" rendered="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge!=0.00}" icon="ui-icon ui-icon-close" value ="Clear Service Charge" title="Clear the service charge">  
+                            <p:commandButton oncomplete="clearConfirmation.show()" ajax="true" rendered="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge!=0.0}" icon="ui-icon ui-icon-close" value ="Clear Service Charge" title="Clear the service charge">  
                             </p:commandButton>
+                            <h:outputText value="" rendered="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge==0.0}" />
 
                             <h:outputText value="Breakfast: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.hasBreakfast}" style="font-weight:bold" /> 
@@ -80,7 +81,7 @@
                     <br/>
                     Sure to Clear Service Charge?
                     <br/><br/>
-                    <p:commandButton value="Yes" update="display"  oncomplete="confirmation.hide()">  
+                    <p:commandButton value="Yes" actionListener="#{roomSearchResultManagedBean.clearService}" update="display" onclick="growl" oncomplete="confirmation.hide()">  
                     </p:commandButton>
                     <p:commandButton value="Not yet" onclick="clearConfirmation.hide()" type="button"/>  
                 </p:dialog>  
