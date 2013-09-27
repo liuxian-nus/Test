@@ -59,7 +59,13 @@ public class RoomServiceManagedBean {
     }
 
     public List<RoomServiceEntity> getSource() throws ExistException {
-        return roomServiceSessionBean.getAllRoomServices();
+        source = roomServiceSessionBean.getAllRoomServices();
+        System.out.println("in get all room service managed bean...");
+        System.out.println("Sample --> ");
+        System.out.println(source.get(0).getCategory());
+        System.out.println(source.get(0).getRoomServiceName());
+        System.out.println(source.get(0).getRoomServicePrice());
+        return source;
     }
 
     public void setSource(List<RoomServiceEntity> source) {
