@@ -7,6 +7,7 @@ package FBMS.session;
 import FBMS.entity.OrderEntity;
 import FBMS.entity.DishEntity;
 import CRMS.entity.MemberEntity;
+import FBMS.entity.CourseEntity;
 import FBMS.entity.MenuEntity;
 import java.util.Date;
 import java.util.Set;
@@ -36,6 +37,12 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
      * @param dishId
      * @return
      */
+    
+    public boolean setMenu(MenuEntity me)
+    {
+        em.persist(me);
+        return true;
+    }
     @Override
     public DishEntity getDish (Long dishId)
     {
@@ -57,13 +64,27 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         return true;
     }
     
-    /*E.2.1.2 Configure menu*/
     @Override
-    public boolean configureMenu(Set<DishEntity> dishes){
+    public boolean setCourse(CourseEntity ce)
+    {
+        em.persist(ce);
+        return true;
+    }
+    
+    @Override
+    public CourseEntity getCourse(Long courseId)
+    {
+        CourseEntity ce = em.find(CourseEntity.class, courseId);
+        return ce;
+    }
+    
+    /*E.2.1.2 Configure menu*/
+        @Override
+        public boolean configureMenu(Set<CourseEntity> courses){
         
         System.out.println("OrderSessionBean: configure menu starts!");
         MenuEntity menu=new MenuEntity();
-        menu.setDishes(dishes);
+        menu.setCourses(courses);
         
         em.persist(menu);
         System.out.println("OrderSessionBean: configure menu is successful!");

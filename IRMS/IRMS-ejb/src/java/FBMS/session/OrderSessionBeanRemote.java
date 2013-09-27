@@ -5,6 +5,7 @@
 package FBMS.session;
 
 import CRMS.entity.MemberEntity;
+import FBMS.entity.CourseEntity;
 import FBMS.entity.DishEntity;
 import FBMS.entity.InvoiceEntity;
 import FBMS.entity.MenuEntity;
@@ -19,7 +20,7 @@ import java.util.Set;
 public interface OrderSessionBeanRemote {
 
     /*E.2.1.2 Configure menu*/
-    boolean configureMenu(Set<DishEntity> dishes);
+    boolean configureMenu(Set<CourseEntity> courses);
 
     boolean configureMenu(MenuEntity menu);
 
@@ -47,5 +48,9 @@ public interface OrderSessionBeanRemote {
     MenuEntity getMenu(Long menuId);
     
     boolean setDish(DishEntity de);
+    
+    boolean setCourse(CourseEntity ce);
+    
+    CourseEntity getCourse(Long courseId);
     
 }

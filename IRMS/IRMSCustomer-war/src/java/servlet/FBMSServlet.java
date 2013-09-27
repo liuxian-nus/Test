@@ -4,6 +4,7 @@
  */
 package servlet;
 
+import FBMS.entity.CourseEntity;
 import FBMS.entity.DishEntity;
 import FBMS.entity.IndReservationEntity;
 import FBMS.entity.MenuEntity;
@@ -348,44 +349,51 @@ public class FBMSServlet extends HttpServlet {
 
     private MenuEntity configureMenu (HttpServletRequest request)
     {
+        
         System.out.println("FBMSServlet ConfigureMenu Method Invoked!");
         MenuEntity me = new MenuEntity();
         System.out.println("FBMSServlet: The menu has been initialized "+me.getMenuId());
-        Set <DishEntity> dishes = new HashSet <DishEntity>();
+        Set <CourseEntity> courses = new HashSet <CourseEntity>();
         Integer courseNumber = Integer.parseInt(request.getParameter("courseNumber"));
         System.out.println("FBMSServlet: the course number has been retrieved to be "+courseNumber);
         int i = 1;
         
         while(i<=courseNumber)
         {
+            CourseEntity course = new CourseEntity();
             Long dishId = Long.parseLong(request.getParameter("dish"+i));
+            dishId += 100000;
             System.out.println("FBMSServlet: the current dishId is "+dishId);
             DishEntity de = orderSessionBean.getDish(dishId);
+            System.out.println("FBMSServlet: the dish entity has been found "+de.getDishName());
             
             if(de!=null){
-            System.out.println("FBMSServlet: the dish entity has been found "+de.getDishName());
-            DishEntity dish = new DishEntity();
-                dish.setDishCost(de.getDishCost());
-                System.out.println("FBMSServlet: the dish entity cost has been cloned"+ dish.getDishCost());
-                dish.setDishName(de.getDishName());
-                System.out.println("FBMSServlet: the dish entity name has been cloned"+dish.getDishName());
-                dish.setDishQuantity(0);
-                System.out.println("FBMSServlet: the dish entity quantity has been initialized"+dish.getDishQuantity());
-                boolean dishSettled = orderSessionBean.setDish(de);
-                
-                System.out.println("FBMSServlet: the dish entity has been cloned!"+dish.getDishId()+"  "+dishSettled);
             
-            dishes.add(dish);
-            me.setDishes(dishes);
-            i++;
+               // System.out.println("FBMSServlet: the course entity id is "+ course.getCourseId());
+                course.setDish(de);
+                System.out.println("FBMSServlet: the course entity associated dish has been found"+ course.getDish().getDishName()+course.getCourseId());
+                /* course.setMenu(me);
+                System.out.println("FBMSServlet: the dish entity's menu has been set"+ course.getMenu().getMenuId()); 
+               courses.add(course); */
+               
+          //  System.out.println("FBMSServlet: the current element is "+me.getCourses().size());
+                System.out.println(courses.contains(course));
+                System.out.println(courses.add(course));
+                System.out.println(orderSessionBean.setCourse(course));
+                
+                System.out.println("FBMSServlet: courses have been added new course: "+courses.size());
+                i++;
             System.out.println("FBMSServlet: while loop has proceeded to "+i);
-            System.out.println("FBMSServlet: the current element is "+me.getDishes().size());
+            //System.out.println("FBMSServlet: the current element is "+me.getDishes().size());
             }
             else {
                 i++;
                 continue;
             }
         }
+        
+        me.setCourses(courses);
+        System.out.println("FBMSServlet: menu has been configured: "+me.getCourses().size());
         boolean isMenuSet = orderSessionBean.configureMenu(me);
         System.out.println("FBMSServlet: the menu has been configured!" + isMenuSet);
         return me;

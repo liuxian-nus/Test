@@ -27,11 +27,22 @@ public class MenuEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long menuId;
     @OneToMany (cascade={CascadeType.ALL})
-    private Set<DishEntity> dishes;
+    private Set<CourseEntity> courses;
+    
     @OneToOne(cascade={CascadeType.ALL},mappedBy = "menu")
     private OrderEntity order;
     
     private Integer NumberOrder;
+
+    public MenuEntity(){}
+    
+    public Set<CourseEntity> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<CourseEntity> courses) {
+        this.courses = courses;
+    }
 
     public Integer getNumberOrder() {
         return NumberOrder;
@@ -58,12 +69,6 @@ public class MenuEntity implements Serializable {
     }
 
     
-   public Set<DishEntity> getDishes(){
-       return dishes;
-   }
    
-   public void setDishes(Set<DishEntity> dishes){
-       this.dishes=dishes;
-   }
     
 }

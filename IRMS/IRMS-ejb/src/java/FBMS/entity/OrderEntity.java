@@ -33,7 +33,7 @@ public final class OrderEntity implements Serializable {
     private Date orderDateTime;
     //@OneToMany (cascade ={CascadeType.ALL},mappedBy = "order")
     //private Set <DishEntity> Dishes;
-    @OneToOne (cascade = {CascadeType.ALL})
+    @OneToOne (cascade = {CascadeType.DETACH})
     private MenuEntity menu;
     private String status="In Process";
     @ManyToOne (cascade = {CascadeType.ALL})

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 
 /**
@@ -18,29 +19,29 @@ import javax.persistence.TableGenerator;
  * @author Diana Wang
  */
 @Entity
-@TableGenerator(name="tab", initialValue = 101)
+@TableGenerator(name="seq", initialValue = 101)
 public class DishEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE,generator = "tab")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq")
     private Long dishId;
     private String dishName;
     private Integer dishQuantity;
     private Double dishCost;
-    @ManyToOne(cascade={CascadeType.ALL})
-    private MenuEntity menu;
- 
+    @OneToOne (cascade={CascadeType.ALL},mappedBy="dish")
+    private CourseEntity course;
     
     public DishEntity(){}
 
-    public MenuEntity getMenu() {
-        return menu;
+    public CourseEntity getCourse() {
+        return course;
     }
 
-    public void setMenu(MenuEntity menu) {
-        this.menu = menu;
+    public void setCourse(CourseEntity course) {
+        this.course = course;
     }
 
+   
     
     public Long getDishId() {
         return dishId;
