@@ -26,11 +26,11 @@
                         <p:column style="width:100px">  
                             <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
 
-                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit">  
+                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
                                     <f:setPropertyActionListener value="#{roleList}" target="#{manageRoleManagedBean.selectedRole}" />  
                                     <f:setPropertyActionListener value="#{true}" target="#{manageRoleManagedBean.editMode}" />  
                                 </p:commandButton>  
-                                <p:commandButton update=":form:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete">  
+                                <p:commandButton update=":form:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
                                     <f:setPropertyActionListener value="#{roleList}" target="#{manageRoleManagedBean.selectedRole}" />  
                                 </p:commandButton>  
                             </h:panelGrid>  
