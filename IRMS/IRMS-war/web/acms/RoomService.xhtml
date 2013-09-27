@@ -27,11 +27,11 @@
                     </p:panel>
                 </h:form>
             </p:tab>  
-<!--
+
             <p:tab id="tab2" title="Manage Room Service">  
                 <h:form id="serviceMgt">
                     <p:pickList id="manageService" value="#{roomServiceManagedBean.getAllRoomServices()}" var="manageService"   
-                                itemLabel="#{service}" itemValue="#{service}" />  
+                                 />  <!--itemLabel="#{service}" itemValue="#{service}"-->
 
                     <p:commandButton id="serviceSubmit" value="Submit" update="displayServices" oncomplete="PF('serviceDialog').show()" style="margin-top:5px"/>  
 
@@ -49,10 +49,10 @@
                             </ui:repeat>  
                         </h:panelGrid>  
                     </p:dialog> 
-                    
+
                 </h:form>
             </p:tab> 
--->
+
         </p:tabView>
     </ui:define>
 

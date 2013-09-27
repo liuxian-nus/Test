@@ -44,7 +44,7 @@ public class RoomServiceManagedBean {
 
     public DualListModel<RoomServiceEntity> getAllRoomServices() throws ExistException {
         source = roomServiceSessionBean.getAllRoomServices();
-        target = roomServiceSessionBean.getAllRoomServices();
+//        target = roomServiceSessionBean.getAllRoomServices();
         System.err.println("in get all room services");
         roomServices = new DualListModel<RoomServiceEntity>(source, target);
         return roomServices;
