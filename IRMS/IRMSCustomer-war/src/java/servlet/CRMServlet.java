@@ -39,9 +39,8 @@ public class CRMServlet extends HttpServlet {
     @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
     //private Set<RestaurantEntity> data = null;
-    private String message=null; 
+    private String message = null;
     private MemberEntity member;
-    
 
     //private String keyword=null;
     /**
@@ -78,7 +77,7 @@ public class CRMServlet extends HttpServlet {
 
             if ("member".equals(page)) {
                 System.out.println("***member page***");
-                
+
                 request.getRequestDispatcher("/member.jsp").forward(request, response);
 
             } else if ("memberInfo".equals(page)) {
@@ -92,56 +91,81 @@ public class CRMServlet extends HttpServlet {
 
                 System.out.println(email);
                 System.out.println(password);
-                
-                member=memberSession.getMemberByEmail(email);
-             
-                System.out.println("CRMSServlet: member has been returned");
-                request.setAttribute("data", member);
 
-
-                request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
-               /* boolean isLogin = memberManagementSessionBean.login(email, password);
+                boolean isLogin = memberManagementSessionBean.login(email, password);
                 if (isLogin) {
                     System.out.println(isLogin);
                     member = memberSession.getMemberByEmail(email);
                     System.out.println(member.getMemberName());
-                    request.setAttribute("data",member);
+                    request.setAttribute("data", member);
                     request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
                 } else {
-                    message="Wrong password or username entered";
-                    request.setAttribute("message",message);
+                    message = "Wrong password or username entered";
+                    request.setAttribute("message", message);
                     request.getRequestDispatcher("/member.jsp").forward(request, response);
-                    
-                }*/
 
-            } else if("memberInfoEditionConfirmation".equals(page)){
-                System.out.println("***memberInfoEdictionConfirmation page***");
-                
-                String userName=request.getParameter("userName");
+                }
+
+                /*member=memberSession.getMemberByEmail(email);
+             
+                 System.out.println("CRMSServlet: member has been returned");
+                 request.setAttribute("data", member);
+
+
+                 request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);*/
+
+
+            } else if ("resetMemberPassword".equals(page)) {
+                System.out.println("***resetMemberPassword page***");
+                request.getRequestDispatcher("/resetMemberPassword.jsp").forward(request, response);
+            } else if ("resetMemberPasswordConfirmation".equals(page)) {
+                System.out.println("***resetMemberPasswordConfirmation page***");
                 String email=request.getParameter("email");
-                String password=request.getParameter("password");
-                String mobile=request.getParameter("mobile");
-                String nationality=request.getParameter("nationality");
-                String day=request.getParameter("date");
-                String month=request.getParameter("month");
-                String year=request.getParameter("year");
-                String maritalStatus=request.getParameter("maritalStatus");
+                String oldPassword=request.getParameter("oldPwd");
+                String newPassword1=request.getParameter("newPwd1");
+                String newPassword2=request.getParameter("newPwd2");
+                memberManagementSessionBean.resetPassword
+                
+                request.getRequestDispatcher("/resetMemberPasswordConfirmation.jsp").forward(request, response);
+            }else if ("memberInfoEditionConfirmation".equals(page)) {
+                System.out.println("***memberInfoEdictionConfirmation page***");
+
+                String userName = request.getParameter("userName");
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                String mobile = request.getParameter("mobile");
+                String nationality = request.getParameter("nationality");
+                String day = request.getParameter("date");
+                String month = request.getParameter("month");
+                String year = request.getParameter("year");
+                String maritalStatus = request.getParameter("maritalStatus");
                 String gender = request.getParameter("gender");
                 Boolean subscribe = Boolean.valueOf(request.getParameter("subscribe"));
-                String securityQuestion=request.getParameter("securityQuestion");
-                String answer=request.getParameter("answer");
-                
+                String securityQuestion = request.getParameter("securityQuestion");
+                String answer = request.getParameter("answer");
+
                 String this_date = day + "-" + month + "-" + year;
                 System.out.println(this_date);
                 Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
                 System.out.println(date);
+
+                /*    if (subscribe) {
+                 System.out.println("the member has subscribed");
+                 message="You have subscribed";
+                 request.setAttribute("message",message);
+                 } else {
+                 message="You have not subscribed.";
+                 request.setAttribute("message",message);                
+                 }
                 
+                 System.out.println("message, "+message);*/
+
                 member = memberSession.updateMember(email, userName, password, mobile, gender, nationality, date, maritalStatus, subscribe,
                         securityQuestion, answer);
-                request.setAttribute("data",member);
-                
+                request.setAttribute("data", member);
+
                 request.getRequestDispatcher("/memberInfoEditionConfirmation.jsp").forward(request, response);
-                
+
             } else if ("memberRegister".equals(page)) {
                 System.out.println("***memberRegister page***");
                 request.getRequestDispatcher("/memberRegister.jsp").forward(request, response);
@@ -162,7 +186,7 @@ public class CRMServlet extends HttpServlet {
                 String maritalStatus = request.getParameter("marital");
                 String gender = request.getParameter("gender");
                 Boolean subscribe = Boolean.valueOf(request.getParameter("subscribe"));
-                
+
                 String this_date = day + "-" + month + "-" + year;
                 System.out.println(this_date);
                 Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
@@ -173,8 +197,8 @@ public class CRMServlet extends HttpServlet {
 
                 member = memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe,
                         securityQuestion, answer);
-                
-                
+
+
 
                 request.getRequestDispatcher("/memberRegisterResult.jsp").forward(request, response);
             } else if ("memberForgetPassword".equals(page)) {

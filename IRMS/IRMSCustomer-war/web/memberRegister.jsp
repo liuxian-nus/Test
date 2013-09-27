@@ -83,12 +83,12 @@
                         <div>
                             <div class="small-10 columns">
                                 <select required name="nationality" id="customDropdown">
-                                    <option value="1">Afghan</option>
-                                    <option value="2">Swedish</option>
-                                    <option value="3">Albanian</option>
-                                    <option value="4">Algerian</option>
-                                    <option value="5">American</option>
-                                    <option value="6">Andorran</option>
+                                    <option value="Afghan">Afghan</option>
+                                    <option value="Swedish">Swedish</option>
+                                    <option value="Albanian">Albanian</option>
+                                    <option value="Algerian">Algerian</option>
+                                    <option value="American">American</option>
+                                    <option value="Andorran">Andorran</option>
                                     <option value="7">Angolan</option>
                                     <option value="8">Antiguans</option>
                                     <option value="9">Barbudans</option>
@@ -377,7 +377,7 @@
                         </div>
                         <div class="small-3 columns">
                             <select required name="dateMonth" id="button dropdown">
-                                <option value="0">Month</option>
+                                <option value="Month">Month</option>
                                 <option value="1">Jan</option>
                                 <option value="2">Feb</option>
                                 <option value="3">Mar</option>
