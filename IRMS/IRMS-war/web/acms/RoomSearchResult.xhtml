@@ -71,7 +71,17 @@
 
                 <p:dialog width="500" showEffect="explode" hideEffect="explode" header="Room Service" widgetVar="checkService"> 
                     <br/>
-                    room service check list
+                     <p:dataTable id="roomServices" value="#{roomSearchResultManagedBean.thisRoom.getRoomService}" var="roomServices" paginator="true" rows="3">
+                                <p:column headerText="Category: ">
+                                    <h:outputText value="#{roomServices.category}"/>
+                                </p:column>                         
+                                <p:column headerText="Room Service: ">
+                                    <h:outputText value="#{roomServices.roomServiceName}"/>
+                                </p:column>
+                                <p:column headerText="Service Price: ">
+                                    <h:outputText value="#{roomServices.roomServicePrice}"/>
+                                </p:column>
+                            </p:dataTable>
                     <br/><br/>
                     <p:commandButton value="Okay" oncomplete="checkService.hide()">  
                     </p:commandButton>
