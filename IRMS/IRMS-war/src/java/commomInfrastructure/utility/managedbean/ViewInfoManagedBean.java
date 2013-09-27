@@ -53,7 +53,7 @@ public class ViewInfoManagedBean {
     public void saveChanges(ActionEvent event) throws ExistException
     {
         em.updateEmployee(selectedEmployee);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));        
+        addMessage("Changes saved.");        
     }
 
     public EmployeeSessionBean getEm() {
@@ -82,5 +82,10 @@ public class ViewInfoManagedBean {
 
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
+    }
+    
+    public void addMessage(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

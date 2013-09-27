@@ -4,13 +4,14 @@
                 template="./../Template/generalTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
 
     <ui:define name="content">
         <h:form id="form">
             <p:panel id="info" header="My Info" style="height:495px;">
                 <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
-                    <p:growl id="msgs" showDetail="true" />
+                    <p:growl id="msgs"/>
                     <p:dataTable id="employees" value="#{viewInfoManagedBean.getEmployees()}" var="employeeList" draggableColumns="true">
 
                         <p:column headerText="name">
@@ -71,7 +72,7 @@
 
                             <f:facet name="footer">  
                                 <p:outputPanel rendered="#{viewInfoManagedBean.editMode}" layout="block" style="text-align:center">  
-                                    <p:commandButton value="Save" update="employees msgs" actionListener="#{viewInfoManagedBean.saveChanges}"   
+                                    <p:commandButton value="Save" update="msgs" actionListener="#{viewInfoManagedBean.saveChanges}"   
                                                      oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
                                     <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
                                 </p:outputPanel>  
