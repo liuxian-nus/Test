@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -24,7 +25,7 @@ import javax.faces.event.PhaseEvent;
 public class RoomServiceManagedBean {
     @EJB
     private RoomServiceSessionBean roomServiceSessionBean;
-    private List<RoomServiceEntity> roomServices = new ArrayList<RoomServiceEntity>();
+    private DualListModel<RoomServiceEntity> roomServices;
     private RoomServiceEntity thisRoomService;
     private String roomServiceName;
     private double roomServicePrice;
@@ -38,12 +39,17 @@ public class RoomServiceManagedBean {
         System.err.println("reservaion Id get" + roomServiceName);
     }
 
-    public List<RoomServiceEntity> getRoomServices() throws ExistException {
+    public DualListModel<RoomServiceEntity> getAllRoomServices() throws ExistException {
+        List<RoomServiceEntity> source = new ArrayList<RoomServiceEntity>();
+        List<RoomServiceEntity> target = new ArrayList<RoomServiceEntity>();
+        source = roomServiceSessionBean.getAllRoomServices();
+        target = roomServiceSessionBean.getAllRoomServices();
         System.err.println("in get all room services");
-        return roomServiceSessionBean.getAllRoomServices();
+        roomServices = new DualListModel<RoomServiceEntity>(source, target);  
+        return roomServices;
     }
 
-    public void setRoomServices(List<RoomServiceEntity> roomServices) {
+    public void setRoomServices(DualListModel<RoomServiceEntity> roomServices) {
         this.roomServices = roomServices;
     }
 
