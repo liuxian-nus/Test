@@ -180,10 +180,10 @@ public class IRMSFilter implements Filter {
 
     private Boolean excludeAdminCheck(String employeeId, String path) throws ExistException {
 
-        System.err.println("excludeAdminCheck...");
+        //System.err.println("excludeAdminCheck...");
 
         EmployeeEntity user = employeeManager.getEmployeeById(employeeId);
-        System.err.println("excludeAdminCheck: " + user.getEmployeeName());
+        //System.err.println("excludeAdminCheck: " + user.getEmployeeName());
         List<String> userType = new ArrayList<String>();
 
         for (int i = 0; i < user.getRoles().size(); i++) {
@@ -245,7 +245,7 @@ public class IRMSFilter implements Filter {
     }
 
     private Boolean checkAccessRight(String employeeId, String path) throws ExistException {
-        System.err.println("check access right");
+        //System.err.println("check access right");
         if (path.equals("/test.xhtml") || path.equals("/error.xhtml") || path.equals("/initialization.xhtml")) {
             return true;
         } else {
@@ -256,13 +256,13 @@ public class IRMSFilter implements Filter {
             Boolean flag = false;
             List<RoleEntity> roleList = employee.getRoles();
             for (RoleEntity role : roleList) {
-                System.out.println("first for loop...");
+                //System.out.println("first for loop...");
                 List<FunctionalityEntity> functionalityList = role.getFunctionalities();
                 for (FunctionalityEntity functionality : functionalityList) {
-                    System.err.println("functionality name: " + functionality.getFuncName());
+                    //System.err.println("functionality name: " + functionality.getFuncName());
                     if (accessRight.contains(functionality.getFuncName())) {
                         flag = true;
-                        System.err.println("flag in:" + flag);
+                        //System.err.println("flag in:" + flag);
                         break;
                     }
                 }
