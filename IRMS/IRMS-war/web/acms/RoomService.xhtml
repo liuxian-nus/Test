@@ -12,9 +12,9 @@
                     <p:panel id="service" header="List of Room Services" style="height:495px;">
                         <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
                             <p:dataTable id="roomServices" value="#{roomServiceManagedBean.getAllServices()}" var="roomServices" paginator="true" rows="3">
-                                 <p:column headerText="Category: ">
+                                <p:column headerText="Category: ">
                                     <h:outputText value="#{roomServices.category}"/>
-                                 </p:column>                         
+                                </p:column>                         
                                 <p:column headerText="Room Service: ">
                                     <h:outputText value="#{roomServices.roomServiceName}"/>
                                 </p:column>
@@ -29,6 +29,25 @@
 
             <p:tab id="tab2" title="Manage Room Service">  
                 <h:form id="serviceMgt">
+                    <p:pickList id="manageService" value="#{roomServiceManagedBean.getAllServices()}" var="manageService"   
+                                itemLabel="#{service}" itemValue="#{service}" />  
+
+                    <p:commandButton id="serviceSubmit" value="Submit" update="displayServices" oncomplete="PF('serviceDialog').show()" style="margin-top:5px"/>  
+
+
+                    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="serviceDialog">  
+                        <h:panelGrid id="displayServices" columns="2">  
+                            <h:outputText value="Source: " style="font-weight:bold"/>  
+                            <ui:repeat value="#{roomServiceManagedBean.getAllServices().source}" var="item">  
+                                <h:outputText value="#{item}" style="margin-right:5px" />  
+                            </ui:repeat>  
+
+                            <h:outputText value="Target: " style="font-weight:bold"/>  
+                            <ui:repeat value="#{roomServiceManagedBean.getAllServices().target}" var="item">  
+                                <h:outputText value="#{item}" style="margin-right:5px" />  
+                            </ui:repeat>  
+                        </h:panelGrid>  
+                    </p:dialog> 
                     
                 </h:form>
             </p:tab> 
