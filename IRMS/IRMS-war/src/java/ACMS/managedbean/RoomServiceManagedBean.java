@@ -23,16 +23,19 @@ import org.primefaces.model.DualListModel;
 @ManagedBean
 @ViewScoped
 public class RoomServiceManagedBean {
+
     @EJB
     private RoomServiceSessionBean roomServiceSessionBean;
     private DualListModel<RoomServiceEntity> roomServices;
+    List<RoomServiceEntity> source = new ArrayList<RoomServiceEntity>();
+    List<RoomServiceEntity> target = new ArrayList<RoomServiceEntity>();
     private RoomServiceEntity thisRoomService;
     private String roomServiceName;
     private double roomServicePrice;
-    
+
     public RoomServiceManagedBean() {
     }
-    
+
     public void initViewSelect(PhaseEvent event) {
         System.err.println("in initial view function");
         this.roomServiceName = (String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("roomServiceName");
@@ -40,15 +43,37 @@ public class RoomServiceManagedBean {
     }
 
     public DualListModel<RoomServiceEntity> getAllRoomServices() throws ExistException {
-        List<RoomServiceEntity> source = new ArrayList<RoomServiceEntity>();
-        List<RoomServiceEntity> target = new ArrayList<RoomServiceEntity>();
         source = roomServiceSessionBean.getAllRoomServices();
         target = roomServiceSessionBean.getAllRoomServices();
         System.err.println("in get all room services");
-        roomServices = new DualListModel<RoomServiceEntity>(source, target);  
+        roomServices = new DualListModel<RoomServiceEntity>(source, target);
         return roomServices;
     }
 
+    public RoomServiceSessionBean getRoomServiceSessionBean() {
+        return roomServiceSessionBean;
+    }
+
+    public void setRoomServiceSessionBean(RoomServiceSessionBean roomServiceSessionBean) {
+        this.roomServiceSessionBean = roomServiceSessionBean;
+    }
+
+    public List<RoomServiceEntity> getSource() throws ExistException {
+        return roomServiceSessionBean.getAllRoomServices();
+    }
+
+    public void setSource(List<RoomServiceEntity> source) {
+        this.source = source;
+    }
+
+    public List<RoomServiceEntity> getTarget() throws ExistException {
+        return roomServiceSessionBean.getAllRoomServices();
+    }
+
+    public void setTarget(List<RoomServiceEntity> target) {
+        this.target = target;
+    }
+    
     public void setRoomServices(DualListModel<RoomServiceEntity> roomServices) {
         this.roomServices = roomServices;
     }
@@ -76,5 +101,4 @@ public class RoomServiceManagedBean {
     public void setRoomServicePrice(double roomServicePrice) {
         this.roomServicePrice = roomServicePrice;
     }
-    
 }
