@@ -17,7 +17,7 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <h1>Restaurant Search Result!</h1>
+            <h2>Restaurant Search Result!</h2>
 
             <table>
                 <tbody>
