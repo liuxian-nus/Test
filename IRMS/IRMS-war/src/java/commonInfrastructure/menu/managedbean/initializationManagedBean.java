@@ -258,7 +258,7 @@ public class initializationManagedBean implements Serializable {
     
     public void createMember() {
         System.err.println("go to create member page...");       
-        Date qqdate = new Date(11,03,1991);
+        Date qqdate = new Date(91,02,11);
         
         member = new MemberEntity();
         member.setMemberEmail("xinqi-wang@yahoo.com");
@@ -271,6 +271,7 @@ public class initializationManagedBean implements Serializable {
         member.setMaritalStatus("single");
         member.setIsVIP(true);
         member.setIsSubscriber(true);
+        member.setPreferences("to be set");
         
         try {
             System.out.println("Creating new member....");

@@ -33,7 +33,7 @@ import javax.persistence.PersistenceContext;
  * @author Ser3na
  */
 @Singleton
-@Startup
+//@Startup
 public class InitSessionBean {
     
 
@@ -246,7 +246,7 @@ public class InitSessionBean {
 
     public void createMember() {
         System.err.println("go to create member page...");       
-        Date qqdate = new Date(1991,03,11);
+        Date qqdate = new Date(91,02,11);
         
         member = new MemberEntity();
         member.setMemberEmail("xinqi-wang@yahoo.com");
@@ -370,7 +370,7 @@ public class InitSessionBean {
             roomServiceSessionBean.addRoomService(roomService1);
             System.err.println("roomService added");
         }catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            System.out.println("Error occurs when adding room service");
             return;
         }
         
@@ -387,7 +387,7 @@ public class InitSessionBean {
             roomServiceSessionBean.addRoomService(roomService2);
             System.err.println("roomService added");
         }catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            System.out.println("Error occurs when adding room service");
             return;
         }
     }

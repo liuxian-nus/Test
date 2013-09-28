@@ -160,19 +160,22 @@ public class CRMServlet extends HttpServlet {
                 System.out.println("captured password: "+password);
                 String mobile = request.getParameter("mobile");
                 String nationality = request.getParameter("nationality");
-                String day = request.getParameter("date");
-                String month = request.getParameter("month");
-                String year = request.getParameter("year");
+                Integer day = Integer.parseInt(request.getParameter("date"));
+                Integer month = Integer.parseInt(request.getParameter("month"));
+                month+=1;
+                Integer year = Integer.parseInt(request.getParameter("year"));
                 String maritalStatus = request.getParameter("maritalStatus");
                 String gender = request.getParameter("gender");
                 Boolean subscribe = Boolean.valueOf(request.getParameter("subscribe"));
                 String securityQuestion = request.getParameter("securityQuestion");
                 String answer = request.getParameter("answer");
 
-                String this_date = day + "-" + month + "-" + year;
-                System.out.println(this_date);
-                Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
-                System.out.println(date);
+            //    String this_date = day + "-" + month + "-" + year;
+            //    System.out.println(this_date);
+                Date date;
+                date=new Date(year-1900, month-1, day);
+            //    Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
+            //    System.out.println(date);
 
                 /*    if (subscribe) {
                  System.out.println("the member has subscribed");
@@ -206,17 +209,19 @@ public class CRMServlet extends HttpServlet {
                 String password2 = request.getParameter("password2");
                 String mobile = request.getParameter("mobile");
                 String nationality = request.getParameter("nationality");
-                String day = request.getParameter("dateDay");
-                String month = request.getParameter("dateMonth");
-                String year = request.getParameter("dateYear");
+                Integer day = Integer.parseInt(request.getParameter("dateDay"));
+                Integer month = Integer.parseInt(request.getParameter("dateMonth"));
+                Integer year = Integer.parseInt(request.getParameter("dateYear"));
                 String maritalStatus = request.getParameter("marital");
                 String gender = request.getParameter("gender");
                 Boolean subscribe = Boolean.valueOf(request.getParameter("subscribe"));
 
-                String this_date = day + "-" + month + "-" + year;
-                System.out.println(this_date);
-                Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
-                System.out.println(date);
+           //     String this_date = day + "-" + month + "-" + year;
+           //     System.out.println(this_date);
+                Date date;
+                date=new Date(year-1900, month-1, day);
+   //             Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
+   //             System.out.println(date);
                 String securityQuestion = request.getParameter("securityQuestion");
                 String answer = request.getParameter("answer");
                 System.out.println("userName: " + userName);
