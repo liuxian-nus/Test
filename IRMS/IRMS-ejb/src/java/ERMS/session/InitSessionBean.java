@@ -4,20 +4,22 @@
  */
 package ERMS.session;
 
+import ACMS.entity.OverbookingQuotaEntity;
 import ACMS.entity.ReservationEntity;
+import ACMS.session.OverbookingSessionBean;
 import ACMS.session.ReservationSessionBean;
+import ACMS.session.RoomSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.session.CPasswordHashSessionBean;
 import CRMS.session.MemberSessionBean;
 import ERMS.entity.EmployeeEntity;
+import ERMS.entity.FunctionalityEntity;
 import ERMS.entity.RoleEntity;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -28,7 +30,8 @@ import javax.persistence.PersistenceContext;
 @Singleton
 @Startup
 public class InitSessionBean {
-
+    
+ 
     @PersistenceContext
     private EntityManager em;
     @EJB
@@ -41,11 +44,22 @@ public class InitSessionBean {
     private ReservationSessionBean reSessionBean;
     @EJB
     private MemberSessionBean mmSessionBean;
+    @EJB
+    private RoomSessionBean roomSessionBean;
+    @EJB
+    private FunctionalitySessionBean functionalitySessionBean;
+    @EJB
+    private OverbookingSessionBean overbookingSessionBean;
+   
+    
+    
     
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
     private MemberEntity member;
+    private FunctionalityEntity functionality;
+    private OverbookingQuotaEntity overbookingQuota;
 
     @PostConstruct
     public void init() {
@@ -54,6 +68,11 @@ public class InitSessionBean {
 
     public void createSuperAdmin() {
         System.err.println("go to create super admin");
+        
+        functionality = new FunctionalityEntity();
+        functionality.setFuncName("addRole");
+        functionality.setFuncDescription("access right to addRole page");
+        functionalitySessionBean.addFunctionality(functionality);
 
         role = new RoleEntity();
         role.setRoleId(10);
@@ -76,10 +95,10 @@ public class InitSessionBean {
             employeeSessionBean.addEmployee(employee);
             System.out.println("Super Admin saved.....");
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
+            System.out.println("Error occurs when adding Super Admin");
             return;
         }
-        System.err.println("Insert Employee into database");
+        System.err.println("Insert Super Admin into database");
 
     }
 
@@ -105,11 +124,69 @@ public class InitSessionBean {
             employeeSessionBean.addEmployee(employee);
             System.out.println("ACMSAdmin saved.....");
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
+            System.out.println("Error occurs when creating system user");
             return;
         }
-        System.err.println("Insert Employee into database");
+        System.err.println("Insert System User into database");
 
+    }
+    
+    public void createFBMSAdmin() {
+        System.out.println("go to create FBMS page");
+
+        role = new RoleEntity();
+        role.setRoleId(50);
+        role.setRoleName("FBMSAdmin");
+        System.out.println("Create role :" + role.getRoleName());
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("E0000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeName("FBMSAdmin");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("E0000"));
+        System.out.println("finished hashing");
+        employee.addRole(role);
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving FBMSAdmin....");
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("FBMSAdmin saved.....");
+        } catch (Exception e) {
+            System.out.println("Error occurs when adding FBMSadmin");
+            return;
+        }
+        System.out.println("Insert FBMSAdmin into database");
+      
+    }
+    
+    public void createCRMSAdmin() {
+        System.out.println("go to create CRMS page");
+
+        role = new RoleEntity();
+        role.setRoleId(80);
+        role.setRoleName("CRMSAdmin");
+        System.out.println("Create role :" + role.getRoleName());
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("H0000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeName("CRMSAdmin");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("H0000"));
+        System.out.println("finished hashing");
+        employee.addRole(role);
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving CRMSAdmin....");
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("CRMSAdmin saved.....");
+        } catch (Exception e) {
+            System.out.println("Error occurs when adding admin");
+            return;
+        }
+        System.out.println("Insert CRMS Admin into database");
+        
     }
 
     public void createReservation() {
@@ -137,13 +214,13 @@ public class InitSessionBean {
             reSessionBean.addReservation(reservation);
             System.out.println("Hotel Reservation saved.....");
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding reservation", ""));
+            System.out.println("Error occurs when adding reservation");
             return;
         }
         System.err.println("Insert Reservation into database");
     }
 
-    //Add new test cases below!!!!!!!!!
+
     public void createMember() {
         System.err.println("go to create member page...");       
         Date qqdate = new Date(1991,03,11);
@@ -166,9 +243,96 @@ public class InitSessionBean {
             mmSessionBean.addMember(member);
             System.out.println("Member created....");
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding member", ""));
+            System.out.println("Error occurs when adding member");
             return;
         }
         System.err.println("Insert dayan-wang member into database");
+    }
+    
+    public void createRoom() {
+        try {
+            System.err.println("Insert room started.....");
+            roomSessionBean.createTestRoom(1,1,1,"deluxe","available","Danny");
+            /*
+            RoomEntity room1 = new RoomEntity();
+            room1.setRoomId(1, 1, 1);
+            room1.setRoomType("deluxe");
+            room1.setRoomStatus("available");
+            rmSessionBean.createTestRoom(room1);
+            RoomEntity room2 = new RoomEntity();
+            room2.setRoomId(1, 1, 2);
+            room2.setRoomType("deluxe");
+            room2.setRoomStatus("available");
+            rmSessionBean.createTestRoom(room2);
+            RoomEntity room3 = new RoomEntity();
+            room3.setRoomId(1, 1, 3);
+            room3.setRoomType("deluxe");
+            room3.setRoomStatus("reserved");
+            rmSessionBean.createTestRoom(room3);
+            RoomEntity room4 = new RoomEntity();
+            room4.setRoomId(1, 1, 4);
+            room4.setRoomType("deluxe");
+            room4.setRoomStatus("occupied");
+            rmSessionBean.createTestRoom(room4);
+            *//*
+            Query query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
+                    + "VALUES (1,1,1,'Deluxe');");
+            query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
+                    + "VALUES (1,1,2,'Deluxe');");
+            query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
+                    + "VALUES (1,1,3,'Deluxe');");
+            query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
+                    + "VALUES (1,1,4,'Deluxe');");
+            query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
+                    + "VALUES (1,1,5,'Deluxe');");
+            query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
+                    + "VALUES (1,1,6,'Deluxe');");
+                    */
+        } catch (Exception e) {
+            System.out.println("Error occurs when adding room to Orchard Hotel");
+            return;
+        }
+        System.out.println("Insert room into database");
+ 
+    }
+      
+    public void createFunctionalities(){
+        functionality = new FunctionalityEntity();
+        functionality.setFuncName("addFunctionality");
+        functionality.setFuncDescription("access right to addFunctionality page");
+        
+        try {
+            System.out.println("Creating new functionality....");
+            functionalitySessionBean.addFunctionality(functionality);
+            System.out.println("Functionality created....");
+        } catch (Exception e) {
+            System.out.println("Error occurs when adding functionality");
+            return;
+        }
+        System.err.println("Insert systemMsg functionality into database");
+      
+    }
+    
+    public void createOverbooking(){
+        overbookingQuota = new OverbookingQuotaEntity();
+        overbookingQuota.setOverbookingId(1);
+        overbookingQuota.setRoomType("deluxe");
+        overbookingQuota.setQuota(0);
+        overbookingQuota.setCompensation1(105);
+        overbookingQuota.setCompensation2(485.3);
+        
+        try {
+            System.err.println("Initiating the overbooking entity...");
+            overbookingSessionBean.initOverbooking(overbookingQuota);
+            System.out.println("Overbooking record initiated");
+        }catch (Exception e) {
+             System.out.println("Error occurs when initiating overbooking");
+            return;
+        }
+        System.err.println("Initiating overbookin entity into database");
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
     }
 }
