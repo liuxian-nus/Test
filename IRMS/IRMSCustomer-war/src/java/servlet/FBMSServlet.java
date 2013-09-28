@@ -633,8 +633,57 @@ public class FBMSServlet extends HttpServlet {
     }
 
     private OrderEntity modifyCatering(HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        OrderEntity oe = null; 
+        System.out.println("FBMSServlet: modifyCatering function has been invoked!");
+            
+            Integer year = Integer.parseInt(request.getParameter("year"));
+            System.out.println("The booking year is "+ year);
+            
+            Integer month = Integer.parseInt(request.getParameter("month"));
+            System.out.println("The booking month is "+ month);
+            
+            Integer date = Integer.parseInt(request.getParameter("date"));
+            System.out.println("The booking date is "+ date);
+            
+            Integer hour = Integer.valueOf(request.getParameter("time"));
+            System.out.println("The booking hour is "+hour);
+            
+            int min = 0;
+            
+            Date thisDate;
+            thisDate = new Date(year-1900,month-1,date,hour,min);
+            
+        System.out.println("FBMSServlet makeReservation: date has been retrieved!");
         
+            String title = request.getParameter("title");
+        System.out.println("The booking people title is "+title);
+        
+        String name = request.getParameter("name");
+        System.out.println("The booking people name is "+name);
+        
+        String email = request.getParameter("email");
+        System.out.println("The booking people email is "+email);
+        
+        String mobile = request.getParameter("mobile");
+        System.out.println("The booking people mobile is "+mobile);
+        
+        String notes = request.getParameter("notes");
+        System.out.println("The booking people's notes is "+notes);
+        
+        Integer numberOrder = Integer.parseInt(request.getParameter("numberOrder"));
+        System.out.println("The booking quantity is "+numberOrder);
+        
+        Long orderId = Long.parseLong(request.getParameter("orderId"));
+        System.out.println("The booking orderId is "+orderId);
+        
+        oe = orderSessionBean.modifyOrder(orderId, email, mobile, name, notes, thisDate, title);
+        System.out.println("FBMSServlet: the booking has been modified!");
+        
+        //oe = orderSessionBean.viewOrder(orderId);
+        
+        emailSessionBean.sendConfirmation(email, oe);
+        
+        return oe;
     }
     
     

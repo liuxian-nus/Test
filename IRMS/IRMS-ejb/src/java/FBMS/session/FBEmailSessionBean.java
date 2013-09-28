@@ -100,7 +100,8 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
                     InternetAddress.parse(toEmailAddress));
             message.setSubject("COREL ISLAND RESORT: Your confirmation for catering order");
             message.setText("Greeting from Coral Island Resort!"
-                    + "\nHere is confirmation number:"+ oe.getId()+
+                    + "\nHere is confirmation number:"+ oe.getOrderId()
+                    +
                     "\nPlease use this confirmation number for later modification on our website \n\n"
                     +"Title: "+oe.getTitle()+"\nName: "+oe.getName()
                     +"\nNumber of people: "+oe.getMenu().getNumberOrder()

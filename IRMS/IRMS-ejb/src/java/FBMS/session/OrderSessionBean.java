@@ -148,13 +148,44 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
     @Override
     public boolean modifyOrder (Long orderId,Date orderDateTime, MenuEntity menu, MemberEntity member){
         OrderEntity current = em.find(OrderEntity.class, orderId);
+        
+        if(member!=null)
         current.setMember(member);
+        
+        if(menu!=null)
         current.setMenu(menu);
+        
         current.setOrderDateTime(orderDateTime);
         em.merge(current);
         System.out.println("OrderSessionBean: Order has been modified!");
        
         return true;
+    }
+    
+    @Override
+    public OrderEntity modifyOrder(Long orderId,String email,String mobile,String name,String notes,Date orderDateTime,String title)
+    {
+        OrderEntity current = em.find(OrderEntity.class, orderId);
+        if(current!=null)
+        {
+            current.setEmail(email);
+            current.setMobile(mobile);
+            current.setName(name);
+            current.setNotes(notes);
+            current.setOrderDateTime(orderDateTime);
+            current.setTitle(title);
+            
+            em.merge(current);
+            System.out.println("OrderSessionBean: the order has been modified and merged successfully!");
+            return current;
+        }
+        
+        else
+        {
+            System.out.println("OrderSessionBean: the order cannot be found!");
+            return null;
+        }
+        
     }
 
     @Override

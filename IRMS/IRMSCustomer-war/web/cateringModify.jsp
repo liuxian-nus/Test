@@ -75,6 +75,13 @@
                                 
                                 <div class ="row">
                                 <div class="large-12 columns">
+                                    <label>Hour(0~23)</label>
+                                    <input type="text" name="time" value ="${data.orderDateTime.getHours()}"/>
+                                </div>   
+                                </div>
+                                
+                                <div class ="row">
+                                <div class="large-12 columns">
                                     <label>Date</label>
                                     <input type="text" name="date" value ="${data.orderDateTime.getDate()}"/>
                                 </div>   
