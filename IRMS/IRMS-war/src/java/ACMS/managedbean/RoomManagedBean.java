@@ -7,6 +7,8 @@ package ACMS.managedbean;
 import ACMS.entity.RoomEntity;
 import ACMS.session.RoomSessionBean;
 import ACMS.entity.ReservationEntity;
+import ACMS.entity.RoomServiceEntity;
+import ACMS.session.RoomServiceSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -33,10 +35,47 @@ public class RoomManagedBean implements Serializable {
 
     @EJB
     private RoomSessionBean rm;
+    @EJB
+    private RoomServiceSessionBean rs;
     private List<RoomEntity> selectRoom = new ArrayList<RoomEntity>();
     private Long reservationId;
     private RoomEntity thisRoom = new RoomEntity();
+    private RoomServiceEntity thisRoomService = new RoomServiceEntity();
     private int searchId;
+    private int roomId;
+    private String serviceName;
+
+    public RoomServiceSessionBean getRs() {
+        return rs;
+    }
+
+    public void setRs(RoomServiceSessionBean rs) {
+        this.rs = rs;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    public RoomServiceEntity getThisRoomService() {
+        return thisRoomService;
+    }
+
+    public void setThisRoomService(RoomServiceEntity thisRoomService) {
+        this.thisRoomService = thisRoomService;
+    }
 
     public RoomEntity getThisRoom() {
         return thisRoom;
@@ -63,6 +102,19 @@ public class RoomManagedBean implements Serializable {
     }
 
     public RoomManagedBean() throws ExistException {
+    }
+
+    public void saveNewRoomService(ActionEvent event) throws ExistException {
+        System.out.println("saving new room services...");
+        System.out.println("SaveNewRoomService Name: " + serviceName);
+        System.out.println("room ID: "+roomId);
+        try {
+            rm.addRoomService(roomId, serviceName);
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new room service", ""));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Room Service saved.", ""));
     }
 
     public List<RoomEntity> getAllRooms() throws ExistException, IOException {

@@ -32,7 +32,7 @@ public class RoomServiceManagedBean {
     private RoomServiceEntity thisRoomService;
     private String roomServiceName;
     private double roomServicePrice;
-
+    
     public RoomServiceManagedBean() {
     }
 
@@ -68,6 +68,27 @@ public class RoomServiceManagedBean {
         return source;
     }
 
+    
+    
+//      Start of tab 2...    
+//
+//    public List<RoomServiceEntity> getAllServices() throws ExistException, IOException {
+//        System.err.println("in getAll service");
+//        return roomServiceSessionBean.getAllRoomServices();
+//    }
+//
+//    public List<RoomServiceEntity> getSelectRoom() {
+//        return selectedService;
+//    }
+//
+//    public void setSelectService(List<RoomServiceEntity> selectService) {
+//        this.selectedService = selectService;
+//    }
+
+//      End of tab 2...
+    
+
+    
     public void setSource(List<RoomServiceEntity> source) {
         this.source = source;
     }
@@ -79,7 +100,7 @@ public class RoomServiceManagedBean {
     public void setTarget(List<RoomServiceEntity> target) {
         this.target = target;
     }
-    
+
     public void setRoomServices(DualListModel<RoomServiceEntity> roomServices) {
         this.roomServices = roomServices;
     }

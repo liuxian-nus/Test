@@ -117,7 +117,7 @@ public class RoomSessionBean {
     //list of all rooms -- for floor plan
     //information displayed: availability, roomSchedule,roomName, roomType, roomService, accumulated charge
     public List<RoomEntity> getAllRooms() throws ExistException {
-        System.err.println("in gerallrooms session bean");
+        System.err.println("in getAllrooms session bean");
         Query q = em.createQuery("SELECT r FROM RoomEntity r");
         List roomList = new ArrayList<RoomEntity>();
         for (Object o : q.getResultList()) {
@@ -127,7 +127,7 @@ public class RoomSessionBean {
         if (roomList == null) {
             throw new ExistException("RoomEntity database is empty!");
         }
-        System.err.println("in gerallrooms sessionbean"+roomList.size());
+        System.err.println("in get all rooms sessionbean: room list size="+roomList.size());
         return roomList;
     }
     

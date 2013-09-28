@@ -4,51 +4,51 @@
                 template="./../Template/generalTemplate.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
         <p:tabView id="tabView">  
             <p:tab id="tab1" title="List Room Service">  
                 <h:form id="serviceList">
-                    <p:panel id="service">
-                        <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
-                            <p:dataTable id="roomServices" value="#{roomServiceManagedBean.getSource()}" var="roomServices" paginator="true" rows="3">
-                                <p:column headerText="Category: ">
-                                    <h:outputText value="#{roomServices.category}"/>
-                                </p:column>                         
-                                <p:column headerText="Room Service: ">
-                                    <h:outputText value="#{roomServices.roomServiceName}"/>
-                                </p:column>
-                                <p:column headerText="Service Price: ">
-                                    <h:outputText value="#{roomServices.roomServicePrice}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </div>
-                    </p:panel>
+                    <p:dataTable id="roomServices" value="#{roomServiceManagedBean.getSource()}" var="roomServices" paginator="true" rows="3">
+                        <p:column headerText="Category: ">
+                            <h:outputText value="#{roomServices.category}"/>
+                        </p:column>                         
+                        <p:column headerText="Room Service: ">
+                            <h:outputText value="#{roomServices.roomServiceName}"/>
+                        </p:column>
+                        <p:column headerText="Service Price: ">
+                            <h:outputText value="#{roomServices.roomServicePrice}"/>
+                        </p:column>
+                    </p:dataTable>
                 </h:form>
             </p:tab>  
 
-            <p:tab id="tab2" title="Manage Room Service">  
+
+
+
+            <p:tab id="tab2" title="Manage Room Services">  
                 <h:form id="serviceMgt">
-                    <p:pickList id="manageService" value="#{roomServiceManagedBean.getAllRoomServices()}" var="manageService"   
-                                 />  <!--itemLabel="#{service}" itemValue="#{service}"-->
+                   <p:growl id="message" showDetail="true" sticky="true" />
+                   <h:panelGrid columns="2">
 
-                    <p:commandButton id="serviceSubmit" value="Submit" update="displayServices" oncomplete="PF('serviceDialog').show()" style="margin-top:5px"/>  
+                        <h:outputText value="Room ID: "/>
+                        <p:selectOneMenu value="#{roomManagedBean.roomId}">  
+                            <f:selectItem itemLabel="Select Room" itemValue=""/>
+                            <f:selectItems value="#{roomManagedBean.rm.allRooms}" var="allRoom" itemLabel="#{allRoom.roomId}" itemValue="#{allRoom.roomId}" />  
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Room Service Name: "/>
+                        <p:selectOneMenu value="#{roomManagedBean.serviceName}">  
+                            <f:selectItem itemLabel="Select Service" itemValue=""/>
+                            <f:selectItems value="#{roomServiceManagedBean.roomServiceSessionBean.allRoomServices}" var="allRoomServices" itemLabel="#{allRoomServices.roomServiceName}" itemValue="#{allRoomServices.roomServiceName}" />  
+                        </p:selectOneMenu>
 
 
-                    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="serviceDialog">  
-                        <h:panelGrid id="displayServices" columns="2">  
-                            <h:outputText value="Source: " style="font-weight:bold"/>  
-                            <ui:repeat value="#{roomServiceManagedBean.getAllRoomServices().source}" var="item">  
-                                <h:outputText value="#{item}" style="margin-right:5px" />  
-                            </ui:repeat>  
+                    </h:panelGrid>
 
-                            <h:outputText value="Target: " style="font-weight:bold"/>  
-                            <ui:repeat value="#{roomServiceManagedBean.getAllRoomServices().target}" var="item">  
-                                <h:outputText value="#{item}" style="margin-right:5px" />  
-                            </ui:repeat>  
-                        </h:panelGrid>  
-                    </p:dialog> 
+                    <p:commandButton value="Save" ajax="true" actionListener="#{roomManagedBean.saveNewRoomService}" update="message"/>
 
                 </h:form>
             </p:tab> 
