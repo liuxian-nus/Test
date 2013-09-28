@@ -61,6 +61,8 @@ public class InitSessionBean {
     
     
     
+    
+    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
