@@ -365,7 +365,7 @@ public class initializationManagedBean implements Serializable {
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when initiating overbooking", ""));
             return;
         }
-        System.err.println("Initiating overbookin entity into database");
+        System.err.println("Initiating overbooking entity into database");
     }
     
     public void createRmService(){
