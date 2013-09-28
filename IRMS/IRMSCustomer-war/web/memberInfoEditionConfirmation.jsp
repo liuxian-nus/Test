@@ -11,12 +11,16 @@
         <jsp:include page="base.jsp"></jsp:include>
     </head>
     <body>
-      <h1>Your information has been updated.</h1>
+    
+         <jsp:include page="header.jsp"></jsp:include>
+           <h1>Your information has been updated.</h1>
       <form id="member" action="memberInfo" method="POST">
           <input type="hidden" name="email" value="${data.memberEmail}"/>
           <p>
             <a href="member"> Please log in again. </a>
          </p>
+                 <jsp:include page="footer.jsp"></jsp:include>
+
       </form>
       
     </body>
