@@ -19,10 +19,11 @@
             <section>
                 <p class="title" data-section-title><a href="#"><strong>Edit your personal profile</strong></a></p>
                 <div class="content" data-section-content>
+                
 
-
-                    <form id="search-form" action="memberInfoEditionConfirmation" method="POST">
-                        <fieldset>
+                   <form id="search-form" action="memberInfoEditionConfirmation" method="POST">
+                  
+                            <!--<fieldset>
                             <legend>Your information</legend>
                             <div class="row">
                                 <div class="large-12 columns">
@@ -37,8 +38,8 @@
                                     <input type="text" name ="email" readonly="readonly" value="${data.memberEmail}"/>
                                 </div>   
                             </div>
-                                
-     
+
+
 
                             <div class="row">
                                 <div class="large-12 columns">
@@ -144,7 +145,7 @@
 
 
                             <div class="row">
-                
+
                                 <div class="small-1 columns">
                                     <input type="checkbox" name="subscribe" value="${Boolean.toString(data.isSubscriber)}"/>
                                 </div>
@@ -153,8 +154,8 @@
                                 </div>
 
                             </div>
-                                
-                                <input type="hidden" name="password" value="${data.memberPassword}"/>
+
+                            <input type="hidden" name="password" value="${data.memberPassword}"/>
 
 
                             <div class="row">
@@ -164,33 +165,32 @@
                                 </div>
                             </div>
 
-                        </fieldset>
+                        </fieldset>-->
 
                     </form>
-                                    
-                                        <div class="row">
-                                            <div class="large-12 columns">
-                                                <form action="resetMemberPassword"><input type="Submit" value ="Reset Password"/>
-                                                    <input type="hidden" name="email" value="${data.memberEmail}"/>
-                                                </form>
-                                                <!--         <a href="resetMemberPassword" color="#000000"> Reset Password</a> -->
 
-                                            </div> 
-                                        </div>
+                    <!--   <div class="row">
+                           <div class="large-12 columns">
+                               <form action="resetMemberPassword"><input type="Submit" value ="Reset Password"/>
+                                   <input type="hidden" name="email" value="${data.memberEmail}"/>
+                               </form>
+                             <a href="resetMemberPassword" color="#000000"> Reset Password</a> -->
 
 
                 </div>
+
+   
             </section>
             <section>
-                <p class="title" data-section-title><a href="#"><strong>Member Service</strong></a></p>
+                <p class="title" data-section-title><a href="#"><strong>Security Setting</strong></a></p>
                 <div class="content" data-section-content>
-                    <p>Order food for your event!</p>
+                    <p>Security setting</p>
                 </div>
             </section>
             <section>
-                <p class="title" data-section-title><a href="#"><strong>Section 3</strong></a></p>
+                <p class="title" data-section-title><a href="#"><strong>Member Service </strong></a></p>
                 <div class="content" data-section-content>
-                    <p>Content of section 3.</p>
+                    <p></p>
                 </div>
             </section>
         </div>
