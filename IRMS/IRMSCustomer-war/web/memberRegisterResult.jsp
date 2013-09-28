@@ -12,7 +12,7 @@
         </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <h1>Log in succussful. </h1>
+        <h1>You have registered successfully. </h1>
         <p>
             <a href="member"> Please log in from here. </a>
         </p>
