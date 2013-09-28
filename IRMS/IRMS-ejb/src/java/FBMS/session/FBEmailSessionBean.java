@@ -5,6 +5,7 @@
 package FBMS.session;
 
 import FBMS.entity.IndReservationEntity;
+import FBMS.entity.OrderEntity;
 import java.util.Properties;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -75,4 +76,48 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
         return true;
     }
 
+    @Override
+     public boolean sendConfirmation (String toEmailAddress,OrderEntity oe){
+         Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+        
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            //message.setRecipients(new InternetAddress(""));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmailAddress));
+            message.setSubject("COREL ISLAND RESORT: Your confirmation for catering order");
+            message.setText("Greeting from Coral Island Resort!"
+                    + "\nHere is confirmation number:"+ oe.getId()+
+                    "\nPlease use this confirmation number for later modification on our website \n\n"
+                    +"Title: "+oe.getTitle()+"\nName: "+oe.getName()
+                    +"\nNumber of people: "+oe.getMenu().getNumberOrder()
+                    +"\nDate & Time: "+oe.getOrderDateTime()
+                    +"\nMobile Number: "+oe.getMobile()
+                    +"\nNotes: "+oe.getNotes()
+                    + "\n\n\nBest Regards,\nThe Coral Island Management Team");
+                    
+
+            Transport.send(message);
+
+            System.out.println("EmailSessionBean: the email has been done!");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        
+        return true;
+     }
 }

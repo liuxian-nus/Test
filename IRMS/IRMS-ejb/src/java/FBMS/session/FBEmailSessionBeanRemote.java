@@ -5,6 +5,7 @@
 package FBMS.session;
 
 import FBMS.entity.IndReservationEntity;
+import FBMS.entity.OrderEntity;
 
 /**
  *
@@ -13,5 +14,5 @@ import FBMS.entity.IndReservationEntity;
 public interface FBEmailSessionBeanRemote {
 
     boolean sendConfirmation(String toEmailAddress, IndReservationEntity ire);
-    
+    boolean sendConfirmation (String toEmailAddress,OrderEntity oe);
 }

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -168,14 +169,29 @@ public class FBMSServlet extends HttpServlet {
             }
             else if ("restaurantIndModify".equalsIgnoreCase(page))
             {
-                System.out.println("*****restaurantIndModify*****");
-                System.out.println("FBMSServlet: Current page is restaurantIndModify");
-                Long reservationId = Long.parseLong(request.getParameter("reservationId"));
-                System.out.println("FBMSServlet: the reservation confirmation nubmer is "+reservationId);
-                data3 = indReservationSessionBean.viewReservation(reservationId);
-                System.out.println("FBMSServlet: the individual reservation has been returned");
-                request.setAttribute("data", data3);
-                request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
+                String type = request.getParameter("type");
+                if(type.equalsIgnoreCase("Individual"))
+                    {
+                    System.out.println("*****restaurantIndModify*****");
+                    System.out.println("FBMSServlet: Current page is restaurantIndModify");
+                    Long reservationId = Long.parseLong(request.getParameter("reservationId"));
+                    System.out.println("FBMSServlet: the reservation confirmation nubmer is "+reservationId);
+                    data3 = indReservationSessionBean.viewReservation(reservationId);
+                    System.out.println("FBMSServlet: the individual reservation has been returned");
+                    request.setAttribute("data", data3);
+                    request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
+                    }
+                else
+                {
+                    System.out.println("*****restaurantIndModify*****");
+                    System.out.println("FBMSServlet: Current page is restaurantIndModify: Event Catering Modification");
+                    Long reservationId = Long.parseLong(request.getParameter("reservationId"));
+                    System.out.println("FBMSServlet: the reservation confirmation nubmer is "+reservationId);
+                    data5 = orderSessionBean.viewOrder(reservationId);
+                    System.out.println("FBMSServlet: the event catering reservation has been returned");
+                    request.setAttribute("data", data5);
+                    request.getRequestDispatcher("/cateringModify.jsp").forward(request, response);
+                }
             
             }
             else if("cateringBook".equalsIgnoreCase(page))
@@ -195,6 +211,7 @@ public class FBMSServlet extends HttpServlet {
             }
             else if("cateringCheck".equalsIgnoreCase(page))
             {
+                if(request.getParameter("booking").equalsIgnoreCase("true")){
                 System.out.println("*****cateringCheck*****");
                 System.out.println("FBMSServlet: Current page is cateringCheck");
                 
@@ -202,6 +219,18 @@ public class FBMSServlet extends HttpServlet {
                 System.out.println("FBMSServlet: the order has been confirmed!");
                 request.setAttribute("data", data5);
                 request.getRequestDispatcher("/cateringCheck.jsp").forward(request, response);
+                }
+                
+                else
+                {
+                    System.out.println("*****cateringCheck*****");
+                    System.out.println("FBMSServlet: Current page is catering Check: Modify catering order");
+                    
+                    data5 = modifyCatering(request);
+                    System.out.println("FBMSServlet: the order has been modified!");
+                    request.setAttribute("data", data5);
+                    request.getRequestDispatcher("/cateringCheck.jsp").forward(request, response);
+                }
             }
             
             
@@ -553,6 +582,18 @@ public class FBMSServlet extends HttpServlet {
             me.setCourses(data4);
             System.out.println("FBMSServlet: courses has been set "+me.getCourses().size());
             
+        /*    Iterator <CourseEntity> itr = data4.iterator();
+            while(itr.hasNext())
+            {
+                CourseEntity ce = itr.next();
+                ce.setMenu(me);
+                System.out.println("FBMSServlet: CourseEntity's datafield menu has been set");
+                ce.setQuantity(numberPeople);
+                System.out.println("FBMSServlet: CourseEntity's datafield numberPeople has been set");
+                orderSessionBean.setCourse(ce);
+                
+            }*/
+            
             orderSessionBean.configureMenu(me);
             System.out.println("FBMSServlet: menu has been manipulated completely!"+ me.getNumberOrder());
             
@@ -582,7 +623,7 @@ public class FBMSServlet extends HttpServlet {
         {
             System.out.println("The catering order has been confirmed? "+isConfirmed);
         
-        //emailSessionBean.sendConfirmation(email, );
+             emailSessionBean.sendConfirmation(email,oe );
             return oe;
         }
        
@@ -590,4 +631,11 @@ public class FBMSServlet extends HttpServlet {
         //别忘了发email！！！
         
     }
+
+    private OrderEntity modifyCatering(HttpServletRequest request) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+        
+    }
+    
+    
 }

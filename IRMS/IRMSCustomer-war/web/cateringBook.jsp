@@ -109,6 +109,7 @@
                                     
                                     <input type="submit" value ="book" class="small button"/>
                                 <input type="hidden" name="courseNumber" value="9"/>
+                                <input type="hidden" name="booking" value="true"/>
                                     </form>
                                     </div>
                                     </section>

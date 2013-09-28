@@ -207,6 +207,7 @@
                     
                     
                     <input type="hidden" name="orders" value="${data}"/> 
+                    <input type="hidden" name="booking" value="true"/>
                 
                 </fieldset>
             </form>
