@@ -89,18 +89,18 @@
                                     <option value="Algerian">Algerian</option>
                                     <option value="American">American</option>
                                     <option value="Andorran">Andorran</option>
-                                    <option value="7">Angolan</option>
-                                    <option value="8">Antiguans</option>
-                                    <option value="9">Barbudans</option>
-                                    <option value="10">Argentinean</option>
-                                    <option value="11">Armenian</option>
-                                    <option value="12">Aruban</option>
-                                    <option value="13">Australian</option>
-                                    <option value="14">Austrian</option>
-                                    <option value="15">Azerbaijani</option>
-                                    <option value="16">Bahamian</option>
-                                    <option value="17">Bahraini</option>
-                                    <option value="18">Bangladeshi</option>
+                                    <option value="Angolan">Angolan</option>
+                                    <option value="Antiguans">Antiguans</option>
+                                    <option value="Barbudans">Barbudans</option>
+                                    <option value="Argentinean">Argentinean</option>
+                                    <option value="Armenian">Armenian</option>
+                                    <option value="Aruban">Aruban</option>
+                                    <option value="Australian">Australian</option>
+                                    <option value="Austrian">Austrian</option>
+                                    <option value="Azerbaijani">Azerbaijani</option>
+                                    <option value="Bahamian">Bahamian</option>
+                                    <option value="Bahraini">Bahraini</option>
+                                    <option value="Bangladeshi">Bangladeshi</option>
                                     <option value="19">Barbadian</option>
                                     <option value="20">Belarusian</option>
                                     <option value="21">Belgian</option>
@@ -277,26 +277,26 @@
                                     <option value="192">Serbian</option>
                                     <option value="193">Seychellois</option>
                                     <option value="194">Sierra Leonean</option>
-                                    <option selected="selected" value="195">Singaporean</option>
-                                    <option value="196">Slovakian</option>
-                                    <option value="197">Slovenian</option>
-                                    <option value="198">Solomon Islander</option>
-                                    <option value="199">Somali</option>
-                                    <option value="200">South African</option>
-                                    <option value="201">South Georgia and South Sandwich Islands</option>
-                                    <option value="202">Spanish</option>
-                                    <option value="203">Sri Lankan</option>
-                                    <option value="204">Sudanese</option>
-                                    <option value="205">Surinamer</option>
+                                    <option selected="selected" value="Singaporean">Singaporean</option>
+                                    <option value="Slovakian">Slovakian</option>
+                                    <option value="Slovenian">Slovenian</option>
+                                    <option value="Solomon Islander">Solomon Islander</option>
+                                    <option value="Somali">Somali</option>
+                                    <option value="South Afriican">South African</option>
+    
+                                    <option value="Spanish">Spanish</option>
+                                    <option value="Sri Lankan">Sri Lankan</option>
+                                    <option value="Sudanese">Sudanese</option>
+                                    <option value="Surinamer">Surinamer</option>
                                     <option value="206">Svalbard and Jan Mayen Islands</option>
-                                    <option value="207">Swazi</option>
-                                    <option value="208">Swedish</option>
-                                    <option value="209">Swiss</option>
-                                    <option value="210">Syrian</option>
-                                    <option value="211">Taiwanese</option>
-                                    <option value="212">Tajik</option>
-                                    <option value="213">Tanzanian</option>
-                                    <option value="214">Thai</option>
+                                    <option value="Swazi">Swazi</option>
+                                    <option value="Swedish">Swedish</option>
+                                    <option value="Swish">Swiss</option>
+                                    <option value="Syrian">Syrian</option>
+                                    <option value="Taiwanese">Taiwanese</option>
+                                    <option value="Tajik">Tajik</option>
+                                    <option value="Tanzanian">Tanzanian</option>
+                                    <option value="Thai">Thai</option>
                                     <option value="215">East Timorese</option>
                                     <option value="216">Togolese</option>
                                     <option value="217">Tokelauan</option>
@@ -306,13 +306,13 @@
                                     <option value="221">Turkish</option>
                                     <option value="222">Turkmenistan</option>
                                     <option value="223">Turks and Caicos Islands</option>
-                                    <option value="224">Tuvaluan</option>
-                                    <option value="225">Ugandan</option>
-                                    <option value="226">Ukrainian</option>
-                                    <option value="227">Emirian</option>
-                                    <option value="228">British</option>
-                                    <option value="229">American</option>
-                                    <option value="230">American</option>
+                                    <option value="Tuvaluan">Tuvaluan</option>
+                                    <option value="Ugandan">Ugandan</option>
+                                    <option value="Ukrainian">Ukrainian</option>
+                                    <option value="Emirian">Emirian</option>
+                                    <option value="British">British</option>
+                                    <option value="American">American</option>
+                           
                                     <option value="231">Uruguayan</option>
                                     <option value="232">Uzbekistani</option>
                                     <option value="233">Ni-Vanuatu</option>
@@ -511,10 +511,10 @@
 
                             <select required id="customDropdown" name="marital">
                                 <option value="0">- Select -</option>
-                                <option value="1">Single</option>
-                                <option value="2">Married</option>
-                                <option value="3">Widowed</option>
-                                <option value="4">Divorced</option>
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Widowed">Widowed</option>
+                                <option value="Divorced">Divorced</option>
                             </select>
                         </div>
                     </div>
@@ -527,9 +527,9 @@
 
                             <select required id="customDropdown" name="gender">
                                 <option value="0">- Select -</option>
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
-                                <option value="3">Others</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Others">Others</option>
                             </select>
                         </div>
 
