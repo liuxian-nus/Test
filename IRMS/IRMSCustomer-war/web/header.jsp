@@ -7,16 +7,16 @@
     <ul>
         <li><a href="home" >Home</a></li>
         <li><a href="hotel" >Hotel</a>
-            <ul>
-                <li><a href="#">Sub menu 1</a></li>
+             <!--<ul>
+               <li><a href="#">Sub menu 1</a></li>
                 <li><a href="#">Sub menu 2</a></li>
                 <li><a href="#">Sub menu 3</a></li>
                <li><a href="#">Sub menu 1</a></li>
-            </ul>
+            </ul>-->
         </li>
         <li><a href="restaurant">Restaurant</a>
             <ul>
-                <li><a href="restaurantBook">Book Restaurant</a></li>
+                <li><a href="restaurant">Book Restaurant</a></li>
                 <li><a href="cateringBook">Group Catering</a></li>
                 <!--<li><a href="#">Sub menu 3</a></li>
                 <li><a href="#">Sub menu 4</a></li>
