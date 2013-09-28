@@ -11,6 +11,9 @@
     <h:body>
         <h:form id="form"> 
             <p:growl id="messages"/> 
+            <p:commandButton value="Initialize all" actionListener ="#{initializationManagedBean.initialize}" update="messages" icon="ui-icon-disk"/>
+            
+            <br/>
             <p:commandButton value="Create Super Admin" actionListener="#{initializationManagedBean.createSuperAdmin}" update="messages" icon="ui-icon-disk"/>
 
             <br/>

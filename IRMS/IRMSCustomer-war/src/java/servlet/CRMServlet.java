@@ -270,15 +270,7 @@ public class CRMServlet extends HttpServlet {
         }
     }
 
-    private ArrayList makeReservation(HttpServletRequest request) throws ParseException {
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yy");
-        ArrayList al = new ArrayList();
-        Date indReservationDateTime = formatter.parse(request.getParameter("indReservationDateTime"));
-
-        return al;
-
-    }
-
+    
     /* TODO output your page here. You may use following sample code. */
     /* TODO output your page here. You may use following sample code. */
 
@@ -324,39 +316,6 @@ public class CRMServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private ArrayList searchRestaurant(HttpServletRequest request) {
-
-        ArrayList al = new ArrayList();
-        System.out.println("method invoked");
-        String restNeighbourhood = request.getParameter("restNeighbourhood");
-        System.out.println(restNeighbourhood);
-        System.out.println("restNeighbourhood retrieved");
-        String restTypeOfPlace = request.getParameter("restTypeOfPlace");
-        System.out.println(restTypeOfPlace);
-        String restCuisine = request.getParameter("restCuisine");
-        System.out.println(restCuisine);
-        String keyword = request.getParameter("keyword");
-        System.out.println(keyword);
-        RestaurantEntity re = indReservationSessionBean.createRestaurantEntity(restNeighbourhood, restTypeOfPlace, restCuisine, keyword);
-
-        System.out.println(re.getRestNeighbourhood() + re.getRestCuisine() + re.getRestTypeOfPlace());
-
-        Set<RestaurantEntity> res = indReservationSessionBean.searchRestaurant(re);
-
-
-
-        al.addAll(res);
-        al.add("Restaurant Search has been performed!");
-
-        //  System.out.println(al.get(0));
-        System.out.println("CRMServlet: restaurant search has been completed!");
-
-
-
-        return al;
-        //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
