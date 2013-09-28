@@ -6,8 +6,10 @@ package ERMS.session;
 
 import ACMS.entity.OverbookingQuotaEntity;
 import ACMS.entity.ReservationEntity;
+import ACMS.entity.RoomServiceEntity;
 import ACMS.session.OverbookingSessionBean;
 import ACMS.session.ReservationSessionBean;
+import ACMS.session.RoomServiceSessionBean;
 import ACMS.session.RoomSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.session.CPasswordHashSessionBean;
@@ -15,11 +17,14 @@ import CRMS.session.MemberSessionBean;
 import ERMS.entity.EmployeeEntity;
 import ERMS.entity.FunctionalityEntity;
 import ERMS.entity.RoleEntity;
+import FBMS.entity.RestaurantEntity;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -31,7 +36,7 @@ import javax.persistence.PersistenceContext;
 @Startup
 public class InitSessionBean {
     
- 
+
     @PersistenceContext
     private EntityManager em;
     @EJB
@@ -50,6 +55,8 @@ public class InitSessionBean {
     private FunctionalitySessionBean functionalitySessionBean;
     @EJB
     private OverbookingSessionBean overbookingSessionBean;
+    @EJB
+    private RoomServiceSessionBean roomServiceSessionBean;
    
     
     
@@ -60,10 +67,24 @@ public class InitSessionBean {
     private MemberEntity member;
     private FunctionalityEntity functionality;
     private OverbookingQuotaEntity overbookingQuota;
+    private RestaurantEntity restaurant;
+    private RoomServiceEntity roomService1;
+    private RoomServiceEntity roomService2;
 
     @PostConstruct
     public void init() {
         System.err.println("InitSessionBean.init");
+        createSuperAdmin();
+        createSystemUser();
+        createReservation();
+        createFBMSAdmin();
+        createCRMSAdmin();
+        createMember();
+        createRoom();
+        createFunctionalities();
+        createOverbooking();
+        createRmService(); 
+        
     }
 
     public void createSuperAdmin() {
@@ -235,8 +256,9 @@ public class InitSessionBean {
         member.setMemberDob(qqdate);
         member.setGender("female");
         member.setMaritalStatus("single");
-        member.setIsVIP(false);
+        member.setIsVIP(true);
         member.setIsSubscriber(true);
+        member.setPreferences("to be Set");
         
         try {
             System.out.println("Creating new member....");
@@ -330,6 +352,42 @@ public class InitSessionBean {
             return;
         }
         System.err.println("Initiating overbookin entity into database");
+    }
+    
+    public void createRmService(){
+        roomService1 = new RoomServiceEntity();
+        System.out.println("Creating room service 1....");
+        
+        roomService1.setRoomServiceName("Laundry");
+        roomService1.setRoomServicePrice(0);
+        roomService1.setCategory("free service");
+        
+        try {
+            System.out.println(roomService1.getRoomServiceName());
+            System.out.println(roomService1.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService1);
+            System.err.println("roomService added");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            return;
+        }
+        
+        roomService2 = new RoomServiceEntity();
+        System.out.println("Creating room service 2....");
+        
+        roomService2.setRoomServiceName("Minibar vodka");
+        roomService2.setRoomServicePrice(11.8);
+        roomService2.setCategory("charged service");
+        
+        try {
+            System.out.println(roomService2.getRoomServiceName());
+            System.out.println(roomService2.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService2);
+            System.err.println("roomService added");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            return;
+        }
     }
 
     public void persist(Object object) {
