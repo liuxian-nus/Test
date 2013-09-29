@@ -62,7 +62,7 @@ public class RoomSearchResultManagedBean implements Serializable {
         request.getSession().setAttribute("roomId", thisRoom.getRoomId());
     }
 
-    public void intiViewAll(PhaseEvent event) {
+    public void intiViewAgain(PhaseEvent event) {
         rooms = (List<RoomEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("Rooms");
     }
 
@@ -81,7 +81,7 @@ public class RoomSearchResultManagedBean implements Serializable {
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
         try {
-            roomId = (Integer)request.getSession().getAttribute("roomId");
+            roomId = (Integer) request.getSession().getAttribute("roomId");
             roomSessionBean.clearServiceCharge(roomId);
             System.out.println("we are after search roomID: " + roomId);
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", roomSessionBean.getRoomById(roomId));
