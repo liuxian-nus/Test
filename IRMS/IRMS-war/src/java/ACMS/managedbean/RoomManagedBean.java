@@ -39,6 +39,7 @@ public class RoomManagedBean implements Serializable {
     private RoomServiceSessionBean rs;
     private List<RoomEntity> selectRoom = new ArrayList<RoomEntity>();
     private Long reservationId;
+    private String guestName;
     private RoomEntity thisRoom = new RoomEntity();
     private RoomServiceEntity thisRoomService = new RoomServiceEntity();
     private int searchId;
@@ -157,11 +158,12 @@ public class RoomManagedBean implements Serializable {
 
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
+        String getGuestName = (String) request.getSession().getAttribute("guestName");
 
         try {
             System.err.println("Reservation ID" + getRerservationId);
             System.err.println("room ID" + thisRoom.getRoomId());
-            rm.checkIn(thisRoom.getRoomId(), getRerservationId);
+            rm.checkIn(thisRoom.getRoomId(), getRerservationId, guestName);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when checking in", ""));
             return;
@@ -224,5 +226,13 @@ public class RoomManagedBean implements Serializable {
 
     public void setSearchId(int searchId) {
         this.searchId = searchId;
+    }
+
+    public String getGuestName() {
+        return guestName;
+    }
+
+    public void setGuestName(String guestName) {
+        this.guestName = guestName;
     }
 }
