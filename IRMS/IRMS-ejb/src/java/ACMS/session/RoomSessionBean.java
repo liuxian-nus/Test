@@ -182,6 +182,7 @@ public class RoomSessionBean {
             System.out.println("RoomSessionBean-->Welcome! " + thisMember.getMemberName());
         }
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is now occupied");
+//        PriceEntity roomPrice = 
     }
 
     //individual member checkout

@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.commons.math3.distribution.*;
 
 /**
  *
@@ -36,6 +37,7 @@ public class OverbookingSessionBean {
     public double sl;
     public int demandMean;
     public int demandSD;
+    NormalDistribution n = new NormalDistribution(); 
     
     public OverbookingSessionBean (){
         
@@ -60,7 +62,10 @@ public class OverbookingSessionBean {
         sl = cs / (cs + ce);
         System.out.println("sl:" +sl);
         
-        double x = inverseCumulativeProbability(sl);
+        double x = n.inverseCumulativeProbability(sl);
+        double q = x*demandMean + demandSD;
+        double quota = q - demandMean;
+        suggestedQuota = new BigDecimal(quota).intValueExact();
 /*        double z = 0.0;
         double p = 0.5;
         double n1;
