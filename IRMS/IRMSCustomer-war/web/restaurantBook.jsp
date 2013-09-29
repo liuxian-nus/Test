@@ -17,6 +17,7 @@
             <form action="restaurantCheck" method="POST">
                 <fieldset>
                     <legend>Book Restaurant</legend>
+                    <p>${message}</p>
                     <div class="row">
                         <div class="small-2 columns">
                             <label for="right-label" class="left-align,inline"><strong>Date</label>

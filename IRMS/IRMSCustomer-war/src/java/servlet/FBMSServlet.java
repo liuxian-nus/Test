@@ -13,6 +13,7 @@ import FBMS.entity.RestaurantEntity;
 import FBMS.session.FBEmailSessionBean;
 import FBMS.session.IndReservationSessionBeanRemote;
 import FBMS.session.OrderSessionBean;
+import FBMS.session.RestaurantSessionBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -34,6 +35,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "FBMSServlet", urlPatterns = {"/FBMSServlet","/FBMSServlet/*"})
 public class FBMSServlet extends HttpServlet {
+    @EJB
+    private RestaurantSessionBeanRemote restaurantSessionBean;
     @EJB
     private FBEmailSessionBean emailSessionBean;
     
@@ -137,35 +140,59 @@ public class FBMSServlet extends HttpServlet {
                 System.out.println("FBMSServlet: Current page is restaurantCheck");
                 Long restId = Long.valueOf(request.getParameter("restId"));
                 System.out.println("FBMSServlet: the restaurant ID is "+restId);
-                if(request.getParameter("booking").equalsIgnoreCase("true")){
-                    data3 = makeReservation(request);
-                    request.setAttribute("data", data3);
-                    if(data3!=null){
-                    System.out.println("data is not null, go to check page");
-                    request.getRequestDispatcher("/restaurantCheck.jsp").forward(request, response);
-
-                    }else{
-                    System.out.println("data is null,book again");
-                    request.getRequestDispatcher("/restaurantBook.jsp").forward(request, response);
-                    }
-                }
-                else
+                
+                if(validationCheck(request))
                 {
-                    System.out.println("FBMSServlet: going to modify the reservation!");
-                    data3 = modifyReservation(request);
-                    request.setAttribute("data", data3);
-                    if(data3!=null){
-                    System.out.println("data is not null, go to check page");
-                    request.getRequestDispatcher("/restaurantCheck.jsp").forward(request, response);
+                    if(request.getParameter("booking").equalsIgnoreCase("true")){
+                        data3 = makeReservation(request);
+                        request.setAttribute("data", data3);
+                        if(data3!=null){
+                        System.out.println("data is not null, go to check page");
+                        request.getRequestDispatcher("/restaurantCheck.jsp").forward(request, response);
 
-                    }else{
-                    System.out.println("data is null,modify again");
-                    request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
+                        }else{
+                        System.out.println("data is null,book again");
+                        request.getRequestDispatcher("/restaurantBook.jsp").forward(request, response);
+                        }
                     }
+                    else
+                    {
+                        System.out.println("FBMSServlet: going to modify the reservation!");
+                        data3 = modifyReservation(request);
+                        request.setAttribute("data", data3);
+                        if(data3!=null){
+                        System.out.println("data is not null, go to check page");
+                        request.getRequestDispatcher("/restaurantCheck.jsp").forward(request, response);
+
+                        }else{
+                        System.out.println("data is null,modify again");
+                        request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
+                        }
+                        }
+                
+                
                 }
                 
-                
-                
+                else 
+                {
+                    System.out.println("FBMSServlet: Current page is restaurantCheck: validation condition fails");
+                    if(request.getParameter("booking").equalsIgnoreCase("false"))
+                    {
+                        Long currentId = Long.parseLong(request.getParameter("indReservationId"));
+                        data3 = indReservationSessionBean.viewReservation(currentId);
+                        System.out.println("FBMSServlet: the order has not been modified: it has been returned back");
+                        request.setAttribute("data",data3);
+                        request.setAttribute("message", "Wrong input format: please check and submit again!");
+                        request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
+                    }
+                    else
+                    {
+                        data2 = restaurantSessionBean.getRestaurantById(restId);
+                        request.setAttribute("data",data2 );
+                        request.setAttribute("message","Wrong input format: please check and submit again!" );
+                        request.getRequestDispatcher("/cateringConfirm.jsp").forward(request, response);
+                    }
+                }
             }
             else if ("restaurantIndModify".equalsIgnoreCase(page))
             {

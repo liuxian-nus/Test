@@ -31,6 +31,7 @@
                     <form id="search-form" action="restaurantCheck" method="POST">
                         <fieldset>
                             <legend>Your reservation order</legend>
+                            <p>${message}</p>
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label>Reservation number</label>
