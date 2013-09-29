@@ -59,6 +59,10 @@ public class ManageEmployeeManagedBean implements Serializable {
 
     public void deleteEmployee(ActionEvent event) throws ExistException {
         setId((String)event.getComponent().getAttributes().get("code1"));
+        if(getId().equals("A0000")){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "You are not allowed to delete SuperAdmin.", ""));
+            return;
+        }
         getEm().removeEmployee(getId());
     }
 

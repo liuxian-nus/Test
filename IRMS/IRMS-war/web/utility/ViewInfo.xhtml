@@ -72,7 +72,7 @@
 
                             <f:facet name="footer">  
                                 <p:outputPanel rendered="#{viewInfoManagedBean.editMode}" layout="block" style="text-align:center">  
-                                    <p:commandButton value="Save" update="msgs" actionListener="#{viewInfoManagedBean.saveChanges}"   
+                                    <p:commandButton value="Save" update="info" actionListener="#{viewInfoManagedBean.saveChanges}"   
                                                      oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
                                     <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
                                 </p:outputPanel>  

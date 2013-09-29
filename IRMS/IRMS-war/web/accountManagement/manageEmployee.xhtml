@@ -78,7 +78,7 @@
 
 
                             <p:outputPanel rendered="#{manageEmployeeManagedBean.editMode}" layout="block" style="text-align:left;">  
-                                <p:commandButton value="Save" update="employees" actionListener="#{manageEmployeeManagedBean.saveChanges}"   
+                                <p:commandButton value="Save" update="employeeMgt" actionListener="#{manageEmployeeManagedBean.saveChanges}"   
                                                  oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
                                 <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
                             </p:outputPanel>  
@@ -91,7 +91,7 @@
                         <br/>
                         Are you sure to delete?
                         <br/><br/>
-                        <p:commandButton value="Yes" update="message" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
+                        <p:commandButton value="Yes" update="employeeMgt" actionListener="#{manageEmployeeManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
                             <f:attribute name="code1" value="#{manageEmployeeManagedBean.selectedEmployee.employeeId}" />
                         </p:commandButton>
                         <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
