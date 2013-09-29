@@ -71,8 +71,7 @@ public class initializationManagedBean implements Serializable {
     private FunctionalityEntity functionality;
     private RestaurantEntity restaurant;
     private OverbookingQuotaEntity overbookingQuota;
-    private RoomServiceEntity roomService1;
-    private RoomServiceEntity roomService2;
+    private RoomServiceEntity roomService;
     private PriceEntity price;
     
 //    private MemberEntity member;
@@ -386,34 +385,100 @@ public class initializationManagedBean implements Serializable {
     }
     
     public void createRmService(){
-        roomService1 = new RoomServiceEntity();
+        roomService = new RoomServiceEntity();
         System.out.println("Creating room service 1....");
         
-        roomService1.setRoomServiceName("Laundry");
-        roomService1.setRoomServicePrice(0);
-        roomService1.setCategory("free service");
+        roomService.setRoomServiceName("Laundry");
+        roomService.setRoomServicePrice(0);
+        roomService.setCategory("free service");
         
         try {
-            System.out.println(roomService1.getRoomServiceName());
-            System.out.println(roomService1.getRoomServicePrice());
-            roomServiceSessionBean.addRoomService(roomService1);
+            System.out.println(roomService.getRoomServiceName());
+            System.out.println(roomService.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService);
             System.err.println("roomService added");
         }catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
             return;
         }
         
-        roomService2 = new RoomServiceEntity();
+        roomService = new RoomServiceEntity();
         System.out.println("Creating room service 2....");
         
-        roomService2.setRoomServiceName("Minibar vodka");
-        roomService2.setRoomServicePrice(11.8);
-        roomService2.setCategory("charged service");
+        roomService.setRoomServiceName("Minibar vodka");
+        roomService.setRoomServicePrice(11.8);
+        roomService.setCategory("charged service");
         
         try {
-            System.out.println(roomService2.getRoomServiceName());
-            System.out.println(roomService2.getRoomServicePrice());
-            roomServiceSessionBean.addRoomService(roomService2);
+            System.out.println(roomService.getRoomServiceName());
+            System.out.println(roomService.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService);
+            System.err.println("roomService added");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            return;
+        }
+        
+         roomService = new RoomServiceEntity();
+        System.out.println("Creating room service 3....");
+        
+        roomService.setRoomServiceName("Minibar Pepsi");
+        roomService.setRoomServicePrice(3.5);
+        roomService.setCategory("charged service");
+        
+        try {
+            System.out.println(roomService.getRoomServiceName());
+            System.out.println(roomService.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService);
+            System.err.println("roomService added");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            return;
+        }
+        
+         roomService = new RoomServiceEntity();
+        System.out.println("Creating room service 4....");
+        
+        roomService.setRoomServiceName("Custard Puff");
+        roomService.setRoomServicePrice(5.4);
+        roomService.setCategory("food");
+        
+        try {
+            System.out.println(roomService.getRoomServiceName());
+            System.out.println(roomService.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService);
+            System.err.println("roomService added");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            return;
+        }
+        roomService = new RoomServiceEntity();
+        System.out.println("Creating room service 5....");
+        
+        roomService.setRoomServiceName("Chocolate Puff");
+        roomService.setRoomServicePrice(5.4);
+        roomService.setCategory("food");
+        
+        try {
+            System.out.println(roomService.getRoomServiceName());
+            System.out.println(roomService.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService);
+            System.err.println("roomService added");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            return;
+        }
+                 roomService = new RoomServiceEntity();
+        System.out.println("Creating room service 6....");
+        
+        roomService.setRoomServiceName("Thai Pineapple Rice");
+        roomService.setRoomServicePrice(10);
+        roomService.setCategory("food");
+        
+        try {
+            System.out.println(roomService.getRoomServiceName());
+            System.out.println(roomService.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService);
             System.err.println("roomService added");
         }catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));

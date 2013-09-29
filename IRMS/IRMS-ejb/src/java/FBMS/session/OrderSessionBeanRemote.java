@@ -15,7 +15,7 @@ import java.util.Set;
 
 /**
  *
- * @author Jieqiong
+ * @author Diana Wang
  */
 public interface OrderSessionBeanRemote {
 

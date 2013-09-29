@@ -276,7 +276,7 @@ public class InitSessionBean {
     public void createRoom() {
         try {
             System.err.println("Insert room started.....");
-            roomSessionBean.createTestRoom(1,1,1,"deluxe","available","Danny");
+            roomSessionBean.createTestRoom(1,1,1,"deluxe","available");
             /*
             RoomEntity room1 = new RoomEntity();
             room1.setRoomId(1, 1, 1);
