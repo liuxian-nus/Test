@@ -73,13 +73,13 @@
                     <br/>
                      <p:dataTable id="roomServices" value="#{roomSearchResultManagedBean.thisRoom.roomService}" var="roomServices" paginator="true" rows="3">
                                 <p:column headerText="Category: ">
-                                    <h:outputText value="#{roomServices.category}"/>
+                                    <h:outputText value="#{roomService.category}"/>
                                 </p:column>                         
                                 <p:column headerText="Room Service: ">
-                                    <h:outputText value="#{roomServices.roomServiceName}"/>
+                                    <h:outputText value="#{roomService.roomServiceName}"/>
                                 </p:column>
                                 <p:column headerText="Service Price: ">
-                                    <h:outputText value="#{roomServices.roomServicePrice}"/>
+                                    <h:outputText value="#{roomService.roomServicePrice}"/>
                                 </p:column>
                             </p:dataTable>
                     <br/><br/>

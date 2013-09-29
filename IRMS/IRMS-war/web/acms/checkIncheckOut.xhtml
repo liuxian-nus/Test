@@ -35,20 +35,6 @@
                 </h:form>
             </p:tab> 
 
-            <p:tab id="tab3" title="Overbooking Mgt">  
-                <h:form id="formOverbooking">
-                    <h:panelGrid columns="3" cellpadding="10" id="suggestedQuota">
-                        <h:outputText value ="SystemSuggestedQuota: "/>
-                        <h:outputText value ="#{overbookingManagedBean.suggestedQuota}"/>
-                        <p:commandButton value ="Calculate" ajax ="true" actionListener="#{overbookingManagedBean.doCalculate}" update="suggestedQuota"/>
-                    </h:panelGrid>
-                    <h:panelGrid columns="2" cellpadding="10" id="newQuota">
-                        <h:outputText value ="Quota: "/>
-                        <h:inputText value ="#{overbookingManagedBean.newQuota}"/>       
-                        <p:commandButton  value="Save" ajax="true" actionListener="#{overbookingManagedBean.doUpdate}" update="newQuota"/>
-                    </h:panelGrid> 
-                </h:form>
-            </p:tab> 
 
         </p:tabView>
     </ui:define>

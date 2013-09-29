@@ -132,6 +132,11 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/acms/RoomService.xhtml");
                 submenu.getChildren().add(item);
                 
+                 item = new MenuItem();
+                item.setValue("Overbooking Mgt");
+                item.setUrl("/acms/overbookingManagement.xhtml");
+                submenu.getChildren().add(item);
+                
                 model.addSubmenu(submenu);
              }
              
