@@ -80,7 +80,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input required type="mobile" name="mobile" placeholder="mobile phone number">
+                                <input required type="text" name="mobile" placeholder="mobile phone number">
                                 <small class="error">Please enter a mobile number.</small>
                             </div>
                         </div>
@@ -555,10 +555,10 @@
                         <div class="small-10 columns"> 
 
                             <select required id="customDropdown" name="securityQuestion">
-                                <option value="question1">What is your mother's original surname?</option>
-                                <option value="question2">What is the name of your primary school?</option>
-                                <option value="question3">What is your best friend's name?</option>
-                                <option value="question4">What is your favourite food?</option>
+                                <option value="What is your mother's original surname?">What is your mother's original surname?</option>
+                                <option value="What is the name of your primary school?">What is the name of your primary school?</option>
+                                <option value="What is your best friend's name?">What is your best friend's name?</option>
+                                <option value="What is your favourite food?">What is your favourite food?</option>
                             </select>
                         </div>          
                     </div>
@@ -623,6 +623,7 @@
         //Set the color to the bad color and
         //notify the user.
         message.innerHTML = "Passwords Do Not Match!"
+      
         }
         }
 </script>
