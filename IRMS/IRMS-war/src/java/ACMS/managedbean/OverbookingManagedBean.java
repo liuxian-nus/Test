@@ -32,6 +32,7 @@ public class OverbookingManagedBean implements Serializable{
     private int suggestedQuota;
     private int demandMean;
     private int demandSD;
+    private double ce;
     
     /**
      * Creates a new instance of OverbookingManagedBean
@@ -84,7 +85,7 @@ public class OverbookingManagedBean implements Serializable{
      public void doCalculate(ActionEvent event) throws IOException, ExistException {
          
         try {
-            setSuggestedQuota(obSessionBean.calculateSuggestedQuota(demandMean, demandSD));
+            setSuggestedQuota(obSessionBean.calculateSuggestedQuota(demandMean, demandSD, ce));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when calculate quota", ""));
             return;
@@ -106,5 +107,13 @@ public class OverbookingManagedBean implements Serializable{
 
     public void setDemandSD(int demandSD) {
         this.demandSD = demandSD;
+    }
+
+    public double getCe() {
+        return ce;
+    }
+
+    public void setCe(double ce) {
+        this.ce = ce;
     }
     }

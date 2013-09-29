@@ -49,16 +49,15 @@ public class OverbookingSessionBean {
     }
 
     //compensation to be discussed, now assume as direct human input
-    public int calculateSuggestedQuota(int demandMean, int demandSD) {
+    public int calculateSuggestedQuota(int demandMean, int demandSD, double ce) {
 
         //algorithm missing here.
         overbooking = em.find(OverbookingQuotaEntity.class,1);
         String roomType = overbooking.getRoomType();
         PriceEntity price = em.find(PriceEntity.class, roomType);
 //        double cs = price.getPrice();
-        double cs = 482.5;
+        cs = 482.5;
 //        ce = overbooking.getCompensation1();
-        ce = 105;
         sl = cs / (cs + ce);
         System.out.println("sl:" +sl);
         
