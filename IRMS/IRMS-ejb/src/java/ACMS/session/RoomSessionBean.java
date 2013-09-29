@@ -138,6 +138,22 @@ public class RoomSessionBean {
         return roomList;
     }
     
+     public List<RoomEntity> getOccupiedRooms() throws ExistException {
+        System.err.println("in getOccupiedrooms session bean");
+        Query q = em.createQuery("SELECT r FROM RoomEntity r");
+        List roomList = new ArrayList<RoomEntity>();
+        for (Object o : q.getResultList()) {
+            RoomEntity r = (RoomEntity) o;
+            if (r.getRoomStatus()=="occupied")
+            roomList.add(r);
+        }
+        if (roomList == null) {
+            throw new ExistException("RoomEntity database is empty!");
+        }
+        System.err.println("in get all rooms sessionbean: room list size="+roomList.size());
+        return roomList;
+    }
+    
     
     //add new charged service
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

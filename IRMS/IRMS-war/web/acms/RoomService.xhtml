@@ -30,13 +30,13 @@
 
             <p:tab id="tab2" title="Manage Room Services">  
                 <h:form id="serviceMgt">
-                   <p:growl id="message" showDetail="true" sticky="true" />
-                   <h:panelGrid columns="2">
+                    <p:growl id="message" showDetail="true" sticky="true" />
+                    <h:panelGrid columns="2">
 
                         <h:outputText value="Room ID: "/>
                         <p:selectOneMenu value="#{roomManagedBean.roomId}">  
                             <f:selectItem itemLabel="Select Room" itemValue=""/>
-                            <f:selectItems value="#{roomManagedBean.rm.allRooms}" var="allRoom" itemLabel="#{allRoom.roomId}" itemValue="#{allRoom.roomId}" />  
+                            <f:selectItems value="#{roomManagedBean.rm.occupiedRooms}" var="allRoom" itemLabel="#{allRoom.roomId}" itemValue="#{allRoom.roomId}" />  
                         </p:selectOneMenu>
 
                         <h:outputText value="Room Service Name: "/>
@@ -48,8 +48,17 @@
 
                     </h:panelGrid>
 
-                    <p:commandButton value="Save" ajax="true" actionListener="#{roomManagedBean.saveNewRoomService}" update="message"/>
-
+                    <p:commandButton value="Add" ajax="true" oncomplete="confirmation.show()" icon="ui-icon ui-icon-check"/>
+                    
+                    
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                        <h:outputText value="Please enter number of service: "/>
+                        <h:inputText value =" "/>
+                        <br/><br/>
+                        <p:commandButton value="Add" update="message" actionListener="#{roomManagedBean.saveNewRoomService}" oncomplete="confirmation.hide()">  
+                        </p:commandButton>
+                        <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                    </p:dialog> 
                 </h:form>
             </p:tab> 
 
