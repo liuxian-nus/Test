@@ -22,7 +22,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class MemberTransactionSessionBean implements MemberTransactionSessionRemote {
+public class MemberTransactionSessionBean {
 
     @PersistenceContext
     private EntityManager em;
@@ -32,7 +32,6 @@ public class MemberTransactionSessionBean implements MemberTransactionSessionRem
     public MemberTransactionSessionBean() {
     }
 
-    @Override
     public double addMemberTransaction(String memberEmail, MemberTransactionEntity mt, Boolean coinPay) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {
@@ -61,7 +60,6 @@ public class MemberTransactionSessionBean implements MemberTransactionSessionRem
 
     }
 
-    @Override
     public void addPoint(String memberEmail, double mtAmount) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {
@@ -73,7 +71,6 @@ public class MemberTransactionSessionBean implements MemberTransactionSessionRem
         System.out.println("Member : " + memberEmail + " account has been credited by" + point + "points");
     }
 
-    @Override
     public void addCoin(String memberEmail, double mtAmount) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {

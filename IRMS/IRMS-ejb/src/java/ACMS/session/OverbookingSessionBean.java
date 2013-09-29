@@ -55,7 +55,7 @@ public class OverbookingSessionBean {
         String roomType = overbooking.getRoomType();
         PriceEntity price = em.find(PriceEntity.class, roomType);
 //        double cs = price.getPrice();
-        cs = 482.5;
+        cs = 485.3;
 //        ce = overbooking.getCompensation1();
         sl = cs / (cs + ce);
         System.out.println("sl:" + sl);

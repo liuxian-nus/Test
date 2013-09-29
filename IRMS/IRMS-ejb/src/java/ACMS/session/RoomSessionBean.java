@@ -224,7 +224,8 @@ public class RoomSessionBean {
             System.out.println("come to create test room session bean");
             System.err.println("create priceEntity first");
             price.setPriceType(roomType);
-            price.setPrice(485.3);
+            if (roomType.equals("deluxe")) price.setPrice(485.3);
+            else if(roomType.equals("superior")) price.setPrice(382);
             em.persist(price);
             room.setRoomHotel(roomHotel);
             room.setRoomLevel(roomLevel);
