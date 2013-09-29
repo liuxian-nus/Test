@@ -155,7 +155,6 @@ public class RoomManagedBean implements Serializable {
     public void checkIn() throws IOException {
 
         System.err.println("we are in checkin managedbean");
-
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
         String getGuestName = (String) request.getSession().getAttribute("guestName");

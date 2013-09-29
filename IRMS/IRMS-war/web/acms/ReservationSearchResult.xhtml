@@ -12,14 +12,20 @@
         <f:view beforePhase="#{reservationSearchResultManagedBean.initViewSelect}"> 
             <h:form id="form">
                 <p:panel id="search" header="Search Result" style="height:495px;">
-               
-                    <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
+
+                    <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                        <h:outputText value ="Welcome!"/>
+                        <h:outputText value ="#{reservationSearchResultManagedBean.selectReservation.rcMember.memberName}" rendered="#{reservationSearchResultManagedBean.selectReservation.rcMember.memberEmail == reservationSearchResultManagedBean.selectReservation.rcEmail}" style="font-weight:bold" /> 
+                        <h:outputText value =""/>
+                        <h:outputText value =""/>
                         <h:outputText value="Reservation ID: " />  
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationId}" style="font-weight:bold" /> 
                         <h:outputText value="Customer Name: " /> 
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.rcName}" style="font-weight:bold" />
                         <h:outputText value="Customer Email: " />  
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.rcEmail}" style="font-weight:bold" /> 
+                        <h:outputText value ="Customer Credit Card Number"/>
+                        <h:outputText value ="#{reservationSearchResultManagedBean.selectReservation.rcCreditCardNo}" style="font-weight:bold"/>
                         <h:outputText value="Check In Date: " />  
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.rcCheckInDate}" style="font-weight:bold" /> 
                         <h:outputText value="Check Out Date: " />  
