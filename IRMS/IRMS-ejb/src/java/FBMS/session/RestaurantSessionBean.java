@@ -24,7 +24,7 @@ import javax.persistence.Query;
 public class RestaurantSessionBean implements RestaurantSessionBeanRemote{
     
     
-    private RestaurantEntity restaurant;
+    private RestaurantEntity restaurant=new RestaurantEntity();
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     
