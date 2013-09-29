@@ -207,6 +207,7 @@ public class RoomSessionBean {
         }
         room.setCheckInDate(null);
         room.setCheckOutDate(null);
+        room.setGuestName(null);
         room.setRoomStatus("available");
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
     }
