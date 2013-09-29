@@ -72,7 +72,7 @@
 
                 <p:dialog width="500" showEffect="explode" hideEffect="explode" header="Room Service" widgetVar="checkService"> 
                     <br/>
-                     <p:dataTable id="roomServices" value="#{roomSearchResultManagedBean.thisRoom.roomService}" var="roomServices" paginator="true" rows="3">
+                     <p:dataTable id="roomServices" value="#{roomSearchResultManagedBean.thisRoom.roomService}" var="roomService" paginator="true" rows="3">
                                 <p:column headerText="Category: ">
                                     <h:outputText value="#{roomService.category}"/>
                                 </p:column>                         

@@ -14,10 +14,9 @@
                 <p:panel id="search" header="Search Result" style="height:495px;">
 
                     <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
-                        <h:outputText value ="Welcome!"/>
-                        <h:outputText value ="#{reservationSearchResultManagedBean.selectReservation.rcMember.memberName}" rendered="#{reservationSearchResultManagedBean.selectReservation.rcMember.memberEmail == reservationSearchResultManagedBean.selectReservation.rcEmail}" style="font-weight:bold" /> 
-                        <h:outputText value =""/>
-                        <h:outputText value =""/>
+                        <h:outputText value ="Member Name:"/>
+                        <h:outputText value ="#{reservationSearchResultManagedBean.selectReservation.rcMember.memberName}" rendered="#{reservationSearchResultManagedBean.selectReservation.rcMember!=null}" style="font-weight:bold" /> 
+                        <h:outputText value ="Guest is not a Member!" rendered="#{reservationSearchResultManagedBean.selectReservation.rcMember==null}"/>
                         <h:outputText value="Reservation ID: " />  
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationId}" style="font-weight:bold" /> 
                         <h:outputText value="Customer Name: " /> 

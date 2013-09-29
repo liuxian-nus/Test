@@ -47,13 +47,11 @@
                         </p:column>  
                     </p:dataTable>
                 </div>
-                
-                
+
+
                 <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
-                    <h:outputText value="Guest Name"/>
+                    <h:outputText value="Please enter Guest Name: "/>
                     <h:inputText value ="#{roomManagedBean.guestName}"/>
-                    <br/>
-                    Are you sure to Check In?
                     <br/><br/>
                     <p:commandButton value="Yes" onclick="growl" update ="form" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
                     </p:commandButton>
