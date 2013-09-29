@@ -371,7 +371,7 @@
                             <div class="large-12 columns">
                                 <label>Year</label>
                                 <input type="hidden" id="year" value ="${data.memberDob.getYear()+1900}"/>
-                                <select required name="Year" id="yearDropdown">
+                                <select required name="year" id="yearDropdown">
 
                                     <option value="2013">2013</option>
                                     <option value="2012">2012</option>
@@ -496,8 +496,7 @@
                             <div class="small-2 columns">
                                 <label>Gender</label>
                                 <input type="hidden" id ="gender" value ="${data.gender}"/>
-                                <select required id="genderDropdown" name="gender" value="${data.gender}"/>
-
+                                <select required id="genderDropdown" name="gender">
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Others">Others</option>
@@ -532,8 +531,8 @@
                             <div class="large-12 columns">
                                 <label>Subscription</label>
 
-                                <input type="hidden" id ="subscribe" value ="${Boolean.toString(data.isSubscriber)}"/>
-
+                                <input type="hidden" id ="subscribe" value ="${data.isSubscriber()}"/>
+                                
                                 <select required id="subscribeDropdown" name="subscribe">
                                     <option value="true">Yes, I would like to receive news and updates.</option>
                                     <option value="false">No, I don't want the latest updates.</option>
@@ -605,13 +604,15 @@
                 // Console.log("********in check information function******");
                 //Store the password field objects into variables ...
                 var securityQuestion = document.getElementById('securityQuestion').value;
-                var gender = document.getElementById('gender').value;
+                var gender = document.getElementById('gender').value;     
                 var subscribe = document.getElementById('subscribe').value;
+                console.log(subscribe);
                 var maritalStatus = document.getElementById('maritalStatus').value;
+                console.log(maritalStatus);
                 var year = document.getElementById('year').value;
                 var month = document.getElementById('month').value;
                 var date = document.getElementById('date').value;
-                var nationality=document.getElementById('nationality').value;
+                var nationality = document.getElementById('nationality').value;
 
 
 
@@ -619,31 +620,34 @@
                 //look for security question
                 for (var i = 0; i < 3; i++) {
                     console.log("inside loop");
-                    console.log(document.getElementById("securityQuestionDropdown").options[i]);
+                    
                     if (document.getElementById("securityQuestionDropdown").options[i].value == securityQuestion) {
 
                         document.getElementById("securityQuestionDropdown").options[i].selected = true;
+                        console.log(document.getElementById("securityQuestionDropdown").options[i]);
                     }
                 }
                 //look for gender
 
                 for (var i = 0; i < 2; i++) {
                     console.log("inside loop");
-                    console.log(document.getElementById("genderDropdown").options[i]);
+                   
                     if (document.getElementById("genderDropdown").options[i].value == gender) {
 
                         document.getElementById("genderDropdown").options[i].selected = true;
+                        console.log(document.getElementById("genderDropdown").options[i]);
                     }
                 }
 
                 // look for subscription
 
-                for (var i = 0; i < 1; i++) {
+                for (var i = 0; i < 2; i++) {
                     console.log("inside loop");
-                    console.log(document.getElementById("subscribeDropdown").options[i]);
+                   
                     if (document.getElementById("subscribeDropdown").options[i].value == subscribe) {
-
+                        console.log(subscribe);
                         document.getElementById("subscribeDropdown").options[i].selected = true;
+                        console.log(document.getElementById("subscribeDropdown").options[i]);
                     }
                 }
 
@@ -651,46 +655,52 @@
 
                 for (var i = 0; i < 3; i++) {
                     console.log("inside loop");
-                    console.log(document.getElementById("maritalStatusDropdown").options[i]);
+                  
                     if (document.getElementById("maritalStatusDropdown").options[i].value == maritalStatus) {
 
                         document.getElementById("maritalStatusDropdown").options[i].selected = true;
+                        console.log(document.getElementById("maritalStatusDropdown").options[i]);
                     }
                 }
                 // look for year
                 for (var i = 0; i < 100; i++) {
                     console.log("inside loop");
-                    console.log(document.getElementById("yearDropdown").options[i]);
+                    
                     if (document.getElementById("yearDropdown").options[i].value == year) {
 
                         document.getElementById("yearDropdown").options[i].selected = true;
+                        console.log(document.getElementById("yearDropdown").options[i]);
                     }
                 }
                 // look for month
                 for (var i = 0; i < 11; i++) {
                     console.log("inside loop");
-                    console.log(document.getElementById("monthDropdown").options[i]);
+                 
                     if (document.getElementById("monthDropdown").options[i].value == month) {
 
                         document.getElementById("monthDropdown").options[i].selected = true;
+                        console.log(document.getElementById("monthDropdown").options[i]);
                     }
                 }
                 // look for day
                 for (var i = 0; i < 30; i++) {
                     console.log("inside loop");
-                    console.log(document.getElementById("dateDropdown").options[i]);
+                   
                     if (document.getElementById("dateDropdown").options[i].value == date) {
 
                         document.getElementById("dateDropdown").options[i].selected = true;
+                        
+                         console.log(document.getElementById("dateDropdown").options[i]);
                     }
                 }
                 
-                      for (var i = 0; i < 244; i++) {
+                      for (var i = 0; i < 240; i++) {
                     console.log("inside loop");
-                    console.log(document.getElementById("nationalityDropdown").options[i]);
+                   
                     if (document.getElementById("nationalityDropdown").options[i].value == nationality) {
 
                         document.getElementById("nationalityDropdown").options[i].selected = true;
+                         console.log(document.getElementById("nationalityDropdown").options[i]);
                     }
                 }
             }
