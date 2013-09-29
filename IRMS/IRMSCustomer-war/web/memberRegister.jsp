@@ -570,7 +570,7 @@
                             <input type="checkbox" name="subscribe" value="true">
                         </div>
                         <div class="small-11 columns"> 
-                            <strong><label><strong>I want to subscribe latest updates.</label>
+                            <strong><label>I want to subscribe latest updates.</label>
                         </div>
                     </div>
 

@@ -24,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -83,13 +84,17 @@ public class CRMServlet extends HttpServlet {
                 request.getRequestDispatcher("/member.jsp").forward(request, response);
 
             } else if ("memberInfo".equals(page)) {
-                System.out.println("***memberInfo page***");
+                             
+                System.out.println("get member email is: "+member.getMemberEmail());
 
                 System.out.println(request.getParameter("email"));
                 System.out.println(request.getParameter("password"));
-
+                
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
+
+                
+                
 
                 System.out.println(email);
                 System.out.println(password);
@@ -228,6 +233,7 @@ public class CRMServlet extends HttpServlet {
 
                 member = memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe,
                         securityQuestion, answer);
+                request.setAttribute("data", member);
           
                 request.getRequestDispatcher("/memberRegisterResult.jsp").forward(request, response);
                 
@@ -235,8 +241,8 @@ public class CRMServlet extends HttpServlet {
                 System.out.println("***memberForgetPassword page***");
                 request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
 
-            } else if ("memberInfoEdition".equals(page)) {
-                System.out.println("***memberInfoEdition page***");
+            } else if ("memberForgetPasswordResult".equals(page)) {
+                System.out.println("***memberForgetPasswordResult***");
 
                 String email = request.getParameter("email");
                 String question = request.getParameter("question");
@@ -244,7 +250,7 @@ public class CRMServlet extends HttpServlet {
                 boolean correctAnswer = memberManagementSessionBean.checkAnswer(email, answer);
                 if (correctAnswer) {
                     memberManagementSessionBean.ResetPassword(email);
-                    request.getRequestDispatcher("/memberInfoEdition.jsp").forward(request, response);
+                    request.getRequestDispatcher("/memberForgetPasswordResult.jsp").forward(request, response);
                 } else {
                     request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
                 }

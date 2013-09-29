@@ -17,7 +17,7 @@
 
             <div class="row">
 
-                <form id="search-form" action="memberInfoEdition" method="POST">
+                <form id="search-form" action="memberForgetPasswordResult" method="POST">
                     <fieldset>
                         <legend>Reset Password</legend>
 
@@ -54,7 +54,7 @@
                             </div>
                             <div class="small-10 columns"> 
 
-                               <input type="text" placeholder="Security Question Answer" name="email">
+                               <input type="text" placeholder="Registered email address" name="email">
                             </div>
 
                         </div>

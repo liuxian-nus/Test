@@ -12,6 +12,7 @@
         </head>
     <body>
         <h1>reset member password</h1>
+        <p>${message}</p>
         
          <form id="resetPassword" action="resetMemberPasswordConfirmation" method="POST">
                         <fieldset>
