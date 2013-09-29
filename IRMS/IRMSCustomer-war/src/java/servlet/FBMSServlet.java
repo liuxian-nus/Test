@@ -211,25 +211,47 @@ public class FBMSServlet extends HttpServlet {
             }
             else if("cateringCheck".equalsIgnoreCase(page))
             {
-                if(request.getParameter("booking").equalsIgnoreCase("true")){
-                System.out.println("*****cateringCheck*****");
-                System.out.println("FBMSServlet: Current page is cateringCheck");
-                
-                data5 = cateringReservation(request);
-                System.out.println("FBMSServlet: the order has been confirmed!");
-                request.setAttribute("data", data5);
-                request.getRequestDispatcher("/cateringCheck.jsp").forward(request, response);
-                }
-                
-                else
-                {
-                    System.out.println("*****cateringCheck*****");
-                    System.out.println("FBMSServlet: Current page is catering Check: Modify catering order");
+                if(validationCheck(request)){
                     
-                    data5 = modifyCatering(request);
-                    System.out.println("FBMSServlet: the order has been modified!");
+
+                    if(request.getParameter("booking").equalsIgnoreCase("true")){
+                    System.out.println("*****cateringCheck*****");
+                    System.out.println("FBMSServlet: Current page is cateringCheck");
+
+                    data5 = cateringReservation(request);
+                    System.out.println("FBMSServlet: the order has been confirmed!");
                     request.setAttribute("data", data5);
                     request.getRequestDispatcher("/cateringCheck.jsp").forward(request, response);
+                    }
+                
+                    else
+                    {
+                        System.out.println("*****cateringCheck*****");
+                        System.out.println("FBMSServlet: Current page is catering Check: Modify catering order");
+
+                        data5 = modifyCatering(request);
+                        System.out.println("FBMSServlet: the order has been modified!");
+                        request.setAttribute("data", data5);
+                        request.getRequestDispatcher("/cateringCheck.jsp").forward(request, response);
+                    }
+                }
+                else
+                {
+                    System.out.println("FBMSServlet: Current page is cateringCheck: validation condition fails");
+                    if(request.getParameter("booking").equalsIgnoreCase("false"))
+                    {
+                        Long currentId = Long.parseLong(request.getParameter("orderId"));
+                        data5 = orderSessionBean.viewOrder(currentId);
+                        System.out.println("FBMSServlet: the order has not been modified: it has been returned back");
+                        request.setAttribute("data",data5);
+                        request.setAttribute("message", "Wrong input format: please check and submit again!");
+                        request.getRequestDispatcher("/cateringModify.jsp").forward(request, response);
+                    }
+                    else
+                    {
+                        request.setAttribute("message","Wrong input format: please check and submit again!" );
+                        request.getRequestDispatcher("/cateringConfirm.jsp").forward(request, response);
+                    }
                 }
             }
             
@@ -684,6 +706,38 @@ public class FBMSServlet extends HttpServlet {
         emailSessionBean.sendConfirmation(email, oe);
         
         return oe;
+    }
+
+    private boolean validationCheck(HttpServletRequest request) {
+       boolean isValid = true; 
+       System.out.println("FBMSServlet validationCheck method invoked ");
+        
+            Integer year = Integer.parseInt(request.getParameter("year"));
+            System.out.println("The booking year is "+ year);
+            
+            Integer month = Integer.parseInt(request.getParameter("month"));
+            System.out.println("The booking month is "+ month);
+            
+            Integer date = Integer.parseInt(request.getParameter("date"));
+            System.out.println("The booking date is "+ date);
+            
+            Integer hour = Integer.valueOf(request.getParameter("time"));
+            System.out.println("The booking hour is "+hour);
+            
+            int min = 0;
+            
+            Date thisDate;
+            thisDate = new Date(year-1900,month-1,date,hour,min);
+            
+            Date now = new Date();//This data can be modified!! Do not forget when demo!!
+            
+            if(thisDate.before(now))
+                isValid = false;
+        
+        System.out.println("FBMSServlet makeReservation: date has been validated!" + isValid);
+        
+        
+        return isValid;
     }
     
     

@@ -30,6 +30,7 @@
                 <form id="search-form" action="cateringCheck" method="POST">
                     <fieldset>
                         <legend>Your reservation order</legend>
+                        <p>${message}</p>
                         <div class="row">
                                 <div class="row">
                                 <div class="large-12 columns">

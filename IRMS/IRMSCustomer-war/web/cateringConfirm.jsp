@@ -18,6 +18,7 @@
             <form action="cateringCheck" method="POST">
                 <fieldset>
                     <legend>Place catering order</legend>
+                    <p>${message}</p>
                     <div class="row">
                         <div class="small-2 columns">
                             <select name="date" class="customDropdown">
