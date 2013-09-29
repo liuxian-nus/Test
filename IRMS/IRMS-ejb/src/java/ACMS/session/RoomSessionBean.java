@@ -211,7 +211,6 @@ public class RoomSessionBean {
         if (price == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->Price Entity missing!");
         }
- //
  //       thisMember.setMemberTransactions(null);
     }
 
@@ -239,11 +238,7 @@ public class RoomSessionBean {
     public void createTestRoom(int roomHotel, int roomLevel, int roomNo, String roomType, String roomStatus) {
         try {
             System.out.println("come to create test room session bean");
-            System.err.println("create priceEntity first");
-            price.setPriceType(roomType);
-            if (roomType.equals("deluxe")) price.setPrice(485.3);
-            else if(roomType.equals("superior")) price.setPrice(382);
-            em.persist(price);
+            System.err.println("create priceEntity first");           
             room.setRoomHotel(roomHotel);
             room.setRoomLevel(roomLevel);
             room.setRoomNo(roomNo);
@@ -253,7 +248,7 @@ public class RoomSessionBean {
             room.setRoomPrice(price);
             room.setRoomMember(null);
             room.setReservation(null);
-            room.setRoomServiceCharge(13.7);
+            room.setRoomServiceCharge(0);
             System.out.println(room.getRoomId());
             System.out.println(room.getRoomType());
             System.out.println(room.getRoomStatus());

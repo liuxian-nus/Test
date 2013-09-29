@@ -5,6 +5,7 @@
 package commonInfrastructure.menu.managedbean;
 
 import ACMS.entity.OverbookingQuotaEntity;
+import ACMS.entity.PriceEntity;
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomServiceEntity;
 import ACMS.session.OverbookingSessionBean;
@@ -29,6 +30,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -58,6 +61,8 @@ public class initializationManagedBean implements Serializable {
     private EPasswordHashSessionBean ePasswordHashSessionBean;
     @EJB
     private FunctionalitySessionBean functionalitySessionBean;
+    @PersistenceContext
+    private EntityManager em;
    
     private EmployeeEntity employee;
     private RoleEntity role;
@@ -68,6 +73,7 @@ public class initializationManagedBean implements Serializable {
     private OverbookingQuotaEntity overbookingQuota;
     private RoomServiceEntity roomService1;
     private RoomServiceEntity roomService2;
+    private PriceEntity price;
     
 //    private MemberEntity member;
 
@@ -288,8 +294,18 @@ public class initializationManagedBean implements Serializable {
     public void createRoom() {
         try {
             System.err.println("Insert room started.....");
+            price = new PriceEntity();
+            price.setPriceType("deluxe");
+            price.setPrice(485.3);
+            em.persist(price);
+            price = new PriceEntity();
+            price.setPriceType("superior");
+            price.setPrice(380.3);
+            em.persist(price);
             roomSessionBean.createTestRoom(1,1,1,"deluxe","available");
-            roomSessionBean.createTestRoom(1,1,2,"superior", "available");
+            roomSessionBean.createTestRoom(1,1,2,"deluxe", "available");
+            roomSessionBean.createTestRoom(1,1,3,"superior","available");
+            roomSessionBean.createTestRoom(1,1,4,"superior","available");
             /*
             RoomEntity room1 = new RoomEntity();
             room1.setRoomId(1, 1, 1);
