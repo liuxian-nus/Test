@@ -50,7 +50,7 @@
                         <div class="row">
                             <div class="large-12 columns">
                                 <label>Nationality</label>
-                                <input type="hidden" name ="nationality" id="nationality" value="${data.nationality}"/>
+                                <input type="hidden" id="nationality" value="${data.nationality}"/>
                                   <select required name="nationality" id="nationalityDropdown">
                                     <option value="Afghan">Afghan</option>
                                     <option value="Swedish">Swedish</option>
@@ -346,7 +346,7 @@
                         <div class ="row">
                             <div class="large-12 columns">
                                 <label>Month</label>
-                                <input type="hidden" name="month" id="month" value ="${data.memberDob.getMonth()+1}"/>
+                                <input type="hidden" id="month" value ="${data.memberDob.getMonth()+1}"/>
 
                                 <select required name="month" id="monthDropdown">
 
@@ -370,7 +370,7 @@
                         <div class ="row">
                             <div class="large-12 columns">
                                 <label>Year</label>
-                                <input type="hidden" name="year" id="year" value ="${data.memberDob.getYear()+1900}"/>
+                                <input type="hidden" id="year" value ="${data.memberDob.getYear()+1900}"/>
                                 <select required name="Year" id="yearDropdown">
 
                                     <option value="2013">2013</option>
@@ -481,7 +481,7 @@
                         <div class="row">
                             <div class="large-12 columns">
                                 <label>Marital Status</label>
-                                <input type="hidden" id="maritalStatus" name ="maritalStatus" value="${data.maritalStatus}"/>
+                                <input type="hidden" id="maritalStatus" value="${data.maritalStatus}"/>
                                 <select required id="maritalStatusDropdown" name="maritalStatus">
                                     <option value="Single">Single</option>
                                     <option value="Married">Married</option>
