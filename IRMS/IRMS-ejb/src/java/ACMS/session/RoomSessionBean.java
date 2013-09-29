@@ -223,15 +223,22 @@ public class RoomSessionBean {
             throw new RoomException("RoomSessionBean-->RoomException-->There is uncleared room service charge!");
         }  
         bill = this.calculateBill(room);
+        System.out.println("accounts receivable: " + bill);
+        mtSessionBean.addMemberTransaction(room.getRoomMember(),bill,room.getCheckOutDate(),"Hotel" ,null ,false);
+        System.out.println("room check out: member transaction captured!");
         room.setCheckInDate(null);
         room.setCheckOutDate(null);
         room.setGuestName(null);
         room.setRoomStatus("available");
+        room.setHasBreakfast(false);
+        room.setReservation(null);
+        room.setRoomCreditCardNo(null);
+        room.setRoomMember(null);
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
     }
     
     public double calculateBill(RoomEntity room) {
-        double roomCharge = room.getRoomPrice().getPrice() * 5;
+        double roomCharge = room.getRoomPrice().getPrice() * 5; // 5 should be outDate - inDate
         double roomServiceCharge = room.getRoomServiceCharge();
         return roomCharge + roomServiceCharge;
     }
