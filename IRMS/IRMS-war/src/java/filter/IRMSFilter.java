@@ -249,6 +249,8 @@ public class IRMSFilter implements Filter {
                 || path.startsWith("/javax.faces.resource")
                 || path.startsWith("/resources")
                 || path.contains("resetPassword.xhtml")
+                || path.contains("resetPasswordResult.xhtml")
+                || path.contains("firstTimeLoginPwdChangeResult.xhtml")
                 || path.endsWith("/")) {
             return true;
         } else {
