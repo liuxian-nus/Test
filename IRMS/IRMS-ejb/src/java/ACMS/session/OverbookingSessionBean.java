@@ -34,6 +34,8 @@ public class OverbookingSessionBean {
     public double cs;
     public double ce;
     public double sl;
+    public int demandMean;
+    public int demandSD;
     
     public OverbookingSessionBean (){
         
@@ -45,7 +47,7 @@ public class OverbookingSessionBean {
     }
 
     //compensation to be discussed, now assume as direct human input
-    public int calculateSuggestedQuota() {
+    public int calculateSuggestedQuota(int demandMean, int demandSD) {
 
         //algorithm missing here.
         overbooking = em.find(OverbookingQuotaEntity.class,1);
@@ -123,6 +125,38 @@ public class OverbookingSessionBean {
         int id = 1;
         OverbookingQuotaEntity quota = em.find(OverbookingQuotaEntity.class, id);
         quota.setQuota(newQuota);
+    }
+
+    public int getSuggestedQuota() {
+        return suggestedQuota;
+    }
+
+    public void setSuggestedQuota(int suggestedQuota) {
+        this.suggestedQuota = suggestedQuota;
+    }
+
+    public OverbookingQuotaEntity getOverbooking() {
+        return overbooking;
+    }
+
+    public void setOverbooking(OverbookingQuotaEntity overbooking) {
+        this.overbooking = overbooking;
+    }
+
+    public int getDemandMean() {
+        return demandMean;
+    }
+
+    public void setDemandMean(int demandMean) {
+        this.demandMean = demandMean;
+    }
+
+    public int getDemandSD() {
+        return demandSD;
+    }
+
+    public void setDemandSD(int demandSD) {
+        this.demandSD = demandSD;
     }
 
     private double pow(int i, double z) {

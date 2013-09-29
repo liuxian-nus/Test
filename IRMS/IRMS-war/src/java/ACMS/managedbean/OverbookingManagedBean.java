@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.PhaseEvent;
 
 /**
  *
@@ -29,13 +30,15 @@ public class OverbookingManagedBean implements Serializable{
     private OverbookingQuotaEntity ob;
     private int newQuota;
     private int suggestedQuota;
+    private int demandMean;
+    private int demandSD;
     
     /**
      * Creates a new instance of OverbookingManagedBean
      */
     public OverbookingManagedBean() {
     }
-
+    
     public OverbookingSessionBean getObSessionBean() {
         return obSessionBean;
     }
@@ -81,12 +84,27 @@ public class OverbookingManagedBean implements Serializable{
      public void doCalculate(ActionEvent event) throws IOException, ExistException {
          
         try {
-            setSuggestedQuota(obSessionBean.calculateSuggestedQuota());
+            setSuggestedQuota(obSessionBean.calculateSuggestedQuota(demandMean, demandSD));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when calculate quota", ""));
             return;
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "System Calculated Overbooking Quota.", ""));
         }
-     
+
+    public int getDemandMean() {
+        return demandMean;
+    }
+
+    public void setDemandMean(int demandMean) {
+        this.demandMean = demandMean;
+    }
+
+    public int getDemandSD() {
+        return demandSD;
+    }
+
+    public void setDemandSD(int demandSD) {
+        this.demandSD = demandSD;
+    }
     }
