@@ -4,11 +4,19 @@
     Author     : lionetdd
 --%>
 
+<%-- 
+    Document   : memeberRegister
+    Created on : Sep 21, 2013, 4:44:26 PM
+    Author     : lionetdd
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <jsp:include page="base.jsp"></jsp:include>
+            <script type="text/javascript" src="/IRMSCustomer-war/js/checkpass.js"></script>
+
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
@@ -23,7 +31,7 @@
                         <div>
                             <div class="small-10 columns">
                                 <input required type="text" placeholder="username" name="username">
-                                 <small class="error">Please enter your name.</small>
+                                <small class="error">Please enter your name.</small>
                             </div>
                         </div>
                     </div>
@@ -46,7 +54,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input required type="password" name="password">
+                                <input required type="password" name="password" id="password">
                                 <small class="error">Please enter a password consists of lowercase, uppercase and number.</small>
                             </div>
                         </div>
@@ -58,8 +66,10 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input required type="password" name="password2">
-                                <small class="error">Please confirm your password.</small>
+                                <input required type="password" name="password2" id="password2" onblur="checkPass()">
+
+                              <!--  <button type="button" onclick="checkPass()">Check</button>-->
+                                <small class="error" id="confirmMessage">Please confirm your password.</small>
                             </div>
                         </div>
                     </div>
@@ -70,7 +80,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input required type="number" name="mobile" placeholder="mobile phone number">
+                                <input required type="mobile" name="mobile" placeholder="mobile phone number">
                                 <small class="error">Please enter a mobile number.</small>
                             </div>
                         </div>
@@ -283,7 +293,7 @@
                                     <option value="Solomon Islander">Solomon Islander</option>
                                     <option value="Somali">Somali</option>
                                     <option value="South Afriican">South African</option>
-    
+
                                     <option value="Spanish">Spanish</option>
                                     <option value="Sri Lankan">Sri Lankan</option>
                                     <option value="Sudanese">Sudanese</option>
@@ -312,7 +322,7 @@
                                     <option value="Emirian">Emirian</option>
                                     <option value="British">British</option>
                                     <option value="American">American</option>
-                           
+
                                     <option value="231">Uruguayan</option>
                                     <option value="232">Uzbekistani</option>
                                     <option value="233">Ni-Vanuatu</option>
@@ -560,7 +570,7 @@
                         <div class="small-10 columns"> 
 
                             <input required type="text" placeholder="Security Question Answer" name="answer">
-                        <small class="error">Please enter your security question answer.</small>
+                            <small class="error">Please enter your security question answer.</small>
                         </div>
 
                     </div>
@@ -570,7 +580,7 @@
                             <input type="checkbox" name="subscribe" value="true">
                         </div>
                         <div class="small-11 columns"> 
-                            <strong><label>I want to subscribe latest updates.</label>
+                            <strong><label><strong>I want to subscribe latest updates.</label>
                         </div>
                     </div>
 
@@ -584,14 +594,38 @@
             </form>
 
         <jsp:include page="footer.jsp"></jsp:include>
+
         <script>
-            document.write('<script src=' +
-                    ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
-                    '.js><\/script>')
-        </script>
+        document.write('<script src=' +
+        ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
+        '.js><\/script>')
+        </script> 
+
+        <script src="global/js/vendor/jquery.js"></script>
         <script src="js/foundation.min.js"></script>
         <script>
-                    $(document).foundation();
+                $(document).foundation();
         </script>
+        <script>
+        function checkPass()
+        {
+        console.log("********in checkpass function******");
+        //Store the password field objects into variables ...
+        var pass1 = document.getElementById('password');
+        var pass2 = document.getElementById('password2');
+        console.log(pass1);
+        //Store the Confimation Message Object ...
+        var message = document.getElementById('confirmMessage');
+
+        if (pass1.value !== pass2.value) {
+
+        //The passwords do not match.
+        //Set the color to the bad color and
+        //notify the user.
+        message.innerHTML = "Passwords Do Not Match!"
+        }
+        }
+</script>
+
     </body>
 </html>
