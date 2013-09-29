@@ -37,79 +37,82 @@ public class OverbookingSessionBean {
     public double sl;
     public int demandMean;
     public int demandSD;
-    NormalDistribution n = new NormalDistribution(); 
-    
-    public OverbookingSessionBean (){
-        
+    NormalDistribution n = new NormalDistribution();
+
+    public OverbookingSessionBean() {
     }
-    
-    public void initOverbooking(OverbookingQuotaEntity ob){
+
+    public void initOverbooking(OverbookingQuotaEntity ob) {
         em.persist(ob);
-        
+
     }
 
     //compensation to be discussed, now assume as direct human input
     public int calculateSuggestedQuota(int demandMean, int demandSD, double ce) {
 
         //algorithm missing here.
-        overbooking = em.find(OverbookingQuotaEntity.class,1);
+        overbooking = em.find(OverbookingQuotaEntity.class, 1);
         String roomType = overbooking.getRoomType();
         PriceEntity price = em.find(PriceEntity.class, roomType);
 //        double cs = price.getPrice();
         cs = 482.5;
 //        ce = overbooking.getCompensation1();
         sl = cs / (cs + ce);
-        System.out.println("sl:" +sl);
-        
+        System.out.println("sl:" + sl);
         double x = n.inverseCumulativeProbability(sl);
-        double q = x*demandMean + demandSD;
+        System.out.println("x = " + x);
+        double q = demandMean + demandSD * x;
         double quota = q - demandMean;
-        suggestedQuota = new BigDecimal(quota).intValueExact();
-/*        double z = 0.0;
-        double p = 0.5;
-        double n1;
-        double n2;
-        double n;
-        double final_z;
-        
-        n1=1 / (Math.pow(2, 0.5) * Math.PI);
-        System.out.println("n1: "+n1);
-        n2=Math.exp(-0.5 * Math.pow(0.05,2));
-        System.out.println("n2 when Z=0.05: "+n2);
-        System.out.println("n1*n2: "+n1*n2);
-        
-        n = (1 / (Math.pow(2, 0.5) * Math.PI)) * Math.exp(-0.5 * Math.pow(0.05,2));
-        System.out.println("n when z=0.05: "+n);
-        System.out.println("p when z=0.05: "+n*0.05);
+        System.out.println("Q = " + q);
+        System.out.println("quota = " + quota);
+        int suggestedQuota = (int) quota;
+        System.out.println("final result = " + suggestedQuota);
 
-        while (p < sl) {
-            n1=1 / (Math.pow(2, 0.5) * Math.PI);
-            System.out.println("n1: "+n1);
-            n2=Math.exp(-0.5 * Math.pow(z,2));
-            System.out.println("z: "+z);
-            System.out.println("n2:"+n2);
-  //          System.out.println("n1*n2: "+n1*n2);
-            n = (1 / (Math.pow(2, 0.5) * Math.PI)) * Math.exp(-0.5 * Math.pow(z, 2));
-            System.out.println("n: "+n);
+        /*        double z = 0.0; 
+         double p = 0.5;
+         double n1;
+         double n2;
+         double n;
+         double final_z;
+        
+         n1=1 / (Math.pow(2, 0.5) * Math.PI);
+         System.out.println("n1: "+n1);
+         n2=Math.exp(-0.5 * Math.pow(0.05,2));
+         System.out.println("n2 when Z=0.05: "+n2);
+         System.out.println("n1*n2: "+n1*n2);
+        
+         n = (1 / (Math.pow(2, 0.5) * Math.PI)) * Math.exp(-0.5 * Math.pow(0.05,2));
+         System.out.println("n when z=0.05: "+n);
+         System.out.println("p when z=0.05: "+n*0.05);
+
+         while (p < sl) {
+         n1=1 / (Math.pow(2, 0.5) * Math.PI);
+         System.out.println("n1: "+n1);
+         n2=Math.exp(-0.5 * Math.pow(z,2));
+         System.out.println("z: "+z);
+         System.out.println("n2:"+n2);
+         //          System.out.println("n1*n2: "+n1*n2);
+         n = (1 / (Math.pow(2, 0.5) * Math.PI)) * Math.exp(-0.5 * Math.pow(z, 2));
+         System.out.println("n: "+n);
             
-            p += n * 0.05;
-            z += 0.05;
-      //      System.out.println("n: "+n);
-            System.out.println("p: "+p);
-     //       System.out.println("z: "+z);
-        }
+         p += n * 0.05;
+         z += 0.05;
+         //      System.out.println("n: "+n);
+         System.out.println("p: "+p);
+         //       System.out.println("z: "+z);
+         }
 
 
-        final_z = Math.floor(z);        
-        System.out.println("final_z: "+final_z);
-  */      
+         final_z = Math.floor(z);        
+         System.out.println("final_z: "+final_z);
+         */
         //suggestedQuota = integer value of final_z
         //calculate quota given the probability sl
    /*     suggestedQuota = new BigDecimal(final_z).intValueExact();
-        System.err.println(suggestedQuota);
-        overbooking.setSuggestedQuota(suggestedQuota);
-        em.merge(overbooking);
-        return suggestedQuota;*/
+         System.err.println(suggestedQuota);
+         overbooking.setSuggestedQuota(suggestedQuota);
+         em.merge(overbooking);
+         return suggestedQuota;*/
         return 1;
     }
 
