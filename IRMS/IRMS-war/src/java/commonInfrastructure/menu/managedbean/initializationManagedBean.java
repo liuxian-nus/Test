@@ -171,9 +171,9 @@ public class initializationManagedBean implements Serializable {
         Date codate = new Date(2014, 10, 5);
 
         reservation = new ReservationEntity();
-        reservation.setRcName("Danny");
+        reservation.setRcName("Diana");
         System.out.println("create reservation: welcome " + reservation.getRcName());
-        reservation.setRcEmail("chrislx.nus@gmail.com");
+        reservation.setRcEmail("diana-wang@yahoo.com");
         reservation.setRcHP("65-81801380");
         reservation.setRcCreditCardNo("1230000045600000");
         reservation.setRcCheckInDate(cidate);
@@ -183,6 +183,7 @@ public class initializationManagedBean implements Serializable {
         reservation.setReservationHotelNo(1);
         reservation.setReservationRoomCount(3);
         reservation.setReservationGuestCount(6);
+        reservation.setRcMember(member);
 
         try {
             System.out.println("Saving hotel reservation....");
@@ -287,8 +288,8 @@ public class initializationManagedBean implements Serializable {
     public void createRoom() {
         try {
             System.err.println("Insert room started.....");
-            roomSessionBean.createTestRoom(1,1,1,"deluxe","available","Danny");
-            roomSessionBean.createTestRoom(1,1,2,"superior", "available","Diana");
+            roomSessionBean.createTestRoom(1,1,1,"deluxe","available");
+            roomSessionBean.createTestRoom(1,1,2,"superior", "available");
             /*
             RoomEntity room1 = new RoomEntity();
             room1.setRoomId(1, 1, 1);
@@ -408,10 +409,10 @@ public class initializationManagedBean implements Serializable {
     public void initialize(){
         createSuperAdmin();
         createSystemUser();
+        createMember();
         createReservation();
         createFBMSAdmin();
         createCRMSAdmin();
-        createMember();
         createRoom();
         createFunctionalities();
         createOverbooking();
