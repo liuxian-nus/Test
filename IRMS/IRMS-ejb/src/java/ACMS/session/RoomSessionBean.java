@@ -5,10 +5,13 @@ import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
 import ACMS.entity.RoomServiceEntity;
 import CRMS.entity.MemberEntity;
+import CRMS.entity.MemberTransactionEntity;
+import CRMS.session.MemberTransactionSessionBean;
 import Exception.ExistException;
 import Exception.RoomException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -22,6 +25,8 @@ import javax.persistence.Query;
  */
 @Stateless
 public class RoomSessionBean {
+    @EJB
+    private MemberTransactionSessionBean mtSessionBean;
 
     @PersistenceContext
     private EntityManager em;
@@ -29,6 +34,8 @@ public class RoomSessionBean {
     RoomServiceEntity roomService = new RoomServiceEntity();
     ReservationEntity reservation = new ReservationEntity();
     PriceEntity price = new PriceEntity();
+    MemberTransactionEntity memberTransaction = new MemberTransactionEntity();
+    
 
     public RoomSessionBean() {
     }
@@ -154,12 +161,13 @@ public class RoomSessionBean {
         if (room == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->Invalid room Id!");
         }
-        room.setRoomServiceCharge(0);      
+        room.setRoomServiceCharge(0);
+        room.setRoomService(null);
         return room.getRoomServiceCharge();
     }
     
     //member check-in
-    public void checkIn(int roomId, Long reservationId) throws RoomException, ExistException {
+    public void checkIn(int roomId, Long reservationId,String guestName) throws RoomException, ExistException {
         ReservationEntity reservation = new ReservationEntity();
         reservation = em.find(ReservationEntity.class, reservationId);
         if (reservation == null) {
@@ -174,15 +182,21 @@ public class RoomSessionBean {
         room.setReservation(reservation);
         room.setCheckInDate(reservation.getRcCheckInDate());
         room.setCheckOutDate(reservation.getRcCheckOutDate());
-        //room.setGuestName(reservation.getRcName());
+        room.setGuestName(guestName);
         room.setRoomStatus("occupied");
+        room.setRoomCreditCardNo(reservation.getRcCreditCardNo());
         MemberEntity thisMember = reservation.getRcMember();
         if (thisMember != null) {
             room.setRoomMember(thisMember);
             System.out.println("RoomSessionBean-->Welcome! " + thisMember.getMemberName());
         }
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is now occupied");
-//        PriceEntity roomPrice = 
+        price = em.find(PriceEntity.class,room.getRoomType());
+        if (price == null) {
+            throw new ExistException("RoomSessionBean-->ExistException-->Price Entity missing!");
+        }
+ //
+ //       thisMember.setMemberTransactions(null);
     }
 
     //individual member checkout
@@ -239,4 +253,54 @@ public class RoomSessionBean {
         }
         System.out.println("Insert room into database");
     }
+
+    public MemberTransactionSessionBean getMtSessionBean() {
+        return mtSessionBean;
+    }
+
+    public void setMtSessionBean(MemberTransactionSessionBean mtSessionBean) {
+        this.mtSessionBean = mtSessionBean;
+    }
+
+    public RoomEntity getRoom() {
+        return room;
+    }
+
+    public void setRoom(RoomEntity room) {
+        this.room = room;
+    }
+
+    public RoomServiceEntity getRoomService() {
+        return roomService;
+    }
+
+    public void setRoomService(RoomServiceEntity roomService) {
+        this.roomService = roomService;
+    }
+
+    public ReservationEntity getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(ReservationEntity reservation) {
+        this.reservation = reservation;
+    }
+
+    public PriceEntity getPrice() {
+        return price;
+    }
+
+    public void setPrice(PriceEntity price) {
+        this.price = price;
+    }
+
+    public MemberTransactionEntity getMemberTransaction() {
+        return memberTransaction;
+    }
+
+    public void setMemberTransaction(MemberTransactionEntity memberTransaction) {
+        this.memberTransaction = memberTransaction;
+    }
+    
+    
 }

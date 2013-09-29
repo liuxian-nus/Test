@@ -6,8 +6,9 @@ package ACMS.entity;
 
 import CRMS.entity.MemberEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -33,6 +34,7 @@ public class RoomEntity implements Serializable {
     private int roomNo;
     private String guestName;
     private boolean hasBreakfast = false;
+    private String roomCreditCardNo;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date checkInDate;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -40,10 +42,9 @@ public class RoomEntity implements Serializable {
     private double roomServiceCharge = 0;
     
     @ManyToMany(cascade={CascadeType.PERSIST})
-    private Set<RoomServiceEntity> roomService = new HashSet<RoomServiceEntity> ();
+    private List<RoomServiceEntity> roomService = new ArrayList<RoomServiceEntity> ();
     @ManyToOne(cascade={CascadeType.PERSIST})
     private PriceEntity roomPrice = new PriceEntity();
-    private double overbookingLoss = 0;
     @ManyToOne(cascade={CascadeType.PERSIST})
     private ReservationEntity reservation = new ReservationEntity();
     @OneToOne(cascade={CascadeType.PERSIST})
@@ -113,11 +114,11 @@ public class RoomEntity implements Serializable {
         this.hasBreakfast = hasBreakfast;
     }    
     
-    public Set<RoomServiceEntity> getRoomService(){
+    public List<RoomServiceEntity> getRoomService(){
         return roomService;
     }
     
-    public void setRoomService(Set<RoomServiceEntity> roomService){
+    public void setRoomService(List<RoomServiceEntity> roomService){
         this.roomService = roomService;
     }
 
@@ -156,13 +157,15 @@ public class RoomEntity implements Serializable {
         System.out.println("RoomEntity-->update serviceCharge: " + setCharge);
     }
 
-    public double getOverbookingLoss() {
-        return overbookingLoss;
+    public String getRoomCreditCardNo() {
+        return roomCreditCardNo;
     }
 
-    public void setOverbookingLoss(double overbookingLoss) {
-        this.overbookingLoss = overbookingLoss;
+    public void setRoomCreditCardNo(String roomCreditCardNo) {
+        this.roomCreditCardNo = roomCreditCardNo;
     }
+
+
 
     public ReservationEntity getReservation() {
         return reservation;
