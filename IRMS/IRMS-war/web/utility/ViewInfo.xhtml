@@ -21,7 +21,9 @@
                             <h:outputText value="#{employeeList.employeeEmail}"/>
                         </p:column>
                         <p:column headerText="Date of Birth">
-                            <h:outputText value="#{employeeList.employeeDob}"/>
+                            <h:outputText value="#{employeeList.employeeDob}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Gender">
                             <h:outputText value="#{employeeList.employeeGender}"/>
@@ -54,7 +56,7 @@
 
                             <h:outputText value="Date of Birth" />  
                             <p:calendar pattern="yyyy-MM-dd" yearRange="-70" showButtonPanel="true" navigator="true" id="customCal" value="#{viewInfoManagedBean.selectedEmployee.employeeDob}" /> 
-                            
+
 
                             <h:outputText value="Email" />  
                             <h:panelGroup >  
