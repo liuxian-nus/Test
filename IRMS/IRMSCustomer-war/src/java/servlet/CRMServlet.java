@@ -85,7 +85,7 @@ public class CRMServlet extends HttpServlet {
 
             } else if ("memberInfo".equals(page)) {
                              
-                System.out.println("get member email is: "+member.getMemberEmail());
+          //      System.out.println("get member email is: "+member.getMemberEmail());
 
                 System.out.println(request.getParameter("email"));
                 System.out.println(request.getParameter("password"));
@@ -125,11 +125,16 @@ public class CRMServlet extends HttpServlet {
             } else if ("resetMemberPassword".equals(page)) {
                 System.out.println("***resetMemberPassword page***");
                 String email=request.getParameter("email");
-                member=memberSession.getMemberByEmail(email);         
-                request.setAttribute("data", member);
-                
-                request.getRequestDispatcher("/resetMemberPassword.jsp").forward(request, response);
-                
+                System.out.println("email get from request: "+email);
+                        
+                if(email==null)
+                    request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+                else{
+                    member = memberSession.getMemberByEmail(email);
+                    request.setAttribute("data", member);
+
+                    request.getRequestDispatcher("/resetMemberPassword.jsp").forward(request, response);
+                }
                 
             } else if ("resetMemberPasswordConfirmation".equals(page)) {
                 System.out.println("***resetMemberPasswordConfirmation page***");
@@ -257,7 +262,10 @@ public class CRMServlet extends HttpServlet {
 
                 //       memberManagementSessionBean.ResetPassword("leijq369@gmail.com");
 
-            } else {
+            } else if("accessDenied".equals(page)){
+                System.out.println("***accessDenied***");
+                request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+            }else {
                 System.out.println("other page");
             }
 //          

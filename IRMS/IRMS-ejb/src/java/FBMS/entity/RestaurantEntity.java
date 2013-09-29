@@ -9,16 +9,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.TableGenerator;
 
 /**
  *
  * @author Diana Wang
  */
 @Entity
+@TableGenerator(name="seq", initialValue = 101)
 public class RestaurantEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq")
     private Long restId;
     private String restNeighbourhood; 
     private String restTypeOfPlace;

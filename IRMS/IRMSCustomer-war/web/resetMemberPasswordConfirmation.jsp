@@ -8,10 +8,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <jsp:include page="base.jsp"></jsp:include>
     </head>
     <body>
-        <h1>Reset member password.</h1>
+        <jsp:include page="header.jsp"></jsp:include>
+        <h1>You have successfully reset your password. </h1>
+        <p>
+            <a href="member"> Please log in from here. </a>
+        </p>
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

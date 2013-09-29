@@ -11,8 +11,11 @@
         <jsp:include page="base.jsp"></jsp:include>
         </head>
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <h1>reset member password</h1>
-        <p>${message}</p>
+        <%
+            String email=request.getParameter("email");
+            if(email=="")%> <a href="accessDenied" you have no access to this page/>         
         
          <form id="resetPassword" action="resetMemberPasswordConfirmation" method="POST">
                         <fieldset>
@@ -38,6 +41,8 @@
                                 </div>
                             </div>
                             
+                            <p>${message}</p>
+                            
                           <input type="hidden" name="email" value="${data.memberEmail}"/>
 
                             <br>
@@ -51,5 +56,6 @@
  
                         </fieldset>         
                     </form>
+          <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

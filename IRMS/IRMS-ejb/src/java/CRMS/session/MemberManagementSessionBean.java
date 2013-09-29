@@ -91,6 +91,7 @@ public class MemberManagementSessionBean {
         System.out.println("MemberManagementSessionBean, login function");
         System.out.println("memberEmail: "+memberEmail);
         member = em.find(MemberEntity.class, memberEmail);
+        if(member==null) return false;
         System.out.println("member email stored: "+member.getMemberEmail());
         
         System.out.println("logging in....");
@@ -139,9 +140,6 @@ public class MemberManagementSessionBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when updating member password", ""));
             return;
         }
-         
-         emailSessionBean.emailInitialPassward(email, newPwd);
-         System.out.println("email already sent");
          member = new MemberEntity();       
     }
     
