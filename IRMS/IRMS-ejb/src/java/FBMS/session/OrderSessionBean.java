@@ -10,6 +10,7 @@ import CRMS.entity.MemberEntity;
 import FBMS.entity.CourseEntity;
 import FBMS.entity.MenuEntity;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -68,6 +69,13 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
     public CourseEntity setCourse(CourseEntity ce)
     {
         em.persist(ce);
+        return ce;
+    }
+    
+    @Override
+    public CourseEntity modifyCourse(CourseEntity ce)
+    {
+        em.merge(ce);
         return ce;
     }
     
@@ -163,7 +171,7 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
     }
     
     @Override
-    public OrderEntity modifyOrder(Long orderId,String email,String mobile,String name,String notes,Date orderDateTime,String title)
+    public OrderEntity modifyOrder(Long orderId,String email,String mobile,String name,String notes,Date orderDateTime,String title,Integer numberOrder)
     {
         OrderEntity current = em.find(OrderEntity.class, orderId);
         if(current!=null)
@@ -174,7 +182,24 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
             current.setNotes(notes);
             current.setOrderDateTime(orderDateTime);
             current.setTitle(title);
+            MenuEntity thisMenu = current.getMenu();
+            thisMenu.setNumberOrder(numberOrder);
             
+            Set <CourseEntity> thisCourses = thisMenu.getCourses();
+            Iterator <CourseEntity> itr = thisCourses.iterator();
+            while(itr.hasNext())
+            {
+                CourseEntity ce = itr.next();
+                ce.setMenu(thisMenu);
+                System.out.println("FBMSServlet: CourseEntity's datafield menu has been set");
+                ce.setQuantity(numberOrder);
+                System.out.println("FBMSServlet: CourseEntity's datafield numberPeople has been set");
+                this.modifyCourse(ce);
+                
+            }
+            
+            em.merge(thisMenu);
+            System.out.println("OrderSessionBean: the order menu has been modified and merged successfully");
             em.merge(current);
             System.out.println("OrderSessionBean: the order has been modified and merged successfully!");
             return current;

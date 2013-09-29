@@ -582,7 +582,7 @@ public class FBMSServlet extends HttpServlet {
             me.setCourses(data4);
             System.out.println("FBMSServlet: courses has been set "+me.getCourses().size());
             
-        /*    Iterator <CourseEntity> itr = data4.iterator();
+           Iterator <CourseEntity> itr = data4.iterator();
             while(itr.hasNext())
             {
                 CourseEntity ce = itr.next();
@@ -590,9 +590,9 @@ public class FBMSServlet extends HttpServlet {
                 System.out.println("FBMSServlet: CourseEntity's datafield menu has been set");
                 ce.setQuantity(numberPeople);
                 System.out.println("FBMSServlet: CourseEntity's datafield numberPeople has been set");
-                orderSessionBean.setCourse(ce);
+                orderSessionBean.modifyCourse(ce);
                 
-            }*/
+            }
             
             orderSessionBean.configureMenu(me);
             System.out.println("FBMSServlet: menu has been manipulated completely!"+ me.getNumberOrder());
@@ -676,7 +676,7 @@ public class FBMSServlet extends HttpServlet {
         Long orderId = Long.parseLong(request.getParameter("orderId"));
         System.out.println("The booking orderId is "+orderId);
         
-        oe = orderSessionBean.modifyOrder(orderId, email, mobile, name, notes, thisDate, title);
+        oe = orderSessionBean.modifyOrder(orderId, email, mobile, name, notes, thisDate, title, numberOrder);
         System.out.println("FBMSServlet: the booking has been modified!");
         
         //oe = orderSessionBean.viewOrder(orderId);
