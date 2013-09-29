@@ -65,6 +65,10 @@ public class MemberEntity implements Serializable {
     public void setMemberTransactions(Set<MemberTransactionEntity> MemberTransactions) {
         this.MemberTransactions = MemberTransactions;
     }
+    
+    public void addMemberTransaction(MemberTransactionEntity newTransaction) {
+        this.MemberTransactions.add(newTransaction);
+    }
 
     public MemberEntity(){
     }

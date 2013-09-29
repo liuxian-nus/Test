@@ -36,6 +36,8 @@ public class RoomSessionBean {
     PriceEntity price = new PriceEntity();
     MemberTransactionEntity memberTransaction = new MemberTransactionEntity();
     
+    private double bill = 0;
+    
 
     public RoomSessionBean() {
     }
@@ -219,14 +221,20 @@ public class RoomSessionBean {
         room = em.find(RoomEntity.class, roomId);
         if (room.getRoomServiceCharge() != 0) {
             throw new RoomException("RoomSessionBean-->RoomException-->There is uncleared room service charge!");
-        }
+        }  
+        bill = this.calculateBill(room);
         room.setCheckInDate(null);
         room.setCheckOutDate(null);
         room.setGuestName(null);
         room.setRoomStatus("available");
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
     }
-
+    
+    public double calculateBill(RoomEntity room) {
+        double roomCharge = room.getRoomPrice().getPrice() * 5;
+        double roomServiceCharge = room.getRoomServiceCharge();
+        return roomCharge + roomServiceCharge;
+    }
 
     public void addMembership(int roomId, MemberEntity thisMember) {
         room = em.find(RoomEntity.class, roomId);

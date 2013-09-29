@@ -32,7 +32,21 @@ public class MemberTransactionSessionBean {
     public MemberTransactionSessionBean() {
     }
 
-    public double addMemberTransaction(String memberEmail, MemberTransactionEntity mt, Boolean coinPay) throws ExistException {
+    public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay) {
+        System.out.println("creating member transaction....");
+        mt.setMember(member);
+        mt.setMtAmount(amount);
+        mt.setMtDate(mtDate);
+        mt.setMtDepartment(mtDepartment);
+        mt.setMtPromotion(mtPromotion);
+        mt.setMtMode(true); //later add in cash or card
+        mt.setPaymentStatus(true);//later add in paid or not paid
+        em.persist(mt);
+        System.out.println("member transaction successfully added");
+        member.addMemberTransaction(mt);
+    }
+    
+    public double addMemberTransaction(String memberEmail, MemberTransactionEntity mt, boolean coinPay) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {
             throw new ExistException("Member does not exist!");
@@ -57,7 +71,6 @@ public class MemberTransactionSessionBean {
             System.out.println("Transaction of " + memberEmail + "has been added successfully");
             return (mt.getMtAmount() - tempCoin);
         }
-
     }
 
     public void addPoint(String memberEmail, double mtAmount) throws ExistException {

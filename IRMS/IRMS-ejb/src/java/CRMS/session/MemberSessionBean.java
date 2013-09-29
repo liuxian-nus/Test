@@ -4,22 +4,15 @@ package CRMS.session;
 import CRMS.entity.MemberEntity;
 import ERMS.session.EPasswordHashSessionBean;
 import Exception.ExistException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.ejb.Stateless;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -175,9 +168,6 @@ public class MemberSessionBean {
         }
         return memberList;
     }
-    
-    
-    
 
     @Remove
     public void remove() {
