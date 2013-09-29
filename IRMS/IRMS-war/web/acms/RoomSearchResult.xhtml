@@ -45,7 +45,8 @@
                             <h:outputText value="" rendered="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge==0.0}" />
 
                             <h:outputText value="Breakfast: " />  
-                            <h:outputText value="#{roomSearchResultManagedBean.thisRoom.hasBreakfast}" style="font-weight:bold" /> 
+                            <h:outputText value="Not included" rendered="#{roomSearchResultManagedBean.thisRoom.hasBreakfast==false}" style="font-weight:bold" />
+                            <h:outputText value="Included" rendered="#{roomSearchResultManagedBean.thisRoom.hasBreakfast==true}" style="font-weight:bold" />
                             <h:outputText value="" /> 
 
                             <h:outputText value="Number of Guests: " />  
