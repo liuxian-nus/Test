@@ -6,7 +6,6 @@ package ERMS.session;
 
 import ACMS.entity.RoomEntity;
 import java.util.Properties;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -84,15 +83,17 @@ public class EmailSessionBean {
             message.setFrom(new InternetAddress("chrislx.nus@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAdress));
-            message.setSubject("Initial Password");
+            message.setSubject("Your bill from Coral Island Resort");
             message.setText("Thank you for coming to Coral Island Resort!"
-                    + "\nYour staff " +room.getGuestName() + " has come to our hotel from " + room.getCheckInDate() + " to " + room.getCheckOutDate()
+                    + "\nYour staff " +room.getGuestName() + " has come to our hotel "
+                    + "\nfrom " + room.getCheckInDate() + " to " + room.getCheckOutDate()
                     + "\nThe room fee is " + room.getRoomPrice().getPrice() + " per day,"
                     + " \nand the service charge is " +room.getRoomServiceCharge()
                     + "\nYou have a total bill of " + totalBill
                     + "\nPlease clear your bill in 10 days."
                     + "\nThank you. " 
-                    + "\n\nIn case of any issues and inqueries, you may contact our corporate service manager @ 65-8180 1380"
+                    + "\n\nIn case of any issues and inqueries, you may contact our corporate service manager "
+                    + "\n@ 65-8180 1380"
                     + "\n\n\nBest Regards,\nThe Coral Island Management Team");
                     
             Transport.send(message);

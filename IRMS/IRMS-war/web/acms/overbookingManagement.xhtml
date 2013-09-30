@@ -20,7 +20,7 @@
                             <h:outputText value ="Overbooking loss (Compensation)"/>
                             <h:inputText value ="#{overbookingManagedBean.ce}"/>
                             <h:outputText value ="SystemSuggestedQuota: "/>
-                            <h:outputText value ="#{overbookingManagedBean.suggestedQuota}"/>
+                            <h:outputText value ="#{overbookingManagedBean.suggestedQuota}" style="font-weight:bold"/>
                         </h:panelGrid>
                         <p:commandButton value ="Calculate" ajax ="true" actionListener="#{overbookingManagedBean.doCalculate}" update="suggestedQuota" onclick="growl"/>
 
