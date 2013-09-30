@@ -600,8 +600,6 @@
         ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
         '.js><\/script>')
         </script> 
-
-        <script src="global/js/vendor/jquery.js"></script>
         <script src="js/foundation.min.js"></script>
         <script>
                 $(document).foundation();
