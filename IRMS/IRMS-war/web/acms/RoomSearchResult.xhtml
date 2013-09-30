@@ -24,7 +24,6 @@
 
                             <h:outputText value="Corporate: " /> 
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomCorporate}" style="font-weight:bold" />
-                            <h:outputText value=" " /> 
                             <p:commandButton oncomplete="emailBill.show()" ajax="true" rendered="#{roomSearchResultManagedBean.thisRoom.roomCorporate != null}" icon="ui-icon ui-icon-close" value ="Email Bill" title="Email Bill">  
                             </p:commandButton>
 
@@ -37,11 +36,13 @@
                             <h:outputText value=" " /> 
 
                             <h:outputText value="Check In Date: " />  
-                            <h:outputText value="#{roomSearchResultManagedBean.thisRoom.checkInDate}" style="font-weight:bold" /> 
+                            <h:outputText value="#{roomSearchResultManagedBean.thisRoom.checkInDate}" style="font-weight:bold" /> \
+                            <f:convertDateTime pattern="dd-MM-yyyy" />
                             <h:outputText value=" " /> 
 
                             <h:outputText value="Check Out Date: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.checkOutDate}" style="font-weight:bold" /> 
+                            <f:convertDateTime pattern="dd-MM-yyyy" />
                             <h:outputText value=" " /> 
 
                             <h:outputText value="Room Service Charge: " />  
