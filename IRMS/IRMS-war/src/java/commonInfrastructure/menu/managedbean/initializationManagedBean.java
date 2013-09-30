@@ -9,6 +9,7 @@ import ACMS.entity.PriceEntity;
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomServiceEntity;
 import ACMS.session.OverbookingSessionBean;
+import ACMS.session.PriceSessionBean;
 import ACMS.session.ReservationSessionBean;
 import ACMS.session.RoomServiceSessionBean;
 import ACMS.session.RoomSessionBean;
@@ -40,6 +41,8 @@ import javax.persistence.PersistenceContext;
 @ManagedBean
 @RequestScoped
 public class initializationManagedBean implements Serializable {
+    @EJB
+    private PriceSessionBean priceSessionBean;
     
     //    @PersistenceContext
 //    private EntityManager em;
@@ -61,8 +64,6 @@ public class initializationManagedBean implements Serializable {
     private EPasswordHashSessionBean ePasswordHashSessionBean;
     @EJB
     private FunctionalitySessionBean functionalitySessionBean;
-    @PersistenceContext
-    private EntityManager em;
    
     private EmployeeEntity employee;
     private RoleEntity role;
@@ -296,11 +297,11 @@ public class initializationManagedBean implements Serializable {
             price = new PriceEntity();
             price.setPriceType("deluxe");
             price.setPrice(485.3);
-            em.persist(price);
+            priceSessionBean.createPrice(price);
             price = new PriceEntity();
             price.setPriceType("superior");
             price.setPrice(380.3);
-            em.persist(price);
+            priceSessionBean.createPrice(price);
             roomSessionBean.createTestRoom(1,1,1,"deluxe","available");
             roomSessionBean.createTestRoom(1,1,2,"deluxe", "available");
             roomSessionBean.createTestRoom(1,1,3,"superior","available");
