@@ -28,11 +28,13 @@
                         <h:outputText value ="Customer Credit Card Number"/>
                         <h:outputText value ="#{reservationSearchResultManagedBean.selectReservation.rcCreditCardNo}" style="font-weight:bold"/>
                         <h:outputText value="Check In Date: " />  
-                        <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.rcCheckInDate}" style="font-weight:bold" />
-                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                        <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.rcCheckInDate}" style="font-weight:bold" >
+                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                        </h:outputText>
                         <h:outputText value="Check Out Date: " />  
-                        <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.rcCheckOutDate}" style="font-weight:bold" />
-                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                        <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.rcCheckOutDate}" style="font-weight:bold" >
+                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                        </h:outputText>
                         <h:outputText value="Room Type: " />  
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationRoomType}" style="font-weight:bold" /> 
                         <h:outputText value="Hotel Number: " />  
