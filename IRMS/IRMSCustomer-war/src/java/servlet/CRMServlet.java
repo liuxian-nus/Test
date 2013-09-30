@@ -194,7 +194,7 @@ public class CRMServlet extends HttpServlet {
                     System.out.println(day);
                     Integer month = Integer.parseInt(request.getParameter("month"));
                     System.out.println(month);
-                    Integer year = Integer.parseInt(request.getParameter("Year"));
+                    Integer year = Integer.parseInt(request.getParameter("year"));
                     System.out.println(year);
                     String maritalStatus = request.getParameter("maritalStatus");
                     System.out.println(maritalStatus);
@@ -278,15 +278,24 @@ public class CRMServlet extends HttpServlet {
 
             } else if ("memberForgetPassword".equals(page)) {
                 System.out.println("***memberForgetPassword page***");
+                
                 request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
 
             } else if ("memberForgetPasswordResult".equals(page)) {
                 System.out.println("***memberForgetPasswordResult***");
 
                 String email = request.getParameter("email");
+                System.out.println("email: "+email);
+                
                 
                 if(email==null)
                     request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+                else if(memberSession.getMemberByEmail(email)==null){
+                    System.out.println("invalid email: "+email);
+                    message = "This email is not registered yet.";
+                    request.setAttribute("message", message);
+                    request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);                   
+                }
                 else{
                     String question = request.getParameter("question");
                     String answer = request.getParameter("answer");
@@ -295,6 +304,9 @@ public class CRMServlet extends HttpServlet {
                         memberManagementSessionBean.ResetPassword(email);
                         request.getRequestDispatcher("/memberForgetPasswordResult.jsp").forward(request, response);
                     } else {
+                        System.out.println("wrong answer");
+                        message="Your question or answer is not correct";
+                        request.setAttribute("message", message);
                         request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
                     }
                 }

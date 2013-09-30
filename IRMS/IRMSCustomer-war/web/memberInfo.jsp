@@ -580,11 +580,11 @@
             </section>
 
             <section>
-                <p class="title" data-section-title><a href="#"><strong>Security Setting</strong></a></p>
+                <p class="title" data-section-title><a href="#"><strong>Reset Password</strong></a></p>
                 <div class="content" data-section-content>
 
 
-                    <form id="resetPassword" action="resetMemberPasswordConfirmation" method="POST">
+                    <form data-abide id="resetPassword" action="resetMemberPasswordConfirmation" method="POST">
                         <fieldset>
 
                             <div class="row">
@@ -597,14 +597,16 @@
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label><strong>New Password</strong></label>
-                                    <input id="input-name" type="password" name="newPwd1">
+                                    <input required id="newPwd1" type="password" name="newPwd1">
+                                    <small class="error">Please enter a password consists of lowercase, uppercase and number.</small>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label><strong>Confirm New Password </strong></label>
-                                    <input id="input-name" type="password" name="newPwd2">
+                                    <input required id="newPwd2" type="password" name="newPwd2" onblur="checkPass()">
+                                    <small class="error" id="confirmMessage">Please confirm your password.</small>
                                 </div>
                             </div>
 
@@ -753,6 +755,27 @@
             }
 
 
+        </script>
+        <script>
+        function checkPass()
+        {
+        console.log("********in checkpass function******");
+        //Store the password field objects into variables ...
+        var pass1 = document.getElementById('newPwd1');
+        var pass2 = document.getElementById('newPwd2');
+        console.log(pass1);
+        //Store the Confimation Message Object ...
+        var message = document.getElementById('confirmMessage');
+
+        if (pass1.value !== pass2.value) {
+
+        //The passwords do not match.
+        //Set the color to the bad color and
+        //notify the user.
+        message.innerHTML = "Passwords Do Not Match!"
+      
+        }
+        }
         </script>
     </body>
 </html>

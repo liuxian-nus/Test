@@ -23,21 +23,23 @@
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label>Old password</label>
-                                    <input id="input-name" type="password" name="oldPwd">
+                                    <input required id="oldPwd" type="password" name="oldPwd">
+                                    
                                 </div>
-                            </div>
+                            </div>                 
                              
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label>New Password</label>
-                                    <input id="input-name" type="password" name="newPwd1">
+                                    <input required id="newPwd1" type="password" name="newPwd1">
+                                    <small class="error">Please enter a password consists of lowercase, uppercase and number.</small>
                                 </div>
                             </div>
-                            
+                                                       
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label>Confirm New Password </label>
-                                    <input id="input-name" type="password" name="newPwd2">
+                                    <input required id="newPwd2" type="password" name="newPwd2" onblur="checkPass()">
                                 </div>
                             </div>
                             

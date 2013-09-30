@@ -112,7 +112,10 @@ public class MemberManagementSessionBean {
             System.out.println("true");
             return true;
         }
-        else return false;
+        else{
+            System.out.println(answer);
+            return false;
+        }
     }
     
     public boolean checkPassword(String email, String pwd){

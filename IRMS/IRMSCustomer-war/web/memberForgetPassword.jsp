@@ -58,6 +58,13 @@
                             </div>
 
                         </div>
+                        
+                        <div class="row">
+                            <div class="small-10 small-offset-2 columns">
+                                <p><strong>${message}</strong></p>
+                            </div>
+                        </div>
+                        
       
                         <br>
                         <div class="row">
