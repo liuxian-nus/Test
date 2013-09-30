@@ -143,13 +143,15 @@ public class RoomManagedBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The room does not exist!", ""));
                 return;
             }
+            else
+            {
             System.out.println("we are after search");
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", thisRoom);
             System.out.println("we are after setting parameter");
             request.getSession().setAttribute("roomId", getSearchId());
             System.out.println("we are after setting reservationId session attribute");
-
             FacesContext.getCurrentInstance().getExternalContext().redirect("RoomSearchResult.xhtml");
+            }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
             return;

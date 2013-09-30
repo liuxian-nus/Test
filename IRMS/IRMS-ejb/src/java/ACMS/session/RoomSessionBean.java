@@ -63,9 +63,9 @@ public class RoomSessionBean {
     public RoomEntity getRoomById(int id) throws ExistException {
         System.err.println("in get room by id sessionbean");
         RoomEntity thisRoom = em.find(RoomEntity.class, id);
-        if (thisRoom == null) {
-            throw new ExistException("RoomSessionBean-->ExistException-->Room doesn't exist!");
-        }
+//        if (thisRoom == null) {
+//            throw new ExistException("RoomSessionBean-->ExistException-->Room doesn't exist!");
+//        }
         return thisRoom;
     }
 

@@ -39,7 +39,7 @@ public class ReservationSessionBean {
     
     public ReservationEntity getReservationById(Long reservationId) throws ExistException {
         reservation = em.find(ReservationEntity.class, reservationId);
-        if(reservation == null)throw new ExistException("Reservation does not exist!");
+//        if(reservation == null)throw new ExistException("Reservation does not exist!");
         return reservation;
         }
     

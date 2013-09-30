@@ -70,14 +70,14 @@ public class ReservationManagedBean implements Serializable {
             if (selectReservation == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservation does not exist!", ""));
                 return;
+            } else {
+                System.out.println("we are after search");
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
+                System.out.println("we are after setting parameter");
+                request.getSession().setAttribute("reservationId", Long.valueOf(getSearchId()));
+                System.out.println("we are after setting reservationId session attribute");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
             }
-            System.out.println("we are after search");
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
-            System.out.println("we are after setting parameter");
-            request.getSession().setAttribute("reservationId", Long.valueOf(getSearchId()));
-            System.out.println("we are after setting reservationId session attribute");
-
-            FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
             return;
