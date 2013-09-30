@@ -164,6 +164,7 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
         
         Integer totalNum=0;
         Integer restQuota=restaurant.getRestQuota();
+        System.out.println("indr session bean : restQuota" + restQuota);
         
         Query q=em.createQuery("SELECT indRes FROM IndReservationEntity IndRes");
   
@@ -174,11 +175,12 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
                 if(indReservation.getStatus().equals("Confirmed")&&indReservation.getIndReservationDateTime().equals(date)){
                     totalNum+=indReservation.getNumberPeople();
                 }
-                totalNum+=indReservation.getNumberPeople();
+              //  totalNum+=indReservation.getNumberPeople();
             }
         }
         
         totalNum+=numberPeople;
+        System.out.println("FBMS, INDSB, TOTALNUM" + totalNum);
         System.out.println("FBMS,IndReservationSessionBean, checkAvailability, ends!");
         
         if(totalNum<=restQuota) return true;

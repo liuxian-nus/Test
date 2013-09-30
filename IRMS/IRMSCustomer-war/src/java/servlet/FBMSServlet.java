@@ -4,6 +4,7 @@
  */
 package servlet;
 
+import Exception.ExistException;
 import FBMS.entity.CourseEntity;
 import FBMS.entity.DishEntity;
 import FBMS.entity.IndReservationEntity;
@@ -145,13 +146,17 @@ public class FBMSServlet extends HttpServlet {
                 {
                     if(request.getParameter("booking").equalsIgnoreCase("true")){
                         data3 = makeReservation(request);
-                        request.setAttribute("data", data3);
+                        
                         if(data3!=null){
+                        request.setAttribute("data", data3);
                         System.out.println("data is not null, go to check page");
                         request.getRequestDispatcher("/restaurantCheck.jsp").forward(request, response);
 
                         }else{
                         System.out.println("data is null,book again");
+                        RestaurantEntity thisre = restaurantSessionBean.getRestaurantById(restId);
+                        request.setAttribute("data", thisre);
+                        request.setAttribute("message","Restaurant is full at the time selected! Please book again!");
                         request.getRequestDispatcher("/restaurantBook.jsp").forward(request, response);
                         }
                     }
@@ -159,13 +164,20 @@ public class FBMSServlet extends HttpServlet {
                     {
                         System.out.println("FBMSServlet: going to modify the reservation!");
                         data3 = modifyReservation(request);
-                        request.setAttribute("data", data3);
+                        
                         if(data3!=null){
+                        
+                        request.setAttribute("data", data3);
                         System.out.println("data is not null, go to check page");
                         request.getRequestDispatcher("/restaurantCheck.jsp").forward(request, response);
 
                         }else{
+                            
                         System.out.println("data is null,modify again");
+                        Long reservationId = Long.parseLong(request.getParameter("indReservationId"));
+                        data3 = indReservationSessionBean.viewReservation(reservationId);
+                        request.setAttribute("data", data3);
+                        request.setAttribute("message","Restaurant is full at the time selected! Please book again!");
                         request.getRequestDispatcher("/restaurantIndModify.jsp").forward(request, response);
                         }
                         }
@@ -247,8 +259,19 @@ public class FBMSServlet extends HttpServlet {
 
                     data5 = cateringReservation(request);
                     System.out.println("FBMSServlet: the order has been confirmed!");
-                    request.setAttribute("data", data5);
-                    request.getRequestDispatcher("/cateringCheck.jsp").forward(request, response);
+                    
+                    if(data5!=null){
+                        request.setAttribute("data", data5);
+                        System.out.println("FBMSServlet: the data returned is not null!");
+                        request.getRequestDispatcher("/cateringCheck.jsp").forward(request, response);
+                    }
+                    else
+                    {
+                        request.setAttribute("data", data5);
+                        System.out.println("FBMSServlet: the data returned is null");
+                        request.setAttribute("message","the catering date you select is not available");
+                        request.getRequestDispatcher("/cateringConfirm.jsp").forward(request, response);
+                    }
                     }
                 
                     else
@@ -480,11 +503,12 @@ public class FBMSServlet extends HttpServlet {
         return courses;
     }
     
-    private IndReservationEntity modifyReservation(HttpServletRequest request)
+    private IndReservationEntity modifyReservation(HttpServletRequest request) throws ExistException
     {
         System.out.println("FBMSServlet: the modifyReservation method has been invoked");
          Long restId = Long.parseLong(request.getParameter("restId"));
             System.out.println("The booking restaurant Id is "+ restId);
+            RestaurantEntity thisRe = restaurantSessionBean.getRestaurantById(restId);
             
             Integer numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
             System.out.println("The booking numberPeople is "+numberPeople);
@@ -493,6 +517,7 @@ public class FBMSServlet extends HttpServlet {
         
         Long indReservationId = Long.parseLong(request.getParameter("indReservationId"));
         System.out.println("The indReservationid is "+indReservationId);
+        IndReservationEntity ire = indReservationSessionBean.viewReservation(indReservationId);
         
         Integer year = Integer.parseInt(request.getParameter("year"));
             System.out.println("The booking year is "+ year);
@@ -531,7 +556,10 @@ public class FBMSServlet extends HttpServlet {
         String notes = request.getParameter("notes");
         System.out.println("The booking people's notes is "+notes);
         
-        Boolean isAvailable = checkAvailability(request);
+        Integer newAdd = numberPeople - ire.getNumberPeople();
+        System.out.println("Modify function: new add people "+newAdd);
+        
+        Boolean isAvailable = indReservationSessionBean.checkAvailability(thisRe, newAdd, thisDate);
         
         if(isAvailable){
         
