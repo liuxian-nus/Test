@@ -273,10 +273,12 @@ public class initializationManagedBean implements Serializable {
         member.setMemberHP("92728760");
         member.setNationality("China");
         member.setMemberDob(qqdate);
-        member.setGender("female");
-        member.setMaritalStatus("single");
+        member.setGender("Female");
+        member.setMaritalStatus("Single");
         member.setIsVIP(true);
         member.setIsSubscriber(true);
+        member.setSecurityQuestion("What is your mother's original surname?");
+        member.setAnswer("Wang");
         member.setPreferences("to be set");
         
         try {
