@@ -10,8 +10,9 @@
         <h:form> 
             <f:view beforePhase="#{firstTimeLoginManagedBean.initView}"> 
                 <p:panel id="resetP" header="Input New Password" style="height:495px;">
-                    <div style="margin-top:100px;margin-left:300px;">
+                    <div style="margin-top:50px;margin-left:70px;">
                         <h:panelGrid id="resetPassword" columns="3">
+                            <p:growl id="msg"/>
                             <h:outputText value ="New Password"/>
                             <h:inputSecret value ="#{firstTimeLoginManagedBean.passwordTemp}" redisplay="true"/>
                             <br/>
@@ -30,7 +31,7 @@
                             <h:outputText value ="Answer"/>
                             <h:inputText value="#{firstTimeLoginManagedBean.employee.answer}" requiredMessage="Answer cannot be empty" required="true" />
                             <br/> 
-                            <p:commandButton value ="Confirms" ajax ="true" actionListener = "#{firstTimeLoginManagedBean.doSubmit}" />
+                            <p:commandButton value ="Confirms" update="msg" ajax ="true" actionListener = "#{firstTimeLoginManagedBean.doSubmit}" />
                         </h:panelGrid>
                     </div>
                 </p:panel>

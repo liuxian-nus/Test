@@ -47,7 +47,7 @@ public class ResetPasswordManagedBean {
         System.out.println(employee.getEmployeeId());
         if (employee == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid UserName", ""));
-
+            return;
         } else {
 
             if (employee.getEmployeeDob().toString().equals(employeeDob) && employee.getSecurityQuestion().equals(securityQuestion) && employee.getAnswer().equals(answer)) {
