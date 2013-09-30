@@ -722,7 +722,7 @@
                     }
                 }
                 // look for month
-                for (var i = 0; i < 11; i++) {
+                for (var i = 0; i < 12; i++) {
                     console.log("inside loop");
 
                     if (document.getElementById("monthDropdown").options[i].value == month) {
@@ -732,7 +732,7 @@
                     }
                 }
                 // look for day
-                for (var i = 0; i < 30; i++) {
+                for (var i = 0; i < 31; i++) {
                     console.log("inside loop");
 
                     if (document.getElementById("dateDropdown").options[i].value == date) {
