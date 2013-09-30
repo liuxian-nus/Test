@@ -10,18 +10,20 @@
     <ui:define name="content">
         <h:form id="form">
             <p:panel id="func" header="Function Management" style="height:495px;">
-                <div style="margin-left:50px;margin-right:50px;margin-top:20px;">
+                <div style="margin-top:20px;">
                     <p:growl id="msgs" showDetail="true" /> 
-                    <p:dataTable id="functionalities" value="#{manageFunctionalityManagedBean.getFunctionalities()}" var="funcList" paginator="true" rows="6">
+                    <p:dataTable id="functionalities" value="#{manageFunctionalityManagedBean.getFunctionalities()}" 
+                                 var="funcList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
+                                 resizableColumns="true">
 
                         
-                        <p:column headerText="Functionality ID">
+                        <p:column headerText="Functionality ID" style="width:70px;">
                             <h:outputText value="#{funcList.funcId}"/>
                         </p:column>
-                        <p:column headerText="Name">
+                        <p:column headerText="Name" style="width:80px;">
                             <h:outputText value="#{funcList.funcName}"/>
                         </p:column>
-                        <p:column headerText="Description">
+                        <p:column headerText="Description" style="width:300px;">
                             <h:outputText value="#{funcList.funcDescription}"/>
                         </p:column>
 

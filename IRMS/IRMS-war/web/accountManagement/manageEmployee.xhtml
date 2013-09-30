@@ -9,22 +9,23 @@
 
     <ui:define name="content">
         <h:form id="form">
-            <p:panel id="employeeMgt" header="Employee Management" style="height:495px;">
-                <div style="margin-top:20px;margin-left:65px;margin-right:50px;margin-bottom:20px;">
+            <p:panel id="employeeMgt" header="Employee Management" style="height:500px;">
+                <div style="margin-top:20px;margin-bottom:20px;">
                     <p:growl id="message" showDetail="true" /> 
 
-                    <p:dataTable id="employees" value="#{manageEmployeeManagedBean.getEmployees()}" var="employeeList" paginator="true" rows="6" draggableColumns="true">
+                    <p:dataTable id="employees" value="#{manageEmployeeManagedBean.getEmployees()}" var="employeeList" 
+                                 paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
 
-                        <p:column headerText="User ID">
+                        <p:column headerText="User ID" style="width:50px;">
                             <h:outputText value="#{employeeList.employeeId}"/>
                         </p:column>
-                        <p:column headerText="Name">
+                        <p:column headerText="Name" style="width:100px;">
                             <h:outputText value="#{employeeList.employeeName}"/>
                         </p:column>
                         <p:column headerText="Roles">
                             <h:outputText value="#{manageEmployeeManagedBean.toSentence(employeeList.roles)}"/>
                         </p:column>
-                        <p:column headerText="Department">
+                        <p:column headerText="Department" style="width:150px;">
                             <h:outputText value="#{employeeList.employeeDepartment}"/>
                         </p:column>
                         <!--<p:column headerText="User Schedule">
