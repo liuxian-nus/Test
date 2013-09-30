@@ -290,6 +290,7 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.err.println("Insert Dayanqi member into database");
+        addMessage("Member Created!");
     }
     
     public void createVIP(){
@@ -323,6 +324,7 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.err.println("Insert Bowen VIP into database");
+        addMessage("VIP member Created!");
     }
 
     public void createRoom() {
