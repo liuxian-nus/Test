@@ -120,21 +120,23 @@ public class Menu2ManagedBean implements Serializable {
                 System.out.println("ACMSAdmin menu bar");
                 submenu = new Submenu();
                 submenu.setLabel("Hotel");
-                submenu.setIcon("ui-icon ui-icon-contact");
                 
                 item = new MenuItem();
                 item.setValue("Front Desk");
                 item.setUrl("/acms/checkIncheckOut.xhtml");
+                item.setIcon("ui-icon ui-icon-suitcase");
                 submenu.getChildren().add(item);
                 
                 item = new MenuItem();
                 item.setValue("Room Service");
                 item.setUrl("/acms/RoomService.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
                 
                  item = new MenuItem();
                 item.setValue("Overbooking Mgt");
                 item.setUrl("/acms/overbookingManagement.xhtml");
+                item.setIcon("ui-icon ui-icon-calculator");
                 submenu.getChildren().add(item);
                 
                 model.addSubmenu(submenu);
@@ -163,11 +165,13 @@ public class Menu2ManagedBean implements Serializable {
                 item = new MenuItem();
                 item.setValue("Create Restaurant");
                 item.setUrl("/fbms/addRestaurant.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
                 
                 item = new MenuItem();
-                item.setValue("View Restaurants");
+                item.setValue("Manage Restaurants");
                 item.setUrl("/fbms/manageRestaurant.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
                 
                 model.addSubmenu(submenu);
@@ -180,8 +184,9 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setIcon("ui-icon ui-icon-contact");
                 
                 item = new MenuItem();
-                item.setValue("search VIP");
+                item.setValue("Search VIP");
                 item.setUrl("/crms/searchVIP.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
                 
                 
