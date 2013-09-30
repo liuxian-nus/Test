@@ -253,7 +253,8 @@ public class RoomSessionBean {
     public void createTestRoom(int roomHotel, int roomLevel, int roomNo, String roomType, String roomStatus) {
         try {
             System.out.println("come to create test room session bean");
-            System.err.println("create priceEntity first");           
+            System.err.println("create priceEntity first");
+            price = em.find(PriceEntity.class, roomType);
             room.setRoomHotel(roomHotel);
             room.setRoomLevel(roomLevel);
             room.setRoomNo(roomNo);
