@@ -76,7 +76,7 @@
                                 <p:outputPanel rendered="#{viewInfoManagedBean.editMode}" layout="block" style="text-align:center">  
                                     <p:commandButton value="Save" update="info" actionListener="#{viewInfoManagedBean.saveChanges}"   
                                                      oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
-                                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
+                                    <p:commandButton value="Cancel" onclick="carDialog.hide();" type="button" icon="ui-icon ui-icon-close"/>  
                                 </p:outputPanel>  
                             </f:facet>  
                         </h:panelGrid>  
@@ -89,7 +89,7 @@
                         <p:commandButton value="Yes" update="employees" actionListener="#{viewInfoManagedBean.deleteEmployee}" oncomplete="confirmation.hide()">  
                             <f:attribute name="code1" value="#{viewInfoManagedBean.selectedEmployee.employeeId}" />
                         </p:commandButton>
-                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />   
+                        <p:commandButton value="Not yet" onclick="confirmation.hide();" type="button" />   
                     </p:dialog>
                 </div>
             </p:panel>

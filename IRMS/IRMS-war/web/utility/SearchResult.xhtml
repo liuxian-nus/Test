@@ -11,7 +11,7 @@
         <f:view beforePhase="#{searchResultManagedBean.initView}"> 
             <h:form id="form">
                 <p:panel id="search" header="Search Result" style="height:495px;">
-                    <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
+                    <div style="margin-top:30px;">
                         <p:growl id="msgs" showDetail="true" /> 
                         <p:dataTable id="employees" value="#{searchResultManagedBean.employees}" var="employeeList" paginator="true" rows="6">
                             <p:column headerText="Name">

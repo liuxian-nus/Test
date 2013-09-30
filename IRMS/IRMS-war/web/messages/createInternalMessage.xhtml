@@ -10,7 +10,7 @@
         <h:form>               
             <p:growl id="statusMessage"/>
             <p:panel id="msg" header="Write Internal Message" style="height:495px;">
-                <div style="margin-left:200px;margin-top:40px;">
+                <div style="margin-left:40px;margin-top:40px;">
                     <div style="margin-bottom: 15px;">
                         <h:outputText value="To:" /><p:spacer width="10px"/>
 
@@ -21,7 +21,7 @@
                         <h:inputText value="#{createInternalMsgManagedBean.title}" />
 
                     </div>
-                    <p:editor value="#{createInternalMsgManagedBean.msg}" widgetVar="editor" width="600"/>  
+                    <p:editor value="#{createInternalMsgManagedBean.msg}" widgetVar="editor" width="570"/>  
 
                     <h:panelGrid columns="2" style="margin-top:10px">  
                         <p:commandButton value="Send" update="statusMessage" icon="ui-icon ui-icon-mail-closed" actionListener="#{createInternalMsgManagedBean.sendMsg}" />  
