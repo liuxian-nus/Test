@@ -46,7 +46,7 @@ public class ReservationEntity implements Serializable {
         this.reservationRoomType = reservationRoomType;
     }
     //to be continued;
-     @ManyToOne(cascade={CascadeType.PERSIST})
+     @ManyToOne(cascade={CascadeType.MERGE})
      private MemberEntity rcMember;
 
     public Long getId() {

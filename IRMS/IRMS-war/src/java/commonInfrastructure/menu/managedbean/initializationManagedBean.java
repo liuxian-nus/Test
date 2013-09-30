@@ -269,6 +269,7 @@ public class initializationManagedBean implements Serializable {
         
         member = new MemberEntity();
         member.setMemberEmail("xinqi-wang@yahoo.com");
+        member.setMemberPassword("dayanqi");
         member.setMemberName("dayanqi");
         System.out.println("Create a new member: welcome! " + member.getMemberName());
         member.setMemberHP("92728760");
