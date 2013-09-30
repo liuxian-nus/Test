@@ -41,26 +41,13 @@
                         <h:outputText value="#{searchMemberResultManagedBean.member.coin}" style="font-weight:bold" />
                         
                         <h:outputText value="Preferences : " />  
-                        <p:inplace id="preferences" editor="true" style="font-weight:bold">  
+                        <p:inplace id="preferences" editor="true" style="font-weight:bold;">  
                             <p:inputText value="#{searchMemberResultManagedBean.member.preferences}" label="preferences" style="font-weight:bold"/>  
                         </p:inplace>
               
-                        <p:commandButton value="Edit" ajax="true" oncomplete="growl" update="form" actionListener="#{searchMemberResultManagedBean.saveChanges}"/>
+                        <p:commandButton value="Save Changes" ajax="true" oncomplete="growl" update="form" actionListener="#{searchMemberResultManagedBean.saveChanges}"/>
 
                         </h:panelGrid>
-                    
-                   
-                    
-                    
-                 
-                        
-       
-                      
-                        
-                   
-                        
-                  
-           
                     
                 </p:panel>
             </h:form>
