@@ -4,14 +4,16 @@
                 template="./../Template/generalTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
 
 
     <ui:define name="content">
         <p:tabView id="tabView">  
             <p:tab id="tab1" title="Overbooking Mgt">  
-                    <h:form id="formOverbooking">
-                        <p:growl id="growl" showDetail="true" sticky="true" /> 
+                <h:form id="formOverbooking">
+                    <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <p:fieldset legend="Calculate Overbooking Quota" toggleable="true" toggleSpeed="500">  
                         <h:panelGrid columns="2" cellpadding="10" id="suggestedQuota">
                             <h:outputText value ="Average customer demand per day"/>
                             <h:inputText value ="#{overbookingManagedBean.demandMean}"/>
@@ -23,13 +25,16 @@
                             <h:outputText value ="#{overbookingManagedBean.suggestedQuota}" style="font-weight:bold"/>
                         </h:panelGrid>
                         <p:commandButton value ="Calculate" ajax ="true" actionListener="#{overbookingManagedBean.doCalculate}" update="suggestedQuota" onclick="growl"/>
-
+                    </p:fieldset>
+                    <br/>
+                    <p:fieldset legend="Set Overbooking Quota" toggleable="true" toggleSpeed="500" collapsed="true">  
                         <h:panelGrid columns="2" cellpadding="10" id="newQuota">
                             <h:outputText value ="Quota: "/>
                             <h:inputText value ="#{overbookingManagedBean.newQuota}"/>       
                             <p:commandButton  value="Save" ajax="true" actionListener="#{overbookingManagedBean.doUpdate}" update="newQuota" onclick="growl"/>
                         </h:panelGrid> 
-                    </h:form>
+                    </p:fieldset>
+                </h:form>
             </p:tab> 
         </p:tabView>
     </ui:define>
