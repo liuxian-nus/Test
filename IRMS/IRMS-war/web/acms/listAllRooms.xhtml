@@ -19,21 +19,21 @@
                         <p:column headerText="Room ID: ">
                             <h:outputText value="#{rooms.roomId}"/>
                         </p:column>
-                        <p:column sortBy="#{rooms.roomType}" headerText="Room Type: ">
+                        <p:column  headerText="Room Type: ">
                             <h:outputText value="#{rooms.roomType}"/>
                         </p:column>
-                        <p:column sortBy="#{rooms.roomHotel}" headerText="Hotel: ">
+                        <p:column  headerText="Hotel: ">
                             <h:outputText rendered="#{rooms.roomHotel==1}" value="Orchard Hotel"/>
                             <h:outputText rendered="#{rooms.roomHotel==2}" value="Beach View Hotel" />
                             <h:outputText rendered="#{rooms.roomHotel==3}" value="Bay View Hotel" />
                         </p:column>
-                        <p:column sortBy="#{rooms.roomLevel}" headerText="Level: ">
+                        <p:column  headerText="Level: ">
                             <h:outputText value="#{rooms.roomLevel}"/>
                         </p:column>
-                        <p:column sortBy="#{rooms.roomNo}" headerText="Number: ">
+                        <p:column  headerText="Number: ">
                             <h:outputText value="#{rooms.roomNo}"/>
                         </p:column>
-                        <p:column sortBy="#{rooms.roomStatus}" headerText="Status: ">
+                        <p:column  headerText="Status: ">
                             <h:outputText value="#{rooms.roomStatus}"/>
                         </p:column>
                         <p:column style="width:100px">  
