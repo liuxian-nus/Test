@@ -13,7 +13,8 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <h1>Restaurant book for ${data.restName}!</h1>
+   
+            <h4>Restaurant book for <strong> ${data.restName} </strong></h4>
             <form action="restaurantCheck" method="POST">
                 <fieldset>
                     <legend>Book Restaurant</legend>
