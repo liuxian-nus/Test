@@ -6,10 +6,12 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+
 <!DOCTYPE html>
 <html>
     <head>
         <jsp:include page="base.jsp"></jsp:include>
+
         </head>
         <body onload="checkInfo()">
             <script type="text/javascript">
@@ -18,40 +20,59 @@
         <jsp:include page="header.jsp"></jsp:include>
         <h5> Welcome back, dear ${data.memberName}</h5>
 
-  
+
         <div class="section-container vertical-tabs" data-section="vertical-tabs">
             <section>
-                <p class="title" data-section-title><a href="#"><strong>Edit your personal profile</strong></a></p>
+                <p class="title" data-section-title><a href="#"><strong>Member Service </strong></a></p>
                 <div class="content" data-section-content>
-                    <form id="search-form" action="memberInfoEditionConfirmation" method="POST">
+                    <p style="color:#4d4d4d">You have ${data.coin} coins accumulated.</p>
 
-                        <button type="button" onclick="checkInfo()">Refresh</button>
+                </div>
+            </section>
+            <section>
+                <p class="title" data-section-title><a href="#" onclick="checkInfo()"><strong>Edit your personal profile</strong></a></p>
+                <div class="content" data-section-content>
+                    <form id="search-form" action="memberInfoEditionConfirmation" method="POST" >
+
                         <div class="row">
                             <div class="large-12 columns">
-                                <label>Name</label>
+                                <label><strong>Name</strong></label>
                                 <input type ="text" name ="userName"  value="${data.memberName}"/>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="large-12 columns">
-                                <label>Email</label>
-                                <input type="text" name ="email" readonly="readonly" value="${data.memberEmail}"/>
-                            </div>   
+                                <label><strong>Email</strong></label>
+
+                                <input type="text" required name ="email" readonly="readonly" value="${data.memberEmail}"/>
+
+
+                            </div>
                         </div>
 
                         <div class="row"> 
                             <div class="large-12 columns">
-                                <label>Mobile number</label>
+                                <label><strong>Mobile number</strong></label>
                                 <input type="text" name="mobile" value="${data.memberHP}"/>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="large-12 columns">
-                                <label>Nationality</label>
+                            <div class="large-4 columns">
+                                <label><strong>Nationality</strong></label>
+                            </div>
+                            <div class="large-4 columns">
+                                <label><strong>Gender</strong></label>
+                            </div>
+                            <div class="large-4 columns">
+                                <label><strong>Marital Status</strong></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-4 columns">
                                 <input type="hidden" id="nationality" value="${data.nationality}"/>
-                                  <select required name="nationality" id="nationalityDropdown">
+                                <select required name="nationality" id="nationalityDropdown">
                                     <option value="Afghan">Afghan</option>
                                     <option value="Swedish">Swedish</option>
                                     <option value="Albanian">Albanian</option>
@@ -231,7 +252,6 @@
                                     <option value="177">Romanian</option>
                                     <option value="178">Russian</option>
                                     <option value="179">Rwandan</option>
-                                    
                                     <option value="181">Saint Helena</option>
                                     <option value="182">Kittitian, Nevisian</option>
                                     <option value="183">Saint Lucian</option>
@@ -252,7 +272,6 @@
                                     <option value="Solomon Islander">Solomon Islander</option>
                                     <option value="Somali">Somali</option>
                                     <option value="South Afriican">South African</option>
-
                                     <option value="Spanish">Spanish</option>
                                     <option value="Sri Lankan">Sri Lankan</option>
                                     <option value="Sudanese">Sudanese</option>
@@ -281,7 +300,6 @@
                                     <option value="Emirian">Emirian</option>
                                     <option value="British">British</option>
                                     <option value="American">American</option>
-
                                     <option value="231">Uruguayan</option>
                                     <option value="232">Uzbekistani</option>
                                     <option value="233">Ni-Vanuatu</option>
@@ -296,18 +314,41 @@
                                     <option value="242">Zambian</option>
                                     <option value="243">Zimbabwean</option>
                                     <option value="244">Others</option>
-
                                 </select>
-                                
-                            </div> 
+                            </div>     
+
+                            <div class="large-4 columns">
+
+                                <input type="hidden" id="maritalStatus" value="${data.maritalStatus}"/>
+                                <select required id="maritalStatusDropdown" name="maritalStatus">
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Widowed">Widowed</option>
+                                    <option value="Divorced">Divorced</option>
+                                </select>
+
+                            </div>
+                            <div class="large-4 columns">
+                                <input type="hidden" id ="gender" value ="${data.gender}"/>
+                                <select required id="genderDropdown" name="gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Others">Others</option>
+                                </select>
+
+                            </div>
                         </div>
 
-                        <div class ="row">
+                        <div class="row">
                             <div class="large-12 columns">
-                                <label>Date</label>
+                                <label><strong>Date of Birth</strong></label>
+                            </div>
+                        </div>
+                        <div class ="row">
+                            <div class="large-4 columns">
+
                                 <input type="hidden" id="date" value="${data.memberDob.getDate()}"/>
                                 <select required name="date" id="dateDropdown" value="${data.memberDob.getDate()}"/>
-
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -341,11 +382,11 @@
                                 <option value="31">31</option>
                                 </select>
                             </div>   
-                        </div>
 
-                        <div class ="row">
-                            <div class="large-12 columns">
-                                <label>Month</label>
+
+
+                            <div class="large-4 columns">
+
                                 <input type="hidden" id="month" value ="${data.memberDob.getMonth()+1}"/>
 
                                 <select required name="month" id="monthDropdown">
@@ -364,12 +405,12 @@
                                     <option value="12">Dec</option>
                                 </select>
                             </div>
-                        </div>   
 
 
-                        <div class ="row">
-                            <div class="large-12 columns">
-                                <label>Year</label>
+
+
+                            <div class="large-4 columns">
+
                                 <input type="hidden" id="year" value ="${data.memberDob.getYear()+1900}"/>
                                 <select required name="year" id="yearDropdown">
 
@@ -478,36 +519,19 @@
                             </div>   
                         </div>
 
-                        <div class="row">
-                            <div class="large-12 columns">
-                                <label>Marital Status</label>
-                                <input type="hidden" id="maritalStatus" value="${data.maritalStatus}"/>
-                                <select required id="maritalStatusDropdown" name="maritalStatus">
-                                    <option value="Single">Single</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Widowed">Widowed</option>
-                                    <option value="Divorced">Divorced</option>
-                                </select>
-                            </div> 
-                        </div>
+
+
+
+
+
+
 
 
                         <div class="row">
-                            <div class="small-2 columns">
-                                <label>Gender</label>
-                                <input type="hidden" id ="gender" value ="${data.gender}"/>
-                                <select required id="genderDropdown" name="gender">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Others">Others</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="large-12 columns">
-                                <label>Security Question</label>
+                                <label><strong>Security Question</strong></label>
                                 <input type="hidden" id ="securityQuestion" value ="${data.securityQuestion}"/>
-                               <!-- <button type="button" onclick="checkInfo()">Check</button>-->
+                                <!-- <button type="button" onclick="checkInfo()">Check</button>-->
                                 <select required id="securityQuestionDropdown" name="securityQuestion">
                                     <option value="What is your mother's original surname?">What is your mother's original surname?</option>
                                     <option value="What is the name of your primary school?">What is the name of your primary school?</option>
@@ -520,7 +544,7 @@
 
                         <div class ="row">
                             <div class="large-12 columns">
-                                <label>Security Question answer</label>
+                                <label><strong>Security Question answer</strong></label>
                                 <input type="text" name="answer" value ="${data.answer}"/>
                             </div>   
                         </div>
@@ -529,59 +553,82 @@
                         <div class="row">
 
                             <div class="large-12 columns">
-                                <label>Subscription</label>
+                                <label><strong>Subscription</strong></label>
 
                                 <input type="hidden" id ="subscribe" value ="${data.isSubscriber()}"/>
-                                
+
                                 <select required id="subscribeDropdown" name="subscribe">
                                     <option value="true">Yes, I would like to receive news and updates.</option>
                                     <option value="false">No, I don't want the latest updates.</option>
 
                                 </select>
                             </div>  
-                            <!--
-                            <div class="small-1 columns">
-                                <input type="checkbox" name="subscribe" value="$"/>
-                            </div>
-                            <div class="small-11 columns"> 
-                                <label>I want to subscribe latest updates.</label>
-                            </div>-->
+
                         </div>
 
 
                         <input type="hidden" name="password" value="${data.memberPassword}"/>
-
+                        <br>
                         <div class="row">
                             <div class="large-12 columns">
                                 <input type="submit" class="small button" value="Confirm">    
                             </div>                                
                         </div>
-
                     </form>
 
-                    <div class="row">
-                        <div class="large-12 columns">
-                            <form action="resetMemberPassword"><input type="Submit" value ="Reset Password"/>
-                                <input type="hidden" name="email" value="${data.memberEmail}"/>
-                            </form>
-                        </div> 
-                    </div>
                 </div>                      
             </section>
 
             <section>
                 <p class="title" data-section-title><a href="#"><strong>Security Setting</strong></a></p>
                 <div class="content" data-section-content>
-                    <p>Security setting</p>
+
+
+                    <form id="resetPassword" action="resetMemberPasswordConfirmation" method="POST">
+                        <fieldset>
+
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label><strong>Old password</strong></label>
+                                    <input id="input-name" type="password" name="oldPwd">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label><strong>New Password</strong></label>
+                                    <input id="input-name" type="password" name="newPwd1">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label><strong>Confirm New Password </strong></label>
+                                    <input id="input-name" type="password" name="newPwd2">
+                                </div>
+                            </div>
+
+                            <p>${message}</p>
+
+                            <input type="hidden" name="email" value="${data.memberEmail}"/>
+
+                            <br>
+
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <input type="submit" class="small button" value="Confirm">
+                                </div>
+
+                            </div>
+
+                            </ul>
+
+                        </fieldset>         
+                    </form>
                 </div>
             </section>
 
-            <section>
-                <p class="title" data-section-title><a href="#"><strong>Member Service </strong></a></p>
-                <div class="content" data-section-content>
-                    <p></p>
-                </div>
-            </section>
+
 
         </div>
 
@@ -604,7 +651,7 @@
                 // Console.log("********in check information function******");
                 //Store the password field objects into variables ...
                 var securityQuestion = document.getElementById('securityQuestion').value;
-                var gender = document.getElementById('gender').value;     
+                var gender = document.getElementById('gender').value;
                 var subscribe = document.getElementById('subscribe').value;
                 console.log(subscribe);
                 var maritalStatus = document.getElementById('maritalStatus').value;
@@ -620,7 +667,7 @@
                 //look for security question
                 for (var i = 0; i < 3; i++) {
                     console.log("inside loop");
-                    
+
                     if (document.getElementById("securityQuestionDropdown").options[i].value == securityQuestion) {
 
                         document.getElementById("securityQuestionDropdown").options[i].selected = true;
@@ -631,7 +678,7 @@
 
                 for (var i = 0; i < 2; i++) {
                     console.log("inside loop");
-                   
+
                     if (document.getElementById("genderDropdown").options[i].value == gender) {
 
                         document.getElementById("genderDropdown").options[i].selected = true;
@@ -643,7 +690,7 @@
 
                 for (var i = 0; i < 2; i++) {
                     console.log("inside loop");
-                   
+
                     if (document.getElementById("subscribeDropdown").options[i].value == subscribe) {
                         console.log(subscribe);
                         document.getElementById("subscribeDropdown").options[i].selected = true;
@@ -655,7 +702,7 @@
 
                 for (var i = 0; i < 3; i++) {
                     console.log("inside loop");
-                  
+
                     if (document.getElementById("maritalStatusDropdown").options[i].value == maritalStatus) {
 
                         document.getElementById("maritalStatusDropdown").options[i].selected = true;
@@ -665,7 +712,7 @@
                 // look for year
                 for (var i = 0; i < 100; i++) {
                     console.log("inside loop");
-                    
+
                     if (document.getElementById("yearDropdown").options[i].value == year) {
 
                         document.getElementById("yearDropdown").options[i].selected = true;
@@ -675,7 +722,7 @@
                 // look for month
                 for (var i = 0; i < 11; i++) {
                     console.log("inside loop");
-                 
+
                     if (document.getElementById("monthDropdown").options[i].value == month) {
 
                         document.getElementById("monthDropdown").options[i].selected = true;
@@ -685,22 +732,22 @@
                 // look for day
                 for (var i = 0; i < 30; i++) {
                     console.log("inside loop");
-                   
+
                     if (document.getElementById("dateDropdown").options[i].value == date) {
 
                         document.getElementById("dateDropdown").options[i].selected = true;
-                        
-                         console.log(document.getElementById("dateDropdown").options[i]);
+
+                        console.log(document.getElementById("dateDropdown").options[i]);
                     }
                 }
-                
-                      for (var i = 0; i < 240; i++) {
+
+                for (var i = 0; i < 240; i++) {
                     console.log("inside loop");
-                   
+
                     if (document.getElementById("nationalityDropdown").options[i].value == nationality) {
 
                         document.getElementById("nationalityDropdown").options[i].selected = true;
-                         console.log(document.getElementById("nationalityDropdown").options[i]);
+                        console.log(document.getElementById("nationalityDropdown").options[i]);
                     }
                 }
             }
