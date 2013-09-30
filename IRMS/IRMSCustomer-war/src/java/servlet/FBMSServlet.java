@@ -190,7 +190,7 @@ public class FBMSServlet extends HttpServlet {
                         data2 = restaurantSessionBean.getRestaurantById(restId);
                         request.setAttribute("data",data2 );
                         request.setAttribute("message","Wrong input format: please check and submit again!" );
-                        request.getRequestDispatcher("/cateringConfirm.jsp").forward(request, response);
+                        request.getRequestDispatcher("/restaurantBook.jsp").forward(request, response);
                     }
                 }
             }
