@@ -107,7 +107,7 @@ public class RoomManagedBean implements Serializable {
     public void saveNewRoomService(ActionEvent event) throws ExistException {
         System.out.println("saving new room services...");
         System.out.println("SaveNewRoomService Name: " + serviceName);
-        System.out.println("room ID: "+roomId);
+        System.out.println("room ID: " + roomId);
         try {
             rm.addRoomService(roomId, serviceName);
         } catch (Exception e) {
@@ -137,7 +137,12 @@ public class RoomManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            setThisRoom(rm.getRoomById(getSearchId()));
+            thisRoom = rm.getRoomById(getSearchId());
+            if (thisRoom == null) {
+                System.out.println("we are in no room loop");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The room does not exist!", ""));
+                return;
+            }
             System.out.println("we are after search");
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", thisRoom);
             System.out.println("we are after setting parameter");
