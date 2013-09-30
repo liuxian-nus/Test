@@ -163,7 +163,7 @@ public class RoomSessionBean {
         if (room == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->Invalid room Id!");
         }
-        mtSessionBean.addMemberTransaction(room.getRoomMember(), room.getRoomServiceCharge(), room.getCheckOutDate(), "Hotel", null, false);
+//        mtSessionBean.addMemberTransaction(room.getRoomMember(), room.getRoomServiceCharge(), room.getCheckOutDate(), "Hotel", null, false);
         room.setRoomServiceCharge(0);
         room.setRoomService(null);
         return room.getRoomServiceCharge();
