@@ -48,7 +48,9 @@
                             <h:outputText value=" " /> 
 
                             <h:outputText value="Room Service Charge: " />  
-                            <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge}" style="font-weight:bold" /> 
+                            <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge}" style="font-weight:bold" > 
+                            <f:convertNumber pattern="#0.00" />
+                            </h:outputText>
                             <p:commandButton oncomplete="clearConfirmation.show()" ajax="true" rendered="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge!=0.0}" icon="ui-icon ui-icon-close" value ="Clear Service Charge" title="Clear the service charge">  
                             </p:commandButton>
                             <h:outputText value="" rendered="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge==0.0}" />
