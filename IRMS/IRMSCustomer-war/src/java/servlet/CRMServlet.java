@@ -84,33 +84,37 @@ public class CRMServlet extends HttpServlet {
                 request.getRequestDispatcher("/member.jsp").forward(request, response);
 
             } else if ("memberInfo".equals(page)) {
-                             
-          //      System.out.println("get member email is: "+member.getMemberEmail());
+                
 
                 System.out.println(request.getParameter("email"));
                 System.out.println(request.getParameter("password"));
                 
                 String email = request.getParameter("email");
-                String password = request.getParameter("password");
-
                 
-                
+                if(email==null)
+                    request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+                else{
+                    String password = request.getParameter("password");
 
-                System.out.println(email);
-                System.out.println(password);
 
-                boolean isLogin = memberManagementSessionBean.login(email, password);
-                if (isLogin) {
-                    System.out.println(isLogin);
-                    member = memberSession.getMemberByEmail(email);
-                    System.out.println(member.getMemberName());
-                    request.setAttribute("data", member);
-                    request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
-                } else {
-                    message = "Wrong password or username entered";
-                    request.setAttribute("message", message);
-                    request.getRequestDispatcher("/member.jsp").forward(request, response);
 
+
+                    System.out.println(email);
+                    System.out.println(password);
+
+                    boolean isLogin = memberManagementSessionBean.login(email, password);
+                    if (isLogin) {
+                        System.out.println(isLogin);
+                        member = memberSession.getMemberByEmail(email);
+                        System.out.println(member.getMemberName());
+                        request.setAttribute("data", member);
+                        request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
+                    } else {
+                        message = "Wrong password or username entered";
+                        request.setAttribute("message", message);
+                        request.getRequestDispatcher("/member.jsp").forward(request, response);
+
+                    }
                 }
 
                 /*member=memberSession.getMemberByEmail(email);
@@ -124,6 +128,7 @@ public class CRMServlet extends HttpServlet {
 
             } else if ("resetMemberPassword".equals(page)) {
                 System.out.println("***resetMemberPassword page***");
+                
                 String email=request.getParameter("email");
                 System.out.println("email get from request: "+email);
                         
@@ -142,68 +147,89 @@ public class CRMServlet extends HttpServlet {
                 
                
                 String email=request.getParameter("email");
-                String oldPassword=request.getParameter("oldPwd");
-                String newPassword1=request.getParameter("newPwd1");
-                String newPassword2=request.getParameter("newPwd2");
                 
-                Boolean correctOldPwd=memberManagementSessionBean.checkPassword(email, oldPassword);
-                if(!correctOldPwd){
-                    message="wrong password";
-                    request.setAttribute("message", message);
-                    request.getRequestDispatcher("/resetMemberPassword.jsp").forward(request, response);
-                }
+                if(email==null)
+                    request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+                
                 else{
-                    memberManagementSessionBean.resetPasswordWithNewPassword(email,newPassword1);
-                    System.out.println("password saved.");
-                    
-                    request.getRequestDispatcher("/resetMemberPasswordConfirmation.jsp").forward(request, response);
+                    String oldPassword = request.getParameter("oldPwd");
+                    String newPassword1 = request.getParameter("newPwd1");
+                    String newPassword2 = request.getParameter("newPwd2");
+
+                    Boolean correctOldPwd = memberManagementSessionBean.checkPassword(email, oldPassword);
+                    if (!correctOldPwd) {
+                        message = "wrong password";
+                        request.setAttribute("message", message);
+                        request.getRequestDispatcher("/resetMemberPassword.jsp").forward(request, response);
+                    } else {
+                        memberManagementSessionBean.resetPasswordWithNewPassword(email, newPassword1);
+                        System.out.println("password saved.");
+
+                        request.getRequestDispatcher("/resetMemberPasswordConfirmation.jsp").forward(request, response);
+                    }
                 }
-                
                 
                 
             }else if ("memberInfoEditionConfirmation".equals(page)) {
                 System.out.println("***memberInfoEdictionConfirmation page***");
 
-                String userName = request.getParameter("userName");
                 String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                System.out.println("captured password: "+password);
-                String mobile = request.getParameter("mobile");
-                String nationality = request.getParameter("nationality");
-                Integer day = Integer.parseInt(request.getParameter("date"));
-                Integer month = Integer.parseInt(request.getParameter("month"));
-                month+=1;
-                Integer year = Integer.parseInt(request.getParameter("year"));
-                String maritalStatus = request.getParameter("maritalStatus");
-                String gender = request.getParameter("gender");
-                Boolean subscribe = Boolean.valueOf(request.getParameter("subscribe"));
-                String securityQuestion = request.getParameter("securityQuestion");
-                String answer = request.getParameter("answer");
-
-            //    String this_date = day + "-" + month + "-" + year;
-            //    System.out.println(this_date);
-                Date date;
-                date=new Date(year-1900, month-1, day);
-            //    Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
-            //    System.out.println(date);
-
-                /*    if (subscribe) {
-                 System.out.println("the member has subscribed");
-                 message="You have subscribed";
-                 request.setAttribute("message",message);
-                 } else {
-                 message="You have not subscribed.";
-                 request.setAttribute("message",message);                
-                 }
+                System.out.println(email);
                 
-                 System.out.println("message, "+message);*/
+                if(email==null)
+                    request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+                
+                else{
+                    String userName = request.getParameter("userName");
+                    System.out.println(userName);
 
-                member = memberSession.updateMember(email, userName, password, mobile, gender, nationality, date, maritalStatus, subscribe,
-                        securityQuestion, answer);
-                System.out.println("member email before setAttribute"+member.getMemberEmail());
-                request.setAttribute("data", member);
+                    String password = request.getParameter("password");
+                    System.out.println("captured password: " + password);
+                    String mobile = request.getParameter("mobile");
+                    System.out.println(mobile);
+                    String nationality = request.getParameter("nationality");
+                    System.out.println(nationality);
+                    Integer day = Integer.parseInt(request.getParameter("date"));
+                    System.out.println(day);
+                    Integer month = Integer.parseInt(request.getParameter("month"));
+                    System.out.println(month);
+                    Integer year = Integer.parseInt(request.getParameter("Year"));
+                    System.out.println(year);
+                    String maritalStatus = request.getParameter("maritalStatus");
+                    System.out.println(maritalStatus);
+                    String gender = request.getParameter("gender");
+                    System.out.println(gender);
+                    Boolean subscribe = Boolean.valueOf(request.getParameter("subscribe"));
+                    System.out.println(Boolean.valueOf(subscribe));
+                    String securityQuestion = request.getParameter("securityQuestion");
+                    String answer = request.getParameter("answer");
 
-                request.getRequestDispatcher("/memberInfoEditionConfirmation.jsp").forward(request, response);
+                    //    String this_date = day + "-" + month + "-" + year;
+                    //    System.out.println(this_date);
+                    Date date;
+                    date = new Date(year - 1900, month - 1, day);
+                    //    Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
+                    //    System.out.println(date);
+
+                    /*    if (subscribe) {
+                     System.out.println("the member has subscribed");
+                     message="You have subscribed";
+                     request.setAttribute("message",message);
+                     } else {
+                     message="You have not subscribed.";
+                     request.setAttribute("message",message);                
+                     }
+                
+                     System.out.println("message, "+message);*/
+
+                    member = memberSession.updateMember(email, userName, password, mobile, gender, nationality, date, maritalStatus, subscribe,
+                            securityQuestion, answer);
+                    System.out.println("member email before setAttribute" + member.getMemberEmail());
+                    System.out.println("member subscriber? :" + Boolean.toString(member.isSubscriber()));
+                    request.setAttribute("data", member);
+
+                    request.getRequestDispatcher("/memberInfoEditionConfirmation.jsp").forward(request, response);
+                }
 
             } else if ("memberRegister".equals(page)) {
                 System.out.println("***memberRegister page***");
@@ -212,36 +238,43 @@ public class CRMServlet extends HttpServlet {
             } else if ("memberRegisterResult".equals(page)) {
 
                 System.out.println("***memberRegisterResult page***");
-
-                String userName = request.getParameter("username");
-                String email = request.getParameter("e-mail");
-                String password1 = request.getParameter("password");
-                String password2 = request.getParameter("password2");
-                String mobile = request.getParameter("mobile");
-                String nationality = request.getParameter("nationality");
-                Integer day = Integer.parseInt(request.getParameter("dateDay"));
-                Integer month = Integer.parseInt(request.getParameter("dateMonth"));
-                Integer year = Integer.parseInt(request.getParameter("dateYear"));
-                String maritalStatus = request.getParameter("marital");
-                String gender = request.getParameter("gender");
-                Boolean subscribe = Boolean.valueOf(request.getParameter("subscribe"));
-
-           //     String this_date = day + "-" + month + "-" + year;
-           //     System.out.println(this_date);
-                Date date;
-                date=new Date(year-1900, month-1, day);
-   //             Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
-   //             System.out.println(date);
-                String securityQuestion = request.getParameter("securityQuestion");
-                String answer = request.getParameter("answer");
-                System.out.println("userName: " + userName);
-
-                member = memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe,
-                        securityQuestion, answer);
-                request.setAttribute("data", member);
-          
-                request.getRequestDispatcher("/memberRegisterResult.jsp").forward(request, response);
                 
+                String email = request.getParameter("e-mail");
+                if(email==null)
+                    request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+                
+                else{
+     
+                    String userName = request.getParameter("username");
+
+                    String password1 = request.getParameter("password");
+                    String password2 = request.getParameter("password2");
+                    String mobile = request.getParameter("mobile");
+                    String nationality = request.getParameter("nationality");
+                    Integer day = Integer.parseInt(request.getParameter("dateDay"));
+                    Integer month = Integer.parseInt(request.getParameter("dateMonth"));
+                    Integer year = Integer.parseInt(request.getParameter("dateYear"));
+                    String maritalStatus = request.getParameter("marital");
+                    String gender = request.getParameter("gender");
+                    Boolean subscribe = Boolean.valueOf(request.getParameter("subscribe"));
+
+                    //     String this_date = day + "-" + month + "-" + year;
+                    //     System.out.println(this_date);
+                    Date date;
+                    date = new Date(year - 1900, month - 1, day);
+                    //             Date date = new SimpleDateFormat("dd-MMM-yyyy").parse("01-July-2013");
+                    //             System.out.println(date);
+                    String securityQuestion = request.getParameter("securityQuestion");
+                    String answer = request.getParameter("answer");
+                    System.out.println("userName: " + userName);
+
+                    member = memberSession.addMember(email, userName, password1, password2, mobile, gender, nationality, date, maritalStatus, subscribe,
+                            securityQuestion, answer);
+                    request.setAttribute("data", member);
+
+                    request.getRequestDispatcher("/memberRegisterResult.jsp").forward(request, response);
+                }
+
             } else if ("memberForgetPassword".equals(page)) {
                 System.out.println("***memberForgetPassword page***");
                 request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
@@ -250,14 +283,19 @@ public class CRMServlet extends HttpServlet {
                 System.out.println("***memberForgetPasswordResult***");
 
                 String email = request.getParameter("email");
-                String question = request.getParameter("question");
-                String answer = request.getParameter("answer");
-                boolean correctAnswer = memberManagementSessionBean.checkAnswer(email, answer);
-                if (correctAnswer) {
-                    memberManagementSessionBean.ResetPassword(email);
-                    request.getRequestDispatcher("/memberForgetPasswordResult.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
+                
+                if(email==null)
+                    request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+                else{
+                    String question = request.getParameter("question");
+                    String answer = request.getParameter("answer");
+                    boolean correctAnswer = memberManagementSessionBean.checkAnswer(email, answer);
+                    if (correctAnswer) {
+                        memberManagementSessionBean.ResetPassword(email);
+                        request.getRequestDispatcher("/memberForgetPasswordResult.jsp").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
+                    }
                 }
 
                 //       memberManagementSessionBean.ResetPassword("leijq369@gmail.com");
