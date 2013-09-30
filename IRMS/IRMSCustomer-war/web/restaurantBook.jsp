@@ -9,13 +9,13 @@
 <html>
     <head>
         <jsp:include page="base.jsp"></jsp:include>
-        <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
+       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
    
             <h4>Restaurant book for <strong> ${data.restName} </strong></h4>
-            <form action="restaurantCheck" method="POST">
+            <form data-abide action="restaurantCheck" method="POST">
                 <fieldset>
                     <legend>Book Restaurant</legend>
                     <p>${message}</p>
@@ -165,7 +165,8 @@
                             <label for="right-label" class="left-align,inline"><strong>Name</label>
                         </div>
                         <div class="small-5 columns">
-                            <input id="input-name" type="text" placeholder="name" name="name">
+                            <input required type="text" id="input-name"  placeholder="name" name="name">
+                            <small class="error">Please enter your name.</small>
                         </div>
 
                     </div>
@@ -174,10 +175,12 @@
                     <div class="row">
                         <div class="small-2 columns">
                             <label for="right-label" class="left-align,inline"><strong>E-mail</label>
+                         
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="text" placeholder="email" name="email">
+                                <input required type="email" placeholder="email" name="email">
+                               <small class="error" id="confirmMessage">Please enter a valid e-mail.</small>
                             </div>
                         </div>
                     </div>
@@ -188,7 +191,8 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input type="text" name="mobile"placeholder="mobile phone number">
+                                <input required pattern="[0-9]{8}" type="text" name="mobile"placeholder="mobile phone number">
+                             <small class="error" id="confirmMessage">Please enter a valid phone number.</small>
                             </div>
                         </div>
                     </div>
@@ -218,5 +222,14 @@
             </form>
                      
         <jsp:include page="footer.jsp"></jsp:include>
+        <script>
+        document.write('<script src=' +
+        ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
+        '.js><\/script>')
+        </script> 
+   
+        <script>
+                $(document).foundation();
+        </script>
     </body>
 </html>
