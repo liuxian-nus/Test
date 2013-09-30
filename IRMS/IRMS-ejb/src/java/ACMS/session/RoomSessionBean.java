@@ -7,10 +7,10 @@ import ACMS.entity.RoomServiceEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.session.MemberTransactionSessionBean;
+import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
 import Exception.RoomException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -26,9 +26,11 @@ import javax.persistence.Query;
  */
 @Stateless
 public class RoomSessionBean {
+
+    @EJB
+    private EmailSessionBean emailSessionBean;
     @EJB
     private MemberTransactionSessionBean mtSessionBean;
-
     @PersistenceContext
     private EntityManager em;
     RoomEntity room = new RoomEntity();
@@ -36,9 +38,7 @@ public class RoomSessionBean {
     ReservationEntity reservation = new ReservationEntity();
     PriceEntity price = new PriceEntity();
     MemberTransactionEntity memberTransaction = new MemberTransactionEntity();
-    
     private double bill = 0;
-    
 
     public RoomSessionBean() {
     }
@@ -59,7 +59,7 @@ public class RoomSessionBean {
         em.merge(room);
         return room;
     }
-    
+
     public RoomEntity getRoomById(int id) throws ExistException {
         System.err.println("in get room by id sessionbean");
         RoomEntity thisRoom = em.find(RoomEntity.class, id);
@@ -106,7 +106,7 @@ public class RoomSessionBean {
         System.out.println("finish the session bean method" + selectRoom.size());
         return roomList;
     }
-    
+
     //list of all rooms -- for floor plan
     //information displayed: availability, roomSchedule,roomName, roomType, roomService, accumulated charge
     public List<RoomEntity> getAllRooms() throws ExistException {
@@ -120,27 +120,27 @@ public class RoomSessionBean {
         if (roomList == null) {
             throw new ExistException("RoomEntity database is empty!");
         }
-        System.err.println("in get all rooms sessionbean: room list size="+roomList.size());
+        System.err.println("in get all rooms sessionbean: room list size=" + roomList.size());
         return roomList;
     }
-    
-     public List<RoomEntity> getOccupiedRooms() throws ExistException {
+
+    public List<RoomEntity> getOccupiedRooms() throws ExistException {
         System.err.println("in getOccupiedrooms session bean");
         Query q = em.createQuery("SELECT r FROM RoomEntity r");
         List roomList = new ArrayList<RoomEntity>();
         for (Object o : q.getResultList()) {
             RoomEntity r = (RoomEntity) o;
-            if (r.getRoomStatus()=="occupied")
-            roomList.add(r);
+            if (r.getRoomStatus() == "occupied") {
+                roomList.add(r);
+            }
         }
         if (roomList == null) {
             throw new ExistException("RoomEntity database is empty!");
         }
-        System.err.println("in get all rooms sessionbean: room list size="+roomList.size());
+        System.err.println("in get all rooms sessionbean: room list size=" + roomList.size());
         return roomList;
     }
-    
-    
+
     //add new charged service
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public RoomServiceEntity addRoomService(int roomId, String roomServiceName) throws ExistException {
@@ -156,10 +156,10 @@ public class RoomSessionBean {
         System.out.println("RoomSessionBean--> " + roomId + " now has total outstanding payable: " + room.getRoomServiceCharge());
         return roomService;
     }
-    
+
     //clear all room service charge
     public double clearServiceCharge(int roomId) throws ExistException {
-        room = em.find(RoomEntity.class, roomId); 
+        room = em.find(RoomEntity.class, roomId);
         if (room == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->Invalid room Id!");
         }
@@ -167,9 +167,9 @@ public class RoomSessionBean {
         room.setRoomService(null);
         return room.getRoomServiceCharge();
     }
-    
+
     //member check-in
-    public void checkIn(int roomId, Long reservationId,String guestName) throws RoomException, ExistException {
+    public void checkIn(int roomId, Long reservationId, String guestName) throws RoomException, ExistException {
         ReservationEntity reservation = new ReservationEntity();
         reservation = em.find(ReservationEntity.class, reservationId);
         if (reservation == null) {
@@ -194,11 +194,11 @@ public class RoomSessionBean {
             System.out.println("RoomSessionBean-->Welcome! " + thisMember.getMemberName());
         }
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is now occupied");
-        price = em.find(PriceEntity.class,room.getRoomType());
+        price = em.find(PriceEntity.class, room.getRoomType());
         if (price == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->Price Entity missing!");
         }
- //       thisMember.setMemberTransactions(null);
+        //       thisMember.setMemberTransactions(null);
     }
 
     //individual member checkout
@@ -206,11 +206,14 @@ public class RoomSessionBean {
         room = em.find(RoomEntity.class, roomId);
         if (room.getRoomServiceCharge() != 0) {
             throw new RoomException("RoomSessionBean-->RoomException-->There is uncleared room service charge!");
-        }  
+        }
         bill = this.calculateBill(room);
         System.out.println("accounts receivable: " + bill);
-        mtSessionBean.addMemberTransaction(room.getRoomMember(),bill,room.getCheckOutDate(),"Hotel" ,null ,false);
+        mtSessionBean.addMemberTransaction(room.getRoomMember(), bill, room.getCheckOutDate(), "Hotel", null, false);
         System.out.println("room check out: member transaction captured!");
+        if (room.getRoomCorporate() != null) {
+            emailSessionBean.emailCorporateBill("cookiewxy@gmail.com", room);
+        }
         room.setCheckInDate(null);
         room.setCheckOutDate(null);
         room.setGuestName(null);
@@ -219,12 +222,13 @@ public class RoomSessionBean {
         room.setReservation(null);
         room.setRoomCreditCardNo(null);
         room.setRoomMember(null);
+        room.setRoomCorporate(null);
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
     }
-    
+
     public double calculateBill(RoomEntity room) {
- //       double temp1 = room.getCheckInDate().get(Calendar.DAY_OF_YEAR);
- //       double temp2 = room.getCheckOutDate().get(Calendar.DAY_OF_YEAR);
+        //       double temp1 = room.getCheckInDate().get(Calendar.DAY_OF_YEAR);
+        //       double temp2 = room.getCheckOutDate().get(Calendar.DAY_OF_YEAR);
         double roomCharge = room.getRoomPrice().getPrice() * 5; // 5 should be outDate - inDate
         double roomServiceCharge = room.getRoomServiceCharge();
         return roomCharge + roomServiceCharge;
@@ -316,6 +320,4 @@ public class RoomSessionBean {
     public void setMemberTransaction(MemberTransactionEntity memberTransaction) {
         this.memberTransaction = memberTransaction;
     }
-    
-    
 }
