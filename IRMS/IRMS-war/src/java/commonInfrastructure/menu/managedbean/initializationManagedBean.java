@@ -31,8 +31,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -174,7 +172,7 @@ public class initializationManagedBean implements Serializable {
     public void createReservation() {
         System.out.println("go to create hotel reservation page...");
         Date cidate = new Date(2014, 10, 1);
-        Date codate = new Date(2014, 10, 5);
+        Date codate = new Date(2014, 10, 6);
 
         reservation = new ReservationEntity();
         reservation.setRcName("Diana");
@@ -185,7 +183,6 @@ public class initializationManagedBean implements Serializable {
         reservation.setReservationCorporate("Credit Suisse");
         reservation.setRcCheckInDate(cidate);
         reservation.setRcCheckOutDate(codate);
-//         reservation.setRcMember(member);
         reservation.setReservationRoomType("Deluxe");
         reservation.setReservationHotelNo(1);
         reservation.setReservationRoomCount(3);
@@ -270,8 +267,8 @@ public class initializationManagedBean implements Serializable {
         
         member = new MemberEntity();
         member.setMemberEmail("xinqi-wang@yahoo.com");
-        member.setMemberPassword("dayanqi");
-        member.setMemberName("dayanqi");
+        member.setMemberPassword("ABCabc123");
+        member.setMemberName("Diana");
         System.out.println("Create a new member: welcome! " + member.getMemberName());
         member.setMemberHP("92728760");
         member.setNationality("China");
@@ -308,6 +305,7 @@ public class initializationManagedBean implements Serializable {
             roomSessionBean.createTestRoom(1,1,2,"deluxe", "available");
             roomSessionBean.createTestRoom(1,1,3,"superior","available");
             roomSessionBean.createTestRoom(1,1,4,"superior","available");
+            roomSessionBean.createTestRoom(1,1,5,"superior","available");
             /*
             RoomEntity room1 = new RoomEntity();
             room1.setRoomId(1, 1, 1);
@@ -408,9 +406,9 @@ public class initializationManagedBean implements Serializable {
         roomService = new RoomServiceEntity();
         System.out.println("Creating room service 2....");
         
-        roomService.setRoomServiceName("Minibar vodka");
-        roomService.setRoomServicePrice(11.8);
-        roomService.setCategory("charged service");
+        roomService.setRoomServiceName("Housekeeping");
+        roomService.setRoomServicePrice(0);
+        roomService.setCategory("free service");
         
         try {
             System.out.println(roomService.getRoomServiceName());
@@ -422,11 +420,28 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         
-         roomService = new RoomServiceEntity();
+        roomService = new RoomServiceEntity();
         System.out.println("Creating room service 3....");
         
-        roomService.setRoomServiceName("Minibar Pepsi");
-        roomService.setRoomServicePrice(3.5);
+        roomService.setRoomServiceName("TV Channel Subscription 1");
+        roomService.setRoomServicePrice(19.9);
+        roomService.setCategory("charged service");
+        
+        try {
+            System.out.println(roomService.getRoomServiceName());
+            System.out.println(roomService.getRoomServicePrice());
+            roomServiceSessionBean.addRoomService(roomService);
+            System.err.println("roomService added");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
+            return;
+        }
+        
+        roomService = new RoomServiceEntity();
+        System.out.println("Creating room service 4....");
+        
+        roomService.setRoomServiceName("TV Channel Subscription 2");
+        roomService.setRoomServicePrice(49.9);
         roomService.setCategory("charged service");
         
         try {
@@ -440,7 +455,7 @@ public class initializationManagedBean implements Serializable {
         }
         
          roomService = new RoomServiceEntity();
-        System.out.println("Creating room service 4....");
+        System.out.println("Creating room service 5....");
         
         roomService.setRoomServiceName("Custard Puff");
         roomService.setRoomServicePrice(5.4);
@@ -456,7 +471,7 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         roomService = new RoomServiceEntity();
-        System.out.println("Creating room service 5....");
+        System.out.println("Creating room service 6....");
         
         roomService.setRoomServiceName("Chocolate Puff");
         roomService.setRoomServicePrice(5.4);
@@ -471,8 +486,8 @@ public class initializationManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
             return;
         }
-                 roomService = new RoomServiceEntity();
-        System.out.println("Creating room service 6....");
+        roomService = new RoomServiceEntity();
+        System.out.println("Creating room service 7....");
         
         roomService.setRoomServiceName("Thai Pineapple Rice");
         roomService.setRoomServicePrice(10);
