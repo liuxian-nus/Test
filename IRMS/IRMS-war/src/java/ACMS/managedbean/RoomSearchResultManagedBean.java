@@ -91,4 +91,19 @@ public class RoomSearchResultManagedBean implements Serializable {
             return;
         }
     }
+    public void sendBill() throws IOException {
+        System.out.println("we are in clear service charge");
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+
+        try {
+            roomId = (Integer) request.getSession().getAttribute("roomId");
+            roomSessionBean.sendBill(roomId);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", roomSessionBean.getRoomById(roomId));
+            System.out.println("we are after setting parameter");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when clearing search", ""));
+            return;
+        }
+    }
 }

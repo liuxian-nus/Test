@@ -225,6 +225,17 @@ public class RoomSessionBean {
         room.setRoomCorporate(null);
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
     }
+    
+     public void sendBill(int roomId) throws RoomException {
+        room = em.find(RoomEntity.class, roomId);
+        bill = this.calculateBill(room);
+        System.out.println("accounts receivable: " + bill);
+        
+        if (room.getRoomCorporate() != null) {
+            emailSessionBean.emailCorporateBill("xinqi_wang@yahoo.com", room);
+        }
+        System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " bill is successfully send");
+    }
 
     public double calculateBill(RoomEntity room) {
         //       double temp1 = room.getCheckInDate().get(Calendar.DAY_OF_YEAR);

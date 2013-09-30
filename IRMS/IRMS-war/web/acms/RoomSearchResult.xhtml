@@ -25,8 +25,10 @@
                             <h:outputText value="Corporate: " /> 
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomCorporate}" style="font-weight:bold" />
                             <h:outputText value=" " /> 
+                            <p:commandButton oncomplete="emailBill.show()" ajax="true" rendered="#{roomSearchResultManagedBean.thisRoom.roomCorporate != null}" icon="ui-icon ui-icon-close" value ="Email Bill" title="Email Bill">  
+                            </p:commandButton>
 
-                            <h:outputText value="RoomType: " />  
+                            <h:outputText value="RoomType: " /> 
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomType}" style="font-weight:bold" /> 
                             <h:outputText value=" " /> 
 
@@ -65,6 +67,14 @@
                     </div>
                 </p:panel>
 
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="EmailBill" widgetVar="emailBill"> 
+                    <br/>
+                    Sure to Send Email?
+                    <br/><br/>
+                    <p:commandButton value="Yes" update="growl" action="#{roomSearchResultManagedBean.sendBill}" oncomplete="emailBill.hide()">  
+                    </p:commandButton>
+                    <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
+                </p:dialog> 
 
                 <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
                     <br/>
