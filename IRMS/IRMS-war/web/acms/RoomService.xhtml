@@ -11,7 +11,7 @@
         <p:tabView id="tabView">  
             <p:tab id="tab1" title="List Room Service">  
                 <h:form id="serviceList">
-                    <p:dataTable id="roomServices" value="#{roomServiceManagedBean.getSource()}" var="roomServices" paginator="true" rows="3">
+                    <p:dataTable id="roomServices" value="#{roomServiceManagedBean.getSource()}" var="roomServices" paginator="true" rows="10">
                         <p:column headerText="Category: ">
                             <h:outputText value="#{roomServices.category}"/>
                         </p:column>                         
@@ -24,9 +24,6 @@
                     </p:dataTable>
                 </h:form>
             </p:tab>  
-
-
-
 
             <p:tab id="tab2" title="Manage Room Services">  
                 <h:form id="serviceMgt">
