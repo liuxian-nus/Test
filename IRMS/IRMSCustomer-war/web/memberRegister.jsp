@@ -80,7 +80,7 @@
                         </div>
                         <div>
                             <div class="small-10 columns">
-                                <input required type="text" name="mobile" placeholder="mobile phone number">
+                                <input required pattern="[0-9]{8}" type="text" name="mobile" placeholder="mobile phone number">
                                 <small class="error">Please enter a mobile number.</small>
                             </div>
                         </div>
