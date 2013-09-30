@@ -40,6 +40,7 @@ public class RoomEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date checkOutDate;
     private double roomServiceCharge = 0;
+    private String roomCorporate;
     
     @ManyToMany(cascade={CascadeType.PERSIST})
     private List<RoomServiceEntity> roomService = new ArrayList<RoomServiceEntity> ();
@@ -165,7 +166,13 @@ public class RoomEntity implements Serializable {
         this.roomCreditCardNo = roomCreditCardNo;
     }
 
+    public String getRoomCorporate() {
+        return roomCorporate;
+    }
 
+    public void setRoomCorporate(String roomCorporate) {
+        this.roomCorporate = roomCorporate;
+    }
 
     public ReservationEntity getReservation() {
         return reservation;

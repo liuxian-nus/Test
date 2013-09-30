@@ -6,7 +6,6 @@ package ACMS.managedbean;
 
 import ACMS.entity.RoomEntity;
 import ACMS.session.RoomSessionBean;
-import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomServiceEntity;
 import ACMS.session.RoomServiceSessionBean;
 import Exception.ExistException;

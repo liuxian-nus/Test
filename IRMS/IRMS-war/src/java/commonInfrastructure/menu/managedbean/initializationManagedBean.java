@@ -182,6 +182,7 @@ public class initializationManagedBean implements Serializable {
         reservation.setRcEmail("diana-wang@yahoo.com");
         reservation.setRcHP("65-81801380");
         reservation.setRcCreditCardNo("1230000045600000");
+        reservation.setReservationCorporate("Credit Suisse");
         reservation.setRcCheckInDate(cidate);
         reservation.setRcCheckOutDate(codate);
 //         reservation.setRcMember(member);

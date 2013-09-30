@@ -10,6 +10,7 @@ import CRMS.session.MemberTransactionSessionBean;
 import Exception.ExistException;
 import Exception.RoomException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -42,23 +43,6 @@ public class RoomSessionBean {
     public RoomSessionBean() {
     }
 
-    /*  All Attributes of a room:
-     private int roomId;
-     private double roomPrice;
-     private String roomType;
-     private String roomStatus;
-     private int roomHotel;
-     private int roomLevel;
-     private int roomNo;
-     private boolean hasBreakfast;
-     private boolean isOccupied;
-     @Temporal(javax.persistence.TemporalType.DATE)
-     private Date checkInDate;
-     @Temporal(javax.persistence.TemporalType.DATE)
-     private Date checkOutDate;
-     @ManyToMany(cascade={CascadeType.PERSIST})
-     public Set<RoomServiceEntity> roomService = new HashSet<RoomServiceEntity> ();
-     */
     //room include or dis-include breakfast 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public RoomEntity updateRoom(int roomId, boolean hasBreakfast) throws ExistException {
@@ -200,6 +184,7 @@ public class RoomSessionBean {
         room.setReservation(reservation);
         room.setCheckInDate(reservation.getRcCheckInDate());
         room.setCheckOutDate(reservation.getRcCheckOutDate());
+        room.setRoomCorporate(reservation.getReservationCorporate());
         room.setGuestName(guestName);
         room.setRoomStatus("occupied");
         room.setRoomCreditCardNo(reservation.getRcCreditCardNo());
@@ -238,6 +223,8 @@ public class RoomSessionBean {
     }
     
     public double calculateBill(RoomEntity room) {
+ //       double temp1 = room.getCheckInDate().get(Calendar.DAY_OF_YEAR);
+ //       double temp2 = room.getCheckOutDate().get(Calendar.DAY_OF_YEAR);
         double roomCharge = room.getRoomPrice().getPrice() * 5; // 5 should be outDate - inDate
         double roomServiceCharge = room.getRoomServiceCharge();
         return roomCharge + roomServiceCharge;

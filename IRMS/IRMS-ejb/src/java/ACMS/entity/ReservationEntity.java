@@ -37,6 +37,7 @@ public class ReservationEntity implements Serializable {
     private int reservationRoomCount;
     private int reservationGuestCount;
     private String reservationRoomType;
+    private String reservationCorporate;
 
     public String getReservationRoomType() {
         return reservationRoomType;
@@ -151,7 +152,15 @@ public class ReservationEntity implements Serializable {
     public void setRcMember(MemberEntity rcMember) {
         this.rcMember = rcMember;
     }
- 
+
+    public String getReservationCorporate() {
+        return reservationCorporate;
+    }
+
+    public void setReservationCorporate(String reservationCorporate) {
+        this.reservationCorporate = reservationCorporate;
+    }
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the reservationId fields are not set
