@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
 public class MemberTransactionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mtId;//memberTransaction Id
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date mtDate;
