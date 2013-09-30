@@ -60,7 +60,7 @@
                                     <label for="customDropdown">Neighborhood</label>
                                     <select id="customDropdown" name="restNeighbourhood">
                                         <option></option>
-                                        <option>Whole</option>
+                                   
                                         <option>Central</option>
                                         <option>West</option>
                                         <option>East</option>
