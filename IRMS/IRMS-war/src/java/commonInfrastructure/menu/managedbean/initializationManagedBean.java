@@ -266,7 +266,7 @@ public class initializationManagedBean implements Serializable {
         Date qqdate = new Date(91,02,11);
         
         member = new MemberEntity();
-        member.setMemberEmail("xinqi-wang@yahoo.com");
+        member.setMemberEmail("xinqi_wang@yahoo.com");
         member.setMemberPassword("ABCabc123");
         member.setMemberName("Diana");
         System.out.println("Create a new member: welcome! " + member.getMemberName());
@@ -275,7 +275,7 @@ public class initializationManagedBean implements Serializable {
         member.setMemberDob(qqdate);
         member.setGender("Female");
         member.setMaritalStatus("Single");
-        member.setIsVIP(true);
+        member.setIsVIP(false);
         member.setIsSubscriber(true);
         member.setSecurityQuestion("What is your mother's original surname?");
         member.setAnswer("Wang");
@@ -290,6 +290,39 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.err.println("Insert Dayanqi member into database");
+    }
+    
+    public void createVIP(){
+        System.err.println("go to create VIP page...");       
+        Date bowendate = new Date(90,10,8);
+        
+        member = new MemberEntity();
+        member.setMemberEmail("bowen@nus.edu.sg");
+        member.setMemberPassword("ABCabc123");
+        member.setMemberName("Bowen");
+        System.out.println("Create a new member: welcome! " + member.getMemberName());
+        member.setMemberHP("92728760");
+        member.setNationality("China");
+        member.setMemberDob(bowendate);
+        member.setGender("Female");
+        member.setMaritalStatus("Single");
+        member.setIsVIP(true);
+        member.setIsSubscriber(true);
+        member.setSecurityQuestion("What is your mother's original surname?");
+        member.setAnswer("Zheng");
+        member.setPreferences("to be set");
+        member.setPoint(10000);
+        member.setCoin(200);
+        
+        try {
+            System.out.println("Creating new member....");
+            memberSessionBean.addMember(member);
+            System.out.println("Member created....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding member", ""));
+            return;
+        }
+        System.err.println("Insert Bowen VIP into database");
     }
 
     public void createRoom() {
@@ -511,6 +544,7 @@ public class initializationManagedBean implements Serializable {
         createSuperAdmin();
         createSystemUser();
         createMember();
+        createVIP();
         createReservation();
         createFBMSAdmin();
         createCRMSAdmin();
