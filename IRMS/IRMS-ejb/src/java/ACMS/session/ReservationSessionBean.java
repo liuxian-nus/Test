@@ -59,6 +59,8 @@ public class ReservationSessionBean {
         ReservationEntity thisReservation = newReservation;
         thisReservation.getRcCheckInDate().setYear(newReservation.getRcCheckInDate().getYear()-1900);
         thisReservation.getRcCheckInDate().setMonth(newReservation.getRcCheckInDate().getMonth()-1);
+        thisReservation.getRcCheckOutDate().setYear(newReservation.getRcCheckOutDate().getYear()-1900);
+        thisReservation.getRcCheckOutDate().setMonth(newReservation.getRcCheckOutDate().getMonth()-1);
         em.persist(thisReservation);
     }
 
