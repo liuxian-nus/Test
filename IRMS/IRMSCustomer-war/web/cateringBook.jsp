@@ -103,39 +103,10 @@
                                                 <input type="radio" name="dish9" value="34">Mini Chocolate Puff<br>
                                                 <input type="radio" name="dish9" value="35">Mini Chocolate Éclair <br>
                                                 <input type="radio" name="dish9" value="36">Steamed Siew Mai<br>
-                                        </div>
-                                        
-                                        <div class="large-6 large columns">
-                                            <p><strong>10. Prawn </strong><p>                                      
-                                                <input type="radio" name="dish9" value="37">Butter Prawn<br>
-                                                <input type="radio" name="dish9" value="38">Cereal Prawn<br>
-                                                <input type="radio" name="dish9" value="39">Stir Fried Prawn <br>
-                                                <input type="radio" name="dish9" value="40">Sze Chuan Prawn<br>
-                                                <input type="radio" name="dish9" value="41">Tempura Prawn<br>
-                                        </div>
-                       
+                                        </div>  
                                     </div>
                                     
-                                     <div class ="row">
-                                        <div class="large-6 large columns">
-                                            <p><strong>11. Desert</strong><p>
-                                                <input type="radio" name="dish9" value="42">Ice Jelly with Cocktail<br>
-                                                <input type="radio" name="dish9" value="43">Almond Jelly Logan<br>
-                                                <input type="radio" name="dish9" value="44">Seacoconut cocktail <br>
-                                                <input type="radio" name="dish9" value="45">Chin Chow with Logan<br>
-                                                <input type="radio" name="dish9" value="46">Seacoconut with Logan<br>
-                                        </div>
-                                        
-                                        <div class="large-6 large columns">
-                                            <p><strong>12. Baby full month combo </strong><p>                                      
-                                                <input type="radio" name="dish9" value="47">Blissful Red Eggs<br>
-                                                <input type="radio" name="dish9" value="48">Ang Ku Kueh<br>
-                                                <input type="radio" name="dish9" value="49">Mini Assorted Pastry <br>
-                                        </div>
-                       
-                                    </div>
-                                    
-                                    
+                               
                                     <input type="submit" value ="book" class="small button"/>
                                 <input type="hidden" name="courseNumber" value="9"/>
                                 <input type="hidden" name="booking" value="true"/>
