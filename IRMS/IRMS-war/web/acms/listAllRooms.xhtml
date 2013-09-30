@@ -15,7 +15,7 @@
             <p:panel id="search" header="Search Result" style="height:495px;">
                 <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
                     <p:growl id="msgs" showDetail="true" /> 
-                    <p:dataTable id="rooms" value="#{roomManagedBean.getAvailableRooms()}" var="rooms" paginator="true" rows="6">
+                    <p:dataTable id="rooms" value="#{roomManagedBean.getAllRooms()}" var="rooms" paginator="true" rows="6">
                         <p:column headerText="Room ID: ">
                             <h:outputText value="#{rooms.roomId}"/>
                         </p:column>

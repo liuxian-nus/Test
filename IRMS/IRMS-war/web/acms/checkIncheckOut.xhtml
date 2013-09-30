@@ -31,7 +31,6 @@
                         <p:autoComplete id="room" value="#{roomManagedBean.searchId}" required="true" requiredMessage="Room ID Cannot be Null"/>
                         <p:spacer width="20"/>
                         <p:commandButton  value="Search" ajax="true" actionListener="#{roomManagedBean.searchById}" update="growl"/>
-                        <p:message for="room"/>
                     </h:panelGrid> 
                 </h:form>
             </p:tab> 
