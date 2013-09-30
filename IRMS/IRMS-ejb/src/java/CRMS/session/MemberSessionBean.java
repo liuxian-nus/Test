@@ -107,7 +107,8 @@ public class MemberSessionBean {
     
     public MemberEntity getMemberByEmail(String email){
         member = em.find(MemberEntity.class, email);
-        System.out.println("member name: "+member.getMemberName());
+        if(member==null) System.out.println("in MemberSessionBean: member doesn't exist");
+ //       System.out.println("member name: "+member.getMemberName());
         return member;
     }
     

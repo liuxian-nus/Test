@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -53,18 +54,44 @@ public class SearchMemberManagedBean {
     }
     
     public void searchByEmail() throws IOException, ExistException{
-        System.out.println("search by email: "+searchEmail);
+        System.out.println("SearchMemberManagedBean: search by email: "+searchEmail);
         
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+  //      HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+  //      HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+       member=memberSessionBean.getMemberByEmail(getSearchEmail());
+ //      System.out.println("before search by member email:" + member.getMemberEmail());
+       if(member==null){
+           System.out.println("in SearchMemberManagedBean: member doesn't exist");
+           FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "member doesn't exist", ""));
+           return;
+       }
+       else if(member.isVIP()){
+           System.out.println("isVIP");
+           setMember(member);
+           System.out.println("after search by member email:" + member.getMemberEmail());
+           FacesContext.getCurrentInstance().getExternalContext().getFlash().put("Member", member);
+           System.out.println("after setting parameter");
+           FacesContext.getCurrentInstance().getExternalContext().redirect("searchMemberResult.xhtml");         
+       }
+       else{
+           System.out.println("member is not VIP yet");
+           FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "member is not VIP yet", ""));
+           return;
+       }
         
-        setMember(memberSessionBean.getMemberByEmail(getSearchEmail()));
-        System.out.println("after search by member email:"+member.getMemberEmail());
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("Member", member);
-        System.out.println("after setting parameter");
-        request.getSession().setAttribute("memberEmail", getSearchEmail());
-        System.out.println("after setting memberEmail session attribute");
-        FacesContext.getCurrentInstance().getExternalContext().redirect("searchMemberResult.xhtml");
+//        try{
+//            setMember(memberSessionBean.getMemberByEmail(getSearchEmail()));
+//            System.out.println("after search by member email:" + member.getMemberEmail());
+//            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("Member", member);
+//            System.out.println("after setting parameter");
+//            //      request.getSession().setAttribute("memberEmail", getSearchEmail());
+//       //     System.out.println("after setting memberEmail session attribute");
+//            FacesContext.getCurrentInstance().getExternalContext().redirect("searchMemberResult.xhtml");
+//        } catch (Exception e){
+//            System.out.println("wrong email");
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "wrong Email address", ""));
+//            return;
+//        }
     }
     
     public MemberEntity getMember(){
