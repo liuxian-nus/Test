@@ -79,10 +79,10 @@
                                 <label><strong>Nationality</strong></label>
                             </div>
                             <div class="large-4 columns">
-                                <label><strong>Gender</strong></label>
+                                <label><strong>Marital Status</strong></label>
                             </div>
                             <div class="large-4 columns">
-                                <label><strong>Marital Status</strong></label>
+                                <label><strong>Gender</strong></label>
                             </div>
                         </div>
                         <div class="row">
@@ -684,7 +684,7 @@
 
                 console.log(securityQuestion);
                 //look for security question
-                for (var i = 0; i < 3; i++) {
+                for (var i = 0; i < 4; i++) {
                     console.log("inside loop");
 
                     if (document.getElementById("securityQuestionDropdown").options[i].value == securityQuestion) {
@@ -695,7 +695,7 @@
                 }
                 //look for gender
 
-                for (var i = 0; i < 2; i++) {
+                for (var i = 0; i < 3; i++) {
                     console.log("inside loop");
 
                     if (document.getElementById("genderDropdown").options[i].value == gender) {
@@ -719,7 +719,7 @@
 
                 // look for maritalStatus
 
-                for (var i = 0; i < 3; i++) {
+                for (var i = 0; i < 4; i++) {
                     console.log("inside loop");
 
                     if (document.getElementById("maritalStatusDropdown").options[i].value == maritalStatus) {
