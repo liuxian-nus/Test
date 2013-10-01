@@ -67,6 +67,7 @@ public class initializationManagedBean implements Serializable {
     private RoleEntity role;
     private ReservationEntity reservation;
     private MemberEntity member;
+    private MemberEntity member2;
     private FunctionalityEntity functionality;
     private RestaurantEntity restaurant;
     private OverbookingQuotaEntity overbookingQuota;
@@ -297,27 +298,27 @@ public class initializationManagedBean implements Serializable {
         System.err.println("go to create VIP page...");       
         Date bowendate = new Date(90,10,8);
         
-        member = new MemberEntity();
-        member.setMemberEmail("bowen@nus.edu.sg");
-        member.setMemberPassword("ABCabc123");
-        member.setMemberName("Bowen");
-        System.out.println("Create a new member: welcome! " + member.getMemberName());
-        member.setMemberHP("92728760");
-        member.setNationality("China");
-        member.setMemberDob(bowendate);
-        member.setGender("Female");
-        member.setMaritalStatus("Single");
-        member.setIsVIP(true);
-        member.setIsSubscriber(true);
-        member.setSecurityQuestion("What is your mother's original surname?");
-        member.setAnswer("Zheng");
-        member.setPreferences("to be set");
-        member.setPoint(10000);
-        member.setCoin(200);
+        member2 = new MemberEntity();
+        member2.setMemberEmail("bowen@nus.edu.sg");
+        member2.setMemberPassword("ABCabc123");
+        member2.setMemberName("Bowen");
+        System.out.println("Create a new member: welcome! " + member2.getMemberName());
+        member2.setMemberHP("92728760");
+        member2.setNationality("China");
+        member2.setMemberDob(bowendate);
+        member2.setGender("Female");
+        member2.setMaritalStatus("Single");
+        member2.setIsVIP(true);
+        member2.setIsSubscriber(true);
+        member2.setSecurityQuestion("What is your mother's original surname?");
+        member2.setAnswer("Zheng");
+        member2.setPreferences("to be set");
+        member2.setPoint(10000);
+        member2.setCoin(200);
         
         try {
             System.out.println("Creating new member....");
-            memberSessionBean.addMember(member);
+            memberSessionBean.addMember(member2);
             System.out.println("Member created....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding member", ""));
