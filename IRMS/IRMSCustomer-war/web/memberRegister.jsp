@@ -134,7 +134,7 @@
                                     <option value="39">Central African</option>
                                     <option value="40">Chadian</option>
                                     <option value="41">Chilean</option>
-                                    <option value="42">Chinese</option>
+                                    <option value="Chinese">Chinese</option>
                                     <option value="43">Christmas Islanders</option>
                                     <option value="44">Cocossian </option>
                                     <option value="45">Colombian</option>

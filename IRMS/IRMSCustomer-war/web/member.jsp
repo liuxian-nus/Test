@@ -5,7 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!DOCTYPE html>   
+<%
+    String loginStatus="false";
+    session.setAttribute("loginStatus", loginStatus);
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -35,6 +39,8 @@
                                     <input id="input-name" type="password" name="password">
                                 </div>
                             </div>
+                            
+                            <input type="hidden" name="loginStatus" value="false"/>
                           
 
                             <br>

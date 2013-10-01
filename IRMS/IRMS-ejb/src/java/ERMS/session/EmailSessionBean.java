@@ -62,6 +62,42 @@ public class EmailSessionBean {
         }
     }
     
+    public void emailGeneratedPassword(String toEmailAdress, String initialPassword) {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmailAdress));
+            message.setSubject("System Generated Password");
+            message.setText("Greeting from Coral Island Resort!"
+                    + "\nHere is a system generated password:" + initialPassword +
+                    "\nPlease login immediately to change your password.\n\n\nBest Regards,\nThe Coral Island Management Team");
+                    
+
+            Transport.send(message);
+
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    
     public void emailCorporateBill(String toEmailAdress, RoomEntity room) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");

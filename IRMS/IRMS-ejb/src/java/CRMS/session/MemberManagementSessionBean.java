@@ -69,7 +69,7 @@ public class MemberManagementSessionBean {
         
         System.out.println("member updated!!!!");
         
-        emailSessionBean.emailInitialPassward(member.getMemberEmail(), initialPwd);
+        emailSessionBean.emailGeneratedPassword(member.getMemberEmail(), initialPwd);
         System.out.println("email already sent");
         member = new MemberEntity();
     }

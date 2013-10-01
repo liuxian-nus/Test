@@ -12,10 +12,13 @@
         </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <h1>You have registered successfully. </h1>
-        <p>
+        <h3>You have registered successfully. </h3>
+        <h3><Strong>
             <a href="member"> Please log in from here. </a>
-        </p>
+        </Strong></h3>
+  
+        
+   
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

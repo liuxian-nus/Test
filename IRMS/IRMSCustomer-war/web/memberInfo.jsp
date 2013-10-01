@@ -8,6 +8,15 @@
 
 
 <!DOCTYPE html>
+
+<%
+    String email=(String)request.getAttribute("email");
+    String password=(String) request.getAttribute("password");
+    String loginStatus=(String)session.getAttribute("loginStatus");
+    System.out.println("loginStatus:"+loginStatus);
+    session.setAttribute("email",email);
+    session.setAttribute("password", password);
+%> 
 <html>
     <head>
         <jsp:include page="base.jsp"></jsp:include>
@@ -18,7 +27,14 @@
             $(document).ready(infoCheck());
             </script>
         <jsp:include page="header.jsp"></jsp:include>
-        <h5> Welcome back, dear ${data.memberName}</h5>
+        <form action="logOut">
+            <button type="Submit" class="button"> log out</button>
+        </form>
+
+        <form>      
+            <input type="hidden" name="email" value="${data.memberEmail}"/>
+            <input type="hidden" name="loginStatus" value="${data2}"/>
+        </form>
 
 
         <div class="section-container vertical-tabs" data-section="vertical-tabs">
@@ -613,6 +629,7 @@
                             <p>${message}</p>
 
                             <input type="hidden" name="email" value="${data.memberEmail}"/>
+                        <!--    <input type="hidden" name="isLogin" value="true"/>-->
 
                             <br>
 

@@ -12,12 +12,13 @@
         </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <h1>Member Info Edition!</h1>
-        <p> The new password has been sent to your email.
-        </p>
-        <p>
+        <h3><strong>The new password has been sent to your email.</strong></h3>
+        <h3>
+        <strong>
                <a href="member">Please log in again. </a>
-        </p>
+        </strong></h3>
+   
+    
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

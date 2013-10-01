@@ -45,6 +45,7 @@ public class CRMServlet extends HttpServlet {
     private String message = null;
     private MemberEntity member;
     private MemberEntity data;
+    private String data2;
 
     //private String keyword=null;
     /**
@@ -65,6 +66,7 @@ public class CRMServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("CRMSERVLET: processRequest()");
+        HttpSession session = request.getSession(true);
 
         /* response.setContentType("text/html;charset=UTF-8");
          PrintWriter out = response.getWriter();*/
@@ -95,26 +97,34 @@ public class CRMServlet extends HttpServlet {
                 if(email==null)
                     request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
                 else{
-                    String password = request.getParameter("password");
-
-
-
-
-                    System.out.println(email);
-                    System.out.println(password);
-
-                    boolean isLogin = memberManagementSessionBean.login(email, password);
-                    if (isLogin) {
-                        System.out.println(isLogin);
+                    System.out.println("email is not null");
+                    String loginStatus=request.getParameter("loginStatus");
+                    
+                    if(loginStatus.equals("true")){
+                        System.out.println("has logged in before");
                         member = memberSession.getMemberByEmail(email);
                         System.out.println(member.getMemberName());
                         request.setAttribute("data", member);
                         request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
-                    } else {
-                        message = "Wrong password or username entered";
-                        request.setAttribute("message", message);
-                        request.getRequestDispatcher("/member.jsp").forward(request, response);
+                    }
+                    else{
+                        String password = request.getParameter("password");
+                       System.out.println(email);
+                        System.out.println(password);
 
+                        boolean isLogin = memberManagementSessionBean.login(email, password);
+                        if (isLogin) {
+                            System.out.println(isLogin);
+                            member = memberSession.getMemberByEmail(email);
+                            System.out.println(member.getMemberName());
+                            request.setAttribute("data", member);
+                            request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
+                        } else {
+                            message = "Wrong password or username entered";
+                            request.setAttribute("message", message);
+                            request.getRequestDispatcher("/member.jsp").forward(request, response);
+
+                        }
                     }
                 }
 
@@ -228,6 +238,7 @@ public class CRMServlet extends HttpServlet {
                     System.out.println("member email before setAttribute" + member.getMemberEmail());
                     System.out.println("member subscriber? :" + Boolean.toString(member.isSubscriber()));
                     request.setAttribute("data", member);
+                    request.setAttribute("data2","true");
 
                     request.getRequestDispatcher("/memberInfoEditionConfirmation.jsp").forward(request, response);
                 }
@@ -316,6 +327,9 @@ public class CRMServlet extends HttpServlet {
             } else if("accessDenied".equals(page)){
                 System.out.println("***accessDenied***");
                 request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+            } else if("logOut".equals(page)){
+                System.out.println("***logOut***");
+                request.getRequestDispatcher("/logOut.jsp").forward(request, response);
             }else {
                 System.out.println("other page");
             }
