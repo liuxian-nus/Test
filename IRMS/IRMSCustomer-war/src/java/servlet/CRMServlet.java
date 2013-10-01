@@ -149,7 +149,7 @@ public class CRMServlet extends HttpServlet {
                     member = memberSession.getMemberByEmail(email);
                     request.setAttribute("data", member);
 
-                    request.getRequestDispatcher("/resetMemberPassword.jsp").forward(request, response);
+                    request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
                 }
                 
             } else if ("resetMemberPasswordConfirmation".equals(page)) {
@@ -171,7 +171,7 @@ public class CRMServlet extends HttpServlet {
                     if (!correctOldPwd) {
                         message = "wrong password";
                         request.setAttribute("message", message);
-                        request.getRequestDispatcher("/resetMemberPassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
                     } else {
                         memberManagementSessionBean.resetPasswordWithNewPassword(email, newPassword1);
                         System.out.println("password saved.");

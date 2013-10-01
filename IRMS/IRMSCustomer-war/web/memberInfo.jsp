@@ -626,7 +626,7 @@
                                 </div>
                             </div>
 
-                            <p>${message}</p>
+                            <p style="color:black">${message}</p>
 
                             <input type="hidden" name="email" value="${data.memberEmail}"/>
                         <!--    <input type="hidden" name="isLogin" value="true"/>-->
