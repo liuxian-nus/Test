@@ -351,7 +351,7 @@
 
                         <div class="small-3 columns">
                             <select required name="dateDay" class="customDropdown">
-                                <option value="0">Day</option>
+                       <!--         <option value="0">Day</option>-->
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -387,7 +387,7 @@
                         </div>
                         <div class="small-3 columns">
                             <select required name="dateMonth" id="button dropdown">
-                                <option value="Month">Month</option>
+                         <!--       <option value="Month">Month</option>-->
                                 <option value="1">Jan</option>
                                 <option value="2">Feb</option>
                                 <option value="3">Mar</option>
@@ -405,7 +405,7 @@
 
                         <div class="small-4 columns">
                             <select required name="dateYear" id="customDropdown">
-                                <option value="0">Year</option>
+                        <!--        <option value="0">Year</option>-->
                                 <option value="2013">2013</option>
                                 <option value="2012">2012</option>
                                 <option value="2011">2011</option>
@@ -520,7 +520,7 @@
                         <div class="small-10 columns"> 
 
                             <select required id="customDropdown" name="marital">
-                                <option value="0">- Select -</option>
+                 <!--               <option value="0">- Select -</option>-->
                                 <option value="Single">Single</option>
                                 <option value="Married">Married</option>
                                 <option value="Widowed">Widowed</option>
@@ -536,7 +536,7 @@
                         <div class="small-10 columns"> 
 
                             <select required id="customDropdown" name="gender">
-                                <option value="0">- Select -</option>
+                      <!--          <option value="0">- Select -</option>-->
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Others">Others</option>
