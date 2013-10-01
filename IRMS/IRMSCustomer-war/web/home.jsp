@@ -135,7 +135,7 @@ ddsmoothmenu.init({
         </div>
         <div class="col one_third last_box">
         	<h2>Coral Membership</h2>
-            <img src="/IRMSCustomer-war/images/templatemo_image_01.jpg" alt="Image 01" class="image_frame" />
+            <img src="/IRMSCustomer-war/images/templatemo_image_01_new.png" alt="Image 01" class="image_frame" />
             <p><em>Join us and become one of our members NOW!</em></p>
             <a href="#" class="more">More</a>	
         </div>
