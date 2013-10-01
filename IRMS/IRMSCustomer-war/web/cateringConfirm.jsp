@@ -18,10 +18,14 @@
             <form action="cateringCheck" method="POST">
                 <fieldset>
                     <legend>Place catering order</legend>
+                    <p style="color:red" id="errorMessage"></p>
                     <p>${message}</p>
                     <div class="row">
+                               <div class="small-2 columns">
+                            <label for="right-label" class="left-align,inline"><strong>Date & Time</label>
+                        </div>
                         <div class="small-2 columns">
-                            <select name="date" class="customDropdown">
+                            <select name="date" class="customDropdown" id="date">
                                 <option value="0">Day</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -57,7 +61,7 @@
                             </select>
                         </div>
                         <div class="small-3 columns">
-                            <select name="month" id="button dropdown">
+                            <select name="month" id="month" >
                                 <option value="0">Month</option>
                                 <option value="1">Jan</option>
                                 <option value="2">Feb</option>
@@ -75,7 +79,7 @@
                         </div>
 
                         <div class="small-2 columns">
-                            <select name="year" id="customDropdown">
+                            <select name="year" id="year" onblur="checkDate()">
                                 <option value="0">Year</option>
                                 <option value="2013">2013</option>
                                 <option value="2014">2014</option>
@@ -202,7 +206,7 @@
                     
                     <div clas="row">
                         <div class="large-12 columns">
-                            <input type="submit" class="small button" value="Confirm">
+                            <input type="submit" class="small button" value="Confirm" onclick="checkDate()">
                         </div>
                     </div>
                     
@@ -213,5 +217,33 @@
                 </fieldset>
             </form>
             <jsp:include page="footer.jsp"></jsp:include>
+            <script>
+                function checkDate()
+                {
+                    console.log("******checkDate*******");
+                    
+                    var date = document.getElementById("date").value;
+                    var month = document.getElementById("month").value;
+                    var year = document.getElementById("year").value;
+                    var newyearDate=1;
+                    var newyearMonth=1;
+                    
+                    console.log("date month year has been retrieved");
+                    console.log(date+month+year);
+                    
+                    if(date== newyearDate && month == newyearMonth)
+                        {
+                             console.log("inside funcion");
+                            var message = document.getElementById("errorMessage");
+                            console.log("inside funcion 2");
+                             message.innerHTML = "Sorry!We do not offer catering service on your specified date!";
+                        }
+                        else {
+                            var message = document.getElementById("errorMessage");
+                            message.innerHTML = "Catering date is available: please continue booking!";
+                        }
+                  }
+                
+            </script>
     </body>
 </html>
