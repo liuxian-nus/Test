@@ -123,20 +123,20 @@ ddsmoothmenu.init({
         </div>
         <div class="col one_third">
         	<h2>Services</h2>
-            <p>Cras consequat neque quis dolor feugiat vehicula. Aliquam erat volutpat. Phasellus adipiscing elit pharetra lobortis. Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow"><strong>XHTML</strong></a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow"><strong>CSS</strong></a>.</p>
+            <p><a href="http://localhost:8080/IRMSCustomer-war/irmsServlet/home"><strong>Coral Island Resort </strong></a> offers a variety of services aims to provide our valued members and customers the best experience. We make every effort to provide the most intimate services for different type of customers.</p>
             <ul class="templatemo_list">
-            	<li>Fusce bibendum suscipit justo quis</li>
-                <li>Nam sagittis euismod dui pellentesque</li>
-                <li>Lacus a lectusa suspendisse luctus</li>
-                <li>Maecenas tempus ipsum id orci dictum</li>
-                <li>Nunc pharetra aliquam vehicula erat</li>
+            	<li>Leisure Tourism</li>
+                <li>Business Tourism</li>
+                <li>Sports Tourism</li>
+                <li>Cultural Tourism</li>
+                <li>Wellness Tourism</li>
 			</ul>
             <a href="#" class="more">More</a>	
         </div>
         <div class="col one_third last_box">
         	<h2>Coral Membership</h2>
             <img src="/IRMSCustomer-war/images/templatemo_image_01.jpg" alt="Image 01" class="image_frame" />
-            <p><em>Curabitur turpis sapien, auctor sit amet tincidunt et, vestibulum amet dapibus eros.</em></p>
+            <p><em>Join us and become one of our members NOW!</em></p>
             <a href="#" class="more">More</a>	
         </div>
         <!--
