@@ -10,6 +10,7 @@
     <head>
         
     <title>Coral Island Resort</title>
+   
     <link href="/IRMSCustomer-war/css/templatemo_style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/IRMSCustomer-war/css/nivo-slider.css" type="text/css" media="screen" />
 
@@ -55,6 +56,8 @@ ddsmoothmenu.init({
         
 </head>
     <body>
+        
+        
     
         <jsp:include page="header.jsp"></jsp:include>
        <!-- <div id="search_box">
@@ -69,8 +72,8 @@ ddsmoothmenu.init({
    
         <div id="slider" class="nivoSlider">
             <img src="/IRMSCustomer-war/images/slider/01.png" alt="Slider 01" title="we offer a spectacular showcase of local and international cuisines." />
-            <a href="#"><img src="/IRMSCustomer-war/images/slider/02.png" alt="Slider 02" title="a tropical paradise with an escapade for everyone" /></a>
-            <img src="/IRMSCustomer-war/images/slider/03.png" alt="Slider 03" title="Donec purus eros, dictum nec accumsan quis, auctor non eros."/>
+            <a href="#"><img src="/IRMSCustomer-war/images/slider/02.png" alt="Slider 02" title="A tropical paradise with an escapade for everyone." /></a>
+            <img src="/IRMSCustomer-war/images/slider/03.png" alt="Slider 03" title="Your home away from home."/>
             <img src="/IRMSCustomer-war/images/slider/04.png" alt="Slider 04" title="Discover the awe-inspiring world of life in the ocean at the world’s largest aquarium." />
         </div>
         <div id="htmlcaption" class="nivo-html-caption">
