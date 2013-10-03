@@ -1,7 +1,7 @@
 <%-- 
     Document   : resetMemberPassword
     Created on : 27-Sep-2013, 16:04:39
-    Author     : Administrator
+    Author     : Jieqiong
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

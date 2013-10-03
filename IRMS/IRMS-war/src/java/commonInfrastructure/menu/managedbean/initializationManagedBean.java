@@ -13,6 +13,9 @@ import ACMS.session.PriceSessionBean;
 import ACMS.session.ReservationSessionBean;
 import ACMS.session.RoomServiceSessionBean;
 import ACMS.session.RoomSessionBean;
+import ATMS.entity.QuotaEntity;
+import ATMS.entity.TicketEntity;
+import ATMS.session.TicketSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.session.MemberSessionBean;
 import ERMS.entity.EmployeeEntity;
@@ -62,6 +65,9 @@ public class initializationManagedBean implements Serializable {
     private EPasswordHashSessionBean ePasswordHashSessionBean;
     @EJB
     private FunctionalitySessionBean functionalitySessionBean;
+    @EJB
+    private TicketSessionBean ticketSessionBean;
+    
    
     private EmployeeEntity employee;
     private RoleEntity role;
@@ -73,6 +79,8 @@ public class initializationManagedBean implements Serializable {
     private OverbookingQuotaEntity overbookingQuota;
     private RoomServiceEntity roomService;
     private PriceEntity price;
+    private TicketEntity ticket;
+    private QuotaEntity quota;
     
 //    private MemberEntity member;
 
@@ -231,6 +239,35 @@ public class initializationManagedBean implements Serializable {
         }
         System.out.println("Insert Employee into database");
         addMessage("FBMSAdmin Created!");
+    }
+    
+    public void createATMSAdmin() {
+        System.out.println("go to create ATMS page");
+
+        role = new RoleEntity();
+        role.setRoleId(60);
+        role.setRoleName("ATMSAdmin");
+        System.out.println("Create role :" + role.getRoleName());
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("F0000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeName("ATMSAdmin");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("F0000"));
+        System.out.println("finished hashing");
+        employee.addRole(role);
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving ATMSAdmin....");
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("ATMSAdmin saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
+            return;
+        }
+        System.out.println("Insert ATMSAdmin into database");
+        addMessage("ATMSAdmin Created!");
     }
     
     public void createCRMSAdmin() {
@@ -541,6 +578,93 @@ public class initializationManagedBean implements Serializable {
             return;
         }
     }
+    
+    public void createTickets() {
+        System.out.println("go to create Tickets page");
+        
+        quota=new QuotaEntity();
+        quota.setMaxQuota(500);
+        quota.setRestQuota(500);
+        ticket=new TicketEntity();
+        ticket.setTicketName("Indoor Themepark");
+        ticket.setTicketPrice(49.9);
+        ticket.setQuota(quota);
+        
+        try{
+            System.out.println("Saving tickets....");
+            ticketSessionBean.addTicket(ticket);
+            System.out.println("ticket saved...");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
+            return;
+        }
+        System.out.println("Insert Ticket into database");
+        
+        
+        System.out.println("create 2nd ticket");
+        
+        quota=new QuotaEntity();
+        quota.setMaxQuota(1000);
+        quota.setRestQuota(1000);
+        ticket=new TicketEntity();
+        ticket.setTicketName("Outdoor Themepark");
+        ticket.setTicketPrice(79.9);
+        ticket.setQuota(quota);
+        
+        try{
+            System.out.println("Saving tickets....");
+            ticketSessionBean.addTicket(ticket);
+            System.out.println("ticket saved...");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
+            return;
+        }
+        System.out.println("Insert 2nd Ticket into database");
+        
+        System.out.println("create 3nd ticket");
+        
+        quota=new QuotaEntity();
+        quota.setMaxQuota(400);
+        quota.setRestQuota(400);
+        ticket=new TicketEntity();
+        ticket.setTicketName("Aquarium");
+        ticket.setTicketPrice(39.9);
+        ticket.setQuota(quota);
+        
+        try{
+            System.out.println("Saving tickets....");
+            ticketSessionBean.addTicket(ticket);
+            System.out.println("ticket saved...");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
+            return;
+        }
+        System.out.println("Insert 3nd Ticket into database");
+        
+        System.out.println("create 4th ticket");
+        
+        quota=new QuotaEntity();
+        quota.setMaxQuota(200);
+        quota.setRestQuota(200);
+        ticket=new TicketEntity();
+        ticket.setTicketName("Museum");
+        ticket.setTicketPrice(9.9);
+        ticket.setQuota(quota);
+        
+        try{
+            System.out.println("Saving tickets....");
+            ticketSessionBean.addTicket(ticket);
+            System.out.println("ticket saved...");
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
+            return;
+        }
+        System.out.println("Insert 4th Ticket into database");
+        addMessage("Tickets Created!");
+        
+        
+    }
+
     //Add new test cases below!!!!!!!!!
     
     public void initialize(){
@@ -550,6 +674,7 @@ public class initializationManagedBean implements Serializable {
         createVIP();
         createReservation();
         createFBMSAdmin();
+        createATMSAdmin();
         createCRMSAdmin();
         createRoom();
         createFunctionalities();

@@ -177,6 +177,28 @@ public class Menu2ManagedBean implements Serializable {
                 model.addSubmenu(submenu);
              }
              
+             if (userType.contains("ATMSAdmin")){ 
+                System.out.println("ATMSAdmin menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("Attractions");
+                submenu.setIcon("ui-icon ui-icon-contact");
+                
+                item = new MenuItem();
+                item.setValue("Add Tickets");
+                item.setUrl("/atms/addTicket.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Manage Tickets");
+                item.setUrl("/atms/manageTicket.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+                
+                
+                model.addSubmenu(submenu);
+             }
+             
              if (userType.contains("CRMSAdmin")){ 
                 System.out.println("CRMSAdmin menu bar");
                 submenu = new Submenu();
