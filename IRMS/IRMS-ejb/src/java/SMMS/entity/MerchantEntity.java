@@ -5,7 +5,9 @@
 package SMMS.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,9 +32,25 @@ public class MerchantEntity implements Serializable {
     private String securityQuestion;
     private String answer;
     @OneToMany
-    private OutletEntity merchantOutlet = new OutletEntity();
+    private List<OutletEntity> merchantOutlet = new ArrayList<OutletEntity>();
     @OneToMany
-    private ContractEntity merchantContract = new ContractEntity();
+    private List<ContractEntity> merchantContract = new ArrayList<ContractEntity>();
+
+    public List<OutletEntity> getMerchantOutlet() {
+        return merchantOutlet;
+    }
+
+    public void setMerchantOutlet(List<OutletEntity> merchantOutlet) {
+        this.merchantOutlet = merchantOutlet;
+    }
+
+    public List<ContractEntity> getMerchantContract() {
+        return merchantContract;
+    }
+
+    public void setMerchantContract(List<ContractEntity> merchantContract) {
+        this.merchantContract = merchantContract;
+    }
 
     public String getMerchantEmail() {
         return merchantEmail;
@@ -90,22 +108,6 @@ public class MerchantEntity implements Serializable {
         this.answer = answer;
     }
 
-    public OutletEntity getMerchantOutlet() {
-        return merchantOutlet;
-    }
-
-    public void setMerchantOutlet(OutletEntity merchantOutlet) {
-        this.merchantOutlet = merchantOutlet;
-    }
-
-    public ContractEntity getMerchantContract() {
-        return merchantContract;
-    }
-
-    public void setMerchantContract(ContractEntity merchantContract) {
-        this.merchantContract = merchantContract;
-    }
-
     public String getId() {
         return merchantEmail;
     }
@@ -137,5 +139,11 @@ public class MerchantEntity implements Serializable {
     @Override
     public String toString() {
         return "SMMS.entity.MerchantEntity[ id=" + merchantEmail + " ]";
+    }
+
+    private static class Arraylist<T> {
+
+        public Arraylist() {
+        }
     }
 }

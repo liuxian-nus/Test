@@ -42,6 +42,10 @@ public class ContractEntity implements Serializable {
     private String contractStatus;
     private double contractDeposit;
     private int contractOutlet;
+    @OneToMany(mappedBy = "contract")
+    private List<ContracteventEntity> contractEvent = new ArrayList<ContracteventEntity>();
+    @ManyToOne
+    private MerchantEntity contractMerchant = new MerchantEntity();
 
     public int getContractOutlet() {
         return contractOutlet;
@@ -58,10 +62,6 @@ public class ContractEntity implements Serializable {
     public void setContractDeposit(double contractDeposit) {
         this.contractDeposit = contractDeposit;
     }
-    @OneToMany(mappedBy = "contract")
-    private List<ContracteventEntity> contractEvent = new ArrayList<ContracteventEntity>();
-    @ManyToOne
-    private MerchantEntity contractMerchant = new MerchantEntity();
 
     public Long getContractId() {
         return contractId;

@@ -28,7 +28,7 @@ public class OutletTransactionEntity implements Serializable {
     private Date transactionDate;
     private double transactionAmount;
     @ManyToOne
-    private OutletEntity transactionOutlet = new OutletEntity();
+    private OutletEntity outlet = new OutletEntity();
 
     public Long getTransactionId() {
         return transactionId;
@@ -55,11 +55,11 @@ public class OutletTransactionEntity implements Serializable {
     }
 
     public OutletEntity getTransactionOutlet() {
-        return transactionOutlet;
+        return outlet;
     }
 
     public void setTransactionOutlet(OutletEntity transactionOutlet) {
-        this.transactionOutlet = transactionOutlet;
+        this.outlet = transactionOutlet;
     }
 
     public Long getId() {

@@ -37,6 +37,8 @@ public class ContracteventEntity implements Serializable {
     private double eventCommissionRate;
     private String eventStatus;
     private double eventDeposit;
+    @ManyToOne
+    private ContractEntity contract = new ContractEntity();
 
     public double getEventDeposit() {
         return eventDeposit;
@@ -47,15 +49,12 @@ public class ContracteventEntity implements Serializable {
     }
 
     public ContractEntity getEventContract() {
-        return eventContract;
+        return contract;
     }
 
     public void setEventContract(ContractEntity eventContract) {
-        this.eventContract = eventContract;
+        this.contract = eventContract;
     }
-    
-    @ManyToOne
-    private ContractEntity eventContract = new ContractEntity();
 
     public Long getContracteventId() {
         return contracteventId;

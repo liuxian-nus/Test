@@ -31,7 +31,7 @@ public class BillEntity implements Serializable {
     private String billMerchant;
     private String billStatus;
     @ManyToOne
-    private OutletEntity billOutlet = new OutletEntity();
+    private OutletEntity outlet = new OutletEntity();
 
     public String getBillMerchant() {
         return billMerchant;
@@ -50,11 +50,11 @@ public class BillEntity implements Serializable {
     }
 
     public OutletEntity getBillOutlet() {
-        return billOutlet;
+        return outlet;
     }
 
     public void setBillOutlet(OutletEntity billOutlet) {
-        this.billOutlet = billOutlet;
+        this.outlet = billOutlet;
     }
 
     public Long getBillId() {

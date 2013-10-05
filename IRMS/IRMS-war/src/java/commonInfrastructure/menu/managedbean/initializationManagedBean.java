@@ -744,11 +744,32 @@ public class initializationManagedBean implements Serializable {
         merchant.setMerchantAddress("35 Prince George's Park");
         merchant.setSecurityQuestion("What is your mother's original surname?");
         merchant.setAnswer("Gu");
+        
+        
+        MerchantEntity merchant2 = new MerchantEntity();
+        merchant2.setMerchantEmail("lionetdd@gmail.com");
+        merchant2.setMerchantName("liuyudi");
+        merchant2.setMerchantPassword(ePasswordHashSessionBean.hashPassword("M1000"));
+        merchant2.setMerchantHP("81116391");
+        merchant2.setMerchantAddress("30 Prince George's Park");
+        merchant2.setSecurityQuestion("What is your mother's original surname?");
+        merchant2.setAnswer("Gu");
+        
+        MerchantEntity merchant3 = new MerchantEntity();
+        merchant3.setMerchantEmail("chrislx.nus@gmail.com");
+        merchant3.setMerchantName("liuxian");
+        merchant3.setMerchantPassword(ePasswordHashSessionBean.hashPassword("M2000"));
+        merchant3.setMerchantHP("81113391");
+        merchant3.setMerchantAddress("25 Prince George's Park");
+        merchant3.setSecurityQuestion("What is your mother's original surname?");
+        merchant3.setAnswer("Gu");
 
         try {
             System.out.println("Saving merchant....");
 
             merchantSessionBean.addMerchant(merchant);
+            merchantSessionBean.addMerchant(merchant2);
+            merchantSessionBean.addMerchant(merchant3);
             System.out.println("Merchant saved.....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding reservation", ""));
