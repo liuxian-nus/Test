@@ -39,6 +39,7 @@ public class InventorySessionBean {
         de.setDishCost(dishCost);
         de.setDishName(dishName);
         de.setDishQuantity(dishQuantity);
+        em.persist(de);
         return de;
     }
     
@@ -66,6 +67,7 @@ public class InventorySessionBean {
             de.setDishCost(dishCost);
             de.setDishName(dishName);
             de.setDishQuantity(dishQuantity);
+            em.merge(de);
             System.out.println("InventorySessionBean: The dish has been updated successfully!"+de.getDishName()+de.getDishCost()+de.getDishQuantity());
             return de;
         }
@@ -95,6 +97,7 @@ public class InventorySessionBean {
                course = itr.next();
                course.getDish().setDishQuantity(oe.getMenu().getNumberOrder()+course.getDish().getDishQuantity());
                System.out.println("InventorySessionBean:issueGoods: course"+i+": inventory has been deducted by "+oe.getMenu().getNumberOrder());
+               em.merge(course);
                i++;
            }
            
@@ -134,8 +137,15 @@ public class InventorySessionBean {
                 currentCost = currentCost+ unit*unitCost;
                 System.out.println("InventorySessionBean:assignCost: The currentCost is "+currentCost);
             }
-            
+            //Assign cost to the order
             oe.setCost(currentCost);
+            
+            //Assign salePrice to the order
+            Integer numberPeople = oe.getMenu().getNumberOrder();
+            Double uc = oe.getMenu().getCourses().size()*1.50;
+            Double salePrice = numberPeople * uc;
+            oe.setSalePrice(salePrice);
+            
             em.merge(oe);
             System.out.println("InventorySessionBean:assignCost: The cost assigned is "+oe.getCost());
             return currentCost;
