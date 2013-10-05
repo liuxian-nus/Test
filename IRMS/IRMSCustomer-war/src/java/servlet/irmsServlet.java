@@ -174,7 +174,10 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/CRMServlet/accessDenied").forward(request, response);
             } else if ("logOut".equals(page)) {
                 request.getRequestDispatcher("/CRMServlet/logOut").forward(request, response);
-            } else {
+            } else if ("hotelBooking".equals(page)) {
+                request.getRequestDispatcher("/ACMSServlet/hotelBooking").forward(request, response);
+            }
+            else {
                 System.out.println("other page");
 
                 //Below is testing

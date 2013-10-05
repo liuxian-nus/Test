@@ -8,12 +8,12 @@
     <ul>
         <li><a href="home" >Home</a></li>
         <li><a href="hotel" >Hotel</a>
-             <!--<ul>
-               <li><a href="#">Sub menu 1</a></li>
-                <li><a href="#">Sub menu 2</a></li>
-                <li><a href="#">Sub menu 3</a></li>
-               <li><a href="#">Sub menu 1</a></li>
-            </ul>-->
+             <ul>
+               <li><a href="hotel">Our Hotels</a></li>
+                <li><a href="hotelBooking">Book now</a></li>
+                <!--<li><a href="#">Sub menu 3</a></li>
+               <li><a href="#">Sub menu 1</a></li>-->
+            </ul>
         </li>
         <li><a href="restaurant">Restaurant</a>
             <ul>
