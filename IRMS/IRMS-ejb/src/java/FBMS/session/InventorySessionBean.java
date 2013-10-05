@@ -8,8 +8,10 @@ import FBMS.entity.CourseEntity;
 import FBMS.entity.DishEntity;
 import FBMS.entity.MenuEntity;
 import FBMS.entity.OrderEntity;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -161,19 +163,19 @@ public class InventorySessionBean {
         em.persist(object);
     }
     
-    public Set <DishEntity> listDishes()
+    public List <DishEntity> listDishes()
     {
         Query q = em.createQuery("SELECT d FROM DishEntity d");
         
-        Set stateSet = new HashSet <DishEntity> ();
+        List dishList = new ArrayList <DishEntity> ();
         for (Object o : q.getResultList())
         {
             DishEntity dish = (DishEntity)o;
-            stateSet.add(dish);
+            dishList.add(dish);
             System.out.println("InventorySessionBean: listDishes: new dish has been added");
         }
         
-        return stateSet;
+        return dishList;
     }
     
 
