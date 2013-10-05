@@ -34,10 +34,10 @@ public class OutletEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private int outletId;
-    private String outletType; //jewelery,FNB,appareal,appliance,toys
+    private String outletType; //jewelery,FNB,appareal,appliance,toys,exibition
     private String outletName;
-    private String outletStatus;
-    private String outletCondition;
+    private String outletStatus = "available";
+    private String outletCondition = "in use";
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date outletCStartingDate;
     @Temporal(javax.persistence.TemporalType.DATE)

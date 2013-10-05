@@ -39,6 +39,13 @@ public class OutletSessionBean {
         System.out.println("OutletSessionBean: outlet " + outlet.getOutletName() + " is successfully updated");
         return true;
     }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public OutletEntity addOutlet(OutletEntity outlet) {
+        em.persist(outlet);
+        System.out.println("OutletSessionBean: outlet " + outlet.getOutletName() + " is successfully added");
+        return outlet;
+    }
 
 //    @TransactionAttribute(TransactionAttributeType.REQUIRED)
 //    public void removeOutlet(int outletId) throws ExistException {

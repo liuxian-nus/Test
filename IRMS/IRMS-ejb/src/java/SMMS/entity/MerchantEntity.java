@@ -19,10 +19,20 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class MerchantEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String merchantEmail;
     private String merchantName;
+    private String merchantPassword;
+    private String merchantHP;
+    private String merchantAddress;
+    private String securityQuestion;
+    private String answer;
+    @OneToMany
+    private OutletEntity merchantOutlet = new OutletEntity();
+    @OneToMany
+    private ContractEntity merchantContract = new ContractEntity();
 
     public String getMerchantEmail() {
         return merchantEmail;
@@ -95,17 +105,6 @@ public class MerchantEntity implements Serializable {
     public void setMerchantContract(ContractEntity merchantContract) {
         this.merchantContract = merchantContract;
     }
-    private String merchantPassword;
-    private String merchantHP;
-    private String merchantAddress;
-    private String securityQuestion;
-    private String answer;
-    
-    @OneToMany
-    private OutletEntity merchantOutlet = new OutletEntity();
-    @OneToMany
-    private ContractEntity merchantContract = new ContractEntity();
-    
 
     public String getId() {
         return merchantEmail;
@@ -139,5 +138,4 @@ public class MerchantEntity implements Serializable {
     public String toString() {
         return "SMMS.entity.MerchantEntity[ id=" + merchantEmail + " ]";
     }
-    
 }
