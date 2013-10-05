@@ -85,7 +85,13 @@ public class ManageInventoryManagedBean implements Serializable {
         this.dishCost = dishCost;
     }
 
-    public Set<DishEntity> getAllDishes() throws ExistException, IOException {
+    /**
+     *
+     * @return
+     * @throws ExistException
+     * @throws IOException
+     */
+    public List<DishEntity> getAllDishes() throws ExistException, IOException {
         System.err.println("in getAll dishes");
         return inventorySessionBean.listDishes();
 
