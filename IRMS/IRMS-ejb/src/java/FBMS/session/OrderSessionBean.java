@@ -213,6 +213,7 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         
     }
 
+    // E.3.1.1 & E.3.1.2 update sales order 'in process','confirmed','pending','suspended','terminated','goods issued','completed'
     @Override
     public OrderEntity updateOrderStatus(String status,Long orderId)
     {

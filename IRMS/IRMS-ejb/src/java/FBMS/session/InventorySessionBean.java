@@ -5,11 +5,14 @@
 package FBMS.session;
 
 import FBMS.entity.DishEntity;
+import FBMS.entity.OrderEntity;
+import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -22,6 +25,7 @@ public class InventorySessionBean {
     private EntityManager em;
     
     DishEntity de;
+    OrderEntity oe;
 
     
     public InventorySessionBean(){}
@@ -69,12 +73,42 @@ public class InventorySessionBean {
         }
     }
     
+    public OrderEntity issueGoods(Long orderId)
+    {
+        oe = em.find(OrderEntity.class,orderId);
+        if(oe!=null)
+        {
+           oe.setStatus("goods issued");
+           em.merge(oe);
+           return oe; 
+        }
+        else
+        {
+            System.out.println("InventorySessionBean:issueGoods: The dish does not exist!"+orderId);
+            return null;
+        }
+    }
+    
     
 
     public void persist(Object object) {
         em.persist(object);
     }
     
+    public Set <DishEntity> listDishes()
+    {
+        Query q = em.createQuery("SELECT d FROM DishEntity d");
+        
+        Set stateSet = new HashSet <DishEntity> ();
+        for (Object o : q.getResultList())
+        {
+            DishEntity dish = (DishEntity)o;
+            stateSet.add(dish);
+            System.out.println("InventorySessionBean: listDishes: new dish has been added");
+        }
+        
+        return stateSet;
+    }
     
 
 }
