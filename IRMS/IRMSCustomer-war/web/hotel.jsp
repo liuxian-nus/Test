@@ -1,161 +1,242 @@
 <%-- 
-    Document   : hotel
-    Created on : Sep 11, 2013, 12:20:59 AM
+    Document   : home
+    Created on : Sep 16, 2013, 2:22:54 PM
     Author     : lionetdd
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-   <head>
+    <head>
+        <script>
+            $(document).ready(function() {
+                $("#reg-form").submit(function() {
+                    if ($("#input-name").val().length < 1) {
+                        $("#input-name").addClass("error");
+                    }
+                });
+            });
+        </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="/IRMSCustomer-war/js/bootstrap-datepicker.js"></script>
         <jsp:include page="base.jsp"></jsp:include>
-
-
-<script language="javascript" type="text/javascript">
-function clearText(field){
-
-    if (field.defaultValue == field.value) field.value = '';
-    else if (field.value == '') field.value = field.defaultValue;
-
-}
-</script>
+        </head>
+        <body>
+        <jsp:include page="header.jsp"></jsp:include>
 
 
 
+            <div class="section-container tabs" data-section="tabs">
+                <!--first section: orchard hotel -->
+                <section class="active">
+                    <p class="title" data-section-title><a href="#"><strong>Orchard Hotel </strong></a></p>
+                    <div class="content" data-section-content>
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <div class="panel">
+                                    <h5><strong>Orchard Suite</strong></h5>
+                                    <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_01.png">
+                                        <img src="/IRMSCustomer-war/images/gallery/food_01.png">
+                                    </a>
+                                    <!-- <p>We provide every guest with an enriched ultimate dining experience to enjoy authentic Chinese cuisine</p>-->
+                                </div>
+                            </div>
+                            <div class="large-8 columns">
+                                <h5><a href="#" style="color:#4d4d4d">Orchard Suite</a></h5>
+                                <p style="color:#4d4d4d">Perched on the top floor of Orchard Hotel, the Orchard Suite is the epitome of luxury and exclusivity. 
+                                    Set against the best view point of the island, guests can enjoy this stately suite with its spacious living
+                                    and dining areas and a fully serviced open pantry that offers the ultimate in comfort and luxury. The adjacent media room 
+                                    provides a cozy and more casual relaxation zone that comes complete with top of the line audio visual equipment for an 
+                                    unparalleled home entertainment experience. The suite’s two majestic bedrooms each feature direct access to a spacious dressing
+                                    room and vanity area, walk in wardrobes and oversized ensuite bathrooms.</p>
 
-<script type="text/javascript">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <div class="panel">
+                                    <h5><strong>Deluxe Suite</strong></h5>
 
-ddsmoothmenu.init({
-	mainmenuid: "templatemo_menu", //menu DIV id
-	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
-	classname: 'ddsmoothmenu', //class added to menu's outer DIV
-	//customtheme: ["#1c5a80", "#18374a"],
-	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
-})
+                                    <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_02.png">
+                                        <img src="/IRMSCustomer-war/images/gallery/food_02.png">
+                                    </a>
+                                    <!--<p>Come and get yourself indulged in the fabulous and sumptuous variety of French cuisine featured by a vibrant combination of contemporary culinary technique with innovative twist</p>-->
+                                </div>
+                            </div>
+                            <div class="large-8 columns">
 
-</script>
+                                <h5><a href="#" style="color:#4d4d4d">Deluxe Suite</a></h5>
+                                <p style="color:#4d4d4d">Our one bedroom Deluxe Suites feature a luxurious king-sized bed, spacious formal living and dining area
+                                    as well as an open pantry. Decked out in delicately muted colours to create a warm, homely feel, and a bathroom that features
+                                    both a circular shower and a large bath, Orchard Hotel’s Deluxe Suites elevate the hotel experience to an entirely new level.</p>
 
-<!--////// CHOOSE ONE OF THE 3 PIROBOX STYLES  \\\\\\\-->
-<link href="css_pirobox/white/style.css" media="screen" title="shadow" rel="stylesheet" type="text/css" />
-<!--<link href="css_pirobox/white/style.css" media="screen" title="white" rel="stylesheet" type="text/css" />
-<link href="css_pirobox/black/style.css" media="screen" title="black" rel="stylesheet" type="text/css" />-->
-<!--////// END  \\\\\\\-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <div class="panel">
+                                    <h5><strong>Deluxe</strong></h5>
+                                    <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_03.png">
+                                        <img src="/IRMSCustomer-war/images/gallery/food_03.png">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="large-8 columns">
 
-<!--////// INCLUDE THE JS AND PIROBOX OPTION IN YOUR HEADER  \\\\\\\-->
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/piroBox.1_2.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	$().piroBox({
-			my_speed: 600, //animation speed
-			bg_alpha: 0.5, //background opacity
-			radius: 4, //caption rounded corner
-			scrollImage : false, // true == image follows the page, false == image remains in the same open position
-			pirobox_next : 'piro_next', // Nav buttons -> piro_next == inside piroBox , piro_next_out == outside piroBox
-			pirobox_prev : 'piro_prev',// Nav buttons -> piro_prev == inside piroBox , piro_prev_out == outside piroBox
-			close_all : '.piro_close',// add class .piro_overlay(with comma)if you want overlay click close piroBox
-			slideShow : 'slideshow', // just delete slideshow between '' if you don't want it.
-			slideSpeed : 4 //slideshow duration in seconds(3 to 6 Recommended)
-	});
-});
-</script>
-<!--////// END  \\\\\\\-->
+                                <h5><a href="#" style="color:#4d4d4d">Deluxe</a></h5>
+                                <p style="color:#4d4d4d">Michael Graves’ signature is firmly stamped in all our Deluxe Rooms, from the wash basin and the shower 
+                                    stall to the gorgeous furnishings and art pieces that adorn the walls. In the bathrooms, the classic black and white marble
+                                    flooring, as well as the flower-motif mosaic wall is a sight to behold.Designed in delicately muted colours for a warm and cosy
+                                    feel, each room comes with a pull-out writing desk, a hidden vanity mirror, and ample storage space for personal effects.</p>
 
-</head>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--second section: marina hotel -->
+                <section>
+                    <p class="title" data-section-title><a href="#"><strong>Marina Hotel </strong></a></p>
+                    <div class="content" data-section-content>
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <div class="panel">
+                                    <h5><strong>Chairman Suite</strong></h5>
+                                    <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_01.png">
+                                        <img src="/IRMSCustomer-war/images/gallery/food_01.png">
+                                    </a>
+                                    <!-- <p>We provide every guest with an enriched ultimate dining experience to enjoy authentic Chinese cuisine</p>-->
+                                </div>
+                            </div>
+                            <div class="large-8 columns">
 
-<body>
- <!-- end of header -->
-    <!--Start of menu bar-->
-    <jsp:include page="header.jsp"></jsp:include>
-    
-    <div id="templatemo_main">
-    	<div class="gallery_box">
-            <h2>Web Designs</h2>
-            <ul class="gallery">
-                <li><a class="pirobox" href="images/gallery/01.jpg"><img src="images/gallery/01.jpg" alt="Image 01" /></a></li>
-                <li><a class="pirobox" href="images/gallery/02.jpg"><img src="images/gallery/02.jpg" alt="Image 02" /></a></li>
-                <li><a class="pirobox" href="images/gallery/03.jpg"><img src="images/gallery/03.jpg" alt="Image 03" /></a></li>
-                <li><a class="pirobox" href="images/gallery/04.jpg"><img src="images/gallery/04.jpg" alt="Image 04" /></a></li>
-            </ul>
-			<div class="cleaner"></div>
-            <a class="more" href="#">More</a><a href="http://es.onlyimage.com" title="imágenes" class="gallery_box_link"  >imágenes</a>
-        </div>    
-        <div class="gallery_box">
-            <h2>3D Animations</h2>
-            <ul class="gallery">
-                <li><a class="pirobox" href="images/gallery/05.jpg"><img src="images/gallery/05.jpg" alt="Image 05" /></a></li>
-                <li><a class="pirobox" href="images/gallery/06.jpg"><img src="images/gallery/06.jpg" alt="Image 06" /></a></li>
-                <li><a class="pirobox" href="images/gallery/07.jpg"><img src="images/gallery/07.jpg" alt="Image 07" /></a></li>
-                <li><a class="pirobox" href="images/gallery/08.jpg"><img src="images/gallery/08.jpg" alt="Image 08" /></a></li>
-            </ul>
-            <div class="cleaner"></div>
-            <a class="more" href="#">More</a><a href="http://es.onlyimage.com" title="imágenes" class="gallery_box_link"  >imágenes</a>
-        </div>
-        <div class="gallery_box">
-            <h2>T-Shirt Designs</h2>
-            <ul class="gallery">
-                <li><a class="pirobox" href="images/gallery/09.jpg"><img src="images/gallery/09.jpg" alt="Image 09" /></a></li>
-                <li><a class="pirobox" href="images/gallery/10.jpg"><img src="images/gallery/10.jpg" alt="Image 10" /></a></li>
-                <li><a class="pirobox" href="images/gallery/11.jpg"><img src="images/gallery/11.jpg" alt="Image 11" /></a></li>
-                <li><a class="pirobox" href="images/gallery/12.jpg"><img src="images/gallery/12.jpg" alt="Image 12" /></a></li>
-            </ul>
-            <div class="cleaner"></div>
-            <a class="more" href="#">More</a><a href="http://es.onlyimage.com" title="imágenes" class="gallery_box_link"  >imágenes</a>
-        </div>  
-        <div class="cleaner"></div>
-    </div>
-    
-    <div id="templatemo_bottom">
-    	<div class="col one_fourth">
-        	<h5>Recent Posts</h5>
-            <ul class="footer_link">
-            	<li><a href="#">Morbi posuere dictum diam</a></li>
-                <li><a href="#">Suscipit porta mauris</a></li>
-                <li><a href="#">Luctus tincidunt iaculis</a></li>
-                <li><a href="#">Ut porta, lacus at mattis</a></li>
-                <li><a href="#">Non molestie turpis magna</a></li>
-			</ul>
-        </div>
-        <div class="col one_fourth">
-        	<h5>Recent Comments</h5>
-            <ul class="footer_link">
-            	<li><a href="#">Jones</a> on <a href="#">Vivamus ac augue eros</a></li>
-                <li><a href="#">Steven</a> on <a href="#">Curabitur imperdiet lacus</a></li>
-                <li><a href="#">Susan</a> on <a href="#">Duis nec justo ut eros dignissim</a></li>
-                <li><a href="#">Collin</a> on <a href="#">Suscipit dui integer imperdiet</a></li>
-                <li><a href="#">Edward</a> on <a href="#">Sed a,</a> Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow"><strong>XHTML</strong></a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow"><strong>CSS</strong></a>.</li>
-			</ul>
-        </div>
-        <div class="col one_fourth">
-        	<h5>Blogroll</h5>
-            <ul class="footer_link">
-            	<li><a href="http://www.templatemo.com/page/1">Free CSS Templates</a></li>
-                <li><a href="http://www.webdesignmo.com/blog">Web Design Resources</a></li>
-            	<li><a href="http://www.flashmo.com">Free Flash Templates</a></li>
-                <li><a href="http://www.templatemo.com">Website Templates</a></li>
-                <li><a href="http://www.koflash.com">Free Web Gallery</a></li>
-			</ul>
-        </div>
-        <div class="col one_fourth last_box">
-        	<h5>Follow Us</h5>
-            <ul class="footer_link">
-            	<li><a href="#" class="facebook social">Facebook</a></li>
-                <li><a href="#" class="linkedin social">Linkedin</a></li>
-                <li><a href="#" class="myspace social">Myspace</a></li>
-                <li><a href="#" class="youtube social">Youtube</a></li>
-                <li><a href="#" class="vimeo social">Vimeo</a></li>
-			</ul>
-        </div>
-        <div class="cleaner"></div>
-    </div>
-    
-    <div id="templatemo_footer">
-    	Copyright © 2048 Your Company Name | Designed by <a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a>
-    </div>
-</div>
+                                <h5><a href="#" style="color:#4d4d4d">Chairman Suite</a></h5>
+                                <p style="color:#4d4d4d">The Chairman Suites offer panoramic views of the resort 
+                                    and its multitude attractions. Decorated in a soothing palette of silver and ivory, the suite’s exquisitely designed interior 
+                                    balances contemporary decor with delicate oriental touches. Guests can relax in the spacious formal living and dining areas 
+                                    with an open concept pantry or proceed to the entertainment room decked out with top of the line audio visual equipment 
+                                    providing unrivalled home entertainment. Boasting a dramatic champagne toned ceiling with silver leaf motifs, the master 
+                                    bedroom opens up to an adjacent oversized ensuite bathroom offering stunning views of the resort.</p>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <div class="panel">
+                                    <h5><strong>Deluxe Suite</strong></h5>
+
+                                    <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_02.png">
+                                        <img src="/IRMSCustomer-war/images/gallery/food_02.png">
+                                    </a>
+                                    <!--<p>Come and get yourself indulged in the fabulous and sumptuous variety of French cuisine featured by a vibrant combination of contemporary culinary technique with innovative twist</p>-->
+                                </div>
+                            </div>
+                            <div class="large-8 columns">
+
+                                <h5><a href="#" style="color:#4d4d4d">Deluxe Suite</a></h5>
+                                <p style="color:#4d4d4d">Our one bedroom Deluxe Suites feature a luxurious king-sized bed, spacious formal living and 
+                                    dining area as well as an open pantry. Decked out in delicately muted colours to create a warm, homely feel, and a bathroom 
+                                    that features both a circular shower and a large bath, Marina Hotel’s Deluxe Suites elevate the hotel experience to an 
+                                    entirely new level.</p>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <div class="panel">
+                                    <h5><strong>Deluxe</strong></h5>
+                                    <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_03.png">
+                                        <img src="/IRMSCustomer-war/images/gallery/food_03.png">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="large-8 columns">
+
+                                <h5><a href="#" style="color:#4d4d4d">Deluxe</a></h5>
+                                <p style="color:#4d4d4d">Michael Graves’ signature is firmly stamped in all our Deluxe Rooms, from the wash basin and the shower 
+                                    stall to the gorgeous furnishings and art pieces that adorn the walls. In the bathrooms, the classic black and white marble
+                                    flooring, as well as the flower-motif mosaic wall is a sight to behold.Designed in delicately muted colours for a warm and cosy
+                                    feel, each room comes with a pull-out writing desk, a hidden vanity mirror, and ample storage space for personal effects.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--third section: beachview hotel -->
+                <section>
+                    <p class="title" data-section-title><a href="#"><strong>BeachView Hotel </strong></a></p>
+                    <div class="content" data-section-content>
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <div class="panel">
+                                    <h5><strong>Deluxe Suite</strong></h5>
+                                    <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_01.png">
+                                        <img src="/IRMSCustomer-war/images/gallery/food_01.png">
+                                    </a>
+                                    <!-- <p>We provide every guest with an enriched ultimate dining experience to enjoy authentic Chinese cuisine</p>-->
+                                </div>
+                            </div>
+                            <div class="large-8 columns">
+
+                                <h5><a href="#" style="color:#4d4d4d">Deluxe Suite</a></h5>
+                                <p style="color:#4d4d4d">Our one bedroom Deluxe Suites feature a luxurious king-sized bed, spacious formal living and dining area 
+                                    as well as an open pantry. Decked out in delicately muted colours to create a warm, homely feel, and a bathroom that features
+                                    both a circular shower and a large bath, BeachView Hotel’s Deluxe Suites elevate the hotel experience to an entirely new level.</p>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <div class="panel">
+                                    <h5><strong>Deluxe</strong></h5>
+
+                                    <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_02.png">
+                                        <img src="/IRMSCustomer-war/images/gallery/food_02.png">
+                                    </a>
+                                    <!--<p>Come and get yourself indulged in the fabulous and sumptuous variety of French cuisine featured by a vibrant combination of contemporary culinary technique with innovative twist</p>-->
+                                </div>
+                            </div>
+                            <div class="large-8 columns">
+
+                                <h5><a href="#" style="color:#4d4d4d">Deluxe</a></h5>
+                                <p style="color:#4d4d4d">Michael Graves’ signature is firmly stamped in all our Deluxe Rooms, from the wash basin and the shower 
+                                    stall to the gorgeous furnishings and art pieces that adorn the walls. In the bathrooms, the classic black and white marble
+                                    flooring, as well as the flower-motif mosaic wall is a sight to behold.Designed in delicately muted colours for a warm and cosy
+                                    feel, each room comes with a pull-out writing desk, a hidden vanity mirror, and ample storage space for personal effects.</p>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <div class="panel">
+                                    <h5><strong>Superior</strong></h5>
+                                    <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_03.png">
+                                        <img src="/IRMSCustomer-war/images/gallery/food_03.png">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="large-8 columns">
+
+                                <h5><a href="#" style="color:#4d4d4d">Superior</a></h5>
+                                <p style="color:#4d4d4d"></p>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        <jsp:include page="footer.jsp"></jsp:include>
+        <script>
+            document.write('<script src=' +
+                    ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
+                    '.js><\/script>')
+        </script> 
 
 
-<script type='text/javascript' src='js/logging.js'></script>
-</body>
-
+        <script src="js/foundation.min.js"></script>
+        <script>
+            $(document).foundation();
+        </script>
+    </body>
 </html>

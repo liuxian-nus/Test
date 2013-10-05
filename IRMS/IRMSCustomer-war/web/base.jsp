@@ -33,6 +33,6 @@ ddsmoothmenu.init({
 })
 
 </script>
-    <title>JSP Page</title>
+    <title>Coral Island Resort</title>
 
     
