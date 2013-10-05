@@ -139,6 +139,12 @@ public class Menu2ManagedBean implements Serializable {
                 item.setIcon("ui-icon ui-icon-calculator");
                 submenu.getChildren().add(item);
                 
+                item = new MenuItem();
+                item.setValue("Shift Logbook");
+                item.setUrl("/acms/shiftLogBook.xhtml");
+                item.setIcon("ui-icon ui-icon-calculator");
+                submenu.getChildren().add(item);
+                
                 model.addSubmenu(submenu);
              }
              

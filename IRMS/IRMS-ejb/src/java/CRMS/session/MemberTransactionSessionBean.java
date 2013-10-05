@@ -27,13 +27,14 @@ public class MemberTransactionSessionBean {
     @PersistenceContext
     private EntityManager em;
     MemberEntity member = new MemberEntity();
-    MemberTransactionEntity mt = new MemberTransactionEntity();
+    MemberTransactionEntity mt;
 
     public MemberTransactionSessionBean() {
     }
 
-    public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay) {
+    public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay) throws ExistException {
         System.out.println("creating member transaction....");
+        mt = new MemberTransactionEntity();
         mt.setMember(member);
         mt.setMtAmount(amount);
         mt.setMtDate(mtDate);
@@ -42,6 +43,16 @@ public class MemberTransactionSessionBean {
         mt.setMtMode(true); //later add in cash or card
         mt.setPaymentStatus(true);//later add in paid or not paid
         em.persist(mt);
+         if (!coinPay) {
+            addPoint(member, amount);
+            addCoin(member, amount);
+            updateVIP(member.getPoint());
+            System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
+        } else {
+            double tempCoin = member.getCoin();
+            member.setCoin(0);
+            System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
+        }
         System.out.println("member transaction successfully added");
         member.addMemberTransaction(mt);
     }
@@ -60,35 +71,28 @@ public class MemberTransactionSessionBean {
         }
         mt.setMember(member);
         if (!coinPay) {
-            addPoint(memberEmail, mt.getMtAmount());
-            addCoin(memberEmail, mt.getMtAmount());
+            addPoint(member, mt.getMtAmount());
+            addCoin(member, mt.getMtAmount());
             updateVIP(member.getPoint());
-            System.out.println("Transaction of " + memberEmail + "has been added successfully");
+            System.out.println("Transaction of " + member.getMemberEmail() + "has been added successfully");
             return mt.getMtAmount();
         } else {
             double tempCoin = member.getCoin();
             member.setCoin(0);
-            System.out.println("Transaction of " + memberEmail + "has been added successfully");
+            System.out.println("Transaction of " + member.getMemberEmail() + "has been added successfully");
             return (mt.getMtAmount() - tempCoin);
         }
     }
 
-    public void addPoint(String memberEmail, double mtAmount) throws ExistException {
-        member = em.find(MemberEntity.class, memberEmail);
-        if (member == null) {
-            throw new ExistException("Member does not exist!");
-        }
+    public void addPoint(MemberEntity member, double mtAmount) throws ExistException {
+
         double point = member.getPoint();
         point = point + mtAmount * 0.01;
         member.setPoint(point);
-        System.out.println("Member : " + memberEmail + " account has been credited by" + point + "points");
+        System.out.println("Member : " + member.getMemberName() + " account has been credited by" + point + "points");
     }
 
-    public void addCoin(String memberEmail, double mtAmount) throws ExistException {
-        member = em.find(MemberEntity.class, memberEmail);
-        if (member == null) {
-            throw new ExistException("Member does not exist!");
-        }
+    public void addCoin(MemberEntity member, double mtAmount) throws ExistException {
         double coin = member.getCoin();
         coin = coin + mtAmount * 0.01;
         member.setCoin(coin);
