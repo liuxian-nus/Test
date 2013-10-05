@@ -69,6 +69,7 @@ public class InventorySessionBean {
         }
     }
     
+    
 
     public void persist(Object object) {
         em.persist(object);

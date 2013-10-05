@@ -56,4 +56,6 @@ public interface OrderSessionBeanRemote {
     OrderEntity modifyOrder(Long orderId,String email,String mobile,String name,String notes,Date orderDateTime,String title,Integer numberOrder);
     
     CourseEntity modifyCourse(CourseEntity ce);
+    
+    OrderEntity updateOrderStatus(String status,Long orderId);
 }

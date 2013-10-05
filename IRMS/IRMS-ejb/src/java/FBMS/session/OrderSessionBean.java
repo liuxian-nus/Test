@@ -214,6 +214,23 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
     }
 
     @Override
+    public OrderEntity updateOrderStatus(String status,Long orderId)
+    {
+        order = em.find(OrderEntity.class, orderId);
+        if(order!=null)
+        {
+            order.setStatus(status);
+            em.merge(order);
+            System.out.println("OrderSessionBean:updateOrderStatus: The order has been updated to!"+status+" successfully!");
+            return order;
+        }
+        else
+        {
+            System.out.println("OrderSessionBean:updateOrderStatus: The order does not exist!");
+            return null;
+        }
+    }
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
