@@ -203,7 +203,7 @@ public class RoomSessionBean {
     }
 
     //individual member checkout
-    public void checkOut(int roomId) throws RoomException {
+    public void checkOut(int roomId) throws RoomException, ExistException {
         room = em.find(RoomEntity.class, roomId);
         if (room.getRoomServiceCharge() != 0) {
             throw new RoomException("RoomSessionBean-->RoomException-->There is uncleared room service charge!");
