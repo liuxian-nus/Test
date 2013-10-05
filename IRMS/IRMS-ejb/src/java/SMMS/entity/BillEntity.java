@@ -6,6 +6,7 @@ package SMMS.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class BillEntity implements Serializable {
     private String billType; //commission, month rate,early terminate,deposit
     private String billMerchant;
     private String billStatus;
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.PERSIST})
     private OutletEntity outlet = new OutletEntity();
 
     public String getBillMerchant() {

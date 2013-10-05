@@ -876,7 +876,6 @@ public class initializationManagedBean implements Serializable {
         createSMMSAdmin();
         createSMMSOps();
         createMerchant();
-        createOutlet();
         createPushingcart();
 
         addMessage("Initialization succeed!");

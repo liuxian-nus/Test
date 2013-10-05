@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,9 +32,9 @@ public class MerchantEntity implements Serializable {
     private String merchantAddress;
     private String securityQuestion;
     private String answer;
-    @OneToMany
+    @OneToMany(cascade={CascadeType.PERSIST})
     private List<OutletEntity> merchantOutlet = new ArrayList<OutletEntity>();
-    @OneToMany
+    @OneToMany(cascade={CascadeType.PERSIST})
     private List<ContractEntity> merchantContract = new ArrayList<ContractEntity>();
 
     public List<OutletEntity> getMerchantOutlet() {

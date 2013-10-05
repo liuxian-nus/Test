@@ -43,7 +43,7 @@ public class OutletSessionBean {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public OutletEntity addOutlet(OutletEntity outlet) {
         em.persist(outlet);
-        System.out.println("OutletSessionBean: outlet " + outlet.getOutletName() + " is successfully added");
+        System.out.println("OutletSessionBean: outlet " + outlet.getOutletId() + " is successfully added");
         return outlet;
     }
 

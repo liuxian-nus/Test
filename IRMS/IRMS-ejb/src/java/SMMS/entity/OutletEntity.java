@@ -46,11 +46,11 @@ public class OutletEntity implements Serializable {
     private int outletNo;
     private double outletArea;
     
-    @OneToMany(mappedBy = "outlet")
+    @OneToMany(cascade={CascadeType.PERSIST},mappedBy = "outlet")
     private List<OutletTransactionEntity> outletTransaction = new ArrayList<OutletTransactionEntity>();
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.PERSIST})
     private MerchantEntity outletMerchant = new MerchantEntity();
-    @OneToMany(mappedBy = "outlet")
+    @OneToMany(cascade={CascadeType.PERSIST},mappedBy = "outlet")
     private List<BillEntity> outletBill = new ArrayList<BillEntity>();
 
     public String getOutletName() {

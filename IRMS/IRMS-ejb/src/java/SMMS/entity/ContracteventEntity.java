@@ -6,6 +6,7 @@ package SMMS.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,7 +38,7 @@ public class ContracteventEntity implements Serializable {
     private double eventCommissionRate;
     private String eventStatus;
     private double eventDeposit;
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.PERSIST})
     private ContractEntity contract = new ContractEntity();
 
     public double getEventDeposit() {

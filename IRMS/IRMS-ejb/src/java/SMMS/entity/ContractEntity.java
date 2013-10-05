@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,9 +43,9 @@ public class ContractEntity implements Serializable {
     private String contractStatus;
     private double contractDeposit;
     private int contractOutlet;
-    @OneToMany(mappedBy = "contract")
+    @OneToMany(cascade={CascadeType.PERSIST},mappedBy = "contract")
     private List<ContracteventEntity> contractEvent = new ArrayList<ContracteventEntity>();
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.PERSIST})
     private MerchantEntity contractMerchant = new MerchantEntity();
 
     public int getContractOutlet() {
