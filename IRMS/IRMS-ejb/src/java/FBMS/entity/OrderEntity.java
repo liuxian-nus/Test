@@ -45,8 +45,28 @@ public final class OrderEntity implements Serializable {
     private String email;
     private String mobile;
     private String notes;
+    private Double cost =0.00;
+    private Double salePrice=0.00;
     
     public OrderEntity(){}
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    public Double getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(Double salePrice) {
+        this.salePrice = salePrice;
+    }
+    
+    
     
     public OrderEntity(Date orderDateTime,MenuEntity menu,String status,String title,String name,String email,String mobile,String notes)
     {

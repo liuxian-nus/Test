@@ -4,9 +4,12 @@
  */
 package FBMS.session;
 
+import FBMS.entity.CourseEntity;
 import FBMS.entity.DishEntity;
+import FBMS.entity.MenuEntity;
 import FBMS.entity.OrderEntity;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -78,6 +81,27 @@ public class InventorySessionBean {
         oe = em.find(OrderEntity.class,orderId);
         if(oe!=null)
         {
+           MenuEntity menu = oe.getMenu();
+           Set <CourseEntity> courses = menu.getCourses();
+           System.out.println("InventorySessionBean:issueGoods: Both Menu and courses have been found! MenuId: "
+                   +menu.getMenuId());
+           int courseNumber = courses.size();
+           int i =1;
+           CourseEntity course = new CourseEntity();
+           Iterator <CourseEntity> itr = courses.iterator();
+           
+           while(itr.hasNext())
+           {
+               course = itr.next();
+               course.getDish().setDishQuantity(oe.getMenu().getNumberOrder()+course.getDish().getDishQuantity());
+               System.out.println("InventorySessionBean:issueGoods: course"+i+": inventory has been deducted by "+oe.getMenu().getNumberOrder());
+               i++;
+           }
+           
+           Double orderCost = this.assignCost(orderId);
+           System.out.println("InventorySessionBean: issueGoods: The order associated cost has been assigned "+orderCost);
+           
+           
            oe.setStatus("goods issued");
            em.merge(oe);
            return oe; 
@@ -89,7 +113,39 @@ public class InventorySessionBean {
         }
     }
     
-    
+    public Double assignCost(Long orderId)
+    {
+        Double currentCost=0.00;
+        oe = em.find(OrderEntity.class,orderId);
+        if(oe!=null)
+        {
+            MenuEntity menu = oe.getMenu();
+            Set <CourseEntity> courses = menu.getCourses();
+            Iterator <CourseEntity> itr = courses.iterator();
+            CourseEntity course;
+            
+            while(itr.hasNext())
+            {
+                course = itr.next();
+                Double unitCost = course.getDish().getDishCost();
+                System.out.println("InventorySessionBean:assignCost: The course "+course.getDish().getDishName()+
+                        " and its cost is "+unitCost);
+                Integer unit = menu.getNumberOrder();
+                currentCost = currentCost+ unit*unitCost;
+                System.out.println("InventorySessionBean:assignCost: The currentCost is "+currentCost);
+            }
+            
+            oe.setCost(currentCost);
+            em.merge(oe);
+            System.out.println("InventorySessionBean:assignCost: The cost assigned is "+oe.getCost());
+            return currentCost;
+        }
+        else
+        {
+            System.out.println("InventorySessionBean:assignCost: The order does not exist!"+orderId);
+            return null;
+        }
+    }
 
     public void persist(Object object) {
         em.persist(object);
