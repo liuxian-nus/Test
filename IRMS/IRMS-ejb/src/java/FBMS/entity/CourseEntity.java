@@ -28,20 +28,20 @@ public class CourseEntity implements Serializable {
     
     private Integer quantity;
     
-    @ManyToOne(cascade={CascadeType.ALL})
-    private MenuEntity menu;
+    /*@ManyToOne(cascade={CascadeType.ALL})
+    private MenuEntity menu;*/
 
     public CourseEntity(){
     
     }
     
-    public MenuEntity getMenu() {
+    /*public MenuEntity getMenu() {
         return menu;
     }
 
     public void setMenu(MenuEntity menu) {
         this.menu = menu;
-    }
+    } */
 
     public Integer getQuantity() {
         return quantity;

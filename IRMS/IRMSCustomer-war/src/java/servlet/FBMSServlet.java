@@ -489,7 +489,7 @@ public class FBMSServlet extends HttpServlet {
                 i++;
             System.out.println("FBMSServlet: while loop has proceeded to "+i);
             //System.out.println("FBMSServlet: the current element is "+me.getDishes().size());
-            course.setMenu(me);//menu haven't been persisted, so this should be null
+            //course.setMenu(me);//menu haven't been persisted, so this should be null
             }
             else {
                 i++;
@@ -663,8 +663,8 @@ public class FBMSServlet extends HttpServlet {
             while(itr.hasNext())
             {
                 CourseEntity ce = itr.next();
-                ce.setMenu(me);
-                System.out.println("FBMSServlet: CourseEntity's datafield menu has been set");
+               /* ce.setMenu(me);
+                System.out.println("FBMSServlet: CourseEntity's datafield menu has been set");*/
                 ce.setQuantity(numberPeople);
                 System.out.println("FBMSServlet: CourseEntity's datafield numberPeople has been set");
                 orderSessionBean.modifyCourse(ce);

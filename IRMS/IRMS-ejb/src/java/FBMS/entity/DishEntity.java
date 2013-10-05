@@ -28,18 +28,18 @@ public class DishEntity implements Serializable {
     private String dishName;
     private Integer dishQuantity;
     private Double dishCost;
-    @OneToOne (cascade={CascadeType.ALL},mappedBy="dish")
-    private CourseEntity course;
+   /* @OneToOne (cascade={CascadeType.ALL},mappedBy="dish")
+    private CourseEntity course;*/
     
     public DishEntity(){}
 
-    public CourseEntity getCourse() {
+    /*public CourseEntity getCourse() {
         return course;
     }
 
     public void setCourse(CourseEntity course) {
         this.course = course;
-    }
+    }*/
 
    
     

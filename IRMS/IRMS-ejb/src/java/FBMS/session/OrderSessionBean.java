@@ -190,10 +190,10 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
             while(itr.hasNext())
             {
                 CourseEntity ce = itr.next();
-                ce.setMenu(thisMenu);
-                System.out.println("FBMSServlet: CourseEntity's datafield menu has been set");
+               // ce.setMenu(thisMenu);
+                System.out.println("OrderSessionBean: CourseEntity's datafield menu has been set");
                 ce.setQuantity(numberOrder);
-                System.out.println("FBMSServlet: CourseEntity's datafield numberPeople has been set");
+                System.out.println("OrderSessionBean: CourseEntity's datafield numberPeople has been set");
                 this.modifyCourse(ce);
                 
             }
