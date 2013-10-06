@@ -72,7 +72,7 @@ public class ContractSessionBean {
         List OutletList = new ArrayList<ContractEntity>();
         for (Object o : q.getResultList()) {
             ContractEntity m = (ContractEntity) o;
-            if (m.getContractMerchant().getMerchantEmail()== merchantEmail) {
+            if (m.getMerchant().getMerchantEmail()== merchantEmail) {
                 OutletList.add(m);
             }
         }
@@ -86,12 +86,18 @@ public class ContractSessionBean {
         List TransactionList = new ArrayList<ContractEntity>();
         for (Object o : q.getResultList()) {
             ContractEntity m = (ContractEntity) o;
-            if (m.getContractOutlet()== outletId) {
+            if (m.getOutlet().getOutletId()== outletId) {
                 TransactionList.add(m);
             }
         }
         System.err.println("in get contract by outlet sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
+    }
+    
+    public ContractEntity getContractById(String contractId) throws ExistException{
+        contract = em.find(ContractEntity.class, contractId);
+        if(contract == null)  throw new ExistException("Contract does not exist!");
+        return contract;
     }
     
     

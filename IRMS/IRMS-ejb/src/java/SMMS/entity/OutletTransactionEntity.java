@@ -28,7 +28,7 @@ public class OutletTransactionEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date transactionDate;
     private double transactionAmount;
-    @ManyToOne(cascade={CascadeType.PERSIST})
+    @ManyToOne
     private OutletEntity outlet = new OutletEntity();
 
     public Long getTransactionId() {

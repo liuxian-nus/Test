@@ -55,7 +55,6 @@ public class Menu2ManagedBean implements Serializable {
 
             for (int i = 0; i < user.getRoles().size(); i++) {
                 userType.add(user.getRoles().get(i).getRoleName());
-                System.err.println("Menu2 user role = "+user.getRoles().get(i).getRoleName());
             }
 
             //First submenu
@@ -228,27 +227,42 @@ public class Menu2ManagedBean implements Serializable {
                 model.addSubmenu(submenu);
             }
             
-            if (userType.contains("ESMSAdmin")) {
-                System.out.println("ESMSAdmin menu bar");
+              if (userType.contains("SMMSAdmin")) {
+                System.out.println("SMMSAdmin menu bar");
                 submenu = new Submenu();
-                submenu.setLabel("Show");
-                //submenu.setIcon("ui-icon ui-icon-contact");
+                submenu.setLabel("Shopping Mall");
+                submenu.setIcon("ui-icon ui-icon-contact");
 
                 item = new MenuItem();
-                item.setValue("Create new show");
-                item.setUrl("/esms/addShow.xhtml");
-                item.setIcon("ui-icon ui-icon-plus");
+                item.setValue("Manage Pushing Cart");
+                item.setUrl("/smms/pushingcartManagement.xhtml");
+                item.setIcon("ui-icon ui-icon-cart");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("Manage Outlets");
+                item.setUrl("/smms/outletManagement.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("Manage Contracts");
+                item.setUrl("/smms/contractManagement.xhtml");
+                item.setIcon("ui-icon ui-icon-document");
                 submenu.getChildren().add(item);
                 
-//                item = new MenuItem();
-//                item.setValue("Manage show");
-//                item.setUrl("/esms/manageShow.xhtml");
-//                item.setIcon("ui-icon ui-icon-pencil");
-//                submenu.getChildren().add(item);
-
+                item = new MenuItem();
+                item.setValue("Manage Contract Payments");
+                item.setUrl("/smms/paymentManagement.xhtml");
+                item.setIcon("ui-icon ui-icon-lightbulb");
+                submenu.getChildren().add(item);
+                
                 model.addSubmenu(submenu);
             }
+            
         }
         return model;
     }
+    
+    
 }

@@ -29,17 +29,16 @@ public class BillEntity implements Serializable {
     private Date billDate;
     private double billAmount;
     private String billType; //commission, month rate,early terminate,deposit
-    private String billMerchant;
     private String billStatus;
-    @ManyToOne(cascade={CascadeType.PERSIST})
-    private OutletEntity outlet = new OutletEntity();
+    @ManyToOne
+    private ContractEntity contract = new ContractEntity();
 
-    public String getBillMerchant() {
-        return billMerchant;
+    public ContractEntity getContract() {
+        return contract;
     }
 
-    public void setBillMerchant(String billMerchant) {
-        this.billMerchant = billMerchant;
+    public void setContract(ContractEntity contract) {
+        this.contract = contract;
     }
 
     public String getBillStatus() {
@@ -50,13 +49,6 @@ public class BillEntity implements Serializable {
         this.billStatus = billStatus;
     }
 
-    public OutletEntity getBillOutlet() {
-        return outlet;
-    }
-
-    public void setBillOutlet(OutletEntity billOutlet) {
-        this.outlet = billOutlet;
-    }
 
     public Long getBillId() {
         return billId;

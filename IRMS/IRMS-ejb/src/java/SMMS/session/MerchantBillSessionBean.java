@@ -65,17 +65,17 @@ public class MerchantBillSessionBean {
     }
     
     
-    public List<BillEntity> getBillByOutlet(int outletId) {
-        System.err.println("in get bill by outlet session bean");
+    public List<BillEntity> getBillByContract(Long contractId) {
+        System.err.println("in get bill by contract session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-            if (m.getBillOutlet().getOutletId()== outletId) {
+            if (m.getContract().getContractId()== contractId) {
                 TransactionList.add(m);
             }
         }
-        System.err.println("in get bill by outlet sessionbean: Transaction List size=" + TransactionList.size());
+        System.err.println("in get bill by contract sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
     
@@ -85,11 +85,11 @@ public class MerchantBillSessionBean {
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-            if (m.getBillMerchant()== merchantId) {
+            if (m.getContract().getMerchant().getMerchantEmail()== merchantId) {
                 TransactionList.add(m);
             }
         }
-        System.err.println("in get bill by outlet sessionbean: Transaction List size=" + TransactionList.size());
+        System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
 }

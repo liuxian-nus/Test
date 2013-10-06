@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -43,10 +44,30 @@ public class ContractEntity implements Serializable {
     private String contractStatus;
     private double contractDeposit;
     private int contractOutlet;
-    @OneToMany(cascade={CascadeType.PERSIST},mappedBy = "contract")
+    @OneToMany(mappedBy = "contract")
     private List<ContracteventEntity> contractEvent = new ArrayList<ContracteventEntity>();
-    @ManyToOne(cascade={CascadeType.PERSIST})
-    private MerchantEntity contractMerchant = new MerchantEntity();
+    @ManyToOne (cascade={CascadeType.MERGE})
+    private MerchantEntity merchant = new MerchantEntity();
+    @OneToOne(cascade = {CascadeType.MERGE},mappedBy = "contract")
+    private OutletEntity outlet;
+    
+    public ContractEntity(){}
+
+    public MerchantEntity getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(MerchantEntity merchant) {
+        this.merchant = merchant;
+    }
+
+    public OutletEntity getOutlet() {
+        return outlet;
+    }
+
+    public void setOutlet(OutletEntity outlet) {
+        this.outlet = outlet;
+    }
 
     public int getContractOutlet() {
         return contractOutlet;
@@ -142,14 +163,6 @@ public class ContractEntity implements Serializable {
 
     public void setContractEvent(List<ContracteventEntity> contractEvent) {
         this.contractEvent = contractEvent;
-    }
-
-    public MerchantEntity getContractMerchant() {
-        return contractMerchant;
-    }
-
-    public void setContractMerchant(MerchantEntity contractMerchant) {
-        this.contractMerchant = contractMerchant;
     }
 
     public Long getId() {

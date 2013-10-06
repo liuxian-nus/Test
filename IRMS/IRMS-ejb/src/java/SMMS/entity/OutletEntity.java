@@ -21,6 +21,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.transaction.UserTransaction;
 
@@ -46,12 +47,21 @@ public class OutletEntity implements Serializable {
     private int outletNo;
     private double outletArea;
     
-    @OneToMany(cascade={CascadeType.PERSIST},mappedBy = "outlet")
+    @OneToMany(mappedBy = "outlet")
     private List<OutletTransactionEntity> outletTransaction = new ArrayList<OutletTransactionEntity>();
-    @ManyToOne(cascade={CascadeType.PERSIST})
-    private MerchantEntity outletMerchant = new MerchantEntity();
-    @OneToMany(cascade={CascadeType.PERSIST},mappedBy = "outlet")
-    private List<BillEntity> outletBill = new ArrayList<BillEntity>();
+    @OneToOne(cascade={CascadeType.REMOVE})
+    private ContractEntity contract;
+
+    public OutletEntity(){}
+    
+    public ContractEntity getContract() {
+        return contract;
+    }
+
+    public void setContract(ContractEntity contract) {
+        this.contract = contract;
+    }
+    
 
     public String getOutletName() {
         return outletName;
@@ -61,13 +71,6 @@ public class OutletEntity implements Serializable {
         this.outletName = outletName;
     }
 
-    public List<BillEntity> getOutletBill() {
-        return outletBill;
-    }
-
-    public void setOutletBill(List<BillEntity> outletBill) {
-        this.outletBill = outletBill;
-    }
 
     public List<OutletTransactionEntity> getOutletTransaction() {
         return outletTransaction;
@@ -75,14 +78,6 @@ public class OutletEntity implements Serializable {
 
     public void setOutletTransaction(List<OutletTransactionEntity> outletTransaction) {
         this.outletTransaction = outletTransaction;
-    }
-
-    public MerchantEntity getOutletMerchant() {
-        return outletMerchant;
-    }
-
-    public void setOutletMerchant(MerchantEntity outletMerchant) {
-        this.outletMerchant = outletMerchant;
     }
 
     public int getOutletId() {

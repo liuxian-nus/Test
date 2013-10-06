@@ -81,8 +81,6 @@ public class initializationManagedBean implements Serializable {
     private FunctionalitySessionBean functionalitySessionBean;
     @EJB
     private TicketSessionBean ticketSessionBean;
-    @EJB
-    private ShowSessionBean showSessionBean;
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -96,7 +94,6 @@ public class initializationManagedBean implements Serializable {
     private TicketEntity ticket;
     private QuotaEntity quota;
     private MerchantEntity merchant;
-    private ShowEntity show;
 //    private MemberEntity member;
 
     @PostConstruct
@@ -749,8 +746,8 @@ public class initializationManagedBean implements Serializable {
         merchant.setMerchantAddress("35 Prince George's Park");
         merchant.setSecurityQuestion("What is your mother's original surname?");
         merchant.setAnswer("Gu");
-
-
+        
+        
         MerchantEntity merchant2 = new MerchantEntity();
         merchant2.setMerchantEmail("lionetdd@gmail.com");
         merchant2.setMerchantName("liuyudi");
@@ -759,7 +756,7 @@ public class initializationManagedBean implements Serializable {
         merchant2.setMerchantAddress("30 Prince George's Park");
         merchant2.setSecurityQuestion("What is your mother's original surname?");
         merchant2.setAnswer("Gu");
-
+        
         MerchantEntity merchant3 = new MerchantEntity();
         merchant3.setMerchantEmail("chrislx.nus@gmail.com");
         merchant3.setMerchantName("liuxian");
@@ -862,37 +859,6 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert cart into database");
 
         addMessage("Carts! Created!");
-    }
-
-    public void createESMSAdmin() {
-        System.out.println("go to create esms admin");
-        
-        role = new RoleEntity();
-        role.setRoleId(70);
-        role.setRoleName("ESMSAdmin");
-        System.out.println("Create role :" + role.getRoleName());
-
-        employee = new EmployeeEntity();
-        employee.setEmployeeId("G0000"); //business assumption: maximum employee number 9999
-        employee.setEmployeeName("ESMSAdmin");
-        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("G0000"));
-        System.out.println("finished hashing");
-        employee.addRole(role);
-        employee.setIsFirstTimeLogin(false);
-        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
-        try {
-            System.out.println("Saving ESMS Admin....");
-
-            employeeSessionBean.addEmployee(employee);
-            System.out.println("ESMS Admin saved.....");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
-            return;
-        }
-        System.out.println("Insert Employee into database");
-
-        addMessage("ESMS Admin Created!");
     }
     //Add new test cases below!!!!!!!!!
 

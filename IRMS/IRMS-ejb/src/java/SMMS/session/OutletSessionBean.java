@@ -95,7 +95,7 @@ public class OutletSessionBean {
         List OutletList = new ArrayList<OutletEntity>();
         for (Object o : q.getResultList()) {
             OutletEntity m = (OutletEntity) o;
-            if (m.getOutletMerchant().getMerchantEmail()== merchantEmail) {
+            if (m.getContract().getMerchant().getMerchantEmail()== merchantEmail) {
                 OutletList.add(m);
             }
         }

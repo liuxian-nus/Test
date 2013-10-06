@@ -32,18 +32,11 @@ public class MerchantEntity implements Serializable {
     private String merchantAddress;
     private String securityQuestion;
     private String answer;
-    @OneToMany(cascade={CascadeType.PERSIST})
-    private List<OutletEntity> merchantOutlet = new ArrayList<OutletEntity>();
-    @OneToMany(cascade={CascadeType.PERSIST})
+   
+    @OneToMany(mappedBy="merchant")
     private List<ContractEntity> merchantContract = new ArrayList<ContractEntity>();
-
-    public List<OutletEntity> getMerchantOutlet() {
-        return merchantOutlet;
-    }
-
-    public void setMerchantOutlet(List<OutletEntity> merchantOutlet) {
-        this.merchantOutlet = merchantOutlet;
-    }
+    
+    public MerchantEntity(){}
 
     public List<ContractEntity> getMerchantContract() {
         return merchantContract;
@@ -114,7 +107,7 @@ public class MerchantEntity implements Serializable {
     }
 
     public void setId(String id) {
-        this.merchantEmail = merchantEmail;
+        this.merchantEmail = id;
     }
 
     @Override

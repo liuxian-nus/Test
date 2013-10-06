@@ -38,7 +38,7 @@ public class ContracteventEntity implements Serializable {
     private double eventCommissionRate;
     private String eventStatus;
     private double eventDeposit;
-    @ManyToOne(cascade={CascadeType.PERSIST})
+    @ManyToOne(cascade={CascadeType.PERSIST}) ///not necessarily need this lah
     private ContractEntity contract = new ContractEntity();
 
     public double getEventDeposit() {
