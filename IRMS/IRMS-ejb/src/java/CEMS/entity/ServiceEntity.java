@@ -19,20 +19,64 @@ public class ServiceEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    private Long serviceId;
+    
+    private String serviceName;
+    private String serviceCategory;
+    private Integer serviceQuantity;
+    private Double serviceCost;
     public Long getId() {
-        return id;
+        return serviceId;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getServiceCategory() {
+        return serviceCategory;
+    }
+
+    public void setServiceCategory(String serviceCategory) {
+        this.serviceCategory = serviceCategory;
+    }
+
+    public Integer getServiceQuantity() {
+        return serviceQuantity;
+    }
+
+    public void setServiceQuantity(Integer serviceQuantity) {
+        this.serviceQuantity = serviceQuantity;
+    }
+
+    public Double getServiceCost() {
+        return serviceCost;
+    }
+
+    public void setServiceCost(Double serviceCost) {
+        this.serviceCost = serviceCost;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.serviceId = id;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (serviceId != null ? serviceId.hashCode() : 0);
         return hash;
     }
 
@@ -43,7 +87,7 @@ public class ServiceEntity implements Serializable {
             return false;
         }
         ServiceEntity other = (ServiceEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.serviceId == null && other.serviceId != null) || (this.serviceId != null && !this.serviceId.equals(other.serviceId))) {
             return false;
         }
         return true;
@@ -51,7 +95,7 @@ public class ServiceEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "CEMS.entity.ServiceEntity[ id=" + id + " ]";
+        return "CEMS.entity.ServiceEntity[ id=" + serviceId + " ]";
     }
     
 }
