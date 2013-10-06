@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        
+        <h:form id="form">
+            <p:panel id="show" header="Show Management" style="height:495px;">
+                <div style="margin-top:20px;">
+                    <p:growl id="msgs" showDetail="true" /> 
+                    <p:dataTable id="shows" value="#{manageShowManagedBean.getShows()}" 
+                                 var="showList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
+                                 resizableColumns="true">
+                        
+                        <p:column headerText="Show Name" style="width:70px;">
+                            <h:outputText value="#{showList.showName}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Description" style="width:300px;">
+                            <h:outputText value="#{showList.showDescription}"/>
+                        </p:column>
+
+                        <p:column style="width:100px">  
+                            <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
+
+                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                    <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
+                                    <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.editMode}" />  
+                                </p:commandButton>  
+                                <p:commandButton update=":form:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                    <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
+                                </p:commandButton>  
+                            </h:panelGrid>  
+                        </p:column>  
+
+                    </p:dataTable>  
+
+                    <p:dialog header="Edit Show" widgetVar="carDialog" resizable="false" id="carDlg"  
+                              showEffect="fade" hideEffect="explode" width="500">  
+
+                        <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
+
+
+
+                            <h:outputText value="Show Name" />  
+                            <h:panelGroup>  
+                                <h:outputText value="#{manageShowManagedBean.selectedShow.showName}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/>  
+                                <p:inputText id="showName" required="true" requiredMessage="Show Name cannot be empty" value="#{manageShowManagedBean.selectedShow.showName}" rendered="#{manageShowManagedBean.editMode}"  label="Show Name"/>  
+                                <p:message for="showName"/>
+                            </h:panelGroup>  
+
+                            <h:outputText value="Show Description" />  
+                            <h:panelGroup>  
+                                <h:outputText value="#{manageShowManagedBean.selectedShow.showDescription}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/>  
+                                <p:inputText id="showDescription" required="true" requiredMessage="Show Description cannot be empty" value="#{manageShowManagedBean.selectedShow.showDescription}" rendered="#{manageShowManagedBean.editMode}"  label="Show Description"/>  
+                                <p:message for="showDescription"/>
+                            </h:panelGroup>
+
+
+                            <f:facet name="footer">  
+                                <p:outputPanel rendered="#{manageShowManagedBean.editMode}" layout="block" style="text-align:right">  
+                                    <p:commandButton value="Save" update="show" actionListener="#{manageShowManagedBean.saveChanges}"   
+                                                     oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
+                                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
+
+                                </p:outputPanel>  
+                            </f:facet>  
+                        </h:panelGrid>  
+
+                    </p:dialog>
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
+                        <br/>
+                        Are you sure to delete?
+                        <br/><br/>
+                        <p:commandButton value="Yes" update="shows" actionListener="#{manageShowManagedBean.deleteShow}" oncomplete="confirmation.hide()">  
+                            <f:attribute name="code1" value="#{manageShowManagedBean.selectedShow.showId}" />
+                        </p:commandButton>
+                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
+                    </p:dialog>  
+                </div>
+            </p:panel>
+        </h:form>  
+        
+    </ui:define>
+
+</ui:composition>
