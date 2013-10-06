@@ -30,11 +30,10 @@
                         <p:column style="width:100px">  
                             <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
 
-                                <p:commandButton update=":form:display" oncomplete="editDish.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                <p:commandButton  oncomplete="editDish.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
                                     <f:setPropertyActionListener value="#{dishes}" target="#{manageInventoryManagedBean.thisDish}" />  
-
                                 </p:commandButton>  
-                                <p:commandButton update=":form:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                <p:commandButton  oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
                                     <f:setPropertyActionListener value="#{dishes}" target="#{manageInventoryManagedBean.thisDish}" />  
                                 </p:commandButton>  
                             </h:panelGrid>  
@@ -48,41 +47,56 @@
                 </div>
 
 
-                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="editDish"> 
-                    <h:outputText value="Please enter Guest Name: "/>
-                    <h:inputText value ="#{roomManagedBean.guestName}"/>
-                    <br/><br/>
-                    <p:commandButton value="Yes" onclick="growl" update ="form" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
-                    </p:commandButton>
-                    <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                <p:dialog width="420" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="editDish"> 
+                    <h:panelGrid columns="2" columnClasses="column" cellpadding="5"> 
+                        <h:outputText value="Dish Name: " />  
+                        <p:inplace id="dishNameInplace" editor="true">  
+                            <p:inputText value="#{manageInventoryManagedBean.thisDish.dishName}"/> 
+                                          
+                        </p:inplace>
+                        <h:outputText value="Dish Quantity: " />  
+                        <p:inplace id="dishQuantityInplace" editor="true">  
+                            <p:inputText value="#{manageInventoryManagedBean.thisDish.dishQuantity}" />  
+                                           
+                        </p:inplace>
+                         <h:outputText value="Dish Cost: " />  
+                        <p:inplace id="dishCostInplace" editor="true">  
+                            <p:inputText value="#{manageInventoryManagedBean.thisDish.dishCost}"/> 
+                                           
+                        </p:inplace>
+                       
+                        <p:commandButton value="Yes" onclick="growl" update ="form" actionListener="#{manageInventoryManagedBean.updateDish}" oncomplete="editDish.hide()">  
+                        </p:commandButton>
+                        <p:commandButton value="Cancel" onclick="editDish.hide()" type="button"/>  
+                    </h:panelGrid>
                 </p:dialog>  
 
                 <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
                     <h:outputText value="Are you sure to delete this dish ?"/>
 
                     <br/><br/>
-                    <p:commandButton value="Yes" onclick="growl" update ="form" action="#{manageInventoryManagedBean.deleteDish}" oncomplete="confirmation.hide()">  
+                    <p:commandButton value="Yes" onclick="growl" update ="form" actionListener="#{manageInventoryManagedBean.deleteDish}" oncomplete="confirmation.hide()">  
                     </p:commandButton>
                     <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
                 </p:dialog>  
 
                 <p:dialog width="420"  styleClass="actions" showEffect="explode" hideEffect="explode" header="Add new dish" widgetVar="addDish"> 
                     <p:panelGrid columns="2">  
-                         
+
                         <h:outputText value="Please enter Dish Name: "/>
-                        <h:inputText value ="#{manageInventoryManagedBean.dishName}"/>
+                        <h:inputText value ="#{manageInventoryManagedBean.thisDish.dishName}"/>
                         <h:outputText value="Please enter Dish Cost: "/>
-                        <h:inputText value ="#{manageInventoryManagedBean.dishCost}"/>
+                        <h:inputText value ="#{manageInventoryManagedBean.thisDish.dishCost}"/>
                         <h:outputText value="Please enter Dish Quantity: "/>
-                        <h:inputText value ="#{manageInventoryManagedBean.dishQuantity}"/>
-                       
-                        <p:commandButton value="Confirm" onclick="growl" update ="form" action="#{manageInventoryManagedBean.addDish}" oncomplete="confirmation.hide()">  
+                        <h:inputText value ="#{manageInventoryManagedBean.thisDish.dishQuantity}"/>
+
+                        <p:commandButton value="Confirm" onclick="growl" update ="form" actionListener="#{manageInventoryManagedBean.addDish}" oncomplete="addDish.hide()">  
                         </p:commandButton>
-                        <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>
+                        <p:commandButton value="Cancel" onclick="addDish.hide()" type="button"/>
                     </p:panelGrid>
                 </p:dialog>  
             </p:panel>
-           
+
         </h:form>  
     </ui:define>
 
