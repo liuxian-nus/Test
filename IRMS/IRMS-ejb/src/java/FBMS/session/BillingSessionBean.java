@@ -66,6 +66,17 @@ public class BillingSessionBean {
         if(ie!=null){
             System.out.println("BillingSessioBean: createReceipt: The invoice has been found! "+invoiceId);
             re = new ReceiptEntity();
+            re.setReceiptDate(date);
+            re.setInvoice(ie);
+
+            System.out.println("BillingSessioBean: createReceipt: The receipt has been set "+re.getId());
+            
+            ie.setReceipt(re);
+            System.out.println("BillingSessioBean: createReceipt: The invoice has been set "+ie.getInvoiceId());
+            
+            em.persist(re);
+            em.merge(ie);
+            System.out.println("BillingSessioBean: createReceipt: The receipt and invoice has been updated! "+re.getId()+ie.getInvoiceId());
             
             return re;
         }

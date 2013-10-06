@@ -27,7 +27,7 @@ public class ReceiptEntity implements Serializable {
     @OneToOne (cascade ={CascadeType.ALL},mappedBy="receipt")
     private InvoiceEntity invoice;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date invoiceDate;
+    private Date receiptDate;
 
     public ReceiptEntity(){}
 
@@ -47,12 +47,12 @@ public class ReceiptEntity implements Serializable {
         this.invoice = invoice;
     }
 
-    public Date getInvoiceDate() {
-        return invoiceDate;
+    public Date getReceiptDate() {
+        return receiptDate;
     }
 
-    public void setInvoiceDate(Date invoiceDate) {
-        this.invoiceDate = invoiceDate;
+    public void setReceiptDate(Date receiptDate) {
+        this.receiptDate = receiptDate;
     }
     
     
