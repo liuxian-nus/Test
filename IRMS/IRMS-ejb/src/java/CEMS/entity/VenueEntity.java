@@ -5,6 +5,8 @@
 package CEMS.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,20 +21,51 @@ public class VenueEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long venueId;
+    private String venueName;
+   
+    private int venueCapacity;
+    private List<String> venueFunction = new ArrayList<String>();
 
-    public Long getId() {
-        return id;
+    public String getVenueName() {
+        return venueName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setVenueName(String venueName) {
+        this.venueName = venueName;
+    }
+
+    public int getVenueCapacity() {
+        return venueCapacity;
+    }
+
+    public void setVenueCapacity(int venueCapacity) {
+        this.venueCapacity = venueCapacity;
+    }
+
+    public List<String> getVenueFunction() {
+        return venueFunction;
+    }
+
+    public void setVenueFunction(List<String> venueFunction) {
+        this.venueFunction = venueFunction;
+    }
+   
+    
+    
+
+    public Long getVenueId() {
+        return venueId;
+    }
+
+    public void setVenueId(Long id) {
+        this.venueId = id;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (venueId != null ? venueId.hashCode() : 0);
         return hash;
     }
 
@@ -43,7 +76,7 @@ public class VenueEntity implements Serializable {
             return false;
         }
         VenueEntity other = (VenueEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.venueId == null && other.venueId != null) || (this.venueId != null && !this.venueId.equals(other.venueId))) {
             return false;
         }
         return true;
@@ -51,7 +84,7 @@ public class VenueEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "CEMS.entity.VenueEntity[ id=" + id + " ]";
+        return "CEMS.entity.VenueEntity[ id=" + venueId + " ]";
     }
     
 }
