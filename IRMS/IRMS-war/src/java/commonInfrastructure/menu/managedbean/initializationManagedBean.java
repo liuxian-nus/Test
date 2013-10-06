@@ -877,6 +877,7 @@ public class initializationManagedBean implements Serializable {
         employee.setEmployeeName("ESMSAdmin");
         employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("G0000"));
         System.out.println("finished hashing");
+        employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
 

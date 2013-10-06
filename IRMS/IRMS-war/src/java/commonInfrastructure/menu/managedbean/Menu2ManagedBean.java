@@ -55,6 +55,7 @@ public class Menu2ManagedBean implements Serializable {
 
             for (int i = 0; i < user.getRoles().size(); i++) {
                 userType.add(user.getRoles().get(i).getRoleName());
+                System.err.println("Menu2 user role = "+user.getRoles().get(i).getRoleName());
             }
 
             //First submenu
