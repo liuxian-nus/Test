@@ -83,7 +83,6 @@ public class initializationManagedBean implements Serializable {
     private TicketSessionBean ticketSessionBean;
     @EJB
     private ShowSessionBean showSessionBean;
-    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -750,8 +749,8 @@ public class initializationManagedBean implements Serializable {
         merchant.setMerchantAddress("35 Prince George's Park");
         merchant.setSecurityQuestion("What is your mother's original surname?");
         merchant.setAnswer("Gu");
-        
-        
+
+
         MerchantEntity merchant2 = new MerchantEntity();
         merchant2.setMerchantEmail("lionetdd@gmail.com");
         merchant2.setMerchantName("liuyudi");
@@ -760,7 +759,7 @@ public class initializationManagedBean implements Serializable {
         merchant2.setMerchantAddress("30 Prince George's Park");
         merchant2.setSecurityQuestion("What is your mother's original surname?");
         merchant2.setAnswer("Gu");
-        
+
         MerchantEntity merchant3 = new MerchantEntity();
         merchant3.setMerchantEmail("chrislx.nus@gmail.com");
         merchant3.setMerchantName("liuxian");
@@ -864,9 +863,14 @@ public class initializationManagedBean implements Serializable {
 
         addMessage("Carts! Created!");
     }
-    
-        public void createESMSAdmin() {
+
+    public void createESMSAdmin() {
         System.out.println("go to create esms admin");
+        
+        role = new RoleEntity();
+        role.setRoleId(70);
+        role.setRoleName("ESMSAdmin");
+        System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
         employee.setEmployeeId("G0000"); //business assumption: maximum employee number 9999
