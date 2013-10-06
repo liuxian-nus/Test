@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+        <h:form>
+            <p:growl id="message" showDetail="true" sticky="true" />
+            <p:panel id="addShow" header="Add New Show" style="height:495px;">
+                <div style="margin-left:150px;margin-top:60px;">
+                    <h:panelGrid id="grid" columns="3">
+                        <h:outputText value="Show Name" />
+                        <h:inputText required="true" requiredMessage="Show name cannot be empty" value="#{addShowManagedBean.show.showName}" style="margin-bottom:10px;"/>
+                        <br/>
+                        <h:outputText value="Show Description" />
+                        <h:inputText required="true" requiredMessage="Show Description cannot be empty" value="#{addShowManagedBean.show.showDescription}" style="margin-bottom:10px;"/>
+                        <br/>
+                        <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShow}" update="message"/>
+
+                        <p:commandButton value="Clear" ajax="true" actionListener="#{addShowManagedBean.oneMore}" update="message"/>
+                    </h:panelGrid>
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
