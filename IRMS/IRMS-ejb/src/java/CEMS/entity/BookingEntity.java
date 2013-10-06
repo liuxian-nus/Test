@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -28,6 +29,7 @@ public class BookingEntity implements Serializable {
     private EventEntity event;
     @OneToOne(cascade={CascadeType.ALL})
     private VenueEntity venue;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date bookingDate;
 
     public Date getBookingDate() {

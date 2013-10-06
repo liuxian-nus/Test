@@ -6,6 +6,7 @@ package FBMS.session;
 
 import FBMS.entity.InvoiceEntity;
 import FBMS.entity.OrderEntity;
+import FBMS.entity.ReceiptEntity;
 import java.util.Date;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -24,6 +25,7 @@ public class BillingSessionBean {
     
     InvoiceEntity ie;
     OrderEntity oe;
+    ReceiptEntity re;
     
     
     public BillingSessionBean(){}
@@ -58,6 +60,21 @@ public class BillingSessionBean {
         }
     }
 
+    public ReceiptEntity createReceipt(Long invoiceId,Date date)
+    {
+        ie = em.find(InvoiceEntity.class, invoiceId);
+        if(ie!=null){
+            System.out.println("BillingSessioBean: createReceipt: The invoice has been found! "+invoiceId);
+            re = new ReceiptEntity();
+            
+            return re;
+        }
+        else
+        {
+            System.out.println("BillingSessioBean: createReceipt: The invoice does not exist! "+invoiceId);
+            return null;
+        }
+    }
     public void persist(Object object) {
         em.persist(object);
     }
