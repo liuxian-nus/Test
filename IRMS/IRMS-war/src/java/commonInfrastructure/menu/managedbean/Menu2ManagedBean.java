@@ -226,6 +226,27 @@ public class Menu2ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
             }
+            
+            if (userType.contains("ESMSAdmin")) {
+                System.out.println("ESMSAdmin menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("Show");
+                //submenu.setIcon("ui-icon ui-icon-contact");
+
+                item = new MenuItem();
+                item.setValue("Create new show");
+                item.setUrl("/esms/addShow.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
+                
+//                item = new MenuItem();
+//                item.setValue("Manage show");
+//                item.setUrl("/esms/manageShow.xhtml");
+//                item.setIcon("ui-icon ui-icon-pencil");
+//                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
+            }
         }
         return model;
     }
