@@ -25,6 +25,8 @@ import ERMS.session.EPasswordHashSessionBean;
 import ERMS.session.EmployeeSessionBean;
 import ERMS.session.FunctionalitySessionBean;
 import ERMS.session.RoleSessionBean;
+import ESMS.entity.ShowEntity;
+import ESMS.session.ShowSessionBean;
 import FBMS.entity.RestaurantEntity;
 import SMMS.entity.MerchantEntity;
 import SMMS.entity.OutletEntity;
@@ -79,6 +81,9 @@ public class initializationManagedBean implements Serializable {
     private FunctionalitySessionBean functionalitySessionBean;
     @EJB
     private TicketSessionBean ticketSessionBean;
+    @EJB
+    private ShowSessionBean showSessionBean;
+    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -92,6 +97,7 @@ public class initializationManagedBean implements Serializable {
     private TicketEntity ticket;
     private QuotaEntity quota;
     private MerchantEntity merchant;
+    private ShowEntity show;
 //    private MemberEntity member;
 
     @PostConstruct
@@ -858,6 +864,31 @@ public class initializationManagedBean implements Serializable {
 
         addMessage("Carts! Created!");
     }
+    
+        public void createESMSAdmin() {
+        System.out.println("go to create esms admin");
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("G0000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeName("ESMSAdmin");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("G0000"));
+        System.out.println("finished hashing");
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving ESMS Admin....");
+
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("ESMS Admin saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
+            return;
+        }
+        System.out.println("Insert Employee into database");
+
+        addMessage("ESMS Admin Created!");
+    }
     //Add new test cases below!!!!!!!!!
 
     public void initialize() {
@@ -877,6 +908,7 @@ public class initializationManagedBean implements Serializable {
         createSMMSOps();
         createMerchant();
         createPushingcart();
+        createESMSAdmin();
 
         addMessage("Initialization succeed!");
     }
