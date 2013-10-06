@@ -5,10 +5,14 @@
 package CEMS.entity;
 
 import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -19,20 +23,50 @@ public class BookingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long bookingId;
+    @ManyToOne(cascade={CascadeType.ALL})
+    private EventEntity event;
+    @OneToOne(cascade={CascadeType.ALL})
+    private VenueEntity venue;
+    private Date bookingDate;
 
+    public Date getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+    
+
+    public EventEntity getEvent() {
+        return event;
+    }
+
+    public void setEvent(EventEntity event) {
+        this.event = event;
+    }
+
+    public VenueEntity getVenue() {
+        return venue;
+    }
+
+    public void setVenue(VenueEntity venue) {
+        this.venue = venue;
+    }
+    
     public Long getId() {
-        return id;
+        return bookingId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.bookingId = id;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (bookingId != null ? bookingId.hashCode() : 0);
         return hash;
     }
 
@@ -43,7 +77,7 @@ public class BookingEntity implements Serializable {
             return false;
         }
         BookingEntity other = (BookingEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.bookingId == null && other.bookingId != null) || (this.bookingId != null && !this.bookingId.equals(other.bookingId))) {
             return false;
         }
         return true;
@@ -51,7 +85,7 @@ public class BookingEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "CEMS.entity.BookingEntity[ id=" + id + " ]";
+        return "CEMS.entity.BookingEntity[ id=" + bookingId + " ]";
     }
     
 }

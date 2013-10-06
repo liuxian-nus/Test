@@ -5,10 +5,13 @@
 package CEMS.entity;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -25,7 +28,18 @@ public class EventEntity implements Serializable {
     private String eventType;
     private String eventContact;
     private int eventScale;
+    @OneToMany(cascade={CascadeType.ALL},mappedBy="event")
+    private List<BookingEntity> bookings;
 
+    public List<BookingEntity> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<BookingEntity> bookings) {
+        this.bookings = bookings;
+    }
+
+    
     public String getEventName() {
         return eventName;
     }
