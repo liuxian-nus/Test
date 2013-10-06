@@ -185,7 +185,7 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/fbms/addDish.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
-                
+
                 model.addSubmenu(submenu);
             }
 
@@ -226,8 +226,8 @@ public class Menu2ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
             }
-            
-              if (userType.contains("SMMSAdmin")) {
+
+            if (userType.contains("SMMSAdmin")) {
                 System.out.println("SMMSAdmin menu bar");
                 submenu = new Submenu();
                 submenu.setLabel("Shopping Mall");
@@ -250,19 +250,37 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/smms/contractManagement.xhtml");
                 item.setIcon("ui-icon ui-icon-document");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Manage Contract Payments");
                 item.setUrl("/smms/paymentManagement.xhtml");
                 item.setIcon("ui-icon ui-icon-lightbulb");
                 submenu.getChildren().add(item);
-                
+
                 model.addSubmenu(submenu);
             }
             
+            if (userType.contains("ESMSAdmin")) {
+                System.out.println("ESMSAdmin menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("Show");
+                
+                item = new MenuItem();
+                item.setValue("Create new show");
+                item.setUrl("/esms/addShow.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("Manage show");
+                item.setUrl("/esms/manageShow.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
+                submenu.getChildren().add(item);
+                
+                model.addSubmenu(submenu);
+            }
+
         }
         return model;
     }
-    
-    
 }
