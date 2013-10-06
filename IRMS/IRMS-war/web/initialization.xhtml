@@ -12,58 +12,61 @@
         <h:form id="form"> 
             <p:growl id="messages"/> 
             <p:commandButton value="Initialize all" actionListener ="#{initializationManagedBean.initialize}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create Super Admin" actionListener="#{initializationManagedBean.createSuperAdmin}" update="messages" icon="ui-icon-disk"/>
+           
+            <br/>
+            <p:commandButton value="Create ESMS Admin" actionListener="#{initializationManagedBean.createESMSAdmin}" update="messages" icon="ui-icon-disk"/>
 
             <br/>
             <p:commandButton value="Create System User" actionListener="#{initializationManagedBean.createACMSAdmin}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create Functionalities" actionListener="#{initializationManagedBean.createFunctionalities}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create Reservation" actionListener="#{initializationManagedBean.createReservation}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create FBMS Admin" actionListener="#{initializationManagedBean.createFBMSAdmin}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create ATMS Admin" actionListener="#{initializationManagedBean.createATMSAdmin}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create CRMS Admin" actionListener="#{initializationManagedBean.createCRMSAdmin}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create Dayanqi" actionListener="#{initializationManagedBean.createMember}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create Rooms" actionListener="#{initializationManagedBean.createRoom}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Initiate Overbooking" actionListener="#{initializationManagedBean.createOverbooking}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create Room Service" actionListener="#{initializationManagedBean.createRmService}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create Tickets" actionListener="#{initializationManagedBean.createTickets}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create merchants" actionListener="#{initializationManagedBean.createMerchant()}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create outlets" actionListener="#{initializationManagedBean.createOutlet()}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create pushingcart" actionListener="#{initializationManagedBean.createPushingcart()}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create SMMSAdmin" actionListener="#{initializationManagedBean.createSMMSAdmin()}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/>
             <p:commandButton value="Create SMMSOps" actionListener="#{initializationManagedBean.createSMMSOps()}" update="messages" icon="ui-icon-disk"/>
-            
+
             <br/><br/>
             <a href="/IRMS-war/index.xhtml" style="margin-left:10px;"> 
                 Index Page
