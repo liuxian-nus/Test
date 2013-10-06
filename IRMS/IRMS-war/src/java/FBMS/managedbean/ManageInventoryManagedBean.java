@@ -17,6 +17,8 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -24,19 +26,33 @@ import javax.faces.event.ActionEvent;
  *
  * @author lionetdd
  */
-@Named(value = "manageInventoryManagedBean")
-@Dependent
+@ManagedBean
+@ViewScoped
 public class ManageInventoryManagedBean implements Serializable {
 
     @EJB
     private InventorySessionBean inventorySessionBean;
     private List<DishEntity> allDish = new ArrayList<DishEntity>();
     private DishEntity thisDish = new DishEntity();
-    private Long dishId;
-    private String dishName;
-    private Integer dishQuantity;
-    private Double dishCost;
+//    private Long dishId;
+//    private String dishName;
+//    private Integer dishQuantity;
+//    private Double dishCost;
+//    private DishEntity dish = new DishEntity();
 
+    public DishEntity getThisDish() {
+        System.out.println("This is the dish id"+thisDish.getDishId());
+        System.out.println("This is the dish name"+thisDish.getDishName());
+        System.out.println("This is the dish quantity"+thisDish.getDishQuantity());
+        System.out.println("This is the dish cost"+thisDish.getDishCost());
+        return thisDish;
+    }
+
+    public void setThisDish(DishEntity thisDish) {
+        this.thisDish = thisDish;
+    }
+
+    
     public InventorySessionBean getInventorySessionBean() {
         return inventorySessionBean;
     }
@@ -53,37 +69,38 @@ public class ManageInventoryManagedBean implements Serializable {
         this.allDish = allDish;
     }
 
-    public Long getDishId() {
-        return dishId;
-    }
-
-    public void setDishId(Long dishId) {
-        this.dishId = dishId;
-    }
-
-    public String getDishName() {
-        return dishName;
-    }
-
-    public void setDishName(String dishName) {
-        this.dishName = dishName;
-    }
-
-    public Integer getDishQuantity() {
-        return dishQuantity;
-    }
-
-    public void setDishQuantity(Integer dishQuantity) {
-        this.dishQuantity = dishQuantity;
-    }
-
-    public Double getDishCost() {
-        return dishCost;
-    }
-
-    public void setDishCost(Double dishCost) {
-        this.dishCost = dishCost;
-    }
+//    public Long getDishId() {
+//        return dishId;
+//    }
+//
+//    public void setDishId(Long dishId) {
+//        this.dishId = dishId;
+//    }
+//
+//    public String getDishName() {
+//        System.out.println("here get dish name"+dishName);
+//        return dishName;
+//    }
+//
+//    public void setDishName(String dishName) {
+//        this.dishName = dishName;
+//    }
+//
+//    public Integer getDishQuantity() {
+//        return dishQuantity;
+//    }
+//
+//    public void setDishQuantity(Integer dishQuantity) {
+//        this.dishQuantity = dishQuantity;
+//    }
+//
+//    public Double getDishCost() {
+//        return dishCost;
+//    }
+//
+//    public void setDishCost(Double dishCost) {
+//        this.dishCost = dishCost;
+//    }
 
     /**
      *
@@ -98,19 +115,40 @@ public class ManageInventoryManagedBean implements Serializable {
     }
 
     public void addDish(ActionEvent event) throws IOException, ExistException {
-
-        System.out.println("we are in add dish");
+       
+      //  thisDish = new DishEntity();
+        System.out.println("we are in add dish"+thisDish.getDishId());
 
         try {
-            inventorySessionBean.addDish(dishName, dishQuantity, dishCost);
+            inventorySessionBean.addDish(thisDish);
+            System.out.println("After addDish"+thisDish.getDishId());
+            
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when add dish", ""));
             return;
         }
+        thisDish = new DishEntity();
+    }
+    
+       public void updateDish(ActionEvent event) throws IOException, ExistException {
+       
+        //thisDish = new DishEntity();
+        System.out.println("we are in update dish"+thisDish.getDishId());
+
+        try {
+            inventorySessionBean.updateDish(thisDish);
+            System.out.println("After updateDish"+thisDish.getDishId());
+            
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when add dish", ""));
+            return;
+        }
+        thisDish = new DishEntity();
     }
 
     public void deleteDish(ActionEvent event) throws IOException, ExistException {
 
+        //thisDish = new DishEntity();
         System.out.println("we are in delete dish");
 
         try {
@@ -125,5 +163,6 @@ public class ManageInventoryManagedBean implements Serializable {
      * Creates a new instance of ManageInventoryManagedBean
      */
     public ManageInventoryManagedBean() {
+//        thisDish = new DishEntity();
     }
 }
