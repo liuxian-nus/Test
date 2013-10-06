@@ -4,6 +4,7 @@
  */
 package FBMS.session;
 
+import FBMS.entity.AccountEntity;
 import FBMS.entity.InvoiceEntity;
 import FBMS.entity.OrderEntity;
 import FBMS.entity.ReceiptEntity;
@@ -26,6 +27,7 @@ public class BillingSessionBean {
     InvoiceEntity ie;
     OrderEntity oe;
     ReceiptEntity re;
+    AccountEntity ae;
     
     
     public BillingSessionBean(){}
@@ -85,6 +87,64 @@ public class BillingSessionBean {
             System.out.println("BillingSessioBean: createReceipt: The invoice does not exist! "+invoiceId);
             return null;
         }
+    }
+    
+    public Double postPayment (double amount,Long accountId)
+    {
+        ae = em.find(AccountEntity.class, accountId);
+        if(ae!=null)
+        {
+            System.out.println("BillingSessionBean:postPayment: the account has been found! "+ae.getId());
+            Double currentAmount = ae.getAccountAmount()-amount;
+            ae.setAccountAmount(currentAmount);
+            em.merge(ae);
+            System.out.println("BillingSessionBean:postPayment: the account has been reset! "
+                    +ae.getId()+ae.getAccountName()+"by "+ae.getAccountAmount());
+            return currentAmount;
+        }
+        else
+        {
+            System.out.println("BillingSessionBean:postPayment: the account does not exist! "+ae.getId());
+            return null;
+        }
+    }
+    
+    public Double receivePayment(double amount, Long accountId)
+    {
+      ae = em.find(AccountEntity.class, accountId);
+        if(ae!=null)
+        {
+            System.out.println("BillingSessionBean:receivePayment: the account has been found! "+ae.getId());
+            Double currentAmount = ae.getAccountAmount()+amount;
+            ae.setAccountAmount(currentAmount);
+            em.merge(ae);
+            System.out.println("BillingSessionBean:receivePayment: the account has been reset! "
+                    +ae.getId()+ae.getAccountName()+"by "+ae.getAccountAmount());
+            return currentAmount;
+        }
+        else
+        {
+            System.out.println("BillingSessionBean:receivePayment: the account does not exist! "+ae.getId());
+            return null;
+        }  
+    }
+    
+    public boolean createAccount(String accountName,Double accountAmount)
+    {
+        ae = new AccountEntity();
+        ae.setAccountAmount(accountAmount);
+        ae.setAccountName(accountName);
+        em.persist(ae);
+        
+        System.out.println("BillingSessionBean:createAccount: the account has been created! "+ae.getId());
+        return true;
+        
+    }
+    
+    public AccountEntity viewAccount(Long accountId)
+    {
+        ae = em.find(AccountEntity.class, accountId);
+        return ae;
     }
     public void persist(Object object) {
         em.persist(object);
