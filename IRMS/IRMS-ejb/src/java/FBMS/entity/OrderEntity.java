@@ -35,7 +35,7 @@ public final class OrderEntity implements Serializable {
     //private Set <DishEntity> Dishes;
     @OneToOne (cascade = {CascadeType.DETACH})
     private MenuEntity menu;
-    private String status="In Process";
+    private String status="Not Confirmed";
     @ManyToOne (cascade = {CascadeType.ALL})
     private MemberEntity member;
     @OneToOne (cascade = {CascadeType.ALL})

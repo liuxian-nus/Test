@@ -144,7 +144,18 @@ public class BillingSessionBean {
     public AccountEntity viewAccount(Long accountId)
     {
         ae = em.find(AccountEntity.class, accountId);
-        return ae;
+        if(ae!=null)
+        {
+            System.out.println("BillingSessionBean:viewAccount: the account has been found! "
+                    +ae.getAccountName()+ae.getId());
+            return ae;
+        }
+        else
+        {
+            System.out.println("BillingSessionBean:viewAccount: the account does not exist! "
+                    +accountId);
+            return null;
+        }
     }
     public void persist(Object object) {
         em.persist(object);
