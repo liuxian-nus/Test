@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="form"> 
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:panel id="search" header="Search Result" style="height:495px;">
+                <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
+                    <p:growl id="msgs" showDetail="true" /> 
+                    <p:dataTable id="rooms" value="#{logBookManagedBean.getLogList()}" var="logs" paginator="true" rows="10">
+                        <p:ajax event="rowToggle" listener="#{logBookManagedBean.onRowToggle}" update=":form:growl" /> 
+                        <f:facet name="header">  
+                            Employee Shift Log Book for Hotel  
+                        </f:facet>  
+
+                        <p:column style="width:2%">  
+                            <p:rowToggler />  
+                        </p:column> 
+
+                        <p:column headerText="Shift: " style="width:20%">
+                            <h:outputText rendered="#{logs.logShift==1}" value="Morning"/>
+                            <h:outputText rendered="#{logs.logShift==2}" value="Afternoon" />
+                            <h:outputText rendered="#{logs.logShift==3}" value="Night" />
+                        </p:column>
+                        <p:column  headerText="Date: " style="width:20%">
+                            <h:outputText value="#{logs.publishDate}"/>
+                        </p:column>
+                        <p:column  headerText="Employee Id: " style="width:10%">
+                            <h:outputText value="#{logs.logEmployee.employeeId}"/>
+                        </p:column>
+                        <p:column  headerText="Employee Name: " style="width:20%">
+                            <h:outputText value="#{logs.logEmployee.employeeName}"/>
+                        </p:column>
+                        <p:column  headerText="Title: " style="width:28%">
+                            <h:outputText value="#{logs.logTitle}"/>
+                        </p:column>
+
+                        <p:rowExpansion>  
+                            <h:panelGrid id="display" columns="2" cellpadding="4" style="width:300px;"  
+                                         styleClass=" ui-widget-content grid">  
+
+                                <f:facet name="header">  
+                                    #{logs.logTitle}
+                                </f:facet>  
+
+                                <h:outputText value="Content:" />  
+                                <h:outputText id="content" value="#{logs.logText}" />  
+
+                                <h:outputText value="Remark:" />  
+                                <h:outputText id="remark" value="#{logs.remark}" />  
+
+                                <h:outputText value="Employee Name:" />  
+                                <h:outputText value="#{logs.logEmployee.employeeName}"/>  
+
+                                <h:outputText value="Date:" />  
+                                <h:outputText value="#{logs.publishDate}"/>  
+                            </h:panelGrid>  
+                        </p:rowExpansion>  
+                    </p:dataTable>
+                </div>
+
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                    <h:outputText value="Please enter your shift: "/>
+                    <h:inputText value ="#{logs.logShift}"/>
+                    <h:outputText value="Please enter your Id: "/>
+                    <h:inputText value ="#{logs.logEmployee.employeeId}"/>
+                    <h:outputText value="Please enter title: "/>
+                    <h:inputText value ="#{logs.logTitle}"/>
+                    <h:outputText value="Please enter content: "/>
+                    <h:inputText value ="#{logs.logText}"/>
+                    <h:outputText value="Please enter remark: "/>
+                    <h:inputText value ="#{logs.remark}"/>
+                    <br/><br/>
+                    <p:commandButton value="Yes" onclick="growl" update ="form" action="#{logBookManagedBean.addLog}" oncomplete="confirmation.hide()">  
+                    </p:commandButton>
+                    <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                </p:dialog>  
+            </p:panel>
+            <!--    </h:form>
+                <h:form> -->
+
+        </h:form>  
+    </ui:define>
+
+</ui:composition>
