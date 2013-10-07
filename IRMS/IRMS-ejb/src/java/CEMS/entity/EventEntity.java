@@ -32,15 +32,15 @@ public class EventEntity implements Serializable {
     private int eventScale;
     @OneToMany(cascade={CascadeType.ALL},mappedBy="event")
     private List<BookingEntity> bookings;
+    private String status = "in progress: booking";
 
-    
-    
+
     private String title;
     private String name;
     private String email;
     private String address;
-    private String countryOfResidence;
-    private String preferLanguage;
+    private String countryOfResidence = "Singapore";
+    private String preferLanguage = "English";
     private String eventIndustry;
     private String notes;
     private Double estimatedBudget;
@@ -52,6 +52,14 @@ public class EventEntity implements Serializable {
     
     public EventEntity(){}
     
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
     public String getTitle() {
         return title;
     }
