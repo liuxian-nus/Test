@@ -4,6 +4,7 @@
  */
 package ERMS.entity;
 
+import ACMS.entity.LogBookEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -40,6 +42,8 @@ public class EmployeeEntity implements Serializable {
     
     @ManyToMany(targetEntity = RoleEntity.class, cascade = {CascadeType.ALL})
     private List<RoleEntity> roles = new ArrayList<RoleEntity>();
+    @OneToMany(cascade={CascadeType.ALL}, mappedBy = "logEmployee")
+    private List<LogBookEntity> logs = new ArrayList<LogBookEntity>();
 
     public List<RoleEntity> getRoles() {
         return roles;
@@ -161,6 +165,14 @@ public class EmployeeEntity implements Serializable {
 
     public void setEmployeeEmail(String employeeEmail) {
         this.employeeEmail = employeeEmail;
+    }
+
+    public List<LogBookEntity> getLogs() {
+        return logs;
+    }
+
+    public void setLogs(List<LogBookEntity> logs) {
+        this.logs = logs;
     }
 
     

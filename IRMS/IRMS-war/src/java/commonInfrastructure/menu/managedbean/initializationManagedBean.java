@@ -4,10 +4,12 @@
  */
 package commonInfrastructure.menu.managedbean;
 
+import ACMS.entity.LogBookEntity;
 import ACMS.entity.OverbookingQuotaEntity;
 import ACMS.entity.PriceEntity;
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomServiceEntity;
+import ACMS.session.LogBookSessionBean;
 import ACMS.session.OverbookingSessionBean;
 import ACMS.session.PriceSessionBean;
 import ACMS.session.ReservationSessionBean;
@@ -52,6 +54,8 @@ import javax.faces.context.FacesContext;
 public class initializationManagedBean implements Serializable {
 
     @EJB
+    private LogBookSessionBean logBookSessionBean;
+    @EJB
     private OutletSessionBean outletSessionBean;
     @EJB
     private MerchantSessionBean merchantSessionBean;
@@ -59,8 +63,6 @@ public class initializationManagedBean implements Serializable {
     private PushingcartSessionBean pushingcartSessionBean;
     @EJB
     private PriceSessionBean priceSessionBean;
-    //    @PersistenceContext
-//    private EntityManager em;
     @EJB
     private OverbookingSessionBean overbookingSessionBean;
     @EJB
@@ -83,7 +85,6 @@ public class initializationManagedBean implements Serializable {
     private TicketSessionBean ticketSessionBean;
     @EJB
     private ShowSessionBean showSessionBean;
-    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -98,6 +99,7 @@ public class initializationManagedBean implements Serializable {
     private QuotaEntity quota;
     private MerchantEntity merchant;
     private ShowEntity show;
+    private LogBookEntity log;
 //    private MemberEntity member;
 
     @PostConstruct
@@ -750,8 +752,8 @@ public class initializationManagedBean implements Serializable {
         merchant.setMerchantAddress("35 Prince George's Park");
         merchant.setSecurityQuestion("What is your mother's original surname?");
         merchant.setAnswer("Gu");
-        
-        
+
+
         MerchantEntity merchant2 = new MerchantEntity();
         merchant2.setMerchantEmail("lionetdd@gmail.com");
         merchant2.setMerchantName("liuyudi");
@@ -760,7 +762,7 @@ public class initializationManagedBean implements Serializable {
         merchant2.setMerchantAddress("30 Prince George's Park");
         merchant2.setSecurityQuestion("What is your mother's original surname?");
         merchant2.setAnswer("Gu");
-        
+
         MerchantEntity merchant3 = new MerchantEntity();
         merchant3.setMerchantEmail("chrislx.nus@gmail.com");
         merchant3.setMerchantName("liuxian");
@@ -864,7 +866,7 @@ public class initializationManagedBean implements Serializable {
 
         addMessage("Carts! Created!");
     }
-    
+
     public void createESMSAdmin() {
         System.out.println("go to create ESMSAdmin");
 
@@ -894,6 +896,32 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
 
         addMessage("ESMS Admin Created!");
+    }
+
+    public void createLogBook() {
+        System.out.println("go to create log book");
+        Date today = new Date(13, 11, 8);
+        
+        log = new LogBookEntity();
+        log.setLogShift(1);
+        log.setPublishDate(today);
+        log.setLogTitle("HaHa");
+        log.setLogText("HaHa,我们有一个神叫包神");
+        log.setRemark("test");
+        log.setLogEmployee(employee);
+        try {
+            System.out.println("Saving Log....");
+
+            logBookSessionBean.addLog(log);
+            System.out.println("new log Saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding log", ""));
+            return;
+        }
+        System.out.println("Insert Log into database");
+
+        addMessage("New Log Saved!");
+
     }
     //Add new test cases below!!!!!!!!!
 
