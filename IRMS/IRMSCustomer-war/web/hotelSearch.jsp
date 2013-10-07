@@ -103,6 +103,7 @@
 
                     </div>
                 </div>
+                <br>
                 <div class="row">
                     <div class="large-5 columns">
                         <div class="panel">
@@ -125,6 +126,7 @@
 
                     </div>
                 </div>
+                <br>
                 <div class="row">
                     <div class="large-5 columns">
                         <div class="panel">
