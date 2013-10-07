@@ -29,6 +29,7 @@ import ERMS.session.FunctionalitySessionBean;
 import ERMS.session.RoleSessionBean;
 import ESMS.entity.ShowEntity;
 import ESMS.session.ShowSessionBean;
+import Exception.ExistException;
 import FBMS.entity.RestaurantEntity;
 import SMMS.entity.MerchantEntity;
 import SMMS.entity.OutletEntity;
@@ -898,20 +899,20 @@ public class initializationManagedBean implements Serializable {
         addMessage("ESMS Admin Created!");
     }
 
-    public void createLogBook() {
+    public void createLogBook() throws ExistException {
         System.out.println("go to create log book");
         Date today = new Date(13, 11, 8);
         
         log = new LogBookEntity();
+        EmployeeEntity thisEmployee = employeeSessionBean.getEmployeeById("B0000");
         log.setLogShift(1);
         log.setPublishDate(today);
         log.setLogTitle("HaHa");
-        log.setLogText("HaHa,我们有一个神叫包神");
+        log.setLogText("HaHa,我们有一个神叫包神，好吧我必须让这个message长一点，可是我又没什么好说的，那我要怎么才能让它长一点呢？本来就是一个test case，为什么非要让它那么长呢？累觉不爱了，好吧就这样了");
         log.setRemark("test");
-        log.setLogEmployee(employee);
+        log.setLogEmployee(thisEmployee);
         try {
             System.out.println("Saving Log....");
-
             logBookSessionBean.addLog(log);
             System.out.println("new log Saved.....");
         } catch (Exception e) {
