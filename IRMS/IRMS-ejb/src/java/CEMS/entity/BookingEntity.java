@@ -6,12 +6,14 @@ package CEMS.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -31,7 +33,41 @@ public class BookingEntity implements Serializable {
     private VenueEntity venue;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date bookingDate;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date endingDate;
+    @OneToMany(cascade={CascadeType.ALL})
+    private List<ServiceEntity> services;
+    
+    private Integer numberNightRoom;
 
+    public Integer getNumberNightRoom() {
+        return numberNightRoom;
+    }
+
+    public void setNumberNightRoom(Integer numberNightRoom) {
+        this.numberNightRoom = numberNightRoom;
+    }
+
+    public List<ServiceEntity> getServices() {
+        return services;
+    }
+
+    public void setServices(List<ServiceEntity> services) {
+        this.services = services;
+    }
+
+    public Date getEndingDate() {
+        return endingDate;
+    }
+
+    public void setEndingDate(Date endingDate) {
+        this.endingDate = endingDate;
+    }
+    
+    
+
+    public BookingEntity(){}
+    
     public Date getBookingDate() {
         return bookingDate;
     }

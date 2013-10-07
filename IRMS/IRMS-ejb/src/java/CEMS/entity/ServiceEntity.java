@@ -25,6 +25,9 @@ public class ServiceEntity implements Serializable {
     private String serviceCategory;
     private Integer serviceQuantity;
     private Double serviceCost;
+    
+    public ServiceEntity(){}
+    
     public Long getId() {
         return serviceId;
     }
