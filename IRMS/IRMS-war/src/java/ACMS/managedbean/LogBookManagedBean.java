@@ -6,6 +6,7 @@ package ACMS.managedbean;
 
 import ACMS.entity.LogBookEntity;
 import ACMS.session.LogBookSessionBean;
+import ERMS.entity.MessageEntity;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,6 +61,16 @@ public class LogBookManagedBean {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 //        Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
 //        String getGuestName = (String) request.getSession().getAttribute("guestName");
+    }
+    
+     public void deleteLog(ActionEvent event) throws ExistException{
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        Long id=(Long)event.getComponent().getAttributes().get("deleteMsg");
+        
+        System.out.println("Delete Message number "+ id.toString());
+        
+        logBookSessionBean.removeLog(id);
+        thisLog = new LogBookEntity();
     }
     
     public void onRowToggle(ToggleEvent event) {  
