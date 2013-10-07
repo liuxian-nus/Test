@@ -15,6 +15,7 @@ import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -126,6 +127,20 @@ public class EventSessionBean {
         {
             System.out.println("EventSessionBean:venueBooking: event does not exist! "+eventId);
             return null;
+        }
+    }
+    
+    public boolean checkVenueAvailability(Long venueId,Date startDate,Date endDate,Integer numberPeople)
+    {
+        ve = em.find(VenueEntity.class, venueId);
+        if(ve!=null){
+            Query q = em.createQuery("");
+            return true;
+        }
+        else
+        {
+            System.out.println("EventSessionBean:checkVenueAvailability: The venue does not exist! "+venueId);
+            return false;
         }
     }
    
