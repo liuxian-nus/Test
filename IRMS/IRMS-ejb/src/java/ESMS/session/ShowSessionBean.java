@@ -5,11 +5,10 @@
 package ESMS.session;
 
 import ESMS.entity.ShowEntity;
-import Exception.ExistException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -48,14 +47,8 @@ public class ShowSessionBean {
         return true;
     }
     
-    public List<ShowEntity> getAllShows() throws ExistException{
+    public List<ShowEntity> getAllShows() throws NoResultException{
         Query q = em.createQuery("SELECT m FROM ShowEntity m");
-        List showList = new ArrayList<ShowEntity>();
-         for (Object o: q.getResultList()) { 
-            ShowEntity m = (ShowEntity) o; 
-            showList.add(m); 
-        } 
-        if(showList.isEmpty())throw new ExistException("getAllShows: show database is empty!");
-        return showList;  
+        return q.getResultList();
     } 
 }
