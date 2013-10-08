@@ -213,4 +213,9 @@ public class EventSessionBean {
         
     }
 
+    public List <EventEntity> listEvents()
+    {
+        
+    }
+
 
