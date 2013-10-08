@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form id="addAttraction">
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:panel id="addAttraction" header="Add Ticket" style="height:440px;">
+                <h:panelGrid columns="2" cellpadding="10">  
+                    <h:outputText value="Attraction ID*: "/>
+                    <h:inputText id="attrId" required ="true" requiredMessage="Attraction ID cannot be empty" value="#{addAttractionManagedBean.attr.id}"/>
+                    <h:outputText value="Attraction Name*: "/>
+                    <h:inputText id="attrName" required ="true" requiredMessage="Attraction name cannot be empty" value="#{addAttractionManagedBean.attr.attrName}"/>
+                    <h:outputText value="Maximum Daily Quota*: "/>
+                    <h:inputText id="quota" required ="true" requiredMessage="Quota cannot be empty" value="#{addAttractionManagedBean.attr.quota.maxQuota}"/>
+                </h:panelGrid>
+                <p:commandButton value ="Save" ajax ="true" actionListener = "#{addAttractionManagedBean.saveNewAttraction}" update="growl" icon="ui-icon-check"/>
+                <p:commandButton value="Add more ticket" actionListener="#{addAttractionManagedBean.oneMore}" />
+            </p:panel>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
