@@ -65,7 +65,7 @@ public class irmsServlet extends HttpServlet {
             String page = request.getPathInfo();
             page = page.substring(1);
             System.out.println("page:" + page);
-            
+
 
 
             if ("restaurantSearch".equals(page)) {
@@ -152,11 +152,10 @@ public class irmsServlet extends HttpServlet {
             } else if ("resetMemberPassword".equals(page)) {
                 System.out.println("***irmsServlet resetMemberPassword page***");
                 request.getRequestDispatcher("/CRMServlet/resetMemberPassword").forward(request, response);
-            }else if ("resetMemberPasswordConfirmation".equals(page)) {
+            } else if ("resetMemberPasswordConfirmation".equals(page)) {
                 System.out.println("***irmsServlet resetMemberPasswordConfirmation page***");
                 request.getRequestDispatcher("/CRMServlet/resetMemberPasswordConfirmation").forward(request, response);
-            }            
-            else if ("memberRegister".equals(page)) {
+            } else if ("memberRegister".equals(page)) {
                 System.out.println("***irmsServlet memberRegister page***");
                 request.getRequestDispatcher("/CRMServlet/memberRegister").forward(request, response);
 
@@ -174,12 +173,13 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/CRMServlet/accessDenied").forward(request, response);
             } else if ("logOut".equals(page)) {
                 request.getRequestDispatcher("/CRMServlet/logOut").forward(request, response);
-            } else if ("hotelBooking".equals(page)) {
-                request.getRequestDispatcher("/ACMSServlet/hotelBooking").forward(request, response);
-            }else if ("event".equals(page)) {
+            } else if ("hotelSearch".equals(page)) {
+                request.getRequestDispatcher("/ACMSServlet/hotelSearch").forward(request, response);
+            } else if ("hotelBook".equals(page)) {
+                request.getRequestDispatcher("/ACMSServlet/hotelBook").forward(request, response);
+            } else if ("event".equals(page)) {
                 request.getRequestDispatcher("/CEMSServlet/event").forward(request, response);
-            }
-            else {
+            } else {
                 System.out.println("other page");
 
                 //Below is testing

@@ -56,11 +56,15 @@ public class ACMSServlet extends HttpServlet {
             System.out.println("ACMSServlet page: " + page);
 
 
-            if ("hotelBooking".equals(page)) {
-                System.out.println("***hotel Booking***");
+            if ("hotelSearch".equals(page)) {
+                System.out.println("***hotel Search***");
 
-                request.getRequestDispatcher("/hotelBooking.jsp").forward(request, response);
-            } else {
+                request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
+            }else if ("hotelBook".equals(page)) {
+                System.out.println("***hotel Book***");
+
+                request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
+            }else {
                 System.out.println("other page");
             }
         } catch (Exception e) {
