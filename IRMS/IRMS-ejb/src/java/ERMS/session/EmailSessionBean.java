@@ -4,6 +4,7 @@
  */
 package ERMS.session;
 
+import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
 import java.util.Properties;
 import javax.ejb.Stateless;
@@ -128,6 +129,50 @@ public class EmailSessionBean {
                     + "\nYou have a total bill of " + totalBill
                     + "\nPlease clear your bill in 10 days."
                     + "\nThank you. " 
+                    + "\n\nIn case of any issues and inqueries, you may contact our corporate service manager "
+                    + "\n@ 65-8180 1380"
+                    + "\n\n\nBest Regards,\nThe Coral Island Management Team");
+                    
+            Transport.send(message);
+
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public void emailReservationConfirmation(String toEmailAdress, ReservationEntity newReservation) {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmailAdress));
+            message.setSubject("Thank you for your reservation");
+            message.setText("Greeting from Coral Island Resort!"
+                    +"\nYou have successfully make a reservation in Coral Island Resort Group. Thank you for your new reservation!"
+                    + "\nHere is your Reservation Id:" + newReservation.getReservationId() 
+                    + "\nBelow is your reservation detail:"
+                    + "\nName: " + newReservation.getRcName()  
+                    + "\nEmail Address: " + newReservation.getRcEmail()
+                    +"\nCheckIn Date: " + newReservation.getRcCheckInDate()
+                    +"\nCheckOut Date: " + newReservation.getRcCheckOutDate()
+                    +"\nRoom Count " + newReservation.getReservationRoomCount()
+                    +"\nRoom Type" + newReservation.getReservationRoomType()
                     + "\n\nIn case of any issues and inqueries, you may contact our corporate service manager "
                     + "\n@ 65-8180 1380"
                     + "\n\n\nBest Regards,\nThe Coral Island Management Team");

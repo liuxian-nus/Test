@@ -65,9 +65,9 @@ public class LogBookManagedBean {
     
      public void deleteLog(ActionEvent event) throws ExistException{
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        Long id=(Long)event.getComponent().getAttributes().get("deleteMsg");
+        Long id=(Long)event.getComponent().getAttributes().get("deleteLog");
         
-        System.out.println("Delete Message number "+ id.toString());
+        System.out.println("Delete Log number "+ id.toString());
         
         logBookSessionBean.removeLog(id);
         thisLog = new LogBookEntity();

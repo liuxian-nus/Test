@@ -27,19 +27,30 @@
                             <h:outputText rendered="#{logs.logShift==2}" value="Afternoon" />
                             <h:outputText rendered="#{logs.logShift==3}" value="Night" />
                         </p:column>
+
                         <p:column  headerText="Date: " style="width:20%">
                             <h:outputText value="#{logs.publishDate}">
                                 <f:convertDateTime pattern="dd-MM-yyyy" />
                             </h:outputText>
                         </p:column>
+
                         <p:column  headerText="Employee Id: " style="width:10%">
                             <h:outputText value="#{logs.logEmployee.employeeId}"/>
                         </p:column>
+
                         <p:column  headerText="Employee Name: " style="width:20%">
                             <h:outputText value="#{logs.logEmployee.employeeName}"/>
                         </p:column>
+
                         <p:column  headerText="Title: " style="width:28%">
                             <h:outputText value="#{logs.logTitle}"/>
+                        </p:column>
+
+                        <p:column style="width:70px;">
+                            <f:facet name="header">Action</f:facet>
+                            <p:commandButton oncomplete="delete.show()" ajax="true"  image="ui-icon ui-icon-close" title="Delete" value ="Delete" >
+                                <f:setPropertyActionListener value="#{logs}" target="#{logBookManagedBean.thisLog}" />  
+                            </p:commandButton>
                         </p:column>
 
                         <p:rowExpansion>  
@@ -51,24 +62,28 @@
                                 </f:facet>  
 
                                 <h:outputText value="Content:" />  
-                                <h:outputText id="content" value="#{logs.logText}" />  
+                                <h:outputText id="content" value="#{logs.logText}" style="width:100px;"   />  
 
                                 <h:outputText value="Remark:" />  
-                                <h:outputText id="remark" value="#{logs.remark}" />  
+                                <h:outputText id="remark" value="#{logs.remark}"  style="width:100px;"  />  
 
                                 <h:outputText value="Employee Name:" />  
-                                <h:outputText value="#{logs.logEmployee.employeeName}"/>  
+                                <h:outputText value="#{logs.logEmployee.employeeName}" style="width:100px;"  />  
 
                                 <h:outputText value="Date:" />  
                                 <h:outputText value="#{logs.publishDate}">  
                                     <f:convertDateTime pattern="dd-MM-yyyy" />
-                                </h:outputText>
+                                </h:outputText>                                
                             </h:panelGrid>  
-                        </p:rowExpansion>  
+                        </p:rowExpansion>                        
                     </p:dataTable>
+                    <p:commandButton oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Add Log" title="Add Log">  
+   <!--                     <f:setPropertyActionListener target="#{logBookManagedBean.thisLog}" value="#{logs}"/>  -->
+                    </p:commandButton> 
                 </div>
 
-                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+
+                <p:dialog width="250" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
                     <h:outputText value="Please enter your shift: "/>
                     <h:inputText value ="#{logs.logShift}"/>
                     <h:outputText value="Please enter your Id: "/>
@@ -80,10 +95,18 @@
                     <h:outputText value="Please enter remark: "/>
                     <h:inputText value ="#{logs.remark}"/>
                     <br/><br/>
-                    <p:commandButton value="Yes" update ="form" action="#{logBookManagedBean.addLog}" oncomplete="confirmation.hide()">  
+                    <p:commandButton value="Yes" update ="form" actionListener="#{logBookManagedBean.addLog}" oncomplete="confirmation.hide()">  
                     </p:commandButton>
                     <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
-                </p:dialog>  
+                </p:dialog> 
+<!--INFO: image attribute is deprecated to define an icon, use icon attribute instead.-->
+
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Delete Message" widgetVar="delete">  
+                    <p:commandButton value="Delete" update="logs" actionListener="#{logBookManagedBean.deleteLog}" oncomplete="delete.hide()">  
+                        <f:attribute name="deleteLog" value="#{logBookManagedBean.getThisLog.logBookId}" />
+                    </p:commandButton>
+                    <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button" />  
+                </p:dialog>
             </p:panel>
 
 

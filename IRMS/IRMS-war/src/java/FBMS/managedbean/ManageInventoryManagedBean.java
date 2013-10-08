@@ -120,7 +120,7 @@ public class ManageInventoryManagedBean implements Serializable {
         System.out.println("we are in add dish"+thisDish.getDishId());
 
         try {
-            inventorySessionBean.addDish(thisDish);
+//            inventorySessionBean.addDish(thisDish);
             System.out.println("After addDish"+thisDish.getDishId());
             
         } catch (Exception e) {
@@ -136,7 +136,7 @@ public class ManageInventoryManagedBean implements Serializable {
         System.out.println("we are in update dish"+thisDish.getDishId());
 
         try {
-            inventorySessionBean.updateDish(thisDish);
+ //           inventorySessionBean.updateDish(thisDish);
             System.out.println("After updateDish"+thisDish.getDishId());
             
         } catch (Exception e) {

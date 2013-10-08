@@ -6,6 +6,7 @@ package ACMS.managedbean;
 
 import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
+import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -29,11 +30,14 @@ import javax.servlet.http.HttpServletResponse;
 public class ReservationManagedBean implements Serializable {
 
     @EJB
+    private EmailSessionBean emailSessionBean;
+    @EJB
     private ReservationSessionBean rm;
     @EJB
     ReservationSessionBean reservationSessionBean;
     private List<ReservationEntity> reservationList;
     private ReservationEntity selectReservation;
+    private ReservationEntity newReservation;
     private String searchId;
 
     public String getSearchId() {
@@ -82,6 +86,31 @@ public class ReservationManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
             return;
         }
+    }
+//javax.el.PropertyNotFoundException: /acms/checkIncheckOut.xhtml @45,154 value="#{reservationManagedBean.selectReservation.rcName}": Target Unreachable, 'null' returned null
+    public void addReservation(ActionEvent event) throws IOException {
+        newReservation = new ReservationEntity();
+        newReservation = (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
+        try {
+            System.out.println("we are in addReservation in managedbean" + newReservation.getRcName());
+            if(newReservation.getReservationRoomType().equals("1")) newReservation.setReservationRoomType("superior");
+            if(newReservation.getReservationRoomType().equals("2")) newReservation.setReservationRoomType("deluxe");
+            if(newReservation.getReservationRoomType().equals("3")) newReservation.setReservationRoomType("deluxe suite");
+            if(newReservation.getReservationRoomType().equals("4")) newReservation.setReservationRoomType("orchard suite");
+            if(newReservation.getReservationRoomType().equals("5")) newReservation.setReservationRoomType("chairman suite");
+            reservationSessionBean.addReservation(newReservation);
+            System.out.println("we are after add reservation in managedbean");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new reservation", ""));
+            e.printStackTrace();
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Reservation saved.", ""));
+//            emailSessionBean.emailInitialPassward(employee.getPersonalEmail(), initialPwd); //send email
+        emailSessionBean.emailReservationConfirmation(newReservation.getRcEmail(), newReservation);
+        System.out.println("email already sent");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+        newReservation = new ReservationEntity();
     }
 
     public List<ReservationEntity> getReservatioinList() {

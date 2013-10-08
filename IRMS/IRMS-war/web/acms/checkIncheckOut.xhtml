@@ -14,7 +14,7 @@
                     <p:growl id="growl" showDetail="true" sticky="true" />                    
                     <h:panelGrid columns="2" cellpadding="10">  
                         <h:outputText value="Reservation ID: " style="margin-right: 10px;"/>
-                        <p:autoComplete id="reservation" value="#{reservationManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"  
+                        <p:autoComplete id="reservation" value="#{reservationManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
                                         completeMethod="#{reservationManagedBean.complete}" />
                         <p:spacer width="20"/>
                         <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchById}" update ="growl"/>
@@ -35,6 +35,71 @@
                 </h:form>
             </p:tab> 
 
+            <!--Error: tabView:formReserve:j_idt57: "Deluxe" 必须是由一个或多个数字构成的数值。
+           tabView:formReserve:j_idt57: "Deluxe" 必须是介于 -2147483648 和 2147483647 之间的数值。示例: 9346-->
+            <p:tab id="tab3" title="Make Reservation">  
+                <h:form id="formReserve">
+                    <p:growl id="growl" showDetail="true" sticky="true" />                    
+                    <h:panelGrid columns="3" cellpadding="10">  
+                        <h:outputText value="Guest Name*:"/>
+                        <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{reservationManagedBean.selectReservation.rcName}"/>                                   
+                        <h:outputText value=""/>
+                        <h:outputText value="Email*:"/>
+                        <h:inputText required ="true" requiredMessage="Email cannot be empty" value="#{reservationManagedBean.selectReservation.rcEmail}"/>                                   
+                        <h:outputText value=""/>
+                        <h:outputText value="Credit Card Number*:"/>
+                        <h:inputText required ="true" requiredMessage="Credit Card cannot be empty" value="#{reservationManagedBean.selectReservation.rcCreditCardNo}"/>                                   
+                        <h:outputText value=""/>
+                        <h:outputText value="Hand Phone Number*:"/>
+                        <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{reservationManagedBean.selectReservation.rcHP}"/>                                   
+                        <h:outputText value=""/>
+                        <h:outputText value="CheckIn Date*:"/>
+                        <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="customCal1" value="#{reservationManagedBean.selectReservation.rcCheckInDate}" /> 
+                        <h:outputText value=""/>
+                        <h:outputText value="CheckOut Date*:"/>
+                        <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="customCal2" value="#{reservationManagedBean.selectReservation.rcCheckOutDate}" /> 
+                        <h:outputText value=""/>
+                        <h:outputText value="Hotel*:"/>
+                        <h:selectOneRadio value ="#{reservationManagedBean.selectReservation.reservationHotelNo}" required ="true" requiredMessage="You have to choose a hotel">
+                            <f:selectItem itemLabel="Orchard Hotel" itemValue="1" />  
+                            <f:selectItem itemLabel="Marina Hotel" itemValue="2" />  
+                            <f:selectItem itemLabel="BeachView Hotel" itemValue="3" />  
+                        </h:selectOneRadio> 
+                        <h:outputText value=""/>
+                        <h:outputText value="Number of Rooms*:"/>
+                        <h:inputText required ="true" requiredMessage="Number of rooms cannot be empty" value="#{reservationManagedBean.selectReservation.reservationRoomCount}"/>                                   
+                        <h:outputText value=""/>
+                        <h:outputText value="Number of Guests:"/>
+                        <h:inputText value="#{reservationManagedBean.selectReservation.reservationGuestCount}"/>                                   
+                        <h:outputText value=""/>
+                        <h:outputText value="Room Type*:"/>
+                        <h:selectOneMenu value ="#{reservationManagedBean.selectReservation.reservationGuestCount}" required ="true" requiredMessage="You have to specify your room type">
+                            <f:selectItem itemLabel="Select Room Type" itemValue="" />  
+                            <f:selectItem itemLabel="Superior" itemValue="1" />  
+                            <f:selectItem itemLabel="Deluxe" itemValue="2" />  
+                            <f:selectItem itemLabel="Deluxe Suite" itemValue="3" />  
+                            <f:selectItem itemLabel="Orchard Suite" itemValue="4" />  
+                            <f:selectItem itemLabel="Chairman Suite" itemValue="5" />  
+                        </h:selectOneMenu> 
+                        <h:outputText value=""/>
+                        <h:outputText value="Corporate (If applicable):"/>
+                        <h:inputText value="#{reservationManagedBean.selectReservation.reservationCorporate}"/>                                   
+                        <h:outputText value=""/>
+
+                        <p:spacer width="20"/>
+                        <p:commandButton  value="Reserve Now" ajax="true" oncomplete="confirmation.show()" icon="ui-icon ui-icon-check" />
+
+                        <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                            Confirm Reservation?
+                            <h:outputText value=""/>
+                            <p:commandButton value="Yes" update="growl" actionListener="#{reservationManagedBean.addReservation}" oncomplete="confirmation.hide()">  
+                            </p:commandButton>
+                            <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                        </p:dialog>  
+
+                    </h:panelGrid> 
+                </h:form>
+            </p:tab> 
 
         </p:tabView>
     </ui:define>

@@ -50,8 +50,10 @@
 
 
                 <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
-                    <h:outputText value="Please enter Guest Name: "/>
+                    <h:outputText value="Please enter guest name: "/>
                     <h:inputText value ="#{roomManagedBean.guestName}"/>
+                    <h:outputText value="Please enter credit card number: "/>
+                    <h:inputText value ="#{roomManagedBean.creditCardNo}"/>
                     <br/><br/>
                     <p:commandButton value="Yes" onclick="growl" update ="form" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
                     </p:commandButton>
