@@ -176,6 +176,8 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/CRMServlet/logOut").forward(request, response);
             } else if ("hotelBooking".equals(page)) {
                 request.getRequestDispatcher("/ACMSServlet/hotelBooking").forward(request, response);
+            }else if ("event".equals(page)) {
+                request.getRequestDispatcher("/CEMSServlet/event").forward(request, response);
             }
             else {
                 System.out.println("other page");
