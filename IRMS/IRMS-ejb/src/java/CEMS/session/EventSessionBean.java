@@ -210,12 +210,23 @@ public class EventSessionBean {
         System.out.println("EventSessionBean:SearchVenue: qualified venues have been retrieved 2");
         return qualifedVenues;
         }
+     
+    public List<EventEntity> listEvents()
+    {
+        Query q = em.createQuery("SELECT e FROM EventEntity e");
+        List <EventEntity> events = new ArrayList<EventEntity>();
         
+        for(Object o:q.getResultList())
+        {
+            ee = (EventEntity)o;
+            events.add(ee);
+            System.out.println("EventSessionBean:listEvents: a new event has been added!");
+        }
+        System.out.println("EventSessionBean:listEvents: all events have been fully retrieved!"+events.size());
+        return events;
+    }
     }
 
-    public List <EventEntity> listEvents()
-    {
-        
-    }
+    
 
 
