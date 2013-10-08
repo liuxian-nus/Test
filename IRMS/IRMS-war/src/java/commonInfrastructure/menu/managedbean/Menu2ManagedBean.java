@@ -203,7 +203,13 @@ public class Menu2ManagedBean implements Serializable {
 
                 item = new MenuItem();
                 item.setValue("Manage Tickets");
-                item.setUrl("/atms/manageTicket.xhtml");
+                item.setUrl("/atms/manageTickets.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Manage Attractions");
+                item.setUrl("/atms/manageAttractions.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
 
