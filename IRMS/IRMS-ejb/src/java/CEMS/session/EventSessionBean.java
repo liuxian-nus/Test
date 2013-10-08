@@ -130,18 +130,48 @@ public class EventSessionBean {
         }
     }
     
-    public boolean checkVenueAvailability(Long venueId,Date startDate,Date endDate,Integer numberPeople)
+    public List <Date> checkVenueAvailability(Long venueId,Integer numberPeople)
     {
         ve = em.find(VenueEntity.class, venueId);
         if(ve!=null){
-            Query q = em.createQuery("");
-            return true;
+            if(ve.getVenueCapacity()< numberPeople){
+               System.out.println("EventSessionBean:CheckVenueAvailability: venue quota reached! ");
+                return null;
+            }
+            Query q = em.createQuery("SELECT b FROM BookingEntity b WHERE b.venue.venueId ='"+venueId+"'");
+            List<Date> unavailDates = new ArrayList<Date>();
+            
+            for(Object o : q.getResultList())
+            {
+                BookingEntity booking = (BookingEntity)o;
+                Date startDate = booking.getBookingDate();
+                Date endDate = booking.getEndingDate();
+                
+                Date unavailDate = startDate;
+                while(unavailDate.before(endDate))
+                {
+                    unavailDates.add(unavailDate);
+                    System.out.println("EventSessionBean:CheckVenueAvailability: date unavailable is "
+                            +unavailDate);
+                    unavailDate.setTime(unavailDate.getTime()+1*24*60*60*1000);
+                    System.out.println("EventSessionBean:CheckVenueAvailability: date has been incremented to "
+                            +unavailDate);
+                    
+                }
+                System.out.println("EventSessionBean:CheckVenueAvailability: date list has been partially retrieved "
+                            +unavailDates.size());
+            }
+                System.out.println("EventSessionBean:CheckVenueAvailability: date list has been fully retrieved "
+                            +unavailDates.size());
+                return unavailDates;
+            
         }
         else
-        {
+            {
             System.out.println("EventSessionBean:checkVenueAvailability: The venue does not exist! "+venueId);
-            return false;
-        }
+            return null;
+            }
+        
     }
    
 

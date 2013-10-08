@@ -4,6 +4,7 @@
  */
 package CEMS.entity;
 
+import ERMS.entity.EmployeeEntity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -48,11 +49,20 @@ public class EventEntity implements Serializable {
     private Date startDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date endDate;
+    private EmployeeEntity eventManager;
     
     
     public EventEntity(){}
+
+    public EmployeeEntity getEventManager() {
+        return eventManager;
+    }
+
+    public void setEventManager(EmployeeEntity eventManager) {
+        this.eventManager = eventManager;
+    }
     
-    
+     
     public String getStatus() {
         return status;
     }
