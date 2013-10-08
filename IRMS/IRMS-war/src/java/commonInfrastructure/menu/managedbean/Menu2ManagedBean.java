@@ -194,18 +194,6 @@ public class Menu2ManagedBean implements Serializable {
                 submenu = new Submenu();
                 submenu.setLabel("Attractions");
                 submenu.setIcon("ui-icon ui-icon-contact");
-
-                item = new MenuItem();
-                item.setValue("Add Tickets");
-                item.setUrl("/atms/addTicket.xhtml");
-                item.setIcon("ui-icon ui-icon-search");
-                submenu.getChildren().add(item);
-
-                item = new MenuItem();
-                item.setValue("Manage Tickets");
-                item.setUrl("/atms/manageTickets.xhtml");
-                item.setIcon("ui-icon ui-icon-search");
-                submenu.getChildren().add(item);
                 
                 item = new MenuItem();
                 item.setValue("Manage Attractions");
@@ -213,7 +201,25 @@ public class Menu2ManagedBean implements Serializable {
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
 
+                item = new MenuItem();
+                item.setValue("Add Attractions");
+                item.setUrl("/atms/addAttractions.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();              
+                item.setValue("Add Tickets");
+                item.setUrl("/atms/addTicket.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+                
 
+                item = new MenuItem();
+                item.setValue("Manage Tickets");
+                item.setUrl("/atms/manageTickets.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+ 
                 model.addSubmenu(submenu);
             }
 
