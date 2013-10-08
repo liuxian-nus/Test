@@ -5,28 +5,29 @@
 package ATMS.entity;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.TableGenerator;
 
 /**
  *
  * @author Jieqiong
  */
 @Entity
+@TableGenerator(name="seq", initialValue = 101)
 public class TicketEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq")
     private Long id;
+    private String attrId;
+    private String attrName;
     private String ticketName;
     private double ticketPrice;
-    @OneToOne (cascade ={CascadeType.ALL})  
-    private QuotaEntity quota=new QuotaEntity();
-    
+    private String type; //one day, two day, annual
+    private String cluster; //adult, child, senior(over 60)
     
     public Long getTicketId() {
         return id;
@@ -35,6 +36,7 @@ public class TicketEntity implements Serializable {
     public void setTicketId(Long id) {
         this.id = id;
     }
+
     
     public String getTicketName(){
         return ticketName;
@@ -52,13 +54,42 @@ public class TicketEntity implements Serializable {
         ticketPrice=price;
     }
 
-    public QuotaEntity getQuota() {
-        return quota;
+    public String getType() {
+        return type;
     }
 
-    public void setQuota(QuotaEntity quota) {
-        this.quota = quota;
+    public void setType(String type) {
+        this.type = type;
     }
+
+    public String getCluster() {
+        return cluster;
+    }
+
+    public void setCluster(String cluster) {
+        this.cluster = cluster;
+    }
+
+    public String getAttrId() {
+        return attrId;
+    }
+
+    public void setAttrId(String attrId) {
+        this.attrId = attrId;
+    }
+
+    public String getAttrName() {
+        return attrName;
+    }
+
+    public void setAttrName(String attrName) {
+        this.attrName = attrName;
+    }
+    
+    
+    
+    
+
     
     
 
@@ -69,18 +100,6 @@ public class TicketEntity implements Serializable {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TicketEntity)) {
-            return false;
-        }
-        TicketEntity other = (TicketEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {
