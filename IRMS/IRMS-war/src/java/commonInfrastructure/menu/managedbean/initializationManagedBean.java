@@ -656,7 +656,7 @@ public class initializationManagedBean implements Serializable {
         }
     }
 
-    public void createTickets() {
+  /*  public void createTickets() {
         System.out.println("go to create Tickets page");
 
         quota = new QuotaEntity();
@@ -740,7 +740,7 @@ public class initializationManagedBean implements Serializable {
         addMessage("Tickets Created!");
 
 
-    }
+    }*/
 
     public void createMerchant() {
         System.out.println("go to create merchant page...");
