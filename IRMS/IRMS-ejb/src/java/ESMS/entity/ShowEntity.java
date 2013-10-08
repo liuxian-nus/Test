@@ -5,10 +5,14 @@
 package ESMS.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -16,12 +20,43 @@ import javax.persistence.Id;
  */
 @Entity
 public class ShowEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long showId;
     private String showName;
     private String showDescription;
+    private int showCapacity;
+    
+    @OneToMany(targetEntity = ShowTicketEntity.class, cascade = {CascadeType.MERGE})
+    private List<ShowTicketEntity> showTickets = new ArrayList<ShowTicketEntity>();
+    @OneToMany(targetEntity = ShowScheduleEntity.class, cascade = {CascadeType.MERGE})
+    private List<ShowScheduleEntity> showSchedules = new ArrayList<ShowScheduleEntity>();
+
+    public List<ShowScheduleEntity> getShowSchedules() {
+        return showSchedules;
+    }
+
+    public void setShowSchedules(List<ShowScheduleEntity> showSchedules) {
+        this.showSchedules = showSchedules;
+    }
+    
+    public void addShowSchedule(ShowScheduleEntity showSchedule){
+        this.showSchedules.add(showSchedule);
+    }
+    
+    public List<ShowTicketEntity> getShowTickets() {
+        return showTickets;
+    }
+
+    public void setShowTickets(List<ShowTicketEntity> showTickets) {
+        this.showTickets = showTickets;
+    }
+
+    public void addShowTicket(ShowTicketEntity showTicket) {
+        this.showTickets.add(showTicket);
+    }
 
     public String getShowName() {
         return showName;
@@ -47,34 +82,11 @@ public class ShowEntity implements Serializable {
         this.showId = showId;
     }
     
-    
-    
-    
-    
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (showId != null ? showId.hashCode() : 0);
-        return hash;
+    public int getShowCapacity() {
+        return showCapacity;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ShowEntity)) {
-            return false;
-        }
-        ShowEntity other = (ShowEntity) object;
-        if ((this.showId == null && other.showId != null) || (this.showId != null && !this.showId.equals(other.showId))) {
-            return false;
-        }
-        return true;
+    public void setShowCapacity(int showCapacity) {
+        this.showCapacity = showCapacity;
     }
-
-    @Override
-    public String toString() {
-        return "ESMS.entity.showEntity[ id=" + showId + " ]";
-    }
-    
 }
