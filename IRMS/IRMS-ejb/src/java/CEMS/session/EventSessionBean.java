@@ -174,5 +174,43 @@ public class EventSessionBean {
         
     }
    
+    public boolean checkVenueCapacity(Long venueId,Integer numberPeople)
+    {
+        ve = em.find(VenueEntity.class, venueId);
+        if(ve!=null)
+        {
+            if(numberPeople>ve.getVenueCapacity())
+                return false;
+            else
+                return true;
+        }
+        else
+        {
+          System.out.println("EventSessionBean: checkVenueCapacity: venue does not exist! "+venueId); 
+          return false;
+        }
+    }
+    
+    public List <VenueEntity> searchVenue(Integer venueCapacity,String venueFunction)
+    {
+        Query q = em.createQuery("SELECT v FROM VenueEntity v WHERE v.venueCapacity >= '"+venueCapacity+"'");
+        System.out.println("EventSessionBean:SearchVenue: qualified venues have been retrieved 1");
+        List<VenueEntity> qualifedVenues = new ArrayList<VenueEntity>();
+        
+        for(Object o: q.getResultList())
+        {
+            VenueEntity venue = (VenueEntity)o;
+            List<String> functions = venue.getVenueFunction();
+            if(functions.contains(venueFunction))
+            { 
+                qualifedVenues.add(venue);
+                System.out.println("EventSessionBean:SearchVenue: one qualified venues have been added!");
+            }
+            }
+        System.out.println("EventSessionBean:SearchVenue: qualified venues have been retrieved 2");
+        return qualifedVenues;
+        }
+        
+    }
 
 }
