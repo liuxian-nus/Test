@@ -13,6 +13,7 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
+        
             <h2>Your Reservation Details...</h2>
             <div class ="row">
                 <!--<div class="panel">-->
@@ -37,9 +38,9 @@
                         <br>
                         <div class="row">
                             <div class="large-4 columns">                               
-                                    <input href="member" class="tiny button" value="Log In">
-                                    
-                                  
+                                <input href="member" class="tiny button" value="Log In">
+
+
                             </div>
                             <div class="large-6 columns">
                                 <label for="right-label" class="right-align,inline" ><h7><a href="memberRegister" style="color:#4d4d4d">Not a member?</a></h7></label>
@@ -48,10 +49,12 @@
                     </div>
                 </div>
             </div>
+            
+            
             <div class ="row">
                 <div class="large-7 columns">
                     <div class="panel callout">
-                        <form data-abide action="hotelSearch" method="POST">
+                        <form data-abide action="hotelPay" method="POST">
                             <fieldset>
                                 <legend>Hotel Reservation</legend>
                                 <p>${message}</p>
@@ -125,7 +128,7 @@
                             </div>
                             <div class="row">
                                 <div class="large-6 columns">
-                                    <input required type="text" id="input-phoneNo"  placeholder="phoneNo" name="phoneNo">
+                                    <input  required pattern="[0-9]{8}" required type="text" id="input-phoneNo"  placeholder="phoneNo" name="phoneNo">
                                     <small class="error">Please enter your phone number.</small>
                                 </div>
                                 <div class="large-5 columns">
@@ -377,18 +380,66 @@
                                     </select>
                                 </div>
                             </div>
+                            
+                            
+                            <div class="row">
+                                <input type="submit" class="small button" class="center-align" value="Continue">
+                            </div>
+                            
+                            
                         </fieldset>
                     </form>                     
                 </div>
             </div>
 
+                            
+                            
+                            
             <div class="large-5 columns">
                 <div class="panel">
                     <fieldset>
                         <legend style="color:#4d4d4d">Booking Summary</legend>
                         <p>${message}</p>
-                        <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h4><strong>To Be finished</strong></h4></label>
+                        <div class="row">
+                            <div class="large-5 columns">
+                                <label for="right-label" class="left-align,inline"><h6>Rate: </h6></label>
+                            </div>
+                            <div class="large-7 columns">
+                                <label for="right-label" class="right-align,inline"><strong></strong></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-7 columns">
+                                <label for="right-label" class="left-align,inline"><h6>Number of nights:</h6></label>
+                            </div>
+                            <div class="large-5 columns">
+                                <label for="right-label" class="right-align,inline"><strong></strong></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-5 columns">
+                                <label for="right-label" class="left-align,inline"><h6>Total:</h6></label>
+                            </div>
+                            <div class="large-7 columns">
+                                <label for="right-label" class="right-align,inline"><strong></strong></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-7 columns">
+                                <label for="right-label" class="left-align,inline"><h6>Service Charge:</h6></label>
+                            </div>
+                            <div class="large-5 columns">
+                                <label for="right-label" class="right-align,inline"><strong></strong></label>
+                            </div>
+                        </div>
                     </fieldset>
+                    <br><br>
+                    <div class="row">
+                        <div class="large-2 columns"></div>
+                        <div class="large-10 columns">
+                            <label for="right-label" class="left-align,inline"><strong>15% of the total room reservation fee will be deducted from your credit card after making the reservation. This service charge will not be refundable nor transferable</strong></label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

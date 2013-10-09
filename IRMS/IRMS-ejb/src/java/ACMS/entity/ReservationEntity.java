@@ -38,6 +38,8 @@ public class ReservationEntity implements Serializable {
     private int reservationGuestCount;
     private String reservationRoomType;
     private String reservationCorporate;
+    private double reservationTotal;
+    private double reservationCharge;
 
     public String getReservationRoomType() {
         return reservationRoomType;
@@ -160,6 +162,23 @@ public class ReservationEntity implements Serializable {
     public void setReservationCorporate(String reservationCorporate) {
         this.reservationCorporate = reservationCorporate;
     }
+
+    public double getReservationTotal() {
+        return reservationTotal;
+    }
+
+    public void setReservationTotal(double reservationTotal) {
+        this.reservationTotal = reservationTotal;
+    }
+
+    public double getReservationCharge() {
+        return reservationCharge;
+    }
+
+    public void setReservationCharge(double reservationCharge) {
+        this.reservationCharge = reservationCharge;
+    }
+    
     
     @Override
     public boolean equals(Object object) {

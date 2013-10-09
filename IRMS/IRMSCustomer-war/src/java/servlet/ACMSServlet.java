@@ -64,6 +64,14 @@ public class ACMSServlet extends HttpServlet {
                 System.out.println("***hotel Book***");
 
                 request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
+            }else if ("hotelPay".equals(page)) {
+                System.out.println("***hotel payment***");
+
+                request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
+            }else if ("hotelPayConfirm".equals(page)) {
+                System.out.println("***hotel payment confirmation***");
+
+                request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
             }else {
                 System.out.println("other page");
             }

@@ -32,7 +32,7 @@
 
                         <div class="row">
                             <div class="large-12 columns">
-                                <label for="customDropdown">Where to live</label>
+                                <label for="customDropdown"><strong>Where to live</strong></label>
                                 <select id="customDropdown" name="hotelList">
 
                                     <option></option>
@@ -46,7 +46,7 @@
 
                         <div class="row">
                             <div class="large-12 columns">
-                                <label for="customDropdown">Type of room</label>
+                                <label for="customDropdown"><strong>Type of room</strong></label>
                                 <select id="customDropdown" name="roomTypeList">
 
                                     <option></option>
@@ -61,15 +61,21 @@
                         </div>
                         <div class="row">
                             <div class="large-12 columns">
-                                <label for="customDropdown">Check In Date</label>
+                                <label for="customDropdown"><strong>Check In Date</strong></label>
                                 <input name="en_date" type="text" id="en_date" onclick="new Calendar(null, null, 1).show(this);" size="10" maxlength="10" readonly="readonly">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="large-12 columns"> 
-                                <label for="customDropdown">Check Out Date</label>
+                                <label for="customDropdown"><strong>Check Out Date</strong></label>
                                 <input name="en_date" type="text" id="en_date" onclick="new Calendar(null, null, 1).show(this);" size="10" maxlength="10" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <label for="right-label" class="left-align,inline"><strong>Number of People</label>
+                                <input required type="text" id="input-people"  placeholder="people" name="people">
                             </div>
                         </div>
                         <br>
@@ -94,23 +100,24 @@
         </div>
         <div class="large-9 columns"> 
             <div class="row">
-                <div class="large-5 columns">
-                    <div class="panel">
+                <div class="panel callout">
+                    <div class="large-5 columns">
                         <h5><strong>Orchard Hotel™</strong></h5>
                         <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel2.jpg">
                             <img src="/IRMSCustomer-war/images/gallery/hotel2.jpg">
                         </a>
                         <!-- <p>We provide every guest with an enriched ultimate dining experience to enjoy authentic Chinese cuisine</p>-->
+
                     </div>
-                </div>
-                <div class="large-7 columns">
+                    <div class="large-7 columns">
 
-                    <h5><a style="color:#4d4d4d"><strong>Five Star</strong></a></h5><i class="sprite starrating stars5"></i>
-                    <p style="color:#4d4d4d">Orchard Hotel is the fun destination of Coral Island Resort. The fabulous location, our family- and child-friendly environment, 
-                        and range of fun amenities make this vibrant hotel the ideal family getaway.The nearby Festive Walk and 
-                        World Square offer a host of non-stop entertainment and facilities to add to the holiday mood. For a fun family getaway, be sure to check in at 
-                        Orchard Hotel!                                                                                                                                                         </p>
+                        <h5><a style="color:#4d4d4d"><strong>Five Star</strong></a></h5><i class="sprite starrating stars5"></i>
+                        <p style="color:#4d4d4d">Orchard Hotel is the fun destination of Coral Island Resort. The fabulous location, our family- and child-friendly environment, 
+                            and range of fun amenities make this vibrant hotel the ideal family getaway.The nearby Festive Walk and 
+                            World Square offer a host of non-stop entertainment and facilities to add to the holiday mood. For a fun family getaway, be sure to check in at 
+                            Orchard Hotel!                                                                                                                                                         </p>
 
+                    </div>
                 </div>
             </div>
             <br>
