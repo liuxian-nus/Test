@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author lionetdd, Jieqiong
+ * @author lionetdd
  */
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
@@ -118,6 +118,8 @@ public class CRMServlet extends HttpServlet {
                             member = memberSession.getMemberByEmail(email);
                             System.out.println(member.getMemberName());
                             request.setAttribute("data", member);
+                            request.setAttribute("memberEmail",member.getMemberEmail());
+                            request.setAttribute("loginStatus","true");
                             request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
                         } else {
                             message = "Wrong password or username entered";

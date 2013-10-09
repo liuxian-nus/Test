@@ -4,18 +4,15 @@
     Author     : Jieqiong
 --%>
 
+<%@page import="CRMS.entity.MemberEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
 
 <%
-    String email=(String)request.getAttribute("email");
-    String password=(String) request.getAttribute("password");
-    String loginStatus=(String)session.getAttribute("loginStatus");
-    System.out.println("loginStatus:"+loginStatus);
-    session.setAttribute("email",email);
-    session.setAttribute("password", password);
+    MemberEntity member=(MemberEntity)request.getAttribute("data");
+    session.setAttribute("member",member);
 %> 
 <html>
     <head>
@@ -27,6 +24,7 @@
             $(document).ready(infoCheck());
             </script>
         <jsp:include page="header.jsp"></jsp:include>
+        <h3>Welcome, ${member.memberName}!</h3>
         <form action="logOut">
             <button type="Submit" class="button"> log out</button>
         </form>
