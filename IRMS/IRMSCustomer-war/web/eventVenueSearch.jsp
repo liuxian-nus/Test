@@ -35,7 +35,7 @@
                 <td width="200">
                     <br>
                     <form action="eventVenueBook"><input class="small button" type="submit" value ="Make Reservation"/>
-                        
+                        <input type="hidden" name="venueId" value="${data.venueId}"/>
                     </form> 
                 </td>
             </tr>

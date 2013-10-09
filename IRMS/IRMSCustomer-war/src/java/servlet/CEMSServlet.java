@@ -9,6 +9,7 @@ import CEMS.session.EventSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -29,6 +30,7 @@ public class CEMSServlet extends HttpServlet {
     @EJB
     private EventSessionBean eventSessionBean;
     private List<VenueEntity> data;
+    private VenueEntity data1;
     //private String keyword=null;
     /**
      * Processes requests for both HTTP
@@ -78,7 +80,24 @@ public class CEMSServlet extends HttpServlet {
                 System.out.println(data.isEmpty());
                 request.setAttribute("data", data);
                 request.getRequestDispatcher("/eventVenueSearch.jsp").forward(request, response);
-            } else {
+            } 
+            if("eventVenueBook".equalsIgnoreCase(page)){
+                System.out.println("*****eventVenueBook*****");
+                System.out.println("CEMSSevlet: Current page is eventVenueBook!");
+                Long venueId = Long.parseLong(request.getParameter("venueId"));
+                data1 = eventSessionBean.getVenue(venueId);
+                System.out.println("CEMSServlet:eventVenueBook: the venue has been found "+data1.getVenueName());
+                List <Date> unavailDates = new ArrayList<Date>();
+                unavailDates = eventSessionBean.checkVenueAvailability(venueId, 1);
+                
+                request.setAttribute("data", data1);
+                request.setAttribute("unavailDates",unavailDates );
+                System.out.println("CEMSServlet:eventVenueBook: the list of unavailable dates!");
+                System.out.println(data1.toString()+unavailDates.isEmpty());
+                request.getRequestDispatcher("/eventVenueBook.jsp").forward(request, response);
+                
+            }
+            else {
                 System.out.println("other page");
             }
         } catch (Exception e) {
@@ -159,5 +178,7 @@ public class CEMSServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+  
 }
 

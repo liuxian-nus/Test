@@ -235,7 +235,24 @@ public class EventSessionBean {
         System.out.println("EventSessionBean:listEvents: all events have been fully retrieved!"+events.size());
         return events;
     }
+    
+    public VenueEntity getVenue(Long venueId)
+    {
+        VenueEntity thisV = em.find(VenueEntity.class, venueId);
+        if(thisV!=null)
+        {
+            System.out.println("EventSessionBean:getVenue: The venue has been found!");
+            return thisV;
+        }
+        else
+        {
+            System.out.println("EventSessionBean:getVenue: The venue cannot be found!");
+            return null;
+        }
     }
+    }
+
+
 
     
 
