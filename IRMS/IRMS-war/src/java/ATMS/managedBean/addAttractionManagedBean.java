@@ -72,7 +72,7 @@ public class addAttractionManagedBean {
     }
     
     public void oneMore(ActionEvent event) throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("manageAttractions.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("addAttractions.xhtml");
     }
 
     

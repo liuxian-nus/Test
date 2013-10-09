@@ -16,11 +16,11 @@ import javax.persistence.TableGenerator;
  * @author Jieqiong
  */
 @Entity
-@TableGenerator(name="seq", initialValue = 101)
+@TableGenerator(name="seqTicket", initialValue = 1)
 public class TicketEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seqTicket")
     private Long id;
     private String attrId;
     private String attrName;
@@ -28,15 +28,14 @@ public class TicketEntity implements Serializable {
     private double ticketPrice;
     private String type; //one day, two day, annual
     private String cluster; //adult, child, senior(over 60)
-    
-    public Long getTicketId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setTicketId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
-
     
     public String getTicketName(){
         return ticketName;

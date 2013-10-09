@@ -4,7 +4,6 @@
  */
 package ATMS.managedBean;
 
-import ATMS.entity.QuotaEntity;
 import ATMS.entity.TicketEntity;
 import ATMS.session.TicketSessionBean;
 import java.io.IOException;
@@ -26,7 +25,6 @@ public class addTicketManagedBean {
     @EJB
     private TicketSessionBean ticketSessionBean;   
     private TicketEntity ticket;
-    private QuotaEntity quota;
     
     @PostConstruct
     public void init()
@@ -51,10 +49,8 @@ public class addTicketManagedBean {
     
     public void saveNewTicket(ActionEvent event) throws IOException{
         try{
-            System.out.println("into addTicketManagedBean: saveNewTicket");
-            quota=ticket.getQuota();
-            quota.setRestQuota(quota.getMaxQuota());
-            ticket.setQuota(quota);
+            System.out.println("into addTicketManagedBean: saveNewTicket"); 
+      //      ticket=mapAttractionId(ticket);
             ticketSessionBean.addTicket(ticket);
             System.out.println("new ticket added");
         }catch (Exception e){
@@ -67,6 +63,24 @@ public class addTicketManagedBean {
     
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("addTicket.xhtml");
+    }
+    
+    public TicketEntity mapAttractionId(TicketEntity ticket){
+        String name=ticket.getAttrName();
+        
+        if(name.equals("Aquarium"))
+            ticket.setAttrId("AQ");
+        else if(name.equals("Horror House"))
+            ticket.setAttrId("IT");
+        else if(name.equals("Culture Musuem"))
+            ticket.setAttrId("MU");
+        else if(name.equals("Adventure World"))
+            ticket.setAttrId("OT");
+        else
+            System.out.println("wrong attraction name");
+        
+        return ticket; 
+ 
     }
     
    
