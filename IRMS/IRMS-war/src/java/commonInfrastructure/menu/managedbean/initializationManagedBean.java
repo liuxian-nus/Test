@@ -28,7 +28,10 @@ import ERMS.session.EmployeeSessionBean;
 import ERMS.session.FunctionalitySessionBean;
 import ERMS.session.RoleSessionBean;
 import ESMS.entity.ShowEntity;
+import ESMS.entity.ShowScheduleEntity;
+import ESMS.entity.ShowTicketEntity;
 import ESMS.session.ShowSessionBean;
+import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
 import FBMS.entity.RestaurantEntity;
 import SMMS.entity.MerchantEntity;
@@ -86,6 +89,9 @@ public class initializationManagedBean implements Serializable {
     private TicketSessionBean ticketSessionBean;
     @EJB
     private ShowSessionBean showSessionBean;
+    @EJB
+    private ShowTicketSessionBean showTicketSessionBean;
+    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -101,6 +107,8 @@ public class initializationManagedBean implements Serializable {
     private MerchantEntity merchant;
     private ShowEntity show;
     private LogBookEntity log;
+    private ShowScheduleEntity showSchedule;
+    private ShowTicketEntity showTicket;
 //    private MemberEntity member;
 
     @PostConstruct
@@ -924,9 +932,31 @@ public class initializationManagedBean implements Serializable {
         addMessage("New Log Saved!");
 
     }
+    public void createShow(){
+        System.err.println("creating show...");
+        show = new ShowEntity();
+        showTicket = new ShowTicketEntity();
+        show.setShowName("Harry Potter");
+        show.setShowDescription("Harry Potter and the Philosopher's Stone");
+        showTicket.setShowTicketPrice(35.00);
+        showTicket.setShowTicketQuantity(20);
+        showTicket.setShowTicketType("Premium");
+        showTicketSessionBean.addShowTicket(showTicket);
+        show.addShowTicket(showTicket);
+        try {
+            System.out.println("Saving show....");
+            showSessionBean.addShow(show);
+            System.out.println("Show saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding show", ""));
+            return;
+        }
+        addMessage("Show Created!");
+    }
     //Add new test cases below!!!!!!!!!
 
     public void initialize() {
+        createShow();
         createSuperAdmin();
         createSystemUser();
         createMember();
@@ -944,7 +974,7 @@ public class initializationManagedBean implements Serializable {
         createMerchant();
         createPushingcart();
         createESMSAdmin();
-
+        
         addMessage("Initialization succeed!");
     }
 }
