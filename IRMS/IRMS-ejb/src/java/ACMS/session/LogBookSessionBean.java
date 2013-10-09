@@ -55,6 +55,7 @@ public class LogBookSessionBean {
     }
 
     public LogBookEntity addLog(LogBookEntity thisLog) {
+        System.out.println("add log session bean");
         em.persist(thisLog);
         return thisLog;
     }

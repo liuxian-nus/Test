@@ -32,6 +32,7 @@ public class LogBookManagedBean {
     @EJB
     private LogBookSessionBean logBookSessionBean;
     private LogBookEntity thisLog;
+    private LogBookEntity newLog = new LogBookEntity();
     private List<LogBookEntity> logList;
     private Long logId;
     
@@ -56,11 +57,17 @@ public class LogBookManagedBean {
         logList = (List<LogBookEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("logList");
     }
     
-    public void addLog()throws IOException {
-        System.err.println("we are in log book managedbean");
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-//        Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
-//        String getGuestName = (String) request.getSession().getAttribute("guestName");
+    public void addLog(ActionEvent event)throws IOException {
+
+        try {
+        System.err.println("we are in log book managedbean " + newLog.getLogTitle() );
+        newLog = (LogBookEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("logs");
+        logBookSessionBean.addLog(newLog);
+        System.err.println("we are after log book managedbean " + newLog.getLogTitle() );
+         } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new log", ""));
+            e.printStackTrace();
+         }
     }
     
      public void deleteLog(ActionEvent event) throws ExistException{

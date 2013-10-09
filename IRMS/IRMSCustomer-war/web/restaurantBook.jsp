@@ -211,7 +211,7 @@
                      <input type="hidden" name="restId" value="${data.restId}"/>
                      <input type="hidden" name="booking" value="true"/>
 
-                    <div clas="row">
+                    <div class="row">
                         <div class="large-12 columns">
                             <input type="submit" class="small button" value="Confirm">
                         </div>

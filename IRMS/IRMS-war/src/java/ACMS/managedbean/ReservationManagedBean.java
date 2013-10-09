@@ -188,8 +188,8 @@ public class ReservationManagedBean implements Serializable {
     }
 //javax.el.PropertyNotFoundException: /acms/checkIncheckOut.xhtml @45,154 value="#{reservationManagedBean.selectReservation.rcName}": Target Unreachable, 'null' returned null
     public void addReservation(ActionEvent event) throws IOException {
-        newReservation = new ReservationEntity();
         newReservation = (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
+        newReservation.setRcName((String)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation.rcName"));
         try {
             System.out.println("we are in addReservation in managedbean" + newReservation.getRcName());
             if(newReservation.getReservationRoomType().equals("1")) newReservation.setReservationRoomType("superior");

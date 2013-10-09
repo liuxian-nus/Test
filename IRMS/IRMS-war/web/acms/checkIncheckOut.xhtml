@@ -10,31 +10,37 @@
     <ui:define name="content">
         <p:tabView id="tabView">  
             <p:tab id="tab1" title="Check In">  
-                <h:form id="formCheckIn">
+                <h:form id="formCheckIn1">
                     <p:growl id="growl" showDetail="true" sticky="true" />   
-                    <p:fieldset legend="Search Reservation By ID" toggleable="true" toggleSpeed="500">  
+                    <p:fieldset legend="Search Reservation By ID" toggleable="true" toggleSpeed="500" collapsed="true">  
                         <h:panelGrid columns="2" cellpadding="10">  
                             <h:outputText value="Reservation ID: " style="margin-right: 10px;"/>
-                            <p:autoComplete id="reservation1" value="#{reservationManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                            <p:autoComplete id="reservation" value="#{reservationManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
                                             completeMethod="#{reservationManagedBean.complete}" />
                             <p:spacer width="20"/>
                             <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchById}" update ="growl"/>
                         </h:panelGrid> 
                     </p:fieldset>
-                    <br/>
-                    <p:fieldset legend="Search Reservation By Guest Name" toggleable="true" toggleSpeed="500"> 
+                </h:form>
+                <br/>
+                <h:form id="formCheckIn2">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Search Reservation By Guest Name" toggleable="true" toggleSpeed="500" collapsed="true"> 
                         <h:panelGrid columns="2" cellpadding="10">  
                             <h:outputText value="Guest Name: " style="margin-right: 10px;"/>
-                            <p:autoComplete id="reservation2" value="#{reservationManagedBean.searchName}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                            <p:autoComplete id="reservation2" value="#{reservationManagedBean.searchName}" required="true" requiredMessage="Guest Name Cannot be Null"   
                                             completeMethod="#{reservationManagedBean.complete}" />
                             <p:spacer width="20"/>
                             <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchByName}" update ="growl"/>
                         </h:panelGrid> 
                     </p:fieldset>
-                    <p:fieldset legend="Search Reservation By Guest Email" toggleable="true" toggleSpeed="500"> 
+                </h:form>
+                <h:form id="formCheckIn3">
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
+                    <p:fieldset legend="Search Reservation By Guest Email" toggleable="true" toggleSpeed="500" collapsed="true"> 
                         <h:panelGrid columns="2" cellpadding="10">  
                             <h:outputText value="Reservation Email: " style="margin-right: 10px;"/>
-                            <p:autoComplete id="reservation3" value="#{reservationManagedBean.searchEmail}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                            <p:autoComplete id="reservation3" value="#{reservationManagedBean.searchEmail}" required="true" requiredMessage="Reservation Email Cannot be Null"   
                                             completeMethod="#{reservationManagedBean.complete}" />
                             <p:spacer width="20"/>
                             <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchByEmail}" update ="growl"/>
@@ -110,12 +116,14 @@
                         <p:spacer width="20"/>
                         <p:commandButton  value="Reserve Now" ajax="true" oncomplete="confirmation.show()" icon="ui-icon ui-icon-check" />
 
-                        <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
-                            Confirm Reservation?
-                            <h:outputText value=""/>
-                            <p:commandButton value="Yes" update="growl" actionListener="#{reservationManagedBean.addReservation}" oncomplete="confirmation.hide()">  
-                            </p:commandButton>
-                            <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                        <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">
+                            <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                                <h:outputText value="Confirm Reservation?"/>
+                                <h:outputText value=""/>
+                                <p:commandButton value="Yes" update="growl" actionListener="#{reservationManagedBean.addReservation}" oncomplete="confirmation.hide()">  
+                                </p:commandButton>
+                                <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                            </h:panelGrid>
                         </p:dialog>  
 
                     </h:panelGrid> 

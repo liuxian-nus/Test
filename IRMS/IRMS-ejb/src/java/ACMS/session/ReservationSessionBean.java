@@ -45,7 +45,7 @@ public class ReservationSessionBean {
     
     public List<ReservationEntity> getReservationByName(String rcName)
     {
-        Query query = em.createQuery("SELECT r FROM EmployeeEntity r WHERE r.rcName ='" + rcName + "'");
+        Query query = em.createQuery("SELECT r FROM ReservationEntity r WHERE r.rcName ='" + rcName + "'");
         System.err.println("getReservationByName: "+rcName);
         //query.setParameter("employeeName", employeeName);
         reservations = new ArrayList<ReservationEntity>();
@@ -55,7 +55,7 @@ public class ReservationSessionBean {
     
      public List<ReservationEntity> getReservationByEmail(String rcEmail)
     {
-        Query query = em.createQuery("SELECT r FROM EmployeeEntity r WHERE r.rcEmail ='" + rcEmail + "'");
+        Query query = em.createQuery("SELECT r FROM ReservationEntity r WHERE r.rcEmail ='" + rcEmail + "'");
         System.err.println("getReservationByEmail: "+rcEmail);
         //query.setParameter("employeeName", employeeName);
         reservations = new ArrayList<ReservationEntity>();

@@ -26,7 +26,7 @@
         <body>
         <jsp:include page="header.jsp"></jsp:include>
             <div class="large-3 columns">    
-                <form id="search-form" action="restaurantSearch" method="POST">
+                <form id="search-form" action="hotelBook" method="POST">
                     <fieldset>
                         <legend>Search for hotels</legend>
 
@@ -75,17 +75,21 @@
                         <br>
                         <div class="row">
                             <div class="large-12 columns">
-                                <input type="submit" class="small button" value="Search">
+                                <input type="submit" class="small button" value="Search Availability">
+                                <input type="hidden" name="availableHotel" value="${data.availableHotel}"/>
+                            <input type="hidden" name="availableType" value="${data.availableType}"/>
+                            <input type="hidden" name="availableCheckInDate" value="${data.availableCheckInDate}"/>
+                            <input type="hidden" name="availableCheckOutDate" value="${data.availableCheckOutDate}"/>
 
-                            </div>
                         </div>
-                    </fieldset>
-                    <form action="restaurantBook"><input class="small button" type="Search" value ="Search Availability"/>
-                        <input type="hidden" name="availableHotel" value="${data.availableHotel}"/>
-                    <input type="hidden" name="availableType" value="${data.availableType}"/>
-                    <input type="hidden" name="availableCheckInDate" value="${data.availableCheckInDate}"/>
-                    <input type="hidden" name="availableCheckOutDate" value="${data.availableCheckOutDate}"/>
-                </form>
+                    </div>
+                </fieldset>
+                <!--                   <form action="restaurantBook"><input class="small button" type="Search" value ="Search Availability"/>
+                                       <input type="hidden" name="availableHotel" value="${data.availableHotel}"/>
+                                   <input type="hidden" name="availableType" value="${data.availableType}"/>
+                                   <input type="hidden" name="availableCheckInDate" value="${data.availableCheckInDate}"/>
+                                   <input type="hidden" name="availableCheckOutDate" value="${data.availableCheckOutDate}"/>
+                               </form>-->
             </form>
         </div>
         <div class="large-9 columns"> 
@@ -101,7 +105,7 @@
                 </div>
                 <div class="large-7 columns">
 
-                    <h5><a style="color:#4d4d4d"><strong>Five Star</strong></a></h5>
+                    <h5><a style="color:#4d4d4d"><strong>Five Star</strong></a></h5><i class="sprite starrating stars5"></i>
                     <p style="color:#4d4d4d">Orchard Hotel is the fun destination of Coral Island Resort. The fabulous location, our family- and child-friendly environment, 
                         and range of fun amenities make this vibrant hotel the ideal family getaway.The nearby Festive Walk and 
                         World Square offer a host of non-stop entertainment and facilities to add to the holiday mood. For a fun family getaway, be sure to check in at 
@@ -123,7 +127,7 @@
                 </div>
                 <div class="large-7 columns">
 
-                    <h5><a style="color:#4d4d4d"><strong>Five Star</strong></a></h5>
+                    <h5><a style="color:#4d4d4d"><strong>Five Star</strong></a></h5><i class="sprite starrating stars5"></i>
                     <p style="color:#4d4d4d">Marina Hotel is a luxurious treat for art lovers. A tribute to one of America’s greatest contemporary architects 
                         Michael Graves, we let this boutique hotel speak for itself through the designer’s elegant and distinctive touches, from lamps and
                         crockery to furnishings and the decor.We enrich all our guests’ stay experience with art through our art gallery-like atmosphere in 
@@ -144,7 +148,7 @@
                 </div>
                 <div class="large-7 columns">
 
-                    <h5><a style="color:#4d4d4d"><strong>Four Star</strong></a></h5>
+                    <h5><a style="color:#4d4d4d"><strong>Four Star</strong></a></h5><i class="sprite starrating stars4"></i>
                     <p style="color:#4d4d4d">On the western tip of the Coral Island is our idyllic retreat of BeachView Hotel. An exquisite series of 
                         secluded tropical sanctuaries, BeachView Hotel offers spectacular views, personal butlers and luxurious comforts for that well-earned 
                         getaway or a romantic escapade.Enter paradise at Beach Villas, just one of an infinite range of momentous experiences we offer at
