@@ -19,14 +19,14 @@
         <jsp:include page="header.jsp"></jsp:include>
             <div class="row"> 
                 <div class="large-9 columns">
-                    <form id="search-form" action="restaurantSearch" method="POST">
+                    <form id="search-form" action="eventVenueSearch" method="POST">
                         <fieldset>
                             <legend>Search venue</legend>
 
                             <div class="row">
                                 <div class="large-4 columns">
                                     <!-- <label for="customDropdown">Event Type</label>-->
-                                    <select id="customDropdown" class="button dropdown secondary small" name="VenueFunction">
+                                    <select id="customDropdown" class="button dropdown secondary small" name="venueFunction">
                                         <option>Conference</option>
                                         <option>Dinner</option>
                                         <option>Dinner and Dance</option>
@@ -41,7 +41,7 @@
 
                                 <div class="large-4 columns">
                                     <!--<label for="customDropdown">Venue Capacity</label>-->
-                                    <select id="customDropdown" class="button dropdown secondary small" name="Venue Capacity">
+                                    <select id="customDropdown" class="button dropdown secondary small" name="venueCapacity">
                                         <option value="50">Below 50 people</option>
                                         <option value="100">50-100 people</option>
                                         <option value="500">100-500 people</option>
