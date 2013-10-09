@@ -25,7 +25,11 @@
             </ul>
         </li>
         <li><a href="entertainment" >Entertainment</a></li>
-        <li><a href="attraction">Attraction</a></li>
+        <li><a href="attraction">Attraction</a>
+            <ul>
+                <li><a href="adventureWorld">Adventure World</a></li>
+            </ul>
+        </li>
         <li><a href="shopping" >Shopping</a></li>
         <li><a href="event" >Conventions</a></li>
         <li><a href="member">Member</a></li>
