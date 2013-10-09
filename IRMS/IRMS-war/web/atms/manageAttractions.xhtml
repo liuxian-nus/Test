@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel id="attrMgt" header="Attraction Information" style="height:495px;">
+                <div style="margin-top:20px;margin-bottom:20px;">
+                <p:dataTable id="attractions" value="#{manageAttractionsManagedBean.getAllAttractions()}" 
+                             var="attrList" paginator="true" rows="5" draggableColumns="true" scrollable="true" 
+                             resizableColumns="true">
+                    
+                    <p:column headerText="Attraction ID" style="width:60px;">
+                        <h:outputText value="#{attrList.id}"/>
+                    </p:column>
+                    <p:column headerText="Attraction name" style="width:100px;">
+                        <h:outputText value="#{attrList.attrName}"/>
+                    </p:column>
+                    <p:column headerText="Max Quota" style="width:60px;">
+                        <h:outputText value="#{attrList.quota.maxQuota}"/>
+                    </p:column>
+                    <p:column headerText="Available Quota" style="width:60px;">
+                        <h:outputText value="#{attrList.quota.restQuota}"/>
+                    </p:column>    
+                    
+                    <p:column style="width:100px">  
+                        <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
+                            <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                <f:setPropertyActionListener value="#{attrList}" target="#{manageAttractionsManagedBean.attr}" />  
+                                <f:setPropertyActionListener value="#{true}" target="#{manageAttractionsManagedBean.editMode}" /> 
+                            </p:commandButton>
+                            <p:commandButton update=":form:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                <f:setPropertyActionListener value="#{attrList}" target="#{manageAttractionsManagedBean.attr}" />  
+                            </p:commandButton> 
+                        </h:panelGrid>
+                    </p:column> 
+                </p:dataTable>
+
+                <p:dialog header="Edit Attractions" widgetVar="carDialog" resizable="false" id="carDlg"  
+                          showEffect="fade" hideEffect="explode" width="500">
+                    <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">
+                        <h:outputText value="Attraction Name: " />  
+                        <h:panelGroup>  
+                            <h:outputText value="#{manageAttractionsManagedBean.attr.attrName}" style="font-weight:bold" rendered="#{!manageAttractionsManagedBean.editMode}"/>  
+                            <p:inputText id="name"   requiredMessage="Name cannot be empty" value="#{manageAttractionsManagedBean.attr.attrName}" rendered="#{manageAttractionsManagedBean.editMode}" required="true" label="Name"/>  
+                            <p:message for="name"/>
+                        </h:panelGroup>  
+                        <h:outputText value="Maximum Daily Quota: " /> 
+                        <h:panelGroup>  
+                            <h:outputText value="#{manageAttractionsManagedBean.attr.quota.maxQuota}" style="font-weight:bold" rendered="#{!manageAttractionsManagedBean.editMode}"/>  
+                            <p:inputText id="quota2"   requiredMessage="Quota cannot be empty" value="#{manageAttractionsManagedBean.attr.quota.maxQuota}" rendered="#{manageAttractionsManagedBean.editMode}" required="true" label="Quota"/>  
+                            <p:message for="name"/>
+                        </h:panelGroup>   
+
+                        <f:facet name="footer">  
+                            <p:outputPanel rendered="#{manageAttractionsManagedBean.editMode}" layout="block" style="text-align:right">  
+                                <p:commandButton value="Save" actionListener="#{manageAttractionsManagedBean.saveChanges}"   
+                                                 oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check" update="attractions"/>  
+                                <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
+                            </p:outputPanel>  
+                        </f:facet>              
+                    </h:panelGrid>
+                </p:dialog>
+
+                <p:dialog  width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
+                    <br/>
+                    Are you sure?
+                    <br/><br/>
+                    <p:commandButton value="Yes" update="attractions" actionListener="#{manageAttractionsManagedBean.deleteAttraction}" oncomplete="confirmation.hide()">  
+                        <f:attribute name="code1" value="#{manageAttractionsManagedBean.attr.id}" />
+                    </p:commandButton>
+                    <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
+
+                </p:dialog> 
+               </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
