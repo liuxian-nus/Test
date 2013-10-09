@@ -5,6 +5,7 @@
 package ESMS.session;
 
 import ESMS.entity.ShowEntity;
+import ESMS.entity.ShowScheduleEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,7 +23,7 @@ public class ShowSessionBean {
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     
-    ShowEntity show;
+    private ShowEntity show;
     
     public ShowSessionBean(){}
     
@@ -51,4 +52,11 @@ public class ShowSessionBean {
         Query q = em.createQuery("SELECT m FROM ShowEntity m");
         return q.getResultList();
     } 
+
+    public void addShowSchedule(Long showId, ShowScheduleEntity showSchedule) {
+        show = em.find(ShowEntity.class, showId);
+        show.addShowSchedule(showSchedule);
+        em.merge(show);
+    }
+
 }
