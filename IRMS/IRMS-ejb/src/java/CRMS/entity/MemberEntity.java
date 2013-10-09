@@ -5,6 +5,7 @@
 package CRMS.entity;
 
 import ACMS.entity.ReservationEntity;
+import ATMS.entity.TicketPurchaseEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.Entity;
@@ -49,6 +50,8 @@ public class MemberEntity implements Serializable {
     private Set <MemberTransactionEntity> MemberTransactions;
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "mcMemberTargets")
     private Set <MarketingCampaignEntity> MarketingCampaigns;
+    @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
+    private List <TicketPurchaseEntity> ticketPurchases=new ArrayList<TicketPurchaseEntity>();
     
     public Set<MarketingCampaignEntity> getMarketingCampaigns() {
         return MarketingCampaigns;
@@ -72,9 +75,16 @@ public class MemberEntity implements Serializable {
 
     public MemberEntity(){
     }
-    
 
+    public List<TicketPurchaseEntity> getTicketPurchases() {
+        return ticketPurchases;
+    }
+
+    public void setTicketPurchases(List<TicketPurchaseEntity> ticketPurchases) {
+        this.ticketPurchases = ticketPurchases;
+    }
     
+ 
     //create a new MemberEntity instance
    /* public void create(String memberEmail,String memberName,String memberPassword,String memberHP,String gender,String nationality,Date memberDob,boolean maritalStatus,boolean isSuscriber) {
         this.setMemberEmail(memberEmail);
