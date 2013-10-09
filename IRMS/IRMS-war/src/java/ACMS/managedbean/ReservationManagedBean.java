@@ -39,6 +39,57 @@ public class ReservationManagedBean implements Serializable {
     private ReservationEntity selectReservation;
     private ReservationEntity newReservation;
     private String searchId;
+    private String searchName;
+    private String searchEmail;
+
+    public EmailSessionBean getEmailSessionBean() {
+        return emailSessionBean;
+    }
+
+    public void setEmailSessionBean(EmailSessionBean emailSessionBean) {
+        this.emailSessionBean = emailSessionBean;
+    }
+
+    public ReservationSessionBean getReservationSessionBean() {
+        return reservationSessionBean;
+    }
+
+    public void setReservationSessionBean(ReservationSessionBean reservationSessionBean) {
+        this.reservationSessionBean = reservationSessionBean;
+    }
+
+    public List<ReservationEntity> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<ReservationEntity> reservationList) {
+        this.reservationList = reservationList;
+    }
+
+    public ReservationEntity getNewReservation() {
+        return newReservation;
+    }
+
+    public void setNewReservation(ReservationEntity newReservation) {
+        this.newReservation = newReservation;
+    }
+
+    public String getSearchName() {
+        return searchName;
+    }
+
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
+
+    public String getSearchEmail() {
+        return searchEmail;
+    }
+
+    public void setSearchEmail(String searchEmail) {
+        this.searchEmail = searchEmail;
+    }
+    
 
     public String getSearchId() {
         System.out.println("No3: we are in setearchId" + searchId);
@@ -79,6 +130,54 @@ public class ReservationManagedBean implements Serializable {
                 FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
                 System.out.println("we are after setting parameter");
                 request.getSession().setAttribute("reservationId", Long.valueOf(getSearchId()));
+                System.out.println("we are after setting reservationId session attribute");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
+        }
+    }
+    
+    public void searchByName(ActionEvent event) throws IOException, ExistException {
+
+        System.out.println("NO6 we are in searchByName function " + searchName);
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            reservationList = rm.getReservationByName(searchName);
+            if (reservationList == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservation does not exist!", ""));
+                return;
+            } else {
+                System.out.println("we are after search");
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);
+                System.out.println("we are after setting parameter");
+                request.getSession().setAttribute("rcName", searchName);
+                System.out.println("we are after setting reservationId session attribute");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
+        }
+    }
+    
+     public void searchByEmail(ActionEvent event) throws IOException, ExistException {
+
+        System.out.println("NO6 we are in searchByName function " + searchEmail);
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            reservationList = rm.getReservationByEmail(searchEmail);
+            if (reservationList == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservation does not exist!", ""));
+                return;
+            } else {
+                System.out.println("we are after search");
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);
+                System.out.println("we are after setting parameter");
+                request.getSession().setAttribute("rcEmail", searchEmail);
                 System.out.println("we are after setting reservationId session attribute");
                 FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
             }
@@ -133,7 +232,7 @@ public class ReservationManagedBean implements Serializable {
         System.out.println("NO4: we are in complete bean BEFORE");
         List<String> results = new ArrayList<String>();
 
-        List<ReservationEntity> reservationList = reservationSessionBean.getAllReservations();
+        reservationList = reservationSessionBean.getAllReservations();
         for (Object o : reservationList) {
             ReservationEntity rve = (ReservationEntity) o;
             if ((rve.getReservationId()).toString().startsWith(query)) {

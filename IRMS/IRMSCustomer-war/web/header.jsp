@@ -10,7 +10,7 @@
         <li><a href="hotel" >Hotel</a>
              <ul>
                <li><a href="hotel">Our Hotels</a></li>
-                <li><a href="hotelBooking">Book now</a></li>
+                <li><a href="hotelSearch">Book now</a></li>
                 <!--<li><a href="#">Sub menu 3</a></li>
                <li><a href="#">Sub menu 1</a></li>-->
             </ul>

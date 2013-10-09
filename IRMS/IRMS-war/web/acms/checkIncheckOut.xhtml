@@ -11,14 +11,35 @@
         <p:tabView id="tabView">  
             <p:tab id="tab1" title="Check In">  
                 <h:form id="formCheckIn">
-                    <p:growl id="growl" showDetail="true" sticky="true" />                    
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <h:outputText value="Reservation ID: " style="margin-right: 10px;"/>
-                        <p:autoComplete id="reservation" value="#{reservationManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
-                                        completeMethod="#{reservationManagedBean.complete}" />
-                        <p:spacer width="20"/>
-                        <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchById}" update ="growl"/>
-                    </h:panelGrid> 
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Search Reservation By ID" toggleable="true" toggleSpeed="500">  
+                        <h:panelGrid columns="2" cellpadding="10">  
+                            <h:outputText value="Reservation ID: " style="margin-right: 10px;"/>
+                            <p:autoComplete id="reservation1" value="#{reservationManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                                            completeMethod="#{reservationManagedBean.complete}" />
+                            <p:spacer width="20"/>
+                            <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchById}" update ="growl"/>
+                        </h:panelGrid> 
+                    </p:fieldset>
+                    <br/>
+                    <p:fieldset legend="Search Reservation By Guest Name" toggleable="true" toggleSpeed="500"> 
+                        <h:panelGrid columns="2" cellpadding="10">  
+                            <h:outputText value="Guest Name: " style="margin-right: 10px;"/>
+                            <p:autoComplete id="reservation2" value="#{reservationManagedBean.searchName}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                                            completeMethod="#{reservationManagedBean.complete}" />
+                            <p:spacer width="20"/>
+                            <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchByName}" update ="growl"/>
+                        </h:panelGrid> 
+                    </p:fieldset>
+                    <p:fieldset legend="Search Reservation By Guest Email" toggleable="true" toggleSpeed="500"> 
+                        <h:panelGrid columns="2" cellpadding="10">  
+                            <h:outputText value="Reservation Email: " style="margin-right: 10px;"/>
+                            <p:autoComplete id="reservation3" value="#{reservationManagedBean.searchEmail}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                                            completeMethod="#{reservationManagedBean.complete}" />
+                            <p:spacer width="20"/>
+                            <p:commandButton  value="Search" ajax="true" actionListener="#{reservationManagedBean.searchByEmail}" update ="growl"/>
+                        </h:panelGrid> 
+                    </p:fieldset>
                 </h:form>
             </p:tab>  
 

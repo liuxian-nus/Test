@@ -22,18 +22,18 @@ public class ReservationSessionBean {
     @PersistenceContext
     private EntityManager em;
     ReservationEntity reservation = new ReservationEntity();
+    List <ReservationEntity> reservations;
 
     public ReservationSessionBean() {
     }
 
-    public List<ReservationEntity> getAllReservations() throws ExistException {
+    public List<ReservationEntity> getAllReservations() {
         Query q = em.createQuery("SELECT re FROM ReservationEntity re");
         List reservationList = new ArrayList<ReservationEntity>();
         for (Object o : q.getResultList()) {
             ReservationEntity re = (ReservationEntity) o;
             reservationList.add(re);
          }
-        if(reservationList.isEmpty())  throw new ExistException("Reservation database is empty!");
         return reservationList;
         }
     
@@ -42,6 +42,26 @@ public class ReservationSessionBean {
 //        if(reservation == null)throw new ExistException("Reservation does not exist!");
         return reservation;
         }
+    
+    public List<ReservationEntity> getReservationByName(String rcName)
+    {
+        Query query = em.createQuery("SELECT r FROM EmployeeEntity r WHERE r.rcName ='" + rcName + "'");
+        System.err.println("getReservationByName: "+rcName);
+        //query.setParameter("employeeName", employeeName);
+        reservations = new ArrayList<ReservationEntity>();
+        reservations = query.getResultList();
+        return reservations;
+    }
+    
+     public List<ReservationEntity> getReservationByEmail(String rcEmail)
+    {
+        Query query = em.createQuery("SELECT r FROM EmployeeEntity r WHERE r.rcEmail ='" + rcEmail + "'");
+        System.err.println("getReservationByEmail: "+rcEmail);
+        //query.setParameter("employeeName", employeeName);
+        reservations = new ArrayList<ReservationEntity>();
+        reservations = query.getResultList();
+        return reservations;
+    }
     
     public void addReservation(ReservationEntity newReservation) {
     /*
