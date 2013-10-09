@@ -5,10 +5,10 @@
 package ESMS.session;
 
 import ESMS.entity.ShowTicketEntity;
-import Exception.ExistException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -19,35 +19,34 @@ import javax.persistence.Query;
 @Stateless
 public class ShowTicketSessionBean {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
+    
+    ShowTicketEntity showTicket;
+    
+    public ShowTicketSessionBean(){}
 
-    public ShowTicketEntity getFunctionality(Long funcId) throws ExistException {
-        ShowTicketEntity showTicket = em.find(ShowTicketEntity.class, funcId);
-        System.err.println("getShowTicket: " + showTicket.getShowTicketType());
-        if (showTicket == null) {
-            throw new ExistException("ShowTicketSessionBean-->ExistException-->Show Ticket doesn't exist!");
-        }
+    public ShowTicketEntity addShowTicket(ShowTicketEntity showTicket) {
+        em.persist(showTicket);
         return showTicket;
     }
 
-    public void addShowTicket(ShowTicketEntity showTicket) {
-        em.persist(showTicket);
-        em.flush();
-    }
-
-    public void updateShowTicketEntity(ShowTicketEntity showTicket) {
+    public boolean updateShowTicketEntity(ShowTicketEntity showTicket) {
         em.merge(showTicket);
-        em.flush();
+        return true;
     }
 
-    public void removeShowTicketEntity(Long showTicketId) {
-        ShowTicketEntity showTicket = em.find(ShowTicketEntity.class, showTicketId);
-        em.remove(showTicket);
+    public boolean deleteShowTicketEntity(Long showTicketId) {
+        showTicket = em.find(ShowTicketEntity.class, showTicketId);
+        if (showTicket==null){
+            System.out.println("deleteShowTicket: show does not exist!");
+            return false;
+        }
+        return true;
     }
 
-    public List<ShowTicketEntity> getAllShowTickets() {
-        Query query = em.createQuery("SELECT s1 FROM ShowTicketEntity s1");
-        return query.getResultList();
+    public List<ShowTicketEntity> getAllShowTickets() throws NoResultException{
+        Query q = em.createQuery("SELECT s1 FROM ShowTicketEntity s1");
+        return q.getResultList();
     }
 }

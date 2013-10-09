@@ -6,6 +6,7 @@ package ESMS.session;
 
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
+import ESMS.entity.ShowTicketEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,41 +23,47 @@ public class ShowSessionBean {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
-    
     private ShowEntity show;
-    
-    public ShowSessionBean(){}
-    
-    public ShowEntity addShow(ShowEntity show){
+
+    public ShowSessionBean() {
+    }
+
+    public ShowEntity addShow(ShowEntity show) {
         em.persist(show);
         return show;
     }
-    
-    public boolean deleteShow(Long showId){
+
+    public boolean deleteShow(Long showId) {
         show = em.find(ShowEntity.class, showId);
-        if (show==null){
+        if (show == null) {
             System.out.println("deleteShow: show does not exist!");
             return false;
         }
         return true;
     }
-    
-    public boolean updateShow(ShowEntity show)
-    {
+
+    public boolean updateShow(ShowEntity show) {
         em.merge(show);
         System.out.println("ShowSessionBean: show " + show.getShowName() + " is successfully updated");
         return true;
     }
-    
-    public List<ShowEntity> getAllShows() throws NoResultException{
+
+    public List<ShowEntity> getAllShows() throws NoResultException {
         Query q = em.createQuery("SELECT m FROM ShowEntity m");
         return q.getResultList();
-    } 
+    }
 
     public void addShowSchedule(Long showId, ShowScheduleEntity showSchedule) {
+        System.err.println("show session bean: add show schedule");
         show = em.find(ShowEntity.class, showId);
         show.addShowSchedule(showSchedule);
         em.merge(show);
     }
 
+    public void addShowTicket(Long showId, ShowTicketEntity showTicket) {
+        System.err.println("show session bean: add show ticket");
+        show = em.find(ShowEntity.class, showId);
+        show.addShowTicket(showTicket);
+        em.merge(show);
+    }
 }

@@ -21,8 +21,8 @@ public class ShowTicketEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long showTicketId;
     private String showTicketType;
-    private String showTicketPrice;
-    private String showTicketQuantity;
+    private Double showTicketPrice;
+    private int showTicketQuantity;
 
     public Long getShowTicketId() {
         return showTicketId;
@@ -40,22 +40,22 @@ public class ShowTicketEntity implements Serializable {
         this.showTicketType = showTicketType;
     }
 
-    public String getShowTicketPrice() {
+    public Double getShowTicketPrice() {
         return showTicketPrice;
     }
 
-    public void setShowTicketPrice(String showTicketPrice) {
+    public void setShowTicketPrice(Double showTicketPrice) {
         this.showTicketPrice = showTicketPrice;
     }
 
-    public String getShowTicketQuantity() {
+    public int getShowTicketQuantity() {
         return showTicketQuantity;
     }
 
-    public void setShowTicketQuantity(String showTicketQuantity) {
+    public void setShowTicketQuantity(int showTicketQuantity) {
         this.showTicketQuantity = showTicketQuantity;
     }
-    
+
     @Override
     public String toString() {
         return "ESMS.entity.ShowTicketEntity[ id=" + showTicketId + " ]";

@@ -27,7 +27,6 @@ public class ShowEntity implements Serializable {
     private Long showId;
     private String showName;
     private String showDescription;
-    private int showCapacity;
     
     @OneToMany(targetEntity = ShowTicketEntity.class, cascade = {CascadeType.MERGE})
     private List<ShowTicketEntity> showTickets = new ArrayList<ShowTicketEntity>();
@@ -80,13 +79,5 @@ public class ShowEntity implements Serializable {
 
     public void setShowId(Long showId) {
         this.showId = showId;
-    }
-    
-    public int getShowCapacity() {
-        return showCapacity;
-    }
-
-    public void setShowCapacity(int showCapacity) {
-        this.showCapacity = showCapacity;
     }
 }
