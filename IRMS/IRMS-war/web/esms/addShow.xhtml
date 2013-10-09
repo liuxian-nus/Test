@@ -8,24 +8,89 @@
 
 
     <ui:define name="content">
-        <h:form>
-            <p:growl id="message" showDetail="true" sticky="true" />
-            <p:panel id="addShow" header="Add New Show" style="height:495px;">
-                <div style="margin-left:150px;margin-top:60px;">
-                    <h:panelGrid id="grid" columns="3">
+        <p:tabView id="tabView"> 
+            <p:tab id="tab1" title="Add New Show"> 
+                <h:form id="addShow">
+                    <p:growl id="message" showDetail="true" sticky="true" />
+                    <h:panelGrid id="grid" columns="2">
                         <h:outputText value="Show Name" />
                         <h:inputText required="true" requiredMessage="Show name cannot be empty" value="#{addShowManagedBean.show.showName}" style="margin-bottom:10px;"/>
-                        <br/>
+                        <h:outputText value=""/><br/>
+
                         <h:outputText value="Show Description" />
                         <h:inputText required="true" requiredMessage="Show Description cannot be empty" value="#{addShowManagedBean.show.showDescription}" style="margin-bottom:10px;"/>
-                        <br/>
-                        <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShow}" update="message"/>
+                        <h:outputText value=""/><br/>
 
-                        <p:commandButton value="Clear" ajax="true" actionListener="#{addShowManagedBean.oneMore}" update="message"/>
+                        <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShow}" update="message"/>
+                        <p:commandButton value="Cancel" ajax="true" actionListener="#{addShowManagedBean.oneMore}" update="message"/>
                     </h:panelGrid>
-                </div>
-            </p:panel>
-        </h:form>
+                </h:form>
+            </p:tab>
+
+            <p:tab id="tab2" title="Add Show Schedule">
+                <h:form id="addShowSchedule">
+                    <p:growl id="msg"/>
+                    <h:panelGrid id="grid" columns="2">
+                        <h:outputText value="Show Name: "/>
+                        <p:selectOneMenu value="#{addShowManagedBean.showId}">  
+                            <f:selectItem itemLabel="Select Show" itemValue=""/>
+                            <f:selectItems value="#{addShowManagedBean.showSessionBean.allShows}" var="allShow" itemLabel="#{allShow.showName}" itemValue="#{allShow.showId}" />  
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Show start time: "/>
+                        <p:calendar value="#{addShowManagedBean.showSchedule.startTime}" pattern="HH:mm a" timeOnly="true" /> 
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Show end time: "/>
+                        <p:calendar value="#{addShowManagedBean.showSchedule.endTime}" pattern="HH:mm a" timeOnly="true" /> 
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Show date: "/>
+                        <p:calendar value="#{addShowManagedBean.showSchedule.showDate}" pattern="MM/dd/yyyy" mindate="#{addShowManagedBean.currentDate}"/> 
+                        <h:outputText value=""/><br/>
+
+                        <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShowSchedule}" update="msg"/>
+
+
+                    </h:panelGrid>
+                </h:form>
+            </p:tab>
+
+            <p:tab id="tab3" title="Add Show Ticket">
+                <h:form id="addShowTicket">
+                    <p:growl id="ticketMsg"/>
+                    <h:panelGrid id="grid" columns="2">
+                        <h:outputText value="Show Name: "/>
+                        <p:selectOneMenu value="#{addShowManagedBean.showId}">  
+                            <f:selectItem itemLabel="Select Show" itemValue=""/>
+                            <f:selectItems value="#{addShowManagedBean.showSessionBean.allShows}" var="allShow" itemLabel="#{allShow.showName}" itemValue="#{allShow.showId}" />  
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Ticket Type: "/>
+                        <h:inputText required="true" requiredMessage="Ticket type cannot be empty" value="#{addShowManagedBean.showTicket.showTicketType}" style="margin-bottom:10px;"/> 
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Ticket Price: "/>
+                        <h:inputText label="Ticket Price" required="true" requiredMessage="Ticket price cannot be empty" value="#{addShowManagedBean.showTicket.showTicketPrice}" style="margin-bottom:10px;">
+                            <f:convertNumber type="number" />
+                        </h:inputText> 
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Ticket Quantity: "/>
+                        <h:inputText label="Ticket Quantity" required="true" requiredMessage="Ticket type cannot be empty" value="#{addShowManagedBean.showTicket.showTicketQuantity}" style="margin-bottom:10px;"> 
+                            <f:convertNumber integerOnly="true" type="number" />
+                        </h:inputText> 
+                        <h:outputText value=""/><br/>
+
+                        <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShowSchedule}" update="ticketMsg"/>
+
+
+                    </h:panelGrid>
+                </h:form>
+            </p:tab>
+        </p:tabView>
     </ui:define>
 
 </ui:composition>
