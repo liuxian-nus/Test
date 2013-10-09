@@ -179,7 +179,10 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/ACMSServlet/hotelBook").forward(request, response);
             } else if ("event".equals(page)) {
                 request.getRequestDispatcher("/CEMSServlet/event").forward(request, response);
-            } else {
+            } else if ("eventVenueSearch".equals(page)) {
+                request.getRequestDispatcher("/CEMSServlet/eventVenueSearch").forward(request, response);
+            } 
+            else {
                 System.out.println("other page");
 
                 //Below is testing
