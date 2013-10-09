@@ -4,8 +4,13 @@
  */
 package servlet;
 
+import CEMS.entity.VenueEntity;
+import CEMS.session.EventSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,10 +24,12 @@ import javax.servlet.http.HttpSession;
  *
  * @author lionetdd
  */
-@WebServlet(name = "CEMSServlet", urlPatterns = {"/CEMSServlet","/CEMSServlet/*"})
+@WebServlet(name = "CEMSServlet", urlPatterns = {"/CEMSServlet", "/CEMSServlet/*"})
 public class CEMSServlet extends HttpServlet {
-
-      //private String keyword=null;
+    @EJB
+    private EventSessionBean eventSessionBean;
+    private List<VenueEntity> data;
+    //private String keyword=null;
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -33,6 +40,8 @@ public class CEMSServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    
     @Override
     public void init() {
         System.out.println("CEMSERVLET: init()");
@@ -60,6 +69,15 @@ public class CEMSServlet extends HttpServlet {
                 System.out.println("***event***");
 
                 request.getRequestDispatcher("/event.jsp").forward(request, response);
+            }
+            if ("eventVenueSearch".equalsIgnoreCase(page)) {
+                System.out.println("*****eventVenueSearch*****");
+                System.out.println("CEMSSevlet: Current page is eventVenueSearch!");
+                data = searchVenue(request);
+             
+                System.out.println(data.isEmpty());
+                request.setAttribute("data", data);
+                request.getRequestDispatcher("/eventVenueSearch.jsp").forward(request, response);
             } else {
                 System.out.println("other page");
             }
@@ -78,10 +96,11 @@ public class CEMSServlet extends HttpServlet {
          * @param response servlet response
          * @throws ServletException if a servlet-specific error occurs
          * @throws IOException if an I/O error occurs
+         * 
          */
-       
     }
-     @Override
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
@@ -98,7 +117,30 @@ public class CEMSServlet extends HttpServlet {
         System.out.println("irmsServlet: destroy()");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+        
+    private List<VenueEntity> searchVenue(HttpServletRequest request) {
+        
+        List <VenueEntity> al = new ArrayList <VenueEntity>();
+        System.out.println("method invoked");
+        String venueFunction = request.getParameter("venueFunction");
+        System.out.println(venueFunction);
+        System.out.println("venueFunction retrieved");
+        Integer venueCapacity   = Integer.parseInt(request.getParameter("venueCapacity"));
+        System.out.println(venueCapacity);
+   
+        al = eventSessionBean.searchVenue(venueCapacity, venueFunction);
+        
+        //System.out.println(re.getRestNeighbourhood()+re.getRestCuisine()+re.getRestTypeOfPlace());
+
+        
+      //  System.out.println(al.get(0));
+        System.out.println("CEMSServlet: event search venue has been completed!");
+
+
+
+        return al;
+        //To change body of generated methods, choose Tools | Templates.
+    }// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.
@@ -108,8 +150,6 @@ public class CEMSServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-
     /**
      * Returns a short description of the servlet.
      *
@@ -120,3 +160,4 @@ public class CEMSServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 }
+
