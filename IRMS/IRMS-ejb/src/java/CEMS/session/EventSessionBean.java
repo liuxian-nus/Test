@@ -8,6 +8,7 @@ import CEMS.entity.BookingEntity;
 import CEMS.entity.EventEntity;
 import CEMS.entity.ServiceEntity;
 import CEMS.entity.VenueEntity;
+import CEMS.entity.VenueFunctionEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -196,12 +197,21 @@ public class EventSessionBean {
         Query q = em.createQuery("SELECT v FROM VenueEntity v WHERE v.venueCapacity >= '"+venueCapacity+"'");
         System.out.println("EventSessionBean:SearchVenue: qualified venues have been retrieved 1");
         List<VenueEntity> qualifedVenues = new ArrayList<VenueEntity>();
+        Query q2 = em.createQuery("SELECT f FROM VenueFunctionEntity f WHERE f.functionName = '"+venueFunction+"'");
+        VenueFunctionEntity currentFunction = new VenueFunctionEntity();
+        
+        for(Object o:q2.getResultList())
+        {
+            VenueFunctionEntity vfe = (VenueFunctionEntity)o;
+            currentFunction = vfe;
+        }
         
         for(Object o: q.getResultList())
         {
             VenueEntity venue = (VenueEntity)o;
-            List<String> functions = venue.getVenueFunction();
-            if(functions.contains(venueFunction))
+            List<VenueFunctionEntity> functions = venue.getVenueFunction();
+            
+            if(functions.contains(currentFunction))
             { 
                 qualifedVenues.add(venue);
                 System.out.println("EventSessionBean:SearchVenue: one qualified venues have been added!");

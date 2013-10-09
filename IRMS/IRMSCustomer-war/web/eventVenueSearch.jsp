@@ -19,12 +19,9 @@
 
         <c:forEach items="${data}" var="data">
             <div class="row">
-                ${data.venueName}
+                <p> ${data.venueName}</p>
    
-                    <br>
-                    <form action="restaurantBook"><input class="small button" type="submit" value ="Make Reservation"/>
-                        <input type="hidden" name="restId" value="${data.restId}"/>
-                    </form> 
+               
                
             </div>
         </c:forEach>

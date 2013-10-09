@@ -25,7 +25,7 @@ public class VenueEntity implements Serializable {
     private String venueName;
    
     private int venueCapacity;
-    private List<String> venueFunction = new ArrayList<String>();
+    private List<VenueFunctionEntity> venueFunction = new ArrayList<VenueFunctionEntity>();
 
     public String getVenueName() {
         return venueName;
@@ -43,11 +43,11 @@ public class VenueEntity implements Serializable {
         this.venueCapacity = venueCapacity;
     }
 
-    public List<String> getVenueFunction() {
+    public List<VenueFunctionEntity> getVenueFunction() {
         return venueFunction;
     }
 
-    public void setVenueFunction(List<String> venueFunction) {
+    public void setVenueFunction(List<VenueFunctionEntity> venueFunction) {
         this.venueFunction = venueFunction;
     }
    
