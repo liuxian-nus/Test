@@ -9,9 +9,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Venue Booking For Your Event!</title>
+        <jsp:include page="base.jsp"></jsp:include>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <jsp:include page="header.jsp"></jsp:include>
+        <h4>Venue book for <strong> ${data.venueName} </strong></h4>
+        <form data-abide action="eventVenueCheck" method="POST">
+            <fieldset>
+                <legend>Book Venue</legend>
+                <div class="row">
+                    
+                </div>
+            </fieldset>
+        </form>
     </body>
 </html>
