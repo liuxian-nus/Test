@@ -6,8 +6,10 @@ package ESMS.managedBean;
 
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
+import ESMS.entity.ShowTicketEntity;
 import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
+import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -16,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import org.primefaces.event.CellEditEvent;
 
 /**
  *
@@ -30,9 +33,13 @@ public class ManageShowManagedBean {
     private ShowSessionBean showSessionBean;
     @EJB
     private ShowScheduleSessionBean showScheduleSessionBean;
+    @EJB
+    private ShowTicketSessionBean showTicketSessionBean;      
     
     private ShowEntity selectedShow;
     private ShowScheduleEntity selectedShowSchedule;
+    private ShowTicketEntity selectedShowTicket;
+    
     private boolean editMode;
     private Long id;
 
@@ -65,6 +72,11 @@ public class ManageShowManagedBean {
     public void deleteShowSchedule(ActionEvent event){
         setId((Long)event.getComponent().getAttributes().get("code2"));
         showScheduleSessionBean.deleteShowSchedule(getId());
+    }
+    
+    public void deleteShowTicket(ActionEvent event){
+        setId((Long)event.getComponent().getAttributes().get("code3"));
+        showTicketSessionBean.deleteShowTicket(getId());
     }
     
     public void saveChanges(ActionEvent event)
@@ -108,5 +120,29 @@ public class ManageShowManagedBean {
 
     public void setSelectedShowSchedule(ShowScheduleEntity selectedShowSchedule) {
         this.selectedShowSchedule = selectedShowSchedule;
+    }
+
+    public ShowScheduleSessionBean getShowScheduleSessionBean() {
+        return showScheduleSessionBean;
+    }
+
+    public void setShowScheduleSessionBean(ShowScheduleSessionBean showScheduleSessionBean) {
+        this.showScheduleSessionBean = showScheduleSessionBean;
+    }
+
+    public ShowTicketSessionBean getShowTicketSessionBean() {
+        return showTicketSessionBean;
+    }
+
+    public void setShowTicketSessionBean(ShowTicketSessionBean showTicketSessionBean) {
+        this.showTicketSessionBean = showTicketSessionBean;
+    }
+
+    public ShowTicketEntity getSelectedShowTicket() {
+        return selectedShowTicket;
+    }
+
+    public void setSelectedShowTicket(ShowTicketEntity selectedShowTicket) {
+        this.selectedShowTicket = selectedShowTicket;
     }
 }
