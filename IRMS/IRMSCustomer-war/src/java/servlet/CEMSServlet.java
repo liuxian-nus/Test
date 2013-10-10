@@ -71,8 +71,12 @@ public class CEMSServlet extends HttpServlet {
                 System.out.println("***event***");
 
                 request.getRequestDispatcher("/event.jsp").forward(request, response);
+            }else if ("eventRegister".equals(page)) {
+                System.out.println("***eventRegister***");
+
+                request.getRequestDispatcher("/eventRegister.jsp").forward(request, response);
             }
-            if ("eventVenueSearch".equalsIgnoreCase(page)) {
+            else if ("eventVenueSearch".equalsIgnoreCase(page)) {
                 System.out.println("*****eventVenueSearch*****");
                 System.out.println("CEMSSevlet: Current page is eventVenueSearch!");
                 data = searchVenue(request);
@@ -81,7 +85,7 @@ public class CEMSServlet extends HttpServlet {
                 request.setAttribute("data", data);
                 request.getRequestDispatcher("/eventVenueSearch.jsp").forward(request, response);
             } 
-            if("eventVenueBook".equalsIgnoreCase(page)){
+            else if("eventVenueBook".equalsIgnoreCase(page)){
                 System.out.println("*****eventVenueBook*****");
                 System.out.println("CEMSSevlet: Current page is eventVenueBook!");
                 Long venueId = Long.parseLong(request.getParameter("venueId"));
