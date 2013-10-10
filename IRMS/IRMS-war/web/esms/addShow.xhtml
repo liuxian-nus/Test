@@ -42,8 +42,8 @@
                         <p:calendar value="#{addShowManagedBean.showSchedule.startTime}" pattern="HH:mm a" timeOnly="true" /> 
                         <h:outputText value=""/><br/>
 
-                        <h:outputText value="Show end time: "/>
-                        <p:calendar value="#{addShowManagedBean.showSchedule.endTime}" pattern="HH:mm a" timeOnly="true" /> 
+                        <h:outputText value="Show duration: "/>
+                        <p:calendar value="#{addShowManagedBean.showSchedule.duration}" pattern="HH:mm" timeOnly="true" /> 
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Show date: "/>
@@ -51,8 +51,6 @@
                         <h:outputText value=""/><br/>
 
                         <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShowSchedule}" update="msg"/>
-
-
                     </h:panelGrid>
                 </h:form>
             </p:tab>
