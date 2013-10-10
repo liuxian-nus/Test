@@ -5,6 +5,8 @@
 package ESMS.managedBean;
 
 import ESMS.entity.ShowEntity;
+import ESMS.entity.ShowScheduleEntity;
+import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
 import Exception.ExistException;
 import java.util.List;
@@ -26,7 +28,11 @@ public class ManageShowManagedBean {
     
     @EJB
     private ShowSessionBean showSessionBean;
+    @EJB
+    private ShowScheduleSessionBean showScheduleSessionBean;
+    
     private ShowEntity selectedShow;
+    private ShowScheduleEntity selectedShowSchedule;
     private boolean editMode;
     private Long id;
 
@@ -56,6 +62,11 @@ public class ManageShowManagedBean {
         showSessionBean.deleteShow(getId());
     }
     
+    public void deleteShowSchedule(ActionEvent event){
+        setId((Long)event.getComponent().getAttributes().get("code2"));
+        showScheduleSessionBean.deleteShowSchedule(getId());
+    }
+    
     public void saveChanges(ActionEvent event)
     {
         showSessionBean.updateShow(getSelectedShow());
@@ -81,5 +92,21 @@ public class ManageShowManagedBean {
      */
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+    }
+
+    public ShowSessionBean getShowSessionBean() {
+        return showSessionBean;
+    }
+
+    public void setShowSessionBean(ShowSessionBean showSessionBean) {
+        this.showSessionBean = showSessionBean;
+    }
+
+    public ShowScheduleEntity getSelectedShowSchedule() {
+        return selectedShowSchedule;
+    }
+
+    public void setSelectedShowSchedule(ShowScheduleEntity selectedShowSchedule) {
+        this.selectedShowSchedule = selectedShowSchedule;
     }
 }
