@@ -4,10 +4,11 @@
                 template="./../Template/generalTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:define name="content">
-        
+
         <h:form id="form">
             <p:panel id="show" header="Show Management" style="height:495px;">
                 <div style="margin-top:20px;">
@@ -15,22 +16,30 @@
                     <p:dataTable id="shows" value="#{manageShowManagedBean.getShows()}" 
                                  var="showList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
                                  resizableColumns="true">
-                        
+
                         <p:column headerText="Show Name" style="width:70px;">
                             <h:outputText value="#{showList.showName}"/>
                         </p:column>
-                        
+
                         <p:column headerText="Description" style="width:300px;">
                             <h:outputText value="#{showList.showDescription}"/>
                         </p:column>
 
-                        <p:column style="width:100px">  
-                            <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
+                        <p:column style="width:120px">  
+                            <h:panelGrid columns="4" styleClass="actions" cellpadding="3">  
 
-                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-script" title="Edit Show Info">  
                                     <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
                                     <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.editMode}" />  
                                 </p:commandButton>  
+                                <p:commandButton update=":form:showSchedules" oncomplete="schedule.show()" icon="ui-icon ui-icon-calendar" title="Edit Schedule">  
+                                    <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
+                                    <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.editMode}" />  
+                                </p:commandButton> 
+                                <p:commandButton update=":form:ticket" oncomplete="ticket.show()" icon="ui-icon ui-icon-pencil" title="Edit Ticket">  
+                                    <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
+                                    <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.editMode}" />  
+                                </p:commandButton> 
                                 <p:commandButton update=":form:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
                                     <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
                                 </p:commandButton>  
@@ -43,9 +52,6 @@
                               showEffect="fade" hideEffect="explode" width="500">  
 
                         <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
-
-
-
                             <h:outputText value="Show Name" />  
                             <h:panelGroup>  
                                 <h:outputText value="#{manageShowManagedBean.selectedShow.showName}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/>  
@@ -70,8 +76,70 @@
                                 </p:outputPanel>  
                             </f:facet>  
                         </h:panelGrid>  
-
                     </p:dialog>
+
+                    <p:dialog header="Edit Schedule" widgetVar="schedule" resizable="false" id="schedule"  
+                              showEffect="fade" hideEffect="explode" width="1000">
+
+                        <p:dataTable id="showSchedules" value="#{manageShowManagedBean.selectedShow.showSchedules}" 
+                                     var="showSchedules" paginator="true" rows="3">
+                            <p:column headerText="Show start time: ">
+                                <h:outputText value="#{showSchedules.startTime}">
+                                    <f:convertDateTime pattern="HH:mm a"/>
+                                </h:outputText>
+                            </p:column>                         
+                            <p:column headerText="Show end time: ">
+                                <h:outputText value="#{showSchedules.endTime}">
+                                    <f:convertDateTime pattern="HH:mm a"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Show date: ">
+                                <h:outputText value="#{showSchedules.showDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                            </p:column> 
+                            <p:column>
+                                <p:commandButton update=":form:display" oncomplete="deleteSchedule.show()" icon="ui-icon ui-icon-close" title="Delete">
+                                    <f:setPropertyActionListener value="#{showSchedules}" target="#{manageShowManagedBean.selectedShowSchedule}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </p:dialog>
+
+                    <p:dialog header="Edit Ticket" widgetVar="ticket" resizable="false" id="ticket"  
+                              showEffect="fade" hideEffect="explode" width="1000">
+
+                        <p:dataTable id="showTicket" value="#{manageShowManagedBean.selectedShow.showTickets}" 
+                                     var="showTickets" paginator="true" rows="3">
+                            <p:column headerText="Show ticket type: ">
+                                <h:outputText value="#{showTickets.showTicketType}">
+                                </h:outputText>
+                            </p:column>                         
+                            <p:column headerText="Show ticket price: ">
+                                <h:outputText value="#{showTickets.showTicketPrice}">
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Show ticket quantity: ">
+                                <h:outputText value="#{showTickets.showTicketQuantity}">
+                                </h:outputText>
+                            </p:column> 
+                            <!--<p:column>
+                                <p:commandButton update=":form:display" oncomplete="deleteSchedule.show()" icon="ui-icon ui-icon-close" title="Delete">
+                                    <f:setPropertyActionListener value="#{showSchedules}" target="#{manageShowManagedBean.selectedShowSchedule}" />
+                                </p:commandButton>
+                            </p:column>-->
+                        </p:dataTable>
+                    </p:dialog>
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Delete Show Schedule" widgetVar="deleteSchedule">  
+                        <br/>
+                        Are you sure to delete?
+                        <br/><br/>
+                        <p:commandButton value="Yes" update="showSchedules" actionListener="#{manageShowManagedBean.deleteShowSchedule}" oncomplete="deleteSchedule.hide()">  
+                            <f:attribute name="code2" value="#{manageShowManagedBean.selectedShowSchedule.showScheduleId}" />
+                        </p:commandButton>
+                        <p:commandButton value="Not yet" onclick="deleteSchedule.hide()" type="button" />  
+                    </p:dialog> 
 
                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
                         <br/>
@@ -85,7 +153,7 @@
                 </div>
             </p:panel>
         </h:form>  
-        
+
     </ui:define>
 
 </ui:composition>
