@@ -13,12 +13,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Ser3na
  */
 @Entity
+@Table(
+        uniqueConstraints =
+        @UniqueConstraint(columnNames = {"showName"}))
 public class ShowEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,7 +32,6 @@ public class ShowEntity implements Serializable {
     private Long showId;
     private String showName;
     private String showDescription;
-    
     @OneToMany(targetEntity = ShowTicketEntity.class, cascade = {CascadeType.MERGE})
     private List<ShowTicketEntity> showTickets = new ArrayList<ShowTicketEntity>();
     @OneToMany(targetEntity = ShowScheduleEntity.class, cascade = {CascadeType.MERGE})
@@ -40,11 +44,11 @@ public class ShowEntity implements Serializable {
     public void setShowSchedules(List<ShowScheduleEntity> showSchedules) {
         this.showSchedules = showSchedules;
     }
-    
-    public void addShowSchedule(ShowScheduleEntity showSchedule){
+
+    public void addShowSchedule(ShowScheduleEntity showSchedule) {
         this.showSchedules.add(showSchedule);
     }
-    
+
     public List<ShowTicketEntity> getShowTickets() {
         return showTickets;
     }
