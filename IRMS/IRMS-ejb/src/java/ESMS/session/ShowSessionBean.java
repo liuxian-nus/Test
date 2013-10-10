@@ -39,6 +39,7 @@ public class ShowSessionBean {
             System.out.println("deleteShow: show does not exist!");
             return false;
         }
+        em.remove(show);
         return true;
     }
 
@@ -52,7 +53,7 @@ public class ShowSessionBean {
         Query q = em.createQuery("SELECT m FROM ShowEntity m");
         return q.getResultList();
     }
-
+    
     public void addShowSchedule(Long showId, ShowScheduleEntity showSchedule) {
         System.err.println("show session bean: add show schedule");
         show = em.find(ShowEntity.class, showId);

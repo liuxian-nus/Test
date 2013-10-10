@@ -31,13 +31,10 @@ public class ShowScheduleSessionBean {
         return showSchedule;
     }
     
-    public boolean deleteShowSchedule(Long showScheduleId){
+    public void deleteShowSchedule(Long showScheduleId){
         showSchedule = em.find(ShowScheduleEntity.class, showScheduleId);
-        if (showSchedule==null){
-            System.out.println("deleteShowSchedule: show does not exist!");
-            return false;
-        }
-        return true;
+        System.err.println("Show Schedule Id: "+showScheduleId);
+        em.remove(showSchedule);
     }
     
     public boolean updateShowSchedule(ShowScheduleEntity showSchedule)
