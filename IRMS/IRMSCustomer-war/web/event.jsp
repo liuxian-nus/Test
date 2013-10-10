@@ -67,8 +67,15 @@
                 </div>
               
                 <div class="large-3 columns">
-                    <input type="submit" class="button" value="Request for proposal">
-                    <input type="submit" class="button" value="Manage your event   ">
+                    
+                       <ul class="button-group">                    
+                                  <li><a href="eventRegister" class="button">Request for proposal</a></li>
+                                  <li><a href="eventManage" class="button">Manage your event &nbsp&nbsp   </a></li>
+                            </ul>
+           
+                   <!-- <input h class="button" value="Request for proposal">
+         
+                    <input type="submit" class="button" value="Manage your event   ">-->
                 </div>
             </div>
 
