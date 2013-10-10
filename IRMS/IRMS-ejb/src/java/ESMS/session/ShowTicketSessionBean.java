@@ -31,17 +31,18 @@ public class ShowTicketSessionBean {
         return showTicket;
     }
 
-    public boolean updateShowTicketEntity(ShowTicketEntity showTicket) {
+    public boolean updateShowTicket(ShowTicketEntity showTicket) {
         em.merge(showTicket);
         return true;
     }
 
-    public boolean deleteShowTicketEntity(Long showTicketId) {
+    public boolean deleteShowTicket(Long showTicketId) {
         showTicket = em.find(ShowTicketEntity.class, showTicketId);
         if (showTicket==null){
             System.out.println("deleteShowTicket: show does not exist!");
             return false;
         }
+        em.remove(showTicket);
         return true;
     }
 

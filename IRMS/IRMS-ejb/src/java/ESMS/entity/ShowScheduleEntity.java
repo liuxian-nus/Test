@@ -25,7 +25,7 @@ public class ShowScheduleEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIME)
     private Date startTime;
     @Temporal(javax.persistence.TemporalType.TIME)
-    private Date endTime;
+    private Date duration;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date showDate;
 
@@ -45,12 +45,12 @@ public class ShowScheduleEntity implements Serializable {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public Date getDuration() {
+        return duration;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setDuration(Date duration) {
+        this.duration = duration;
     }
 
     public Date getShowDate() {
