@@ -20,11 +20,24 @@
                         <h:outputText value="Show Description" />
                         <h:inputText required="true" requiredMessage="Show Description cannot be empty" value="#{addShowManagedBean.show.showDescription}" style="margin-bottom:10px;"/>
                         <h:outputText value=""/><br/>
-              
+
+                        <h:outputText value="Show Type" />
+                        <p:selectOneRadio id="options" value="#{addShowManagedBean.show.showType}" onchange="this.form.submit()" requiredMessage="Show Type cannot be empty">  
+                            <f:selectItem itemLabel="Internal" itemValue="Internal" />  
+                            <f:selectItem itemLabel="External" itemValue="External" />  
+                        </p:selectOneRadio> 
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Ticket Commission Percentage: " rendered="#{addShowManagedBean.isExternal()}"/>
+                        <h:inputText label="Ticket Commission" required="true" requiredMessage="Ticket commission cannot be empty" value="#{addShowManagedBean.show.ticketCommission}" rendered="#{addShowManagedBean.isExternal()}" >
+                            <f:convertNumber type="percent"/>
+                        </h:inputText> 
+                        <h:outputText value=""/><br/>
+
                         <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShow}" update="message"/>
                         <p:commandButton value="Cancel" ajax="true" actionListener="#{addShowManagedBean.oneMore}" update="message"/>
-                    
-                        </h:panelGrid>
+
+                    </h:panelGrid>
                 </h:form>
             </p:tab>
 

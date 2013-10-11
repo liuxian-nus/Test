@@ -25,7 +25,15 @@
                             <h:outputText value="#{showList.showDescription}"/>
                         </p:column>
 
-                        <p:column style="width:120px">  
+                        <p:column headerText="Type" style="width:70px;">
+                            <h:outputText value="#{showList.showType}"/>
+                        </p:column>
+
+                        <p:column headerText="Commission" style="width:70px;">
+                            <h:outputText value="#{showList.ticketCommission}"/>
+                        </p:column>
+
+                        <p:column style="width:145px">  
                             <h:panelGrid columns="4" styleClass="actions" cellpadding="3">  
 
                                 <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-script" title="Edit Show Info">  
@@ -65,6 +73,26 @@
                                 <p:inputTextarea id="showDescription" required="true" requiredMessage="Show Description cannot be empty" value="#{manageShowManagedBean.selectedShow.showDescription}" rendered="#{manageShowManagedBean.editMode}"  label="Show Description"/>  
                                 <p:message for="showDescription"/>
                             </h:panelGroup>
+
+                            <h:outputText value="Show Type" />  
+                            <h:panelGroup>  
+                                <h:outputText value="#{manageShowManagedBean.selectedShow.showType}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/>  
+                                <p:selectOneRadio id="options" value="#{manageShowManagedBean.selectedShow.showType}" requiredMessage="Show Type cannot be empty">  
+                                    <f:selectItem itemLabel="Internal" itemValue="Internal" />  
+                                    <f:selectItem itemLabel="External" itemValue="External" />  
+                                </p:selectOneRadio>
+                                <p:message for="options"/>
+                            </h:panelGroup>
+
+                            <h:outputText value="Ticket Commission" />
+                            <h:panelGroup>  
+                                <h:outputText value="#{manageShowManagedBean.selectedShow.ticketCommission}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/> 
+                                <h:inputText id="ticketCom" label="Ticket Commission" value="#{manageShowManagedBean.selectedShow.ticketCommission}">
+                                    <f:convertNumber type="percent"/>
+                                </h:inputText>  
+                                <p:message for="ticketCom"/>
+                            </h:panelGroup> 
+
                             <f:facet name="footer">  
                                 <p:outputPanel rendered="#{manageShowManagedBean.editMode}" layout="block" style="text-align:right">  
                                     <p:commandButton value="Save" update="show" actionListener="#{manageShowManagedBean.saveChanges}"   
