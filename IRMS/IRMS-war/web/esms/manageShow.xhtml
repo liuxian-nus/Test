@@ -114,7 +114,7 @@
                                 <p:cellEditor>
                                     <f:facet name="output">
                                         <h:outputText value="#{showSchedules.showDate}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            <f:convertDateTime pattern="MM/dd/yyyy"/>
                                         </h:outputText>
                                     </f:facet>
                                     <f:facet name="input">
@@ -122,8 +122,8 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column> 
-                            
-                            <p:column id="ssc">
+
+                            <p:column>
                                 <p:rowEditor rendered="#{manageShowManagedBean.editSchedule}"/>
                                 <p:commandButton update="showSchedules" title="Edit" icon="ui-icon ui-icon-pencil" ajax="true" rendered="#{!manageShowManagedBean.editSchedule}">  
                                     <f:setPropertyActionListener value="#{showSchedules}" target="#{manageShowManagedBean.selectedShowSchedule}"/>
@@ -137,19 +137,48 @@
                               showEffect="fade" hideEffect="explode" width="1000">
 
                         <p:dataTable id="showTickets" value="#{manageShowManagedBean.selectedShow.showTickets}" 
-                                     var="showTickets" paginator="true" rows="3">
+                                     var="showTickets" paginator="true" rows="3" editable="true">
+
+                            <p:ajax event="rowEdit" listener="#{manageShowManagedBean.onEditTicket}" update=":form:showTickets"/>
+                            <p:ajax event="rowEditCancel" listener="#{manageShowManagedBean.onCancel}" update=":form:showTickets" />
+
                             <p:column headerText="Show ticket type: ">
-                                <h:outputText value="#{showTickets.showTicketType}">
-                                </h:outputText>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{showTickets.showTicketType}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <h:inputText value="#{showTickets.showTicketType}"/>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>                         
                             <p:column headerText="Show ticket price: ">
-                                <h:outputText value="#{showTickets.showTicketPrice}">
-                                </h:outputText>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{showTickets.showTicketPrice}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <h:inputText value="#{showTickets.showTicketPrice}"/>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
                             <p:column headerText="Show ticket quantity: ">
-                                <h:outputText value="#{showTickets.showTicketQuantity}">
-                                </h:outputText>
-                            </p:column> 
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{showTickets.showTicketQuantity}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <h:inputText value="#{showTickets.showTicketQuantity}"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column>
+                                <p:rowEditor rendered="#{manageShowManagedBean.editTicket}"/>
+                                <p:commandButton update="showTickets" title="Edit" icon="ui-icon ui-icon-pencil" ajax="true" rendered="#{!manageShowManagedBean.editTicket}">  
+                                    <f:setPropertyActionListener value="#{showTickets}" target="#{manageShowManagedBean.selectedShowTicket}"/>
+                                    <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.editTicket}" />
+                                </p:commandButton>
+                            </p:column>
                         </p:dataTable>
                     </p:dialog>
 
