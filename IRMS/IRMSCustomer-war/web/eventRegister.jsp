@@ -471,6 +471,16 @@
                             </div>
                         </div>
                         <div class="large-6 columns">
+                            <div class="large-5 columns">
+                                <label for="right-label" class="left-align,inline"><strong>Notes</label>
+                            </div>
+                            <div>
+                                <div class="large-7 columns">
+                                    <input type="textarea" rows="4" cols="50" name="company">
+                          
+                                </div>
+                            </div>
+                            
 
                         </div>
                     </div>
