@@ -19,8 +19,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.RowEditEvent;
 
 /**
  *

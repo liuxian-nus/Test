@@ -39,6 +39,7 @@ public class ManageShowManagedBean {
     private ShowTicketEntity selectedShowTicket;
     private boolean editMode;
     private boolean editSchedule;
+    private boolean editTicket;
     private Long id;
 
     public Long getId() {
@@ -55,10 +56,16 @@ public class ManageShowManagedBean {
     public ManageShowManagedBean() {
         selectedShow = new ShowEntity();
     }
-    
+
     public void onEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Schedule Edited", null);
         showScheduleSessionBean.updateShowSchedule(selectedShowSchedule);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onEditTicket(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Schedule Edited", null);
+        showTicketSessionBean.updateShowTicket(selectedShowTicket);
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
@@ -164,5 +171,13 @@ public class ManageShowManagedBean {
 
     public void setEditSchedule(boolean editSchedule) {
         this.editSchedule = editSchedule;
+    }
+
+    public boolean isEditTicket() {
+        return editTicket;
+    }
+
+    public void setEditTicket(boolean editTicket) {
+        this.editTicket = editTicket;
     }
 }
