@@ -76,35 +76,63 @@
                         </h:panelGrid>  
                     </p:dialog>
 
-                    <p:dialog header="Schedule" widgetVar="schedule" resizable="false" id="schedule"  
+                    <p:dialog header="Edit Schedule" widgetVar="schedule" resizable="false" id="schedule"  
                               showEffect="fade" hideEffect="explode" width="1000">
                         <p:dataTable id="showSchedules" value="#{manageShowManagedBean.selectedShow.showSchedules}" 
-                                     var="showSchedules" paginator="true" rows="3">
+                                     var="showSchedules" paginator="true" rows="3" editable="true">
+
+                            <p:ajax event="rowEdit" listener="#{manageShowManagedBean.onEdit}" update=":form:showSchedules"/>
+                            <p:ajax event="rowEditCancel" listener="#{manageShowManagedBean.onCancel}" update=":form:showSchedules" />
 
                             <p:column headerText="Show start time: ">
-                                <h:outputText value="#{showSchedules.startTime}">
-                                    <f:convertDateTime pattern="HH:mm a"/>
-                                </h:outputText>
-                            </p:column>                         
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{showSchedules.startTime}">
+                                            <f:convertDateTime pattern="HH:mm a"/>
+                                        </h:outputText>
+                                    </f:facet>
+                                    <f:facet name="input">  
+                                        <p:calendar value="#{showSchedules.startTime}" pattern="HH:mm a" timeOnly="true" />  
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>    
+
                             <p:column headerText="Show duration: ">
-                                <h:outputText value="#{showSchedules.duration}">
-                                    <f:convertDateTime pattern="HH:mm"/>
-                                </h:outputText>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{showSchedules.duration}">
+                                            <f:convertDateTime pattern="HH:mm"/>
+                                        </h:outputText>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:calendar value="#{showSchedules.duration}" pattern="HH:mm" timeOnly="true" />
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
+
                             <p:column headerText="Show date: ">
-                                <h:outputText value="#{showSchedules.showDate}">
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{showSchedules.showDate}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:calendar value="#{showSchedules.showDate}" pattern="MM/dd/yyyy" mindate="#{addShowManagedBean.currentDate}"/>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column> 
-                            <!--<p:column>
-                                <p:commandButton update=":form:display" oncomplete="scheduleDlg.show()" icon="ui-icon ui-icon-pencil" title="Edit">
-                                    <f:setPropertyActionListener value="#{showSchedules}" target="#{manageShowManagedBean.selectedShowSchedule}" />
-                                    <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.editMode}" />
+                            
+                            <p:column id="ssc">
+                                <p:rowEditor rendered="#{manageShowManagedBean.editSchedule}"/>
+                                <p:commandButton update="showSchedules" title="Edit" icon="ui-icon ui-icon-pencil" ajax="true" rendered="#{!manageShowManagedBean.editSchedule}">  
+                                    <f:setPropertyActionListener value="#{showSchedules}" target="#{manageShowManagedBean.selectedShowSchedule}"/>
+                                    <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.editSchedule}" />
                                 </p:commandButton>
-                            </p:column>-->
+                            </p:column>
                         </p:dataTable>
                     </p:dialog>
-                    
+
                     <p:dialog header="Ticket" widgetVar="ticket" resizable="false" id="ticket"  
                               showEffect="fade" hideEffect="explode" width="1000">
 
@@ -122,11 +150,6 @@
                                 <h:outputText value="#{showTickets.showTicketQuantity}">
                                 </h:outputText>
                             </p:column> 
-                            <!--<p:column>
-                                <p:commandButton update=":form:display" oncomplete="deleteTicket.show()" icon="ui-icon ui-icon-close" title="Delete">
-                                    <f:setPropertyActionListener value="#{showTickets}" target="#{manageShowManagedBean.selectedShowTicket}" />
-                                </p:commandButton>
-                            </p:column>-->
                         </p:dataTable>
                     </p:dialog>
 
@@ -146,25 +169,3 @@
     </ui:define>
 
 </ui:composition>
-
-
-
-<!--<p:dialog width="300" showEffect="explode" hideEffect="explode" header="Delete Show Ticket" widgetVar="deleteTicket">  
-    <br/>
-    Are you sure to delete?
-    <br/><br/>
-    <p:commandButton value="Yes" update="showTickets" actionListener="#{manageShowManagedBean.deleteShowTicket}" oncomplete="deleteTicket.hide()">  
-        <f:attribute name="code3" value="#{manageShowManagedBean.selectedShowTicket.showTicketId}" />
-    </p:commandButton>
-    <p:commandButton value="Not yet" onclick="deleteTicket.hide()" type="button" />  
-</p:dialog> 
-
-<p:dialog width="300" showEffect="explode" hideEffect="explode" header="Delete Show Schedule" widgetVar="deleteSchedule">  
-    <br/>
-    Are you sure to delete?
-    <br/><br/>
-    <p:commandButton value="Yes" update="showSchedules" actionListener="#{manageShowManagedBean.deleteShowSchedule}" oncomplete="deleteSchedule.hide()">  
-        <f:attribute name="code2" value="#{manageShowManagedBean.selectedShowSchedule.showScheduleId}" />
-    </p:commandButton>
-    <p:commandButton value="Not yet" onclick="deleteSchedule.hide()" type="button" />  
-</p:dialog>-->
