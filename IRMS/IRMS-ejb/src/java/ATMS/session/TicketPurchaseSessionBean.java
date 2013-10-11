@@ -8,6 +8,7 @@ import ATMS.entity.AttractionEntity;
 import ATMS.entity.TicketEntity;
 import ATMS.entity.TicketPurchaseEntity;
 import CRMS.entity.MemberEntity;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -27,7 +28,7 @@ public class TicketPurchaseSessionBean {
     private EntityManager em;
     
     private TicketPurchaseEntity tp;
-    private TicketEntity ticket;
+    private TicketEntity ticket=new TicketEntity();
     private List<TicketEntity> tkts;
     private MemberEntity member=new MemberEntity();
     
@@ -37,7 +38,8 @@ public class TicketPurchaseSessionBean {
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public long addTicketPurchase(TicketPurchaseEntity tp){
+    public Long addTicketPurchase(TicketPurchaseEntity tp){
+        
         em.persist(tp);
         System.out.println("tpId: "+tp.getId());
         return tp.getId();
@@ -63,8 +65,7 @@ public class TicketPurchaseSessionBean {
         System.out.println("tp found"+tp.getId());
         tp.setTickets(tkts);
         System.out.println("tickets set");
-     //   setMemberEmail
-        tp.setQuantity(quantity);
+   //     tp.setQuantity(quantity);
         System.out.println("ticket quantity set");
         em.merge(tp);
         em.flush();
@@ -72,6 +73,35 @@ public class TicketPurchaseSessionBean {
        // return tp.getId();     
         return;
     }
+    
+    
+    public void updateDate(Long tpId, Date date){
+        tp=em.find(TicketPurchaseEntity.class, tpId);
+        tp.setBookDate(date);
+        System.out.println("date updated."+date);
+    }
+    
+    public void updateFee(Long tpId, double fee){
+        tp=em.find(TicketPurchaseEntity.class, tpId);
+        tp.setFee(fee);
+        System.out.println("fee updated."+fee);
+    }
+    
+    public void updatePurchase(Long tpId, List<TicketEntity> tkts, List<Integer> quantities, Date date, double fee){
+        tp=em.find(TicketPurchaseEntity.class, tpId);
+        tp.setTickets(tkts);
+        tp.setQuantity(quantities);
+        tp.setBookDate(date);
+        tp.getFee();
+        System.out.println("quantity2:"+quantities.get(1));
+        System.out.println("quantity size: "+quantities.size());
+        em.merge(tp);
+        em.flush();
+        System.out.println("tp updated in database");
+    }
+
+    
+    
     
     /*public void addTicket(TicketEntity ticket){
         System.out.println("into TicketPurchaseSessionBean: addTicket");
@@ -94,22 +124,7 @@ public class TicketPurchaseSessionBean {
         
     }*/
   
-    
- /*   private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @OneToOne(cascade ={CascadeType.ALL})
-    TicketEntity ticket;
-    @ManyToOne
-    private MemberEntity member=new MemberEntity();
-    private Integer quantity;
-    private double fee;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    Date bookDate =new Date();
-    @Temporal(javax.persistence.TemporalType.DATE)
-    Date lastDate=new Date();*/
-    
+   
     
 
     public void persist(Object object) {

@@ -29,15 +29,13 @@ public class TicketPurchaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToMany(cascade ={CascadeType.PERSIST})
-    List<TicketEntity> tickets;
+    private List<TicketEntity> tickets;
     @ManyToOne
     private MemberEntity member;
-    private Integer quantity;
+    private List<Integer> quantity;
     private double fee;
     @Temporal(javax.persistence.TemporalType.DATE)
     Date bookDate =new Date();
-    @Temporal(javax.persistence.TemporalType.DATE)
-    Date lastDate=new Date();
     
             
     public Long getId() {
@@ -64,13 +62,14 @@ public class TicketPurchaseEntity implements Serializable {
         this.member = member;
     }
 
-    public Integer getQuantity() {
+    public List<Integer> getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(List<Integer> quantity) {
         this.quantity = quantity;
     }
+
 
     public double getFee() {
         return fee;
@@ -88,13 +87,6 @@ public class TicketPurchaseEntity implements Serializable {
         this.bookDate = bookDate;
     }
 
-    public Date getLastDate() {
-        return lastDate;
-    }
-
-    public void setLastDate(Date lastDate) {
-        this.lastDate = lastDate;
-    }
     
     
 
