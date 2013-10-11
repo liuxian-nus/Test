@@ -32,12 +32,13 @@ public class LogBookManagedBean {
     @EJB
     private LogBookSessionBean logBookSessionBean;
     private LogBookEntity thisLog;
-    private LogBookEntity newLog = new LogBookEntity();
+    private LogBookEntity newLog;
     private List<LogBookEntity> logList;
     private Long logId;
     
     
     public LogBookManagedBean() {
+         newLog = new LogBookEntity();
     }
     
      @PostConstruct
@@ -61,7 +62,8 @@ public class LogBookManagedBean {
 
         try {
         System.err.println("we are in log book managedbean " + newLog.getLogTitle() );
-        newLog = (LogBookEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("logs");
+        System.out.println("get log entity" + newLog.getLogTitle());
+        System.out.println("get log entity" + newLog.getLogText());
         logBookSessionBean.addLog(newLog);
         System.err.println("we are after log book managedbean " + newLog.getLogTitle() );
          } catch (Exception e) {
@@ -104,7 +106,7 @@ public class LogBookManagedBean {
         this.thisLog = log;
     }
 
-    public List<LogBookEntity> getLogList() throws ExistException {
+    public List<LogBookEntity> getLogList() {
         System.err.println("in get all logs");
         return logBookSessionBean.getAllLogs();
     }
@@ -119,6 +121,14 @@ public class LogBookManagedBean {
 
     public void setLogId(Long logId) {
         this.logId = logId;
+    }
+
+    public LogBookEntity getNewLog() {
+        return newLog;
+    }
+
+    public void setNewLog(LogBookEntity newLog) {
+        this.newLog = newLog;
     }
     
     

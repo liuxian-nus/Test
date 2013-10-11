@@ -5,11 +5,15 @@
 package servlet;
 
 import ACMS.entity.ReservationEntity;
+import ACMS.session.ReservationSessionBean;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,6 +29,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ACMSServlet", urlPatterns = {"/ACMSServlet", "/ACMSServlet/*"})
 public class ACMSServlet extends HttpServlet {
+    @EJB
+    private ReservationSessionBean reservationSessionBean;
 
     ReservationEntity data = new ReservationEntity();
     boolean isAvailable = false;
@@ -140,8 +146,27 @@ public class ACMSServlet extends HttpServlet {
     }
 
     private boolean checkAvailability(ReservationEntity data) {
-        int availableCount;
-       //total number of rooms availableCount = 60; (eg.)
+        List<ReservationEntity> reservationList = reservationSessionBean.getAllReservations();
+        int count = 0;
+        //set for total room number
+        if ((data.getReservationHotelNo() == 1)&&(data.getReservationRoomType().equals("Deluxe"))) count = 80;
+        else if ((data.getReservationHotelNo() == 1)&&(data.getReservationRoomType().equals("Deluxe Suite"))) count = 50;
+        else if ((data.getReservationHotelNo() == 1)&&(data.getReservationRoomType().equals("Orchard Suite"))) count = 30;
+        else if ((data.getReservationHotelNo() == 2)&&(data.getReservationRoomType().equals("Deluxe"))) count = 100;
+        else if ((data.getReservationHotelNo() == 2)&&(data.getReservationRoomType().equals("Deluxe Suite"))) count = 60;
+        else if ((data.getReservationHotelNo() == 2)&&(data.getReservationRoomType().equals("Chairman Suite"))) count = 20;
+        else if ((data.getReservationHotelNo() == 3)&&(data.getReservationRoomType().equals("Superior"))) count = 60;
+        else if ((data.getReservationHotelNo() == 3)&&(data.getReservationRoomType().equals("Deluxe"))) count = 60;
+        else if ((data.getReservationHotelNo() == 3)&&(data.getReservationRoomType().equals("Deluxe Suite"))) count = 50;
+        System.out.println("room information: " + data.getReservationHotelNo() + data.getReservationRoomType());
+        System.err.println("Total number of rooms is: " + count);
+        //while loop: deduct unavailable rooms
+        Iterator <ReservationEntity> itr = reservationList.iterator();
+        while(itr.hasNext()) {
+              ReservationEntity re = itr.next();
+              
+        }
+
         //for loop: for each reservation
        //if RcCheckOutDate.after(inDate) && RcCheckInDate.before(outDate) availableCount--;
         //if roomCount <= availableCount return true; else return false;

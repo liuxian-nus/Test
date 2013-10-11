@@ -34,7 +34,8 @@ public class ReservationSessionBean {
         for (Object o : q.getResultList()) {
             ReservationEntity re = (ReservationEntity) o;
             reservationList.add(re);
-         }
+         } 
+        System.out.println("session bean return a full list of all reservations");
         return reservationList;
         }
     

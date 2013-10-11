@@ -12,7 +12,7 @@
             <p:panel id="search" header="Search Result" style="height:495px;">
                 <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
                     <p:growl id="msgs" showDetail="true" /> 
-                    <p:dataTable id="logs" value="#{logBookManagedBean.getLogList()}" var="logs" paginator="true" rows="10">
+                    <p:dataTable id="logList" value="#{logBookManagedBean.getLogList()}" var="logs" paginator="true" rows="10">
                         <p:ajax event="rowToggle" listener="#{logBookManagedBean.onRowToggle}" /> 
                         <f:facet name="header">  
                             Employee Shift Log Book for Hotel  
@@ -48,7 +48,7 @@
 
                         <p:column style="width:70px;">
                             <f:facet name="header">Action</f:facet>
-                            <p:commandButton oncomplete="delete.show()" ajax="true"  icon="ui-icon ui-icon-close" title="Delete" value ="Delete" >
+                            <p:commandButton oncomplete="deleteDia.show()" ajax="true"  icon="ui-icon ui-icon-close" title="delete" value ="Delete" >
                                 <f:setPropertyActionListener value="#{logs}" target="#{logBookManagedBean.thisLog}" />  
                             </p:commandButton>
                         </p:column>
@@ -86,27 +86,26 @@
                 <p:dialog width="500" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">
                     <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
                         <h:outputText value="Please enter your shift: "/>
-                        <h:inputText value ="#{logs.logShift}" />
+                        <h:inputText value ="#{logBookManagedBean.newLog.logShift}" />
                         <h:outputText value="Please enter your Id: "/>
-                        <h:inputText value ="#{logs.logEmployee.employeeId}"/>
+                        <h:inputText value ="#{logBookManagedBean.newLog.logEmployee.employeeId}"/>
                         <h:outputText value="Please enter title: "/>
-                        <h:inputText value ="#{logs.logTitle}"/>
+                        <h:inputText value ="#{logBookManagedBean.newLog.logTitle}"/>
                         <h:outputText value="Please enter content: "/>
-                        <h:inputText value ="#{logs.logText}"/>
+                        <h:inputText value ="#{logBookManagedBean.newLog.logText}"/>
                         <h:outputText value="Please enter remark: "/>
-                        <h:inputText value ="#{logs.remark}"/>
-                        <p:commandButton value="Yes" update ="form" actionListener="#{logBookManagedBean.addLog}" oncomplete="confirmation.hide()">  
+                        <h:inputText value ="#{logBookManagedBean.newLog.remark}"/>
+                        <p:commandButton value="Yes" actionListener="#{logBookManagedBean.addLog}" oncomplete="confirmation.hide()" update ="logList" onclick="msgs;">  
                         </p:commandButton>
-                        <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                        <p:commandButton value="Cancel" onclick="confirmation.hide();" type="button"/>  
                     </h:panelGrid>
                 </p:dialog> 
                 <!--INFO: image attribute is deprecated to define an icon, use icon attribute instead.-->
-
-                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Delete Message" widgetVar="delete">  
-                    <p:commandButton value="Delete" update="logs" actionListener="#{logBookManagedBean.deleteLog}" oncomplete="delete.hide()">  
-                        <f:attribute name="deleteLog" value="#{logBookManagedBean.getThisLog.logBookId}" />
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Delete Message" widgetVar="deleteDia">  
+                    <p:commandButton value="delete" update="logList" actionListener="#{logBookManagedBean.deleteLog}" oncomplete="deleteDia.hide()" onclick="msgs;">  
+                        <f:attribute name="deleteLog" value="#{logBookManagedBean.thisLog.logBookId}" />
                     </p:commandButton>
-                    <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button" />  
+                    <p:commandButton value='Cancel' onclick="deleteDia.hide();" type='button'/>
                 </p:dialog>
             </p:panel>
 

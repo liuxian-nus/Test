@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,51 +14,82 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-        
+
             <h2>Your Reservation Details...</h2>
             <div class ="row">
-                <!--<div class="panel">-->
+                <!--<div class="panel">-->  
                 <div class="large-7 columns">
                     <div class="panel callout">
-                        <h4>Hotel Reservation for <strong>  </strong></h4>
-                        <h5>Room Type: <strong>  </strong></h5>
-                        <h5>Check-In Date: <strong>  </strong></h5>
-                        <h5>Check-Out Date: <strong> </strong></h5>
+                        <div class="row">
+                        <div class="large-8 columns">
+                            <c:if test="${data.reservationHotelNo == 1}">
+                            <h6>Reservation for <strong class="right-align,inline"> Orchard Hotel</strong></h6>
+                        </c:if>
+                        <c:if test="${data.reservationHotelNo == 2}">
+                            <h6>Hotel Reservation for <strong class="right-align,inline"> Marina Hotel</strong></h6>
+                        </c:if>
+                        <c:if test="${data.reservationHotelNo == 3}">
+                            <h6>Hotel Reservation for <strong class="right-align,inline"> BeachView Hotel</strong></h6>
+                        </c:if>
+                        <h6>Room Type: <strong class="right-align,inline"> ${data.reservationRoomType} </strong></h6>
+                        <h6>Check-In Date: <strong class="right-align,inline"> ${data.rcCheckInDate} </strong></h6>
+                        <h6>Check-Out Date: <strong class="right-align,inline">${data.rcCheckOutDate} </strong></h6>
                     </div>
-                </div> 
-                <div class="large-5 columns">
-                    <div class="panel">
-                        <div class="row">
-                            <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h4><strong>Coral Island Members</strong></h4></label>
+
+                    <div class="large-4 columns">
+                        <c:if test="${data.reservationHotelNo == 1}">
+                            <a class="th radius" href="/IRMSCustomer-war/images/gallery/orchard.jpg">
+                                <img src="/IRMSCustomer-war/images/gallery/orchard.jpg">
+                            </a>
+                        </c:if>
+                        <c:if test="${data.reservationHotelNo == 2}">
+                            <a class="th radius" href="/IRMSCustomer-war/images/gallery/marina.jpg">
+                                <img src="/IRMSCustomer-war/images/gallery/marina.jpg">
+                            </a>
+                        </c:if>
+                        <c:if test="${data.reservationHotelNo == 3}">
+                            <a class="th radius" href="/IRMSCustomer-war/images/gallery/beachview.jpg">
+                                <img src="/IRMSCustomer-war/images/gallery/beachview.jpg">
+                            </a>
+                        </c:if>
+
+                    </div>
+                    </div>
+                            
+                </div>
+            </div> 
+            <div class="large-5 columns">
+                <div class="panel">
+                    <div class="row">
+                        <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h4><strong>Coral Island Members</strong></h4></label>
+                    </div>
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6><strong>Redeem your points and save money now!</strong></h6></label>
                         </div>
-                        <div class="row">
-                            <div class="large-12 columns">
-                                <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6><strong>Redeem your points and save money now!</strong></h6></label>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="large-4 columns">                               
-                                <input href="member" class="tiny button" value="Log In">
+                    </div>
+                    <div class="row">
+                        <div class="large-4 columns">                               
+                            <input href="member" class="tiny button" value="Log In">
 
 
-                            </div>
-                            <div class="large-6 columns">
-                                <label for="right-label" class="right-align,inline" ><h7><a href="memberRegister" style="color:#4d4d4d">Not a member?</a></h7></label>
-                            </div>
+                        </div>
+                        <div class="large-6 columns">
+                            <label for="right-label" class="right-align,inline" ><h7><a href="memberRegister" style="color:#4d4d4d">Not a member?</a></h7></label>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            
-            <div class ="row">
-                <div class="large-7 columns">
-                    <div class="panel callout">
-                        <form data-abide action="hotelPay" method="POST">
-                            <fieldset>
-                                <legend>Hotel Reservation</legend>
-                                <p>${message}</p>
+        </div>
+
+
+        <div class ="row">
+            <div class="large-7 columns">
+                <div class="panel callout">
+                    <form data-abide action="hotelPay" method="POST">
+                        <fieldset>
+                            <legend>Hotel Reservation</legend>
+                            <p>${message}</p>
                             <div class="row">
                                 <div class="large-2 columns">
                                     <label for="right-label" class="left-align,inline"><strong>Title</label>
@@ -380,21 +412,21 @@
                                     </select>
                                 </div>
                             </div>
-                            
-                            
+
+
                             <div class="row">
                                 <input type="submit" class="small button" class="center-align" value="Continue">
                             </div>
-                            
-                            
+
+
                         </fieldset>
                     </form>                     
                 </div>
             </div>
 
-                            
-                            
-                            
+
+
+
             <div class="large-5 columns">
                 <div class="panel">
                     <fieldset>
@@ -409,11 +441,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="large-7 columns">
+                            <div class="large-10 columns">
                                 <label for="right-label" class="left-align,inline"><h6>Number of nights:</h6></label>
                             </div>
-                            <div class="large-5 columns">
-                                <label for="right-label" class="right-align,inline"><strong></strong></label>
+                            <div class="large-2 columns">
+                                <label for="right-label" class="right-align,inline"><strong>${data.reservationRoomCount}</strong></label>
                             </div>
                         </div>
                         <div class="row">
@@ -435,8 +467,8 @@
                     </fieldset>
                     <br><br>
                     <div class="row">
-                        <div class="large-2 columns"></div>
-                        <div class="large-10 columns">
+                        <div class="large-1 columns"></div>
+                        <div class="large-11 columns">
                             <label for="right-label" class="left-align,inline"><strong>15% of the total room reservation fee will be deducted from your credit card after making the reservation. This service charge will not be refundable nor transferable</strong></label>
                         </div>
                     </div>

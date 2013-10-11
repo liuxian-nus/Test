@@ -29,15 +29,12 @@ public class LogBookSessionBean {
     public LogBookSessionBean() {
     }
 
-    public List<LogBookEntity> getAllLogs() throws ExistException {
+    public List<LogBookEntity> getAllLogs(){
         Query q = em.createQuery("SELECT l FROM LogBookEntity l");
         List logList = new ArrayList<LogBookEntity>();
         for (Object o : q.getResultList()) {
             LogBookEntity l = (LogBookEntity) o;
             logList.add(l);
-        }
-        if (logList.isEmpty()) {
-            throw new ExistException("Reservation database is empty!");
         }
         return logList;
     }

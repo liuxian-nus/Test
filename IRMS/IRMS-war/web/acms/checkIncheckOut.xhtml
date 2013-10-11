@@ -69,38 +69,38 @@
                     <p:growl id="growl" showDetail="true" sticky="true" />                    
                     <h:panelGrid columns="3" cellpadding="10">  
                         <h:outputText value="Guest Name*:"/>
-                        <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{reservationManagedBean.selectReservation.rcName}"/>                                   
+                        <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{reservationManagedBean.newReservation.rcName}"/>                                   
                         <h:outputText value=""/>
                         <h:outputText value="Email*:"/>
-                        <h:inputText required ="true" requiredMessage="Email cannot be empty" value="#{reservationManagedBean.selectReservation.rcEmail}"/>                                   
+                        <h:inputText required ="true" requiredMessage="Email cannot be empty" value="#{reservationManagedBean.newReservation.rcEmail}"/>                                   
                         <h:outputText value=""/>
                         <h:outputText value="Credit Card Number*:"/>
-                        <h:inputText required ="true" requiredMessage="Credit Card cannot be empty" value="#{reservationManagedBean.selectReservation.rcCreditCardNo}"/>                                   
+                        <h:inputText required ="true" requiredMessage="Credit Card cannot be empty" value="#{reservationManagedBean.newReservation.rcCreditCardNo}"/>                                   
                         <h:outputText value=""/>
                         <h:outputText value="Hand Phone Number*:"/>
-                        <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{reservationManagedBean.selectReservation.rcHP}"/>                                   
+                        <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{reservationManagedBean.newReservation.rcHP}"/>                                   
                         <h:outputText value=""/>
                         <h:outputText value="CheckIn Date*:"/>
-                        <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="customCal1" value="#{reservationManagedBean.selectReservation.rcCheckInDate}" /> 
+                        <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="customCal1" value="#{reservationManagedBean.newReservation.rcCheckInDate}" /> 
                         <h:outputText value=""/>
                         <h:outputText value="CheckOut Date*:"/>
-                        <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="customCal2" value="#{reservationManagedBean.selectReservation.rcCheckOutDate}" /> 
+                        <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="customCal2" value="#{reservationManagedBean.newReservation.rcCheckOutDate}" /> 
                         <h:outputText value=""/>
                         <h:outputText value="Hotel*:"/>
-                        <h:selectOneRadio value ="#{reservationManagedBean.selectReservation.reservationHotelNo}" required ="true" requiredMessage="You have to choose a hotel">
+                        <h:selectOneRadio value ="#{reservationManagedBean.newReservation.reservationHotelNo}" required ="true" requiredMessage="You have to choose a hotel">
                             <f:selectItem itemLabel="Orchard Hotel" itemValue="1" />  
                             <f:selectItem itemLabel="Marina Hotel" itemValue="2" />  
                             <f:selectItem itemLabel="BeachView Hotel" itemValue="3" />  
                         </h:selectOneRadio> 
                         <h:outputText value=""/>
                         <h:outputText value="Number of Rooms*:"/>
-                        <h:inputText required ="true" requiredMessage="Number of rooms cannot be empty" value="#{reservationManagedBean.selectReservation.reservationRoomCount}"/>                                   
+                        <h:inputText required ="true" requiredMessage="Number of rooms cannot be empty" value="#{reservationManagedBean.newReservation.reservationRoomCount}"/>                                   
                         <h:outputText value=""/>
                         <h:outputText value="Number of Guests:"/>
-                        <h:inputText value="#{reservationManagedBean.selectReservation.reservationGuestCount}"/>                                   
+                        <h:inputText value="#{reservationManagedBean.newReservation.reservationGuestCount}"/>                                   
                         <h:outputText value=""/>
                         <h:outputText value="Room Type*:"/>
-                        <h:selectOneMenu value ="#{reservationManagedBean.selectReservation.reservationGuestCount}" required ="true" requiredMessage="You have to specify your room type">
+                        <h:selectOneMenu value ="#{reservationManagedBean.newReservation.reservationRoomType}" required ="true" requiredMessage="You have to specify your room type">
                             <f:selectItem itemLabel="Select Room Type" itemValue="" />  
                             <f:selectItem itemLabel="Superior" itemValue="1" />  
                             <f:selectItem itemLabel="Deluxe" itemValue="2" />  
@@ -110,7 +110,7 @@
                         </h:selectOneMenu> 
                         <h:outputText value=""/>
                         <h:outputText value="Corporate (If applicable):"/>
-                        <h:inputText value="#{reservationManagedBean.selectReservation.reservationCorporate}"/>                                   
+                        <h:inputText value="#{reservationManagedBean.newReservation.reservationCorporate}"/>                                   
                         <h:outputText value=""/>
 
                         <p:spacer width="20"/>

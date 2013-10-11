@@ -89,7 +89,6 @@ public class ReservationManagedBean implements Serializable {
     public void setSearchEmail(String searchEmail) {
         this.searchEmail = searchEmail;
     }
-    
 
     public String getSearchId() {
         System.out.println("No3: we are in setearchId" + searchId);
@@ -113,6 +112,7 @@ public class ReservationManagedBean implements Serializable {
      */
     public ReservationManagedBean() {
         this.selectReservation = new ReservationEntity();
+        this.newReservation = new ReservationEntity();
     }
 
     public void searchById(ActionEvent event) throws IOException, ExistException {
@@ -138,7 +138,7 @@ public class ReservationManagedBean implements Serializable {
             return;
         }
     }
-    
+
     public void searchByName(ActionEvent event) throws IOException, ExistException {
 
         System.out.println("NO6 we are in searchByName function " + searchName);
@@ -162,8 +162,8 @@ public class ReservationManagedBean implements Serializable {
             return;
         }
     }
-    
-     public void searchByEmail(ActionEvent event) throws IOException, ExistException {
+
+    public void searchByEmail(ActionEvent event) throws IOException, ExistException {
 
         System.out.println("NO6 we are in searchByName function " + searchEmail);
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -187,18 +187,31 @@ public class ReservationManagedBean implements Serializable {
         }
     }
 //javax.el.PropertyNotFoundException: /acms/checkIncheckOut.xhtml @45,154 value="#{reservationManagedBean.selectReservation.rcName}": Target Unreachable, 'null' returned null
+
     public void addReservation(ActionEvent event) throws IOException {
-        newReservation = (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
-        newReservation.setRcName((String)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation.rcName"));
         try {
             System.out.println("we are in addReservation in managedbean" + newReservation.getRcName());
-            if(newReservation.getReservationRoomType().equals("1")) newReservation.setReservationRoomType("superior");
-            if(newReservation.getReservationRoomType().equals("2")) newReservation.setReservationRoomType("deluxe");
-            if(newReservation.getReservationRoomType().equals("3")) newReservation.setReservationRoomType("deluxe suite");
-            if(newReservation.getReservationRoomType().equals("4")) newReservation.setReservationRoomType("orchard suite");
-            if(newReservation.getReservationRoomType().equals("5")) newReservation.setReservationRoomType("chairman suite");
+            if (newReservation.getReservationRoomType().equals("1")) {
+                newReservation.setReservationRoomType("superior");
+            }
+            if (newReservation.getReservationRoomType().equals("2")) {
+                newReservation.setReservationRoomType("deluxe");
+            }
+            if (newReservation.getReservationRoomType().equals("3")) {
+                newReservation.setReservationRoomType("deluxe suite");
+            }
+            if (newReservation.getReservationRoomType().equals("4")) {
+                newReservation.setReservationRoomType("orchard suite");
+            }
+            if (newReservation.getReservationRoomType().equals("5")) {
+                newReservation.setReservationRoomType("chairman suite");
+            }
             reservationSessionBean.addReservation(newReservation);
             System.out.println("we are after add reservation in managedbean");
+            selectReservation = rm.getReservationById(newReservation.getReservationId());
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+
+
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new reservation", ""));
             e.printStackTrace();

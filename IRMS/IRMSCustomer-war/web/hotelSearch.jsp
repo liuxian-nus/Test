@@ -23,7 +23,7 @@
                     $("#datepicker1").datepicker();
                 });
             </script>
-                    <script>
+            <script>
 
                 $(function() {
                     $("#datepicker2").datepicker();
@@ -78,7 +78,7 @@
                         <div class="row">
                             <div class="large-12 columns"> 
                                 <label for="customDropdown"><strong>Check Out Date</strong></label>
-                             
+
                                 <input type="text" id="datepicker2" name ="out_date"/>
                             </div>
                         </div>
@@ -102,6 +102,7 @@
                             <input type="hidden" name="availableType" value="${data.reservationRoomType}"/>
                             <input type="hidden" name="availableCheckInDate" value="${data.rcCheckInDate}"/>
                             <input type="hidden" name="availableCheckOutDate" value="${data.rcCheckOutDate}"/>
+                            <input type="hidden" name="availableCheckOutDate" value="${data.reservationRoomCount}"/>
 
                         </div>
                     </div>
@@ -118,7 +119,7 @@
             <div class="row">
                 <div class="panel callout">
                     <div class="large-5 columns">
-                        <h5><strong>Orchard Hotel™</strong></h5>
+                        <h5><strong>&nbsp Orchard Hotel™</strong></h5>
                         <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel2.jpg">
                             <img src="/IRMSCustomer-war/images/gallery/hotel2.jpg">
                         </a>
@@ -134,62 +135,57 @@
                             Orchard Hotel!                                                                                                                                                         </p>
 
                     </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="large-5 columns">
-                    <div class="panel">
-                        <h5><strong>Marina Hotel™</strong></h5>
 
-                        <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel1.jpg">
-                            <img src="/IRMSCustomer-war/images/gallery/hotel1.jpg">
-                        </a>
-                        <!--<p>Come and get yourself indulged in the fabulous and sumptuous variety of French cuisine featured by a vibrant combination of contemporary culinary technique with innovative twist</p>-->
+                    <br>
+                    <div class="row">
+                        <div class="large-5 columns">
+                                <h5><strong>&nbsp Marina Hotel™</strong></h5>
+
+                                <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel1.jpg">
+                                    <img src="/IRMSCustomer-war/images/gallery/hotel1.jpg">
+                                </a>
+                                <!--<p>Come and get yourself indulged in the fabulous and sumptuous variety of French cuisine featured by a vibrant combination of contemporary culinary technique with innovative twist</p>-->
+                        </div>
+                        <div class="large-7 columns">
+
+                            <h5><a style="color:#4d4d4d"><strong>Five Star</strong></a></h5><i class="sprite starrating stars5"></i>
+                            <p style="color:#4d4d4d">Marina Hotel is a luxurious treat for art lovers. A tribute to one of America’s greatest contemporary architects 
+                                Michael Graves, we let this boutique hotel speak for itself through the designer’s elegant and distinctive touches, from lamps and
+                                crockery to furnishings and the decor.We enrich all our guests’ stay experience with art through our art gallery-like atmosphere in 
+                                every maple-accented room, which features mural-adorned walls and artistic furniture pieces. Even the bathrooms are works of art, with
+                                flower-motif mosaics on the walls and the unusual blue mosaic-tiled circular shower.</p>
+
+                        </div>
                     </div>
-                </div>
-                <div class="large-7 columns">
+                    <br>
+                    <div class="row">
+                        <div class="large-5 columns">
+                                <h5><strong>&nbsp BeachView Hotel™</strong></h5>
+                                <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel3.jpg">
+                                    <img src="/IRMSCustomer-war/images/gallery/hotel3.jpg">
+                                </a>
+                        </div>
+                        <div class="large-7 columns">
 
-                    <h5><a style="color:#4d4d4d"><strong>Five Star</strong></a></h5><i class="sprite starrating stars5"></i>
-                    <p style="color:#4d4d4d">Marina Hotel is a luxurious treat for art lovers. A tribute to one of America’s greatest contemporary architects 
-                        Michael Graves, we let this boutique hotel speak for itself through the designer’s elegant and distinctive touches, from lamps and
-                        crockery to furnishings and the decor.We enrich all our guests’ stay experience with art through our art gallery-like atmosphere in 
-                        every maple-accented room, which features mural-adorned walls and artistic furniture pieces. Even the bathrooms are works of art, with
-                        flower-motif mosaics on the walls and the unusual blue mosaic-tiled circular shower.</p>
+                            <h5><a style="color:#4d4d4d"><strong>Four Star</strong></a></h5><i class="sprite starrating stars4"></i>
+                            <p style="color:#4d4d4d">On the western tip of the Coral Island is our idyllic retreat of BeachView Hotel. An exquisite series of 
+                                secluded tropical sanctuaries, BeachView Hotel offers spectacular views, personal butlers and luxurious comforts for that well-earned 
+                                getaway or a romantic escapade.Enter paradise at Beach Villas, just one of an infinite range of momentous experiences we offer at
+                                Coral Island Resort.</p>
 
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="large-5 columns">
-                    <div class="panel">
-                        <h5><strong>BeachView Hotel™</strong></h5>
-                        <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel3.jpg">
-                            <img src="/IRMSCustomer-war/images/gallery/hotel3.jpg">
-                        </a>
+                        </div>
                     </div>
-                </div>
-                <div class="large-7 columns">
-
-                    <h5><a style="color:#4d4d4d"><strong>Four Star</strong></a></h5><i class="sprite starrating stars4"></i>
-                    <p style="color:#4d4d4d">On the western tip of the Coral Island is our idyllic retreat of BeachView Hotel. An exquisite series of 
-                        secluded tropical sanctuaries, BeachView Hotel offers spectacular views, personal butlers and luxurious comforts for that well-earned 
-                        getaway or a romantic escapade.Enter paradise at Beach Villas, just one of an infinite range of momentous experiences we offer at
-                        Coral Island Resort.</p>
-
                 </div>
             </div>
         </div>
-    </div>
+
     <jsp:include page="footer.jsp"></jsp:include>
     <script>
-        document.write('<script src=' +
+                document.write('<script src=' +
                 ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
-                '.js><\/script>')
-    </script> 
+                '.js><\/script>')    </script> 
 
     <script>
-        $(document).foundation();
-    </script>
+        $(document).foundation();    </script>
 </body>
 </html>
