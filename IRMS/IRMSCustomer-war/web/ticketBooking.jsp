@@ -33,21 +33,27 @@
                                     <label for="right-label" class="left-align,inline"><strong>Ticket Type</label>
                                 </div>
                                 <div class="large-3 large columns">                                
-                                    <input type="radio" name="OTticket" value="1">1-Day Pass, Adult<br>
+                            <!--        <input type="radio" name="OTticket" value="1">1-Day Pass, Adult<br>
                                     <input type="radio" name="OTticket" value="2">2-Day Pass, Adult<br>
-                                    <input type="radio" name="OTticket" value="3">Annual Pass, Adult<br> 
+                                    <input type="radio" name="OTticket" value="3">Annual Pass, Adult<br> -->
+                            
+                            
+                            
+                            <p>1-Day Pass, Adult</p>
+                            <p>2-Day Pass, Adult</p>
+                            <p>Annual Pass, Adult<p>
+                                    
+                                    
+                                    
                                 </div>
-                                <div class="large-6 large columns">                                
+                                <div class="large-3 large columns">                                
                                     <p>$75</p>
                                     <p>$120</p>
+                                    <p>$375</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="large-3 large columns">
-                                    <label for="right-label" class="left-align,inline"><strong>Quantity</label>
-                                </div>
-                                <div class="large-3 large columns">
-                                    <select required name="quantity" id="customDropdown">
+                                <div class="large-3 large columns">                                
+                                    <select required name="quantity1" id="customDropdown">
+                                        <option value="0">--Select--</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -59,8 +65,39 @@
                                         <option value="9">9</option>
                                         <option value="10">10</option>
                                     </select>
-                                </div>                               
+                                    <p></p>
+                                    <select required name="quantity2" id="customDropdown">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <p></p>
+                                    <select required name="quantity3" id="customDropdown">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    
+                                </div>
                             </div>
+                                
+                                <p></p>
                             <div class="row">
                                 <div class="large-3 columns">
                                     <label for="right-label" class="left-align,inline"><strong>Date</label>
@@ -122,7 +159,12 @@
                                         <option value="2013">2014</option>
                                     </select>
                                         
-                            </div>
+                                    
+                                </div>
+                                
+                                <div class="row">
+                                    <input type="submit" class="small button" value="Submit">
+                                </div>
                                 
                                 
                                 

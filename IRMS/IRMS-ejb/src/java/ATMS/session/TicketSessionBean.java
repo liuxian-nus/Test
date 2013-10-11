@@ -62,6 +62,11 @@ public class TicketSessionBean {
         return true;
     } 
     
+    public TicketEntity getTicketById(Long ticketId){
+        ticket=em.find(TicketEntity.class, ticketId);
+        return ticket;
+    }
+    
     public TicketEntity mapAttractionId(TicketEntity ticket){
         String name=ticket.getAttrName();
         

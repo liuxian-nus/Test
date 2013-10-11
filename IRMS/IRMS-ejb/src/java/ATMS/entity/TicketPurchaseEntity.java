@@ -7,12 +7,14 @@ package ATMS.entity;
 import CRMS.entity.MemberEntity;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -26,11 +28,11 @@ public class TicketPurchaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne(cascade ={CascadeType.ALL})
-    TicketEntity ticket;
+    @OneToMany(cascade ={CascadeType.PERSIST})
+    List<TicketEntity> tickets;
     @ManyToOne
-    private MemberEntity member=new MemberEntity();
-    private int quantity;
+    private MemberEntity member;
+    private Integer quantity;
     private double fee;
     @Temporal(javax.persistence.TemporalType.DATE)
     Date bookDate =new Date();
@@ -46,14 +48,14 @@ public class TicketPurchaseEntity implements Serializable {
         this.id = id;
     }
 
-    public TicketEntity getTicket() {
-        return ticket;
+    public List<TicketEntity> getTickets() {
+        return tickets;
     }
 
-    public void setTicket(TicketEntity ticket) {
-        this.ticket = ticket;
+    public void setTickets(List<TicketEntity> tickets) {
+        this.tickets = tickets;
     }
-
+    
     public MemberEntity getMember() {
         return member;
     }
@@ -62,11 +64,11 @@ public class TicketPurchaseEntity implements Serializable {
         this.member = member;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

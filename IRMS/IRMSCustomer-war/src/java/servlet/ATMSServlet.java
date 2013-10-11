@@ -4,8 +4,16 @@
  */
 package servlet;
 
+import ATMS.entity.TicketEntity;
+import ATMS.entity.TicketPurchaseEntity;
+import ATMS.session.TicketPurchaseSessionBean;
+import ATMS.session.TicketSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,6 +30,14 @@ import javax.servlet.http.HttpSession;
 //@WebServlet(name = "ATMSServlet", urlPatterns = {"/ATMSServlet"})
 @WebServlet(urlPatterns = {"/ATMSServlet", "/ATMSServlet/*"})
 public class ATMSServlet extends HttpServlet {
+    @EJB
+    private TicketSessionBean ticketSessionBean;
+    @EJB
+    private TicketPurchaseSessionBean ticketPurchaseSessionBean;
+    
+    TicketEntity ticket;
+    List<TicketEntity> tkts;
+    TicketPurchaseEntity tp;
 
     /**
      * Processes requests for both HTTP
@@ -42,8 +58,11 @@ public class ATMSServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
+        
         System.out.println("ATMSSERVLET: processRequest()");
-   //     HttpSession session = request.getSession(true);
+        
+        HttpSession session = request.getSession(true);
         
         
         /*response.setContentType("text/html;charset=UTF-8");
@@ -73,6 +92,83 @@ public class ATMSServlet extends HttpServlet {
                 
 
                 request.getRequestDispatcher("/ticketBooking.jsp").forward(request, response);
+            }else if("ticketBookingConfirm".equals(page)){
+                System.out.println("***ticketBookingConfirm page***");
+                
+        /*        Long ticketId=Long.parseLong(request.getParameter("OTticket"));
+                Integer quantity=Integer.parseInt(request.getParameter("quantity"));*/
+                
+            /*    String tickets=request.getParameter("OTticket");
+                System.out.println("OTticket: "+tickets);*/
+                
+        /*        Long quantity1=Long.parseLong(request.getParameter("quantity1"));
+                Long quantity2=Long.parseLong(request.getParameter("quantity2"));
+                Long quantity3=Long.parseLong(request.getParameter("quantity3"));*/
+                Integer quantity1=Integer.parseInt(request.getParameter("quantity1"));
+                Integer quantity2=Integer.parseInt(request.getParameter("quantity2"));
+                Integer quantity3=Integer.parseInt(request.getParameter("quantity3"));
+                
+                Integer day=Integer.parseInt(request.getParameter("dateDay"));
+                Integer month=Integer.parseInt(request.getParameter("dateMonth"));
+                Integer year=Integer.parseInt(request.getParameter("dateYear"));
+                Date date;
+                date = new Date(year - 1900, month - 1, day);
+                
+                System.out.println("quantity1: "+quantity1);
+ 
+                
+                tp=new TicketPurchaseEntity();
+                tkts=new ArrayList<TicketEntity>();
+                boolean tpInitialised=false;
+                Long tpId=ticketPurchaseSessionBean.addTicketPurchase(tp);
+                
+                if(quantity1!=0){
+      //              System.out.println("into if");
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(1)));
+                    System.out.println("ticketName: "+ticket.getTicketName());
+                    tkts.add(ticket);
+                    System.out.println("ticket added: "+tkts.get(0).getTicketName());
+                    ticketPurchaseSessionBean.updateTicketListAndQuantity(tpId, tkts,quantity1);  
+                    System.out.println("tpId received: "+tpId);
+                    tpInitialised=true;
+                    System.out.println("tpInitialised: "+tpInitialised);
+                    System.out.println("ticket 1 added into tp");
+      //              ticketPurchaseSessionBean.addTicket(ticket);
+                }
+                
+                if(quantity2!=0){
+      //              System.out.println("into if");
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(2)));
+                    System.out.println("ticketName: "+ticket.getTicketName());
+                    tkts.add(ticket);
+                    System.out.println("tkts size: "+tkts.size());
+              //      System.out.println("ticket added: "+tkts.get(1).getTicketName());
+             /*       if(tpInitialised){
+                        System.out.println("tp has been initialised");
+                        System.out.println("tpId passed in: "+tpId);
+                        tpId=ticketPurchaseSessionBean.updateTicketListAndQuantity(tpId, tkts,quantity2);  
+                    }                 
+                    else{
+                        System.out.println("tp has not been initialised");
+                        ticketPurchaseSessionBean.updateTicketListAndQuantity(tkts,quantity2);
+                        tpInitialised=true;
+                    }*/
+                    ticketPurchaseSessionBean.updateTicketListAndQuantity(tpId, tkts,quantity2);
+                        
+          //          System.out.println("tpInitialised: "+tpInitialised);
+                    System.out.println("ticket 2 added into tp");
+      //              ticketPurchaseSessionBean.addTicket(ticket);
+                }
+                if(quantity3!=0){
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(3)));
+                    System.out.println("ticketName: "+ticket.getTicketName());
+                    tkts.add(ticket);
+                    System.out.println("tkts size: "+tkts.size());
+                    ticketPurchaseSessionBean.updateTicketListAndQuantity(tpId, tkts,quantity3);
+                    System.out.println("ticket 3 added into tp");
+                }
+ 
+                request.getRequestDispatcher("/ticketBookingConfirm.jsp").forward(request, response);
             }else {
                 System.out.println("other page");
             }
