@@ -15,7 +15,7 @@ import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Ser3na
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class AddShowManagedBean {
 
     @EJB
@@ -51,7 +51,9 @@ public class AddShowManagedBean {
 //        FacesContext.getCurrentInstance().addMessage(null, msg);  
 //    }
     public void saveNewShow(ActionEvent event) throws IOException {
-        System.err.println("Saving New Show...");
+        System.err.println("Saving New Show...");       
+        System.err.println("Ticket Commission percentage="+show.getTicketCommission());
+        System.err.println("Ticket Type="+show.getShowType());
         showSessionBean.addShow(getShow());
 
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -81,6 +83,10 @@ public class AddShowManagedBean {
 
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("addShow.xhtml");
+    }
+    
+    public boolean isExternal() {
+        return ("External".equals(show.getShowType()));
     }
 
     //Getter and Setters
@@ -146,5 +152,5 @@ public class AddShowManagedBean {
 
     public void setShowTicket(ShowTicketEntity showTicket) {
         this.showTicket = showTicket;
-    }
+    }   
 }
