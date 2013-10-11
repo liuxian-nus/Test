@@ -18,29 +18,27 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
  * @author Ser3na
  */
-
 @ManagedBean
 @ViewScoped
 public class ManageShowManagedBean {
-    
+
     @EJB
     private ShowSessionBean showSessionBean;
     @EJB
     private ShowScheduleSessionBean showScheduleSessionBean;
     @EJB
-    private ShowTicketSessionBean showTicketSessionBean;      
-    
+    private ShowTicketSessionBean showTicketSessionBean;
     private ShowEntity selectedShow;
     private ShowScheduleEntity selectedShowSchedule;
     private ShowTicketEntity selectedShowTicket;
-    
     private boolean editMode;
+    private boolean editSchedule;
     private Long id;
 
     public Long getId() {
@@ -51,38 +49,51 @@ public class ManageShowManagedBean {
         this.id = id;
     }
 
-    /** Creates a new instance of ManageShowManagedBean */
+    /**
+     * Creates a new instance of ManageShowManagedBean
+     */
     public ManageShowManagedBean() {
         selectedShow = new ShowEntity();
     }
     
-    public boolean isEditMode() {  
-        return editMode;  
+    public void onEdit(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Schedule Edited", null);
+        showScheduleSessionBean.updateShowSchedule(selectedShowSchedule);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
+
+    public void onCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Schedule Edit Cancelled", null);
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
     public List<ShowEntity> getShows() throws ExistException {
         return showSessionBean.getAllShows();
     }
 
     public void deleteShow(ActionEvent event) {
-        setId((Long)event.getComponent().getAttributes().get("code1"));
+        setId((Long) event.getComponent().getAttributes().get("code1"));
         showSessionBean.deleteShow(getId());
     }
-    
-    public void deleteShowSchedule(ActionEvent event){
-        setId((Long)event.getComponent().getAttributes().get("code2"));
+
+    public void deleteShowSchedule(ActionEvent event) {
+        setId((Long) event.getComponent().getAttributes().get("code2"));
         showScheduleSessionBean.deleteShowSchedule(getId());
     }
-    
-    public void deleteShowTicket(ActionEvent event){
-        setId((Long)event.getComponent().getAttributes().get("code3"));
+
+    public void deleteShowTicket(ActionEvent event) {
+        setId((Long) event.getComponent().getAttributes().get("code3"));
         showTicketSessionBean.deleteShowTicket(getId());
     }
-    
-    public void saveChanges(ActionEvent event)
-    {
+
+    public void saveChanges(ActionEvent event) {
         showSessionBean.updateShow(getSelectedShow());
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));
     }
 
     /**
@@ -144,5 +155,14 @@ public class ManageShowManagedBean {
 
     public void setSelectedShowTicket(ShowTicketEntity selectedShowTicket) {
         this.selectedShowTicket = selectedShowTicket;
+    }
+
+    public boolean isEditSchedule() {
+        System.err.println(editSchedule);
+        return editSchedule;
+    }
+
+    public void setEditSchedule(boolean editSchedule) {
+        this.editSchedule = editSchedule;
     }
 }
