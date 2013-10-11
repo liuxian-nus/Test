@@ -20,10 +20,11 @@
                         <h:outputText value="Show Description" />
                         <h:inputText required="true" requiredMessage="Show Description cannot be empty" value="#{addShowManagedBean.show.showDescription}" style="margin-bottom:10px;"/>
                         <h:outputText value=""/><br/>
-
+              
                         <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShow}" update="message"/>
                         <p:commandButton value="Cancel" ajax="true" actionListener="#{addShowManagedBean.oneMore}" update="message"/>
-                    </h:panelGrid>
+                    
+                        </h:panelGrid>
                 </h:form>
             </p:tab>
 

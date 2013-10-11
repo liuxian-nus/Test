@@ -19,6 +19,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.event.FileUploadEvent;
 
 /**
  *
@@ -45,6 +46,11 @@ public class AddShowManagedBean {
         showSchedule = new ShowScheduleEntity();
         showTicket = new ShowTicketEntity();
     }
+    
+//    public void handleFileUpload(FileUploadEvent event) {  
+//        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");  
+//        FacesContext.getCurrentInstance().addMessage(null, msg);  
+//    }
 
     public void saveNewShow(ActionEvent event) throws IOException {
         System.err.println("Saving New Show...");
