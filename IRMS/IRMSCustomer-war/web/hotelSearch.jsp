@@ -17,6 +17,12 @@
                 });
             });
         </script>
+        <script>
+
+            $(function() {
+                $("#datepicker").datepicker();
+            });
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="/IRMSCustomer-war/js/bootstrap-datepicker.js"></script>
         <jsp:include page="base.jsp"></jsp:include>
@@ -33,7 +39,7 @@
                         <div class="row">
                             <div class="large-12 columns">
                                 <label for="customDropdown"><strong>Where to live</strong></label>
-                                <select id="customDropdown" name="hotelList">
+                                <select id="customDropdown" name="hotel">
 
                                     <option></option>
                                     <option>Orchard Hotel</option>
@@ -47,7 +53,7 @@
                         <div class="row">
                             <div class="large-12 columns">
                                 <label for="customDropdown"><strong>Type of room</strong></label>
-                                <select id="customDropdown" name="roomTypeList">
+                                <select id="customDropdown" name="roomType">
 
                                     <option></option>
                                     <option>Orchard Suite</option>
@@ -62,30 +68,36 @@
                         <div class="row">
                             <div class="large-12 columns">
                                 <label for="customDropdown"><strong>Check In Date</strong></label>
-                                <input name="en_date" type="text" id="en_date" onclick="new Calendar(null, null, 1).show(this);" size="10" maxlength="10" readonly="readonly">
+                                <input type="text" id="datepicker" name="in_date" />
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="large-12 columns"> 
                                 <label for="customDropdown"><strong>Check Out Date</strong></label>
-                                <input name="en_date" type="text" id="en_date" onclick="new Calendar(null, null, 1).show(this);" size="10" maxlength="10" readonly="readonly">
+                                <input type="text" id="datepicker" name ="out_date"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <label for="right-label" class="left-align,inline"><strong>Number of Rooms</label>
+                                <input id="input-room"  placeholder="roomCount" name="roomCount">
                             </div>
                         </div>
                         <div class="row">
                             <div class="large-12 columns">
                                 <label for="right-label" class="left-align,inline"><strong>Number of People</label>
-                                <input required type="text" id="input-people"  placeholder="people" name="people">
+                                <input id="input-people"  placeholder="people" name="people">
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="large-12 columns">
                                 <input type="submit" class="small button" value="Search Availability">
-                                <input type="hidden" name="availableHotel" value="${data.availableHotel}"/>
-                            <input type="hidden" name="availableType" value="${data.availableType}"/>
-                            <input type="hidden" name="availableCheckInDate" value="${data.availableCheckInDate}"/>
-                            <input type="hidden" name="availableCheckOutDate" value="${data.availableCheckOutDate}"/>
+                                <input type="hidden" name="availableHotel" value="${data.reservationHotel}"/>
+                            <input type="hidden" name="availableType" value="${data.reservationRoomType}"/>
+                            <input type="hidden" name="availableCheckInDate" value="${data.rcCheckInDate}"/>
+                            <input type="hidden" name="availableCheckOutDate" value="${data.rcCheckOutDate}"/>
 
                         </div>
                     </div>
