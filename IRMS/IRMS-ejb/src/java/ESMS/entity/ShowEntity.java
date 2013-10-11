@@ -32,6 +32,8 @@ public class ShowEntity implements Serializable {
     private Long showId;
     private String showName;
     private String showDescription;
+    private String showType;
+    private Double ticketCommission;
     @OneToMany(targetEntity = ShowTicketEntity.class, cascade = {CascadeType.MERGE})
     private List<ShowTicketEntity> showTickets = new ArrayList<ShowTicketEntity>();
     @OneToMany(targetEntity = ShowScheduleEntity.class, cascade = {CascadeType.MERGE})
@@ -84,4 +86,21 @@ public class ShowEntity implements Serializable {
     public void setShowId(Long showId) {
         this.showId = showId;
     }
+
+    public String getShowType() {
+        return showType;
+    }
+
+    public void setShowType(String showType) {
+        this.showType = showType;
+    }
+
+    public Double getTicketCommission() {
+        return ticketCommission;
+    }
+
+    public void setTicketCommission(Double ticketCommission) {
+        this.ticketCommission = ticketCommission;
+    }
+
 }
