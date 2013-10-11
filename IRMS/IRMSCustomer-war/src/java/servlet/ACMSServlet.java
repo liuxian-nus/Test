@@ -54,12 +54,17 @@ public class ACMSServlet extends HttpServlet {
 
             if ("hotelSearch".equals(page)) {
                 System.out.println("***hotel Search***");
+          
+                request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
+            }else if("searchAvailable".equals(page)){ 
+                System.out.println("***search hotel availability***");
                 data = createTempReservation(request);
                 isAvailable = checkAvailability(data);
                 System.out.println("data search has been performed and result has been returned by bean");
                 request.setAttribute("data", data);
-                request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
-            } else if ("hotelBook".equals(page)) {
+                if(isAvailable) request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
+                else request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
+            }else if ("hotelBook".equals(page)) {
                 System.out.println("***hotel Book***");
 
                 request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
@@ -112,17 +117,22 @@ public class ACMSServlet extends HttpServlet {
         String speopleCount = request.getParameter("people");
         System.out.println("reservation data retrieved: " + shotel + sroomType + sinDate + soutDate + sroomCount + speopleCount);
         //change datatype
-        int hotel = Integer.valueOf(shotel);
+        int hotel = 0;
+        if(shotel.equals("Orchard Hotel")) hotel = 1;
+        if(shotel.equals("Marina Hotel")) hotel = 2;
+        if(shotel.equals("BeachView Hotel")) hotel = 3;
         int roomCount = Integer.valueOf(sroomCount);
         int guestCount = Integer.valueOf(speopleCount);
-        DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         Date inDate = df.parse(sinDate);
         Date outDate = df.parse(soutDate);
+        System.out.println("indate is: " + inDate);
+        System.out.println("outdate is: " + outDate);
         //create temp POJO
         tempReservation.setReservationHotelNo(hotel);
         tempReservation.setReservationRoomType(sroomType);
         tempReservation.setReservationGuestCount(guestCount);
-        tempReservation.setReservationRoomCount(roomCount);
+        tempReservation.setReservationRoomCount(roomCount); 
         tempReservation.setRcCheckInDate(inDate);
         tempReservation.setRcCheckOutDate(outDate);
         
@@ -130,6 +140,7 @@ public class ACMSServlet extends HttpServlet {
     }
 
     private boolean checkAvailability(ReservationEntity data) {
+        int availableCount;
        //total number of rooms availableCount = 60; (eg.)
         //for loop: for each reservation
        //if RcCheckOutDate.after(inDate) && RcCheckInDate.before(outDate) availableCount--;

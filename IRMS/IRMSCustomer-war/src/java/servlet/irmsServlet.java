@@ -175,6 +175,8 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/CRMServlet/logOut").forward(request, response);
             } else if ("hotelSearch".equals(page)) {
                 request.getRequestDispatcher("/ACMSServlet/hotelSearch").forward(request, response);
+            } else if ("searchAvailable".equals(page)) {
+                request.getRequestDispatcher("/ACMSServlet/searchAvailable").forward(request, response);
             } else if ("hotelBook".equals(page)) {
                 request.getRequestDispatcher("/ACMSServlet/hotelBook").forward(request, response);
             } else if ("hotelPay".equals(page)) {

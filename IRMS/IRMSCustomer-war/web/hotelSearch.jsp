@@ -8,31 +8,34 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script>
-            $(document).ready(function() {
-                $("#reg-form").submit(function() {
-                    if ($("#input-name").val().length < 1) {
-                        $("#input-name").addClass("error");
-                    }
-                });
-            });
-        </script>
-        <script>
-
-            $(function() {
-                $("#datepicker").datepicker();
-            });
-        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="/IRMSCustomer-war/js/bootstrap-datepicker.js"></script>
         <jsp:include page="base.jsp"></jsp:include>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <script type="text/javascript" src="/IRMSCustomer-war/js/calendar.js" ></script>
+            <title>Hotel Search</title>
+            <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+            <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+            <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+            <link rel="stylesheet" href="/resources/demos/style.css" />
+
+
+            <script>
+
+                $(function() {
+                    $("#datepicker1").datepicker();
+                });
+            </script>
+                    <script>
+
+                $(function() {
+                    $("#datepicker2").datepicker();
+                });
+            </script>
         </head>
+
+
         <body>
         <jsp:include page="header.jsp"></jsp:include>
             <div class="large-3 columns">    
-                <form id="search-form" action="hotelBook" method="POST">
+                <form id="search-form" action="searchAvailable" method="POST">
                     <fieldset>
                         <legend>Search for hotels</legend>
 
@@ -68,14 +71,15 @@
                         <div class="row">
                             <div class="large-12 columns">
                                 <label for="customDropdown"><strong>Check In Date</strong></label>
-                                <input type="text" id="datepicker" name="in_date" />
+                                <input type="text" id="datepicker1" name="in_date" />
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="large-12 columns"> 
                                 <label for="customDropdown"><strong>Check Out Date</strong></label>
-                                <input type="text" id="datepicker" name ="out_date"/>
+                             
+                                <input type="text" id="datepicker2" name ="out_date"/>
                             </div>
                         </div>
                         <div class="row">
@@ -179,9 +183,9 @@
     </div>
     <jsp:include page="footer.jsp"></jsp:include>
     <script>
-            document.write('<script src=' +
-                    ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
-                    '.js><\/script>')
+        document.write('<script src=' +
+                ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
+                '.js><\/script>')
     </script> 
 
     <script>
