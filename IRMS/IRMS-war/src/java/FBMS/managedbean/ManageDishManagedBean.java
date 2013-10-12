@@ -34,6 +34,8 @@ public class ManageDishManagedBean implements Serializable {
     private InventorySessionBean inventorySessionBean;
     private List<DishEntity> allDish = new ArrayList<DishEntity>();
     private DishEntity thisDish = new DishEntity();
+    
+    private boolean editMode;
 //    private Long dishId;
 //    private String dishName;
 //    private Integer dishQuantity;
@@ -69,6 +71,15 @@ public class ManageDishManagedBean implements Serializable {
         this.allDish = allDish;
     }
 
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
+
+    
 //    public Long getDishId() {
 //        return dishId;
 //    }
@@ -131,19 +142,22 @@ public class ManageDishManagedBean implements Serializable {
     }
     
        public void updateDish(ActionEvent event) throws IOException, ExistException {
+           
+           inventorySessionBean.updateDish(thisDish);
+           FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));
        
-        //thisDish = new DishEntity();
-        System.out.println("we are in update dish"+thisDish.getDishId());
-
-        try {
- //           inventorySessionBean.updateDish(thisDish);
-            System.out.println("After updateDish"+thisDish.getDishId());
-            
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when add dish", ""));
-            return;
-        }
-        thisDish = new DishEntity();
+//        //thisDish = new DishEntity();
+//        System.out.println("we are in update dish"+thisDish.getDishId());
+//
+//        try {
+// //           inventorySessionBean.updateDish(thisDish);
+//            System.out.println("After updateDish"+thisDish.getDishId());
+//            
+//        } catch (Exception e) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when add dish", ""));
+//            return;
+//        }
+//        thisDish = new DishEntity();
     }
 
     public void deleteDish(ActionEvent event) throws IOException, ExistException {
@@ -165,4 +179,6 @@ public class ManageDishManagedBean implements Serializable {
     public ManageDishManagedBean() {
 //        thisDish = new DishEntity();
     }
+    
+    
 }
