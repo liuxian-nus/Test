@@ -181,8 +181,14 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 item = new MenuItem();
-                item.setValue("Manage Inventory");
+                item.setValue("Create Inventory");
                 item.setUrl("/fbms/addDish.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Manage Inventory");
+                item.setUrl("/fbms/manageDish.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
 

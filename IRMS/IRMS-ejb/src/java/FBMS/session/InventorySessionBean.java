@@ -25,135 +25,103 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class InventorySessionBean {
+
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
-    
     DishEntity de;
     OrderEntity oe;
 
-    
-    public InventorySessionBean(){}
-    
-    public DishEntity addDish(String dishName,Integer dishQuantity,Double dishCost)
-    {
-        de = new DishEntity();
-        de.setDishCost(dishCost);
-        de.setDishName(dishName);
-        de.setDishQuantity(dishQuantity);
-        em.persist(de);
-        return de;
+    public InventorySessionBean() {
     }
-    
-    public boolean deleteDish(Long dishId)
-    {
+
+    public DishEntity addDish(DishEntity dish) {
+        em.persist(dish);
+        return dish;
+    }
+
+    public boolean deleteDish(Long dishId) {
         de = em.find(DishEntity.class, dishId);
-        if(de !=null)
-        {
+        if (de != null) {
             em.remove(de);
-            System.out.println("InventorySessionBean: The dish has been found and removed!"+dishId);
+            System.out.println("InventorySessionBean: The dish has been found and removed!" + dishId);
             return true;
-        }
-        else
-        {
-            System.out.println("InventorySessionBean: The dish does not exist!"+dishId);
+        } else {
+            System.out.println("InventorySessionBean: The dish does not exist!" + dishId);
             return false;
         }
     }
-    
-    public DishEntity updateDish(Long dishId,String dishName,Integer dishQuantity,Double dishCost)
-    {
-        de = em.find(DishEntity.class, dishId);
-        if(de!=null)
-        {
-            de.setDishCost(dishCost);
-            de.setDishName(dishName);
-            de.setDishQuantity(dishQuantity);
-            em.merge(de);
-            System.out.println("InventorySessionBean: The dish has been updated successfully!"+de.getDishName()+de.getDishCost()+de.getDishQuantity());
-            return de;
-        }
-        else
-        {
-            System.out.println("InventorySessionBean: The dish does not exist!"+dishId);
-            return null;
-        }
+
+    public DishEntity updateDish(DishEntity dish) {
+        em.merge(dish);
+        System.out.println("InventorySessionBean: The dish has been updated successfully!" + dish.getDishName() + dish.getDishCost() + dish.getDishQuantity());
+        return dish;
     }
-    
-    public OrderEntity issueGoods(Long orderId)
-    {
-        oe = em.find(OrderEntity.class,orderId);
-        if(oe!=null)
-        {
-           MenuEntity menu = oe.getMenu();
-           Set <CourseEntity> courses = menu.getCourses();
-           System.out.println("InventorySessionBean:issueGoods: Both Menu and courses have been found! MenuId: "
-                   +menu.getMenuId());
-           int courseNumber = courses.size();
-           int i =1;
-           CourseEntity course = new CourseEntity();
-           Iterator <CourseEntity> itr = courses.iterator();
-           
-           while(itr.hasNext())
-           {
-               course = itr.next();
-               course.getDish().setDishQuantity(oe.getMenu().getNumberOrder()+course.getDish().getDishQuantity());
-               System.out.println("InventorySessionBean:issueGoods: course"+i+": inventory has been deducted by "+oe.getMenu().getNumberOrder());
-               em.merge(course);
-               i++;
-           }
-           
-           Double orderCost = this.assignCost(orderId);
-           System.out.println("InventorySessionBean: issueGoods: The order associated cost has been assigned "+orderCost);
-           
-           
-           oe.setStatus("goods issued");
-           em.merge(oe);
-           return oe; 
-        }
-        else
-        {
-            System.out.println("InventorySessionBean:issueGoods: The dish does not exist!"+orderId);
-            return null;
-        }
-    }
-    
-    public Double assignCost(Long orderId)
-    {
-        Double currentCost=0.00;
-        oe = em.find(OrderEntity.class,orderId);
-        if(oe!=null)
-        {
+
+    public OrderEntity issueGoods(Long orderId) {
+        oe = em.find(OrderEntity.class, orderId);
+        if (oe != null) {
             MenuEntity menu = oe.getMenu();
-            Set <CourseEntity> courses = menu.getCourses();
-            Iterator <CourseEntity> itr = courses.iterator();
+            Set<CourseEntity> courses = menu.getCourses();
+            System.out.println("InventorySessionBean:issueGoods: Both Menu and courses have been found! MenuId: "
+                    + menu.getMenuId());
+            int courseNumber = courses.size();
+            int i = 1;
+            CourseEntity course = new CourseEntity();
+            Iterator<CourseEntity> itr = courses.iterator();
+
+            while (itr.hasNext()) {
+                course = itr.next();
+                course.getDish().setDishQuantity(oe.getMenu().getNumberOrder() + course.getDish().getDishQuantity());
+                System.out.println("InventorySessionBean:issueGoods: course" + i + ": inventory has been deducted by " + oe.getMenu().getNumberOrder());
+                em.merge(course);
+                i++;
+            }
+
+            Double orderCost = this.assignCost(orderId);
+            System.out.println("InventorySessionBean: issueGoods: The order associated cost has been assigned " + orderCost);
+
+
+            oe.setStatus("goods issued");
+            em.merge(oe);
+            return oe;
+        } else {
+            System.out.println("InventorySessionBean:issueGoods: The dish does not exist!" + orderId);
+            return null;
+        }
+    }
+
+    public Double assignCost(Long orderId) {
+        Double currentCost = 0.00;
+        oe = em.find(OrderEntity.class, orderId);
+        if (oe != null) {
+            MenuEntity menu = oe.getMenu();
+            Set<CourseEntity> courses = menu.getCourses();
+            Iterator<CourseEntity> itr = courses.iterator();
             CourseEntity course;
-            
-            while(itr.hasNext())
-            {
+
+            while (itr.hasNext()) {
                 course = itr.next();
                 Double unitCost = course.getDish().getDishCost();
-                System.out.println("InventorySessionBean:assignCost: The course "+course.getDish().getDishName()+
-                        " and its cost is "+unitCost);
+                System.out.println("InventorySessionBean:assignCost: The course " + course.getDish().getDishName()
+                        + " and its cost is " + unitCost);
                 Integer unit = menu.getNumberOrder();
-                currentCost = currentCost+ unit*unitCost;
-                System.out.println("InventorySessionBean:assignCost: The currentCost is "+currentCost);
+                currentCost = currentCost + unit * unitCost;
+                System.out.println("InventorySessionBean:assignCost: The currentCost is " + currentCost);
             }
             //Assign cost to the order
             oe.setCost(currentCost);
-            
+
             //Assign salePrice to the order
             Integer numberPeople = oe.getMenu().getNumberOrder();
-            Double uc = oe.getMenu().getCourses().size()*1.50;
+            Double uc = oe.getMenu().getCourses().size() * 1.50;
             Double salePrice = numberPeople * uc;
             oe.setSalePrice(salePrice);
-            
+
             em.merge(oe);
-            System.out.println("InventorySessionBean:assignCost: The cost assigned is "+oe.getCost());
+            System.out.println("InventorySessionBean:assignCost: The cost assigned is " + oe.getCost());
             return currentCost;
-        }
-        else
-        {
-            System.out.println("InventorySessionBean:assignCost: The order does not exist!"+orderId);
+        } else {
+            System.out.println("InventorySessionBean:assignCost: The order does not exist!" + orderId);
             return null;
         }
     }
@@ -161,21 +129,17 @@ public class InventorySessionBean {
     public void persist(Object object) {
         em.persist(object);
     }
-    
-    public List <DishEntity> listDishes()
-    {
+
+    public List<DishEntity> listDishes() {
         Query q = em.createQuery("SELECT d FROM DishEntity d");
-        
-        List dishList = new ArrayList <DishEntity> ();
-        for (Object o : q.getResultList())
-        {
-            DishEntity dish = (DishEntity)o;
+
+        List dishList = new ArrayList<DishEntity>();
+        for (Object o : q.getResultList()) {
+            DishEntity dish = (DishEntity) o;
             dishList.add(dish);
             System.out.println("InventorySessionBean: listDishes: new dish has been added");
         }
-        
+
         return dishList;
     }
-    
-
 }

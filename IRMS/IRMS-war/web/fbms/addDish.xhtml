@@ -5,99 +5,35 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:define name="content">
-        <h:form id="form"> 
-            <p:growl id="growl" showDetail="true" sticky="true" /> 
-            <p:panel id="search" header="Search Result" style="height:495px;">
-                <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
-                    <p:growl id="msgs" showDetail="true" /> 
-                    <p:dataTable id="rooms" value="#{manageInventoryManagedBean.getAllDishes()}" var="dishes" paginator="true" rows="6">
-                        <p:column headerText="Dish ID: ">
-                            <h:outputText value="#{dishes.dishId}"/>
-                        </p:column>
-                        <p:column  headerText="Dish Name: ">
-                            <h:outputText value="#{dishes.dishName}"/>
-                        </p:column>
-                        <p:column  headerText="Quantity: ">
-                            <h:outputText value="#{dishes.dishQuantity}"/>
-                        </p:column>
-                        <p:column  headerText="Cost: ">
-                            <h:outputText value="#{dishes.dishCost}"/>
-                        </p:column>
+        <h:form id="form">
+            <p:growl id="growl" showDetail="true" sticky="true"/>
+            <p:panel id="addDisht" header="Add Dish" style="height:440px;">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Dish Name:"/>
+                    <h:inputText required ="true" requiredMessage="Dish Name cannot be empty" value="#{addDishManagedBean.dish.dishName}"/>                                   
+                    <h:outputText value=""/><br/>
 
-                        <p:column style="width:100px">  
-                            <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
+                    <h:outputText value="Dish Cost: "/>
+                    <h:inputText label="Dish Cost" required="true" requiredMessage="Dish Cost cannot be empty" value="#{addDishManagedBean.dish.dishCost}">
+                        <f:convertNumber type="number" />
+                    </h:inputText>
+                    <h:outputText value=""/><br/>
 
-                                <p:commandButton  oncomplete="editDish.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
-                                    <f:setPropertyActionListener value="#{dishes}" target="#{manageInventoryManagedBean.thisDish}" />  
-                                </p:commandButton>  
-                                <p:commandButton  oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
-                                    <f:setPropertyActionListener value="#{dishes}" target="#{manageInventoryManagedBean.thisDish}" />  
-                                </p:commandButton>  
-                            </h:panelGrid>  
-                        </p:column> 
+                    <h:outputText value="Dish Quantity: "/>
+                    <h:inputText label="Dish Quantity" required="true" requiredMessage="Dish quantity cannot be empty" value="#{addDishManagedBean.dish.dishQuantity}"> 
+                        <f:convertNumber integerOnly="true" type="number" />
+                    </h:inputText>
+                    <h:outputText value=""/><br/>
 
-                    </p:dataTable>
+                    <p:commandButton value="Save" ajax="true" actionListener="#{addDishManagedBean.saveNewDish}" update="growl"/>
 
-                    <p:commandButton  oncomplete="addDish.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Add new" title="Add new">  
-
-                    </p:commandButton> 
-                </div>
-
-
-                <p:dialog width="420" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="editDish"> 
-                    <h:panelGrid columns="2" columnClasses="column" cellpadding="5"> 
-                        <h:outputText value="Dish Name: " />  
-                        <p:inplace id="dishNameInplace" editor="true">  
-                            <p:inputText value="#{manageInventoryManagedBean.thisDish.dishName}"/> 
-                                          
-                        </p:inplace>
-                        <h:outputText value="Dish Quantity: " />  
-                        <p:inplace id="dishQuantityInplace" editor="true">  
-                            <p:inputText value="#{manageInventoryManagedBean.thisDish.dishQuantity}" />  
-                                           
-                        </p:inplace>
-                         <h:outputText value="Dish Cost: " />  
-                        <p:inplace id="dishCostInplace" editor="true">  
-                            <p:inputText value="#{manageInventoryManagedBean.thisDish.dishCost}"/> 
-                                           
-                        </p:inplace>
-                       
-                        <p:commandButton value="Yes" onclick="growl" update ="form" actionListener="#{manageInventoryManagedBean.updateDish}" oncomplete="editDish.hide()">  
-                        </p:commandButton>
-                        <p:commandButton value="Cancel" onclick="editDish.hide()" type="button"/>  
-                    </h:panelGrid>
-                </p:dialog>  
-
-                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
-                    <h:outputText value="Are you sure to delete this dish ?"/>
-
-                    <br/><br/>
-                    <p:commandButton value="Yes" onclick="growl" update ="form" actionListener="#{manageInventoryManagedBean.deleteDish}" oncomplete="confirmation.hide()">  
-                    </p:commandButton>
-                    <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
-                </p:dialog>  
-
-                <p:dialog width="420"  styleClass="actions" showEffect="explode" hideEffect="explode" header="Add new dish" widgetVar="addDish"> 
-                    <p:panelGrid columns="2">  
-
-                        <h:outputText value="Please enter Dish Name: "/>
-                        <h:inputText value ="#{manageInventoryManagedBean.thisDish.dishName}"/>
-                        <h:outputText value="Please enter Dish Cost: "/>
-                        <h:inputText value ="#{manageInventoryManagedBean.thisDish.dishCost}"/>
-                        <h:outputText value="Please enter Dish Quantity: "/>
-                        <h:inputText value ="#{manageInventoryManagedBean.thisDish.dishQuantity}"/>
-
-                        <p:commandButton value="Confirm" onclick="growl" update ="form" actionListener="#{manageInventoryManagedBean.addDish}" oncomplete="addDish.hide()">  
-                        </p:commandButton>
-                        <p:commandButton value="Cancel" onclick="addDish.hide()" type="button"/>
-                    </p:panelGrid>
-                </p:dialog>  
+                </h:panelGrid>
             </p:panel>
-
-        </h:form>  
+        </h:form>
     </ui:define>
 
 </ui:composition>
