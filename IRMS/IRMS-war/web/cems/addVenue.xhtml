@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="addVenueForm">
+
+            <p:growl id="addVenueMsg" showDetail="true" sticky="true"/>
+            <p:panel id="addVenuePanel" header="Add Venue">
+
+                <p:panelGrid id="addVenueGrid" columns="2">
+
+                    <h:outputText value="Venue Name: " />
+                    <h:inputText required="true" requiredMessage="Venue name cannot be empty" value="#{addVenueManagedBean.venue.venueName}" style="margin-bottom:10px;"/>
+                    <h:outputText value=""/><br/>
+
+                    <h:outputText value="Venue Capacity: " />
+                    <h:inputText required="true" requiredMessage="Venue capacity cannot be empty" value="#{addVenueManagedBean.venue.venueCapacity}" style="margin-bottom:10px;">
+                        <f:convertNumber integerOnly="true" type="number" />
+                    </h:inputText>
+                    <h:outputText value=""/><br/>
+
+                    <p:commandButton value="Save" ajax="true" actionListener="#{addVenueManagedBean.saveNewVenue}" update="addVenueMsg"/>
+
+                </p:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
