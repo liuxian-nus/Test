@@ -238,6 +238,35 @@ public class initializationManagedBean implements Serializable {
 
         addMessage("Reservation Created!");
     }
+    
+        public void createCEMSAdmin() {
+        System.out.println("go to create CEMS admin");
+
+        role = new RoleEntity();
+        role.setRoleId(30);
+        role.setRoleName("CEMSAdmin");
+        System.out.println("Create role :" + role.getRoleName());
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("C0000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeName("CEMSAdmin");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("C0000"));
+        System.out.println("finished hashing");
+        employee.addRole(role);
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving CEMSAdmin....");
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("CEMSAdmin saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
+            return;
+        }
+        System.out.println("Insert Employee into database");
+        addMessage("CEMSAdmin Created!");
+    }
 
     public void createFBMSAdmin() {
         System.out.println("go to create FBMS page");
@@ -956,6 +985,7 @@ public class initializationManagedBean implements Serializable {
     //Add new test cases below!!!!!!!!!
 
     public void initialize() {
+        createCEMSAdmin();
         createShow();
         createSuperAdmin();
         createSystemUser();

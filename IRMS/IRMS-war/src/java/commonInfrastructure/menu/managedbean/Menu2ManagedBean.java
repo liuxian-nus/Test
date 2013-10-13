@@ -162,6 +162,27 @@ public class Menu2ManagedBean implements Serializable {
              model.addSubmenu(submenu);
              }
              */
+            
+            if (userType.contains("CEMSAdmin")) {
+                System.out.println("CEMSAdmin menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("Venues");
+                
+                item = new MenuItem();
+                item.setValue("Create Venue");
+                item.setUrl("/cems/addVenue.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Manage Venue");
+                item.setUrl("/cems/manageVenue.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
+                submenu.getChildren().add(item);
+ 
+                model.addSubmenu(submenu);
+            }
+            
             if (userType.contains("FBMSAdmin")) {
                 System.out.println("FBMSAdmin menu bar");
                 submenu = new Submenu();
