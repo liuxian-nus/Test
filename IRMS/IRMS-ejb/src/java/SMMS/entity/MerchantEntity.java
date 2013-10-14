@@ -45,6 +45,11 @@ public class MerchantEntity implements Serializable {
     public void setMerchantContract(List<ContractEntity> merchantContract) {
         this.merchantContract = merchantContract;
     }
+    
+    public void addContract(ContractEntity contract){
+       this.merchantContract.add(contract);
+       System.out.println("ContractEntity-->new event added:" +contract.getContractId());
+    }
 
     public String getMerchantEmail() {
         return merchantEmail;

@@ -7,6 +7,7 @@ package SMMS.session;
 import Exception.ExistException;
 import SMMS.entity.BillEntity;
 import SMMS.entity.ContractEntity;
+import SMMS.entity.ContracteventEntity;
 import SMMS.entity.OutletEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ public class ContractSessionBean {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
+    private ContractEntity contract;
+    private ContracteventEntity newevent;
 
     public ContractSessionBean() {
     }
@@ -37,13 +40,26 @@ public class ContractSessionBean {
     public void persist(Object object) {
         em.persist(object);
     }
-    ContractEntity contract = new ContractEntity();
     
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public ContractEntity addContract(ContractEntity contract) {
         em.persist(contract);
         return contract;
+    }
+    
+    //add new contractEvent
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public ContracteventEntity addContractevent(Long contractId, Long cevent) throws ExistException {
+        contract = em.find(ContractEntity.class, contractId);
+        newevent = em.find(ContracteventEntity.class, cevent);
+        if (newevent == null) {
+            throw new ExistException("ContractSessionBean-->ExistException-->Invalid contract event!");
+        }
+        contract.addContractEvent(newevent);
+        em.merge(contract);
+        System.out.println("ContractSessionBean--> " + contract.getContractId() + " new include new service " + newevent.getContracteventId());
+        return newevent;
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

@@ -49,7 +49,7 @@ public class OutletEntity implements Serializable {
     
     @OneToMany(mappedBy = "outlet")
     private List<OutletTransactionEntity> outletTransaction = new ArrayList<OutletTransactionEntity>();
-    @OneToOne(cascade={CascadeType.REMOVE})
+    @OneToOne(mappedBy="outlet")
     private ContractEntity contract;
 
     public OutletEntity(){}

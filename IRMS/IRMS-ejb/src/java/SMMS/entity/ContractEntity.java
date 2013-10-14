@@ -48,11 +48,11 @@ public class ContractEntity implements Serializable {
     private List<ContracteventEntity> contractEvent = new ArrayList<ContracteventEntity>();
     @ManyToOne (cascade={CascadeType.MERGE})
     private MerchantEntity merchant = new MerchantEntity();
-    @OneToOne(cascade = {CascadeType.MERGE},mappedBy = "contract")
+    @OneToOne(cascade = {CascadeType.MERGE})
     private OutletEntity outlet;
     
     public ContractEntity(){}
-
+    
     public MerchantEntity getMerchant() {
         return merchant;
     }
@@ -164,6 +164,12 @@ public class ContractEntity implements Serializable {
     public void setContractEvent(List<ContracteventEntity> contractEvent) {
         this.contractEvent = contractEvent;
     }
+    
+     public void addContractEvent(ContracteventEntity contract){
+       this.contractEvent.add(contract);
+       System.out.println("ContractEventEntity-->new event added:" +contract.getContracteventId() );
+    }
+
 
     public Long getId() {
         return contractId;

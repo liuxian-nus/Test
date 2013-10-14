@@ -32,6 +32,16 @@ public class ContracteventEntity implements Serializable {
     private Date eventEndDate;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date eventTime;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date eventDownDate;
+
+    public Date getEventDownDate() {
+        return eventDownDate;
+    }
+
+    public void setEventDownDate(Date eventDownDate) {
+        this.eventDownDate = eventDownDate;
+    }
     private double eventDownPayment;
     private double eventMonthRate;
     private double eventEarlyCharge;
