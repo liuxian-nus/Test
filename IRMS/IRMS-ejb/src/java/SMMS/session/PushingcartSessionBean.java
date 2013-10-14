@@ -53,10 +53,16 @@ public class PushingcartSessionBean {
     }
     
      @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void removePushingcart(Long pushingcartId) throws ExistException {
+    public boolean removePushingcart(Long pushingcartId) throws ExistException {
         pushingcart = em.find(PushingcartEntity.class, pushingcartId);
-        if(pushingcart==null) throw new ExistException ("Pushingcart doesn't exist!");
-        em.remove(pushingcart);
+        if (pushingcart != null) {
+            em.remove(pushingcart);
+            System.out.println("PushingcartSessionBean: The cart has been found and removed!" + pushingcart.getPushingcartId());
+            return true;
+        } else {
+            System.out.println("PushingcartSessionBean: The dish does not exist!");
+            return false;
+        }
     }
      
      @TransactionAttribute(TransactionAttributeType.REQUIRED)
