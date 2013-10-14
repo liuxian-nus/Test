@@ -8,9 +8,9 @@
 
     <ui:define name="content">
         <h:form id="form">
+            <p:growl id="message" showDetail="true" /> 
             <p:panel id="pushingcart" header="Pushing Cart Management" style="height:500px;">
                 <div style="margin-top:20px;margin-bottom:20px;">
-                    <p:growl id="message" showDetail="true" /> 
 
                     <p:dataTable id="carts" value="#{pushingcartManagedBean.allPushingcarts}" var="cartList" 
                                  paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
@@ -35,9 +35,9 @@
                         <p:column style="width:100px">  
                             <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
                                 <p:commandButton update=":form:editCart" oncomplete="editCart.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
-                                <f:setPropertyActionListener target="#{pushingcartManagedBean.pushingcart}" value="#{cartList}" />
+                                    <f:setPropertyActionListener target="#{pushingcartManagedBean.pushingcart}" value="#{cartList}" />
                                 </p:commandButton>
-                                
+
                                 <p:commandButton update=":form:deleteCart" icon="ui-icon ui-icon-close" oncomplete="confirmation.show()" title="Delete">  
                                     <f:setPropertyActionListener target="#{pushingcartManagedBean.pushingcart}" value="#{cartList}" />  
                                 </p:commandButton>  
@@ -45,67 +45,18 @@
                         </p:column>  
                     </p:dataTable>  
 
-                    <p:commandButton value="Add new pushing cart" icon="ui-icon ui-icon-check" title="Add"  oncomplete="addCart.show()"/> 
-
-
-
                     <!-- delete confirmation starts here-->
                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
                         <br/>
                         Are you sure to delete?
                         <br/><br/>
                         <h:panelGrid columns="2" id="deleteCart">
-                        <p:commandButton value="Yes" update="carts" onclick ="message" actionListener="#{pushingcartManagedBean.deletePushingcart}" oncomplete="confirmation.hide()"/>
-                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
+                            <p:commandButton value="Yes" update="carts" onclick ="message" actionListener="#{pushingcartManagedBean.deletePushingcart}" oncomplete="confirmation.hide()"/>
+                            <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
                         </h:panelGrid>
                     </p:dialog>  
 
-
-                    <!-- add dialog starts here-->
-                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="addCart"> 
-                        <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;"> 
-                            <h:outputText value="Type*:"/>
-                            <h:selectOneMenu value ="#{pushingcartManagedBean.pushingcart.pushingcartType}" required ="true" requiredMessage="Type cannot be empty">
-                                <f:selectItem itemLabel="Select Type" itemValue="" />  
-                                <f:selectItem itemLabel="Trolley" itemValue="trolley" />  
-                                <f:selectItem itemLabel="Basket" itemValue="basket" />  
-                                <f:selectItem itemLabel="Baby's pushing cart" itemValue="babycart" />  
-                                <f:selectItem itemLabel="Others" itemValue="others" />  
-                            </h:selectOneMenu> 
-
-                            <h:outputText value="Level*:"/>
-                            <h:selectOneMenu value ="#{pushingcartManagedBean.pushingcart.pushingcartLevel}" required ="true" requiredMessage="Level cannot be empty">
-                                <f:selectItem itemLabel="Select Level" itemValue="" />  
-                                <f:selectItem itemLabel="Parking Lots" itemValue="-3" />  
-                                <f:selectItem itemLabel="Basement2" itemValue="-2" />  
-                                <f:selectItem itemLabel="Basement1" itemValue="-1" />  
-                                <f:selectItem itemLabel="1" itemValue="1" />  
-                                <f:selectItem itemLabel="2" itemValue="2" />  
-                                <f:selectItem itemLabel="3" itemValue="3" />  
-                                <f:selectItem itemLabel="4" itemValue="4" />  
-                                <f:selectItem itemLabel="5" itemValue="5" />  
-                            </h:selectOneMenu> 
-
-                            <h:outputText value="Area*:"/>
-                            <h:selectOneMenu value ="#{pushingcartManagedBean.pushingcart.pushingcartArea}" required ="true" requiredMessage="Area cannot be empty">
-                                <f:selectItem itemLabel="Select Area" itemValue="" />  
-                                <f:selectItem itemLabel="East" itemValue="ease" />  
-                                <f:selectItem itemLabel="West" itemValue="west" />  
-                                <f:selectItem itemLabel="North" itemValue="north" />  
-                                <f:selectItem itemLabel="South" itemValue="south" />  
-                                <f:selectItem itemLabel="Center" itemValue="center" />
-                                <f:selectItem itemLabel="Outdoor" itemValue="outdoor" />  
-                            </h:selectOneMenu> 
-
-                            <h:outputText value="Inventory*:"/>
-                            <h:inputText required ="true" requiredMessage="Inventory cannot be empty" value="#{pushingcartManagedBean.pushingcart.pushingcartInventory}"/>                                   
-
-                            <p:commandButton value="Yes" update="carts" onclick ="message" actionListener="#{pushingcartManagedBean.addPushingcart}" oncomplete="addCart.hide()"/>  
-                        </h:panelGrid> 
-                    </p:dialog>  
-
-
-<!-- edit dialog starts here-->
+                    <!-- edit dialog starts here-->
                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="editCart"> 
                         <h:panelGrid id="editCart"  columns="2" cellpadding="4" style="margin:0 auto;"> 
                             <h:outputText value="Inventory: " />  
