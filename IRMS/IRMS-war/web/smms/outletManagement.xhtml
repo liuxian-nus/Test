@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel id="outlet" header="Outlet Management" style="height:500px;">
+                <div style="margin-top:20px;margin-bottom:20px;">
+                    <p:growl id="message" showDetail="true" /> 
+
+                    <p:dataTable id="outlets" value="#{outletManagedBean.allOutlets}" var="outletList" 
+                                 paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                        <p:column headerText="Outlet ID" style="width:50px;">
+                            <h:outputText value="#{outletList.id}"/>
+                        </p:column> 
+                        <p:column headerText="Type" style="width:50px;">
+                            <h:outputText value="#{outletList.outletType}"/>
+                        </p:column>
+                        <p:column headerText="Name" style="width:50px;">
+                            <h:outputText value="#{outletList.outletName}"/>
+                        </p:column>
+                        <p:column headerText="Condition" style="width:50px;">
+                            <h:outputText value="#{outletList.outletCondition}"/>
+                        </p:column>
+                        <p:column headerText="Level" style="width:50px;">
+                            <h:outputText value="#{outletList.outletLevel}"/>
+                        </p:column>
+                        <p:column headerText="Number" style="width:50px;">
+                            <h:outputText value="#{outletList.outletNo}"/>
+                        </p:column>
+                        <p:column headerText="Area" style="width:50px;">
+                            <h:outputText value="#{outletList.outletArea}"/>
+                        </p:column>
+                        <p:column headerText="Status" style="width:50px;">
+                            <h:outputText value="#{outletList.outletStatus}"/>
+                        </p:column>
+                        <p:column headerText="Starting date" style="width:50px;">
+                            <h:outputText value="#{outletList.contract.contractStartDate}"/>
+                        </p:column>
+                        <p:column headerText="Ending date" style="width:50px;">
+                            <h:outputText value="#{outletList.contract.contractEndDate}"/>
+                        </p:column>
+                        <p:column headerText="Merchant" style="width:50px;">
+                            <h:outputText value="#{outletList.contract.merchant.merchantName}"/>
+                        </p:column>
+                        <p:column style="width:100px">  
+                            <p:commandButton update=":form:editOutlet" rendered="#{outletList.outletStatus=='available'}" value="Update" oncomplete="editOutlet.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                <f:setPropertyActionListener target="#{outletManagedBean.outlet}" value="#{outletList}" />
+                                <f:attribute name="lala" value="#{outletList.outletId}" />
+                            </p:commandButton>
+                            <h:outputText value="Rented" rendered="#{outletList.outletStatus!='available'}" />
+                        </p:column>  
+                    </p:dataTable>  
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Update Outlet" widgetVar="editOutlet"> 
+                        <h:panelGrid id="editOutlet"  columns="2" cellpadding="4" style="margin:0 auto;"> 
+                            <h:outputText value="Name: " />  
+                            <p:inplace >  
+                                <p:inputText value="#{outletManagedBean.outlet.outletName}" />  
+                            </p:inplace>  
+                            <h:outputText value="Condition: " />  
+                            <p:inplace >  
+                                <p:inputText value="#{outletManagedBean.outlet.outletCondition}" />  
+                            </p:inplace>
+                            <h:outputText value="Type: " />  
+                            <p:inplace >  
+                                <p:inputText value="#{outletManagedBean.outlet.outletType}" />  
+                            </p:inplace>
+                            <h:outputText value="Area: " />  
+                            <p:inplace >  
+                                <p:inputText value="#{outletManagedBean.outlet.outletArea}" />  
+                            </p:inplace>
+                            <p:commandButton value="Update" update="outlets" onclick ="message" actionListener="#{outletManagedBean.updateOutlet}" oncomplete="editOutlet.hide()"/>
+                        </h:panelGrid>
+                    </p:dialog>  
+
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

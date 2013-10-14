@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:tabView id="tabView">  
+
+            <p:tab id="tab1" title="Add Contract">  
+                <h:form id="formAdd">
+                    <p:growl id="growl" showDetail="true" sticky="true" />                    
+                    <h:panelGrid columns="3" cellpadding="10">  
+                        <h:outputText value="Merchant:"/>
+                        <h:selectOneMenu value ="#{contractManagedBean.merchantId}"  required ="true" requiredMessage="Merchant cannot be empty">
+                            <f:selectItem itemLabel="Select Merchant" itemValue=""/>
+                            <f:selectItems value="#{contractManagedBean.merchantSessionBean.allMerchants}" var="allMerchants" itemLabel="#{allMerchants.merchantName}" itemValue="#{allMerchants.merchantEmail}" />  
+                        </h:selectOneMenu>                                    
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Outlet:"/>
+                        <h:selectOneMenu value ="#{contractManagedBean.outletId}"  required ="true" requiredMessage="Outlet cannot be empty">
+                            <f:selectItem itemLabel="Select Outlet" itemValue="" />  
+                            <f:selectItems value="#{contractManagedBean.outletSessionBean.availableOutlets}" var="allMerchants" itemLabel="#{allMerchants.id}" itemValue="#{allMerchants.id}" />  
+                        </h:selectOneMenu>                            
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Downpayment:"/>
+                        <h:inputText  title="Please enter down payment" required ="true" requiredMessage="Downpayment cannot be empty" value="#{contractManagedBean.newevent.eventDownPayment}"/>
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Downpayment ending date:"/> 
+                        <p:calendar pattern="yyyy-MM-dd"  showButtonPanel="true" navigator="true"  value="#{contractManagedBean.newevent.eventDownDate}" /> 
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Deposit:"/>
+                        <h:inputText  title="Please enter Deposit" required ="true" requiredMessage="Deposit cannot be empty" value="#{contractManagedBean.newevent.eventDeposit}"/>
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Commission Rate:"/>
+                        <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{contractManagedBean.newevent.eventCommissionRate}"/>
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Monthly Rate:"/>
+                        <h:inputText  title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{contractManagedBean.newevent.eventMonthRate}"/>
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Early Termination charge:"/>
+                        <h:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{contractManagedBean.newevent.eventEarlyCharge}"/>
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Starting Date:"/>
+                        <p:calendar pattern="yyyy-MM-dd" showButtonPanel="true" navigator="true"  value="#{contractManagedBean.newevent.eventStartDate}" /> 
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Ending Date:"/>
+                        <p:calendar pattern="yyyy-MM-dd" showButtonPanel="true" navigator="true"  value="#{contractManagedBean.newevent.eventEndDate}" /> 
+                        <h:outputText value=""/>
+
+                        <p:commandButton  value="Add" ajax="true" actionListener="#{contractManagedBean.addContract}" update ="growl"/>
+                    </h:panelGrid> 
+                </h:form>
+            </p:tab>  
+
+            <!-- view contracts tab starts!! -->
+            <p:tab id="tab2" title="View Contracts">  
+                <h:form id="formView">
+                    <p:growl id="growl" showDetail="true" sticky="true" />                    
+                    <h:panelGrid columns="2" cellpadding="10">  
+
+                    </h:panelGrid> 
+                </h:form>
+            </p:tab> 
+
+
+        </p:tabView>
+    </ui:define>
+
+</ui:composition>
