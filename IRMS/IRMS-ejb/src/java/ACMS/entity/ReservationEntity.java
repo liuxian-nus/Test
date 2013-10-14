@@ -40,25 +40,12 @@ public class ReservationEntity implements Serializable {
     private String reservationCorporate;
     private double reservationTotal;
     private double reservationCharge;
-
-    public String getReservationRoomType() {
-        return reservationRoomType;
-    }
-
-    public void setReservationRoomType(String reservationRoomType) {
-        this.reservationRoomType = reservationRoomType;
-    }
+    private boolean reservationStatus;
     //to be continued;
      @ManyToOne(cascade={CascadeType.MERGE})
      private MemberEntity rcMember;
 
-    public Long getId() {
-        return reservationId;
-    }
-
-    public void setId(Long reservationId) {
-        this.reservationId = reservationId;
-    }
+  
 
     @Override
     public int hashCode() {
@@ -177,6 +164,22 @@ public class ReservationEntity implements Serializable {
 
     public void setReservationCharge(double reservationCharge) {
         this.reservationCharge = reservationCharge;
+    }
+
+    public String getReservationRoomType() {
+        return reservationRoomType;
+    }
+
+    public void setReservationRoomType(String reservationRoomType) {
+        this.reservationRoomType = reservationRoomType;
+    }
+
+    public boolean isReservationStatus() {
+        return reservationStatus;
+    }
+
+    public void setReservationStatus(boolean reservationStatus) {
+        this.reservationStatus = reservationStatus;
     }
     
     

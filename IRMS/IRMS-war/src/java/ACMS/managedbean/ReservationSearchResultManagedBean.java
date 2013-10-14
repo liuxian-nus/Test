@@ -27,16 +27,16 @@ public class ReservationSearchResultManagedBean implements Serializable {
     private ReservationSessionBean re;
 
     private ReservationEntity selectReservation;
-    private List<ReservationEntity> reservations;
+    private List<ReservationEntity> reservationList;
     private Long reservationId;
 
-    public List<ReservationEntity> getReservations() {
+    public List<ReservationEntity> getReservationList() {
         System.err.println("in get all reservations");
         return re.getAllReservations();
     }
 
-    public void setReservations(List<ReservationEntity> reservations) {
-        this.reservations = reservations;
+    public void setReservationList(List<ReservationEntity> reservationList) {
+        this.reservationList = reservationList;
     }
 
     public ReservationEntity getSelectReservation() {
@@ -65,8 +65,8 @@ public class ReservationSearchResultManagedBean implements Serializable {
         this.reservationId = reservationId;
     }
 
-    public void initViewAll(PhaseEvent event) {
-        reservations = (List<ReservationEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("Reservations");
+    public void initViewList(PhaseEvent event) {
+        reservationList = (List<ReservationEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("reservationList");
     }
 
 }

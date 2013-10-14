@@ -44,6 +44,7 @@ public class RoomManagedBean implements Serializable {
     private int searchId;
     private int roomId;
     private String serviceName;
+    private String creditCardNo;
 
     public RoomServiceSessionBean getRs() {
         return rs;
@@ -201,6 +202,16 @@ public class RoomManagedBean implements Serializable {
 
         FacesContext.getCurrentInstance().getExternalContext().redirect("listAllRooms.xhtml");
     }
+
+    public String getCreditCardNo() {
+        return creditCardNo;
+    }
+
+    public void setCreditCardNo(String creditCardNo) {
+        this.creditCardNo = creditCardNo;
+    }
+    
+    
 
     //this one copied from PrimeFace showcase
     public void onRowToggle(ToggleEvent event) {

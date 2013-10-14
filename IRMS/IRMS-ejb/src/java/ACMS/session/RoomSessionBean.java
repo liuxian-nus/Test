@@ -176,6 +176,7 @@ public class RoomSessionBean {
         if (reservation == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->This Reservation doesn't exist!");
         }
+        reservation.setReservationStatus(true);
         room = em.find(RoomEntity.class, roomId);
         if ("reserved".equals(room.getRoomStatus())) {
             System.out.println("RoomSessionBean-->Warning! the room is reserved!");

@@ -86,6 +86,7 @@ public class ReservationSessionBean {
         PriceEntity thisPrice = em.find(PriceEntity.class, thisReservation.getReservationRoomType());
         thisReservation.setReservationTotal(thisPrice.getPrice()*thisReservation.getReservationRoomCount()*5);//5 should be days between
         thisReservation.setReservationCharge(0.15*thisReservation.getReservationTotal());
+        thisReservation.setReservationStatus(false); //haven't implement yet
         em.persist(thisReservation);
     }
 
