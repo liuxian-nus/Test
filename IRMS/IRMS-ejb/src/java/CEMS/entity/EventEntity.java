@@ -50,10 +50,20 @@ public class EventEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date endDate;
     private EmployeeEntity eventManager;
+    private boolean isPublic;
     
     
     public EventEntity(){}
 
+    public boolean isIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    
     public EmployeeEntity getEventManager() {
         return eventManager;
     }

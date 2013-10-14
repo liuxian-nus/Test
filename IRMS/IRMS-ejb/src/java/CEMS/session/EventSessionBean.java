@@ -55,13 +55,28 @@ public class EventSessionBean {
             ee.setTitle(title);
             System.out.println("EventSessionBean: makeReservation: event has been created!"+ee.getEventId()+ee.getEventName());
             
-            ee.setStatus("In Progress: move to booking");
+            ee.setStatus("In Progress: booking completed!");
             em.persist(ee);
             System.out.println("EventSessionBean: makeReservation: event status has been changed "+ee.getEventId()+ee.getStatus());
 
         return ee;
     }
-    
+    public EventEntity completeReservation (EventEntity event,String address,String phone,String countryOfResidence
+            ,Double estimatedBudget,String company,String industry,String preferredLanguage,boolean isPublic)
+    {
+        event.setAddress(address);
+        event.setCountryOfResidence(countryOfResidence);
+        event.setEstimatedBudget(estimatedBudget);
+        event.setEventContact(phone);
+        event.setEventCorporate(company);
+        event.setEventIndustry(industry);
+        event.setPreferLanguage(preferredLanguage);
+        event.setIsPublic(isPublic);
+        
+        System.out.println("EventSessionBean:completeReservation: all event details have been updated!"+event.getEventId());
+        em.merge(event);
+        return event;
+    }
     public EventEntity getReservation(Long eventId)
     {
         ee = em.find(EventEntity.class,eventId);

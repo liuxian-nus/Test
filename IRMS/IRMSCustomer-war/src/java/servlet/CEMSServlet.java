@@ -4,10 +4,14 @@
  */
 package servlet;
 
+import CEMS.entity.EventEntity;
 import CEMS.entity.VenueEntity;
 import CEMS.session.EventSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,11 +31,14 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "CEMSServlet", urlPatterns = {"/CEMSServlet", "/CEMSServlet/*"})
 public class CEMSServlet extends HttpServlet {
+
     @EJB
     private EventSessionBean eventSessionBean;
     private List<VenueEntity> data;
     private VenueEntity data1;
+    private EventEntity data2;
     //private String keyword=null;
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -42,8 +49,6 @@ public class CEMSServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    
     @Override
     public void init() {
         System.out.println("CEMSERVLET: init()");
@@ -71,37 +76,41 @@ public class CEMSServlet extends HttpServlet {
                 System.out.println("***event***");
 
                 request.getRequestDispatcher("/event.jsp").forward(request, response);
-            }else if ("eventRegister".equals(page)) {
+            } else if ("eventRegister".equals(page)) {
                 System.out.println("***eventRegister***");
 
                 request.getRequestDispatcher("/eventRegister.jsp").forward(request, response);
-            }
-            else if ("eventVenueSearch".equalsIgnoreCase(page)) {
+            } else if ("eventRegisterResult".equalsIgnoreCase(page)) {
+                System.out.println("*****eventRegisterResult*****");
+                data2 = registerEvent(request);
+
+                System.out.println(data2.getEventName() + " has been registered!");
+                request.setAttribute("data", data2);
+                request.getRequestDispatcher("/eventRegisterResult.jsp").forward(request, response);
+            } else if ("eventVenueSearch".equalsIgnoreCase(page)) {
                 System.out.println("*****eventVenueSearch*****");
                 System.out.println("CEMSSevlet: Current page is eventVenueSearch!");
                 data = searchVenue(request);
-             
+
                 System.out.println(data.isEmpty());
                 request.setAttribute("data", data);
                 request.getRequestDispatcher("/eventVenueSearch.jsp").forward(request, response);
-            } 
-            else if("eventVenueBook".equalsIgnoreCase(page)){
+            } else if ("eventVenueBook".equalsIgnoreCase(page)) {
                 System.out.println("*****eventVenueBook*****");
                 System.out.println("CEMSSevlet: Current page is eventVenueBook!");
                 Long venueId = Long.parseLong(request.getParameter("venueId"));
                 data1 = eventSessionBean.getVenue(venueId);
-                System.out.println("CEMSServlet:eventVenueBook: the venue has been found "+data1.getVenueName());
-                List <Date> unavailDates = new ArrayList<Date>();
+                System.out.println("CEMSServlet:eventVenueBook: the venue has been found " + data1.getVenueName());
+                List<Date> unavailDates = new ArrayList<Date>();
                 unavailDates = eventSessionBean.checkVenueAvailability(venueId, 1);
-                
+
                 request.setAttribute("data", data1);
-                request.setAttribute("unavailDates",unavailDates );
+                request.setAttribute("unavailDates", unavailDates);
                 System.out.println("CEMSServlet:eventVenueBook: the list of unavailable dates!");
-                System.out.println(data1.toString()+unavailDates.isEmpty());
+                System.out.println(data1.toString() + unavailDates.isEmpty());
                 request.getRequestDispatcher("/eventVenueBook.jsp").forward(request, response);
-                
-            }
-            else {
+
+            } else {
                 System.out.println("other page");
             }
         } catch (Exception e) {
@@ -119,7 +128,7 @@ public class CEMSServlet extends HttpServlet {
          * @param response servlet response
          * @throws ServletException if a servlet-specific error occurs
          * @throws IOException if an I/O error occurs
-         * 
+         *
          */
     }
 
@@ -140,23 +149,22 @@ public class CEMSServlet extends HttpServlet {
         System.out.println("irmsServlet: destroy()");
     }
 
-        
     private List<VenueEntity> searchVenue(HttpServletRequest request) {
-        
-        List <VenueEntity> al = new ArrayList <VenueEntity>();
+
+        List<VenueEntity> al = new ArrayList<VenueEntity>();
         System.out.println("method invoked");
         String venueFunction = request.getParameter("venueFunction");
         System.out.println(venueFunction);
         System.out.println("venueFunction retrieved");
-        Integer venueCapacity   = Integer.parseInt(request.getParameter("venueCapacity"));
+        Integer venueCapacity = Integer.parseInt(request.getParameter("venueCapacity"));
         System.out.println(venueCapacity);
-   
+
         al = eventSessionBean.searchVenue(venueCapacity, venueFunction);
-        
+
         //System.out.println(re.getRestNeighbourhood()+re.getRestCuisine()+re.getRestTypeOfPlace());
 
-        
-      //  System.out.println(al.get(0));
+
+        //  System.out.println(al.get(0));
         System.out.println("CEMSServlet: event search venue has been completed!");
 
 
@@ -164,6 +172,7 @@ public class CEMSServlet extends HttpServlet {
         return al;
         //To change body of generated methods, choose Tools | Templates.
     }// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP
      * <code>GET</code> method.
@@ -183,6 +192,47 @@ public class CEMSServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-  
+    private EventEntity registerEvent(HttpServletRequest request) throws ParseException {
+        
+        System.out.println("CEMSServlet: registerEvent has started!");
+        EventEntity ee = new EventEntity();
+        
+        String title = request.getParameter("title");
+        String eventName = request.getParameter("eventName");
+        String name = request.getParameter("name");
+        String eventType = request.getParameter("eventType");
+        String email = request.getParameter("e-mail");
+            String dateString = request.getParameter("startDate");
+            System.out.println("startDate passed in is "+dateString);
+            DateFormat formatter;
+            formatter = new SimpleDateFormat("MM/dd/yyyy");
+            Date startDate = formatter.parse(dateString);
+            System.out.println("startDate is "+startDate);
+            
+            String endDateString = request.getParameter("endDate");
+            System.out.println("startDate passed in is "+endDateString);
+            Date endDate = formatter.parse(endDateString);
+            
+        String phoneNumber = request.getParameter("contact");
+        String address = request.getParameter("address");
+        Integer eventScale = Integer.parseInt(request.getParameter("eventScale"));
+        String countryOfResidence = request.getParameter("countryOfResidence");
+        Double estimatedBudget = Double.parseDouble(request.getParameter("estimatedBudget"));
+        String company = request.getParameter("company");
+        String industry = request.getParameter("industry");
+        boolean isPublic = Boolean.parseBoolean(request.getParameter("subscribe"));
+        String preferredLanguage = request.getParameter("preferredLanguage");
+        
+        System.out.println("CEMSServlet:registerEvent: All data has been passed in already!");
+        
+        ee = eventSessionBean.makeReservation(eventName, eventType, eventName, title,
+                name, email, eventScale, startDate, endDate);
+        ee = eventSessionBean.completeReservation(ee, address,phoneNumber , countryOfResidence, estimatedBudget, 
+                company, industry, preferredLanguage, isPublic);
+        System.out.println("CEMSServlet:registerEvent:Event has been created successfully!");
+                
+                
+        
+        return ee;
+    }
 }
-

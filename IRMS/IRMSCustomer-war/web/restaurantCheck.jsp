@@ -29,7 +29,7 @@
                 <div class="small-11 small-centered columns">
                     <div class="panel">
 
-                        <h6><strong>Here is your reservation details, please use your reservation Id to make modifications.</strong><h6>
+                        <h6><strong>Here is your reservation details, please use your reservation Id to make modifications.</strong></h6>
                                 <br>
                                 <h6><strong>Reservation number : </strong>${data.indReservationId}</h6>
                             <br>
