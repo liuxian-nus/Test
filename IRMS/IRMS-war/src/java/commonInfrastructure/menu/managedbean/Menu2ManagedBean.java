@@ -162,27 +162,27 @@ public class Menu2ManagedBean implements Serializable {
              model.addSubmenu(submenu);
              }
              */
-            
+
             if (userType.contains("CEMSAdmin")) {
                 System.out.println("CEMSAdmin menu bar");
                 submenu = new Submenu();
                 submenu.setLabel("Venues");
-                
+
                 item = new MenuItem();
                 item.setValue("Create Venue");
                 item.setUrl("/cems/addVenue.xhtml");
                 item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Manage Venue");
                 item.setUrl("/cems/manageVenue.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
- 
+
                 model.addSubmenu(submenu);
             }
-            
+
             if (userType.contains("FBMSAdmin")) {
                 System.out.println("FBMSAdmin menu bar");
                 submenu = new Submenu();
@@ -206,7 +206,7 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/fbms/addDish.xhtml");
                 item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Manage Inventory");
                 item.setUrl("/fbms/manageDish.xhtml");
@@ -221,33 +221,33 @@ public class Menu2ManagedBean implements Serializable {
                 submenu = new Submenu();
                 submenu.setLabel("Attractions");
                 submenu.setIcon("ui-icon ui-icon-contact");
-                
+
                 item = new MenuItem();
                 item.setValue("Add Attractions");
                 item.setUrl("/atms/addAttractions.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Manage Attractions");
                 item.setUrl("/atms/manageAttractions.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
 
-                
-                item = new MenuItem();              
+
+                item = new MenuItem();
                 item.setValue("Add Tickets");
                 item.setUrl("/atms/addTicket.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-                
+
 
                 item = new MenuItem();
                 item.setValue("Manage Tickets");
                 item.setUrl("/atms/manageTickets.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
- 
+
                 model.addSubmenu(submenu);
             }
 
@@ -271,7 +271,12 @@ public class Menu2ManagedBean implements Serializable {
                 System.out.println("SMMSAdmin menu bar");
                 submenu = new Submenu();
                 submenu.setLabel("Shopping Mall");
-                submenu.setIcon("ui-icon ui-icon-contact");
+
+                item = new MenuItem();
+                item.setValue("Create Pushing Cart");
+                item.setUrl("/smms/addPushingcart.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
 
                 item = new MenuItem();
                 item.setValue("Manage Pushing Cart");
@@ -299,12 +304,12 @@ public class Menu2ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
             }
-            
+
             if (userType.contains("ESMSAdmin")) {
                 System.out.println("ESMSAdmin menu bar");
                 submenu = new Submenu();
                 submenu.setLabel("Show");
-                
+
                 item = new MenuItem();
                 item.setValue("Create new show");
                 item.setUrl("/esms/addShow.xhtml");
@@ -316,7 +321,7 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/esms/manageShow.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
-                
+
                 model.addSubmenu(submenu);
             }
 
