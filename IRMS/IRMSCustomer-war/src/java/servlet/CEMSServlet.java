@@ -110,6 +110,18 @@ public class CEMSServlet extends HttpServlet {
                 System.out.println(data1.toString() + unavailDates.isEmpty());
                 request.getRequestDispatcher("/eventVenueBook.jsp").forward(request, response);
 
+            } else if ("eventList".equals(page)) {
+                System.out.println("***eventList***");
+                String eventTitle="IS3102";
+                Date eventStart=new Date(2014,10,1);
+                Date eventEnd=new Date(2014,10,3);
+                request.setAttribute("eventTitle",eventTitle);
+                request.setAttribute("eventStart",eventStart);
+                request.setAttribute("eventEnd",eventEnd);
+                System.out.println(eventTitle);
+                System.out.println(eventStart);
+                System.out.println(eventEnd);
+                request.getRequestDispatcher("/eventList.jsp").forward(request, response);
             } else {
                 System.out.println("other page");
             }
