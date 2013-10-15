@@ -270,7 +270,7 @@ public class Menu2ManagedBean implements Serializable {
             if (userType.contains("SMMSAdmin")) {
                 System.out.println("SMMSAdmin menu bar");
                 submenu = new Submenu();
-                submenu.setLabel("Shopping Mall");
+                submenu.setLabel("Manage Property");
 
                 item = new MenuItem();
                 item.setValue("Create Pushing Cart");
@@ -279,7 +279,7 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 item = new MenuItem();
-                item.setValue("Manage Pushing Cart");
+                item.setValue("View Pushing Cart");
                 item.setUrl("/smms/pushingcartManagement.xhtml");
                 item.setIcon("ui-icon ui-icon-cart");
                 submenu.getChildren().add(item);
@@ -289,19 +289,33 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/smms/outletManagement.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
+                model.addSubmenu(submenu);
+
+                submenu = new Submenu();
+                submenu.setLabel("Manage Contracts");
 
                 item = new MenuItem();
-                item.setValue("Manage Contracts");
-                item.setUrl("/smms/contractManagement.xhtml");
+                item.setValue("Add Contract");
+                item.setUrl("/smms/addContract.xhtml");
                 item.setIcon("ui-icon ui-icon-document");
                 submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("View Contracts");
+                item.setUrl("/smms/manageContract.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
+                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
+
+                submenu = new Submenu();
+                submenu.setLabel("Manage Contract payments");
 
                 item = new MenuItem();
                 item.setValue("Manage Contract Payments");
                 item.setUrl("/smms/paymentManagement.xhtml");
                 item.setIcon("ui-icon ui-icon-lightbulb");
                 submenu.getChildren().add(item);
-
                 model.addSubmenu(submenu);
             }
 

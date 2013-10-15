@@ -34,6 +34,15 @@ public class ContracteventEntity implements Serializable {
     private Date eventTime;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date eventDownDate;
+    private double eventDownPayment;
+    private double eventMonthRate;
+    private double eventEarlyCharge;
+    private double eventCommissionRate;
+    private String eventStatus;
+    private double eventDeposit;
+    @ManyToOne(cascade={CascadeType.MERGE}) ///not necessarily need this lah
+    private ContractEntity contract = new ContractEntity();
+
 
     public Date getEventDownDate() {
         return eventDownDate;
@@ -42,15 +51,7 @@ public class ContracteventEntity implements Serializable {
     public void setEventDownDate(Date eventDownDate) {
         this.eventDownDate = eventDownDate;
     }
-    private double eventDownPayment;
-    private double eventMonthRate;
-    private double eventEarlyCharge;
-    private double eventCommissionRate;
-    private String eventStatus;
-    private double eventDeposit;
-    @ManyToOne(cascade={CascadeType.PERSIST}) ///not necessarily need this lah
-    private ContractEntity contract = new ContractEntity();
-
+    
     public double getEventDeposit() {
         return eventDeposit;
     }

@@ -32,19 +32,9 @@ public class ContractEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long contractId;
-    private String contractPeriod;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date contractStartDate;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date contractEndDate;
-    private double contractDownPayment;
-    private double contractMonthRate;
-    private double contractEarlyCharge;
-    private double contractCommissionRate;
-    private String contractStatus;
-    private double contractDeposit;
+   
     private int contractOutlet;
-    @OneToMany(mappedBy = "contract")
+    @OneToMany(mappedBy = "contract",cascade={CascadeType.MERGE})
     private List<ContracteventEntity> contractEvent = new ArrayList<ContracteventEntity>();
     @ManyToOne (cascade={CascadeType.MERGE})
     private MerchantEntity merchant = new MerchantEntity();
@@ -59,6 +49,7 @@ public class ContractEntity implements Serializable {
 
     public void setMerchant(MerchantEntity merchant) {
         this.merchant = merchant;
+        System.err.println("NO1: IN contractEntity: setting merchant");
     }
 
     public OutletEntity getOutlet() {
@@ -66,7 +57,9 @@ public class ContractEntity implements Serializable {
     }
 
     public void setOutlet(OutletEntity outlet) {
+      
         this.outlet = outlet;
+        System.err.println("NO2: IN contractEntity: setting outlet");
     }
 
     public int getContractOutlet() {
@@ -77,14 +70,7 @@ public class ContractEntity implements Serializable {
         this.contractOutlet = contractOutlet;
     }
 
-    public double getContractDeposit() {
-        return contractDeposit;
-    }
-
-    public void setContractDeposit(double contractDeposit) {
-        this.contractDeposit = contractDeposit;
-    }
-
+   
     public Long getContractId() {
         return contractId;
     }
@@ -93,70 +79,7 @@ public class ContractEntity implements Serializable {
         this.contractId = contractId;
     }
 
-    public String getContractPeriod() {
-        return contractPeriod;
-    }
-
-    public void setContractPeriod(String contractPeriod) {
-        this.contractPeriod = contractPeriod;
-    }
-
-    public Date getContractStartDate() {
-        return contractStartDate;
-    }
-
-    public void setContractStartDate(Date contractStartDate) {
-        this.contractStartDate = contractStartDate;
-    }
-
-    public Date getContractEndDate() {
-        return contractEndDate;
-    }
-
-    public void setContractEndDate(Date contractEndDate) {
-        this.contractEndDate = contractEndDate;
-    }
-
-    public double getContractDownPayment() {
-        return contractDownPayment;
-    }
-
-    public void setContractDownPayment(double contractDownPayment) {
-        this.contractDownPayment = contractDownPayment;
-    }
-
-    public double getContractMonthRate() {
-        return contractMonthRate;
-    }
-
-    public void setContractMonthRate(double contractMonthRate) {
-        this.contractMonthRate = contractMonthRate;
-    }
-
-    public double getContractEarlyCharge() {
-        return contractEarlyCharge;
-    }
-
-    public void setContractEarlyCharge(double contractEarlyCharge) {
-        this.contractEarlyCharge = contractEarlyCharge;
-    }
-
-    public double getContractCommissionRate() {
-        return contractCommissionRate;
-    }
-
-    public void setContractCommissionRate(double contractCommissionRate) {
-        this.contractCommissionRate = contractCommissionRate;
-    }
-
-    public String getContractStatus() {
-        return contractStatus;
-    }
-
-    public void setContractStatus(String contractStatus) {
-        this.contractStatus = contractStatus;
-    }
-
+   
     public List<ContracteventEntity> getContractEvent() {
         return contractEvent;
     }

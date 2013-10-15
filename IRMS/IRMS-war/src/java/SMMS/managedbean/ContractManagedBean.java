@@ -14,6 +14,7 @@ import SMMS.session.ContracteventSessionBean;
 import SMMS.session.MerchantSessionBean;
 import SMMS.session.OutletSessionBean;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -38,6 +39,30 @@ public class ContractManagedBean {
     private MerchantSessionBean merchantSessionBean;
     @EJB
     private ContractSessionBean contractSessionBean;
+    private ContractEntity contract;
+    private List<MerchantEntity> merchants;
+    private MerchantEntity merchant;
+    private OutletEntity outlet;
+    private List<OutletEntity> outlets;
+    private String merchantId; //merchant name unique
+    private int outletId;
+    private ContracteventEntity newevent;
+    private Date currentDate = new Date();
+
+    
+    public ContractManagedBean() {
+
+        contract = new ContractEntity();
+        newevent = new ContracteventEntity();
+    }
+    
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
+    }
 
     public ContracteventSessionBean getContracteventSessionBean() {
         return contracteventSessionBean;
@@ -70,14 +95,6 @@ public class ContractManagedBean {
     public void setContractSessionBean(ContractSessionBean contractSessionBean) {
         this.contractSessionBean = contractSessionBean;
     }
-    private ContractEntity contract;
-    private List<MerchantEntity> merchants;
-    private MerchantEntity merchant;
-    private OutletEntity outlet;
-    private List<OutletEntity> outlets;
-    private String merchantId; //merchant name unique
-    private int outletId;
-    private ContracteventEntity newevent;
 
     public List<MerchantEntity> getMerchants() {
         return merchants;
@@ -146,32 +163,32 @@ public class ContractManagedBean {
     /**
      * Creates a new instance of ContractManagedBean
      */
-    public ContractManagedBean() {
-        contract = new ContractEntity();
-        newevent = new ContracteventEntity();
-    }
-
     public void addContract(ActionEvent event) throws ExistException {
         System.out.println("in adding contract" + merchantId + "and outlet ID:" + outletId);
         try {
-            newevent.setEventStatus("new");
-            contracteventSessionBean.addContractevent(newevent);
-            System.out.println("after creating contract event" + newevent.getContracteventId());
-
-            contract.setMerchant(merchantSessionBean.getMerchantById(merchantId)); //adding new merchant
-            contract.setOutlet(outletSessionBean.getOutletById(outletId)); //adding new outlet
-            contract.addContractEvent(newevent);// adding new event to contract
-            contractSessionBean.addContract(contract);
-            System.out.println("after persisting contract" + contract.getContractId());
 
             merchant = merchantSessionBean.getMerchantById(merchantId);
+            outlet = outletSessionBean.getOutletById(outletId);
+
+            contract.setMerchant(merchant); //adding new merchant
+            contract.setOutlet(outlet); //adding new outlet
+            contractSessionBean.addContract(contract);//persist contract entity
+            System.out.println("after persisting contract" + contract.getContractId());
+
+            newevent.setEventStatus("new");
+            newevent.setEventContract(contract);
+            contracteventSessionBean.addContractevent(newevent);//persist event entity
+            System.out.println("after creating new contract event" + newevent.getContracteventId());
+
+            contractSessionBean.addContractevent(contract.getContractId(), newevent.getContracteventId());// adding new event to contract, merge contract entity
+            System.out.println("after adding contract event" + newevent.getContracteventId());
+
             merchant.addContract(contract);
-            merchantSessionBean.updateMerchant(merchant);
+            merchantSessionBean.updateMerchant(merchant);//merge merchant
             System.out.println("after adding contract to merchant" + merchant.getMerchantEmail());
 
-            outlet = outletSessionBean.getOutletById(outletId);
             outlet.setContract(contract);
-            outletSessionBean.updateOutlet(outlet);
+            outletSessionBean.updateOutlet(outlet);//merge outlet
             System.out.println("after adding contract to outlet" + outlet.getOutletId());
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new contract", ""));
@@ -180,6 +197,7 @@ public class ContractManagedBean {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Contract has been added.", ""));
     }
 
+    // NOT USEFUL GETTINGS
     public List<String> getAllMerchants() throws ExistException {
         System.out.println("NO4: we are in ALL merchants bean BEFORE");
         List<String> results = new ArrayList<String>();
@@ -193,6 +211,7 @@ public class ContractManagedBean {
         return results;
     }
 
+    //NOT USEFUL THERE
     public List<Integer> getAvailableOutlets() throws ExistException {
         System.out.println("NO4: we are in ALL outlets bean BEFORE");
         List<Integer> results = new ArrayList<Integer>();

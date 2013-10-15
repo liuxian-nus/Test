@@ -45,6 +45,7 @@ public class ContractSessionBean {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public ContractEntity addContract(ContractEntity contract) {
         em.persist(contract);
+        System.err.println("No3: In contractsessionbean adding contract: ");
         return contract;
     }
     

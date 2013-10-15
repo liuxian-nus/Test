@@ -32,6 +32,7 @@ public class ContracteventSessionBean {
      
      @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public ContracteventEntity addContractevent(ContracteventEntity contractevent) {
+        System.out.println("ContractEvent Session bean: add contractevent called");
         em.persist(contractevent);
         return contractevent;
     }
