@@ -15,47 +15,54 @@
         <body>
         <jsp:include page="header.jsp"></jsp:include>
 
-            <h2>Your Reservation Details...</h2>
+        <div class="row">
+            <ul class="button-group round even-4">
+                <li><a href="#" class="button secondary small"><strong>Search your hotel ></strong></a></li>
+                <li><a href="#" class="button small" disabled ><strong>Fill in your information ></strong></a></li>
+                <li><a href="#" class="button small secondary"><strong>Make payment ></strong></a></li>
+                <li><a href="#" class="button small secondary"><strong>Confirm your reservation ></strong></a></li>
+            </ul>
+        </div>
             <div class ="row">
                 <!--<div class="panel">-->  
                 <div class="large-7 columns">
-                    <div class="panel callout">
+                    <div class="panel callout" >
                         <div class="row">
-                        <div class="large-8 columns">
+                            <div class="large-8 columns">
                             <c:if test="${data.reservationHotelNo == 1}">
-                            <h6>Reservation for <strong class="right-align,inline"> Orchard Hotel</strong></h6>
-                        </c:if>
-                        <c:if test="${data.reservationHotelNo == 2}">
-                            <h6>Hotel Reservation for <strong class="right-align,inline"> Marina Hotel</strong></h6>
-                        </c:if>
-                        <c:if test="${data.reservationHotelNo == 3}">
-                            <h6>Hotel Reservation for <strong class="right-align,inline"> BeachView Hotel</strong></h6>
-                        </c:if>
-                        <h6>Room Type: <strong class="right-align,inline"> ${data.reservationRoomType} </strong></h6>
-                        <h6>Check-In Date: <strong class="right-align,inline"> ${data.rcCheckInDate} </strong></h6>
-                        <h6>Check-Out Date: <strong class="right-align,inline">${data.rcCheckOutDate} </strong></h6>
+                                <h6>Reservation for <strong class="right-align,inline"> Orchard Hotel</strong></h6>
+                            </c:if>
+                            <c:if test="${data.reservationHotelNo == 2}">
+                                <h6>Hotel Reservation for <strong class="right-align,inline"> Marina Hotel</strong></h6>
+                            </c:if>
+                            <c:if test="${data.reservationHotelNo == 3}">
+                                <h6>Hotel Reservation for <strong class="right-align,inline"> BeachView Hotel</strong></h6>
+                            </c:if>
+                            <h6>Room Type: <strong class="right-align,inline"> ${data.reservationRoomType} </strong></h6>
+                            <h6>Check-In Date: <strong class="right-align,inline"> ${data.rcCheckInDate} </strong></h6>
+                            <h6>Check-Out Date: <strong class="right-align,inline">${data.rcCheckOutDate} </strong></h6>
+                        </div>
+
+                        <div class="large-4 columns">
+                            <c:if test="${data.reservationHotelNo == 1}">
+                                <a class="th radius" href="/IRMSCustomer-war/images/gallery/orchard.jpg">
+                                    <img src="/IRMSCustomer-war/images/gallery/orchard.jpg">
+                                </a>
+                            </c:if>
+                            <c:if test="${data.reservationHotelNo == 2}">
+                                <a class="th radius" href="/IRMSCustomer-war/images/gallery/marina.jpg">
+                                    <img src="/IRMSCustomer-war/images/gallery/marina.jpg">
+                                </a>
+                            </c:if>
+                            <c:if test="${data.reservationHotelNo == 3}">
+                                <a class="th radius" href="/IRMSCustomer-war/images/gallery/beachview.jpg">
+                                    <img src="/IRMSCustomer-war/images/gallery/beachview.jpg">
+                                </a>
+                            </c:if>
+
+                        </div>
                     </div>
 
-                    <div class="large-4 columns">
-                        <c:if test="${data.reservationHotelNo == 1}">
-                            <a class="th radius" href="/IRMSCustomer-war/images/gallery/orchard.jpg">
-                                <img src="/IRMSCustomer-war/images/gallery/orchard.jpg">
-                            </a>
-                        </c:if>
-                        <c:if test="${data.reservationHotelNo == 2}">
-                            <a class="th radius" href="/IRMSCustomer-war/images/gallery/marina.jpg">
-                                <img src="/IRMSCustomer-war/images/gallery/marina.jpg">
-                            </a>
-                        </c:if>
-                        <c:if test="${data.reservationHotelNo == 3}">
-                            <a class="th radius" href="/IRMSCustomer-war/images/gallery/beachview.jpg">
-                                <img src="/IRMSCustomer-war/images/gallery/beachview.jpg">
-                            </a>
-                        </c:if>
-
-                    </div>
-                    </div>
-                            
                 </div>
             </div> 
             <div class="large-5 columns">
@@ -70,12 +77,10 @@
                     </div>
                     <div class="row">
                         <div class="large-4 columns">                               
-                            <input href="member" class="tiny button" value="Log In">
-
-
+                                <a href="member" class="small button">Log In</a>
                         </div>
-                        <div class="large-6 columns">
-                            <label for="right-label" class="right-align,inline" ><h7><a href="memberRegister" style="color:#4d4d4d">Not a member?</a></h7></label>
+                        <div class="large-8 columns">
+                           <a href="memberRegister" style="color:#4d4d4d"> Not a member?</a>
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,7 @@
             <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
             <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
             <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-            <link rel="stylesheet" href="/resources/demos/style.css" />
+          
 
 
             <script>
@@ -117,23 +117,39 @@
         </div>
         <div class="large-9 columns"> 
             <div class="row">
-                <div class="panel callout">
-                    <div class="large-5 columns">
+                <div class="panel">
+                    <div class="row">
+                        <div class="large-5 columns">
                         <h5><strong>&nbsp Orchard Hotel™</strong></h5>
+                        </div>
+                        <div class="large-7 columns">
+                        <img style="vertical-align:text-bottom;" src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
+                        </div>
+                         
+                    </div>
+                    <div class="row">
+                    <div class="large-5 columns">
+                      
                         <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel2.jpg">
                             <img src="/IRMSCustomer-war/images/gallery/hotel2.jpg">
                         </a>
+                    
                         <!-- <p>We provide every guest with an enriched ultimate dining experience to enjoy authentic Chinese cuisine</p>-->
-
-                    </div>
+                        </div>
+                  
                     <div class="large-7 columns">
 
-                        <h5><a style="color:#4d4d4d"><strong>Five Star</strong></a></h5><i class="sprite starrating stars5"></i>
+                      
                         <p style="color:#4d4d4d">Orchard Hotel is the fun destination of Coral Island Resort. The fabulous location, our family- and child-friendly environment, 
                             and range of fun amenities make this vibrant hotel the ideal family getaway.The nearby Festive Walk and 
                             World Square offer a host of non-stop entertainment and facilities to add to the holiday mood. For a fun family getaway, be sure to check in at 
                             Orchard Hotel!                                                                                                                                                         </p>
 
+                    </div>
                     </div>
 
                     <br>

@@ -13,7 +13,14 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <h2>Your Payment Details...</h2>
+               <div class="row">
+            <ul class="button-group round even-4">
+                <li><a href="#" class="button secondary small"><strong>Search your hotel ></strong></a></li>
+                <li><a href="#" class="button small secondary"><strong>Fill in your information ></strong></a></li>
+                <li><a href="#" class="button small" disabled><strong>Make payment ></strong></a></li>
+                <li><a href="#" class="button small secondary"><strong>Confirm your reservation ></strong></a></li>
+            </ul>
+        </div>
             <div class ="row">
                 <!--<div class="panel">-->
                 <div class="panel callout">
