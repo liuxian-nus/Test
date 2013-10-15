@@ -1,8 +1,4 @@
-<%-- 
-    Document   : memeberRegister
-    Created on : Sep 21, 2013, 4:44:26 PM
-    Author     : lionetdd
---%>
+
 
 <%-- 
     Document   : memeberRegister
