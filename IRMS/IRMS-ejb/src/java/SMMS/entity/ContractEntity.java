@@ -106,7 +106,7 @@ public class ContractEntity implements Serializable {
      {
          int eventsize = this.getContractEvent().size();
          
-         return this.getContractEvent().get(eventsize);
+         return this.getContractEvent().get(eventsize-1);
          
      }
 

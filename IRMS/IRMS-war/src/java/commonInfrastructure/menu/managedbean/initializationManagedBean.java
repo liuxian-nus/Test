@@ -955,7 +955,7 @@ public class initializationManagedBean implements Serializable {
 
 
             contractSessionBean.addContractevent(contract1.getContractId(), event1.getContracteventId());
-            merchantSessionBean.addContract(contract1.getContractId(), merchanta.getMerchantEmail());
+            merchantSessionBean.addContractInMerchant(contract1.getContractId(), merchanta.getMerchantEmail());
 
             outleta.setContract(contract1);
             outletSessionBean.updateOutlet(outleta);
@@ -999,7 +999,7 @@ public class initializationManagedBean implements Serializable {
 
 
             contractSessionBean.addContractevent(contract1.getContractId(), event2.getContracteventId());
-            merchantSessionBean.addContract(contract1.getContractId(), merchantb.getMerchantEmail());
+            merchantSessionBean.addContractInMerchant(contract1.getContractId(), merchantb.getMerchantEmail());
 
             outletb.setContract(contract1);
             outletSessionBean.updateOutlet(outletb);

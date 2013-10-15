@@ -41,10 +41,10 @@
                             <h:outputText value="#{outletList.outletStatus}"/>
                         </p:column>
                         <p:column headerText="Starting date" style="width:50px;">
-                            <h:outputText value="#{outletList.contract.contractStartDate}"/>
+                            <h:outputText value="#{outletList.contract.last.eventStartDate}"/>
                         </p:column>
                         <p:column headerText="Ending date" style="width:50px;">
-                            <h:outputText value="#{outletList.contract.contractEndDate}"/>
+                            <h:outputText value="#{outletList.contract.last.eventEndDate}"/>
                         </p:column>
                         <p:column headerText="Merchant" style="width:50px;">
                             <h:outputText value="#{outletList.contract.merchant.merchantName}"/>

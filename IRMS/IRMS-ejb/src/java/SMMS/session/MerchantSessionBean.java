@@ -68,7 +68,7 @@ public class MerchantSessionBean {
         return merchant;
     }
     
-    public ContractEntity addContract(Long contractId, String merchantId) throws ExistException {
+    public ContractEntity addContractInMerchant(Long contractId, String merchantId) throws ExistException {
         contract = em.find(ContractEntity.class, contractId);
         merchant = em.find(MerchantEntity.class, merchantId);
         if (contract == null) {

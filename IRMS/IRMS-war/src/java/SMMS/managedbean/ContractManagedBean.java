@@ -198,9 +198,9 @@ public class ContractManagedBean {
             contractSessionBean.addContractevent(contract.getContractId(), newevent.getContracteventId());// adding new event to contract, merge contract entity
             System.out.println("after adding contract event" + newevent.getContracteventId());
 
-            merchantSessionBean.addContract(contract.getContractId(), merchantId);//merge merchant
+            merchantSessionBean.addContractInMerchant(contract.getContractId(), merchantId);//merge merchant
             System.out.println("after adding contract to merchant" + merchant.getMerchantEmail());
-
+            
             outlet.setContract(contract);
             outletSessionBean.updateOutlet(outlet);//merge outlet
             System.out.println("after adding contract to outlet" + outlet.getOutletId());
