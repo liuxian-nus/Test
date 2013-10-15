@@ -13,6 +13,7 @@ import SMMS.session.ContractSessionBean;
 import SMMS.session.ContracteventSessionBean;
 import SMMS.session.MerchantSessionBean;
 import SMMS.session.OutletSessionBean;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.PhaseEvent;
+import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -48,14 +53,24 @@ public class ContractManagedBean {
     private int outletId;
     private ContracteventEntity newevent;
     private Date currentDate = new Date();
+    private ContractEntity selected;
 
-    
     public ContractManagedBean() {
 
         contract = new ContractEntity();
         newevent = new ContracteventEntity();
+        selected = new ContractEntity();
+
     }
-    
+
+    public ContractEntity getSelected() {
+        return selected;
+    }
+
+    public void setSelected(ContractEntity selected) {
+        this.selected = selected;
+    }
+
     public Date getCurrentDate() {
         return currentDate;
     }
@@ -183,8 +198,7 @@ public class ContractManagedBean {
             contractSessionBean.addContractevent(contract.getContractId(), newevent.getContracteventId());// adding new event to contract, merge contract entity
             System.out.println("after adding contract event" + newevent.getContracteventId());
 
-            merchant.addContract(contract);
-            merchantSessionBean.updateMerchant(merchant);//merge merchant
+            merchantSessionBean.addContract(contract.getContractId(), merchantId);//merge merchant
             System.out.println("after adding contract to merchant" + merchant.getMerchantEmail());
 
             outlet.setContract(contract);
@@ -224,22 +238,29 @@ public class ContractManagedBean {
         System.out.println("NO5: we are in complete bean AFTER");
         return results;
     }
+
+    public List<ContractEntity> getAllContracts() {
+        System.out.println("in getting all contracts in session bean");
+        return contractSessionBean.getAllContracts();
+    }
+
+    public void viewContract(ActionEvent event) throws IOException, ExistException {
+
+        System.out.println("in displaying bean " + selected.getContractId());
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", selected);
+            System.out.println("we are after setting parameter");
+            request.getSession().setAttribute("contractId", selected.getContractId());
+            System.out.println("we are after setting contractId session attribute");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("viewContract.xhtml");
+        }
+    catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing contract", ""));
+        return;
+    }
 }
-//public class Main {
-// 
-//	public static void main(String[] args) {
-//		Timer timer = new Timer();
-//		TimerTask tt = new TimerTask(){
-//			public void run(){
-//				Calendar cal = Calendar.getInstance(); //this is the method you should use, not the Date(), because it is desperated.
-// 
-//				int hour = cal.get(Calendar.HOUR_OF_DAY);//get the hour number of the day, from 0 to 23
-// 
-//				if(hour == 14){
-//					System.out.println("doing the scheduled task");
-//				}
-//			}
-//		};
-//		timer.schedule(tt, 1000, 1000*5);//	delay the task 1 second, and then run task every five seconds
-//	}
-//}
+    
+    
+}

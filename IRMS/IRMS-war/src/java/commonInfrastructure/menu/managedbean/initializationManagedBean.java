@@ -34,9 +34,13 @@ import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
 import FBMS.entity.RestaurantEntity;
+import SMMS.entity.ContractEntity;
+import SMMS.entity.ContracteventEntity;
 import SMMS.entity.MerchantEntity;
 import SMMS.entity.OutletEntity;
 import SMMS.entity.PushingcartEntity;
+import SMMS.session.ContractSessionBean;
+import SMMS.session.ContracteventSessionBean;
 import SMMS.session.MerchantSessionBean;
 import SMMS.session.OutletSessionBean;
 import SMMS.session.PushingcartSessionBean;
@@ -57,6 +61,10 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class initializationManagedBean implements Serializable {
 
+    @EJB
+    private ContracteventSessionBean contracteventSessionBean;
+    @EJB
+    private ContractSessionBean contractSessionBean;
     @EJB
     private LogBookSessionBean logBookSessionBean;
     @EJB
@@ -91,7 +99,6 @@ public class initializationManagedBean implements Serializable {
     private ShowSessionBean showSessionBean;
     @EJB
     private ShowTicketSessionBean showTicketSessionBean;
-    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -109,6 +116,8 @@ public class initializationManagedBean implements Serializable {
     private LogBookEntity log;
     private ShowScheduleEntity showSchedule;
     private ShowTicketEntity showTicket;
+    private ContractEntity contract;
+    private ContracteventEntity event;
 //    private MemberEntity member;
 
     @PostConstruct
@@ -238,8 +247,8 @@ public class initializationManagedBean implements Serializable {
 
         addMessage("Reservation Created!");
     }
-    
-        public void createCEMSAdmin() {
+
+    public void createCEMSAdmin() {
         System.out.println("go to create CEMS admin");
 
         role = new RoleEntity();
@@ -693,92 +702,91 @@ public class initializationManagedBean implements Serializable {
         }
     }
 
-  /*  public void createTickets() {
-        System.out.println("go to create Tickets page");
+    /*  public void createTickets() {
+     System.out.println("go to create Tickets page");
 
-        quota = new QuotaEntity();
-        quota.setMaxQuota(500);
-        quota.setRestQuota(500);
-        ticket = new TicketEntity();
-        ticket.setTicketName("Indoor Themepark");
-        ticket.setTicketPrice(49.9);
-        ticket.setQuota(quota);
+     quota = new QuotaEntity();
+     quota.setMaxQuota(500);
+     quota.setRestQuota(500);
+     ticket = new TicketEntity();
+     ticket.setTicketName("Indoor Themepark");
+     ticket.setTicketPrice(49.9);
+     ticket.setQuota(quota);
 
-        try {
-            System.out.println("Saving tickets....");
-            ticketSessionBean.addTicket(ticket);
-            System.out.println("ticket saved...");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
-            return;
-        }
-        System.out.println("Insert Ticket into database");
-
-
-        System.out.println("create 2nd ticket");
-
-        quota = new QuotaEntity();
-        quota.setMaxQuota(1000);
-        quota.setRestQuota(1000);
-        ticket = new TicketEntity();
-        ticket.setTicketName("Outdoor Themepark");
-        ticket.setTicketPrice(79.9);
-        ticket.setQuota(quota);
-
-        try {
-            System.out.println("Saving tickets....");
-            ticketSessionBean.addTicket(ticket);
-            System.out.println("ticket saved...");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
-            return;
-        }
-        System.out.println("Insert 2nd Ticket into database");
-
-        System.out.println("create 3nd ticket");
-
-        quota = new QuotaEntity();
-        quota.setMaxQuota(400);
-        quota.setRestQuota(400);
-        ticket = new TicketEntity();
-        ticket.setTicketName("Aquarium");
-        ticket.setTicketPrice(39.9);
-        ticket.setQuota(quota);
-
-        try {
-            System.out.println("Saving tickets....");
-            ticketSessionBean.addTicket(ticket);
-            System.out.println("ticket saved...");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
-            return;
-        }
-        System.out.println("Insert 3nd Ticket into database");
-
-        System.out.println("create 4th ticket");
-
-        quota = new QuotaEntity();
-        quota.setMaxQuota(200);
-        quota.setRestQuota(200);
-        ticket = new TicketEntity();
-        ticket.setTicketName("Museum");
-        ticket.setTicketPrice(9.9);
-        ticket.setQuota(quota);
-
-        try {
-            System.out.println("Saving tickets....");
-            ticketSessionBean.addTicket(ticket);
-            System.out.println("ticket saved...");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
-            return;
-        }
-        System.out.println("Insert 4th Ticket into database");
-        addMessage("Tickets Created!");
+     try {
+     System.out.println("Saving tickets....");
+     ticketSessionBean.addTicket(ticket);
+     System.out.println("ticket saved...");
+     } catch (Exception e) {
+     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
+     return;
+     }
+     System.out.println("Insert Ticket into database");
 
 
-    }*/
+     System.out.println("create 2nd ticket");
 
+     quota = new QuotaEntity();
+     quota.setMaxQuota(1000);
+     quota.setRestQuota(1000);
+     ticket = new TicketEntity();
+     ticket.setTicketName("Outdoor Themepark");
+     ticket.setTicketPrice(79.9);
+     ticket.setQuota(quota);
+
+     try {
+     System.out.println("Saving tickets....");
+     ticketSessionBean.addTicket(ticket);
+     System.out.println("ticket saved...");
+     } catch (Exception e) {
+     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
+     return;
+     }
+     System.out.println("Insert 2nd Ticket into database");
+
+     System.out.println("create 3nd ticket");
+
+     quota = new QuotaEntity();
+     quota.setMaxQuota(400);
+     quota.setRestQuota(400);
+     ticket = new TicketEntity();
+     ticket.setTicketName("Aquarium");
+     ticket.setTicketPrice(39.9);
+     ticket.setQuota(quota);
+
+     try {
+     System.out.println("Saving tickets....");
+     ticketSessionBean.addTicket(ticket);
+     System.out.println("ticket saved...");
+     } catch (Exception e) {
+     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
+     return;
+     }
+     System.out.println("Insert 3nd Ticket into database");
+
+     System.out.println("create 4th ticket");
+
+     quota = new QuotaEntity();
+     quota.setMaxQuota(200);
+     quota.setRestQuota(200);
+     ticket = new TicketEntity();
+     ticket.setTicketName("Museum");
+     ticket.setTicketPrice(9.9);
+     ticket.setQuota(quota);
+
+     try {
+     System.out.println("Saving tickets....");
+     ticketSessionBean.addTicket(ticket);
+     System.out.println("ticket saved...");
+     } catch (Exception e) {
+     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding ticket", ""));
+     return;
+     }
+     System.out.println("Insert 4th Ticket into database");
+     addMessage("Tickets Created!");
+
+
+     }*/
     public void createMerchant() {
         System.out.println("go to create merchant page...");
 
@@ -850,12 +858,20 @@ public class initializationManagedBean implements Serializable {
         outlet3.setOutletType("appareal");
         outlet3.setOutletArea(21.33);
 
+        OutletEntity outlet4 = new OutletEntity();
+        outlet3.setOutletLevel(4);
+        outlet3.setOutletNo(12);
+        outlet3.setOutletId(4, 12);
+        outlet3.setOutletType("cosmetics");
+        outlet3.setOutletArea(19.23);
+
         try {
             System.out.println("Saving outlets....");
 
             outletSessionBean.addOutlet(outlet);
             outletSessionBean.addOutlet(outlet2);
             outletSessionBean.addOutlet(outlet3);
+            outletSessionBean.addOutlet(outlet4);
 
             System.out.println("Outlets saved.....");
         } catch (Exception e) {
@@ -905,6 +921,99 @@ public class initializationManagedBean implements Serializable {
         addMessage("Carts! Created!");
     }
 
+    public void createContract() {
+        System.out.println("go to create Contract Page...");
+
+        ContractEntity contract1 = new ContractEntity();
+        Date cidate = new Date(2013, 11, 1);
+        Date codate = new Date(2015, 11, 1);
+        Date podate = new Date(2014, 1, 1);
+        try {
+
+            System.out.println("Saving cart....");
+
+            MerchantEntity merchanta = merchantSessionBean.getMerchantById("cookiewxy@hotmail.com");
+            OutletEntity outleta = outletSessionBean.getOutletById(217);
+            contract1.setMerchant(merchanta);
+            contract1.setOutlet(outleta);
+            contractSessionBean.addContract(contract1);
+            System.out.println("Contract saved....." + contract1.getContractId());
+
+
+            ContracteventEntity event1 = new ContracteventEntity();
+            event1.setEventStartDate(cidate);
+            event1.setEventEndDate(codate);
+            event1.setEventDownDate(podate);
+            event1.setEventDeposit(50000.00);
+            event1.setEventMonthRate(10000.00);
+            event1.setEventCommissionRate(0.32);
+            event1.setEventDownPayment(20000);
+            event1.setEventStatus("new");
+            event1.setEventContract(contract1);
+            contracteventSessionBean.addContractevent(event1);
+            System.out.println("Contract saved....." + event1.getContracteventId());
+
+
+            contractSessionBean.addContractevent(contract1.getContractId(), event1.getContracteventId());
+            merchantSessionBean.addContract(contract1.getContractId(), merchanta.getMerchantEmail());
+
+            outleta.setContract(contract1);
+            outletSessionBean.updateOutlet(outleta);
+
+            System.out.println("Contract saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding merchant", ""));
+            return;
+        }
+
+
+
+        ContractEntity contract2 = new ContractEntity();
+        Date cidate1 = new Date(2013, 12, 1);
+        Date codate1 = new Date(2015, 12, 1);
+        Date podate1 = new Date(2014, 1, 1);
+        try {
+
+            System.out.println("Saving cart....");
+
+            MerchantEntity merchantb = merchantSessionBean.getMerchantById("lionetdd@gmail.com");
+            OutletEntity outletb = outletSessionBean.getOutletById(311);
+            contract1.setMerchant(merchantb);
+            contract1.setOutlet(outletb);
+            contractSessionBean.addContract(contract2);
+            System.out.println("Contract saved....." + contract2.getContractId());
+
+
+            ContracteventEntity event2 = new ContracteventEntity();
+            event2.setEventStartDate(cidate1);
+            event2.setEventEndDate(codate1);
+            event2.setEventDownDate(podate1);
+            event2.setEventDeposit(55000.00);
+            event2.setEventMonthRate(11000.00);
+            event2.setEventCommissionRate(0.22);
+            event2.setEventDownPayment(21000);
+            event2.setEventStatus("new");
+            event2.setEventContract(contract2);
+            contracteventSessionBean.addContractevent(event2);
+            System.out.println("Contract saved....." + event2.getContracteventId());
+
+
+            contractSessionBean.addContractevent(contract1.getContractId(), event2.getContracteventId());
+            merchantSessionBean.addContract(contract1.getContractId(), merchantb.getMerchantEmail());
+
+            outletb.setContract(contract1);
+            outletSessionBean.updateOutlet(outletb);
+
+            System.out.println("Contract saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding merchant", ""));
+            return;
+        }
+
+        System.out.println("Insert cart into database");
+        addMessage("Carts! Created!");
+    }
+
     public void createESMSAdmin() {
         System.out.println("go to create ESMSAdmin");
 
@@ -939,7 +1048,7 @@ public class initializationManagedBean implements Serializable {
     public void createLogBook() throws ExistException {
         System.out.println("go to create log book");
         Date today = new Date(13, 11, 8);
-        
+
         log = new LogBookEntity();
         EmployeeEntity thisEmployee = employeeSessionBean.getEmployeeById("B0000");
         log.setLogShift(1);
@@ -961,7 +1070,8 @@ public class initializationManagedBean implements Serializable {
         addMessage("New Log Saved!");
 
     }
-    public void createShow(){
+
+    public void createShow() {
         System.err.println("creating show...");
         show = new ShowEntity();
         showTicket = new ShowTicketEntity();
@@ -1002,9 +1112,11 @@ public class initializationManagedBean implements Serializable {
         createSMMSAdmin();
         createSMMSOps();
         createMerchant();
+        createOutlet();
         createPushingcart();
+        createContract();
         createESMSAdmin();
-        
+
         addMessage("Initialization succeed!");
     }
 }

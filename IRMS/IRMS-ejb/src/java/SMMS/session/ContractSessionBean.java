@@ -68,7 +68,7 @@ public class ContractSessionBean {
         if (contract == null) {
             throw new ExistException("contract doesn't exist!");
         }
-        if ((contract.getContractStatus()!="new")||(contract.getContractStatus()!="rejected")) {
+        if ((contract.getStatus()!="new")||(contract.getStatus()!="rejected")) {
             throw new ExistException("contract cannot be removed because it has been approved!");
         }
         em.remove(contract);
@@ -76,7 +76,7 @@ public class ContractSessionBean {
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean updateContract(ContractEntity contract) throws ExistException {
-        if ((contract.getContractStatus()!="new")||(contract.getContractStatus()!="rejected")) {
+        if ((contract.getStatus()!="new")||(contract.getStatus()!="rejected")) {
             throw new ExistException("contract cannot be updated because it has been approved!");
         }
         em.merge(contract);
@@ -117,5 +117,21 @@ public class ContractSessionBean {
         return contract;
     }
     
+     public List<ContractEntity> getAllContracts() {
+        Query q = em.createQuery("SELECT m FROM ContractEntity m");
+        List ContractList = new ArrayList<ContractEntity>();
+        for (Object o : q.getResultList()) {
+            ContractEntity m = (ContractEntity) o;
+            ContractList.add(m);
+        }
+        return ContractList;
+    }
+    
+     public int getSize(ContractEntity newct) {
+     
+        return newct.getContractEvent().size();
+     }
+       
+
     
 }

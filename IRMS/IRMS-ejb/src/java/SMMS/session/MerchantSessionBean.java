@@ -6,6 +6,7 @@ package SMMS.session;
 
 import ERMS.entity.EmployeeEntity;
 import Exception.ExistException;
+import SMMS.entity.ContractEntity;
 import SMMS.entity.MerchantEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import javax.persistence.Query;
 public class MerchantSessionBean {
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
+    private ContractEntity contract;
   
     MerchantEntity merchant = new MerchantEntity();
     public MerchantSessionBean() {
@@ -66,5 +68,16 @@ public class MerchantSessionBean {
         return merchant;
     }
     
+    public ContractEntity addContract(Long contractId, String merchantId) throws ExistException {
+        contract = em.find(ContractEntity.class, contractId);
+        merchant = em.find(MerchantEntity.class, merchantId);
+        if (contract == null) {
+            throw new ExistException("ContractSessionBean-->ExistException-->Invalid contract event!");
+        }
+        merchant.addContract(contract);
+        em.merge(merchant);
+        System.out.println("ContractSessionBean--> Merchant" + merchant.getMerchantEmail() + " include new contract " + contract.getContractId());
+        return contract;
+    }
     
 }

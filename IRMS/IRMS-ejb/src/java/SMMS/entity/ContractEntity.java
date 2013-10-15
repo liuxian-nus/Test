@@ -40,9 +40,18 @@ public class ContractEntity implements Serializable {
     private MerchantEntity merchant = new MerchantEntity();
     @OneToOne(cascade = {CascadeType.MERGE})
     private OutletEntity outlet;
+    private String status;
     
     public ContractEntity(){}
-    
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+        
     public MerchantEntity getMerchant() {
         return merchant;
     }
@@ -92,6 +101,14 @@ public class ContractEntity implements Serializable {
        this.contractEvent.add(contract);
        System.out.println("ContractEventEntity-->new event added:" +contract.getContracteventId() );
     }
+     
+     public ContracteventEntity getLast()
+     {
+         int eventsize = this.getContractEvent().size();
+         
+         return this.getContractEvent().get(eventsize);
+         
+     }
 
 
     public Long getId() {
