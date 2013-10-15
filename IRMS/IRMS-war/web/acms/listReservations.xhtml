@@ -28,16 +28,18 @@
                                 <h:outputText value="#{reservations.rcCheckOutDate}"/> 
                             </p:column>
                             <p:column style="width:100px">  
-                                <p:commandButton oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Select" title="Select">  
+                                <p:commandButton rendered="#{reservations.reservationStatus == 'false'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Select" title="Select">  
                                     <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                 </p:commandButton>
+                                <h:outputText rendered="#{reservations.reservationStatus == 'true'}" value="Already Checked In" >  
+                            </h:outputText>  
                             </p:column>
                         </p:dataTable>
                     </div>
                     
                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
                         <h:outputText value="Select This Reservation for check-in? "/>
-                    <p:commandButton value="Yes" onclick="growl" update ="form" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
+                    <p:commandButton value="Yes" onclick="growl;" update ="form" action="#{reservationManagedBean.selectThisReservation()}" oncomplete="confirmation.hide()">  
                     </p:commandButton>
                     <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
                 </p:dialog>  

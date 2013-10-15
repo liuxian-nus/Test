@@ -138,6 +138,27 @@ public class ReservationManagedBean implements Serializable {
             return;
         }
     }
+    
+    public void selectThisReservation(ActionEvent event) throws IOException {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            if (selectReservation == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservation does not exist!", ""));
+                return;
+            } else {
+                System.out.println("we are after search");
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
+                System.out.println("we are after setting parameter");
+                request.getSession().setAttribute("reservationId", Long.valueOf(getSearchId()));
+                System.out.println("we are after setting reservationId session attribute");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
+        }
+    }
 
     public void searchByName(ActionEvent event) throws IOException, ExistException {
 
@@ -155,7 +176,7 @@ public class ReservationManagedBean implements Serializable {
                 System.out.println("we are after setting parameter");
                 request.getSession().setAttribute("rcName", searchName);
                 System.out.println("we are after setting reservationId session attribute");
-                FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("listReservations.xhtml");
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
@@ -179,7 +200,7 @@ public class ReservationManagedBean implements Serializable {
                 System.out.println("we are after setting parameter");
                 request.getSession().setAttribute("rcEmail", searchEmail);
                 System.out.println("we are after setting reservationId session attribute");
-                FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("listReservations.xhtml");
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
