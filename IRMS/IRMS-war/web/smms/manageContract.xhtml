@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+
+        <h:form id="form">
+            <p:growl id="message" showDetail="true" /> 
+            <p:panel id="contracts" header="Contracts Management" style="height:500px;">
+                <div style="margin-top:20px;margin-bottom:20px;">
+
+                    <p:dataTable id="contract" value="#{contractManagedBean.allContracts}" var="contract" 
+                                 paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                        <p:column headerText="Contract ID" style="width:50px;">
+                            <h:outputText value="#{contract.contractId}"/>
+                        </p:column>
+                        <p:column headerText="Merchant" style="width:100px;">
+                            <h:outputText value="#{contract.merchant.merchantName}"/>
+                        </p:column>
+                        <p:column headerText="Outlet" style="width:100px;">
+                            <h:outputText value="#{contract.outlet.id}"/>
+                        </p:column>
+                        <p:column headerText="Starting date" style="width:100px;">
+                            <h:outputText value="#{contract.last.eventStartDate}"/>
+                        </p:column>
+                        <p:column headerText="Ending date" style="width:100px;">
+                            <h:outputText value="#{contract.last.eventEndDate}"/>
+                        </p:column>
+                        <p:column headerText="Status" style="width:100px;">
+                            <h:outputText value="#{contract.last.eventStatus}"/>
+                        </p:column>
+                        <p:column style="width:100px">  
+                            <p:commandButton actionListener="#{contractManagedBean.viewContract}" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                <f:attribute name="selectedContract" value="#{contract}" />
+                            </p:commandButton>
+                        </p:column>  
+                    </p:dataTable>  
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
