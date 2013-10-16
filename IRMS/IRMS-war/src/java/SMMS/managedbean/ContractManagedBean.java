@@ -14,6 +14,7 @@ import SMMS.session.ContracteventSessionBean;
 import SMMS.session.MerchantSessionBean;
 import SMMS.session.OutletSessionBean;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @ManagedBean
 @ViewScoped
-public class ContractManagedBean {
+public class ContractManagedBean implements Serializable {
 
     @EJB
     private ContracteventSessionBean contracteventSessionBean;
@@ -59,7 +60,6 @@ public class ContractManagedBean {
 
         contract = new ContractEntity();
         newevent = new ContracteventEntity();
-        selected = new ContractEntity();
 
     }
 
@@ -194,13 +194,14 @@ public class ContractManagedBean {
             newevent.setEventContract(contract);
             contracteventSessionBean.addContractevent(newevent);//persist event entity
             System.out.println("after creating new contract event" + newevent.getContracteventId());
+        selected = new ContractEntity();
 
             contractSessionBean.addContractevent(contract.getContractId(), newevent.getContracteventId());// adding new event to contract, merge contract entity
             System.out.println("after adding contract event" + newevent.getContracteventId());
 
             merchantSessionBean.addContractInMerchant(contract.getContractId(), merchantId);//merge merchant
             System.out.println("after adding contract to merchant" + merchant.getMerchantEmail());
-            
+
             outlet.setContract(contract);
             outletSessionBean.updateOutlet(outlet);//merge outlet
             System.out.println("after adding contract to outlet" + outlet.getOutletId());
@@ -246,21 +247,21 @@ public class ContractManagedBean {
 
     public void viewContract(ActionEvent event) throws IOException, ExistException {
 
-        System.out.println("in displaying bean " + selected.getContractId());
+        System.out.println("No1:in displaying bean " + selected.getContractId());
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
+            selected = (ContractEntity) event.getComponent().getAttributes().get("selectedContract");
+            System.out.println("N02: in displaying bean " + selected.getContractId());
+
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", selected);
             System.out.println("we are after setting parameter");
             request.getSession().setAttribute("contractId", selected.getContractId());
             System.out.println("we are after setting contractId session attribute");
             FacesContext.getCurrentInstance().getExternalContext().redirect("viewContract.xhtml");
-        }
-    catch (Exception e) {
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing contract", ""));
-        return;
+            return;
+        }
     }
-}
-    
-    
 }

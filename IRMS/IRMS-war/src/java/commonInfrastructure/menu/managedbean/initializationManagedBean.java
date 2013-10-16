@@ -367,9 +367,21 @@ public class initializationManagedBean implements Serializable {
     public void createSMMSOps() {
         System.out.println("go to create SMMS page");
 
+        functionality = new FunctionalityEntity();
+        functionality.setFuncName("approveContract");
+        functionality.setFuncDescription("manager approve contract");
+        functionalitySessionBean.addFunctionality(functionality);
+        
+        FunctionalityEntity functionality2 = new FunctionalityEntity();
+        functionality2.setFuncName("managerViewContract");
+        functionality2.setFuncDescription("manager View Contract");
+        functionalitySessionBean.addFunctionality(functionality2);
+
         role = new RoleEntity();
         role.setRoleId(41);
         role.setRoleName("SMMSOps");
+        role.addFunctionality(functionality);
+        role.addFunctionality(functionality2);
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();

@@ -318,7 +318,23 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
                 model.addSubmenu(submenu);
             }
+           
+            
+            if (userType.contains("SMMSOps")) {
+                System.out.println("SMMSOps menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("Manage Contract");
 
+                item = new MenuItem();
+                item.setValue("View Contract");
+                item.setUrl("/smms/approveContract.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
+               
+                model.addSubmenu(submenu);
+           }
+           
+           
             if (userType.contains("ESMSAdmin")) {
                 System.out.println("ESMSAdmin menu bar");
                 submenu = new Submenu();
