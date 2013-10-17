@@ -57,9 +57,9 @@ public class addAttractionManagedBean {
     public void saveNewAttraction(ActionEvent event) throws IOException{
         try{
             System.out.println("into addAttractionManagedBean: saveNewAttraction");
-            quota=attr.getQuota();
+            quota=attr.getAttrQuota();
             quota.setRestQuota(quota.getMaxQuota());
-            attr.setQuota(quota);
+            attr.setAttrQuota(quota);
             System.out.println("attr name: "+attr.getAttrName());
             attractionSessionBean.addAttraction(attr);
             System.out.println("new attraction added");
