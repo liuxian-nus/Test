@@ -6,7 +6,20 @@ package FBMS.session;
 
 import FBMS.entity.IndReservationEntity;
 import FBMS.entity.OrderEntity;
+import com.lowagie.text.Anchor;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.CMYKColor;
+import com.lowagie.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.mail.Message;
@@ -63,14 +76,33 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
                     +"\nMobile Number: "+ire.getMobile()
                     +"\nNotes: "+ire.getNotes()
                     + "\n\n\nBest Regards,\nThe Coral Island Management Team");
+            
                     
 
             Transport.send(message);
 
             System.out.println("EmailSessionBean: the email has been done!");
+            //Below generate a PDF file
+            Document document;
+            document = new Document(PageSize.A4,50,50,50,50);
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Diana Wang\\Documents\\Diana\\"+ire.getId()+".pdf"));
+            document.open();
+            //Below draft the contents
+            Anchor anchorTarget = new Anchor ("Your Reservation Details");
+            anchorTarget.setName("BackToTop");
+            Paragraph paragraph1 = new Paragraph();
+            paragraph1.setSpacingBefore(50);
+            document.add(new Paragraph("Please print this voucher and bring it along to redeem",
+                    FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,new CMYKColor(0, 255, 0, 0))));
+            document.close();
+            
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
+        } catch (DocumentException ex) {
+            Logger.getLogger(FBEmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FBEmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
             
         return true;
