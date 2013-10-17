@@ -4,7 +4,7 @@
  */
 package ATMS.managedBean;
 
-import ATMS.entity.TicketEntity;
+import ATMS.entity.AttrTicketEntity;
 import ATMS.session.TicketSessionBean;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
@@ -24,7 +24,7 @@ import javax.faces.event.ActionEvent;
 public class addTicketManagedBean {
     @EJB
     private TicketSessionBean ticketSessionBean;   
-    private TicketEntity ticket;
+    private AttrTicketEntity ticket;
     
     @PostConstruct
     public void init()
@@ -32,11 +32,11 @@ public class addTicketManagedBean {
         FacesContext.getCurrentInstance().getExternalContext().getSession(true);
     }
     
-    public TicketEntity getTicket(){
+    public AttrTicketEntity getTicket(){
         return ticket;
     }
     
-    public void setTicket(TicketEntity ticket){
+    public void setTicket(AttrTicketEntity ticket){
         this.ticket=ticket;
     }
 
@@ -44,7 +44,7 @@ public class addTicketManagedBean {
      * Creates a new instance of addTicketManagedBean
      */
     public addTicketManagedBean() {
-        ticket=new TicketEntity();
+        ticket=new AttrTicketEntity();
     }
     
     public void saveNewTicket(ActionEvent event) throws IOException{
@@ -58,14 +58,14 @@ public class addTicketManagedBean {
             return;
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Ticket Saved.", ""));
-        ticket=new TicketEntity();
+        ticket=new AttrTicketEntity();
     }
     
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("addTicket.xhtml");
     }
     
-    public TicketEntity mapAttractionId(TicketEntity ticket){
+  /*  public AttrTicketEntity mapAttractionId(AttrTicketEntity ticket){
         String name=ticket.getAttrName();
         
         if(name.equals("Aquarium"))
@@ -81,7 +81,7 @@ public class addTicketManagedBean {
         
         return ticket; 
  
-    }
+    }*/
     
    
 }

@@ -21,18 +21,21 @@ public class AttractionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private String attrId;
     private String attrName;
     @OneToOne (cascade ={CascadeType.ALL})  
-    private QuotaEntity quota=new QuotaEntity();
-
-    public String getId() {
-        return id;
+    private QuotaEntity attrQuota=new QuotaEntity();
+    @OneToOne
+    private AttrTicketEntity attrTicket;
+    
+    public String getAttrId() {
+        return attrId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setAttrId(String attrId) {
+        this.attrId = attrId;
     }
+
 
     public String getAttrName() {
         return attrName;
@@ -42,38 +45,21 @@ public class AttractionEntity implements Serializable {
         this.attrName = attrName;
     }
 
-    public QuotaEntity getQuota() {
-        return quota;
+    public QuotaEntity getAttrQuota() {
+        return attrQuota;
     }
 
-    public void setQuota(QuotaEntity quota) {
-        this.quota = quota;
-    }
-    
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public void setAttrQuota(QuotaEntity attrQuota) {
+        this.attrQuota = attrQuota;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AttractionEntity)) {
-            return false;
-        }
-        AttractionEntity other = (AttractionEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public AttrTicketEntity getAttrTicket() {
+        return attrTicket;
     }
 
-    @Override
-    public String toString() {
-        return "ATMS.entity.AttractionEntity[ id=" + id + " ]";
-    }
+    public void setAttrTicket(AttrTicketEntity attrTicket) {
+        this.attrTicket = attrTicket;
+    } 
+
     
 }

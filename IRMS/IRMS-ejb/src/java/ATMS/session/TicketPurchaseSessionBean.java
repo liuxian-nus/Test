@@ -5,7 +5,7 @@
 package ATMS.session;
 
 import ATMS.entity.AttractionEntity;
-import ATMS.entity.TicketEntity;
+import ATMS.entity.AttrTicketEntity;
 import ATMS.entity.TicketPurchaseEntity;
 import CRMS.entity.MemberEntity;
 import java.util.Date;
@@ -28,8 +28,8 @@ public class TicketPurchaseSessionBean {
     private EntityManager em;
     
     private TicketPurchaseEntity tp;
-    private TicketEntity ticket=new TicketEntity();
-    private List<TicketEntity> tkts;
+    private AttrTicketEntity ticket=new AttrTicketEntity();
+    private List<AttrTicketEntity> tkts;
     private MemberEntity member=new MemberEntity();
     
     
@@ -41,8 +41,8 @@ public class TicketPurchaseSessionBean {
     public Long addTicketPurchase(TicketPurchaseEntity tp){
         
         em.persist(tp);
-        System.out.println("tpId: "+tp.getId());
-        return tp.getId();
+        System.out.println("tpId: "+tp.getTpId());
+        return tp.getTpId();
     }
     
   /*  public Long updateTicketListAndQuantity(List<TicketEntity> tkts, int quantity){
@@ -59,11 +59,11 @@ public class TicketPurchaseSessionBean {
         return tp.getId();     
     }*/
     
-    public void updateTicketListAndQuantity(Long tpId, List<TicketEntity> tkts, int quantity){
+    public void updateTicketListAndQuantity(Long tpId, List<AttrTicketEntity> tkts, int quantity){
         System.out.println("TicketPurchaseSessoinBean: updateTicketList with tpId");
         tp=em.find(TicketPurchaseEntity.class, tpId);
-        System.out.println("tp found"+tp.getId());
-        tp.setTickets(tkts);
+        System.out.println("tp found"+tp.getTpId());
+        tp.setAttrTickets(tkts);
         System.out.println("tickets set");
    //     tp.setQuantity(quantity);
         System.out.println("ticket quantity set");
@@ -77,22 +77,22 @@ public class TicketPurchaseSessionBean {
     
     public void updateDate(Long tpId, Date date){
         tp=em.find(TicketPurchaseEntity.class, tpId);
-        tp.setBookDate(date);
+        tp.setAttrTicketBookDate(date);
         System.out.println("date updated."+date);
     }
     
     public void updateFee(Long tpId, double fee){
         tp=em.find(TicketPurchaseEntity.class, tpId);
-        tp.setFee(fee);
+        tp.setAttrTicketFee(fee);
         System.out.println("fee updated."+fee);
     }
     
-    public void updatePurchase(Long tpId, List<TicketEntity> tkts, List<Integer> quantities, Date date, double fee){
+    public void updatePurchase(Long tpId, List<AttrTicketEntity> tkts, List<Integer> quantities, Date date, double fee){
         tp=em.find(TicketPurchaseEntity.class, tpId);
-        tp.setTickets(tkts);
-        tp.setQuantity(quantities);
-        tp.setBookDate(date);
-        tp.getFee();
+        tp.setAttrTickets(tkts);
+        tp.setAttrTicketQuantities(quantities);
+        tp.setAttrTicketBookDate(date);
+        tp.getAttrTicketFee();
         System.out.println("quantity2:"+quantities.get(1));
         System.out.println("quantity size: "+quantities.size());
         em.merge(tp);
@@ -103,7 +103,7 @@ public class TicketPurchaseSessionBean {
     
     
     
-    /*public void addTicket(TicketEntity ticket){
+    /*public void addTicket(AttrTicketEntity ticket){
         System.out.println("into TicketPurchaseSessionBean: addTicket");
         System.out.println("ticket: "+ticket.getTicketName());
         tkts=tp.getTickets();
@@ -116,8 +116,8 @@ public class TicketPurchaseSessionBean {
     }*/
     
   /*  public void addTicketPurchase(Long ticketId,Integer quantity){
-        ticket=new TicketEntity();
-        ticket=em.find(TicketEntity.class, ticketId);
+        ticket=new AttrTicketEntity();
+        ticket=em.find(AttrTicketEntity.class, ticketId);
         tp=new TicketPurchaseEntity();
         tp.setTicket(ticket);
         

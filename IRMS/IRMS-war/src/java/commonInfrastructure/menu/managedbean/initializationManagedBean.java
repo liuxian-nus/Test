@@ -16,7 +16,7 @@ import ACMS.session.ReservationSessionBean;
 import ACMS.session.RoomServiceSessionBean;
 import ACMS.session.RoomSessionBean;
 import ATMS.entity.QuotaEntity;
-import ATMS.entity.TicketEntity;
+import ATMS.entity.AttrTicketEntity;
 import ATMS.session.TicketSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.session.MemberSessionBean;
@@ -109,7 +109,7 @@ public class initializationManagedBean implements Serializable {
     private OverbookingQuotaEntity overbookingQuota;
     private RoomServiceEntity roomService;
     private PriceEntity price;
-    private TicketEntity ticket;
+    private AttrTicketEntity ticket;
     private QuotaEntity quota;
     private MerchantEntity merchant;
     private ShowEntity show;
@@ -720,7 +720,7 @@ public class initializationManagedBean implements Serializable {
      quota = new QuotaEntity();
      quota.setMaxQuota(500);
      quota.setRestQuota(500);
-     ticket = new TicketEntity();
+     ticket = new AttrTicketEntity();
      ticket.setTicketName("Indoor Themepark");
      ticket.setTicketPrice(49.9);
      ticket.setQuota(quota);
@@ -741,7 +741,7 @@ public class initializationManagedBean implements Serializable {
      quota = new QuotaEntity();
      quota.setMaxQuota(1000);
      quota.setRestQuota(1000);
-     ticket = new TicketEntity();
+     ticket = new AttrTicketEntity();
      ticket.setTicketName("Outdoor Themepark");
      ticket.setTicketPrice(79.9);
      ticket.setQuota(quota);
@@ -761,7 +761,7 @@ public class initializationManagedBean implements Serializable {
      quota = new QuotaEntity();
      quota.setMaxQuota(400);
      quota.setRestQuota(400);
-     ticket = new TicketEntity();
+     ticket = new AttrTicketEntity();
      ticket.setTicketName("Aquarium");
      ticket.setTicketPrice(39.9);
      ticket.setQuota(quota);
@@ -781,7 +781,7 @@ public class initializationManagedBean implements Serializable {
      quota = new QuotaEntity();
      quota.setMaxQuota(200);
      quota.setRestQuota(200);
-     ticket = new TicketEntity();
+     ticket = new AttrTicketEntity();
      ticket.setTicketName("Museum");
      ticket.setTicketPrice(9.9);
      ticket.setQuota(quota);

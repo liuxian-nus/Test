@@ -11,11 +11,11 @@
             <p:panel id="addAttraction" header="Add Attraction" style="height:440px;">
                 <h:panelGrid columns="2" cellpadding="10">  
                     <h:outputText value="Attraction ID*: "/>
-                    <h:inputText id="attrId" required ="true" requiredMessage="Attraction ID cannot be empty" value="#{addAttractionManagedBean.attr.id}"/>
+                    <h:inputText id="attrId" required ="true" requiredMessage="Attraction ID cannot be empty" value="#{addAttractionManagedBean.attr.attrId}"/>
                     <h:outputText value="Attraction Name*: "/>
                     <h:inputText id="attrName" required ="true" requiredMessage="Attraction name cannot be empty" value="#{addAttractionManagedBean.attr.attrName}"/>
                     <h:outputText value="Maximum Daily Quota*: "/>
-                    <h:inputText id="quota" required ="true" requiredMessage="Quota cannot be empty" value="#{addAttractionManagedBean.attr.quota.maxQuota}"/>
+                    <h:inputText id="quota" required ="true" requiredMessage="Quota cannot be empty" value="#{addAttractionManagedBean.attr.attrQuota.maxQuota}"/>
                 </h:panelGrid>
                 <p:commandButton value ="Save" ajax ="true" actionListener = "#{addAttractionManagedBean.saveNewAttraction}" update="growl" icon="ui-icon-check"/>
                 <p:commandButton value="Add more ticket" actionListener="#{addAttractionManagedBean.oneMore}" />

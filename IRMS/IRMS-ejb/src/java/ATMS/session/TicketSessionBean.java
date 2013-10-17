@@ -6,7 +6,7 @@ package ATMS.session;
 
 import ATMS.entity.AttractionEntity;
 import javax.ejb.Stateless;
-import ATMS.entity.TicketEntity;
+import ATMS.entity.AttrTicketEntity;
 import Exception.ExistException;
 import java.util.List;
 import javax.ejb.TransactionAttribute;
@@ -25,26 +25,26 @@ public class TicketSessionBean {
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     
-    private TicketEntity ticket;
+    private AttrTicketEntity ticket;
     
     public TicketSessionBean(){     
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addTicket(TicketEntity ticket){
-        ticket=mapAttractionId(ticket);
+    public void addTicket(AttrTicketEntity ticket){
+  //      ticket=mapAttractionId(ticket);
         em.persist(ticket);
         return;
     }
     
-    public List<TicketEntity> getAllTickets(){
+    public List<AttrTicketEntity> getAllTickets(){
         Query query = em.createQuery("SELECT t FROM TicketEntity t");
         return query.getResultList();
     }
     
-    public void updateTicket(TicketEntity ticket){
+    public void updateTicket(AttrTicketEntity ticket){
         System.out.println("into TicketSessionBean: update Attraction");   
-        ticket=mapAttractionId(ticket);
+     //   ticket=mapAttractionId(ticket);
         em.merge(ticket);
         em.flush();
         System.out.println("updated");
@@ -53,7 +53,7 @@ public class TicketSessionBean {
     
     public boolean removeTicket(Long ticketId)throws ExistException {
         System.out.println("into removeTicket");
-        ticket = em.find(TicketEntity.class, ticketId);
+        ticket = em.find(AttrTicketEntity.class, ticketId);
         if(ticket == null) {
             throw new ExistException("Ticket does not exist!");
         }
@@ -62,13 +62,13 @@ public class TicketSessionBean {
         return true;
     } 
     
-    public TicketEntity getTicketById(Long ticketId){
-        ticket=em.find(TicketEntity.class, ticketId);
+    public AttrTicketEntity getTicketById(Long ticketId){
+        ticket=em.find(AttrTicketEntity.class, ticketId);
         return ticket;
     }
     
-    public TicketEntity mapAttractionId(TicketEntity ticket){
-        String name=ticket.getAttrName();
+    /*public AttrTicketEntity mapAttractionId(AttrTicketEntity ticket){
+        String name=ticket.getAttrTicketName();
         
         if(name.equals("Aquarium"))
             ticket.setAttrId("AQ");
@@ -82,7 +82,7 @@ public class TicketSessionBean {
             System.out.println("wrong attraction name");
         
         return ticket; 
-    }
+    }*/
     
 
     public void persist(Object object) {

@@ -15,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -27,33 +26,24 @@ public class TicketPurchaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long tpId;
     @OneToMany(cascade ={CascadeType.PERSIST})
-    private List<TicketEntity> tickets;
+    private List<AttrTicketEntity> attrTickets;
     @ManyToOne
     private MemberEntity member;
-    private List<Integer> quantity;
-    private double fee;
+    private List<Integer> attrTicketQuantities;
+    private double attrTicketFee;
     @Temporal(javax.persistence.TemporalType.DATE)
-    Date bookDate =new Date();
-    
-            
-    public Long getId() {
-        return id;
+    Date attrTicketBookDate =new Date();
+
+    public Long getTpId() {
+        return tpId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTpId(Long tpId) {
+        this.tpId = tpId;
     }
 
-    public List<TicketEntity> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<TicketEntity> tickets) {
-        this.tickets = tickets;
-    }
-    
     public MemberEntity getMember() {
         return member;
     }
@@ -62,57 +52,41 @@ public class TicketPurchaseEntity implements Serializable {
         this.member = member;
     }
 
-    public List<Integer> getQuantity() {
-        return quantity;
+    public List<AttrTicketEntity> getAttrTickets() {
+        return attrTickets;
     }
 
-    public void setQuantity(List<Integer> quantity) {
-        this.quantity = quantity;
+    public void setAttrTickets(List<AttrTicketEntity> attrTickets) {
+        this.attrTickets = attrTickets;
     }
 
-
-    public double getFee() {
-        return fee;
+    public List<Integer> getAttrTicketQuantities() {
+        return attrTicketQuantities;
     }
 
-    public void setFee(double fee) {
-        this.fee = fee;
+    public void setAttrTicketQuantities(List<Integer> attrTicketQuantities) {
+        this.attrTicketQuantities = attrTicketQuantities;
     }
 
-    public Date getBookDate() {
-        return bookDate;
+    public double getAttrTicketFee() {
+        return attrTicketFee;
     }
 
-    public void setBookDate(Date bookDate) {
-        this.bookDate = bookDate;
+    public void setAttrTicketFee(double attrTicketFee) {
+        this.attrTicketFee = attrTicketFee;
+    }
+
+    public Date getAttrTicketBookDate() {
+        return attrTicketBookDate;
+    }
+
+    public void setAttrTicketBookDate(Date attrTicketBookDate) {
+        this.attrTicketBookDate = attrTicketBookDate;
     }
 
     
     
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TicketPurchaseEntity)) {
-            return false;
-        }
-        TicketPurchaseEntity other = (TicketPurchaseEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "ATMS.entity.OneDayTicketPurchase[ id=" + id + " ]";
-    }
     
+
+   
 }

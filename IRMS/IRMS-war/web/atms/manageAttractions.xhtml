@@ -16,16 +16,16 @@
                              resizableColumns="true">
                     
                     <p:column headerText="Attraction ID" style="width:60px;">
-                        <h:outputText value="#{attrList.id}"/>
+                        <h:outputText value="#{attrList.attrId}"/>
                     </p:column>
                     <p:column headerText="Attraction name" style="width:100px;">
                         <h:outputText value="#{attrList.attrName}"/>
                     </p:column>
                     <p:column headerText="Max Quota" style="width:60px;">
-                        <h:outputText value="#{attrList.quota.maxQuota}"/>
+                        <h:outputText value="#{attrList.attrQuota.maxQuota}"/>
                     </p:column>
                     <p:column headerText="Available Quota" style="width:60px;">
-                        <h:outputText value="#{attrList.quota.restQuota}"/>
+                        <h:outputText value="#{attrList.attrQuota.restQuota}"/>
                     </p:column>    
                     
                     <p:column style="width:100px">  
@@ -52,8 +52,8 @@
                         </h:panelGroup>  
                         <h:outputText value="Maximum Daily Quota: " /> 
                         <h:panelGroup>  
-                            <h:outputText value="#{manageAttractionsManagedBean.attr.quota.maxQuota}" style="font-weight:bold" rendered="#{!manageAttractionsManagedBean.editMode}"/>  
-                            <p:inputText id="quota2"   requiredMessage="Quota cannot be empty" value="#{manageAttractionsManagedBean.attr.quota.maxQuota}" rendered="#{manageAttractionsManagedBean.editMode}" required="true" label="Quota"/>  
+                            <h:outputText value="#{manageAttractionsManagedBean.attr.attrQuota.maxQuota}" style="font-weight:bold" rendered="#{!manageAttractionsManagedBean.editMode}"/>  
+                            <p:inputText id="quota2"   requiredMessage="Quota cannot be empty" value="#{manageAttractionsManagedBean.attr.attrQuota.maxQuota}" rendered="#{manageAttractionsManagedBean.editMode}" required="true" label="Quota"/>  
                             <p:message for="name"/>
                         </h:panelGroup>   
 
@@ -72,7 +72,7 @@
                     Are you sure?
                     <br/><br/>
                     <p:commandButton value="Yes" update="attractions" actionListener="#{manageAttractionsManagedBean.deleteAttraction}" oncomplete="confirmation.hide()">  
-                        <f:attribute name="code1" value="#{manageAttractionsManagedBean.attr.id}" />
+                        <f:attribute name="code1" value="#{manageAttractionsManagedBean.attr.attrId}" />
                     </p:commandButton>
                     <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
 

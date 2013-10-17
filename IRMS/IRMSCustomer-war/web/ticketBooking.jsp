@@ -18,6 +18,18 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+        
+        <script>
+                $(document).ready(function() {
+                $("#datepicker1").datepicker({
+                 minDate:0,
+                onClose: function(selectedDate) {
+                var minDate = $(this).datepicker('getDate');
+                }
+                });
+                });            
+        </script>
+        
         <h3>Welcome, ${member.memberName}!</h3>
         <h4>Ticket Booking</h4>
         
@@ -162,6 +174,15 @@
                                     
                                 </div>
                                 
+                         <!--       <div class="row">                               
+                                    <div class="large-3 columns"> 
+                                            <label for="right-label" class="left-align,inline"><strong>Date</label>
+                                    </div>
+                                    <div class="large-9 columns">
+                                        <input type="text" id="datepicker1" name="startDate" id="startDate"/>
+                                    </div>
+                                </div>-->
+                      
                                 <div class="row">
                                     <input type="submit" class="small button" value="Submit">
                                 </div>

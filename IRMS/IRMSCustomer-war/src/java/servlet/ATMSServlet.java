@@ -4,7 +4,7 @@
  */
 package servlet;
 
-import ATMS.entity.TicketEntity;
+import ATMS.entity.AttrTicketEntity;
 import ATMS.entity.TicketPurchaseEntity;
 import ATMS.session.TicketPurchaseSessionBean;
 import ATMS.session.TicketSessionBean;
@@ -35,8 +35,8 @@ public class ATMSServlet extends HttpServlet {
     @EJB
     private TicketPurchaseSessionBean ticketPurchaseSessionBean;
     
-    TicketEntity ticket;
-    List<TicketEntity> tkts;
+    AttrTicketEntity ticket;
+    List<AttrTicketEntity> tkts;
     TicketPurchaseEntity tp;
 
     /**
@@ -118,16 +118,16 @@ public class ATMSServlet extends HttpServlet {
  
                 
                 tp=new TicketPurchaseEntity();
-                tkts=new ArrayList<TicketEntity>();
+                tkts=new ArrayList<AttrTicketEntity>();
                 boolean tpInitialised=false;
                 Long tpId=ticketPurchaseSessionBean.addTicketPurchase(tp);
                 
                 if(quantity1!=0){
       //              System.out.println("into if");
                     ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(1)));
-                    System.out.println("ticketName: "+ticket.getTicketName());
+                    System.out.println("ticketName: "+ticket.getAttrTicketName());
                     tkts.add(ticket);
-                    System.out.println("ticket added: "+tkts.get(0).getTicketName());
+                    System.out.println("ticket added: "+tkts.get(0).getAttrTicketName());
                     ticketPurchaseSessionBean.updateTicketListAndQuantity(tpId, tkts,quantity1);  
                     System.out.println("tpId received: "+tpId);
                     tpInitialised=true;
@@ -139,7 +139,7 @@ public class ATMSServlet extends HttpServlet {
                 if(quantity2!=0){
       //              System.out.println("into if");
                     ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(2)));
-                    System.out.println("ticketName: "+ticket.getTicketName());
+                    System.out.println("ticketName: "+ticket.getAttrTicketName());
                     tkts.add(ticket);
                     System.out.println("tkts size: "+tkts.size());
               //      System.out.println("ticket added: "+tkts.get(1).getTicketName());
@@ -161,7 +161,7 @@ public class ATMSServlet extends HttpServlet {
                 }
                 if(quantity3!=0){
                     ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(3)));
-                    System.out.println("ticketName: "+ticket.getTicketName());
+                    System.out.println("ticketName: "+ticket.getAttrTicketName());
                     tkts.add(ticket);
                     System.out.println("tkts size: "+tkts.size());
                     ticketPurchaseSessionBean.updateTicketListAndQuantity(tpId, tkts,quantity3);

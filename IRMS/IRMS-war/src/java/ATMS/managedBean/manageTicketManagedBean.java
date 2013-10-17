@@ -4,7 +4,7 @@
  */
 package ATMS.managedBean;
 
-import ATMS.entity.TicketEntity;
+import ATMS.entity.AttrTicketEntity;
 import ATMS.session.TicketSessionBean;
 import Exception.ExistException;
 import java.util.List;
@@ -24,7 +24,7 @@ import javax.faces.event.ActionEvent;
 public class manageTicketManagedBean {
     @EJB
     private TicketSessionBean ticketSessionBean;
-    private TicketEntity ticket;
+    private AttrTicketEntity ticket;
     private Long ticketId;
     private boolean editMode;
     
@@ -33,10 +33,10 @@ public class manageTicketManagedBean {
      * Creates a new instance of manageTicketManagedBean
      */
     public manageTicketManagedBean() {
-        ticket=new TicketEntity();
+        ticket=new AttrTicketEntity();
     }
     
-    public List<TicketEntity> getAllTickets(){
+    public List<AttrTicketEntity> getAllTickets(){
         return ticketSessionBean.getAllTickets();
     }
     
@@ -58,7 +58,7 @@ public class manageTicketManagedBean {
         ticketSessionBean.removeTicket(getTicketId());
     }
     
-    public TicketEntity mapAttractionId(TicketEntity ticket){
+  /*  public AttrTicketEntity mapAttractionId(AttrTicketEntity ticket){
         String name=ticket.getAttrName();
         
         if(name.equals("Aquarium"))
@@ -74,7 +74,7 @@ public class manageTicketManagedBean {
         
         return ticket; 
  
-    }
+    }*/
     
 
     public TicketSessionBean getTicketSessionBean() {
@@ -85,11 +85,11 @@ public class manageTicketManagedBean {
         this.ticketSessionBean = ticketSessionBean;
     }
 
-    public TicketEntity getTicket() {
+    public AttrTicketEntity getTicket() {
         return ticket;
     }
 
-    public void setTicket(TicketEntity ticket) {
+    public void setTicket(AttrTicketEntity ticket) {
         this.ticket = ticket;
     }
 
