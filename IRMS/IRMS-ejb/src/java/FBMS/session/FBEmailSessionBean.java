@@ -85,7 +85,8 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
             //Below generate a PDF file
             Document document;
             document = new Document(PageSize.A4,50,50,50,50);
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Diana Wang\\Documents\\Diana\\"+ire.getId()+".pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Diana Wang\\Documents\\Diana\\Table_Reservation"+ire.getRestaurant().getRestName()
+                    +ire.getId()+".pdf"));
             document.open();
             //Below draft the contents
             Anchor anchorTarget = new Anchor ("Your Reservation Details");
