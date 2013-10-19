@@ -188,7 +188,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
             document.open();
             //Below draft the contents
-            document = addMetaData(document);
+           // document = addMetaData(document);
             document = addContent(document);
             document = addTable(document);
             
@@ -240,7 +240,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
        return paragraph;
     }
 
-    private Document addTable(Document document) {
+    private Document addTable(Document document) throws DocumentException {
         PdfPTable table = new PdfPTable(2);
         table.setSpacingAfter(30);
         table.setSpacingBefore(30);
@@ -254,7 +254,19 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
         
+        table.setHeaderRows(1);
+        
         //Add table content
+        table.addCell("Restaurant");
+        table.addCell("Remark_1");
+        table.addCell("Date");
+        table.addCell("2013/10/19");
+        table.addCell("Number of People");
+        table.addCell("5");
+        table.addCell("Notes");
+        table.addCell("We love TWK");
+        
+        document.add(table);
         
         return document;
     }
