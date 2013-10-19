@@ -44,7 +44,7 @@ public class RoomEntity implements Serializable {
     @ManyToMany(cascade={CascadeType.PERSIST})
     private List<RoomServiceEntity> roomService = new ArrayList<RoomServiceEntity> ();
     @ManyToOne(cascade={CascadeType.PERSIST})
-    private PriceEntity roomPrice = new PriceEntity();
+    private RoomPriceEntity roomPrice = new RoomPriceEntity();
     @ManyToOne(cascade={CascadeType.PERSIST})
     private ReservationEntity reservation = new ReservationEntity();
     @OneToOne(cascade={CascadeType.PERSIST})
@@ -58,11 +58,11 @@ public class RoomEntity implements Serializable {
         this.roomId = roomHotel*1000 + roomLevel*100 + roomNo;
     }
 
-    public PriceEntity getRoomPrice() {
+    public RoomPriceEntity getRoomPrice() {
         return roomPrice;
     }
 
-    public void setRoomPrice(PriceEntity roomPrice) {
+    public void setRoomPrice(RoomPriceEntity roomPrice) {
         this.roomPrice = roomPrice;
     }
 

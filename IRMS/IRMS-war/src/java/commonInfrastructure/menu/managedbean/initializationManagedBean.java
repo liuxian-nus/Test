@@ -6,12 +6,12 @@ package commonInfrastructure.menu.managedbean;
 
 import ACMS.entity.LogBookEntity;
 import ACMS.entity.OverbookingQuotaEntity;
-import ACMS.entity.PriceEntity;
+import ACMS.entity.RoomPriceEntity;
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomServiceEntity;
 import ACMS.session.LogBookSessionBean;
 import ACMS.session.OverbookingSessionBean;
-import ACMS.session.PriceSessionBean;
+import ACMS.session.RoomPriceSessionBean;
 import ACMS.session.ReservationSessionBean;
 import ACMS.session.RoomServiceSessionBean;
 import ACMS.session.RoomSessionBean;
@@ -74,7 +74,7 @@ public class initializationManagedBean implements Serializable {
     @EJB
     private PushingcartSessionBean pushingcartSessionBean;
     @EJB
-    private PriceSessionBean priceSessionBean;
+    private RoomPriceSessionBean priceSessionBean;
     @EJB
     private OverbookingSessionBean overbookingSessionBean;
     @EJB
@@ -108,7 +108,7 @@ public class initializationManagedBean implements Serializable {
     private RestaurantEntity restaurant;
     private OverbookingQuotaEntity overbookingQuota;
     private RoomServiceEntity roomService;
-    private PriceEntity price;
+    private RoomPriceEntity price;
     private AttrTicketEntity ticket;
     private QuotaEntity quota;
     private MerchantEntity merchant;
@@ -534,11 +534,11 @@ public class initializationManagedBean implements Serializable {
     public void createRoom() {
         try {
             System.err.println("Insert room started.....");
-            price = new PriceEntity();
+            price = new RoomPriceEntity();
             price.setPriceType("deluxe");
             price.setPrice(485.3);
             priceSessionBean.createPrice(price);
-            price = new PriceEntity();
+            price = new RoomPriceEntity();
             price.setPriceType("superior");
             price.setPrice(380.3);
             priceSessionBean.createPrice(price);

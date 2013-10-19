@@ -3,7 +3,7 @@
  */
 package ACMS.session;
 
-import ACMS.entity.PriceEntity;
+import ACMS.entity.RoomPriceEntity;
 import ACMS.entity.ReservationEntity;
 import Exception.ExistException;
 import java.util.ArrayList;
@@ -91,9 +91,9 @@ public class ReservationSessionBean {
         thisReservation.getRcCheckInDate().setMonth(newReservation.getRcCheckInDate().getMonth() - 1);
         thisReservation.getRcCheckOutDate().setYear(newReservation.getRcCheckOutDate().getYear() - 1900);
         thisReservation.getRcCheckOutDate().setMonth(newReservation.getRcCheckOutDate().getMonth() - 1);
-        PriceEntity thisPrice = em.find(PriceEntity.class, thisReservation.getReservationRoomType());
+        Query query = em.createQuery("SELECT rp FROM RoomPriceEntity rp WHERE rp.hotelId ='" + newReservation.getReservationHotelNo() + "' AND rp.priceType ='" + newReservation.getReservationRoomType() + "'");
+        RoomPriceEntity thisPrice = (RoomPriceEntity) query.getResultList().get(0);
         thisReservation.setReservationTotal(thisPrice.getPrice() * thisReservation.getReservationRoomCount() * 5);//5 should be days between
-        thisReservation.setReservationCharge(0.15 * thisReservation.getReservationTotal());
         thisReservation.setReservationStatus("guarantee"); //haven't implement yet
         em.persist(thisReservation);
     }

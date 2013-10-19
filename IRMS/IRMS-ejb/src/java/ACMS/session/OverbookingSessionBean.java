@@ -13,7 +13,7 @@
 package ACMS.session;
 
 import ACMS.entity.OverbookingQuotaEntity;
-import ACMS.entity.PriceEntity;
+import ACMS.entity.RoomPriceEntity;
 import java.math.BigDecimal;
 //import ACMS.entity.RoomEntity;
 import javax.ejb.Stateless;
@@ -53,7 +53,7 @@ public class OverbookingSessionBean {
         //algorithm missing here.
         overbooking = em.find(OverbookingQuotaEntity.class, 1);
         String roomType = overbooking.getRoomType();
-        PriceEntity price = em.find(PriceEntity.class, roomType);
+        RoomPriceEntity price = em.find(RoomPriceEntity.class, roomType);
 //        double cs = price.getPrice();
         cs = 485.3;
 //        ce = overbooking.getCompensation1();

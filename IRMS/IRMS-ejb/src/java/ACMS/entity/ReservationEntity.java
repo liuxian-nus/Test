@@ -39,7 +39,6 @@ public class ReservationEntity implements Serializable {
     private String reservationRoomType;
     private String reservationCorporate;
     private double reservationTotal;
-    private double reservationCharge;
     private String reservationStatus;//confirmed, guaranteed, cancelled, outdated, checkedIn
     //to be continued;
      @ManyToOne(cascade={CascadeType.MERGE})
@@ -156,14 +155,6 @@ public class ReservationEntity implements Serializable {
 
     public void setReservationTotal(double reservationTotal) {
         this.reservationTotal = reservationTotal;
-    }
-
-    public double getReservationCharge() {
-        return reservationCharge;
-    }
-
-    public void setReservationCharge(double reservationCharge) {
-        this.reservationCharge = reservationCharge;
     }
 
     public String getReservationRoomType() {

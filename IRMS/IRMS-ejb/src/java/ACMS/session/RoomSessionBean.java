@@ -1,6 +1,6 @@
 package ACMS.session;
 
-import ACMS.entity.PriceEntity;
+import ACMS.entity.RoomPriceEntity;
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
 import ACMS.entity.RoomServiceEntity;
@@ -36,7 +36,7 @@ public class RoomSessionBean {
     RoomEntity room = new RoomEntity();
     RoomServiceEntity roomService = new RoomServiceEntity();
     ReservationEntity reservation = new ReservationEntity();
-    PriceEntity price = new PriceEntity();
+    RoomPriceEntity price = new RoomPriceEntity();
     MemberTransactionEntity memberTransaction = new MemberTransactionEntity();
     private double bill = 0;
 
@@ -198,7 +198,7 @@ public class RoomSessionBean {
             System.out.println("RoomSessionBean-->Welcome! " + thisMember.getMemberName());
         }
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is now occupied");
-        price = em.find(PriceEntity.class, room.getRoomType());
+        price = em.find(RoomPriceEntity.class, room.getRoomType());
         if (price == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->Price Entity missing!");
         }
@@ -262,7 +262,7 @@ public class RoomSessionBean {
         try {
             System.out.println("come to create test room session bean");
             System.err.println("create priceEntity first");
-            price = em.find(PriceEntity.class, roomType);
+            price = em.find(RoomPriceEntity.class, roomType);
             room.setRoomHotel(roomHotel);
             room.setRoomLevel(roomLevel);
             room.setRoomNo(roomNo);
@@ -322,11 +322,11 @@ public class RoomSessionBean {
         this.reservation = reservation;
     }
 
-    public PriceEntity getPrice() {
+    public RoomPriceEntity getPrice() {
         return price;
     }
 
-    public void setPrice(PriceEntity price) {
+    public void setPrice(RoomPriceEntity price) {
         this.price = price;
     }
 
