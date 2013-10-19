@@ -4,7 +4,8 @@
                 template="./../Template/generalTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
 
 
     <ui:define name="content">
@@ -99,6 +100,39 @@
                         <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShowTicket}" update="ticketMsg"/>
 
 
+                    </h:panelGrid>
+                </h:form>
+            </p:tab>
+
+            <p:tab id="tab4" title="Upload Show Image">
+                <h:form id="showImage">
+
+
+                    <h:panelGrid id="upload" columns="2">
+
+                        <h:outputText value="Show Name: "/>
+                        <p:selectOneMenu value="#{addShowManagedBean.showId}">  
+                            <f:selectItem itemLabel="Select Show" itemValue=""/>
+                            <f:selectItems value="#{addShowManagedBean.showSessionBean.allShows}" var="allShow" itemLabel="#{allShow.showName}" itemValue="#{allShow.showId}" />  
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+                        <h:outputText value=""/>
+                        <p:commandButton update="showImage" value="Select show" ajax="true" icon="ui-icon ui-icon-plus">  
+                            <f:attribute name="upload" value="#{addShowManagedBean.showId}" />
+                            <f:setPropertyActionListener value="#{true}" target="#{addShowManagedBean.uploadMode}" />
+                        </p:commandButton>
+                        <h:outputText value=""/><br/>
+                        
+                        <h:outputText value="Upload Show Image: " rendered="#{addShowManagedBean.uploadMode}"/>
+                        <p:fileUpload fileUploadListener="#{addShowManagedBean.handleFileUpload}" id="uploader" 
+                                      mode="advanced" update="messages" label="Choose a file" multiple="false" 
+                                      sizeLimit="1048576" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                      invalidSizeMessage="The maximum file size allowed is 1 Megabyte !" 
+                                      invalidFileMessage="You are allowed to upload only images !" 
+                                      rendered="#{addShowManagedBean.uploadMode}"/>
+                        <p:growl id="messages" showDetail="true" sticky="true"/>
+
+                        <h:outputText value="(Files end with .gif/.jpeg/.png only.)" rendered="#{addShowManagedBean.uploadMode}"/>
                     </h:panelGrid>
                 </h:form>
             </p:tab>

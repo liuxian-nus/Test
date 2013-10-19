@@ -11,14 +11,18 @@ import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -39,6 +43,10 @@ public class AddShowManagedBean {
     private ShowTicketEntity showTicket;
     private Long showId;
     private Date currentDate = new Date();
+    private static final int BUFFER_SIZE = 1024;
+    private UploadedFile file;
+    private Boolean uploadMode;
+    private Long id;
 
     public AddShowManagedBean() {
         show = new ShowEntity();
@@ -46,14 +54,34 @@ public class AddShowManagedBean {
         showTicket = new ShowTicketEntity();
     }
 
-//    public void handleFileUpload(FileUploadEvent event) {  
-//        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");  
-//        FacesContext.getCurrentInstance().addMessage(null, msg);  
-//    }
+    public void handleFileUpload(FileUploadEvent event) throws IOException {
+
+        System.err.println("Uploading Image...");
+        System.err.println(showId);
+
+        ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
+
+        System.out.println(extContext.getRealPath("handleFileUpload: " + event.getFile().getFileName()));
+
+        byte[] buffer = new byte[BUFFER_SIZE];
+        InputStream inputStream = event.getFile().getInputstream();
+        inputStream.read(buffer);
+
+        System.out.println("handleFileUpload: " + buffer);
+        System.out.println("showId:" + showId);
+
+        showSessionBean.uploadFile(showId, buffer);
+
+        FacesMessage msg = new FacesMessage("File Description", "file name: " + event.getFile().getFileName() + " file size: " + event.getFile().getSize() / 1024 + " Kb content type: " + event.getFile().getContentType() + "The file was uploaded.");
+//            FacesMessage msg = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+    }
+
     public void saveNewShow(ActionEvent event) throws IOException {
-        System.err.println("Saving New Show...");       
-        System.err.println("Ticket Commission percentage="+show.getTicketCommission());
-        System.err.println("Ticket Type="+show.getShowType());
+        System.err.println("Saving New Show...");
+        System.err.println("Ticket Commission percentage=" + show.getTicketCommission());
+        System.err.println("Ticket Type=" + show.getShowType());
         showSessionBean.addShow(getShow());
 
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -84,7 +112,7 @@ public class AddShowManagedBean {
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("addShow.xhtml");
     }
-    
+
     public boolean isExternal() {
         return ("External".equals(show.getShowType()));
     }
@@ -99,6 +127,7 @@ public class AddShowManagedBean {
     }
 
     public Long getShowId() {
+        System.err.println("show id: " + showId);
         return showId;
     }
 
@@ -152,5 +181,30 @@ public class AddShowManagedBean {
 
     public void setShowTicket(ShowTicketEntity showTicket) {
         this.showTicket = showTicket;
-    }   
+    }
+
+    public UploadedFile getFile() {
+        System.err.println("Uploaded file:" + file.getFileName());
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public Boolean getUploadMode() {
+        return uploadMode;
+    }
+
+    public void setUploadMode(Boolean uploadMode) {
+        this.uploadMode = uploadMode;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
