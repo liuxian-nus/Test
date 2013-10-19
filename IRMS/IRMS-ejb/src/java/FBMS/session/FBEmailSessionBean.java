@@ -16,6 +16,7 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.CMYKColor;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfWriter;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -47,7 +48,7 @@ import javax.mail.internet.MimeMultipart;
 public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
 
     String emailServerName = "smtp.gmail.com";
-    
+  
     public FBEmailSessionBean(){}
     
     @Override
@@ -173,6 +174,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
     
      public String createBill(String toEmailAddress,IndReservationEntity ire) throws FileNotFoundException, DocumentException
      {
+
         
             //Below generate a PDF file
             Document document;
@@ -182,13 +184,56 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
             document.open();
             //Below draft the contents
-            Anchor anchorTarget = new Anchor ("Your Reservation Details");
-            anchorTarget.setName("BackToTop");
-            Paragraph paragraph1 = new Paragraph();
-            paragraph1.setSpacingBefore(50);
-            document.add(new Paragraph("Please print this voucher and bring it along to redeem",
-                    FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,new CMYKColor(0, 255, 0, 0))));
+            addMetaData(document);
+            addContent(document);
+            addTable(document);
+            
+                Anchor anchorTarget = new Anchor ("Your Reservation Details");
+                anchorTarget.setName("BackToTop");
+                Paragraph paragraph1 = new Paragraph();
+                paragraph1.setSpacingBefore(50);
+                document.add(new Paragraph("Please print this voucher and bring it along to redeem",
+                        FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,new CMYKColor(0, 255, 0, 0))));
+           
+            
             document.close();
             return OUTPUTFILE;
      }
+
+    private void addMetaData(Document document) {
+      document.addAuthor("Corel Resort");
+      document.addCreator("Corel Resort");
+    }
+
+    private void addContent(Document document) throws DocumentException {
+        //Below specify different types of font
+        Font catFont = new Font(Font.TIMES_ROMAN, 18,
+      Font.BOLD);
+        Font redFont = new Font(Font.TIMES_ROMAN, 12,
+      Font.NORMAL,Color.RED);
+        Font subFont = new Font(Font.TIMES_ROMAN, 16,
+      Font.BOLD);
+        Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
+      Font.BOLDITALIC);
+
+        //Below specify contents
+         Paragraph preface = new Paragraph();
+         addEmptyLine(preface, 1);
+         preface.add(new Paragraph("Title of the document", catFont));
+         addEmptyLine(preface, 1);
+         
+         document.add(preface);
+        //document.newPage();  
+    }
+
+    //Add a empty line
+    private void addEmptyLine(Paragraph paragraph, int number) {
+       for (int k = 0; k < number; k++) {
+      paragraph.add(new Paragraph(" "));
+    }
+    }
+
+    private void addTable(Document document) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
