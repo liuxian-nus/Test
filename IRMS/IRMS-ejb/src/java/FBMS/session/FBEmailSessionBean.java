@@ -14,21 +14,29 @@ import com.lowagie.text.FontFactory;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.CMYKColor;
+import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -77,32 +85,40 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
                     +"\nNotes: "+ire.getNotes()
                     + "\n\n\nBest Regards,\nThe Coral Island Management Team");
             
-                    
+            String INPUTFILE = createBill(toEmailAddress,ire);
+            
+            //Below attach the bill within the email
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
 
-            Transport.send(message);
+                Multipart multipart = new MimeMultipart();
+
+                messageBodyPart = new MimeBodyPart();
+                String file;
+                    file = INPUTFILE;
+                String fileName = "CorelResort:Table Reservation";
+               // DataSource source = new FileDataSource(file);
+               // messageBodyPart.setDataHandler(new DataHandler(source));
+                messageBodyPart.setFileName(fileName);
+                messageBodyPart.attachFile(file);
+                multipart.addBodyPart(messageBodyPart);
+
+                ((MimeMessage)message).setContent(multipart);
+
+        System.out.println("Sending");
+
+        Transport.send(message);
 
             System.out.println("EmailSessionBean: the email has been done!");
-            //Below generate a PDF file
-            Document document;
-            document = new Document(PageSize.A4,50,50,50,50);
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Diana Wang\\Documents\\Diana\\Table_Reservation"+ire.getRestaurant().getRestName()
-                    +ire.getId()+".pdf"));
-            document.open();
-            //Below draft the contents
-            Anchor anchorTarget = new Anchor ("Your Reservation Details");
-            anchorTarget.setName("BackToTop");
-            Paragraph paragraph1 = new Paragraph();
-            paragraph1.setSpacingBefore(50);
-            document.add(new Paragraph("Please print this voucher and bring it along to redeem",
-                    FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,new CMYKColor(0, 255, 0, 0))));
-            document.close();
+            
             
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FBEmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
             Logger.getLogger(FBEmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(FBEmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
             
@@ -153,5 +169,26 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
         }
         
         return true;
+     }
+    
+     public String createBill(String toEmailAddress,IndReservationEntity ire) throws FileNotFoundException, DocumentException
+     {
+        
+            //Below generate a PDF file
+            Document document;
+            document = new Document(PageSize.A4,50,50,50,50);
+            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Table_Reservation"+ire.getRestaurant().getRestName()
+                    +ire.getId()+".pdf";
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+            document.open();
+            //Below draft the contents
+            Anchor anchorTarget = new Anchor ("Your Reservation Details");
+            anchorTarget.setName("BackToTop");
+            Paragraph paragraph1 = new Paragraph();
+            paragraph1.setSpacingBefore(50);
+            document.add(new Paragraph("Please print this voucher and bring it along to redeem",
+                    FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,new CMYKColor(0, 255, 0, 0))));
+            document.close();
+            return OUTPUTFILE;
      }
 }
