@@ -9,11 +9,15 @@ import FBMS.entity.OrderEntity;
 import com.lowagie.text.Anchor;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.CMYKColor;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
@@ -184,9 +188,9 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
             document.open();
             //Below draft the contents
-            addMetaData(document);
-            addContent(document);
-            addTable(document);
+            document = addMetaData(document);
+            document = addContent(document);
+            document = addTable(document);
             
                 Anchor anchorTarget = new Anchor ("Your Reservation Details");
                 anchorTarget.setName("BackToTop");
@@ -200,12 +204,13 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
             return OUTPUTFILE;
      }
 
-    private void addMetaData(Document document) {
+    private Document addMetaData(Document document) {
       document.addAuthor("Corel Resort");
       document.addCreator("Corel Resort");
+      return document;
     }
 
-    private void addContent(Document document) throws DocumentException {
+    private Document addContent(Document document) throws DocumentException {
         //Below specify different types of font
         Font catFont = new Font(Font.TIMES_ROMAN, 18,
       Font.BOLD);
@@ -224,16 +229,33 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
          
          document.add(preface);
         //document.newPage();  
+         return document;
     }
 
     //Add a empty line
-    private void addEmptyLine(Paragraph paragraph, int number) {
+    private Paragraph addEmptyLine(Paragraph paragraph, int number) {
        for (int k = 0; k < number; k++) {
       paragraph.add(new Paragraph(" "));
     }
+       return paragraph;
     }
 
-    private void addTable(Document document) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private Document addTable(Document document) {
+        PdfPTable table = new PdfPTable(2);
+        table.setSpacingAfter(30);
+        table.setSpacingBefore(30);
+        
+        //Add table header
+        PdfPCell c1 = new PdfPCell(new Phrase("Table Header 1"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        
+        c1 = new PdfPCell(new Phrase("Table Header 2"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        
+        //Add table content
+        
+        return document;
     }
 }
