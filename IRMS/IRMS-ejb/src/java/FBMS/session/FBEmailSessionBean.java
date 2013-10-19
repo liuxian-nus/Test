@@ -4,6 +4,7 @@
  */
 package FBMS.session;
 
+import FBMS.entity.CourseEntity;
 import FBMS.entity.IndReservationEntity;
 import FBMS.entity.OrderEntity;
 import com.lowagie.text.Anchor;
@@ -24,7 +25,9 @@ import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.activation.DataHandler;
@@ -158,7 +161,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAddress));
             message.setSubject("COREL ISLAND RESORT: Your confirmation for catering order");
-            message.setText("Greeting from Coral Island Resort!"
+            String text = "Greeting from Coral Island Resort!"
                     + "\nHere is confirmation number:"+ oe.getOrderId()
                     +
                     "\nPlease use this confirmation number for later modification on our website \n\n"
@@ -167,16 +170,49 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
                     +"\nDate & Time: "+oe.getOrderDateTime()
                     +"\nMobile Number: "+oe.getMobile()
                     +"\nNotes: "+oe.getNotes()
-                    + "\n\n\nBest Regards,\nThe Coral Island Management Team");
-                    
+                    + "\n\n\nBest Regards,\nThe Coral Island Management Team";
+            //message.setText(text);
+               
+             String INPUTFILE = createBill(toEmailAddress,oe);
+            
+            //Below attach the bill within the email
+                MimeBodyPart messageBodyPart;
+                MimeBodyPart textBodyPart;
 
+                Multipart multipart = new MimeMultipart();
+
+                messageBodyPart = new MimeBodyPart();
+                String file;
+                    file = INPUTFILE;
+                String fileName = "CorelResort:Table Reservation";
+               // DataSource source = new FileDataSource(file);
+               // messageBodyPart.setDataHandler(new DataHandler(source));
+                messageBodyPart.setFileName(fileName);
+                messageBodyPart.attachFile(file);
+                
+                textBodyPart = new MimeBodyPart();
+                textBodyPart.setText(text);
+                
+                multipart.addBodyPart(messageBodyPart);
+                multipart.addBodyPart(textBodyPart);
+                
+
+                ((MimeMessage)message).setContent(multipart);
+
+        System.out.println("Sending");
+
+            
             Transport.send(message);
 
             System.out.println("EmailSessionBean: the email has been done!");
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
-        }
+        } catch (IOException ex) {
+            Logger.getLogger(FBEmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(FBEmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         
         return true;
      }
@@ -230,7 +266,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
         //Below specify contents
          Paragraph preface = new Paragraph();
          addEmptyLine(preface, 1);
-         preface.add(new Paragraph("Your restaurant table booking summary", catFont));
+         preface.add(new Paragraph("Your restaurant/table booking summary", catFont));
          addEmptyLine(preface, 1);
          
          document.add(preface);
@@ -285,6 +321,83 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
         
         document.add(table);
         
+        return document;
+    }
+
+    private String createBill(String toEmailAddress, OrderEntity oe) throws DocumentException, FileNotFoundException {
+        //Below generate a PDF file
+            Document document;
+            document = new Document(PageSize.A4,50,50,50,50);
+            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Catering_Reservation"+oe.getName()
+                    +oe.getOrderId()+".pdf";
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+            // document = addMetaData(document);
+            document.open();
+            //Below draft the contents
+           
+            document = addContent(document);
+            document = addTable(document,oe);
+            
+               /* Anchor anchorTarget = new Anchor ("Your Reservation Details");
+                anchorTarget.setName("BackToTop");
+                Paragraph paragraph1 = new Paragraph();
+                paragraph1.setSpacingBefore(50);*/
+                document.add(new Paragraph("Here is your reservation details, please use your reservation Id to make modifications.",
+                        FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,new CMYKColor(0, 255, 0, 0))));
+           
+            
+            document.close();
+            return OUTPUTFILE;
+    }
+
+    private Document addTable(Document document, OrderEntity oe) throws DocumentException {
+         PdfPTable table = new PdfPTable(2);
+        table.setSpacingAfter(30);
+        table.setSpacingBefore(30);
+        table.setWidths(new int []{1,3});
+        
+        //Add table header
+        PdfPCell c1 = new PdfPCell(new Phrase("Reservation Info"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        
+        c1 = new PdfPCell(new Phrase("Details & Remarks"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        
+        table.setHeaderRows(1);
+        
+        //Add table contents
+        
+        table.addCell("Order Id");
+        table.addCell(oe.getOrderId().toString());
+        table.addCell("Contact's Name");
+        table.addCell(oe.getTitle()+" "+oe.getName());
+        table.addCell("Email");
+        table.addCell(oe.getEmail());
+        table.addCell("Mobile");
+        table.addCell(oe.getMobile());
+        table.addCell("Order Date&Time");
+        table.addCell(oe.getOrderDateTime().toString());
+        table.addCell("Number of People");
+        table.addCell(oe.getMenu().getNumberOrder().toString());
+        
+        table.addCell("Menu");
+        table.addCell("");
+        Set <CourseEntity> courses = oe.getMenu().getCourses();
+        //check if courses is null
+        if(!courses.isEmpty())
+        {
+            Iterator<CourseEntity> itr = courses.iterator();
+            while(itr.hasNext())
+            {
+                table.addCell("");
+                table.addCell(itr.next().getDish().getDishName());
+            }
+        }
+        
+        
+        document.add(table);
         return document;
     }
 }
