@@ -79,7 +79,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAddress));
             message.setSubject("COREL ISLAND RESORT: Your confirmation for restaurant");
-            message.setText("Greeting from Coral Island Resort!"
+            String text = "Greeting from Coral Island Resort!"
                     + "\nHere is confirmation number:"+ ire.getIndReservationId()+
                     "\nPlease use this confirmation number for later modification on our website \n\n"
                     +"Title: "+ire.getTitle()+"\nName: "+ire.getName()
@@ -88,12 +88,14 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
                     +"\nDate & Time: "+ire.getIndReservationDateTime()
                     +"\nMobile Number: "+ire.getMobile()
                     +"\nNotes: "+ire.getNotes()
-                    + "\n\n\nBest Regards,\nThe Coral Island Management Team");
+                    + "\n\n\nBest Regards,\nThe Coral Island Management Team";
+           // message.setText(text); No use already
             
             String INPUTFILE = createBill(toEmailAddress,ire);
             
             //Below attach the bill within the email
-                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                MimeBodyPart messageBodyPart;
+                MimeBodyPart textBodyPart;
 
                 Multipart multipart = new MimeMultipart();
 
@@ -105,7 +107,13 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
                // messageBodyPart.setDataHandler(new DataHandler(source));
                 messageBodyPart.setFileName(fileName);
                 messageBodyPart.attachFile(file);
+                
+                textBodyPart = new MimeBodyPart();
+                textBodyPart.setText(text);
+                
                 multipart.addBodyPart(messageBodyPart);
+                multipart.addBodyPart(textBodyPart);
+                
 
                 ((MimeMessage)message).setContent(multipart);
 
@@ -114,9 +122,6 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
         Transport.send(message);
 
             System.out.println("EmailSessionBean: the email has been done!");
-            
-            
-
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         } catch (FileNotFoundException ex) {
@@ -191,13 +196,13 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
             //Below draft the contents
            
             document = addContent(document);
-            document = addTable(document);
+            document = addTable(document,ire);
             
-                Anchor anchorTarget = new Anchor ("Your Reservation Details");
+               /* Anchor anchorTarget = new Anchor ("Your Reservation Details");
                 anchorTarget.setName("BackToTop");
                 Paragraph paragraph1 = new Paragraph();
-                paragraph1.setSpacingBefore(50);
-                document.add(new Paragraph("Please print this voucher and bring it along to redeem",
+                paragraph1.setSpacingBefore(50);*/
+                document.add(new Paragraph("Here is your reservation details, please use your reservation Id to make modifications.",
                         FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,new CMYKColor(0, 255, 0, 0))));
            
             
@@ -225,7 +230,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
         //Below specify contents
          Paragraph preface = new Paragraph();
          addEmptyLine(preface, 1);
-         preface.add(new Paragraph("Title of the document", catFont));
+         preface.add(new Paragraph("Your restaurant table booking summary", catFont));
          addEmptyLine(preface, 1);
          
          document.add(preface);
@@ -241,32 +246,42 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
        return paragraph;
     }
 
-    private Document addTable(Document document) throws DocumentException {
+    private Document addTable(Document document,IndReservationEntity ire) throws DocumentException {
         PdfPTable table = new PdfPTable(2);
         table.setSpacingAfter(30);
         table.setSpacingBefore(30);
-        table.setWidths(new int []{1,4});
+        table.setWidths(new int []{1,3});
         
         //Add table header
-        PdfPCell c1 = new PdfPCell(new Phrase("Table Header 1"));
+        PdfPCell c1 = new PdfPCell(new Phrase("Reservation Info"));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
         
-        c1 = new PdfPCell(new Phrase("Table Header 2"));
+        c1 = new PdfPCell(new Phrase("Details & Remarks"));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
         
         table.setHeaderRows(1);
         
         //Add table content
-        table.addCell("Restaurant");
-        table.addCell("Remark_1");
-        table.addCell("Date");
-        table.addCell("2013/10/19");
-        table.addCell("Number of People");
-        table.addCell("5");
+        table.addCell("Reservation Number");
+        table.addCell(ire.getIndReservationId().toString());
+        table.addCell("Reservation time");
+        table.addCell(ire.getIndReservationDateTime().toString());
+        table.addCell("Restaurant ");
+        table.addCell(ire.getRestaurant().getRestName());
+        table.addCell("Number of people");
+        table.addCell(ire.getNumberPeople().toString());
+        table.addCell("Title & Name");
+        table.addCell(ire.getTitle()+" "+ire.getName());
+        table.addCell("Email");
+        table.addCell(ire.getEmail());
+        table.addCell("Contact");
+        table.addCell(ire.getMobile());
         table.addCell("Notes");
-        table.addCell("We love TWK");
+        table.addCell(ire.getNotes());
+        table.addCell("Status");
+        table.addCell(ire.getStatus());
         
         document.add(table);
         
