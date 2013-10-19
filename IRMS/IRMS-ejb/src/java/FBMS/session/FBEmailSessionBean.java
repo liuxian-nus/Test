@@ -186,9 +186,10 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
             String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Table_Reservation"+ire.getRestaurant().getRestName()
                     +ire.getId()+".pdf";
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+            // document = addMetaData(document);
             document.open();
             //Below draft the contents
-           // document = addMetaData(document);
+           
             document = addContent(document);
             document = addTable(document);
             
@@ -244,6 +245,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
         PdfPTable table = new PdfPTable(2);
         table.setSpacingAfter(30);
         table.setSpacingBefore(30);
+        table.setWidths(new int []{1,4});
         
         //Add table header
         PdfPCell c1 = new PdfPCell(new Phrase("Table Header 1"));
