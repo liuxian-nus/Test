@@ -44,6 +44,7 @@ public class RoomSessionBean {
     }
 
     //room include or dis-include breakfast 
+    /*
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public RoomEntity updateRoom(int roomId, boolean hasBreakfast) throws ExistException {
         room = em.find(RoomEntity.class, roomId);
@@ -59,6 +60,7 @@ public class RoomSessionBean {
         em.merge(room);
         return room;
     }
+    */
 
     public RoomEntity getRoomById(int id) throws ExistException {
         System.err.println("in get room by id sessionbean");
@@ -176,7 +178,7 @@ public class RoomSessionBean {
         if (reservation == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->This Reservation doesn't exist!");
         }
-        reservation.setReservationStatus(true);
+        reservation.setReservationStatus("checkedIn");
         room = em.find(RoomEntity.class, roomId);
         if ("reserved".equals(room.getRoomStatus())) {
             System.out.println("RoomSessionBean-->Warning! the room is reserved!");
@@ -213,22 +215,24 @@ public class RoomSessionBean {
         System.out.println("accounts receivable: " + bill);
         mtSessionBean.addMemberTransaction(room.getRoomMember(), bill, room.getCheckOutDate(), "Hotel", null, false);
         System.out.println("room check out: member transaction captured!");
-        if (room.getRoomCorporate() != null) {
-            emailSessionBean.emailCorporateBill("cookiewxy@gmail.com", room);
-        }
         room.setCheckInDate(null);
         room.setCheckOutDate(null);
         room.setGuestName(null);
-        room.setRoomStatus("available");
-        room.setHasBreakfast(false);
+ //       room.setHasBreakfast(false);
         room.setReservation(null);
         room.setRoomCreditCardNo(null);
         room.setRoomMember(null);
         room.setRoomCorporate(null);
+        room.setRoomStatus("checkedOut");
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
     }
+    
+    public void updateHousekeeping(int roomId) {
+                room = em.find(RoomEntity.class, roomId);
+                room.setRoomStatus("available");
+    }
 
-    public void sendBill(int roomId) throws RoomException {
+    /*public void sendBill(int roomId) throws RoomException {
         room = em.find(RoomEntity.class, roomId);
         bill = this.calculateBill(room);
         System.out.println("accounts receivable: " + bill);
@@ -237,7 +241,7 @@ public class RoomSessionBean {
             emailSessionBean.emailCorporateBill("xinqi_wang@yahoo.com", room);
         }
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " bill is successfully send");
-    }
+    }*/
 
     public double calculateBill(RoomEntity room) {
         //       double temp1 = room.getCheckInDate().get(Calendar.DAY_OF_YEAR);

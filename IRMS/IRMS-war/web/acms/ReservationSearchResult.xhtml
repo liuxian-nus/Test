@@ -42,10 +42,21 @@
                         <h:outputText value="Number of Rooms: " />  
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationRoomCount}" style="font-weight:bold" /> 
                         <h:outputText value="Number of Guests: " />  
-                        <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationGuestCount}" style="font-weight:bold" /> 
+                        <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationGuestCount}" style="font-weight:bold" />
+                        <p:commandButton  oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-trash" value ="Cancel" title="Cancel">  
+                        </p:commandButton>
                         <p:commandButton  value="Check Available Rooms" ajax="true" action="/acms/listAllRooms.xhtml" /> 
                     </h:panelGrid>
                 </p:panel>
+
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                    <br/>
+                     Sure to cancel this reservation?
+                    <br/><br/>
+                    <p:commandButton value="Yes" update="growl" action="#{reservationSearchResultManagedBean.cancelReservation}" oncomplete="confirmation.hide()">  
+                    </p:commandButton>
+                    <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
+                </p:dialog> 
             </h:form>   
         </f:view>  
     </ui:define>

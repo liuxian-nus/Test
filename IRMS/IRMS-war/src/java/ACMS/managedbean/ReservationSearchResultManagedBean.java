@@ -6,6 +6,7 @@ package ACMS.managedbean;
 
 import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -15,6 +16,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseEvent;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -24,8 +27,10 @@ import javax.faces.event.PhaseEvent;
 @ViewScoped
 public class ReservationSearchResultManagedBean implements Serializable {
     @EJB
-    private ReservationSessionBean re;
+    private ReservationSessionBean reservationSessionBean;
 
+    @EJB
+    private ReservationSessionBean re;
     private ReservationEntity selectReservation;
     private List<ReservationEntity> reservationList;
     private Long reservationId;
@@ -56,7 +61,7 @@ public class ReservationSearchResultManagedBean implements Serializable {
     public void initViewSelect(PhaseEvent event) {
         selectReservation = (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
     }
-  
+
     public Long getReservationId() {
         return reservationId;
     }
@@ -69,4 +74,21 @@ public class ReservationSearchResultManagedBean implements Serializable {
         reservationList = (List<ReservationEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("reservationList");
     }
 
+    public void cancelReservation(ActionEvent event) throws IOException {
+        System.out.println("We are in cancellation of reservation");
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            reservationId = (Long) request.getSession().getAttribute("reservationId");
+            reservationSessionBean.cancelReservation(reservationId);
+            System.out.println("we are after search roomID: " + reservationId);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisReservation", reservationSessionBean.getReservationById(reservationId));
+            System.out.println("we are after setting parameter");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when cancelling reservation", ""));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "this reservation is cancelled", ""));
+
+    }
 }

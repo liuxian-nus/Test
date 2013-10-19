@@ -40,7 +40,7 @@ public class ReservationEntity implements Serializable {
     private String reservationCorporate;
     private double reservationTotal;
     private double reservationCharge;
-    private boolean reservationStatus;
+    private String reservationStatus;//confirmed, guaranteed, cancelled, outdated, checkedIn
     //to be continued;
      @ManyToOne(cascade={CascadeType.MERGE})
      private MemberEntity rcMember;
@@ -174,11 +174,11 @@ public class ReservationEntity implements Serializable {
         this.reservationRoomType = reservationRoomType;
     }
 
-    public boolean isReservationStatus() {
+    public String isReservationStatus() {
         return reservationStatus;
     }
 
-    public void setReservationStatus(boolean reservationStatus) {
+    public void setReservationStatus(String reservationStatus) {
         this.reservationStatus = reservationStatus;
     }
     

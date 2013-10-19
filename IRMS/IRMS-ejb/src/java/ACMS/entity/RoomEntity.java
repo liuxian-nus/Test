@@ -33,7 +33,6 @@ public class RoomEntity implements Serializable {
     private int roomLevel;
     private int roomNo;
     private String guestName;
-    private boolean hasBreakfast = false;
     private String roomCreditCardNo;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date checkInDate;
@@ -107,14 +106,7 @@ public class RoomEntity implements Serializable {
         this.roomNo = roomNo;
     }
     
-    public boolean isHasBreakfast() {
-        return hasBreakfast;
-    }
 
-    public void setHasBreakfast(boolean hasBreakfast) {
-        this.hasBreakfast = hasBreakfast;
-    }    
-    
     public List<RoomServiceEntity> getRoomService(){
         return roomService;
     }

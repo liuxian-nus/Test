@@ -135,6 +135,7 @@ public class InitSessionBean {
 
         employee = new EmployeeEntity();
         employee.setEmployeeId("B0000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeDepartment("hotel");
         employee.setEmployeeName("ACMSAdmin");
         employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0000"));
         System.out.println("finished hashing");
@@ -148,6 +149,36 @@ public class InitSessionBean {
             System.out.println("ACMSAdmin saved.....");
         } catch (Exception e) {
             System.out.println("Error occurs when creating system user");
+            return;
+        }
+        System.err.println("Insert System User into database");
+
+    }
+    
+        public void createFrontDesk() {
+        System.err.println("go to create ACMS user");
+
+        role = new RoleEntity();
+        role.setRoleId(21);
+        role.setRoleName("ACMSFrontDesk");
+        System.out.println("Create role :" + role.getRoleName());
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("B1000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeDepartment("hotel");
+        employee.setEmployeeName("ACMSFrontDesk");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B1000"));
+        System.out.println("finished hashing");
+        employee.addRole(role);
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving ACMSFrontDesk....");
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("ACMSFrontDesk saved.....");
+        } catch (Exception e) {
+            System.out.println("Error occurs when creating hotel front desk user");
             return;
         }
         System.err.println("Insert System User into database");
