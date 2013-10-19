@@ -67,4 +67,11 @@ public class ShowSessionBean {
         show.addShowTicket(showTicket);
         em.merge(show);
     }
+    
+     public void uploadFile(Long showId, byte[] buffer) {
+        show = em.find(ShowEntity.class, showId);
+        show.setImage(buffer);
+        em.persist(show);
+        em.flush();
+    }
 }

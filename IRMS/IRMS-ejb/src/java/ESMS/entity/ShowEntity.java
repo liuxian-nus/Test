@@ -34,6 +34,7 @@ public class ShowEntity implements Serializable {
     private String showDescription;
     private String showType;
     private Double ticketCommission;
+    private byte[] image;
     @OneToMany(targetEntity = ShowTicketEntity.class, cascade = {CascadeType.MERGE})
     private List<ShowTicketEntity> showTickets = new ArrayList<ShowTicketEntity>();
     @OneToMany(targetEntity = ShowScheduleEntity.class, cascade = {CascadeType.MERGE})
@@ -101,6 +102,14 @@ public class ShowEntity implements Serializable {
 
     public void setTicketCommission(Double ticketCommission) {
         this.ticketCommission = ticketCommission;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
 }
