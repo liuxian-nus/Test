@@ -22,13 +22,13 @@
                             <p:rowToggler />  
                         </p:column> 
 
-                        <p:column headerText="Shift: " style="width:20%">
+                        <p:column headerText="Shift: " style="width:15%">
                             <h:outputText rendered="#{logs.logShift==1}" value="Morning"/>
                             <h:outputText rendered="#{logs.logShift==2}" value="Afternoon" />
                             <h:outputText rendered="#{logs.logShift==3}" value="Night" />
                         </p:column>
 
-                        <p:column  headerText="Date: " style="width:20%">
+                        <p:column  headerText="Date: " style="width:15%">
                             <h:outputText value="#{logs.publishDate}">
                                 <f:convertDateTime pattern="dd-MM-yyyy" />
                             </h:outputText>
@@ -46,9 +46,16 @@
                             <h:outputText value="#{logs.logTitle}"/>
                         </p:column>
 
-                        <p:column style="width:70px;">
+                        <p:column style="width:5%;">
                             <f:facet name="header">Action</f:facet>
                             <p:commandButton oncomplete="deleteDia.show()" ajax="true"  icon="ui-icon ui-icon-close" title="delete" value ="Delete" >
+                                <f:setPropertyActionListener value="#{logs}" target="#{logBookManagedBean.thisLog}" />  
+                            </p:commandButton>
+                        </p:column>
+
+                        <p:column style="width:5%;">
+                            <f:facet name="header2">Mark</f:facet>
+                            <p:commandButton oncomplete="resolved.show()" ajax="true"  icon="ui-icon ui-icon-flag" title="resolved" value ="Resolved" >
                                 <f:setPropertyActionListener value="#{logs}" target="#{logBookManagedBean.thisLog}" />  
                             </p:commandButton>
                         </p:column>
@@ -86,7 +93,12 @@
                 <p:dialog width="500" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">
                     <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
                         <h:outputText value="Please enter your shift: "/>
-                        <h:inputText value ="#{logBookManagedBean.newLog.logShift}" />
+                        <p:selectOneMenu value="#{logBookManagedBean.newLog.logEmployee.employeeSchedule}">  
+                            <f:selectItem itemLabel="Select Shift" itemValue=""/>
+                            <f:selectItem itemLabel="Morning Shift" itemValue="1"/>  
+                            <f:selectItem itemLabel="Afternoon Shift" itemValue="2"/>  
+                            <f:selectItem itemLabel="Night Shift" itemValue="3"/>  
+                        </p:selectOneMenu>
                         <h:outputText value="Please enter your Id: "/>
                         <h:inputText value ="#{logBookManagedBean.newLog.logEmployee.employeeId}"/>
                         <h:outputText value="Please enter title: "/>
@@ -101,11 +113,20 @@
                     </h:panelGrid>
                 </p:dialog> 
                 <!--INFO: image attribute is deprecated to define an icon, use icon attribute instead.-->
-                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Delete Message" widgetVar="deleteDia">  
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Delete Message" widgetVar="deleteDia"> 
+                    Are you sure to delete this log?
                     <p:commandButton value="delete" update="logList" actionListener="#{logBookManagedBean.deleteLog}" oncomplete="deleteDia.hide()" onclick="msgs;">  
                         <f:attribute name="deleteLog" value="#{logBookManagedBean.thisLog.logBookId}" />
                     </p:commandButton>
                     <p:commandButton value='Cancel' onclick="deleteDia.hide();" type='button'/>
+                </p:dialog>
+
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Mark as Resolved" widgetVar="resolved">  
+                    Is this issue resolved?
+                    <p:commandButton value="resolved" update="logList" actionListener="#{logBookManagedBean.markResolved}" oncomplete="resolved.hide()" onclick="msgs;">  
+                        <f:attribute name="resolved" value="#{logBookManagedBean.thisLog.logBookId}" />
+                    </p:commandButton>
+                    <p:commandButton value='Cancel' onclick="resolved.hide();" type='button'/>
                 </p:dialog>
             </p:panel>
 

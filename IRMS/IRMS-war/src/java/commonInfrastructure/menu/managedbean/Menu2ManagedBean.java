@@ -142,7 +142,7 @@ public class Menu2ManagedBean implements Serializable {
                 item = new MenuItem();
                 item.setValue("log book");
                 item.setUrl("/acms/logBook.xhtml");
-                item.setIcon("ui-icon ui-icon-clipboard");
+                item.setIcon("ui-icon ui-icon-comment");
                 submenu.getChildren().add(item);
                 
                 item = new MenuItem();

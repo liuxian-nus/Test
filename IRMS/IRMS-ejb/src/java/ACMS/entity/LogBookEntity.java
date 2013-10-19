@@ -29,6 +29,7 @@ public class LogBookEntity implements Serializable {
     private String logText;
     private String remark;
     private int logShift;
+    private boolean resolved;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date publishDate;
     @ManyToOne(cascade={CascadeType.MERGE})
@@ -36,13 +37,6 @@ public class LogBookEntity implements Serializable {
 
     public LogBookEntity(){}
     
-    public Long getId() {
-        return logBookId;
-    }
-
-    public void setId(Long id) {
-        this.logBookId = logBookId;
-    }
 
     @Override
     public int hashCode() {
@@ -131,6 +125,14 @@ public class LogBookEntity implements Serializable {
 
     public void setLogShift(int logShift) {
         this.logShift = logShift;
+    }
+
+    public boolean getResolved() {
+        return resolved;
+    }
+
+    public void setResolved(boolean resolved) {
+        this.resolved = resolved;
     }
     
 }

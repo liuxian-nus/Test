@@ -64,12 +64,26 @@ public class LogBookManagedBean {
         System.err.println("we are in log book managedbean " + newLog.getLogTitle() );
         System.out.println("get log entity" + newLog.getLogTitle());
         System.out.println("get log entity" + newLog.getLogText());
+        newLog.setResolved(false);
         logBookSessionBean.addLog(newLog);
         System.err.println("we are after log book managedbean " + newLog.getLogTitle() );
          } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new log", ""));
             e.printStackTrace();
          }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Log added in", ""));
+
+    }
+    
+    public void markResolved(ActionEvent event)throws IOException {
+        try {
+            logBookSessionBean.markResolved(newLog);
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when updating status", ""));
+            e.printStackTrace();
+         }
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Now this log is marked as resolved", ""));
+
     }
     
      public void deleteLog(ActionEvent event) throws ExistException{

@@ -213,6 +213,36 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("ACMSAdmin Created!");
     }
+    
+            public void createFrontDesk() {
+        System.err.println("go to create ACMS user");
+
+        role = new RoleEntity();
+        role.setRoleId(21);
+        role.setRoleName("ACMSFrontDesk");
+        System.out.println("Create role :" + role.getRoleName());
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("B1000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeDepartment("hotel");
+        employee.setEmployeeName("ACMSFrontDesk");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B1000"));
+        System.out.println("finished hashing");
+        employee.addRole(role);
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving ACMSFrontDesk....");
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("ACMSFrontDesk saved.....");
+        } catch (Exception e) {
+            System.out.println("Error occurs when creating hotel front desk user");
+            return;
+        }
+        System.err.println("Insert System User into database");
+
+    }
 
     public void createReservation() {
         System.out.println("go to create hotel reservation page...");
@@ -232,6 +262,7 @@ public class initializationManagedBean implements Serializable {
         reservation.setReservationHotelNo(1);
         reservation.setReservationRoomCount(3);
         reservation.setReservationGuestCount(6);
+        reservation.setReservationStatus("guarantee");
         reservation.setRcMember(member);
 
         try {
@@ -1106,11 +1137,12 @@ public class initializationManagedBean implements Serializable {
     }
     //Add new test cases below!!!!!!!!!
 
-    public void initialize() {
+    public void initialize() throws ExistException {
         createCEMSAdmin();
         createShow();
         createSuperAdmin();
         createSystemUser();
+        createFrontDesk();
         createMember();
         createVIP();
         createReservation();
@@ -1123,6 +1155,7 @@ public class initializationManagedBean implements Serializable {
         createRmService();
         createSMMSAdmin();
         createSMMSOps();
+        createLogBook();
         createMerchant();
         createOutlet();
         createPushingcart();

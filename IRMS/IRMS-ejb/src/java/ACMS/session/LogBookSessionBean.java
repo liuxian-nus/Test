@@ -57,6 +57,12 @@ public class LogBookSessionBean {
         return thisLog;
     }
     
+        public void markResolved(LogBookEntity thisLog) {
+        System.out.println("mark resolve session bean");
+        thisLog.setResolved(true);
+        em.persist(thisLog);
+    }
+    
     public LogBookEntity removeLog(Long logId) {
         LogBookEntity thisLog = em.find(LogBookEntity.class, logId);
         System.out.println("Remove this log" + logId);
