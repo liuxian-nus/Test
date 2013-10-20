@@ -1,0 +1,122 @@
+/* 
+    Document   : cssLayout
+    Created on : 25-Sep-2013, 23:39:38
+    Author     : Ser3na
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#top {
+    position: relative;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 2em;
+    font-family:Arial Black,Sans-serif;
+    text-align: center;
+    height:60px;
+    padding-top: 25px;
+    margin: 0px 0px 0px 0px;
+}
+
+#Container {
+    
+}
+
+#left {
+    postion:relative;
+    float: left;
+    background-color:#AFAFAF;
+    height:500px;
+    padding: 5px;
+    width: 185px;
+}
+
+#content {
+    height:500px;
+    padding: 5px;
+    margin-left:195px;
+    border-right: 2px solid #AFAFAF;
+}
+
+#bottom {
+    clear:left;
+    position: relative;
+    float:bottom;
+    height:60px;
+    background-color:#dddddd;
+    margin: 0px 0px 0px 0px;
+    border-right: 2px solid #AFAFAF;
+    border-left: 2px solid #AFAFAF;
+    border-bottom: 2px solid #AFAFAF;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+  color: white;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  color: black;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+div#msgbox{
+    height:20px;
+    background-color: #31CE7D;
+    border:solid #669968 2px;
+    padding-left:20px;
+    padding-top:10px;
+    margin-top: 10px;
+    color:#fff;
+    font-weight: bold;
+}
+
+.round {
+  -moz-border-radius:    5px;
+  -webkit-border-radius: 5px;
+  border-radius:         5px;
+}
+
+div.selectList{
+    width:400px;
+    height:40px;
+    background-color:#e9e8e8;
+    border:solid #d1d0d0 1px;
+    padding-top: 10px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+div.selectList:hover{
+    background-color: #f4f4f4;
+}
+
+div.selectList a:link {text-decoration:none;}
+div.selectList a:visited {text-decoration:none;}
+div.selectList a:hover {text-decoration:none;}
+div.selectList a:active {text-decoration:none;}

@@ -368,10 +368,21 @@ public class initializationManagedBean implements Serializable {
 
     public void createSMMSAdmin() {
         System.out.println("go to create SMMS page");
+        functionality = new FunctionalityEntity();
+        functionality.setFuncName("approveContract");
+        functionality.setFuncDescription("manager approve contract");
+        functionalitySessionBean.addFunctionality(functionality);
+
+        FunctionalityEntity functionality2 = new FunctionalityEntity();
+        functionality2.setFuncName("managerViewContract");
+        functionality2.setFuncDescription("manager View Contract");
+        functionalitySessionBean.addFunctionality(functionality2);
 
         role = new RoleEntity();
         role.setRoleId(40);
         role.setRoleName("SMMSAdmin");
+        role.addFunctionality(functionality);
+        role.addFunctionality(functionality2);
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
@@ -399,20 +410,56 @@ public class initializationManagedBean implements Serializable {
         System.out.println("go to create SMMS page");
 
         functionality = new FunctionalityEntity();
-        functionality.setFuncName("approveContract");
-        functionality.setFuncDescription("manager approve contract");
+        functionality.setFuncName("addContract");
+        functionality.setFuncDescription("add contract");
         functionalitySessionBean.addFunctionality(functionality);
-        
+
         FunctionalityEntity functionality2 = new FunctionalityEntity();
-        functionality2.setFuncName("managerViewContract");
-        functionality2.setFuncDescription("manager View Contract");
+        functionality2.setFuncName("addMerchant");
+        functionality2.setFuncDescription("add  Merchant");
         functionalitySessionBean.addFunctionality(functionality2);
+        
+        FunctionalityEntity functionality3 = new FunctionalityEntity();
+        functionality3.setFuncName("addPushingcart");
+        functionality3.setFuncDescription("add pushing cart");
+        functionalitySessionBean.addFunctionality(functionality3);
+
+        FunctionalityEntity functionality4 = new FunctionalityEntity();
+        functionality4.setFuncName("manageContract");
+        functionality4.setFuncDescription("manager View Contract");
+        functionalitySessionBean.addFunctionality(functionality4);
+        
+        FunctionalityEntity functionality5 = new FunctionalityEntity();
+        functionality5.setFuncName("outletManagement");
+        functionality5.setFuncDescription("manager approve contract");
+        functionalitySessionBean.addFunctionality(functionality5);
+
+        FunctionalityEntity functionality6 = new FunctionalityEntity();
+        functionality6.setFuncName("paymentManagement");
+        functionality6.setFuncDescription("manager View Contract");
+        functionalitySessionBean.addFunctionality(functionality6);
+        
+        FunctionalityEntity functionality7 = new FunctionalityEntity();
+        functionality7.setFuncName("pushingcartManagement");
+        functionality7.setFuncDescription("manager approve contract");
+        functionalitySessionBean.addFunctionality(functionality7);
+
+        FunctionalityEntity functionality8 = new FunctionalityEntity();
+        functionality8.setFuncName("viewContract");
+        functionality8.setFuncDescription("manager View Contract");
+        functionalitySessionBean.addFunctionality(functionality8);
 
         role = new RoleEntity();
         role.setRoleId(41);
         role.setRoleName("SMMSOps");
         role.addFunctionality(functionality);
         role.addFunctionality(functionality2);
+        role.addFunctionality(functionality3);
+        role.addFunctionality(functionality4);
+        role.addFunctionality(functionality5);
+        role.addFunctionality(functionality6);
+        role.addFunctionality(functionality7);
+        role.addFunctionality(functionality8);
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
@@ -832,8 +879,31 @@ public class initializationManagedBean implements Serializable {
      }*/
     public void createMerchant() {
         System.out.println("go to create merchant page...");
+//        functionality = new FunctionalityEntity();
+//        functionality.setFuncName("viewContractPartner");
+//        functionality.setFuncDescription("View contract");
+//        functionalitySessionBean.addFunctionality(functionality);
+//        
+//        FunctionalityEntity functionality2 = new FunctionalityEntity();
+//        functionality2.setFuncName("makePaymentPartner");
+//        functionality2.setFuncDescription("Make Outstanding payment");
+//        functionalitySessionBean.addFunctionality(functionality2);
+//        
+//        FunctionalityEntity functionality3 = new FunctionalityEntity();
+//        functionality3.setFuncName("viewOutletPartner");
+//        functionality3.setFuncDescription("Make Outstanding payment");
+//        functionalitySessionBean.addFunctionality(functionality3);
 
+//        role = new RoleEntity();
+//        role.setRoleId(41);
+//        role.setRoleName("SMMSOps");
+//        role.addFunctionality(functionality);
+//        role.addFunctionality(functionality2);
+//        role.addFunctionality(functionality3);
+//        System.out.println("Create role :" + role.getRoleName());
+//        
         merchant = new MerchantEntity();
+//        merchant.setRoles(role);
         merchant.setMerchantEmail("cookiewxy@hotmail.com");
         merchant.setMerchantName("cookie");
         merchant.setMerchantPassword(ePasswordHashSessionBean.hashPassword("M0000"));
@@ -841,6 +911,7 @@ public class initializationManagedBean implements Serializable {
         merchant.setMerchantAddress("35 Prince George's Park");
         merchant.setSecurityQuestion("What is your mother's original surname?");
         merchant.setAnswer("Gu");
+        merchant.setPartnerType("shoppingMall");
 
 
         MerchantEntity merchant2 = new MerchantEntity();
@@ -851,6 +922,7 @@ public class initializationManagedBean implements Serializable {
         merchant2.setMerchantAddress("30 Prince George's Park");
         merchant2.setSecurityQuestion("What is your mother's original surname?");
         merchant2.setAnswer("Gu");
+        merchant2.setPartnerType("shoppingMall");
 
         MerchantEntity merchant3 = new MerchantEntity();
         merchant3.setMerchantEmail("chrislx.nus@gmail.com");
@@ -860,6 +932,7 @@ public class initializationManagedBean implements Serializable {
         merchant3.setMerchantAddress("25 Prince George's Park");
         merchant3.setSecurityQuestion("What is your mother's original surname?");
         merchant3.setAnswer("Gu");
+        merchant3.setPartnerType("shoppingMall");
 
         try {
             System.out.println("Saving merchant....");

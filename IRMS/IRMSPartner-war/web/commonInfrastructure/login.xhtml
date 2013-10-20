@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="content">
+
+        <h:form> 
+            <p:panel id="loginP" header="Login" style="height:400px;">
+                <div style="margin-top:100px; margin-left:180px; text-align:justify;">
+                    <h:panelGrid id="login" columns="3">
+                        <h:outputText value ="User Account: "/>
+                        <h:inputText value ="#{loginManagementManagedBeanPartner.merchantId}"/>
+                        <br/>
+                        <h:outputText value ="Password: "/>
+                        <h:inputSecret value="#{loginManagementManagedBeanPartner.merchantPassword}"/>
+                        <br/> 
+                        <p:commandButton value ="Submit" ajax ="true" actionListener = "#{loginManagementManagedBeanPartner.doLogin}" />
+                        <a href="/IRMSPartner-war/resetPassword.xhtml" style="margin-left:10px;"> 
+                            Forget My Password 
+                        </a>
+                    </h:panelGrid>
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

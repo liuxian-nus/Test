@@ -4,6 +4,7 @@
  */
 package SMMS.entity;
 
+import ERMS.entity.RoleEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -32,11 +34,32 @@ public class MerchantEntity implements Serializable {
     private String merchantAddress;
     private String securityQuestion;
     private String answer;
-   
-    @OneToMany(mappedBy="merchant")
+    private boolean isFirstTimeLogin = true;
+    private String PartnerType;
+    @OneToMany(mappedBy = "merchant")
     private List<ContractEntity> merchantContract = new ArrayList<ContractEntity>();
-    
-    public MerchantEntity(){}
+    @ManyToMany(targetEntity = RoleEntity.class, cascade = {CascadeType.ALL})
+    private List<RoleEntity> roles = new ArrayList<RoleEntity>();
+
+   
+    public MerchantEntity() {
+    }
+
+    public String getPartnerType() {
+        return PartnerType;
+    }
+
+    public void setPartnerType(String PartnerType) {
+        this.PartnerType = PartnerType;
+    }
+
+    public boolean isIsFirstTimeLogin() {
+        return isFirstTimeLogin;
+    }
+
+    public void setIsFirstTimeLogin(boolean isFirstTimeLogin) {
+        this.isFirstTimeLogin = isFirstTimeLogin;
+    }
 
     public List<ContractEntity> getMerchantContract() {
         return merchantContract;
@@ -45,10 +68,10 @@ public class MerchantEntity implements Serializable {
     public void setMerchantContract(List<ContractEntity> merchantContract) {
         this.merchantContract = merchantContract;
     }
-    
-    public void addContract(ContractEntity contract){
-       this.merchantContract.add(contract);
-       System.out.println("ContractEntity-->new event added:" +contract.getContractId());
+
+    public void addContract(ContractEntity contract) {
+        this.merchantContract.add(contract);
+        System.out.println("ContractEntity-->new event added:" + contract.getContractId());
     }
 
     public String getMerchantEmail() {
@@ -114,6 +137,14 @@ public class MerchantEntity implements Serializable {
     public void setId(String id) {
         this.merchantEmail = id;
     }
+     public List<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleEntity> roles) {
+        this.roles = roles;
+    }
+
 
     @Override
     public int hashCode() {

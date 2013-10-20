@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="/IRMSPartner-war/resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="/IRMSPartner-war/resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>Integrated Resort Management System for Coral Island Resort</title>  
+        <style>
+            .infoMsg {color:blue;}
+            .errorMsg {color:red;}
+        </style>
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="115" resizable="false" closable="false" collapsible="false">
+                <ui:insert name="top">
+                    <h:graphicImage value="/images/coral_island_banner.jpg" height="100" style="width:99.99%; height:99.99%;"/>
+                </ui:insert>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="45" resizable="true" closable="true" collapsible="true">
+                <ui:insert name="bottom"> 
+                    ©2013 Kent Ridge Technology
+                    <a href="http://localhost:8080/IRMSCustomer-war/irmsServlet/home">Visit Coral Island Resort Customer Portal</a>
+                </ui:insert>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="240" header="Menu" resizable="true" collapsible="true">
+                <ui:insert name="left"> 
+                    <h:form>
+                        <p:menu style="width:220px;" model="#{menu1ManagedBeanPartner.model}" />
+                        <p:menu style="width:220px;" model="#{menu2ManagedBeanPartner.model}" />
+                    </h:form>
+                </ui:insert>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="east" size="240" resizable="true" header="Tools" collapsible="true" collapsed="true">
+                <ui:insert name="right">
+                    <p:calendar mode="inline" id="inlineCal"/>  
+                </ui:insert>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+                <ui:insert name="content">
+                </ui:insert>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+

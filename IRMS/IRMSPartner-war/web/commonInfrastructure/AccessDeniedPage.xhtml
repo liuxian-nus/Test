@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        <br/><br/>
+        <h1><font color ="red" size="5" style="margin-left:200px; margin-top:200px;">Sorry, Your Access Is Denied</font></h1>
+        <bt/>
+        <h:form>
+            <h:commandButton value ="Go Back" actionListener ="#{accessDeniedManagedBeanPartner.reDirect}"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

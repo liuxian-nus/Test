@@ -274,7 +274,40 @@ public class Menu2ManagedBean implements Serializable {
             }
 
             if (userType.contains("SMMSAdmin")) {
+                System.out.println("SMMSOps menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("Manage Contract");
+
+                item = new MenuItem();
+                item.setValue("View Contract");
+                item.setUrl("/smms/approveContract.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
+            }
+
+
+            if (userType.contains("SMMSOps")) {
                 System.out.println("SMMSAdmin menu bar");
+                
+                submenu = new Submenu();
+                submenu.setLabel("Manage Merchants");
+
+                item = new MenuItem();
+                item.setValue("Add Merchant");
+                item.setUrl("/smms/addMerchant.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Manage Merchant");
+                item.setUrl("/smms/manageMerchant.xhtml");
+                item.setIcon("ui-icon ui-icon-lightbulb");
+                submenu.getChildren().add(item);
+                
+                model.addSubmenu(submenu);
+                
                 submenu = new Submenu();
                 submenu.setLabel("Manage Property");
 
@@ -324,23 +357,8 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
                 model.addSubmenu(submenu);
             }
-           
-            
-            if (userType.contains("SMMSOps")) {
-                System.out.println("SMMSOps menu bar");
-                submenu = new Submenu();
-                submenu.setLabel("Manage Contract");
 
-                item = new MenuItem();
-                item.setValue("View Contract");
-                item.setUrl("/smms/approveContract.xhtml");
-                item.setIcon("ui-icon ui-icon-plus");
-                submenu.getChildren().add(item);
-               
-                model.addSubmenu(submenu);
-           }
-           
-           
+
             if (userType.contains("ESMSAdmin")) {
                 System.out.println("ESMSAdmin menu bar");
                 submenu = new Submenu();

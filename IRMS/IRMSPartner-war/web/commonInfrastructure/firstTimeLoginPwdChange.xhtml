@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form> 
+            <f:view beforePhase="#{firstTimeLoginManagedBeanPartner.initView}"> 
+                <p:panel id="resetP" header="Input New Password" style="height:495px;">
+                    <div style="margin-top:50px;margin-left:70px;">
+                        <h:panelGrid id="resetPassword" columns="3">
+                            <p:growl id="msg"/>
+                            <h:outputText value ="New Password"/>
+                            <h:inputSecret value ="#{firstTimeLoginManagedBeanPartner.passwordTemp}" redisplay="true"/>
+                            <br/>
+                            <h:outputText value ="Re-enter New Password"/>
+                            <h:inputSecret value="#{firstTimeLoginManagedBeanPartner.passwordTemp2}" redisplay="true"/>
+                            <br/> 
+                            <h:outputText value ="Please select a security question:"/>
+                            <h:selectOneMenu value="#{firstTimeLoginManagedBeanPartner.merchant.securityQuestion}" >
+                                <f:selectItem itemLabel="What's your mother's orignal surname?" itemValue="question1" />
+                                <f:selectItem itemLabel="What's the name of your primary school?" itemValue="question2" />
+                                <f:selectItem itemLabel="What's your best friend's name?" itemValue="question3" />
+                                <f:selectItem itemLabel="What's your favourite food?" itemValue="question4" />
+                            </h:selectOneMenu>
+                            <br/> 
+
+                            <h:outputText value ="Answer"/>
+                            <h:inputText value="#{firstTimeLoginManagedBeanPartner.merchant.answer}" requiredMessage="Answer cannot be empty" required="true" />
+                            <br/> 
+                            <p:commandButton value ="Confirms" update="msg" ajax ="true" actionListener = "#{firstTimeLoginManagedBeanPartner.doSubmit}" />
+                        </h:panelGrid>
+                    </div>
+                </p:panel>
+            </f:view>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
