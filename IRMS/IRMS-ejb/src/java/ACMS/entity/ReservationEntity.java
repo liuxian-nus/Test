@@ -165,7 +165,7 @@ public class ReservationEntity implements Serializable {
         this.reservationRoomType = reservationRoomType;
     }
 
-    public String isReservationStatus() {
+    public String getReservationStatus() {
         return reservationStatus;
     }
 

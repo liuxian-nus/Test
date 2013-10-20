@@ -13,11 +13,8 @@ import javax.persistence.IdClass;
  * @author liuxian
  */
 @Entity
-@IdClass(RoomPriceKey.class)
 public class RoomPriceEntity implements Serializable {
 
-    @Id
-    private int hotelId;
     @Id
     private String priceType;
     private double price;
@@ -38,14 +35,6 @@ public class RoomPriceEntity implements Serializable {
         this.price = price;
     }
 
-    public int getHotelId() {
-        return hotelId;
-    }
-
-    public void setHotelId(int hotelId) {
-        this.hotelId = hotelId;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -60,7 +49,7 @@ public class RoomPriceEntity implements Serializable {
             return false;
         }
         RoomPriceEntity other = (RoomPriceEntity) object;
-        if ((this.hotelId == 0 && other.hotelId != 0) || (this.hotelId != 0 && this.hotelId!=other.hotelId)) {
+        if ((this.priceType == null && other.priceType != null) || (this.priceType != null && !(this.priceType).equals(other.priceType))) {
             return false;
         }
         return true;
