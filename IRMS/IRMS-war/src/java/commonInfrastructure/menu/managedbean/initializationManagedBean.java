@@ -32,6 +32,7 @@ import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
 import ESMS.session.ShowContractSessionBean;
+import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
@@ -47,6 +48,7 @@ import SMMS.session.MerchantSessionBean;
 import SMMS.session.OutletSessionBean;
 import SMMS.session.PushingcartSessionBean;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -101,6 +103,8 @@ public class initializationManagedBean implements Serializable {
     private ShowSessionBean showSessionBean;
     @EJB
     private ShowTicketSessionBean showTicketSessionBean;
+    @EJB
+    private ShowScheduleSessionBean showScheduleSessionBean;
     @EJB
     private ShowContractSessionBean showContractSessionBean;
     
@@ -1194,16 +1198,40 @@ public class initializationManagedBean implements Serializable {
     }
 
     public void createShow() {
+        Date ssDate1 = new Date(2013, 1, 1);
+        Date ssDate2 = new Time(2, 0, 0);
+        Date ssDate3 = new Time(16, 0, 0);
         System.err.println("creating show...");
         show = new ShowEntity();
         showTicket = new ShowTicketEntity();
+        showSchedule = new ShowScheduleEntity();
+        showContract = new ShowContractEntity();
+        
         show.setShowName("Harry Potter");
         show.setShowDescription("Harry Potter and the Philosopher's Stone");
+        show.setShowType("External");
+        showContract.setShowMerchantName("Wan Xiangyi");
+        showContract.setShowMerchantEmail("cookiewxy@gmail.com");
+        showContract.setShowMerchantAddress("22 Prince George's Park");
+        showContract.setShowMerchantContact("12345678");
+        showContract.setShowTicketCommission(0.12);
+        showContract.setShowVenueDuration(3);
+        showContract.setShowVenueRate(1300.00);
+        showContractSessionBean.addShowContract(showContract);
+        
         showTicket.setShowTicketPrice(35.00);
         showTicket.setShowTicketQuantity(20);
         showTicket.setShowTicketType("Premium");
         showTicketSessionBean.addShowTicket(showTicket);
+        
+        showSchedule.setDuration(ssDate2);
+        showSchedule.setShowDate(ssDate1);
+        showSchedule.setStartTime(ssDate3);
+        showScheduleSessionBean.addShowSchedule(showSchedule);
+        
         show.addShowTicket(showTicket);
+        show.addShowSchedule(showSchedule);
+        show.setShowContract(showContract);
         try {
             System.out.println("Saving show....");
             showSessionBean.addShow(show);

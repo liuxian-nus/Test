@@ -17,7 +17,7 @@
                                  var="showList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
                                  resizableColumns="true">
 
-                        <p:column headerText="Show Name" style="width:70px;">
+                        <p:column headerText="Show Name" style="width:50px;">
                             <h:outputText value="#{showList.showName}"/>
                         </p:column>
 
@@ -25,12 +25,16 @@
                             <h:outputText value="#{showList.showDescription}"/>
                         </p:column>
 
-                        <p:column headerText="Type" style="width:70px;">
+                        <p:column headerText="Type" style="width:50px;">
                             <h:outputText value="#{showList.showType}"/>
                         </p:column>
 
-                        <p:column headerText="Commission" style="width:70px;">
-                            <h:outputText value="#{showList.ticketCommission}"/>
+                        <p:column headerText="Contract name" style="width:70px;">
+                            <h:outputText value="#{showList.showContract.showMerchantName}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Contract email" style="width:100px;">
+                            <h:outputText value="#{showList.showContract.showMerchantEmail}"/>
                         </p:column>
 
                         <p:column style="width:145px">  
@@ -73,25 +77,6 @@
                                 <p:inputTextarea id="showDescription" required="true" requiredMessage="Show Description cannot be empty" value="#{manageShowManagedBean.selectedShow.showDescription}" rendered="#{manageShowManagedBean.editMode}"  label="Show Description"/>  
                                 <p:message for="showDescription"/>
                             </h:panelGroup>
-
-                            <h:outputText value="Show Type" />  
-                            <h:panelGroup>  
-                                <h:outputText value="#{manageShowManagedBean.selectedShow.showType}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/>  
-                                <p:selectOneRadio id="options" value="#{manageShowManagedBean.selectedShow.showType}" requiredMessage="Show Type cannot be empty">  
-                                    <f:selectItem itemLabel="Internal" itemValue="Internal" />  
-                                    <f:selectItem itemLabel="External" itemValue="External" />  
-                                </p:selectOneRadio>
-                                <p:message for="options"/>
-                            </h:panelGroup>
-
-                            <h:outputText value="Ticket Commission" />
-                            <h:panelGroup>  
-                                <h:outputText value="#{manageShowManagedBean.selectedShow.ticketCommission}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/> 
-                                <h:inputText id="ticketCom" label="Ticket Commission" value="#{manageShowManagedBean.selectedShow.ticketCommission}">
-                                    <f:convertNumber type="percent"/>
-                                </h:inputText>  
-                                <p:message for="ticketCom"/>
-                            </h:panelGroup> 
 
                             <f:facet name="footer">  
                                 <p:outputPanel rendered="#{manageShowManagedBean.editMode}" layout="block" style="text-align:right">  
