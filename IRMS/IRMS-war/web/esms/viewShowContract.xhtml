@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel id="showContract" header="View Show Contract" style="height:495px;">
+                <p:growl id="msgs" showDetail="true" />
+                <p:dataTable id="showContracts" value="#{viewShowContractManagedBean.getShowContracts()}" 
+                             var="contractList" paginator="true" rows="10" draggableColumns="true" 
+                             scrollable="true" resizableColumns="true">
+
+                    <p:column headerText="Merchant Name" style="width:30px;">
+                        <h:outputText value="#{contractList.showMerchantName}"/>
+                    </p:column>
+
+                    <p:column headerText="Email" style="width:70px;">
+                        <h:outputText value="#{contractList.showMerchantEmail}"/>
+                    </p:column>
+
+                    <p:column headerText="Contact" style="width:40px;">
+                        <h:outputText value="#{contractList.showMerchantContact}"/>
+                    </p:column>
+
+                    <p:column headerText="Address" style="width:130px;">
+                        <h:outputText value="#{contractList.showMerchantAddress}"/> 
+                    </p:column>
+
+                    <p:column headerText="Commission" style="width:30px;">
+                        <h:outputText value="#{contractList.showTicketCommission}"/>
+                    </p:column>
+
+                    <p:column headerText="Duration" style="width:30px;">
+                        <h:outputText value="#{contractList.showVenueDuration}"/>
+                    </p:column>
+
+                    <p:column headerText="Rate" style="width:30px;">
+                        <h:outputText value="#{contractList.showVenueRate}"/>
+                    </p:column> 
+
+                    <p:column style="width:30px">  
+                        <h:panelGrid styleClass="actions" >   
+                            <p:commandButton update=":form:showContracts" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                <f:setPropertyActionListener value="#{contractList}" target="#{viewShowContractManagedBean.showContract}" />  
+                            </p:commandButton>  
+                        </h:panelGrid>  
+                    </p:column>  
+                </p:dataTable>
+                
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
+                        <br/>
+                        Are you sure to delete?
+                        <br/><br/>
+                        <p:commandButton value="Yes" update="showContracts" actionListener="#{viewShowContractManagedBean.deleteShowContract}" oncomplete="confirmation.hide()">  
+                            <f:attribute name="code1" value="#{viewShowContractManagedBean.showContract.showContractId}" />
+                        </p:commandButton>
+                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
+                    </p:dialog> 
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
