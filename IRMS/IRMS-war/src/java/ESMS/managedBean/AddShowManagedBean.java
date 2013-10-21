@@ -4,9 +4,11 @@
  */
 package ESMS.managedBean;
 
+import ESMS.entity.ShowContractEntity;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
+import ESMS.session.ShowContractSessionBean;
 import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
@@ -38,20 +40,27 @@ public class AddShowManagedBean {
     ShowScheduleSessionBean showScheduleSessionBean;
     @EJB
     ShowTicketSessionBean showTicketSessionBean;
+    @EJB
+    ShowContractSessionBean showContractSessionBean;
+    
     private ShowEntity show;
     private ShowScheduleEntity showSchedule;
     private ShowTicketEntity showTicket;
+    private ShowContractEntity showContract;
+    
     private Long showId;
     private Date currentDate = new Date();
     private static final int BUFFER_SIZE = 1024;
     private UploadedFile file;
     private Boolean uploadMode;
     private Long id;
+    private Long showContractId;
 
     public AddShowManagedBean() {
         show = new ShowEntity();
         showSchedule = new ShowScheduleEntity();
         showTicket = new ShowTicketEntity();
+        showContract = new ShowContractEntity();
     }
 
     public void handleFileUpload(FileUploadEvent event) throws IOException {
@@ -80,8 +89,15 @@ public class AddShowManagedBean {
 
     public void saveNewShow(ActionEvent event) throws IOException {
         System.err.println("Saving New Show...");
-        System.err.println("Ticket Commission percentage=" + show.getTicketCommission());
         System.err.println("Ticket Type=" + show.getShowType());
+        
+        if (showContractId != null){
+            System.err.println("Show contract Id: "+showContractId);
+            showContract = showContractSessionBean.thisShowContract(showContractId);
+            System.err.println(showContract.getShowMerchantName());
+            getShow().setShowContract(showContract);
+            System.err.println(getShow().getShowContract().getShowContractId());
+        }
         showSessionBean.addShow(getShow());
 
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -206,5 +222,29 @@ public class AddShowManagedBean {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ShowContractSessionBean getShowContractSessionBean() {
+        return showContractSessionBean;
+    }
+
+    public void setShowContractSessionBean(ShowContractSessionBean showContractSessionBean) {
+        this.showContractSessionBean = showContractSessionBean;
+    }
+
+    public Long getShowContractId() {
+        return showContractId;
+    }
+
+    public void setShowContractId(Long showContractId) {
+        this.showContractId = showContractId;
+    }
+
+    public ShowContractEntity getShowContract() {
+        return showContract;
+    }
+
+    public void setShowContract(ShowContractEntity showContract) {
+        this.showContract = showContract;
     }
 }

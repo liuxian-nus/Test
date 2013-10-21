@@ -29,10 +29,11 @@
                         </p:selectOneRadio> 
                         <h:outputText value=""/><br/>
 
-                        <h:outputText value="Ticket Commission Percentage: " rendered="#{addShowManagedBean.isExternal()}"/>
-                        <h:inputText label="Ticket Commission" required="true" requiredMessage="Ticket commission cannot be empty" value="#{addShowManagedBean.show.ticketCommission}" rendered="#{addShowManagedBean.isExternal()}" >
-                            <f:convertNumber type="percent"/>
-                        </h:inputText> 
+                        <h:outputText value="Show Merchant: " rendered="#{addShowManagedBean.isExternal()}"/>
+                        <p:selectOneMenu value="#{addShowManagedBean.showContractId}" rendered="#{addShowManagedBean.isExternal()}">  
+                            <f:selectItem itemLabel="Select Contract" itemValue=""/>  
+                            <f:selectItems value="#{addShowManagedBean.showContractSessionBean.allShowContracts}" var="allShowContract" itemLabel="#{allShowContract.showMerchantName}" itemValue="#{allShowContract.showContractId}"/>
+                        </p:selectOneMenu>
                         <h:outputText value=""/><br/>
 
                         <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShow}" update="message"/>
@@ -122,7 +123,7 @@
                             <f:setPropertyActionListener value="#{true}" target="#{addShowManagedBean.uploadMode}" />
                         </p:commandButton>
                         <h:outputText value=""/><br/>
-                        
+
                         <h:outputText value="Upload Show Image: " rendered="#{addShowManagedBean.uploadMode}"/>
                         <p:fileUpload fileUploadListener="#{addShowManagedBean.handleFileUpload}" id="uploader" 
                                       mode="advanced" update="messages" label="Choose a file" multiple="false" 

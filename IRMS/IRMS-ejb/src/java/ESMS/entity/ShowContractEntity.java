@@ -30,7 +30,7 @@ public class ShowContractEntity implements Serializable {
     private Double showTicketCommission;
     private int showVenueDuration;
     
-    @OneToOne(cascade = {CascadeType.MERGE})
+    @OneToOne(mappedBy="showContract", cascade = {CascadeType.MERGE})
     private ShowEntity show;
 
     public Long getShowContractId() {

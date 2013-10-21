@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -33,12 +34,14 @@ public class ShowEntity implements Serializable {
     private String showName;
     private String showDescription;
     private String showType;
-    private Double ticketCommission;
+//    private Double ticketCommission;
     private byte[] image;
     @OneToMany(targetEntity = ShowTicketEntity.class, cascade = {CascadeType.MERGE})
     private List<ShowTicketEntity> showTickets = new ArrayList<ShowTicketEntity>();
     @OneToMany(targetEntity = ShowScheduleEntity.class, cascade = {CascadeType.MERGE})
     private List<ShowScheduleEntity> showSchedules = new ArrayList<ShowScheduleEntity>();
+    @OneToOne(cascade = {CascadeType.MERGE})
+    private ShowContractEntity showContract;
 
     public List<ShowScheduleEntity> getShowSchedules() {
         return showSchedules;
@@ -96,13 +99,13 @@ public class ShowEntity implements Serializable {
         this.showType = showType;
     }
 
-    public Double getTicketCommission() {
-        return ticketCommission;
-    }
-
-    public void setTicketCommission(Double ticketCommission) {
-        this.ticketCommission = ticketCommission;
-    }
+//    public Double getTicketCommission() {
+//        return ticketCommission;
+//    }
+//
+//    public void setTicketCommission(Double ticketCommission) {
+//        this.ticketCommission = ticketCommission;
+//    }
 
     public byte[] getImage() {
         return image;
@@ -112,4 +115,11 @@ public class ShowEntity implements Serializable {
         this.image = image;
     }
 
+    public ShowContractEntity getShowContract() {
+        return showContract;
+    }
+
+    public void setShowContract(ShowContractEntity showContract) {
+        this.showContract = showContract;
+    }
 }
