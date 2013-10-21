@@ -51,6 +51,11 @@ public class ShowContractSessionBean {
         Query q = em.createQuery("SELECT m FROM ShowContractEntity m");
         return q.getResultList();
     }
+    
+    public ShowContractEntity thisShowContract(Long showContractId){
+        showContract = em.find(ShowContractEntity.class, showContractId);
+        return showContract;
+    }
 
     public ShowContractEntity getShowContract() {
         return showContract;
