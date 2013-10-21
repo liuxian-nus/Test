@@ -27,9 +27,11 @@ import ERMS.session.EPasswordHashSessionBean;
 import ERMS.session.EmployeeSessionBean;
 import ERMS.session.FunctionalitySessionBean;
 import ERMS.session.RoleSessionBean;
+import ESMS.entity.ShowContractEntity;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
+import ESMS.session.ShowContractSessionBean;
 import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
@@ -99,6 +101,9 @@ public class initializationManagedBean implements Serializable {
     private ShowSessionBean showSessionBean;
     @EJB
     private ShowTicketSessionBean showTicketSessionBean;
+    @EJB
+    private ShowContractSessionBean showContractSessionBean;
+    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -112,10 +117,11 @@ public class initializationManagedBean implements Serializable {
     private AttrTicketEntity ticket;
     private QuotaEntity quota;
     private MerchantEntity merchant;
-    private ShowEntity show;
     private LogBookEntity log;
+    private ShowEntity show;
     private ShowScheduleEntity showSchedule;
     private ShowTicketEntity showTicket;
+    private ShowContractEntity showContract;
     private ContractEntity contract;
     private ContracteventEntity event;
 //    private MemberEntity member;
@@ -1208,9 +1214,30 @@ public class initializationManagedBean implements Serializable {
         }
         addMessage("Show Created!");
     }
+    
+    public void createShowContract() {
+        showContract = new ShowContractEntity();
+        showContract.setShowMerchantName("Zheng Bowen");
+        showContract.setShowMerchantEmail("s.er3na.j@gmail.com");
+        showContract.setShowMerchantContact("91772046");
+        showContract.setShowMerchantAddress("21 Prince George's Park Residence 1");
+        showContract.setShowTicketCommission(0.15);
+        showContract.setShowVenueDuration(3);
+        showContract.setShowVenueRate(1500.00);
+        try {
+            System.out.println("Saving show contract....");
+            showContractSessionBean.addShowContract(showContract);
+            System.out.println("Show contract saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding show contract", ""));
+            return;
+        }
+        addMessage("Show Contract Created!");
+    }
     //Add new test cases below!!!!!!!!!
 
     public void initialize() throws ExistException {
+        createShowContract();
         createCEMSAdmin();
         createShow();
         createSuperAdmin();
