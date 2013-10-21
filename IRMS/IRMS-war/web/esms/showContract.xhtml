@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="addShowContract">
+            <p:growl id="message" showDetail="true" sticky="true"/>
+            <p:panel id="Home" header="Create Contract" >
+                <h:panelGrid id="grid" columns="2">
+                    <h:outputText value="Show Merchant Name: " />
+                    <h:inputText required="true" requiredMessage="Show merchant name cannot be empty" value="#{showContractManagedBean.showContract.showMerchantName}" style="margin-bottom:10px;"/>
+                    <h:outputText value=""/><br/>
+
+                    <h:outputText value="Merchant Email: " />
+                    <h:inputText required="true" requiredMessage="Merchant Email cannot be empty" value="#{showContractManagedBean.showContract.showMerchantEmail}" style="margin-bottom:10px;"/>
+                    <h:outputText value=""/><br/>
+
+                    <h:outputText value="Merchant Contact: " />
+                    <h:inputText required="true" requiredMessage="Merchant contact cannot be empty" value="#{showContractManagedBean.showContract.showMerchantContact}" style="margin-bottom:10px;"/>
+                    <h:outputText value=""/><br/>
+
+                    <h:outputText value="Merchant Address" />
+                    <h:inputText required="true" requiredMessage="Merchant address cannot be empty" value="#{showContractManagedBean.showContract.showMerchantAddress}" style="margin-bottom:10px;"/>
+                    <h:outputText value=""/><br/>
+
+                    <h:outputText value="Venue rental rate (per day): " />
+                    <h:inputText required="true" requiredMessage="Venue rental rate cannot be empty" value="#{showContractManagedBean.showContract.showVenueRate}" >
+                        <f:convertNumber type="number"/>
+                    </h:inputText> 
+                    <h:outputText value=""/><br/>
+
+                    <h:outputText value="Show Ticket Commission Percentage: " />
+                    <h:inputText required="true" requiredMessage="Ticket commission cannot be empty" value="#{showContractManagedBean.showContract.showTicketCommission}" >
+                        <f:convertNumber type="percent"/>
+                    </h:inputText> 
+                    <h:outputText value=""/><br/>
+
+                    <h:outputText value="Venue rental duration (days): "/>
+                    <h:inputText required="true" requiredMessage="Venue rental duration cannot be empty" value="#{showContractManagedBean.showContract.showVenueDuration}">
+                        <f:convertNumber type="number"/>
+                    </h:inputText> 
+                    <h:outputText value=""/><br/>
+
+                    <p:commandButton value="Save" ajax="true" actionListener="#{showContractManagedBean.saveNew}" update="message"/>
+                    <p:commandButton value="Cancel" ajax="true" actionListener="#{showContractManagedBean.cancel}" update="message"/>
+
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
