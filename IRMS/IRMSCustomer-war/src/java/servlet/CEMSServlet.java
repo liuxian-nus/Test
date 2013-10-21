@@ -80,7 +80,11 @@ public class CEMSServlet extends HttpServlet {
                 System.out.println("***eventRegister***");
 
                 request.getRequestDispatcher("/eventRegister.jsp").forward(request, response);
-            } else if ("eventRegisterResult".equalsIgnoreCase(page)) {
+            } else if ("eventResource".equals(page)) {
+                System.out.println("***eventResource***");
+
+                request.getRequestDispatcher("/eventResource.jsp").forward(request, response);
+            }else if ("eventRegisterResult".equalsIgnoreCase(page)) {
                 System.out.println("*****eventRegisterResult*****");
                 data2 = registerEvent(request);
 
@@ -113,14 +117,8 @@ public class CEMSServlet extends HttpServlet {
             } else if ("eventList".equals(page)) {
                 System.out.println("***eventList***");
                 String eventTitle="IS3102";
-                Date eventStart=new Date(2014,10,1);
-                Date eventEnd=new Date(2014,10,3);
-                request.setAttribute("eventTitle",eventTitle);
-                request.setAttribute("eventStart",eventStart);
-                request.setAttribute("eventEnd",eventEnd);
-                System.out.println(eventTitle);
-                System.out.println(eventStart);
-                System.out.println(eventEnd);
+                List<EventEntity> events = eventSessionBean.listEvents();
+                request.setAttribute("eventList", events);
                 request.getRequestDispatcher("/eventList.jsp").forward(request, response);
             } else {
                 System.out.println("other page");
