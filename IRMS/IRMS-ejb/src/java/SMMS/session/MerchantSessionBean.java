@@ -64,7 +64,6 @@ public class MerchantSessionBean {
     
      public MerchantEntity getMerchantById(String merchantId) throws ExistException{
         merchant = em.find(MerchantEntity.class, merchantId);
-        if(merchant == null)  throw new ExistException("Merchant does not exist!");
         return merchant;
     }
     

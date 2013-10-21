@@ -36,7 +36,7 @@
                         <f:selectItem itemLabel="5" itemValue="5" />  
                     </h:selectOneMenu> 
 
-                    <h:outputText value="Area*:"/>
+                    <h:outputText value="Location*:"/>
                     <h:selectOneMenu value ="#{addPushingcartManagedBean.pushingcart.pushingcartArea}" required ="true" requiredMessage="Area cannot be empty">
                         <f:selectItem itemLabel="Select Area" itemValue="" />  
                         <f:selectItem itemLabel="East" itemValue="ease" />  
@@ -47,10 +47,10 @@
                         <f:selectItem itemLabel="Outdoor" itemValue="outdoor" />  
                     </h:selectOneMenu> 
 
-                    <h:outputText value="Inventory*:"/>
+                    <h:outputText value="Quantity*:"/>
                     <h:inputText required ="true" requiredMessage="Inventory cannot be empty" value="#{addPushingcartManagedBean.pushingcart.pushingcartInventory}"/>                                   
 
-                    <p:commandButton value="Save" ajax="true" actionListener="#{addPushingcartManagedBean.saveNew}" update="addCartMsg"/>
+                    <p:commandButton value="Save" ajax="true" onclick="addCartMsg" actionListener="#{addPushingcartManagedBean.saveNew}" update="addCartMsg"/>
 
                 </p:panelGrid>
             </p:panel>

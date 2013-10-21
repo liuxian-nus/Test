@@ -62,15 +62,39 @@
                         <h:panelGrid id="editOutlet"  columns="2" cellpadding="4" style="margin:0 auto;"> 
                             <h:outputText value="Name: " />  
                             <p:inplace >  
-                                <p:inputText value="#{outletManagedBean.outlet.outletName}" />  
+                                <p:inputText value="#{outletManagedBean.outlet.outletName}" />
                             </p:inplace>  
                             <h:outputText value="Condition: " />  
                             <p:inplace >  
-                                <p:inputText value="#{outletManagedBean.outlet.outletCondition}" />  
+                                <h:selectOneMenu value ="#{outletManagedBean.outlet.outletCondition}" required ="true" requiredMessage="Outlet name cannot be empty">
+                                    <f:selectItem itemLabel="Select Condition" itemValue="" />  
+                                    <f:selectItem itemLabel="Under Construction" itemValue="underConstruction" />  
+                                    <f:selectItem itemLabel="Not in Construction" itemValue="notinConstruction" />  
+                                </h:selectOneMenu> 
                             </p:inplace>
                             <h:outputText value="Type: " />  
                             <p:inplace >  
-                                <p:inputText value="#{outletManagedBean.outlet.outletType}" />  
+                                <h:selectOneMenu value ="#{outletManagedBean.outlet.outletType}" required ="true" requiredMessage="Outlet name cannot be empty">
+                                    <f:selectItem itemLabel="Select Outlet Type" itemValue="" />  
+                                    <f:selectItem itemLabel="Banks" itemValue="banks" />  
+                                    <f:selectItem itemLabel="Bars and Nightclubs" itemValue="clubs" />
+                                    <f:selectItem itemLabel="Cafes" itemValue="cafes" />  
+                                    <f:selectItem itemLabel="Celebrity Chef Restaurants" itemValue="celebRestaurants" />  
+                                    <f:selectItem itemLabel="Childrens Fashion and Maternity" itemValue="children" />  
+                                    <f:selectItem itemLabel="Electronics and Telecommunications" itemValue="electronics" />
+                                    <f:selectItem itemLabel="General" itemValue="general" />  
+                                    <f:selectItem itemLabel="Gourmet and Speciality Food" itemValue="gourmet" />  
+                                    <f:selectItem itemLabel="Handbags Shoes and Accessories" itemValue="handbags" />  
+                                    <f:selectItem itemLabel="Jewelry" itemValue="jewely" />
+                                    <f:selectItem itemLabel="Lifestyle and Gifts " itemValue="lifestyle" />  
+                                    <f:selectItem itemLabel="Lingerie" itemValue="lingerie" />  
+                                    <f:selectItem itemLabel="Men's Fashion" itemValue="menfashion" />  
+                                    <f:selectItem itemLabel="Restaurants" itemValue="restaurants" />
+                                    <f:selectItem itemLabel="Sports Beauty and Wellness" itemValue="sports" />  
+                                    <f:selectItem itemLabel="Watches" itemValue="watches" />
+                                    <f:selectItem itemLabel="Womens Fashion" itemValue="fashion" />  
+                                    <f:selectItem itemLabel="Others" itemValue="others" />  
+                                </h:selectOneMenu> 
                             </p:inplace>
                             <h:outputText value="Area: " />  
                             <p:inplace >  
