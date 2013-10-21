@@ -36,7 +36,7 @@ public class BookingEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date endingDate;
     @OneToMany(cascade={CascadeType.ALL})
-    private List<ServiceEntity> services;
+    private List<EventServiceEntity> services;
     
     private Integer numberNightRoom;
 
@@ -48,11 +48,11 @@ public class BookingEntity implements Serializable {
         this.numberNightRoom = numberNightRoom;
     }
 
-    public List<ServiceEntity> getServices() {
+    public List<EventServiceEntity> getServices() {
         return services;
     }
 
-    public void setServices(List<ServiceEntity> services) {
+    public void setServices(List<EventServiceEntity> services) {
         this.services = services;
     }
 

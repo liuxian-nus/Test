@@ -15,7 +15,7 @@ import javax.persistence.Id;
  * @author lionetdd
  */
 @Entity
-public class ServiceEntity implements Serializable {
+public class EventServiceEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +26,7 @@ public class ServiceEntity implements Serializable {
     private Integer serviceQuantity;
     private Double serviceCost;
     
-    public ServiceEntity(){}
+    public EventServiceEntity(){}
     
     public Long getId() {
         return serviceId;
@@ -86,10 +86,10 @@ public class ServiceEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ServiceEntity)) {
+        if (!(object instanceof EventServiceEntity)) {
             return false;
         }
-        ServiceEntity other = (ServiceEntity) object;
+        EventServiceEntity other = (EventServiceEntity) object;
         if ((this.serviceId == null && other.serviceId != null) || (this.serviceId != null && !this.serviceId.equals(other.serviceId))) {
             return false;
         }
