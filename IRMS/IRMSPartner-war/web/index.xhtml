@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/generalTemplatePartner.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+        <h:form id="login">
+            <p:panel id="Home" header="Home" style="height:450px;">
+                <div style="font-weight:bold;font-size:2em;text-align:justify">
+                    Welcome to Coral Island Resort
+                </div>
+                <p:imageSwitch effect="fade" style="height:400px;">  
+                    <ui:repeat value="#{imageManagedBeanPartner.images}" var="image">  
+                        <p:graphicImage value="/images/indexImage/#{image}" />  
+                    </ui:repeat>  
+                </p:imageSwitch>  
+                
+            </p:panel>
+        </h:form>
+        
+      <!--for commit-->  
+        
+        
+        <h:form id ="logIn" rendered ="#{indexManagementManagedBeanPartner.loginRender}">
+            <p:commandButton value="Sign in" actionListener ="#{loginManagementManagedBeanPartner.goLogin}"/>
+            <h:outputText value="#{indexManagementManagedBeanPartner.message}" style="position:relative;float:right;margin-right:20px;margin-top:5px;" />
+        </h:form>
+
+        <h:form id="logOut" rendered ="#{indexManagementManagedBeanPartner.logoutRender}" >
+            <p:commandButton value= "Sign out" actionListener ="#{logoutManagementManagedBeanPartner.doLogout}"/>
+            <h:outputText value="#{indexManagementManagedBeanPartner.message}" style="position:relative;float:right;margin-right:20px;margin-top:5px;" />
+        </h:form>
+    </ui:define>
+
+</ui:composition>
