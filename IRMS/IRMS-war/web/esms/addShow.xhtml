@@ -54,16 +54,12 @@
                         </p:selectOneMenu>
                         <h:outputText value=""/><br/>
 
-                        <h:outputText value="Show start time: "/>
-                        <p:calendar value="#{addShowManagedBean.showSchedule.startTime}" pattern="HH:mm a" timeOnly="true" /> 
+                        <h:outputText value="Show start date time: "/>
+                        <p:calendar value="#{addShowManagedBean.showSchedule.startDateTime}" pattern="MM/dd/yyyy HH:mm" mindate="#{addShowManagedBean.currentDate}"/> 
                         <h:outputText value=""/><br/>
 
-                        <h:outputText value="Show duration: "/>
+                        <h:outputText value="Show duration (hours): "/>
                         <p:calendar value="#{addShowManagedBean.showSchedule.duration}" pattern="HH:mm" timeOnly="true" /> 
-                        <h:outputText value=""/><br/>
-
-                        <h:outputText value="Show date: "/>
-                        <p:calendar value="#{addShowManagedBean.showSchedule.showDate}" pattern="MM/dd/yyyy" mindate="#{addShowManagedBean.currentDate}"/> 
                         <h:outputText value=""/><br/>
 
                         <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShowSchedule}" update="msg"/>
@@ -76,9 +72,17 @@
                     <p:growl id="ticketMsg"/>
                     <h:panelGrid id="grid" columns="2">
                         <h:outputText value="Show Name: "/>
-                        <p:selectOneMenu value="#{addShowManagedBean.showId}">  
+                        <p:selectOneMenu value="#{addShowManagedBean.showId}" onchange="this.form.submit();" immediate="true">  
                             <f:selectItem itemLabel="Select Show" itemValue=""/>
                             <f:selectItems value="#{addShowManagedBean.showSessionBean.allShows}" var="allShow" itemLabel="#{allShow.showName}" itemValue="#{allShow.showId}" />  
+                            <p:ajax update="schedules" listener="#{addShowManagedBean.handleShowChanges}" />
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Show Schedule: "/>
+                        <p:selectOneMenu id="schedules" value="#{addShowManagedBean.showSchedule}">  
+                            <f:selectItem itemLabel="Select Show Schedule" itemValue=""/>
+                            <f:selectItems value="#{addShowManagedBean.showScheduleSessionBean.allShowSchedules}" var="allShowSchedule" itemLabel="#{allShowSchedule.startDateTime}" itemValue="#{allShowSchedule.showScheduleId}" />  
                         </p:selectOneMenu>
                         <h:outputText value=""/><br/>
 
@@ -93,7 +97,13 @@
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Ticket Quantity: "/>
-                        <h:inputText label="Ticket Quantity" required="true" requiredMessage="Ticket type cannot be empty" value="#{addShowManagedBean.showTicket.showTicketQuantity}" style="margin-bottom:10px;"> 
+                        <h:inputText label="Ticket Quantity" required="true" requiredMessage="Ticket quantity cannot be empty" value="#{addShowManagedBean.showTicket.showTicketQuantity}" style="margin-bottom:10px;"> 
+                            <f:convertNumber integerOnly="true" type="number" />
+                        </h:inputText> 
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Ticket Quota: "/>
+                        <h:inputText label="Ticket Quota" required="true" requiredMessage="Ticket quota cannot be empty" value="#{addShowManagedBean.showTicket.showTicketQuota}" style="margin-bottom:10px;"> 
                             <f:convertNumber integerOnly="true" type="number" />
                         </h:inputText> 
                         <h:outputText value=""/><br/>
