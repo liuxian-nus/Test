@@ -34,14 +34,14 @@ public class ShowEntity implements Serializable {
     private String showName;
     private String showDescription;
     private String showType;
-//    private Double ticketCommission;
     private byte[] image;
-    @OneToMany(targetEntity = ShowTicketEntity.class, cascade = {CascadeType.MERGE})
-    private List<ShowTicketEntity> showTickets = new ArrayList<ShowTicketEntity>();
+    private boolean showStatus;
     @OneToMany(targetEntity = ShowScheduleEntity.class, cascade = {CascadeType.MERGE})
     private List<ShowScheduleEntity> showSchedules = new ArrayList<ShowScheduleEntity>();
     @OneToOne(cascade = {CascadeType.MERGE})
     private ShowContractEntity showContract;
+    @OneToMany(targetEntity = ShowTicketSaleEntity.class, cascade = {CascadeType.MERGE})
+    private List<ShowTicketSaleEntity> showTicketSale = new ArrayList<ShowTicketSaleEntity>();;
 
     public List<ShowScheduleEntity> getShowSchedules() {
         return showSchedules;
@@ -53,18 +53,6 @@ public class ShowEntity implements Serializable {
 
     public void addShowSchedule(ShowScheduleEntity showSchedule) {
         this.showSchedules.add(showSchedule);
-    }
-
-    public List<ShowTicketEntity> getShowTickets() {
-        return showTickets;
-    }
-
-    public void setShowTickets(List<ShowTicketEntity> showTickets) {
-        this.showTickets = showTickets;
-    }
-
-    public void addShowTicket(ShowTicketEntity showTicket) {
-        this.showTickets.add(showTicket);
     }
 
     public String getShowName() {
@@ -99,14 +87,6 @@ public class ShowEntity implements Serializable {
         this.showType = showType;
     }
 
-//    public Double getTicketCommission() {
-//        return ticketCommission;
-//    }
-//
-//    public void setTicketCommission(Double ticketCommission) {
-//        this.ticketCommission = ticketCommission;
-//    }
-
     public byte[] getImage() {
         return image;
     }
@@ -121,5 +101,21 @@ public class ShowEntity implements Serializable {
 
     public void setShowContract(ShowContractEntity showContract) {
         this.showContract = showContract;
+    }
+
+    public List<ShowTicketSaleEntity> getShowTicketSale() {
+        return showTicketSale;
+    }
+
+    public void setShowTicketSale(List<ShowTicketSaleEntity> showTicketSale) {
+        this.showTicketSale = showTicketSale;
+    }
+
+    public boolean isShowStatus() {
+        return showStatus;
+    }
+
+    public void setShowStatus(boolean showStatus) {
+        this.showStatus = showStatus;
     }
 }

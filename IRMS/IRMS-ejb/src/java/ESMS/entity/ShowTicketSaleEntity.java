@@ -6,6 +6,7 @@ package ESMS.entity;
 
 import CRMS.entity.MemberEntity;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,18 +24,13 @@ public class ShowTicketSaleEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long showTicketSaleId;
-    @ManyToOne(targetEntity = ShowEntity.class)
+    @ManyToOne(cascade = {CascadeType.ALL})
     private ShowEntity show;
-    @ManyToOne(targetEntity = ShowScheduleEntity.class)
-    private ShowScheduleEntity showSchedule;
-    @ManyToOne(targetEntity = ShowTicketEntity.class)
-    private ShowTicketEntity showTicket;
-    @ManyToOne(targetEntity = MemberEntity.class)
-    private MemberEntity member;
     
-    private int quantity;
     //this is to make sure the member with this ticket is already entered, 防假票！！
-    private boolean status;
+    private boolean showTicketStatus;
+    private int showTicketQuantity;
+    
     
     public Long getShowTicketSaleId() {
         return showTicketSaleId;
@@ -51,44 +47,20 @@ public class ShowTicketSaleEntity implements Serializable {
     public void setShow(ShowEntity show) {
         this.show = show;
     }
-
-    public ShowScheduleEntity getShowSchedule() {
-        return showSchedule;
+    
+    public boolean isShowTicketStatus() {
+        return showTicketStatus;
     }
 
-    public void setShowSchedule(ShowScheduleEntity showSchedule) {
-        this.showSchedule = showSchedule;
+    public void setShowTicketStatus(boolean showTicketStatus) {
+        this.showTicketStatus = showTicketStatus;
     }
 
-    public ShowTicketEntity getShowTicket() {
-        return showTicket;
+    public int getShowTicketQuantity() {
+        return showTicketQuantity;
     }
 
-    public void setShowTicket(ShowTicketEntity showTicket) {
-        this.showTicket = showTicket;
-    }
-
-    public MemberEntity getMember() {
-        return member;
-    }
-
-    public void setMember(MemberEntity member) {
-        this.member = member;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setShowTicketQuantity(int showTicketQuantity) {
+        this.showTicketQuantity = showTicketQuantity;
     }
 }

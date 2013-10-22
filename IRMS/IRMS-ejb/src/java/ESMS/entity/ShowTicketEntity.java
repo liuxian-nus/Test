@@ -23,6 +23,7 @@ public class ShowTicketEntity implements Serializable {
     private String showTicketType;
     private Double showTicketPrice;
     private int showTicketQuantity;
+    private int showTicketQuota;
 
     public Long getShowTicketId() {
         return showTicketId;
@@ -54,6 +55,14 @@ public class ShowTicketEntity implements Serializable {
 
     public void setShowTicketQuantity(int showTicketQuantity) {
         this.showTicketQuantity = showTicketQuantity;
+    }
+
+    public int getShowTicketQuota() {
+        return showTicketQuota;
+    }
+
+    public void setShowTicketQuota(int showTicketQuota) {
+        this.showTicketQuota = showTicketQuota;
     }
 
     @Override
