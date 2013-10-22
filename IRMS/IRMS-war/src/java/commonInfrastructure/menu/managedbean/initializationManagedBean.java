@@ -1198,7 +1198,7 @@ public class initializationManagedBean implements Serializable {
     }
 
     public void createShow() {
-        Date ssDate1 = new Date(2013, 1, 1);
+        Date ssDate1 = new Date(114, 2, 2, 12, 0 ,0);
         Date ssDate2 = new Time(2, 0, 0);
         Date ssDate3 = new Time(16, 0, 0);
         System.err.println("creating show...");
@@ -1225,8 +1225,8 @@ public class initializationManagedBean implements Serializable {
         showTicketSessionBean.addShowTicket(showTicket);
         
         showSchedule.setDuration(ssDate2);
-        showSchedule.setShowDate(ssDate1);
-        showSchedule.setStartTime(ssDate3);
+        showSchedule.setStartDateTime(ssDate1);
+//        showSchedule.setStartTime(ssDate3);
         showSchedule.addShowTicket(showTicket);
         showScheduleSessionBean.addShowSchedule(showSchedule);
         
