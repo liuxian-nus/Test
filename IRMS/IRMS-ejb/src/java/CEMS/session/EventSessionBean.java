@@ -6,7 +6,7 @@ package CEMS.session;
 
 import CEMS.entity.BookingEntity;
 import CEMS.entity.EventEntity;
-import CEMS.entity.ServiceEntity;
+import CEMS.entity.EventServiceEntity;
 import CEMS.entity.VenueEntity;
 import CEMS.entity.VenueFunctionEntity;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class EventSessionBean {
     BookingEntity be;
     EventEntity ee;
     VenueEntity ve;
-    ServiceEntity se;
+    EventServiceEntity se;
 
     public void persist(Object object) {
         em.persist(object);
