@@ -1220,8 +1220,9 @@ public class initializationManagedBean implements Serializable {
         showContractSessionBean.addShowContract(showContract);
         
         showTicket.setShowTicketPrice(35.00);
-        showTicket.setShowTicketQuantity(20);
+        showTicket.setShowTicketQuantity(100);
         showTicket.setShowTicketType("Premium");
+        showTicket.setShowTicketQuota(100);
         showTicketSessionBean.addShowTicket(showTicket);
         
         showSchedule.setDuration(ssDate2);
