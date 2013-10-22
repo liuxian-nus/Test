@@ -72,17 +72,17 @@
                     <p:growl id="ticketMsg"/>
                     <h:panelGrid id="grid" columns="2">
                         <h:outputText value="Show Name: "/>
-                        <p:selectOneMenu value="#{addShowManagedBean.showId}" onchange="this.form.submit();" immediate="true">  
+                        <p:selectOneMenu value="#{addShowManagedBean.showId}">  
                             <f:selectItem itemLabel="Select Show" itemValue=""/>
                             <f:selectItems value="#{addShowManagedBean.showSessionBean.allShows}" var="allShow" itemLabel="#{allShow.showName}" itemValue="#{allShow.showId}" />  
                             <p:ajax update="schedules" listener="#{addShowManagedBean.handleShowChanges}" />
-                        </p:selectOneMenu>
+                       </p:selectOneMenu>
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Show Schedule: "/>
-                        <p:selectOneMenu id="schedules" value="#{addShowManagedBean.showSchedule}">  
+                        <p:selectOneMenu id="schedules" value="#{addShowManagedBean.showScheduleId}">  
                             <f:selectItem itemLabel="Select Show Schedule" itemValue=""/>
-                            <f:selectItems value="#{addShowManagedBean.showScheduleSessionBean.allShowSchedules}" var="allShowSchedule" itemLabel="#{allShowSchedule.startDateTime}" itemValue="#{allShowSchedule.showScheduleId}" />  
+                            <f:selectItems value="#{addShowManagedBean.showSchedules}" var="allShowSchedule" itemLabel="#{allShowSchedule.startDateTime}" itemValue="#{allShowSchedule.showScheduleId}" />  
                         </p:selectOneMenu>
                         <h:outputText value=""/><br/>
 

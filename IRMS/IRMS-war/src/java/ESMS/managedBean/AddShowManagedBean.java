@@ -56,6 +56,7 @@ public class AddShowManagedBean {
     private Long id;
     private Long showContractId;
     private List<ShowScheduleEntity> showSchedules = new ArrayList<ShowScheduleEntity>();
+    private Long showScheduleId;
 
     public AddShowManagedBean() {
         show = new ShowEntity();
@@ -131,7 +132,7 @@ public class AddShowManagedBean {
     public void saveNewShowTicket(ActionEvent event) throws IOException {
         System.err.println("Saving New Show Ticket...");
         showTicketSessionBean.addShowTicket(getShowTicket());
-        showSessionBean.addShowTicket(showId, showTicket);
+        showSessionBean.addShowTicket(showScheduleId, showTicket);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Show Ticket saved.", ""));
         FacesContext.getCurrentInstance().getExternalContext().redirect("addShow.xhtml");
     }
@@ -265,5 +266,13 @@ public class AddShowManagedBean {
 
     public void setShowSchedules(List<ShowScheduleEntity> showSchedules) {
         this.showSchedules = showSchedules;
+    }
+
+    public Long getShowScheduleId() {
+        return showScheduleId;
+    }
+
+    public void setShowScheduleId(Long showScheduleId) {
+        this.showScheduleId = showScheduleId;
     }
 }
