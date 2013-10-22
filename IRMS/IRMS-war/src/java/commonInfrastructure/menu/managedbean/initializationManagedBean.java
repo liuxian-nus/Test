@@ -1227,9 +1227,9 @@ public class initializationManagedBean implements Serializable {
         showSchedule.setDuration(ssDate2);
         showSchedule.setShowDate(ssDate1);
         showSchedule.setStartTime(ssDate3);
+        showSchedule.addShowTicket(showTicket);
         showScheduleSessionBean.addShowSchedule(showSchedule);
         
-        show.addShowTicket(showTicket);
         show.addShowSchedule(showSchedule);
         show.setShowContract(showContract);
         try {
