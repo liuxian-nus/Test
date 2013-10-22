@@ -6,11 +6,13 @@ package ERMS.session;
 
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
+import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
@@ -21,6 +23,7 @@ import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Properties;
 import javax.ejb.Stateless;
 import javax.mail.Message;
@@ -226,7 +229,7 @@ public class EmailSessionBean {
         }
     }
 
-    private String createBill(String toEmailAdress, RoomEntity room) throws FileNotFoundException, DocumentException {
+    private String createBill(String toEmailAdress, RoomEntity room) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
         //Below generate a PDF file
         Document document;
             document = new Document(PageSize.A4,50,50,50,50);
@@ -248,6 +251,10 @@ public class EmailSessionBean {
       Font.BOLDITALIC);
         
         //Below specify contents
+         String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+         Image image = Image.getInstance(imagePath);
+         document.add(image);
+         
          Paragraph preface = new Paragraph();
          addEmptyLine(preface, 1);
          preface.add(new Paragraph("Your hotel booking summary", catFont));
