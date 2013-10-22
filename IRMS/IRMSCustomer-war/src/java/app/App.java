@@ -61,7 +61,11 @@ public class App {
     @Produces(MediaType.APPLICATION_XML)
     public MemberEntity readMember(@QueryParam("email") String email)
     {
-        return memberSessionBean.getMemberByEmail(email);
+        if(email!=null){
+            return memberSessionBean.getMemberByEmail(email);
+        }
+        else 
+            return null;
     }
 
     /*
@@ -73,10 +77,11 @@ public class App {
     }
     */
     
+    /*
     @PUT
     @Consumes("application/xml")
     public void putXml(String content) {
-    }
+    }*/
     
     @DELETE
     @Path("{email}")
@@ -97,9 +102,10 @@ public class App {
         memberSessionBean.updateMember(email,memberName,memberHP,memberDob,maritalStatus,memberGender,isSubscriber);
     }
      
+    /*
      @POST
      public void updatePassword(@FormParam("memberPassword") String memberPassword) 
      {
          memberSessionBean.updatePassword(memberPassword);
-     }
+     }*/
 }
