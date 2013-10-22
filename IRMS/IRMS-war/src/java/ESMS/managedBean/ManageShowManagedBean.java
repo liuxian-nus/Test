@@ -19,6 +19,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.ToggleEvent;
 
 /**
  *
@@ -59,12 +60,14 @@ public class ManageShowManagedBean {
 
     public void onEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Schedule Edited", null);
-//        showScheduleSessionBean.updateShowSchedule(selectedShowSchedule);
+        selectedShowSchedule = (ShowScheduleEntity) event.getObject();
+        showScheduleSessionBean.updateShowSchedule(selectedShowSchedule);
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void onEditTicket(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Schedule Edited", null);
+        selectedShowTicket = (ShowTicketEntity) event.getObject();
         showTicketSessionBean.updateShowTicket(selectedShowTicket);
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
