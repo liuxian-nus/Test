@@ -24,7 +24,7 @@ import javax.persistence.Query;
 @LocalBean
 public class ReceiverInfoSessionBean {
 
-     @PersistenceContext
+     @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
     
     private MessageSessionBean mm;

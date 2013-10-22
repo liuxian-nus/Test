@@ -22,7 +22,7 @@ import javax.persistence.Query;
 @LocalBean
 public class LogBookSessionBean {
 
-    @PersistenceContext
+    @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
     LogBookEntity log = new LogBookEntity();
 

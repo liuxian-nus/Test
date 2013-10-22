@@ -21,7 +21,7 @@ import javax.persistence.Query;
 @Stateless
 public class ReservationSessionBean {
 
-    @PersistenceContext
+    @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
     ReservationEntity reservation = new ReservationEntity();
     List<ReservationEntity> reservations;

@@ -37,7 +37,7 @@ import javax.persistence.PersistenceContext;
 public class InitSessionBean {
     
 
-    @PersistenceContext
+    @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
     @EJB
     private EmployeeSessionBean employeeSessionBean;

@@ -31,7 +31,7 @@ public class RoomSessionBean {
     private EmailSessionBean emailSessionBean;
     @EJB
     private MemberTransactionSessionBean mtSessionBean;
-    @PersistenceContext
+    @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
     RoomEntity room = new RoomEntity();
     RoomServiceEntity roomService = new RoomServiceEntity();

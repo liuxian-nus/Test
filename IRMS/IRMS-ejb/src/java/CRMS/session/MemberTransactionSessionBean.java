@@ -12,7 +12,6 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -24,7 +23,7 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class MemberTransactionSessionBean {
 
-    @PersistenceContext
+    @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
     MemberEntity member = new MemberEntity();
     MemberTransactionEntity mt;

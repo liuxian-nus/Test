@@ -26,7 +26,7 @@ public class MemberSessionBean {
 
     @EJB
     private EPasswordHashSessionBean ePasswordHashSessionBean;
-    @PersistenceContext
+    @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
     MemberEntity member = new MemberEntity();
 

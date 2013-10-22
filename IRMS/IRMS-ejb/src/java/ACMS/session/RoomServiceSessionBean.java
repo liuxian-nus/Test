@@ -20,7 +20,7 @@ import javax.persistence.Query;
 @Stateless
 public class RoomServiceSessionBean {
 
-    @PersistenceContext
+    @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
     RoomServiceEntity rmService = new RoomServiceEntity();
     // Add business logic below. (Right-click in editor and choose

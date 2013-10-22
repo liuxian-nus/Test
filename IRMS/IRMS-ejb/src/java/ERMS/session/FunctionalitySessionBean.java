@@ -21,7 +21,7 @@ import javax.persistence.Query;
 @LocalBean
 public class FunctionalitySessionBean {
 
-    @PersistenceContext
+    @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
     
     public FunctionalityEntity getFunctionality(Long funcId) throws ExistException
