@@ -10,9 +10,18 @@ import Exception.ExistException;
 import SMMS.entity.MerchantEntity;
 import SMMS.session.MerchantSessionBean;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.Schedule;
+import javax.ejb.SessionContext;
+import javax.ejb.Timeout;
+import javax.ejb.TimerService;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -34,6 +43,8 @@ public class MerchantManagedBean {
     @EJB
     private MerchantSessionBean merchantSessionBean;
     private MerchantEntity merchant;
+    @Resource
+    private SessionContext ctx;
 
     @PostConstruct
     public void init() {
@@ -44,11 +55,56 @@ public class MerchantManagedBean {
         merchant = new MerchantEntity();
     }
 
+    public void createTimers(ActionEvent event) {
+        TimerService timerService = ctx.getTimerService();
+        String cookie = "EJBTIMER";
+        Timer timer = (Timer) timerService.createTimer(5000, 5000, cookie);
+    }
+
+    public void cancelTimers() {
+        TimerService timerService = ctx.getTimerService();
+        Collection timers = timerService.getTimers();
+        for (Object obj : timers) {
+            Timer timer = (Timer) obj;
+            if (timer.toString().equals("EJBTIMER")) {
+                timer.cancel();
+            }
+        }
+    }
+
+    @Timeout
+    public void handleTimeout(Timer timer) {
+        if (timer.toString().equals("EJBTIMER")) {//Do something}}}
+            Date currentDate = new Date();
+            System.out.println("No1: we are in merchant managedbean: trying this hahaha lalala" + currentDate);
+        }
+    }
+
+//    public static int count = 0;
+//    public Timer timer = new Timer();
+//    public TimerTask task = new TimerTask() {
+//        @Override
+//        public void run() {
+//            count++;
+//            if (count > 6) {
+//                timer.cancel();
+//                timer.purge();
+//            }
+//            Date currentDate = new Date();
+//            System.out.println("No2: we are in merchant managedbean: trying this hahaha lalala" + currentDate);
+//        }
+//    };
+//
+//    public void test(ActionEvent event) {
+//        System.out.println("No1: in test");
+////        timer.scheduleAtFixedRate(task, 0, 1000);
+//        timer.scheduleAtFixedRate(task, 0, 1000);
+//    }
     /**
      * Creates a new instance of AddEmployeeManagedBean
      */
     public void saveNewMerchant(ActionEvent event) throws IOException, ExistException {
-        System.out.println("add new merchant: "+merchant.getMerchantEmail());
+        System.out.println("add new merchant: " + merchant.getMerchantEmail());
         if (merchantSessionBean.getMerchantById(merchant.getMerchantEmail()) != null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mercant already exists", ""));
             return;
@@ -75,7 +131,7 @@ public class MerchantManagedBean {
             emailSessionBean.emailInitialPassward(merchant.getMerchantEmail(), initialPwd);
             System.out.println("email already sent");
             merchant = new MerchantEntity();
-            
+
         }
     }
 
