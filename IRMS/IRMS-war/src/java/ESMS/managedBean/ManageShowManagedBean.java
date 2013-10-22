@@ -59,7 +59,7 @@ public class ManageShowManagedBean {
 
     public void onEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Schedule Edited", null);
-        showScheduleSessionBean.updateShowSchedule(selectedShowSchedule);
+//        showScheduleSessionBean.updateShowSchedule(selectedShowSchedule);
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 

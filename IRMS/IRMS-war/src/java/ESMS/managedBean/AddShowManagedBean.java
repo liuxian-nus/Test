@@ -14,7 +14,9 @@ import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -42,12 +44,10 @@ public class AddShowManagedBean {
     ShowTicketSessionBean showTicketSessionBean;
     @EJB
     ShowContractSessionBean showContractSessionBean;
-    
     private ShowEntity show;
     private ShowScheduleEntity showSchedule;
     private ShowTicketEntity showTicket;
     private ShowContractEntity showContract;
-    
     private Long showId;
     private Date currentDate = new Date();
     private static final int BUFFER_SIZE = 1024;
@@ -55,12 +55,23 @@ public class AddShowManagedBean {
     private Boolean uploadMode;
     private Long id;
     private Long showContractId;
+    private List<ShowScheduleEntity> showSchedules = new ArrayList<ShowScheduleEntity>();
 
     public AddShowManagedBean() {
         show = new ShowEntity();
         showSchedule = new ShowScheduleEntity();
         showTicket = new ShowTicketEntity();
         showContract = new ShowContractEntity();
+    }
+
+    public void handleShowChanges() {
+        if (showId != null) {
+            show = showSessionBean.getShowById(showId);
+            showSchedules = show.getShowSchedules();
+        } else {
+            FacesMessage msg = new FacesMessage("Error occours during ");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
     }
 
     public void handleFileUpload(FileUploadEvent event) throws IOException {
@@ -90,9 +101,9 @@ public class AddShowManagedBean {
     public void saveNewShow(ActionEvent event) throws IOException {
         System.err.println("Saving New Show...");
         System.err.println("Ticket Type=" + show.getShowType());
-        
-        if (showContractId != null){
-            System.err.println("Show contract Id: "+showContractId);
+
+        if (showContractId != null) {
+            System.err.println("Show contract Id: " + showContractId);
             showContract = showContractSessionBean.thisShowContract(showContractId);
             System.err.println(showContract.getShowMerchantName());
             getShow().setShowContract(showContract);
@@ -111,7 +122,7 @@ public class AddShowManagedBean {
         System.err.println("Saving New Show Schedule...");
         showScheduleSessionBean.addShowSchedule(getShowSchedule());
         System.err.println(showId);
-        System.err.println(showSchedule.getShowDate());
+//        System.err.println(showSchedule.getShowDate());
         showSessionBean.addShowSchedule(showId, showSchedule);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Show Schedule saved.", ""));
         FacesContext.getCurrentInstance().getExternalContext().redirect("addShow.xhtml");
@@ -246,5 +257,13 @@ public class AddShowManagedBean {
 
     public void setShowContract(ShowContractEntity showContract) {
         this.showContract = showContract;
+    }
+
+    public List<ShowScheduleEntity> getShowSchedules() {
+        return showSchedules;
+    }
+
+    public void setShowSchedules(List<ShowScheduleEntity> showSchedules) {
+        this.showSchedules = showSchedules;
     }
 }
