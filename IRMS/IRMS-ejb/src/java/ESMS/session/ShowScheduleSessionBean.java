@@ -40,7 +40,7 @@ public class ShowScheduleSessionBean {
     public boolean updateShowSchedule(ShowScheduleEntity showSchedule)
     {
         em.merge(showSchedule);
-        System.out.println("ShowScheduleSessionBean: show " + showSchedule.getShowDate() + " is successfully updated");
+//        System.out.println("ShowScheduleSessionBean: show " + showSchedule.getShowDate() + " is successfully updated");
         return true;
     }
     

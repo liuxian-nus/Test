@@ -24,6 +24,7 @@ public class ShowSessionBean {
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     private ShowEntity show;
+    private ShowScheduleEntity showSchedule;
 
     public ShowSessionBean() {
     }
@@ -54,6 +55,14 @@ public class ShowSessionBean {
         return q.getResultList();
     }
     
+    public List<ShowScheduleEntity> getAllShowSchedules(Long showId) throws NoResultException {
+        show = em.find(ShowEntity.class, showId);
+        List q = show.getShowSchedules();
+//        Query q = em.createQuery("SELECT m FROM ShowScheduleEntity m");
+//        return q.getResultList();
+        return q;
+    }
+    
     public void addShowSchedule(Long showId, ShowScheduleEntity showSchedule) {
         System.err.println("show session bean: add show schedule");
         show = em.find(ShowEntity.class, showId);
@@ -61,11 +70,12 @@ public class ShowSessionBean {
         em.merge(show);
     }
 
-    public void addShowTicket(Long showId, ShowTicketEntity showTicket) {
+    public void addShowTicket(Long showScheduleId, ShowTicketEntity showTicket) {
         System.err.println("show session bean: add show ticket");
-        show = em.find(ShowEntity.class, showId);
-        show.addShowTicket(showTicket);
-        em.merge(show);
+//        show = em.find(ShowEntity.class, showId);
+        showSchedule = em.find(ShowScheduleEntity.class, showScheduleId);
+        showSchedule.addShowTicket(showTicket);
+        em.merge(showSchedule);
     }
     
      public void uploadFile(Long showId, byte[] buffer) {
@@ -73,5 +83,9 @@ public class ShowSessionBean {
         show.setImage(buffer);
         em.persist(show);
         em.flush();
+    }
+
+    public ShowEntity getShowById(Long showId) {
+        return em.find(ShowEntity.class, showId);
     }
 }
