@@ -240,4 +240,23 @@ public class EventSessionBean {
         em.persist(event);
         return event;
     }
+
+    public boolean updateEvent(EventEntity event) {
+        em.merge(event);
+        return true;
+    }
+
+    public boolean deleteEvent(Long id) {
+        ee = em.find(EventEntity.class, id);
+        if (ee == null) {
+            return false;
+        }
+        em.remove(ee);
+        return true;
+    }
+
+    public List<EventEntity> getAllEvents() {
+        Query q = em.createQuery("SELECT m FROM EventEntity m");
+        return q.getResultList();
+    }
 }
