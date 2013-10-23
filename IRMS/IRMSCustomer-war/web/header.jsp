@@ -24,8 +24,11 @@
                         <li><a href="#">Sub menu 5</a></li>-->
                     </ul>
                 </li>
-                <li><a href="entertainment" >Entertainment</a></li>
-             
+                <li><a href="entertainment" >Entertainment</a>
+                  <ul>
+                        <li><a href="entertainmentVenue">Entertainment Venue</a></li>
+                    </ul>
+                </li>
                 <li><a href="attraction">Attraction</a>
                     <ul>
                         <li><a href="adventureWorld">Adventure World</a></li>
@@ -34,7 +37,8 @@
                 <li><a href="shopping" >Shopping</a></li>
                    <li><a href="event">Conventions</a>
                     <ul>
-                        <li><a href="eventList">event Happening</a></li>
+                         <li><a href="event">Our Venues</a></li>
+                        <li><a href="eventList">Events Happening</a></li>
                     </ul>
                 </li>
                 <li><a href="member">Member</a></li>
