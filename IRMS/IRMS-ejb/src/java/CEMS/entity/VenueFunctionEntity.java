@@ -5,10 +5,12 @@
 package CEMS.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -22,6 +24,8 @@ public class VenueFunctionEntity implements Serializable {
     private Long venueFunctionId;
     
     private String functionName;
+    @ManyToMany(mappedBy = "venueFunction")
+    private List<VenueEntity> venueEntitys;
     
     public VenueFunctionEntity(){}
 
@@ -33,14 +37,28 @@ public class VenueFunctionEntity implements Serializable {
         this.functionName = functionName;
     }
     
-    
-
     public Long getId() {
         return venueFunctionId;
     }
 
     public void setId(Long id) {
         this.venueFunctionId = id;
+    }
+
+    public Long getVenueFunctionId() {
+        return venueFunctionId;
+    }
+
+    public void setVenueFunctionId(Long venueFunctionId) {
+        this.venueFunctionId = venueFunctionId;
+    }
+
+    public List<VenueEntity> getVenueEntitys() {
+        return venueEntitys;
+    }
+
+    public void setVenueEntitys(List<VenueEntity> venueEntitys) {
+        this.venueEntitys = venueEntitys;
     }
 
     @Override

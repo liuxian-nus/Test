@@ -7,10 +7,12 @@ package CEMS.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -25,6 +27,7 @@ public class VenueEntity implements Serializable {
     private String venueName;
    
     private int venueCapacity;
+    @ManyToMany (cascade = {CascadeType.MERGE})
     private List<VenueFunctionEntity> venueFunction = new ArrayList<VenueFunctionEntity>();
 
     public String getVenueName() {
@@ -50,10 +53,7 @@ public class VenueEntity implements Serializable {
     public void setVenueFunction(List<VenueFunctionEntity> venueFunction) {
         this.venueFunction = venueFunction;
     }
-   
     
-    
-
     public Long getVenueId() {
         return venueId;
     }

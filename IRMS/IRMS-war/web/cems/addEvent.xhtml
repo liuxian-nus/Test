@@ -1,0 +1,371 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:panel id="addEvent" header="Add New Event">
+                <h:panelGrid id="grid" columns="4">
+
+                    <h:outputText value="Event Details:" style="font-size: larger;font-style: oblique;"/><br/>
+                    <h:outputText value=""/><br/>
+                    
+
+                    <h:outputText value="Event Name*: " />
+                    <h:inputText required="true" requiredMessage="Event name cannot be empty" value="#{addEventManagedBean.eventEntity.eventName}" style="margin-bottom:10px;"/>
+                    
+
+                    <h:outputText value="Event Type*: " />
+                    <p:selectOneMenu required="true" requiredMessage="Event type cannot be empty" value="#{addEventManagedBean.eventEntity.eventType}" style="margin-bottom:10px;">
+                        <f:selectItem itemLabel="Select Event Type" itemValue=""/>
+                        <f:selectItem itemLabel="Conference" itemValue="Conference"/>
+                        <f:selectItem itemLabel="Dinner" itemValue="Dinner"/>
+                        <f:selectItem itemLabel="Dinner and Dance" itemValue="Dinner and Dance"/>
+                        <f:selectItem itemLabel="Exhibition" itemValue="Exhibition"/>
+                        <f:selectItem itemLabel="Meeting" itemValue="Meeting"/>
+                        <f:selectItem itemLabel="Seminar" itemValue="Seminar"/>
+                        <f:selectItem itemLabel="Wedding" itemValue="Wedding"/>
+                        <f:selectItem itemLabel="Entertainment Show" itemValue="Entertainment Show"/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value="Estimated Start Date: "/>
+                    <p:calendar value="#{addEventManagedBean.eventEntity.startDate}" pattern="MM/dd/yyyy" mindate="#{addShowManagedBean.currentDate}"/>  
+                    
+                    <h:outputText value="Estimated End Date: "/>
+                    <p:calendar value="#{addEventManagedBean.eventEntity.endDate}" pattern="MM/dd/yyyy" mindate="#{addShowManagedBean.currentDate}" />  
+                    
+
+                    <h:outputText value="Number of Attendees: " />
+                    <h:inputText value="#{addEventManagedBean.eventEntity.eventScale}" style="margin-bottom:10px;">
+                        <f:convertNumber type="number" />
+                    </h:inputText>
+                    
+                    <h:outputText value="Estimated Budget: " />
+                    <h:inputText value="#{addEventManagedBean.eventEntity.estimatedBudget}" style="margin-bottom:10px;">
+                        <f:convertNumber type="number" />
+                    </h:inputText>
+                    
+                    <h:outputText value="Notes: " />
+                    <h:inputTextarea value="#{addEventManagedBean.eventEntity.notes}" style="margin-bottom:10px;"/>
+                    <br/><h:outputText value=""/>
+                    <p:separator/><p:separator/>
+                    <p:separator/><p:separator/>
+                    <h:outputText value=""/>
+                    <br/>
+                    <h:outputText value=""/>
+                    <br/>
+                    <h:outputText value="Contact Details:" style="font-size: larger;font-style: oblique;"/>
+                    <br/>
+                    <h:outputText value=""/>
+                    <br/>
+
+                    <h:outputText value="Title: " />
+                    <p:selectOneMenu value="#{addEventManagedBean.eventEntity.title}">  
+                        <f:selectItem itemLabel="Select Title" itemValue=""/>
+                        <f:selectItem itemLabel="Mr." itemValue="Mr."/>
+                        <f:selectItem itemLabel="Mrs." itemValue="Mrs."/>
+                        <f:selectItem itemLabel="Miss." itemValue="Miss."/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value="Name*: " />
+                    <h:inputText required="true" requiredMessage="Event corporate cannot be empty" value="#{addEventManagedBean.eventEntity.name}" style="margin-bottom:10px;"/>
+                    
+                    <h:outputText value="Email*: " />
+                    <h:inputText required="true" requiredMessage="Email cannot be empty" value="#{addEventManagedBean.eventEntity.email}" style="margin-bottom:10px;"/>
+                    
+                    <h:outputText value="Contact Number*: " />
+                    <h:inputText required="true" requiredMessage="Event contact cannot be empty" value="#{addEventManagedBean.eventEntity.eventContact}" style="margin-bottom:10px;"/>
+                   
+                    <h:outputText value="Address: " />
+                    <h:inputText value="#{addEventManagedBean.eventEntity.address}" style="margin-bottom:10px;"/>
+                   
+                    <h:outputText value="Country Of Residence: " />
+                    <p:selectOneMenu value="#{addEventManagedBean.eventEntity.title}">  
+                        <f:selectItem itemLabel="Singapore" itemValue="Singapore"/>
+                        <f:selectItem itemLabel="Afghan" itemValue="Afghan"/>
+                        <f:selectItem itemLabel="Swedish" itemValue="Swedish"/>
+                        <f:selectItem itemLabel="Albanian" itemValue="Albanian"/>
+                        <f:selectItem itemLabel="Algerian" itemValue="Algerian"/>
+                        <f:selectItem itemLabel="American" itemValue="American"/>
+                        <f:selectItem itemLabel="Andorran" itemValue="Andorran"/>
+                        <f:selectItem itemLabel="Angolan" itemValue="Angolan"/>
+                        <f:selectItem itemLabel="Antiguans" itemValue="Antiguans"/>
+                        <f:selectItem itemLabel="Barbudans" itemValue="Barbudans"/>
+                        <f:selectItem itemLabel="Argentinean" itemValue="Argentinean"/>
+                        <f:selectItem itemLabel="Armenian" itemValue="Armenian"/>
+                        <f:selectItem itemLabel="Aruban" itemValue="Aruban"/>
+                        <f:selectItem itemLabel="Australian" itemValue="Australian"/>
+                        <f:selectItem itemLabel="Austrian" itemValue="Austrian"/>
+                        <f:selectItem itemLabel="Azerbaijani" itemValue="Azerbaijani"/>
+                        <f:selectItem itemLabel="Bahamian" itemValue="Bahamian"/>
+                        <f:selectItem itemLabel="Bahraini" itemValue="Bahraini"/>
+                        <f:selectItem itemLabel="Bangladeshi" itemValue="Bangladeshi"/>
+                        <f:selectItem itemLabel="Barbadian" itemValue="Barbadian"/>
+                        <f:selectItem itemLabel="Belarusian" itemValue="Belarusian"/>
+                        <f:selectItem itemLabel="Belgian" itemValue="Belgian"/>
+                        <f:selectItem itemLabel="Belizean" itemValue="Belizean"/>
+                        <f:selectItem itemLabel="Beninese" itemValue="Beninese"/>
+                        <f:selectItem itemLabel="Bermudian" itemValue="Bermudian"/>
+                        <f:selectItem itemLabel="Bhutanese" itemValue="Bhutanese"/>
+                        <f:selectItem itemLabel="Bolivian" itemValue="Bolivian"/>
+                        <f:selectItem itemLabel="Bosnian" itemValue="Bosnian"/>
+                        <f:selectItem itemLabel="Batswana" itemValue="Batswana"/>
+                        <f:selectItem itemLabel="Brazilian" itemValue="Brazilian"/>
+                        <f:selectItem itemLabel="Bruneian" itemValue="Bruneian"/>
+                        <f:selectItem itemLabel="Bulgarian" itemValue="Bulgarian"/>
+                        <f:selectItem itemLabel="Burkinabe" itemValue="Burkinabe"/>
+                        <f:selectItem itemLabel="Burundian" itemValue="Burundian"/>
+                        <f:selectItem itemLabel="Cambodian" itemValue="Cambodian"/>
+                        <f:selectItem itemLabel="Cameroonian" itemValue="Cameroonian"/>
+                        <f:selectItem itemLabel="Canadian" itemValue="Canadian"/>
+                        <f:selectItem itemLabel="Cape Verdean" itemValue="Cape Verdean"/>
+                        <f:selectItem itemLabel="Caymanian" itemValue="Caymanian"/>
+                        <f:selectItem itemLabel="Central African" itemValue="Central African"/>
+                        <f:selectItem itemLabel="Chadian" itemValue="Chadian"/>
+                        <f:selectItem itemLabel="Chilean" itemValue="Chilean"/>
+                        <f:selectItem itemLabel="Chinese" itemValue="Chinese"/>
+                        <f:selectItem itemLabel="Christmas Islanders" itemValue="Christmas Islanders"/>
+                        <f:selectItem itemLabel="Cocossian" itemValue="Cocossian "/>
+                        <f:selectItem itemLabel="Colombian" itemValue="Colombian"/>
+                        <f:selectItem itemLabel="Comorian" itemValue="Comorian"/>
+                        <f:selectItem itemLabel="Congolese" itemValue="Congolese"/>
+                        <f:selectItem itemLabel="Congolese" itemValue="Congolese"/>
+                        <f:selectItem itemLabel="Cook Islander" itemValue="Cook Islander"/>
+                        <f:selectItem itemLabel="Costa Rican" itemValue="Costa Rican"/>
+                        <f:selectItem itemLabel="Ivorian" itemValue="Ivorian"/>
+                        <f:selectItem itemLabel="Croatian" itemValue="Croatian"/>
+                        <f:selectItem itemLabel="Cuban" itemValue="Cuban"/>
+                        <f:selectItem itemLabel="Cypriot" itemValue="Cypriot"/>
+                        <f:selectItem itemLabel="Czech" itemValue="Czech"/>
+                        <f:selectItem itemLabel="Danish" itemValue="Danish"/>
+                        <f:selectItem itemLabel="Djiboutian" itemValue="Djiboutian"/>
+                        <f:selectItem itemLabel="Dominican" itemValue="Dominican"/>
+                        <f:selectItem itemLabel="Dominican" itemValue="Dominican"/>
+                        <f:selectItem itemLabel="Ecuadorian" itemValue="Ecuadorian"/>
+                        <f:selectItem itemLabel="Egyptian" itemValue="Egyptian"/>
+                        <f:selectItem itemLabel="Salvadoran" itemValue="Salvadoran"/>
+                        <f:selectItem itemLabel="Equatorial Guinean" itemValue="Equatorial Guinean"/>
+                        <f:selectItem itemLabel="Eritrean" itemValue="Eritrean"/>
+                        <f:selectItem itemLabel="Estonian" itemValue="Estonian"/>
+                        <f:selectItem itemLabel="Ethiopian" itemValue="Ethiopian"/>
+                        <f:selectItem itemLabel="Falkland Islander" itemValue="Falkland Islander"/>
+                        <f:selectItem itemLabel="Faroese" itemValue="Faroese"/>
+                        <f:selectItem itemLabel="Fijian" itemValue="Fijian"/>
+                        <f:selectItem itemLabel="Finnish" itemValue="Finnish"/>
+                        <f:selectItem itemLabel="French" itemValue="French"/>
+                        <f:selectItem itemLabel="French" itemValue="French"/>
+                        <f:selectItem itemLabel="French Polynesian" itemValue="French Polynesian"/>
+                        <f:selectItem itemLabel="French" itemValue="French"/>
+                        <f:selectItem itemLabel="Gabonese" itemValue="Gabonese"/>
+                        <f:selectItem itemLabel="Gambian" itemValue="Gambian"/>
+                        <f:selectItem itemLabel="Georgian" itemValue="Georgian"/>
+                        <f:selectItem itemLabel="German" itemValue="German"/>
+                        <f:selectItem itemLabel="Ghanaian" itemValue="Ghanaian"/>
+                        <f:selectItem itemLabel="Gibraltar" itemValue="Gibraltar"/>
+                        <f:selectItem itemLabel="Greek" itemValue="Greek"/>
+                        <f:selectItem itemLabel="Greenlander" itemValue="Greenlander"/>
+                        <f:selectItem itemLabel="Grenadian" itemValue="Grenadian"/>
+                        <f:selectItem itemLabel="Guadeloupe" itemValue="Guadeloupe"/>
+                        <f:selectItem itemLabel="Guamanian" itemValue="Guamanian"/>
+                        <f:selectItem itemLabel="Guatemalan" itemValue="Guatemalan"/>
+                        <f:selectItem itemLabel="Guernsey" itemValue="Guernsey"/>
+                        <f:selectItem itemLabel="Guinean" itemValue="Guinean"/>
+                        <f:selectItem itemLabel="Guinea-Bissauan" itemValue="Guinea-Bissauan"/>
+                        <f:selectItem itemLabel="Guyanese" itemValue="Guyanese"/>
+                        <f:selectItem itemLabel="Haitian" itemValue="Haitian"/>
+                        <f:selectItem itemLabel="Herzegovinian" itemValue="Herzegovinian"/>
+                        <f:selectItem itemLabel="Honduran" itemValue="Honduran"/>
+                        <f:selectItem itemLabel="Hungarian" itemValue="Hungarian"/>
+                        <f:selectItem itemLabel="Icelander" itemValue="Icelander"/>
+                        <f:selectItem itemLabel="Indian" itemValue="Indian"/>
+                        <f:selectItem itemLabel="Indonesian" itemValue="Indonesian"/>
+                        <f:selectItem itemLabel="Iranian" itemValue="Iranian"/>
+                        <f:selectItem itemLabel="Iraqi" itemValue="Iraqi"/>
+                        <f:selectItem itemLabel="Irish" itemValue="Irish"/>
+                        <f:selectItem itemLabel="Manx" itemValue="Manx"/>
+                        <f:selectItem itemLabel="Israeli" itemValue="Israeli"/>
+                        <f:selectItem itemLabel="Italian" itemValue="Italian"/>
+                        <f:selectItem itemLabel="Jamaican" itemValue="Jamaican"/>
+                        <f:selectItem itemLabel="Japanese" itemValue="Japanese"/>
+                        <f:selectItem itemLabel="Jersey" itemValue="Jersey"/>
+                        <f:selectItem itemLabel="Jordanian" itemValue="Jordanian"/>
+                        <f:selectItem itemLabel="Kazakhstani" itemValue="Kazakhstani"/>
+                        <f:selectItem itemLabel="Kenyan" itemValue="Kenyan"/>
+                        <f:selectItem itemLabel="Kittian and Nevisian" itemValue="Kittian and Nevisian"/>
+                        <f:selectItem itemLabel="North Korean" itemValue="North Korean"/>
+                        <f:selectItem itemLabel="South Korean" itemValue="South Korean"/>
+                        <f:selectItem itemLabel="Kuwaiti" itemValue="Kuwaiti"/>
+                        <f:selectItem itemLabel="Kyrgyz" itemValue="Kyrgyz"/>
+                        <f:selectItem itemLabel="Laotian" itemValue="Laotian"/>
+                        <f:selectItem itemLabel="Latvian" itemValue="Latvian"/>
+                        <f:selectItem itemLabel="Lebanese" itemValue="Lebanese"/>
+                        <f:selectItem itemLabel="Lesotho" itemValue="Lesotho"/>
+                        <f:selectItem itemLabel="Liberian" itemValue="Liberian"/>
+                        <f:selectItem itemLabel="Libyan" itemValue="Libyan"/>
+                        <f:selectItem itemLabel="Liechtensteiner" itemValue="Liechtensteiner"/>
+                        <f:selectItem itemLabel="Lithuanian" itemValue="Lithuanian"/>
+                        <f:selectItem itemLabel="Luxembourger" itemValue="Luxembourger"/>
+                        <f:selectItem itemLabel="Macedonian" itemValue="Macedonian"/>
+                        <f:selectItem itemLabel="Malagasy" itemValue="Malagasy"/>
+                        <f:selectItem itemLabel="Malawian" itemValue="Malawian"/>
+                        <f:selectItem itemLabel="Malaysian" itemValue="Malaysian"/>
+                        <f:selectItem itemLabel="Maldivan" itemValue="Maldivan"/>
+                        <f:selectItem itemLabel="Malian" itemValue="Malian"/>
+                        <f:selectItem itemLabel="Maltese" itemValue="Maltese"/>
+                        <f:selectItem itemLabel="Marshallese" itemValue="Marshallese"/>
+                        <f:selectItem itemLabel="Martiniquais" itemValue="Martiniquais"/>
+                        <f:selectItem itemLabel="Mauritanian" itemValue="Mauritanian"/>
+                        <f:selectItem itemLabel="Mauritian" itemValue="Mauritian"/>
+                        <f:selectItem itemLabel="Mayotte" itemValue="Mayotte"/>
+                        <f:selectItem itemLabel="Mexican" itemValue="Mexican"/>
+                        <f:selectItem itemLabel="Micronesian" itemValue="Micronesian"/>
+                        <f:selectItem itemLabel="Moldovan" itemValue="Moldovan"/>
+                        <f:selectItem itemLabel="Monacan" itemValue="Monacan"/>
+                        <f:selectItem itemLabel="Mongolian" itemValue="Mongolian"/>
+                        <f:selectItem itemLabel="Montenegrin" itemValue="Montenegrin"/>
+                        <f:selectItem itemLabel="Montserrat" itemValue="Montserrat"/>
+                        <f:selectItem itemLabel="Moroccan" itemValue="Moroccan"/>
+                        <f:selectItem itemLabel="Mozambican" itemValue="Mozambican"/>
+                        <f:selectItem itemLabel="Burmese" itemValue="Burmese"/>
+                        <f:selectItem itemLabel="Namibian" itemValue="Namibian"/>
+                        <f:selectItem itemLabel="Nauruan" itemValue="Nauruan"/>
+                        <f:selectItem itemLabel="Nepalese" itemValue="Nepalese"/>
+                        <f:selectItem itemLabel="Netherlander" itemValue="Netherlander"/>
+                        <f:selectItem itemLabel="Dutch" itemValue="Dutch"/>
+                        <f:selectItem itemLabel="New Caledonia" itemValue="New Caledonia"/>
+                        <f:selectItem itemLabel="New Zealander" itemValue="New Zealander"/>
+                        <f:selectItem itemLabel="Nicaraguan" itemValue="Nicaraguan"/>
+                        <f:selectItem itemLabel="Nigerian" itemValue="Nigerian"/>
+                        <f:selectItem itemLabel="Niue" itemValue="Niue"/>
+                        <f:selectItem itemLabel="Norfolk Island" itemValue="Norfolk Island"/>
+                        <f:selectItem itemLabel="Northern Mariana Islands" itemValue="Northern Mariana Islands"/>
+                        <f:selectItem itemLabel="Norwegian" itemValue="Norwegian"/>
+                        <f:selectItem itemLabel="Omani" itemValue="Omani"/>
+                        <f:selectItem itemLabel="Pakistani" itemValue="Pakistani"/>
+                        <f:selectItem itemLabel="Palauan" itemValue="Palauan"/>
+                        <f:selectItem itemLabel="Palestinian" itemValue="Palestinian"/>
+                        <f:selectItem itemLabel="Panamanian" itemValue="Panamanian"/>
+                        <f:selectItem itemLabel="Papua New Guinean" itemValue="Papua New Guinean"/>
+                        <f:selectItem itemLabel="Paraguayan" itemValue="Paraguayan"/>
+                        <f:selectItem itemLabel="Peruvian" itemValue="Peruvian"/>
+                        <f:selectItem itemLabel="Filipino" itemValue="Filipino"/>
+                        <f:selectItem itemLabel="Pitcairn" itemValue="Pitcairn"/>
+                        <f:selectItem itemLabel="Polish" itemValue="Polish"/>
+                        <f:selectItem itemLabel="Portuguese" itemValue="Portuguese"/>
+                        <f:selectItem itemLabel="Puerto Rico" itemValue="Puerto Rico"/>
+                        <f:selectItem itemLabel="Qatari" itemValue="Qatari"/>
+                        <f:selectItem itemLabel="Reunion" itemValue="Reunion"/>
+                        <f:selectItem itemLabel="Romanian" itemValue="Romanian"/>
+                        <f:selectItem itemLabel="Russian" itemValue="Russian"/>
+                        <f:selectItem itemLabel="Rwandan" itemValue="Rwandan"/>
+                        <f:selectItem itemLabel="Saint Barthelemy" itemValue="Saint Barthelemy"/>
+                        <f:selectItem itemLabel="Saint Helena" itemValue="Saint Helena"/>
+                        <f:selectItem itemLabel="Kittitian, Nevisian" itemValue="Kittitian, Nevisian"/>
+                        <f:selectItem itemLabel="Saint Lucian" itemValue="Saint Lucian"/>
+                        <f:selectItem itemLabel="San Marinese" itemValue="San Marinese"/>
+                        <f:selectItem itemLabel="Saint Pierre and Miquelon" itemValue="Saint Pierre and Miquelon"/>
+                        <f:selectItem itemLabel="Vincentian" itemValue="Vincentian"/>
+                        <f:selectItem itemLabel="Samoan" itemValue="Samoan"/>
+                        <f:selectItem itemLabel="Sammarinese" itemValue="Sammarinese"/>
+                        <f:selectItem itemLabel="Sao Tomean" itemValue="Sao Tomean"/>
+                        <f:selectItem itemLabel="Saudi" itemValue="Saudi"/>
+                        <f:selectItem itemLabel="Senegalese" itemValue="Senegalese"/>
+                        <f:selectItem itemLabel="Serbian" itemValue="Serbian"/>
+                        <f:selectItem itemLabel="Seychellois" itemValue="Seychellois"/>
+                        <f:selectItem itemLabel="Sierra Leonean" itemValue="Sierra Leonean"/>
+                        <f:selectItem itemLabel="Slovakian" itemValue="Slovakian"/>
+                        <f:selectItem itemLabel="Slovenian" itemValue="Slovenian"/>
+                        <f:selectItem itemLabel="Solomon Islander" itemValue="Solomon Islander"/>
+                        <f:selectItem itemLabel="Somali" itemValue="Somali"/>
+                        <f:selectItem itemLabel="South Afriican" itemValue="South African"/>
+                        <f:selectItem itemLabel="Spanish" itemValue="Spanish"/>
+                        <f:selectItem itemLabel="Sri Lankan" itemValue="Sri Lankan"/>
+                        <f:selectItem itemLabel="Sudanese" itemValue="Sudanese"/>
+                        <f:selectItem itemLabel="Surinamer" itemValue="Surinamer"/>
+                        <f:selectItem itemLabel="Svalbard and Jan Mayen Islands" itemValue="Svalbard and Jan Mayen Islands"/>
+                        <f:selectItem itemLabel="Swazi" itemValue="Swazi"/>
+                        <f:selectItem itemLabel="Swedish" itemValue="Swedish"/>
+                        <f:selectItem itemLabel="Swish" itemValue="Swiss"/>
+                        <f:selectItem itemLabel="Syrian" itemValue="Syrian"/>
+                        <f:selectItem itemLabel="Taiwanese" itemValue="Taiwanese"/>
+                        <f:selectItem itemLabel="Tajik" itemValue="Tajik"/>
+                        <f:selectItem itemLabel="Tanzanian" itemValue="Tanzanian"/>
+                        <f:selectItem itemLabel="Thai" itemValue="Thai"/>
+                        <f:selectItem itemLabel="East Timorese" itemValue="East Timorese"/>
+                        <f:selectItem itemLabel="Togolese" itemValue="Togolese"/>
+                        <f:selectItem itemLabel="Tokelauan" itemValue="Tokelauan"/>
+                        <f:selectItem itemLabel="Tongan" itemValue="Tongan"/>
+                        <f:selectItem itemLabel="Trinidadian or Tobagonian" itemValue="Trinidadian or Tobagonian"/>
+                        <f:selectItem itemLabel="Tunisian" itemValue="Tunisian"/>
+                        <f:selectItem itemLabel="Turkish" itemValue="Turkish"/>
+                        <f:selectItem itemLabel="Turkmenistan" itemValue="Turkmenistan"/>
+                        <f:selectItem itemLabel="Turks and Caicos Islands" itemValue="Turks and Caicos Islands"/>
+                        <f:selectItem itemLabel="Tuvaluan" itemValue="Tuvaluan"/>
+                        <f:selectItem itemLabel="Ugandan" itemValue="Ugandan"/>
+                        <f:selectItem itemLabel="Ukrainian" itemValue="Ukrainian"/>
+                        <f:selectItem itemLabel="Emirian" itemValue="Emirian"/>
+                        <f:selectItem itemLabel="British" itemValue="British"/>
+                        <f:selectItem itemLabel="American" itemValue="American"/>
+                        <f:selectItem itemLabel="Uruguayan" itemValue="Uruguayan"/>
+                        <f:selectItem itemLabel="Uzbekistani" itemValue="Uzbekistani"/>
+                        <f:selectItem itemLabel="Ni-Vanuatu" itemValue="Ni-Vanuatu"/>
+                        <f:selectItem itemLabel="Vatican City" itemValue="Vatican City"/>
+                        <f:selectItem itemLabel="Venezuelan" itemValue="Venezuelan"/>
+                        <f:selectItem itemLabel="Vietnamese" itemValue="Vietnamese"/>
+                        <f:selectItem itemLabel="British" itemValue="British"/>
+                        <f:selectItem itemLabel="American" itemValue="American"/>
+                        <f:selectItem itemLabel="Welsh" itemValue="Welsh"/>
+                        <f:selectItem itemLabel="Sahrawi" itemValue="Sahrawi"/>
+                        <f:selectItem itemLabel="Yemenite" itemValue="Yemenite"/>
+                        <f:selectItem itemLabel="Zambian" itemValue="Zambian"/>
+                        <f:selectItem itemLabel="Zimbabwean" itemValue="Zimbabwean"/>
+                        <f:selectItem itemLabel="Zambian" itemValue="Zambian"/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value="Company: " />
+                    <h:inputText value="#{addEventManagedBean.eventEntity.eventCorporate}" style="margin-bottom:10px;"/>
+                    
+                    <h:outputText value="Industry: " />
+                    <p:selectOneMenu value="#{addEventManagedBean.eventEntity.eventIndustry}" style="margin-bottom:10px;">
+                        <f:selectItem itemLabel="Select Industry" itemValue=""/>
+                        <f:selectItem itemLabel="Banking, Finance, Insurance" itemValue="Banking,Finance,Insurance"/>
+                        <f:selectItem itemLabel="Biomedical, Healthcare" itemValue="Biomedical,Healthcare"/>
+                        <f:selectItem itemLabel="IT, Electronics" itemValue="IT,Electronics"/>
+                        <f:selectItem itemLabel="Oil, Gas, Petrol, Chemical" itemValue="Oil,Gas,Petrol,Chemical"/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value="Prefered Language: " />
+                    <p:selectOneMenu value="#{addEventManagedBean.eventEntity.preferLanguage}" style="margin-bottom:10px;">
+                        <f:selectItem itemLabel="English" itemValue="English"/>
+                        <f:selectItem itemLabel="Chinese" itemValue="Chinese"/>
+                        <f:selectItem itemLabel="French" itemValue="French"/>
+                        <f:selectItem itemLabel="Japanese" itemValue="Japanese"/>
+                        <f:selectItem itemLabel="Malay" itemValue="Malay"/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value="Status*: " />
+                    <p:selectOneMenu value="#{addEventManagedBean.eventEntity.status}" required="true" requiredMessage="Status cannot be empty">  
+                        <f:selectItem itemLabel="Pending" itemValue="Pending"/>
+                        <f:selectItem itemLabel="Reserved" itemValue="Reserved"/>
+                        <f:selectItem itemLabel="Confirmed" itemValue="Confirmed"/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value=""/><br/>
+                    <h:outputText value=""/><br/>
+                    <h:outputText value=""/><br/>
+                    <h:outputText value=""/><br/>
+                    
+                    <p:commandButton value="Submit" ajax="true" actionListener="#{addEventManagedBean.saveNew}" update="growl"/>
+                    <p:commandButton value="Clear" ajax="true" actionListener="#{addEventManagedBean.redirect}" update="growl"/>
+
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
