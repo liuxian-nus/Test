@@ -58,13 +58,10 @@
 
     </head>
     <body>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
-
-        <a href="https://twitter.com/share" class="twitter-share-button" data-related="jasoncosta" data-lang="en" data-size="large" data-count="none">Tweet</a>
         <jsp:include page="header.jsp"></jsp:include>
-        
-        
+
+
             <!-- <div id="search_box">
                  <form action="#" method="get">
                      <input type="text" value="Search" name="q" size="10" id="searchfield" title="searchfield" onfocus="clearText(this)" onblur="clearText(this)" />
@@ -148,6 +145,18 @@
                     <img src="/IRMSCustomer-war/images/templatemo_image_01_new.png" alt="Image 01" class="image_frame" />
                     <p><em>Join us and become one of our members NOW!</em></p>
                     <a href="#" class="more">More</a>	
+                    <!-- Sample tweets code   -->
+
+                    <script>!function(d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (!d.getElementById(id)) {
+                                js = d.createElement(s);
+                                js.id = id;
+                                js.src = "https://platform.twitter.com/widgets.js";
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }
+                        }(document, "script", "twitter-wjs");</script>
+                    <a href="https://twitter.com/share?text=We%20love%20Bao%20Shen" class="twitter-share-button" data-related="jasoncosta" data-lang="en" data-size="large" data-count="none">Tweet</a>
                 </div>
                 <!--
                 <div class="cleaner hr_divider"></div>
