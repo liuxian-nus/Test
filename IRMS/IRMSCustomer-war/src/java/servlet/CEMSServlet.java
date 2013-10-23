@@ -125,7 +125,7 @@ public class CEMSServlet extends HttpServlet {
             }
         } catch (Exception e) {
             System.out.println(e);
-            log("Exception in ACMSServlet.processRequest()");
+            log("Exception in CEMSServlet.processRequest()");
             //System.out.println(e);
         }
 
