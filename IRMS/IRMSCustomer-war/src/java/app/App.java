@@ -34,7 +34,7 @@ import javax.ws.rs.core.MediaType;
  * @author liuxian
  */
 @Stateless
-@Path("member")
+@Path("rest")
 public class App {
 //    @EJB
  //   private MemberTransactionSessionBean mtSessionBean;
@@ -58,8 +58,9 @@ public class App {
      */
     
     @GET
+    @Path("member")
     @Produces(MediaType.APPLICATION_XML)
-    public MemberEntity readMember(@QueryParam("email") String email)
+    public MemberEntity getMember(@QueryParam("email") String email)
     {
         if(email!=null){
             return memberSessionBean.getMemberByEmail(email);
@@ -68,29 +69,25 @@ public class App {
             return null;
     }
 
-    /*
     @GET
+    @Path("member/transactions")
     @Produces(MediaType.APPLICATION_XML)
-    public List<MemberTransactionEntity> readMemberTransaction(@QueryParam("email") String email)
+    public List<MemberTransactionEntity> getMemberTransaction(@QueryParam("email") String email)
     {
         return memberSessionBean.getAllTransactions(email);
     }
-    */
-    
-    /*
-    @PUT
-    @Consumes("application/xml")
-    public void putXml(String content) {
-    }*/
     
     @DELETE
-    @Path("{email}")
-    public void deleteMember(@PathParam("email") String email) throws ExistException
+    @Path("member")
+    public void deleteMember(@QueryParam("email") String email) throws ExistException
     {
-        memberSessionBean.removeMember(email);
+        if(email!=null){
+            memberSessionBean.removeMember(email);
+        }
     }
     
     @POST
+    @Path("member")
     public void updateMember(@FormParam("email") String email,
                                 @FormParam("memberName") String memberName,
                                 @FormParam("memberHP") String memberHP,
@@ -102,10 +99,11 @@ public class App {
         memberSessionBean.updateMember(email,memberName,memberHP,memberDob,maritalStatus,memberGender,isSubscriber);
     }
      
-    /*
-     @POST
-     public void updatePassword(@FormParam("memberPassword") String memberPassword) 
-     {
-         memberSessionBean.updatePassword(memberPassword);
-     }*/
+    
+    @POST
+    @Path("member/password")
+    public void updatePassword(@FormParam("memberPassword") String memberPassword) 
+    {
+        memberSessionBean.updatePassword(memberPassword);
+    }
 }
