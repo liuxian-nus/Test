@@ -18,6 +18,8 @@ import ACMS.session.RoomSessionBean;
 import ATMS.entity.QuotaEntity;
 import ATMS.entity.AttrTicketEntity;
 import ATMS.session.TicketSessionBean;
+import CEMS.entity.EventEntity;
+import CEMS.session.EventSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.session.MemberSessionBean;
 import ERMS.entity.EmployeeEntity;
@@ -107,6 +109,8 @@ public class initializationManagedBean implements Serializable {
     private ShowScheduleSessionBean showScheduleSessionBean;
     @EJB
     private ShowContractSessionBean showContractSessionBean;
+    @EJB
+    private EventSessionBean eventSessionBean;
     
     private EmployeeEntity employee;
     private RoleEntity role;
@@ -128,6 +132,7 @@ public class initializationManagedBean implements Serializable {
     private ShowContractEntity showContract;
     private ContractEntity contract;
     private ContracteventEntity event;
+    private EventEntity eventEntity;
 //    private MemberEntity member;
 
     @PostConstruct
@@ -1263,9 +1268,26 @@ public class initializationManagedBean implements Serializable {
         }
         addMessage("Show Contract Created!");
     }
+    
+    public void createEvent(){
+        eventEntity = new EventEntity();
+        eventEntity.setEventName("Liu Xian");
+        eventEntity.setEventType("Wedding");
+        eventEntity.setName("Hao Yuan");
+        eventEntity.setEmail("LX <3 HY");
+        eventEntity.setEventContact("31415926");
+        try {
+            eventSessionBean.addEvent(eventEntity);
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding show contract", ""));
+            return;
+        }
+        addMessage("Event Created!");
+    }
     //Add new test cases below!!!!!!!!!
 
     public void initialize() throws ExistException {
+        createEvent();
         createShowContract();
         createCEMSAdmin();
         createShow();
