@@ -7,6 +7,7 @@ package ERMS.session;
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
 import SMMS.entity.ContractEntity;
+import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
@@ -303,7 +304,7 @@ public class EmailSessionBean {
     }
     
     
-    private String createBill(String toEmailAdress, RoomEntity room) throws FileNotFoundException, DocumentException {
+    private String createBill(String toEmailAdress, RoomEntity room) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
         //Below generate a PDF file
         Document document;
             document = new Document(PageSize.A4,50,50,50,50);
