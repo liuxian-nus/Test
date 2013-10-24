@@ -60,6 +60,7 @@ public class ContractManagedBean implements Serializable {
 
         contract = new ContractEntity();
         newevent = new ContracteventEntity();
+        selected = new ContractEntity();
 
     }
 
@@ -178,7 +179,7 @@ public class ContractManagedBean implements Serializable {
     /**
      * Creates a new instance of ContractManagedBean
      */
-    public void addContract(ActionEvent event) throws ExistException {
+    public void addContract(ActionEvent event) throws ExistException, IOException {
         System.out.println("in adding contract" + merchantId + "and outlet ID:" + outletId);
         try {
 
@@ -194,7 +195,7 @@ public class ContractManagedBean implements Serializable {
             newevent.setEventContract(contract);
             contracteventSessionBean.addContractevent(newevent);//persist event entity
             System.out.println("after creating new contract event" + newevent.getContracteventId());
-        selected = new ContractEntity();
+            selected = new ContractEntity();
 
             contractSessionBean.addContractevent(contract.getContractId(), newevent.getContracteventId());// adding new event to contract, merge contract entity
             System.out.println("after adding contract event" + newevent.getContracteventId());
@@ -203,6 +204,7 @@ public class ContractManagedBean implements Serializable {
             System.out.println("after adding contract to merchant" + merchant.getMerchantEmail());
 
             outlet.setContract(contract);
+            outlet.setOutletStatus("unavailable");
             outletSessionBean.updateOutlet(outlet);//merge outlet
             System.out.println("after adding contract to outlet" + outlet.getOutletId());
         } catch (Exception e) {
@@ -245,6 +247,21 @@ public class ContractManagedBean implements Serializable {
         return contractSessionBean.getAllContracts();
     }
 
+    public List<ContractEntity> getNewRequestContracts() {
+        System.out.println("in getting all new request contracts in session bean");
+        return contractSessionBean.getNewRequestContract();
+    }
+
+    public List<ContractEntity> getRenewRequestContracts() {
+        System.out.println("in getting all new request contracts in session bean");
+        return contractSessionBean.getRenewRequestContract();
+    }
+
+    public List<ContractEntity> getEarlyTerminationRequestContracts() {
+        System.out.println("in getting all new request contracts in session bean");
+        return contractSessionBean.getEarlyTerminationRequestContract();
+    }
+
     public void viewContract(ActionEvent event) throws IOException, ExistException {
 
         System.out.println("No1:in displaying bean " + selected.getContractId());
@@ -258,7 +275,7 @@ public class ContractManagedBean implements Serializable {
             System.out.println("we are after setting parameter");
             request.getSession().setAttribute("contractId", selected.getContractId());
             System.out.println("we are after setting contractId session attribute");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("viewContract.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("operatorViewContract.xhtml");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing contract", ""));
             return;

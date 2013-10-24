@@ -36,4 +36,10 @@ public class ContracteventSessionBean {
         em.persist(contractevent);
         return contractevent;
     }
+     
+      public boolean updateContractEvent(ContracteventEntity cevent) {
+        em.merge(cevent);
+        System.out.println("CEventSessionBean: outlet " + cevent.getContracteventId() + " is successfully updated");
+        return true;
+    }
 }

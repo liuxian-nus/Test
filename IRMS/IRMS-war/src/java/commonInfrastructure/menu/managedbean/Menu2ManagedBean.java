@@ -297,8 +297,8 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setLabel("Manage Contract");
 
                 item = new MenuItem();
-                item.setValue("View Contract");
-                item.setUrl("/smms/approveContract.xhtml");
+                item.setValue("Manage Contract");
+                item.setUrl("/smms/managerManageContract.xhtml");
                 item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
 
@@ -359,7 +359,7 @@ public class Menu2ManagedBean implements Serializable {
 
                 item = new MenuItem();
                 item.setValue("View Contracts");
-                item.setUrl("/smms/manageContract.xhtml");
+                item.setUrl("/smms/operatorManageContract.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
 

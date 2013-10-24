@@ -6,7 +6,7 @@ package ERMS.session;
 
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
-import com.lowagie.text.BadElementException;
+import SMMS.entity.ContractEntity;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
@@ -228,8 +228,82 @@ public class EmailSessionBean {
             throw new RuntimeException(e);
         }
     }
+    
+    public void emailRequest(String toEmailAdress, ContractEntity contract) {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
 
-    private String createBill(String toEmailAdress, RoomEntity room) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmailAdress));
+            message.setSubject("New Request");
+            message.setText("Dear Contract Manager"
+                    +"\n Greetings from Coral Island Resort!"
+                    + "\n A new contract has been sent to you for review. Contract ID:"+contract.getContractId()+
+                    "\nPlease login immediately and review the contract.\n\n\nBest Regards,\nThe Coral Island Management Team");
+                    
+
+            Transport.send(message);
+
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+     public void emailApprovalAction(String toEmailAdress, ContractEntity contract) {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmailAdress));
+            message.setSubject("New Request");
+            message.setText("Dear Contract Operator"
+                    +"\n Greetings from Coral Island Resort!"
+                    + "\n The contract has been reviewed by the manager. Contract ID:"+contract.getContractId()
+                    + "\n Contract Status is now: "+ contract.getLast().getEventStatus()
+                    +"\n Please login immediately and review the contract.\n\n\nBest Regards,\nThe Coral Island Management Team");
+                    
+
+            Transport.send(message);
+
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    
+    private String createBill(String toEmailAdress, RoomEntity room) throws FileNotFoundException, DocumentException {
         //Below generate a PDF file
         Document document;
             document = new Document(PageSize.A4,50,50,50,50);

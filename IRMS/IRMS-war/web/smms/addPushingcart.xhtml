@@ -51,10 +51,10 @@
                     <h:inputText required ="true" requiredMessage="Inventory cannot be empty" value="#{addPushingcartManagedBean.pushingcart.pushingcartInventory}"/>                                   
 
                     <p:commandButton value="Save" ajax="true" onclick="addCartMsg" actionListener="#{addPushingcartManagedBean.saveNew}" update="addCartMsg"/>
-
-                </p:panelGrid>
-            </p:panel>
-        </h:form>
-    </ui:define>
+                    <p:commandButton value="Test value" actionListener="#{merchantManagedBean.createTimers}" />
+            </p:panelGrid>
+        </p:panel>
+    </h:form>
+</ui:define>
 
 </ui:composition>

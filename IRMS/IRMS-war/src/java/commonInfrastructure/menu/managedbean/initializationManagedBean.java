@@ -229,7 +229,7 @@ public class initializationManagedBean implements Serializable {
         addMessage("ACMSAdmin Created!");
     }
     
-            public void createFrontDesk() {
+    public void createFrontDesk() {
         System.err.println("go to create ACMS user");
 
         role = new RoleEntity();
@@ -384,7 +384,7 @@ public class initializationManagedBean implements Serializable {
     public void createSMMSAdmin() {
         System.out.println("go to create SMMS page");
         functionality = new FunctionalityEntity();
-        functionality.setFuncName("approveContract");
+        functionality.setFuncName("managerManageContract");
         functionality.setFuncDescription("manager approve contract");
         functionalitySessionBean.addFunctionality(functionality);
 
@@ -392,6 +392,7 @@ public class initializationManagedBean implements Serializable {
         functionality2.setFuncName("managerViewContract");
         functionality2.setFuncDescription("manager View Contract");
         functionalitySessionBean.addFunctionality(functionality2);
+        
 
         role = new RoleEntity();
         role.setRoleId(40);
@@ -403,6 +404,7 @@ public class initializationManagedBean implements Serializable {
         employee = new EmployeeEntity();
         employee.setEmployeeId("D0000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("SMMSAdmin");
+        employee.setEmployeeEmail("cookiewxy@hotmail.com");
         employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("D0000"));
         System.out.println("finished hashing");
         employee.addRole(role);
@@ -433,7 +435,7 @@ public class initializationManagedBean implements Serializable {
         functionality2.setFuncName("addMerchant");
         functionality2.setFuncDescription("add  Merchant");
         functionalitySessionBean.addFunctionality(functionality2);
-        
+
         FunctionalityEntity functionality3 = new FunctionalityEntity();
         functionality3.setFuncName("addPushingcart");
         functionality3.setFuncDescription("add pushing cart");
@@ -443,7 +445,7 @@ public class initializationManagedBean implements Serializable {
         functionality4.setFuncName("manageContract");
         functionality4.setFuncDescription("manager View Contract");
         functionalitySessionBean.addFunctionality(functionality4);
-        
+
         FunctionalityEntity functionality5 = new FunctionalityEntity();
         functionality5.setFuncName("outletManagement");
         functionality5.setFuncDescription("manager approve contract");
@@ -453,7 +455,7 @@ public class initializationManagedBean implements Serializable {
         functionality6.setFuncName("paymentManagement");
         functionality6.setFuncDescription("manager View Contract");
         functionalitySessionBean.addFunctionality(functionality6);
-        
+
         FunctionalityEntity functionality7 = new FunctionalityEntity();
         functionality7.setFuncName("pushingcartManagement");
         functionality7.setFuncDescription("manager approve contract");
@@ -480,6 +482,7 @@ public class initializationManagedBean implements Serializable {
         employee = new EmployeeEntity();
         employee.setEmployeeId("D0100"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("SMMSOps");
+        employee.setEmployeeEmail("a0077969@nus.edu.sg");
         employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("D0100"));
         System.out.println("finished hashing");
         employee.addRole(role);
@@ -1089,6 +1092,7 @@ public class initializationManagedBean implements Serializable {
             merchantSessionBean.addContractInMerchant(contract1.getContractId(), merchanta.getMerchantEmail());
 
             outleta.setContract(contract1);
+            outleta.setOutletStatus("unavailable");
             outletSessionBean.updateOutlet(outleta);
 
             System.out.println("Contract saved.....");
@@ -1185,7 +1189,7 @@ public class initializationManagedBean implements Serializable {
         log.setLogShift(1);
         log.setPublishDate(today);
         log.setLogTitle("HaHa");
-        log.setLogText("HaHa,我们有一个神叫包神，好吧我必须让这个message长一点，可是我又没什么好说的，那我要怎么才能让它长一点呢？本来就是一个test case，为什么非要让它那么长呢？累觉不爱了，好吧就这样了");
+        log.setLogText("HaHa,我们有一个神�?�包神，好�?�我必须让这个message长一点，�?�是我�?�没什么好说的，那我�?怎么�?能让它长一点呢？本�?�就是一个test case，为什么�?��?让它那么长呢？累觉�?爱了，好�?�就这样了");
         log.setRemark("test");
         log.setLogEmployee(thisEmployee);
         try {
@@ -1203,7 +1207,7 @@ public class initializationManagedBean implements Serializable {
     }
 
     public void createShow() {
-        Date ssDate1 = new Date(114, 2, 2, 12, 0 ,0);
+        Date ssDate1 = new Date(114, 2, 2, 12, 0, 0);
         Date ssDate2 = new Time(2, 0, 0);
         Date ssDate3 = new Time(16, 0, 0);
         System.err.println("creating show...");
@@ -1211,7 +1215,7 @@ public class initializationManagedBean implements Serializable {
         showTicket = new ShowTicketEntity();
         showSchedule = new ShowScheduleEntity();
         showContract = new ShowContractEntity();
-        
+
         show.setShowName("Harry Potter");
         show.setShowDescription("Harry Potter and the Philosopher's Stone");
         show.setShowType("External");
@@ -1223,19 +1227,19 @@ public class initializationManagedBean implements Serializable {
         showContract.setShowVenueDuration(3);
         showContract.setShowVenueRate(1300.00);
         showContractSessionBean.addShowContract(showContract);
-        
+
         showTicket.setShowTicketPrice(35.00);
         showTicket.setShowTicketQuantity(100);
         showTicket.setShowTicketType("Premium");
         showTicket.setShowTicketQuota(100);
         showTicketSessionBean.addShowTicket(showTicket);
-        
+
         showSchedule.setDuration(ssDate2);
         showSchedule.setStartDateTime(ssDate1);
 //        showSchedule.setStartTime(ssDate3);
         showSchedule.addShowTicket(showTicket);
         showScheduleSessionBean.addShowSchedule(showSchedule);
-        
+
         show.addShowSchedule(showSchedule);
         show.setShowContract(showContract);
         try {
@@ -1248,7 +1252,7 @@ public class initializationManagedBean implements Serializable {
         }
         addMessage("Show Created!");
     }
-    
+
     public void createShowContract() {
         showContract = new ShowContractEntity();
         showContract.setShowMerchantName("Zheng Bowen");

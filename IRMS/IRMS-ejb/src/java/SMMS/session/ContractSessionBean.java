@@ -68,8 +68,8 @@ public class ContractSessionBean {
         if (contract == null) {
             throw new ExistException("contract doesn't exist!");
         }
-        if ((contract.getStatus()!="new")||(contract.getStatus()!="rejected")) {
-            throw new ExistException("contract cannot be removed because it has been approved!");
+        if ((contract.getStatus()!="new")||(contract.getStatus()!="NewRejected")) {
+            throw new ExistException("contract cannot be removed because it is not allowed in current status!");
         }
         em.remove(contract);
     }
@@ -131,7 +131,48 @@ public class ContractSessionBean {
      
         return newct.getContractEvent().size();
      }
-       
-
+     
+     public List<ContractEntity> getNewRequestContract() {
+        System.err.println("in get new request contract session bean");
+        Query q = em.createQuery("SELECT m FROM ContractEntity m");
+        List TransactionList = new ArrayList<ContractEntity>();
+        for (Object o : q.getResultList()) {
+            ContractEntity m = (ContractEntity) o;
+            if (m.getLast().getEventStatus()=="newRequest") {
+                TransactionList.add(m);
+            }
+        }
+        System.err.println("in get contract by outlet sessionbean: Transaction List size=" + TransactionList.size());
+        return TransactionList;
+    }
+    
+         public List<ContractEntity> getRenewRequestContract() {
+        System.err.println("in get new request contract session bean");
+        Query q = em.createQuery("SELECT m FROM ContractEntity m");
+        List TransactionList = new ArrayList<ContractEntity>();
+        for (Object o : q.getResultList()) {
+            ContractEntity m = (ContractEntity) o;
+            if (m.getLast().getEventStatus()=="renewRequest") {
+                TransactionList.add(m);
+            }
+        }
+        System.err.println("in get contract by outlet sessionbean: Transaction List size=" + TransactionList.size());
+        return TransactionList;
+    }
+         
+             public List<ContractEntity> getEarlyTerminationRequestContract() {
+        System.err.println("in get new request contract session bean");
+        Query q = em.createQuery("SELECT m FROM ContractEntity m");
+        List TransactionList = new ArrayList<ContractEntity>();
+        for (Object o : q.getResultList()) {
+            ContractEntity m = (ContractEntity) o;
+            if (m.getLast().getEventStatus()=="earlyTerminationRequest") {
+                TransactionList.add(m);
+            }
+        }
+        System.err.println("in get contract by outlet sessionbean: Transaction List size=" + TransactionList.size());
+        return TransactionList;
+    }
+ 
     
 }
