@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+        <f:view beforePhase="#{contractResultManagedBean.initViewSelect2}"> 
+            <h:form id="form">
+                <p:growl id="growl" showDetail="true" sticky="true" /> 
+                <p:panel id="viewContract" header="View Contract Detail" style="height:495px;">
+                    <div style="margin-left:10px;margin-right:50px;margin-top:30px;">
+                        <h:panelGrid id="contractView" columns="2" cellpadding="4" style="margin:0 auto;">  
+                            <h:outputText value="Contract ID: " />  
+                            <h:outputText value="#{contractResultManagedBean.managerSelect.contractId}" style="font-weight:bold" /> 
+
+                            <h:outputText value="Contract Outlet: " /> 
+                            <h:outputText value="#{contractResultManagedBean.managerSelect.outlet.id}" style="font-weight:bold" />
+
+                            <h:outputText value="Merchant Outlet: " /> 
+                            <h:outputText value="#{contractResultManagedBean.managerSelect.merchant.merchantName}" style="font-weight:bold" />
+
+                            <h:outputText value="Start Date: " /> 
+                            <h:outputText value="#{contractResultManagedBean.managerSelect.last.eventStartDate}" style="font-weight:bold" > 
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+
+                            <h:outputText value="End Date: " />  
+                            <h:outputText value="#{contractResultManagedBean.managerSelect.last.eventEndDate}" style="font-weight:bold" > 
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+
+                            <h:outputText value="Down Payment: " />  
+                            <h:outputText value="#{contractResultManagedBean.managerSelect.last.eventDownPayment}" style="font-weight:bold" /> 
+
+                            <h:outputText value="Monthly Rate: " />  
+                            <h:outputText value="#{contractResultManagedBean.managerSelect.last.eventMonthRate}" style="font-weight:bold" /> 
+
+                            <h:outputText value="Commissioni Rate: " />  
+                            <h:outputText value="#{contractResultManagedBean.managerSelect.last.eventCommissionRate}" style="font-weight:bold" /> 
+
+                            <h:outputText value="Deposit: " />  
+                            <h:outputText value="#{contractResultManagedBean.managerSelect.last.eventDeposit}" style="font-weight:bold" /> 
+
+                            <h:outputText value="Status: " />  
+                            <h:outputText value="#{contractResultManagedBean.managerSelect.last.eventStatus}" style="font-weight:bold" />
+
+                            <p:commandButton  update=":form:pendingla" oncomplete="pending.show()" ajax="true" icon="ui-icon ui-icon-check" value ="Review" title="Review">  
+                                <f:setPropertyActionListener target="#{managerApproveContractManagedBean.contract}" value="#{contractResultManagedBean.managerSelect}" /> 
+                            </p:commandButton>
+
+                            <p:commandButton  update=":form:approvela" oncomplete="approve.show()" ajax="true" icon="ui-icon ui-icon-search" value ="Approve" title="approve">  
+                                <f:setPropertyActionListener target="#{managerApproveContractManagedBean.contract}" value="#{contractResultManagedBean.managerSelect}" /> 
+                            </p:commandButton>
+
+                            <p:commandButton  update=":form:rejectla" oncomplete="reject.show()" ajax="true" rendered="#{contractResultManagedBean.selectedContract.last.eventStatus=="new"}" icon="ui-icon ui-icon-search" value ="Reject" title="Reject">  
+                                <f:setPropertyActionListener target="#{managerApproveContractManagedBean.contract}" value="#{contractResultManagedBean.managerSelect}" /> 
+                            </p:commandButton> 
+                        </h:panelGrid>
+                    </div>
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="pending"> 
+                        <br/>
+                        Are you sure to review?
+                        <br/><br/>
+                        <h:panelGrid columns="2" id="pendingla">
+                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.requestNew}" oncomplete="pending.hide()"/>
+                            <p:commandButton value="Not yet" onclick="pending.hide()" type="button"/>  
+                        </h:panelGrid>
+                    </p:dialog>  
+                    
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="approve"> 
+                        <br/>
+                        Are you sure to approve?
+                        <br/><br/>
+                        <h:panelGrid columns="2" id="approvela">
+                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.requestNew}" oncomplete="approve.hide()"/>
+                            <p:commandButton value="Not yet" onclick="approve.hide()" type="button"/>  
+                        </h:panelGrid>
+                    </p:dialog> 
+                    
+                    
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="reject"> 
+                        <br/>
+                        Are you sure to reject?
+                        <br/><br/>
+                        <h:panelGrid columns="2" id="rejectla">
+                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.requestNew}" oncomplete="reject.hide()"/>
+                            <p:commandButton value="Not yet" onclick="reject.hide()" type="button"/>  
+                        </h:panelGrid>
+                    </p:dialog> 
+                    
+                </p:panel>
+            </h:form>
+        </f:view>
+    </ui:define>
+
+</ui:composition>
