@@ -31,7 +31,7 @@ public class MemberTransactionSessionBean {
     public MemberTransactionSessionBean() {
     }
 
-    public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay) throws ExistException {
+    public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay) {
         System.out.println("creating member transaction....");
         mt = new MemberTransactionEntity();
         mt.setMember(member);
@@ -83,18 +83,23 @@ public class MemberTransactionSessionBean {
         }
     }
 
-    public void addPoint(MemberEntity member, double mtAmount) throws ExistException {
-
+    public void addPoint(MemberEntity member, double mtAmount){
+        if(member!=null){
         double point = member.getPoint();
         point = point + mtAmount * 0.01;
         member.setPoint(point);
         System.out.println("Member : " + member.getMemberName() + " account has been credited by" + point + "points");
+        }
+        else return;
     }
 
-    public void addCoin(MemberEntity member, double mtAmount) throws ExistException {
+    public void addCoin(MemberEntity member, double mtAmount) {
+        if(member!=null){
         double coin = member.getCoin();
         coin = coin + mtAmount * 0.01;
         member.setCoin(coin);
+        }
+        else return;
     }
 
     private void updateVIP(double point) {
