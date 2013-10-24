@@ -32,9 +32,7 @@ public class ReservationManagedBean implements Serializable {
     @EJB
     private EmailSessionBean emailSessionBean;
     @EJB
-    private ReservationSessionBean rm;
-    @EJB
-    ReservationSessionBean reservationSessionBean;
+    private ReservationSessionBean reservationSessionBean;
     private List<ReservationEntity> reservationList;
     private ReservationEntity selectReservation;
     private ReservationEntity newReservation;
@@ -99,14 +97,6 @@ public class ReservationManagedBean implements Serializable {
         this.searchId = searchId;
     }
 
-    public ReservationSessionBean getRm() {
-        return rm;
-    }
-
-    public void setRm(ReservationSessionBean rm) {
-        this.rm = rm;
-    }
-
     /**
      * Creates a new instance of ReservationManagedBean
      */
@@ -121,7 +111,7 @@ public class ReservationManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            selectReservation = rm.getReservationById(Long.valueOf(getSearchId()));
+            selectReservation = reservationSessionBean.getReservationById(Long.valueOf(getSearchId()));
             if (selectReservation == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservation does not exist!", ""));
                 return;
@@ -166,7 +156,7 @@ public class ReservationManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            reservationList = rm.getReservationByName(searchName);
+            reservationList = reservationSessionBean.getReservationByName(searchName);
             if (reservationList == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservation does not exist!", ""));
                 return;
@@ -190,7 +180,7 @@ public class ReservationManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            reservationList = rm.getReservationByEmail(searchEmail);
+            reservationList = reservationSessionBean.getReservationByEmail(searchEmail);
             if (reservationList == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservation does not exist!", ""));
                 return;
@@ -229,7 +219,7 @@ public class ReservationManagedBean implements Serializable {
             }
             reservationSessionBean.addReservation(newReservation);
             System.out.println("we are after add reservation in managedbean");
-            selectReservation = rm.getReservationById(newReservation.getReservationId());
+            selectReservation = reservationSessionBean.getReservationById(newReservation.getReservationId());
             FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
 
 

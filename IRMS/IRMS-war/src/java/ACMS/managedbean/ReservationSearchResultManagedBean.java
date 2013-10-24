@@ -30,14 +30,13 @@ public class ReservationSearchResultManagedBean implements Serializable {
     private ReservationSessionBean reservationSessionBean;
 
     @EJB
-    private ReservationSessionBean re;
     private ReservationEntity selectReservation;
     private List<ReservationEntity> reservationList;
     private Long reservationId;
 
     public List<ReservationEntity> getReservationList() {
         System.err.println("in get all reservations");
-        return re.getAllReservations();
+        return reservationSessionBean.getAllReservations();
     }
 
     public void setReservationList(List<ReservationEntity> reservationList) {

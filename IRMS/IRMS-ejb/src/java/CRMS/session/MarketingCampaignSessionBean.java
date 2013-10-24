@@ -4,7 +4,7 @@
  */
 package CRMS.session;
 
-import CRMS.entity.MarketingCampaignEntity;
+import CRMS.entity.PromotionEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import java.util.Date;
@@ -33,7 +33,7 @@ public class MarketingCampaignSessionBean implements MarketingCampaignSessionRem
         em.persist(object);
     }
     
-    MarketingCampaignEntity mc = new MarketingCampaignEntity();
+    PromotionEntity mc = new PromotionEntity();
     MemberEntity member = new MemberEntity();
     
     @Override
@@ -68,7 +68,7 @@ public class MarketingCampaignSessionBean implements MarketingCampaignSessionRem
         }
     }
     @Override
-    public void addMarketingCampaign(MarketingCampaignEntity mc){
+    public void addMarketingCampaign(PromotionEntity mc){
      // mc.create(startDate, endDate, remarks, memberTargets);
       System.out.println("MarketingCampaignSessionBean: reference Id is "+mc.getMcId());
       em.persist(mc);

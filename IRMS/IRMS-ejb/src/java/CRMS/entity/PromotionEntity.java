@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
  * @author Diana Wang
  */
 @Entity
-public class MarketingCampaignEntity implements Serializable {
+public class PromotionEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -116,10 +116,10 @@ public class MarketingCampaignEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MarketingCampaignEntity)) {
+        if (!(object instanceof PromotionEntity)) {
             return false;
         }
-        MarketingCampaignEntity other = (MarketingCampaignEntity) object;
+        PromotionEntity other = (PromotionEntity) object;
         if ((this.mcId == null && other.mcId != null) || (this.mcId != null && !this.mcId.equals(other.mcId))) {
             return false;
         }

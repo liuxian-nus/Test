@@ -4,7 +4,7 @@
  */
 package CRMS.session;
 
-import CRMS.entity.MarketingCampaignEntity;
+import CRMS.entity.PromotionEntity;
 import java.util.Date;
 
 /**
@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public interface MarketingCampaignSessionRemote {
 
-    void addMarketingCampaign(MarketingCampaignEntity mc);
+    void addMarketingCampaign(PromotionEntity mc);
 
     String endMarketingCampaign(Date endDate);
 

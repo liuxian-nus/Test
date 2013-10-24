@@ -6,26 +6,27 @@ package app;
 
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
+import CRMS.entity.PromotionEntity;
+import CRMS.session.MemberManagementSessionBean;
 import CRMS.session.MemberSessionBean;
+import CRMS.session.MemberTransactionSessionBean;
 import Exception.ExistException;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -35,32 +36,38 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("rest")
-public class RestResource {
+public class App {
+//    @EJB
+ //   private MemberTransactionSessionBean mtSessionBean;
     @EJB
-    MemberSessionBean memberSessionBean;
+    private MemberManagementSessionBean memberManagementSessionBean;
+    @EJB
+    private MemberSessionBean memberSessionBean;
 
     @Context
     private UriInfo context;
 
     /**
-     * Creates a new instance of RestResource
+     * Creates a new instance of GenericResource
      */
-    public RestResource() {
+    public App() {
     }
 
+    /**
+     * Retrieves representation of an instance of app.GenericResource
+     * @return an instance of java.lang.String
+     */
+    
     @GET
     @Path("member")
     @Produces(MediaType.APPLICATION_XML)
     public MemberEntity getMember(@QueryParam("email") String email)
     {
-        if(memberSessionBean == null)
-            System.err.println("nvpengyoutaizhulezenmeban!!!");
-        MemberEntity member = memberSessionBean.getMemberByEmail(email);
-        if(member!=null){
-            return member;
+        if(email!=null){
+            return memberSessionBean.getMemberByEmail(email);
         }
         else 
-            throw new WebApplicationException(404);
+            return null;
     }
 
     @GET
@@ -70,6 +77,24 @@ public class RestResource {
     {
         return memberSessionBean.getAllTransactions(email);
     }
+    
+    @GET
+    @Path("member/bundles")
+    @Produces(MediaType.APPLICATION_XML)
+    public List<PromotionEntity> getBundles()
+    {
+        return null;
+    }
+    
+    @GET
+    @Path("member/promotions")
+    @Produces(MediaType.APPLICATION_XML)
+    public List<PromotionEntity> getPromotions()
+    {
+        return null;
+    }
+    
+    
     
     @DELETE
     @Path("member")
@@ -99,15 +124,5 @@ public class RestResource {
     public void updatePassword(@FormParam("memberPassword") String memberPassword) 
     {
         memberSessionBean.updatePassword(memberPassword);
-    }
-
-    private MemberSessionBean lookupMemberSessionBeanBean() {
-        try {
-            javax.naming.Context c = new InitialContext();
-            return (MemberSessionBean) c.lookup("java:global/IRMS/IRMS-ejb/MemberSessionBean!CRMS.session.MemberSessionBean");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
     }
 }

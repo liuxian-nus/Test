@@ -24,7 +24,7 @@ public class LogBookSessionBean {
 
     @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
-    LogBookEntity log = new LogBookEntity();
+    private LogBookEntity log = new LogBookEntity();
 
     public LogBookSessionBean() {
     }

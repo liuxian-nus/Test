@@ -90,15 +90,15 @@ public class RoomSearchResultManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when clearing search", ""));
             return;
         }
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "room service charge successfully cleared.", ""));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "room service charge successfully cleared.", ""));
 
     }
-    
+
     public void updateHousekeeping(ActionEvent event) throws IOException {
         System.out.println("We are in set housekeeping");
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-try {
+        try {
             roomId = (Integer) request.getSession().getAttribute("roomId");
             roomSessionBean.updateHousekeeping(roomId);
             System.out.println("we are after search roomID: " + roomId);
@@ -111,19 +111,34 @@ try {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "room cleaned-up, ready for next check in.", ""));
 
     }
-   /* public void sendBill() throws IOException {
-        System.out.println("we are in clear service charge");
+
+   /* public void addIncidentalCharge(ActionEvent event) throws IOException {
+        System.out.println("We are adding incidental charges");
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-
         try {
             roomId = (Integer) request.getSession().getAttribute("roomId");
-            roomSessionBean.sendBill(roomId);
+            roomSessionBean.addIncidentalCharge(roomId);
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", roomSessionBean.getRoomById(roomId));
-            System.out.println("we are after setting parameter");
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when clearing search", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding incidental charge", ""));
             return;
         }
     }*/
+    
+    /* public void sendBill() throws IOException {
+     System.out.println("we are in clear service charge");
+     HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+     HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+
+     try {
+     roomId = (Integer) request.getSession().getAttribute("roomId");
+     roomSessionBean.sendBill(roomId);
+     FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", roomSessionBean.getRoomById(roomId));
+     System.out.println("we are after setting parameter");
+     } catch (Exception e) {
+     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when clearing search", ""));
+     return;
+     }
+     }*/
 }
