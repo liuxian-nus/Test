@@ -10,11 +10,10 @@
 
     <ui:define name="content">
         <h:form id="AddMerchant">
-            <p:growl id="growl" showDetail="true" sticky="true" /> 
-
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            
             <p:panel id="Home" header="Add New Merchant" style="height:440px;">
-
-                <h:panelGrid columns="3" >  
+                <h:panelGrid columns="3" >
                     <h:outputText value="Name*:"/>
                     <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{merchantManagedBean.merchant.merchantName}"/>                                   
                     <h:outputText value=""/>
@@ -32,10 +31,7 @@
                     <h:outputText value="Address*:"/>
                     <h:inputText id ="address" title="Please enter address" required ="true" requiredMessage="Address cannot be empty" value="#{merchantManagedBean.merchant.merchantAddress}"/>
                     <h:outputText value=""/>
-
                 </h:panelGrid>
-                <p:commandButton value="Save" ajax="true"  actionListener="#{merchantManagedBean.saveNewMerchant}" update="growl" icon="ui-icon-check"/>
-                <p:commandButton value="Add More Merchant" actionListener="#{merchantManagedBean.oneMore}" />
             </p:panel>
         </h:form>
     </ui:define>

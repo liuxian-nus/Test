@@ -9,18 +9,16 @@ import Exception.ExistException;
 import SMMS.entity.ContractEntity;
 import SMMS.entity.MerchantEntity;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
-import javax.ejb.TimedObject;
 import javax.ejb.Timeout;
+import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
-import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -95,11 +93,13 @@ public class MerchantSessionBean {
         TimerService timerService = ctx.getTimerService();
         
         String cookie = "EJBTIMER";
-        Timer timer = (Timer) timerService.createTimer(5000, 5000, "EJBTIMER");
-        System.out.println("in session bean test" + timer.toString());
+        TimerConfig timerConfig = new TimerConfig("EJBTIMER", true);
+        Timer timer = (Timer) timerService.createIntervalTimer(5000l, 5000l, timerConfig);
+        System.out.println("in session bean test" + timer.getInfo().toString());
+        
 
     }
-
+  @Timeout
     public void handleTimeout(Timer timer) {
 //        if (timer.toString().equals("EJBTIMER")) {//Do something}}}
         System.out.println("in handle timeout test");

@@ -44,8 +44,7 @@ public class MerchantManagedBean implements Serializable{
     @EJB
     private MerchantSessionBean merchantSessionBean;
     private MerchantEntity merchant;
-    @Resource
-    private SessionContext ctx;
+    
 
     @PostConstruct
     public void init() {
@@ -60,7 +59,7 @@ public class MerchantManagedBean implements Serializable{
         System.out.println("in creating timers");
         merchantSessionBean.createTimers();
     }
-
+//
 //    public void cancelTimers() {
 //        TimerService timerService = ctx.getTimerService();
 //        Collection timers = timerService.getTimers();
