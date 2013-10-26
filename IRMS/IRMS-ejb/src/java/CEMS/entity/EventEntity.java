@@ -33,7 +33,7 @@ public class EventEntity implements Serializable {
     private int eventScale;
     @OneToMany(cascade={CascadeType.ALL},mappedBy="event")
     private List<BookingEntity> bookings;
-    private String status = "in progress: booking";
+    private String status;
 
 
     private String title;
