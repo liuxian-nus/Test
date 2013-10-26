@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 
@@ -23,7 +24,7 @@ public class AttrTicketEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seqTicket")
     private Long attrTicketId;
-    @OneToOne(mappedBy="attrTicket")
+    @ManyToOne
     private AttractionEntity attr;
     private String attrTicketName;
     private double attrTicketPrice;

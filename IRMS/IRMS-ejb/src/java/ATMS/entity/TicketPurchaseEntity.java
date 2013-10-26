@@ -35,6 +35,7 @@ public class TicketPurchaseEntity implements Serializable {
     private double attrTicketFee;
     @Temporal(javax.persistence.TemporalType.DATE)
     Date attrTicketBookDate =new Date();
+    private String attrTPStatus;
 
     public Long getTpId() {
         return tpId;
@@ -84,9 +85,12 @@ public class TicketPurchaseEntity implements Serializable {
         this.attrTicketBookDate = attrTicketBookDate;
     }
 
-    
-    
-    
+    public String getAttrTPStatus() {
+        return attrTPStatus;
+    }
 
-   
+    public void setAttrTPStatus(String attrTPStatus) {
+        this.attrTPStatus = attrTPStatus;
+    }
+      
 }
