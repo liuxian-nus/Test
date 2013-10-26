@@ -164,7 +164,11 @@
                         </div>
                         <div class="large-7 columns">
 
-                            <h5><a style="color:#4d4d4d"><strong>Five Star</strong></a></h5><i class="sprite starrating stars5"></i>
+                         <img style="vertical-align:text-bottom;" src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
                             <p style="color:#4d4d4d">Marina Hotel is a luxurious treat for art lovers. A tribute to one of America’s greatest contemporary architects 
                                 Michael Graves, we let this boutique hotel speak for itself through the designer’s elegant and distinctive touches, from lamps and
                                 crockery to furnishings and the decor.We enrich all our guests’ stay experience with art through our art gallery-like atmosphere in 
@@ -183,7 +187,11 @@
                         </div>
                         <div class="large-7 columns">
 
-                            <h5><a style="color:#4d4d4d"><strong>Four Star</strong></a></h5><i class="sprite starrating stars4"></i>
+                        <img style="vertical-align:text-bottom;" src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
+                        <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
+                   
                             <p style="color:#4d4d4d">On the western tip of the Coral Island is our idyllic retreat of BeachView Hotel. An exquisite series of 
                                 secluded tropical sanctuaries, BeachView Hotel offers spectacular views, personal butlers and luxurious comforts for that well-earned 
                                 getaway or a romantic escapade.Enter paradise at Beach Villas, just one of an infinite range of momentous experiences we offer at

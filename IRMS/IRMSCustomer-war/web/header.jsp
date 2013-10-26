@@ -1,7 +1,8 @@
 <div id="templatemo_wrapper">
     <div id="templatemo_header">
         <div id="site_title">
-            <h1 title="font-style:italic">Coral Island Resort</h1></div>
+             <img src="/IRMSCustomer-war/images/logo.png"  /></div>
+        
         <div class="cleaner"></div>
 
         <div id="templatemo_menu" class="ddsmoothmenu">

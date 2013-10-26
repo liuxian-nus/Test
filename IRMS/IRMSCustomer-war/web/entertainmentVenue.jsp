@@ -15,6 +15,209 @@
         <body>
 
         <jsp:include page="header.jsp"></jsp:include>
+        
+          <div class="row">
+                <form id="member" action="memberInfo" method="POST">
+                    <fieldset>
+                        <legend>Please Select Your Ticket</legend>
+                        <p>${message}</p>
+                    <table>
+
+                        <thead>
+                        <th width="300">Area</th>
+                        <th width="300">Ticket Price</th>
+                        <th width="300">Number of Tickets</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td width="300">&nbsp Area 1</td>
+                                <td width="300">&nbsp $168</td>
+                                <td width="300">   
+                                    <select style="width:100px" required name="ticket1" id="ticket1"/>
+                        <option value="0">0</option>            
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        </select></td>
+
+                        </tr>
+                        <tr>
+                            <td width="300">&nbsp Area 2</td>
+                            <td width="300">&nbsp $68</td>
+                            <td width="300">   
+                                <select style="width:100px" required name="ticket2" id="ticket2"/>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        </select></td>
+
+
+                        </tr>
+
+                        <tr>
+                            <td width="300">&nbsp Area 3</td>
+                            <td width="300">&nbsp $268</td>
+                            <td width="300">   
+                                <select style="width:100px" required name="ticket3" id="ticket3"/>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        </select></td>
+
+                        </tr>
+
+                        <tr>
+                            <td width="300">&nbsp Area 4</td>
+                            <td width="300">&nbsp $198</td>
+                            <td width="300">   
+                                <select style="width:100px" required name="ticket4" id="ticket4"/>
+
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        </select></td>
+
+                        </tr>
+                        <tr>
+                            <td width="300">&nbsp Area 5</td>
+                            <td width="300">&nbsp $168</td>
+                            <td width="300">   
+                                <select style="width:100px" required name="ticket5" id="ticket5"/>
+
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        </select></td>
+
+                        </tr>
+                        <tr>
+                            <td width="300">&nbsp Area 6</td>
+                            <td width="300">&nbsp $68</td>
+                            <td width="300">   
+                                <select style="width:100px" required name="ticket6" id="ticket6"/>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        </select></td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="large-2 large-offset-10 columns">
+                            <input type="submit" value="Continue" class="small button secondary">
+                        </div>
+                    </div>
+                </fieldset>         
+            </form>   
+        </div>
             <div id="container"></div>
             <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.7.2.min.js"></script>
             <script defer="defer">
@@ -402,208 +605,7 @@
 
                 stage.add(layer);
             </script>
-            <div class="row">
-                <form id="member" action="memberInfo" method="POST">
-                    <fieldset>
-                        <legend>Please Select Your Ticket</legend>
-                        <p>${message}</p>
-                    <table>
-
-                        <thead>
-                        <th width="300">Area</th>
-                        <th width="300">Ticket Price</th>
-                        <th width="300">Number of Tickets</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td width="300">&nbsp Area 1</td>
-                                <td width="300">&nbsp $168</td>
-                                <td width="300">   
-                                    <select style="width:100px" required name="ticket1" id="ticket1"/>
-                        <option value="0">0</option>            
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        </select></td>
-
-                        </tr>
-                        <tr>
-                            <td width="300">&nbsp Area 2</td>
-                            <td width="300">&nbsp $68</td>
-                            <td width="300">   
-                                <select style="width:100px" required name="ticket2" id="ticket2"/>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        </select></td>
-
-
-                        </tr>
-
-                        <tr>
-                            <td width="300">&nbsp Area 3</td>
-                            <td width="300">&nbsp $268</td>
-                            <td width="300">   
-                                <select style="width:100px" required name="ticket3" id="ticket3"/>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        </select></td>
-
-                        </tr>
-
-                        <tr>
-                            <td width="300">&nbsp Area 4</td>
-                            <td width="300">&nbsp $198</td>
-                            <td width="300">   
-                                <select style="width:100px" required name="ticket4" id="ticket4"/>
-
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        </select></td>
-
-                        </tr>
-                        <tr>
-                            <td width="300">&nbsp Area 5</td>
-                            <td width="300">&nbsp $168</td>
-                            <td width="300">   
-                                <select style="width:100px" required name="ticket5" id="ticket5"/>
-
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        </select></td>
-
-                        </tr>
-                        <tr>
-                            <td width="300">&nbsp Area 6</td>
-                            <td width="300">&nbsp $68</td>
-                            <td width="300">   
-                                <select style="width:100px" required name="ticket6" id="ticket6"/>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        </select></td>
-
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="large-2 large-offset-10 columns">
-                            <input type="submit" value="Continue" class="small button secondary">
-                        </div>
-                    </div>
-                </fieldset>         
-            </form>   
-        </div>
+          
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

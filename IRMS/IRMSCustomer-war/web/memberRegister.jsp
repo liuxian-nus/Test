@@ -616,7 +616,7 @@
         //The passwords do not match.
         //Set the color to the bad color and
         //notify the user.
-        message.innerHTML = "Passwords Do Not Match!"
+        message.innerHTML = "Passwords do not match."
       
         }
         }

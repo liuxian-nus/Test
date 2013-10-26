@@ -10,7 +10,6 @@ import Exception.ExistException;
 import SMMS.entity.MerchantEntity;
 import SMMS.session.MerchantSessionBean;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Timer;
@@ -35,7 +34,7 @@ import javax.faces.event.ActionEvent;
  */
 @ManagedBean
 @ViewScoped
-public class MerchantManagedBean implements Serializable{
+public class MerchantManagedBean {
 
     @EJB
     private EmailSessionBean emailSessionBean;
@@ -44,7 +43,8 @@ public class MerchantManagedBean implements Serializable{
     @EJB
     private MerchantSessionBean merchantSessionBean;
     private MerchantEntity merchant;
-    
+    @Resource
+    private SessionContext ctx;
 
     @PostConstruct
     public void init() {
@@ -56,28 +56,29 @@ public class MerchantManagedBean implements Serializable{
     }
 
     public void createTimers(ActionEvent event) {
-        System.out.println("in creating timers");
-        merchantSessionBean.createTimers();
+        TimerService timerService = ctx.getTimerService();
+        String cookie = "EJBTIMER";
+        Timer timer = (Timer) timerService.createTimer(5000, 5000, cookie);
     }
-//
+
 //    public void cancelTimers() {
 //        TimerService timerService = ctx.getTimerService();
 //        Collection timers = timerService.getTimers();
 //        for (Object obj : timers) {
 //            Timer timer = (Timer) obj;
-//            if (timer.getInfo().toString()) {
+//            if (timer.toString().equals("EJBTIMER")) {
 //                timer.cancel();
 //            }
 //        }
 //    }
 
-//    @Timeout
-//    public void handleTimeout(Timer timer) {
-////        if (timer.toString().equals("EJBTIMER")) {//Do something}}}
-//            Date currentDate = new Date();
-//            System.out.println("No1: we are in merchant managedbean: trying this hahaha lalala" + currentDate);
-////        }
-//    }
+    @Timeout
+    public void handleTimeout(Timer timer) {
+//        if (timer.toString().equals("EJBTIMER")) {//Do something}}}
+            Date currentDate = new Date();
+            System.out.println("No1: we are in merchant managedbean: trying this hahaha lalala" + currentDate);
+        
+    }
 
 //    public static int count = 0;
 //    public Timer timer = new Timer();
