@@ -1189,7 +1189,7 @@ public class initializationManagedBean implements Serializable {
         log.setLogShift(1);
         log.setPublishDate(today);
         log.setLogTitle("HaHa");
-        log.setLogText("HaHa,我们有一个神�?�包神，好�?�我必须让这个message长一点，�?�是我�?�没什么好说的，那我�?怎么�?能让它长一点呢？本�?�就是一个test case，为什么�?��?让它那么长呢？累觉�?爱了，好�?�就这样了");
+        log.setLogText("HaHa");
         log.setRemark("test");
         log.setLogEmployee(thisEmployee);
         try {
