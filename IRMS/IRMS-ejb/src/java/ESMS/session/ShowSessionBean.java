@@ -84,8 +84,17 @@ public class ShowSessionBean {
         em.persist(show);
         em.flush();
     }
+     
+     
+    public void uploadImage(Long showId, String fileName) {
+   show = em.find(ShowEntity.class, showId);
+        show.setImagePath(fileName);
+        em.persist(show);
+        em.flush();
+    }
 
     public ShowEntity getShowById(Long showId) {
         return em.find(ShowEntity.class, showId);
     }
+
 }

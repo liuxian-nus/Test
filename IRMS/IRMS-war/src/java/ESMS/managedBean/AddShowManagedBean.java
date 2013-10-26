@@ -12,6 +12,8 @@ import ESMS.session.ShowContractSessionBean;
 import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class AddShowManagedBean {
     private ShowContractEntity showContract;
     private Long showId;
     private Date currentDate = new Date();
-    private static final int BUFFER_SIZE = 1024;
+//    private static final int BUFFER_SIZE = 1024;
     private UploadedFile file;
     private Boolean uploadMode;
     private Long id;
@@ -78,24 +80,52 @@ public class AddShowManagedBean {
     public void handleFileUpload(FileUploadEvent event) throws IOException {
 
         System.err.println("Uploading Image...");
-        System.err.println(showId);
+        String[] fileNameParts = event.getFile().getFileName().split("\\.");
+        File result = new File("c:\\photo\\" + fileNameParts[0] + "." + fileNameParts[1]);
 
-        ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
+        FileOutputStream out = new FileOutputStream(result);
 
-        System.out.println(extContext.getRealPath("handleFileUpload: " + event.getFile().getFileName()));
-
+        int a;
+        int BUFFER_SIZE = 8192;
         byte[] buffer = new byte[BUFFER_SIZE];
-        InputStream inputStream = event.getFile().getInputstream();
-        inputStream.read(buffer);
 
-        System.out.println("handleFileUpload: " + buffer);
-        System.out.println("showId:" + showId);
+        InputStream is = event.getFile().getInputstream();
+//        showSessionBean.uploadFile(showId, buffer);
+        String fileName = "c:\\photo\\" + result.getName();
+        showSessionBean.uploadImage(showId, fileName);
+        System.err.println(fileName);
+        while (true) {
+            a = is.read(buffer);
+            if (a < 0) {
+                break;
+            }
+            out.write(buffer, 0, a);
+            out.flush();
+        }
 
-        showSessionBean.uploadFile(showId, buffer);
+        out.close();
+        is.close();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Image has been uploaded", ""));
 
-        FacesMessage msg = new FacesMessage("File Description", "file name: " + event.getFile().getFileName() + " file size: " + event.getFile().getSize() / 1024 + " Kb content type: " + event.getFile().getContentType() + "The file was uploaded.");
-//            FacesMessage msg = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+//        System.err.println(showId);
+//
+//        ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
+//
+//        System.out.println(extContext.getRealPath("handleFileUpload: " + event.getFile().getFileName()));
+//
+//        byte[] buffer = new byte[BUFFER_SIZE];
+//        InputStream inputStream = event.getFile().getInputstream();
+//        inputStream.read(buffer);
+//
+//        System.out.println("handleFileUpload: " + buffer);
+//        System.out.println("showId:" + showId);
+//
+//        showSessionBean.uploadFile(showId, buffer);
+//
+//        FacesMessage msg = new FacesMessage("File Description", "file name: " + event.getFile().getFileName() + " file size: " + event.getFile().getSize() / 1024 + " Kb content type: " + event.getFile().getContentType() + "The file was uploaded.");
+////            FacesMessage msg = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
 
     }
 
