@@ -6,7 +6,7 @@
             30
         </session-timeout>
     </session-config>
-    
+  <!--  
     <servlet>
         <servlet-name>ServletAdaptor</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
@@ -16,5 +16,5 @@
     <servlet-mapping>
         <servlet-name>ServletAdaptor</servlet-name>
         <url-pattern>/resources/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 </web-app>
