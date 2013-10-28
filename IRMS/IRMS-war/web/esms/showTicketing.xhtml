@@ -20,9 +20,6 @@
                                       actionListener="#{showTicketingManagedBean.searchByName}" update ="tab1msg"/>
                 </h:form>
             </p:tab>
-            <p:tab id="tab2" title="List Show">
-
-            </p:tab>
             <p:tab id="tab3" title="Buy Ticket">
                 <h:form id="tab3form">
                     <p:growl id="tab3msg"/>
@@ -53,7 +50,7 @@
                         <h:outputText value="Show Ticket Quantity: "/>
                         <p:inputText value="#{showTicketingManagedBean.showTicketQuota}"/>
                         
-                        <p:commandButton value="Buy" ajax="true" actionListener="#{showTicketingManagedBean.buyTicket}" update="tab3msg"/>
+                        <p:commandButton value="Buy and Print ticket" ajax="true" actionListener="#{showTicketingManagedBean.buyTicket}" update="tab3msg"/>
                         
                     </h:panelGrid>
                 </h:form>
