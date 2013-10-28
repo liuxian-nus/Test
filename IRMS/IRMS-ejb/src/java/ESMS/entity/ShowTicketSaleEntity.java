@@ -4,14 +4,15 @@
  */
 package ESMS.entity;
 
-import CRMS.entity.MemberEntity;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -24,13 +25,15 @@ public class ShowTicketSaleEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long showTicketSaleId;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private ShowEntity show;
     
     //this is to make sure the member with this ticket is already entered, 防假票！！
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date showStartDateTime;
+    private String showTicketType;
     private boolean showTicketStatus;
     private int showTicketQuantity;
-    
     
     public Long getShowTicketSaleId() {
         return showTicketSaleId;
@@ -62,5 +65,21 @@ public class ShowTicketSaleEntity implements Serializable {
 
     public void setShowTicketQuantity(int showTicketQuantity) {
         this.showTicketQuantity = showTicketQuantity;
+    }
+
+    public Date getShowStartDateTime() {
+        return showStartDateTime;
+    }
+
+    public void setShowStartDateTime(Date showStartDateTime) {
+        this.showStartDateTime = showStartDateTime;
+    }
+
+    public String getShowTicketType() {
+        return showTicketType;
+    }
+
+    public void setShowTicketType(String showTicketType) {
+        this.showTicketType = showTicketType;
     }
 }

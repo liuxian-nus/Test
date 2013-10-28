@@ -23,7 +23,7 @@ public class ShowTicketEntity implements Serializable {
     private String showTicketType;
     private Double showTicketPrice;
     private int showTicketQuantity;
-    private int showTicketQuota;
+    private int showTicketQuota; //ticket left
 
     public Long getShowTicketId() {
         return showTicketId;

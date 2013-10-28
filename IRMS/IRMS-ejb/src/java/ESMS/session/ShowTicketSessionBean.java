@@ -55,4 +55,9 @@ public class ShowTicketSessionBean {
         showTicket = em.find(ShowTicketEntity.class, showTicketId);
         return showTicket;
     }
+
+    public void updateQuantity(Long showTicketId, int showTicketQuota) {
+        showTicket = em.find(ShowTicketEntity.class, showTicketId);
+        showTicket.setShowTicketQuota(showTicket.getShowTicketQuota()-showTicketQuota);
+    }
 }
