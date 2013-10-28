@@ -10,6 +10,7 @@ import Exception.ExistException;
 import SMMS.entity.MerchantEntity;
 import SMMS.session.MerchantSessionBean;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Timer;
@@ -76,7 +77,7 @@ public class MerchantManagedBean implements Serializable{
 //            Date currentDate = new Date();
 //            System.out.println("No1: we are in merchant managedbean: trying this hahaha lalala" + currentDate);
         
-    }
+//    }
 
 //    public static int count = 0;
 //    public Timer timer = new Timer();

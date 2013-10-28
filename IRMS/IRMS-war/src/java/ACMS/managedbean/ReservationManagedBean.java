@@ -205,7 +205,7 @@ public class ReservationManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            reservationList = rm.getTodayReservations();
+            reservationList = reservationSessionBean.getTodayReservations();
             
                 System.out.println("we are after session bean");
                 FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);
@@ -223,7 +223,7 @@ public class ReservationManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            reservationList = rm.getBeforeReservations();
+            reservationList = reservationSessionBean.getBeforeReservations();
             
                 System.out.println("we are after session bean");
                 FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);
@@ -241,7 +241,7 @@ public class ReservationManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            reservationList = rm.getAllReservations();
+            reservationList = reservationSessionBean.getAllReservations();
             
                 System.out.println("we are after session bean");
                 FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);
