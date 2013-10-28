@@ -20,6 +20,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -263,5 +264,12 @@ public class smmsInitManagedBean {
 
         System.out.println("Insert cart into database");
         addMessage("Carts! Created!");
+    }
+    
+    public void initla(ActionEvent event)
+    {
+        createMerchant();
+        createOutlet();
+        createContract();
     }
 }
