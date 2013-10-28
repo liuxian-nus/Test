@@ -22,28 +22,32 @@
                                 <h:outputText value="#{reservations.rcName}"/> 
                             </p:column>
                             <p:column headerText ="Check In Date:">
-                                <h:outputText value="#{reservations.rcCheckInDate}"/> 
+                                <h:outputText value="#{reservations.rcCheckInDate}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                                </h:outputText>
                             </p:column>
                             <p:column headerText ="Check Out Date:">
-                                <h:outputText value="#{reservations.rcCheckOutDate}"/> 
+                                <h:outputText value="#{reservations.rcCheckOutDate}"> 
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                                </h:outputText>
                             </p:column>
                             <p:column style="width:100px">  
                                 <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Select" title="Select">  
                                     <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                 </p:commandButton>
                                 <h:outputText rendered="#{reservations.reservationStatus == 'checkedIn'}" value="Already Checked In" >  
-                            </h:outputText>  
+                                </h:outputText>  
                             </p:column>
                         </p:dataTable>
                     </div>
-                    
+
                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
                         <h:outputText value="Select This Reservation for check-in? "/>
-                    <p:commandButton value="Yes" onclick="growl;" update ="form" action="#{reservationManagedBean.getSelectReservation()}" oncomplete="confirmation.hide()">  
-                    </p:commandButton>
-                    <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
-                </p:dialog>  
-              
+                        <p:commandButton value="Yes" onclick="growl;" update ="form" action="#{reservationManagedBean.getSelectReservation()}" oncomplete="confirmation.hide()">  
+                        </p:commandButton>
+                        <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                    </p:dialog>  
+
                 </p:panel>
 
             </h:form>

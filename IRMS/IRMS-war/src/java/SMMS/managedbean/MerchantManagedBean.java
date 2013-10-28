@@ -34,7 +34,7 @@ import javax.faces.event.ActionEvent;
  */
 @ManagedBean
 @ViewScoped
-public class MerchantManagedBean {
+public class MerchantManagedBean implements Serializable{
 
     @EJB
     private EmailSessionBean emailSessionBean;
@@ -43,8 +43,7 @@ public class MerchantManagedBean {
     @EJB
     private MerchantSessionBean merchantSessionBean;
     private MerchantEntity merchant;
-    @Resource
-    private SessionContext ctx;
+    
 
     @PostConstruct
     public void init() {
@@ -55,28 +54,27 @@ public class MerchantManagedBean {
         merchant = new MerchantEntity();
     }
 
-    public void createTimers(ActionEvent event) {
-        TimerService timerService = ctx.getTimerService();
-        String cookie = "EJBTIMER";
-        Timer timer = (Timer) timerService.createTimer(5000, 5000, cookie);
-    }
-
+//    public void createTimers(ActionEvent event) {
+//        System.out.println("in creating timers");
+//        merchantSessionBean.createTimers();
+//    }
+////
 //    public void cancelTimers() {
 //        TimerService timerService = ctx.getTimerService();
 //        Collection timers = timerService.getTimers();
 //        for (Object obj : timers) {
 //            Timer timer = (Timer) obj;
-//            if (timer.toString().equals("EJBTIMER")) {
+//            if (timer.getInfo().toString()) {
 //                timer.cancel();
 //            }
 //        }
 //    }
 
-    @Timeout
-    public void handleTimeout(Timer timer) {
-//        if (timer.toString().equals("EJBTIMER")) {//Do something}}}
-            Date currentDate = new Date();
-            System.out.println("No1: we are in merchant managedbean: trying this hahaha lalala" + currentDate);
+//    @Timeout
+//    public void handleTimeout(Timer timer) {
+////        if (timer.toString().equals("EJBTIMER")) {//Do something}}}
+//            Date currentDate = new Date();
+//            System.out.println("No1: we are in merchant managedbean: trying this hahaha lalala" + currentDate);
         
     }
 

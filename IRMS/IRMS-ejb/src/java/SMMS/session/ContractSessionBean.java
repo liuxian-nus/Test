@@ -63,15 +63,11 @@ public class ContractSessionBean {
         return newevent;
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeContract(ContractEntity contract) throws ExistException {
         if (contract == null) {
             throw new ExistException("contract doesn't exist!");
         }
-        if ((contract.getStatus()!="new")||(contract.getStatus()!="NewRejected")) {
-            throw new ExistException("contract cannot be removed because it is not allowed in current status!");
-        }
-        em.remove(contract);
+         em.remove(contract);
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

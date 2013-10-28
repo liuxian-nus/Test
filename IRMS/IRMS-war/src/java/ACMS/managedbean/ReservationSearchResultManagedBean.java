@@ -8,6 +8,7 @@ import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -33,6 +34,7 @@ public class ReservationSearchResultManagedBean implements Serializable {
     private ReservationEntity selectReservation;
     private List<ReservationEntity> reservationList;
     private Long reservationId;
+    
 
     public List<ReservationEntity> getReservationList() {
         System.err.println("in get all reservations");

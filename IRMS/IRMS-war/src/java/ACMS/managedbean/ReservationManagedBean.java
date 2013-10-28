@@ -197,6 +197,61 @@ public class ReservationManagedBean implements Serializable {
             return;
         }
     }
+    
+    
+     public void getTodayReservations(ActionEvent event) throws IOException, ExistException {
+
+        System.out.println("NO6 we are in getting today reservation function ");
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            reservationList = rm.getTodayReservations();
+            
+                System.out.println("we are after session bean");
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);
+                System.out.println("we are after setting parameter");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("listReservations.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
+        }
+    }
+     
+      public void getBeforeReservations(ActionEvent event) throws IOException, ExistException {
+
+        System.out.println("NO6 we are in getting before reservation function ");
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            reservationList = rm.getBeforeReservations();
+            
+                System.out.println("we are after session bean");
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);
+                System.out.println("we are after setting parameter");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("listReservations.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
+        }
+    }
+      
+       public void getAllReservations(ActionEvent event) throws IOException, ExistException {
+
+        System.out.println("NO6 we are in getting all reservation function ");
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            reservationList = rm.getAllReservations();
+            
+                System.out.println("we are after session bean");
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);
+                System.out.println("we are after setting parameter");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("listReservations.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
+        }
+    }
 //javax.el.PropertyNotFoundException: /acms/checkIncheckOut.xhtml @45,154 value="#{reservationManagedBean.selectReservation.rcName}": Target Unreachable, 'null' returned null
 
     public void addReservation(ActionEvent event) throws IOException {

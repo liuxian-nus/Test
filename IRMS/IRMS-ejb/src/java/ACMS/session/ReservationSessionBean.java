@@ -25,7 +25,9 @@ public class ReservationSessionBean {
     private EntityManager em;
     ReservationEntity reservation = new ReservationEntity();
     List<ReservationEntity> reservations;
+    private Date currentDate = new Date();
 
+    
     public ReservationSessionBean() {
     }
 
@@ -39,7 +41,32 @@ public class ReservationSessionBean {
         System.out.println("session bean return a full list of all reservations");
         return reservationList;
     }
+    
+    public List<ReservationEntity> getTodayReservations() {
+        Query q = em.createQuery("SELECT re FROM ReservationEntity re");
+        List reservationList = new ArrayList<ReservationEntity>();
+        for (Object o : q.getResultList()) {
+            ReservationEntity re = (ReservationEntity) o;
+            System.out.println("current"+currentDate.getDate());
+            System.out.println("checkinDate"+re.getRcCheckInDate().getDate());
+            if (re.getRcCheckInDate().getDate()==currentDate.getDate()){
+            reservationList.add(re);}
+        }
+        System.out.println("session bean return a full list of all reservations");
+        return reservationList;
+    }
 
+    public List<ReservationEntity> getBeforeReservations() {
+        Query q = em.createQuery("SELECT re FROM ReservationEntity re");
+        List reservationList = new ArrayList<ReservationEntity>();
+        for (Object o : q.getResultList()) {
+            ReservationEntity re = (ReservationEntity) o;
+            if (re.getRcCheckInDate().before(currentDate)){
+            reservationList.add(re);}
+        }
+        System.out.println("session bean return a full list of all reservations");
+        return reservationList;
+    }
     public ReservationEntity getReservationById(Long reservationId) throws ExistException {
         reservation = em.find(ReservationEntity.class, reservationId);
 //        if(reservation == null)throw new ExistException("Reservation does not exist!");
@@ -106,5 +133,13 @@ public class ReservationSessionBean {
 
     public ReservationEntity getReservationById(String searchId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
     }
 }
