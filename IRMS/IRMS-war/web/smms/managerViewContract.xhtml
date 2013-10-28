@@ -56,7 +56,7 @@
                                 <f:setPropertyActionListener target="#{managerApproveContractManagedBean.contract}" value="#{contractResultManagedBean.managerSelect}" /> 
                             </p:commandButton>
 
-                            <p:commandButton  update=":form:rejectla" oncomplete="reject.show()" ajax="true" rendered="#{contractResultManagedBean.selectedContract.last.eventStatus=="new"}" icon="ui-icon ui-icon-search" value ="Reject" title="Reject">  
+                            <p:commandButton  update=":form:rejectla" oncomplete="reject.show()" ajax="true" rendered="#{contractResultManagedBean.selectedContract.last.eventStatus=='new'}" icon="ui-icon ui-icon-search" value ="Reject" title="Reject">  
                                 <f:setPropertyActionListener target="#{managerApproveContractManagedBean.contract}" value="#{contractResultManagedBean.managerSelect}" /> 
                             </p:commandButton> 
                         </h:panelGrid>
@@ -67,7 +67,7 @@
                         Are you sure to review?
                         <br/><br/>
                         <h:panelGrid columns="2" id="pendingla">
-                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.requestNew}" oncomplete="pending.hide()"/>
+                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{managerApproveContractManagedBean.pendingNew}" oncomplete="pending.hide()"/>
                             <p:commandButton value="Not yet" onclick="pending.hide()" type="button"/>  
                         </h:panelGrid>
                     </p:dialog>  
@@ -77,7 +77,7 @@
                         Are you sure to approve?
                         <br/><br/>
                         <h:panelGrid columns="2" id="approvela">
-                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.requestNew}" oncomplete="approve.hide()"/>
+                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{managerApproveContractManagedBean.approveNew}" oncomplete="approve.hide()"/>
                             <p:commandButton value="Not yet" onclick="approve.hide()" type="button"/>  
                         </h:panelGrid>
                     </p:dialog> 
@@ -88,7 +88,7 @@
                         Are you sure to reject?
                         <br/><br/>
                         <h:panelGrid columns="2" id="rejectla">
-                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.requestNew}" oncomplete="reject.hide()"/>
+                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{managerApproveContractManagedBean.rejectNew}" oncomplete="reject.hide()"/>
                             <p:commandButton value="Not yet" onclick="reject.hide()" type="button"/>  
                         </h:panelGrid>
                     </p:dialog> 

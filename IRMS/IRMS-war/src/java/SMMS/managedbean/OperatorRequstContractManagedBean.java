@@ -47,10 +47,36 @@ public class OperatorRequstContractManagedBean {
     public void requestNew(ActionEvent event) {
         System.out.println("in getting new request" + contract.getContractId());
         cevent = contract.getLast();
-        cevent.setEventStatus("newRequest");
+        if (cevent.getEventStatus().contains("new")) {
+            cevent.setEventStatus("newRequest");
+        }
+        if (cevent.getEventStatus().contains("renew")) {
+            cevent.setEventStatus("renewRequest");
+        }
+        if (cevent.getEventStatus().contains("earlyTermination")) {
+            cevent.setEventStatus("earlyTerminationRequest");
+        }
         contracteventSessionBean.updateContractEvent(cevent);
         System.out.println("after setting new request" + contract.getLast().getEventStatus());
-        emailSessionBean.emailRequest("cookiewxy@hotmail.com", contract);
+        emailSessionBean.emailRequest("cookiewxy@hotmail.com", contract); // send email to manager for information
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
+
+    }
+
+    public void withdraw(ActionEvent event) {
+        System.out.println("in withdraw request" + contract.getContractId());
+        cevent = contract.getLast();
+        if (cevent.getEventStatus().contains("new")) {
+            cevent.setEventStatus("new");
+        }
+        if (cevent.getEventStatus().contains("renew")) {
+            cevent.setEventStatus("renew");
+        }
+        if (cevent.getEventStatus().contains("earlyTermination")) {
+            cevent.setEventStatus("earlyTermination");
+        }
+        contracteventSessionBean.updateContractEvent(cevent);
+        System.out.println("after setting new request" + contract.getLast().getEventStatus());
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
 
     }
@@ -98,7 +124,7 @@ public class OperatorRequstContractManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing contract", ""));
             return;
         }
-        
+
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Contract has been deleted successfully", ""));
 
     }

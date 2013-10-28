@@ -61,7 +61,7 @@ public class ContractResultManagedBean {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
-        managerSelect = (ContractEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("managerSelect");
+        managerSelect = (ContractEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("managerContract");
         System.out.println("In init view select event size" + managerSelect.getContractEvent().size() + "select contract ID" + managerSelect.getContractId());
 //        request.getSession().setAttribute("roomId", thisRoom.getRoomId());
     }

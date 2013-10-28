@@ -281,4 +281,6 @@ public class ContractManagedBean implements Serializable {
             return;
         }
     }
+    
+    
 }
