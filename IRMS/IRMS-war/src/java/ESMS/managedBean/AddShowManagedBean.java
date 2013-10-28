@@ -81,7 +81,8 @@ public class AddShowManagedBean {
 
         System.err.println("Uploading Image...");
         String[] fileNameParts = event.getFile().getFileName().split("\\.");
-        File result = new File("c:\\photo\\" + fileNameParts[0] + "." + fileNameParts[1]);
+        File result = new File("C:\\Users\\Ser3na\\Documents\\IS3102\\Test.git\\IRMS\\IRMS-war\\web\\images\\" + fileNameParts[0] + "." + fileNameParts[1]);
+//        File result = new File("c:\\photo\\" + fileNameParts[0] + "." + fileNameParts[1]);
 
         FileOutputStream out = new FileOutputStream(result);
 
@@ -91,7 +92,8 @@ public class AddShowManagedBean {
 
         InputStream is = event.getFile().getInputstream();
 //        showSessionBean.uploadFile(showId, buffer);
-        String fileName = "c:\\photo\\" + result.getName();
+//        String fileName = "c:\\photo\\" + result.getName();
+        String fileName = "C:\\Users\\Ser3na\\Documents\\IS3102\\Test.git\\IRMS\\IRMS-war\\web\\images\\" + result.getName();
         showSessionBean.uploadImage(showId, fileName);
         System.err.println(fileName);
         while (true) {
