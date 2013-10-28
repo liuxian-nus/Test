@@ -34,7 +34,6 @@ public class TicketPurchaseSessionBean {
     
     
     public TicketPurchaseSessionBean(){
-        
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

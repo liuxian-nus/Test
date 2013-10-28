@@ -37,6 +37,11 @@ public class TicketPurchaseEntity implements Serializable {
     Date attrTicketBookDate =new Date();
     private String attrTPStatus;
 
+    public TicketPurchaseEntity() {
+        attrTPStatus = "in process";
+    }
+    
+
     public Long getTpId() {
         return tpId;
     }

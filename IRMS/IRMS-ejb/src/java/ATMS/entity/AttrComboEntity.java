@@ -59,7 +59,10 @@ public class AttrComboEntity implements Serializable {
         this.attrs = attrs;
     }
 
-
+    public List<AttrTicketEntity> getAttrTickets() {
+        return attrTickets;
+    }
+    
     public void setAttrTickets(List<AttrTicketEntity> attrTickets) {
         this.attrTickets = attrTickets;
     }

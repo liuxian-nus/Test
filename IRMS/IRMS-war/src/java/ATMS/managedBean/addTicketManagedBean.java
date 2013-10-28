@@ -5,6 +5,8 @@
 package ATMS.managedBean;
 
 import ATMS.entity.AttrTicketEntity;
+import ATMS.entity.AttractionEntity;
+import ATMS.session.AttractionSessionBean;
 import ATMS.session.TicketSessionBean;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
@@ -23,8 +25,11 @@ import javax.faces.event.ActionEvent;
 @RequestScoped
 public class addTicketManagedBean {
     @EJB
-    private TicketSessionBean ticketSessionBean;   
+    private AttractionSessionBean attractionSessionBean;
+    @EJB
+    private TicketSessionBean ticketSessionBean;    
     private AttrTicketEntity ticket;
+    private AttractionEntity attr;
     
     @PostConstruct
     public void init()
@@ -64,24 +69,45 @@ public class addTicketManagedBean {
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("addTicket.xhtml");
     }
-    
-  /*  public AttrTicketEntity mapAttractionId(AttrTicketEntity ticket){
-        String name=ticket.getAttrName();
-        
-        if(name.equals("Aquarium"))
-            ticket.setAttrId("AQ");
-        else if(name.equals("Horror House"))
-            ticket.setAttrId("IT");
-        else if(name.equals("Culture Musuem"))
-            ticket.setAttrId("MU");
-        else if(name.equals("Adventure World"))
-            ticket.setAttrId("OT");
-        else
-            System.out.println("wrong attraction name");
-        
-        return ticket; 
- 
+
+    /*  public AttrTicketEntity mapAttractionId(AttrTicketEntity ticket){
+    String name=ticket.getAttrName();
+    if(name.equals("Aquarium"))
+    ticket.setAttrId("AQ");
+    else if(name.equals("Horror House"))
+    ticket.setAttrId("IT");
+    else if(name.equals("Culture Musuem"))
+    ticket.setAttrId("MU");
+    else if(name.equals("Adventure World"))
+    ticket.setAttrId("OT");
+    else
+    System.out.println("wrong attraction name");
+    return ticket;
     }*/
+    public AttractionSessionBean getAttractionSessionBean() {
+        return attractionSessionBean;
+    }
+
+    public void setAttractionSessionBean(AttractionSessionBean attractionSessionBean) {
+        this.attractionSessionBean = attractionSessionBean;
+    }
+
+    public TicketSessionBean getTicketSessionBean() {
+        return ticketSessionBean;
+    }
+
+    public void setTicketSessionBean(TicketSessionBean ticketSessionBean) {
+        this.ticketSessionBean = ticketSessionBean;
+    }
+
+    public AttractionEntity getAttr() {
+        return attr;
+    }
+
+    public void setAttr(AttractionEntity attr) {
+        this.attr = attr;
+    }
+    
     
    
 }
