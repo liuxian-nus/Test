@@ -15,12 +15,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author Diana Wang
  */
 @Entity
+@XmlRootElement
+@XmlType(name="promotionEntity")
 public class PromotionEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

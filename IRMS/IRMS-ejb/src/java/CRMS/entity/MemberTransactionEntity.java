@@ -12,12 +12,16 @@ import javax.persistence.Id;
 import java.util.Date;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author liuxian
  */
 @Entity
+@XmlRootElement
+@XmlType(name="memberTransactionEntity")
 public class MemberTransactionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

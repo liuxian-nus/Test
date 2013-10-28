@@ -33,7 +33,7 @@ public class AddEventManagedBean {
     
     public void saveNew(ActionEvent event) throws IOException {
         System.err.println("Saving New Event...");
-        eventSessionBean.addEvent(eventEntity);
+ //       eventSessionBean.addEvent(eventEntity);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New event saved.", ""));
         FacesContext.getCurrentInstance().getExternalContext().redirect("addEvent.xhtml");
     }

@@ -17,12 +17,17 @@ import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author liuxian
  */
 @Entity
+@XmlRootElement
+@XmlType(name="memberEntity")
+
 public class MemberEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -1281,7 +1281,7 @@ public class initializationManagedBean implements Serializable {
         eventEntity.setEmail("LX <3 HY");
         eventEntity.setEventContact("31415926");
         try {
-            eventSessionBean.addEvent(eventEntity);
+//            eventSessionBean.addEvent(eventEntity);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding show contract", ""));
             return;
