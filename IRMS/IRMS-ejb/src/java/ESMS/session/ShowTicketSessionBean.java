@@ -21,10 +21,10 @@ public class ShowTicketSessionBean {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
-    
     ShowTicketEntity showTicket;
-    
-    public ShowTicketSessionBean(){}
+
+    public ShowTicketSessionBean() {
+    }
 
     public ShowTicketEntity addShowTicket(ShowTicketEntity showTicket) {
         em.persist(showTicket);
@@ -38,7 +38,7 @@ public class ShowTicketSessionBean {
 
     public boolean deleteShowTicket(Long showTicketId) {
         showTicket = em.find(ShowTicketEntity.class, showTicketId);
-        if (showTicket==null){
+        if (showTicket == null) {
             System.out.println("deleteShowTicket: show does not exist!");
             return false;
         }
@@ -46,8 +46,13 @@ public class ShowTicketSessionBean {
         return true;
     }
 
-    public List<ShowTicketEntity> getAllShowTickets() throws NoResultException{
+    public List<ShowTicketEntity> getAllShowTickets() throws NoResultException {
         Query q = em.createQuery("SELECT s1 FROM ShowTicketEntity s1");
         return q.getResultList();
+    }
+
+    public ShowTicketEntity getShowTicketById(Long showTicketId) {
+        showTicket = em.find(ShowTicketEntity.class, showTicketId);
+        return showTicket;
     }
 }

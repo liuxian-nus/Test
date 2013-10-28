@@ -7,6 +7,7 @@ package ESMS.session;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,6 +26,7 @@ public class ShowSessionBean {
     private EntityManager em;
     private ShowEntity show;
     private ShowScheduleEntity showSchedule;
+    private List<ShowEntity> shows;
 
     public ShowSessionBean() {
     }
@@ -54,7 +56,7 @@ public class ShowSessionBean {
         Query q = em.createQuery("SELECT m FROM ShowEntity m");
         return q.getResultList();
     }
-    
+
     public List<ShowScheduleEntity> getAllShowSchedules(Long showId) throws NoResultException {
         show = em.find(ShowEntity.class, showId);
         List q = show.getShowSchedules();
@@ -62,7 +64,7 @@ public class ShowSessionBean {
 //        return q.getResultList();
         return q;
     }
-    
+
     public void addShowSchedule(Long showId, ShowScheduleEntity showSchedule) {
         System.err.println("show session bean: add show schedule");
         show = em.find(ShowEntity.class, showId);
@@ -77,17 +79,16 @@ public class ShowSessionBean {
         showSchedule.addShowTicket(showTicket);
         em.merge(showSchedule);
     }
-    
-     public void uploadFile(Long showId, byte[] buffer) {
+
+    public void uploadFile(Long showId, byte[] buffer) {
         show = em.find(ShowEntity.class, showId);
         show.setImage(buffer);
         em.persist(show);
         em.flush();
     }
-     
-     
+
     public void uploadImage(Long showId, String fileName) {
-   show = em.find(ShowEntity.class, showId);
+        show = em.find(ShowEntity.class, showId);
         show.setImagePath(fileName);
         em.persist(show);
         em.flush();
@@ -97,4 +98,11 @@ public class ShowSessionBean {
         return em.find(ShowEntity.class, showId);
     }
 
+    public List<ShowEntity> getShowByName(String searchName) {
+        Query query = em.createQuery("SELECT r FROM ShowEntity r WHERE r.showName ='" + searchName + "'");
+        System.err.println("getShowByName: " + searchName);
+        shows = new ArrayList<ShowEntity>();
+        shows = query.getResultList();
+        return shows;
+    }
 }

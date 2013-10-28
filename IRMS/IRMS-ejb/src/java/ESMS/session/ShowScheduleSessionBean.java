@@ -21,32 +21,35 @@ public class ShowScheduleSessionBean {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
-    
     ShowScheduleEntity showSchedule;
-    
-    public ShowScheduleSessionBean(){}
-    
-    public ShowScheduleEntity addShowSchedule(ShowScheduleEntity showSchedule){
+
+    public ShowScheduleSessionBean() {
+    }
+
+    public ShowScheduleEntity addShowSchedule(ShowScheduleEntity showSchedule) {
         em.persist(showSchedule);
         return showSchedule;
     }
-    
-    public void deleteShowSchedule(Long showScheduleId){
+
+    public void deleteShowSchedule(Long showScheduleId) {
         showSchedule = em.find(ShowScheduleEntity.class, showScheduleId);
-        System.err.println("Show Schedule Id: "+showScheduleId);
+        System.err.println("Show Schedule Id: " + showScheduleId);
         em.remove(showSchedule);
     }
-    
-    public boolean updateShowSchedule(ShowScheduleEntity showSchedule)
-    {
+
+    public boolean updateShowSchedule(ShowScheduleEntity showSchedule) {
         em.merge(showSchedule);
 //        System.out.println("ShowScheduleSessionBean: show " + showSchedule.getShowDate() + " is successfully updated");
         return true;
     }
-    
-    public List<ShowScheduleEntity> getAllShowSchedules() throws NoResultException{
+
+    public List<ShowScheduleEntity> getAllShowSchedules() throws NoResultException {
         Query q = em.createQuery("SELECT m FROM ShowScheduleEntity m");
         return q.getResultList();
-    } 
+    }
 
+    public ShowScheduleEntity getShowScheduleById(Long showScheduleId) {
+        showSchedule = em.find(ShowScheduleEntity.class, showScheduleId);
+        return showSchedule;
+    }
 }
