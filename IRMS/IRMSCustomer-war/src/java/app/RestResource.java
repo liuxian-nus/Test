@@ -36,7 +36,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("rest")
-public class App {
+public class RestResource {
 //    @EJB
  //   private MemberTransactionSessionBean mtSessionBean;
     @EJB
@@ -50,7 +50,7 @@ public class App {
     /**
      * Creates a new instance of GenericResource
      */
-    public App() {
+    public RestResource() {
     }
 
     /**
