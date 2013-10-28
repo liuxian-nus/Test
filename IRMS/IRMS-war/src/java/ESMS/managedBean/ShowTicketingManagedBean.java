@@ -7,8 +7,10 @@ package ESMS.managedBean;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
+import ESMS.entity.ShowTicketSaleEntity;
 import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
+import ESMS.session.ShowTicketSaleSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
@@ -38,9 +40,12 @@ public class ShowTicketingManagedBean {
     ShowScheduleSessionBean showScheduleSessionBean;
     @EJB
     ShowTicketSessionBean showTicketSessionBean;
+    @EJB
+    ShowTicketSaleSessionBean showTicketSaleSessionBean;
     private ShowEntity selectedShow;
     private ShowScheduleEntity selectedShowSchedule;
     private ShowTicketEntity selectedShowTicket;
+    private ShowTicketSaleEntity selectedShowTicketSale;
     private List<ShowEntity> showList;
     private List<ShowScheduleEntity> showSchedules = new ArrayList<ShowScheduleEntity>();
     private List<ShowTicketEntity> showTickets = new ArrayList<ShowTicketEntity>();
@@ -49,13 +54,14 @@ public class ShowTicketingManagedBean {
     private Long showScheduleId;
     private Long showTicketId;
     private boolean mode;
-    private int showTicketQuota;
+    private int showTicketQuota;// number of tickets bought
 
     //Constructor
     public ShowTicketingManagedBean() {
         selectedShow = new ShowEntity();
         selectedShowSchedule = new ShowScheduleEntity();
         selectedShowTicket = new ShowTicketEntity();
+        selectedShowTicketSale = new ShowTicketSaleEntity();
     }
 
     //Methods
@@ -75,7 +81,6 @@ public class ShowTicketingManagedBean {
 
     public void searchByName(ActionEvent event) throws IOException, ExistException {
 
-        System.out.println("NO6 we are in searchByName function " + searchName);
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
@@ -96,11 +101,11 @@ public class ShowTicketingManagedBean {
             return;
         }
     }
-    
+
     public void initViewList(PhaseEvent event) {
         showList = (List<ShowEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("showList");
     }
-    
+
     public void handleShowChanges() {
         if (showId != null) {
             selectedShow = showSessionBean.getShowById(showId);
@@ -110,7 +115,7 @@ public class ShowTicketingManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
-    
+
     public void handleShowScheduleChanges() {
         if (showScheduleId != null) {
             selectedShowSchedule = showScheduleSessionBean.getShowScheduleById(showScheduleId);
@@ -120,7 +125,7 @@ public class ShowTicketingManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
-    
+
     public void handleShowTicketChanges() {
         if (showTicketId != null) {
             selectedShowTicket = showTicketSessionBean.getShowTicketById(showTicketId);
@@ -130,8 +135,38 @@ public class ShowTicketingManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
-    
-    public void changeMode(){
+
+    public void buyTicket() throws IOException {
+        System.err.println("buying ticket from ticket office: ");
+        System.out.println("showId: " + showId);
+        System.out.println("showSchedule: " + showScheduleId);
+        System.out.println("showTicket: " + showTicketId);
+
+        selectedShow = showSessionBean.getShowById(showId);
+        selectedShowSchedule = showScheduleSessionBean.getShowScheduleById(showScheduleId);
+        selectedShowTicket = showTicketSessionBean.getShowTicketById(showTicketId);
+
+        if (showTicketQuota > selectedShowTicket.getShowTicketQuota()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Not enough tickets.", ""));
+        } else {
+
+            System.out.println("selectedShow: " + selectedShow.getShowName());
+
+            selectedShowTicketSale.setShow(selectedShow);
+            selectedShowTicketSale.setShowStartDateTime(selectedShowSchedule.getStartDateTime());
+            selectedShowTicketSale.setShowTicketType(selectedShowTicket.getShowTicketType());
+            selectedShowTicketSale.setShowTicketQuantity(showTicketQuota);
+
+            showTicketSessionBean.updateQuantity(showTicketId, showTicketQuota);
+            showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful.", ""));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("showTicketing.xhtml");
+
+        }
+    }
+
+    public void changeMode() {
         mode = true;
     }
 
@@ -254,5 +289,21 @@ public class ShowTicketingManagedBean {
 
     public void setShowTicketQuota(int showTicketQuota) {
         this.showTicketQuota = showTicketQuota;
+    }
+
+    public ShowTicketSaleSessionBean getShowTicketSaleSessionBean() {
+        return showTicketSaleSessionBean;
+    }
+
+    public void setShowTicketSaleSessionBean(ShowTicketSaleSessionBean showTicketSaleSessionBean) {
+        this.showTicketSaleSessionBean = showTicketSaleSessionBean;
+    }
+
+    public ShowTicketSaleEntity getSelectedShowTicketSale() {
+        return selectedShowTicketSale;
+    }
+
+    public void setSelectedShowTicketSale(ShowTicketSaleEntity selectedShowTicketSale) {
+        this.selectedShowTicketSale = selectedShowTicketSale;
     }
 }

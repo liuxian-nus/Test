@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-        <p:tabView orientation="left" style="width: 1000px;">
+        <p:tabView style="width: 1000px;">
             <p:tab id="tab1" title="Search Show By Name">
                 <h:form id ="tablform">
                     <p:growl id="tab1msg"/>
@@ -15,6 +15,7 @@
                     <p:autoComplete id="show" value="#{showTicketingManagedBean.searchName}" 
                                     required="true" requiredMessage="Show name Cannot be empty"   
                                     completeMethod="#{showTicketingManagedBean.complete}" />
+                    <br/>
                     <p:commandButton  value="Search" ajax="true" 
                                       actionListener="#{showTicketingManagedBean.searchByName}" update ="tab1msg"/>
                 </h:form>
@@ -51,6 +52,8 @@
                         
                         <h:outputText value="Show Ticket Quantity: "/>
                         <p:inputText value="#{showTicketingManagedBean.showTicketQuota}"/>
+                        
+                        <p:commandButton value="Buy" ajax="true" actionListener="#{showTicketingManagedBean.buyTicket}" update="tab3msg"/>
                         
                     </h:panelGrid>
                 </h:form>
