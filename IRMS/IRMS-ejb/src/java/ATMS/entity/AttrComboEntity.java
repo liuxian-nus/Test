@@ -5,7 +5,9 @@
 package ATMS.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,8 +31,8 @@ public class AttrComboEntity implements Serializable {
     private String attrComboName;
     @ManyToMany
     private List<AttractionEntity> attrs;
-    @OneToMany
-    private List<AttrTicketEntity> attrTickets;
+    @OneToMany(targetEntity = AttrTicketEntity.class,cascade={CascadeType.MERGE})
+    private List<AttrTicketEntity> attrTickets=new ArrayList<AttrTicketEntity>();
     private double attrComboPrice;
     private String attrComboType; //one day, two day
     private String attrComboCluster; 

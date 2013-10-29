@@ -67,7 +67,7 @@ public class addTicketManagedBean {
     }
     
     public void oneMore(ActionEvent event) throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("addTicket.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("addAttrTickets.xhtml");
     }
     
     public void saveChanges(ActionEvent event) throws ExistException
