@@ -243,7 +243,7 @@ public class Menu2ManagedBean implements Serializable {
             if (userType.contains("ATMSAdmin")) {
                 System.out.println("ATMSAdmin menu bar");
                 submenu = new Submenu();
-                submenu.setLabel("Attractions");
+                submenu.setLabel("Attraction/ticket management");
                 submenu.setIcon("ui-icon ui-icon-contact");
 
                 item = new MenuItem();
@@ -277,7 +277,37 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/atms/addAttrCombos.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Manage Ticket Combos");
+                item.setUrl("/atms/manageAttrCombos.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Add Express Ticket");
+                item.setUrl("/atms/addAttrExpressPass.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Manage Express Combos");
+                item.setUrl("/atms/manageAttrExpressPass.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
 
+                model.addSubmenu(submenu);
+                
+                submenu = new Submenu();
+                submenu.setLabel("Ticket Purchase");
+                submenu.setIcon("ui-icon ui-icon-contact");
+                
+                item = new MenuItem();
+                item.setValue("Adventure world ticket purchase");
+                item.setUrl("/atms/adventureWorldTicketPurchase.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+                
                 model.addSubmenu(submenu);
             }
 
