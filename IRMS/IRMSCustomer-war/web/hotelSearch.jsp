@@ -18,15 +18,20 @@
 
 
             <script>
-
-                $(function() {
-                    $("#datepicker1").datepicker();
+                        $(document).ready(function() {
+                $("#datepicker1").datepicker({
+                 minDate:0,
+                onClose: function(selectedDate) {
+                var minDate = $(this).datepicker('getDate');
+                var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                $("#datepicker2").datepicker("option", "minDate", newMin);
+                }
                 });
+                });            
             </script>
             <script>
-
-                $(function() {
-                    $("#datepicker2").datepicker();
+                        $(function() {
+                        $("#datepicker2").datepicker();
                 });
             </script>
         </head>
@@ -41,29 +46,22 @@
 
                         <div class="row">
                             <div class="large-12 columns">
-                                <label for="customDropdown"><strong>Where to live</strong></label>
-                                <select id="customDropdown" name="hotel">
-
+                                <label for="hotel"><strong>Where to live</strong></label>
+                                <select id="hotel" name="hotel" onblur="loadRoomType()">
                                     <option></option>
                                     <option>Orchard Hotel</option>
                                     <option>Marina Hotel</option>
                                     <option>BeachView Hotel</option>
-
                                 </select>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="large-12 columns">
-                                <label for="customDropdown"><strong>Type of room</strong></label>
-                                <select id="customDropdown" name="roomType">
+                                <label for="roomType"><strong>Type of room</strong></label>
+                                <select id="roomType" name="roomType">
 
                                     <option></option>
-                                    <option>Orchard Suite</option>
-                                    <option>Chairman Suite</option>
-                                    <option>Deluxe Suite</option>
-                                    <option>Deluxe</option>
-                                    <option>Superior</option>
 
                                 </select>
                             </div>
@@ -85,13 +83,75 @@
                         <div class="row">
                             <div class="large-12 columns">
                                 <label for="right-label" class="left-align,inline"><strong>Number of Rooms</label>
-                                <input id="input-room"  placeholder="roomCount" name="roomCount">
+                                
+                                   <select id="input-room" name="roomCount">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                    <option>11</option>
+                                    <option>12</option>
+                                    <option>13</option>
+                                    <option>14</option>
+                                    <option>15</option>
+                                    <option>16</option>
+                                    <option>17</option>
+                                    <option>18</option>
+                                    <option>19</option>
+                                    <option>20</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="large-12 columns">
-                                <label for="right-label" class="left-align,inline"><strong>Number of People</label>
-                                <input id="input-people"  placeholder="people" name="people">
+                                <label for="right-label" class="left-align,inline"><strong>Number of People</label>                               
+                                 <select id="input-people" name="people">
+                                    <option>1</option>
+                                    <option selected='selected'>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                    <option>11</option>
+                                    <option>12</option>
+                                    <option>13</option>
+                                    <option>14</option>
+                                    <option>15</option>
+                                    <option>16</option>
+                                    <option>17</option>
+                                    <option>18</option>
+                                    <option>19</option>
+                                    <option>20</option>
+                                    <option>21</option>
+                                    <option>22</option>
+                                    <option>23</option>
+                                    <option>24</option>
+                                    <option>25</option>
+                                    <option>26</option>
+                                    <option>27</option>
+                                    <option>28</option>
+                                    <option>29</option>
+                                    <option>30</option>
+                                    <option>31</option>
+                                    <option>32</option>
+                                    <option>33</option>
+                                    <option>34</option>
+                                    <option>35</option>
+                                    <option>36</option>
+                                    <option>37</option>
+                                    <option>38</option>
+                                    <option>39</option>
+                                    <option>40</option>
                             </div>
                         </div>
                         <br>
@@ -120,7 +180,7 @@
                 <div class="panel">
                     <div class="row">
                         <div class="large-5 columns">
-                        <h5><strong>&nbsp Orchard Hotel™</strong></h5>
+                        <h5><strong>&nbsp Orchard Hotelâ„¢</strong></h5>
                         </div>
                         <div class="large-7 columns">
                         <img style="vertical-align:text-bottom;" src="/IRMSCustomer-war/images/star.png">
@@ -128,9 +188,9 @@
                         <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
                         <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
                         <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
-                        </div>
                          
                     </div>
+                        </div>
                     <div class="row">
                     <div class="large-5 columns">
                       
@@ -155,7 +215,7 @@
                     <br>
                     <div class="row">
                         <div class="large-5 columns">
-                                <h5><strong>&nbsp Marina Hotel™</strong></h5>
+                                <h5><strong>&nbsp Marina Hotelâ„¢</strong></h5>
 
                                 <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel1.jpg">
                                     <img src="/IRMSCustomer-war/images/gallery/hotel1.jpg">
@@ -169,9 +229,9 @@
                         <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
                         <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
                         <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
-                            <p style="color:#4d4d4d">Marina Hotel is a luxurious treat for art lovers. A tribute to one of America’s greatest contemporary architects 
-                                Michael Graves, we let this boutique hotel speak for itself through the designer’s elegant and distinctive touches, from lamps and
-                                crockery to furnishings and the decor.We enrich all our guests’ stay experience with art through our art gallery-like atmosphere in 
+                            <p style="color:#4d4d4d">Marina Hotel is a luxurious treat for art lovers. A tribute to one of Americaâ€™s greatest contemporary architects 
+                                Michael Graves, we let this boutique hotel speak for itself through the designerâ€™s elegant and distinctive touches, from lamps and
+                                crockery to furnishings and the decor.We enrich all our guestsâ€™ stay experience with art through our art gallery-like atmosphere in 
                                 every maple-accented room, which features mural-adorned walls and artistic furniture pieces. Even the bathrooms are works of art, with
                                 flower-motif mosaics on the walls and the unusual blue mosaic-tiled circular shower.</p>
 
@@ -180,7 +240,7 @@
                     <br>
                     <div class="row">
                         <div class="large-5 columns">
-                                <h5><strong>&nbsp BeachView Hotel™</strong></h5>
+                                <h5><strong>&nbsp BeachView Hotelâ„¢</strong></h5>
                                 <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel3.jpg">
                                     <img src="/IRMSCustomer-war/images/gallery/hotel3.jpg">
                                 </a>
@@ -207,9 +267,29 @@
     <script>
                 document.write('<script src=' +
                 ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
-                '.js><\/script>')    </script> 
+                '.js><\/script>');
+        </script> 
 
     <script>
         $(document).foundation();    </script>
+        <script>
+            function loadRoomType(){
+                var hotel = document.getElementById('hotel').value;
+                if (hotel=== "Orchard Hotel"){
+                    $('#roomType').html('<option value="Orchard Suite">Orchard Suite</option> <option value="Deluxe Suite">Deluxe Suite</option><option value="Deluxe">Deluxe</option>');
+            
+                }
+                else if (hotel==="Marina Hotel"){
+                    $('#roomType').html('<option value="Chairman Suite">Chairman Suite</option><option value="Deluxe Suite">Deluxe Suite</option><option value="Deluxe">Deluxe</option>');
+                     
+                }else if (hotel==="BeachView Hotel"){
+                    $('#roomType').html('<option value="Superior">Superior</option><option value="Deluxe Suite">Deluxe Suite</option><option value="Deluxe">Deluxe</option>');
+                 
+                }else{
+                    
+                }
+           
+            }
+            </script>
 </body>
 </html>
