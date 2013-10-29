@@ -24,54 +24,61 @@
 
 
             <script>
-                $(document).ready(function() {
-                    var eventList = new Array();
-                    <%
+                        $(document).ready(function() {
+                var eventList = new Array();
+            <%
                         SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd");
-                    %>
-                    <c:forEach items="${eventList}" var="item">
-                        var startdate = "${item.startDate}";
+            %>
+            <c:forEach items="${eventList}" var="item">
+                var startdate = "${item.startDate}";
                         var temp = startdate.split(" ");
-                        temp = temp[0]+" "+temp[1]+" "+temp[2] + " 2013";
+                        temp = temp[0] + " " + temp[1] + " " + temp[2] + " 2013";
                         startdate = new Date(temp);
-                  
                         var enddate = "${item.endDate}";
                         var temp = enddate.split(" ");
-                        temp = temp[0]+" "+temp[1]+" "+temp[2] + " 2013";
+                        temp = temp[0] + " " + temp[1] + " " + temp[2] + " 2013";
                         enddate = new Date(temp);
                         var item = {"title": "${item.eventName}",
-                                    "start": moment(startdate).format("YYYY-MM-DD"),
-                                    "end": moment(enddate).format("YYYY-MM-DD")
-                            };
-                        eventList.push(item);
-                    </c:forEach>
+                        "start": moment(startdate).format("YYYY-MM-DD"),
+                        "end": moment(enddate).format("YYYY-MM-DD"),
+                        "url": "restaurant"
                         
-                        console.log(eventList);
+                };
+                        eventList.push(item);            
+           </c:forEach>
 
-                    $('#mycalendar').fullCalendar({
-                        header: {
+                                    console.log(eventList);
+                                    $('#mycalendar').fullCalendar({
+                            header: {
                             left: 'prev,next today',
-                            center: 'title',
-                            right: ''
-                        },
-                        defaultView: 'month',
-                        editable: false,
-                        slotMinutes: 5,
-                        allDaySlot: true,
-                        lazyFetching: true,
-                        events: eventList
+                                    center: 'title',
+                                    right: ''
+                            },
+                                    defaultView: 'month',
+                                    editable: false,
+                                    slotMinutes: 5,
+                                    allDaySlot: true,
+                                    lazyFetching: true,
+                                    events: eventList,
+                                    eventClick: function(event) {
+                                    if (event.url) {
+                                    window.open(event.url);
+                                    <%%>
+                                    return false;
+                                    }
+                                    }
 
 
 
-                    });
-                });
+                            });
+                            });
         </script>
-</head>
-<body>
-    <jsp:include page="header.jsp"></jsp:include>
+    </head>
+    <body>
+        <jsp:include page="header.jsp"></jsp:include>
 
-        <div id='mycalendar'></div>
+            <div id='mycalendar'></div>
 
-    <jsp:include page="footer.jsp"></jsp:include>
-</body>
+        <jsp:include page="footer.jsp"></jsp:include>
+    </body>
 </html>
