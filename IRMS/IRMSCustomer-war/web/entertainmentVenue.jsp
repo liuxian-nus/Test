@@ -5,10 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+       
         <title>Event Venue Booking</title>
         <jsp:include page="base.jsp"></jsp:include>
         </head>
@@ -18,6 +20,10 @@
         
           <div class="row">
               <h5> Please select your ticket for ${thisShow.showName} </h5>
+          <c:forEach items="${showSchedule}" var="schedule">
+              <input type="radio" name="schedule" value="${schedule.startDateTime}">${schedule.startDateTime}<br>
+          </c:forEach>
+          
                 <form id="member" action="memberInfo" method="POST">
                     <fieldset>
                         <legend>Ticket</legend>
