@@ -38,7 +38,7 @@ public class TicketSessionBean {
     }
     
     public List<AttrTicketEntity> getAllTickets(){
-        Query query = em.createQuery("SELECT t FROM TicketEntity t");
+        Query query = em.createQuery("SELECT t FROM AttrTicketEntity t");
         return query.getResultList();
     }
     
