@@ -37,6 +37,7 @@ public class CEMSServlet extends HttpServlet {
     private List<VenueEntity> data;
     private VenueEntity data1;
     private EventEntity data2;
+    
     //private String keyword=null;
 
     /**
@@ -116,10 +117,12 @@ public class CEMSServlet extends HttpServlet {
 
             } else if ("eventList".equals(page)) {
                 System.out.println("***eventList***");
-                String eventTitle="IS3102";
                 List<EventEntity> events = eventSessionBean.listEvents();
                 request.setAttribute("eventList", events);
                 request.getRequestDispatcher("/eventList.jsp").forward(request, response);
+            }else if ("eventInfo".equals(page)) {
+          
+                request.getRequestDispatcher("/eventInfo.jsp").forward(request, response);
             } else {
                 System.out.println("other page");
             }
