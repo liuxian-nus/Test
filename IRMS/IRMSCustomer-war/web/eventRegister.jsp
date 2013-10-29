@@ -21,7 +21,7 @@
                  minDate:0,
                 onClose: function(selectedDate) {
                 var minDate = $(this).datepicker('getDate');
-                var newMin = new Date(minDate.setDate(minDate.getDate() + 1));
+                var newMin = new Date(minDate.setDate(minDate.getDate()));
                 $("#datepicker2").datepicker("option", "minDate", newMin);
                 }
                 });
@@ -557,5 +557,15 @@
             </form>
 
         <jsp:include page="footer.jsp"></jsp:include>
+        
+              <script>
+        document.write('<script src=' +
+        ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
+        '.js><\/script>')
+        </script> 
+        <script src="js/foundation.min.js"></script>
+        <script>
+                $(document).foundation();
+        </script>
     </body>
 </html>
