@@ -51,7 +51,7 @@ public class MemberEntity implements Serializable {
     
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "rcMember")
     private Set<ReservationEntity> hotelReservation;
-    @OneToMany(cascade ={CascadeType.ALL},mappedBy = "member")
+    @OneToMany(cascade ={CascadeType.ALL})
     private Set <MemberTransactionEntity> MemberTransactions;
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "mcMemberTargets")
     private Set <PromotionEntity> MarketingCampaigns;
