@@ -170,8 +170,9 @@ public class MemberSessionBean {
     }
 
     public List<MemberTransactionEntity> getAllTransactions(String memberEmail) {
-        Query q = em.createQuery("SELECT m FROM MemberEntity m where m.memberEmail = '" + memberEmail + "'");
-        List memberTransactionList = new ArrayList<MemberTransactionEntity> ();
+//        member = em.find(MemberEntity.class, memberEmail);
+        Query q = em.createQuery("SELECT mt FROM MemberTransactionEntity mt where mt.memberEmail = '" + memberEmail + "'");
+        List memberTransactionList = new ArrayList<> ();
         for(Object o: q.getResultList()) {
             MemberTransactionEntity mt = (MemberTransactionEntity) o;
             memberTransactionList.add(mt);
@@ -181,7 +182,7 @@ public class MemberSessionBean {
 
     public List<MemberEntity> getAllMembers() {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
-        List memberList = new ArrayList<MemberEntity>();
+        List memberList = new ArrayList<>();
         for (Object o : q.getResultList()) {
             MemberEntity m = (MemberEntity) o;
             memberList.add(m);
@@ -197,4 +198,5 @@ public class MemberSessionBean {
     public void persist(Object object) {
         em.persist(object);
     }
+    
 }

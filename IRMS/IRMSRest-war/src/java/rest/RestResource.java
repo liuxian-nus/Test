@@ -50,7 +50,7 @@ public class RestResource {
 
     @GET
     @Path("member")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public MemberEntity getMember(@QueryParam("email") String email)
     {
         if(memberSessionBean == null)
@@ -59,13 +59,13 @@ public class RestResource {
         if(member!=null){
             return member;
         }
-        else 
+        else
             throw new WebApplicationException(404);
     }
 
     @GET
     @Path("member/transactions")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<MemberTransactionEntity> getMemberTransaction(@QueryParam("email") String email)
     {
         return memberSessionBean.getAllTransactions(email);

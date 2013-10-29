@@ -34,7 +34,7 @@ public class MemberTransactionSessionBean {
     public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay) {
         System.out.println("creating member transaction....");
         mt = new MemberTransactionEntity();
-        mt.setMember(member);
+        mt.setMemberEmail(member.getMemberEmail());
         mt.setMtAmount(amount);
         mt.setMtDate(mtDate);
         mt.setMtDepartment(mtDepartment);
@@ -68,7 +68,7 @@ public class MemberTransactionSessionBean {
         if (temp.add(mt)) {
             member.setMemberTransactions(temp);
         }
-        mt.setMember(member);
+        mt.setMemberEmail(member.getMemberEmail());
         if (!coinPay) {
             addPoint(member, mt.getMtAmount());
             addCoin(member, mt.getMtAmount());

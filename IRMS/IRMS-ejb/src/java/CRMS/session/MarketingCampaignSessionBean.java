@@ -51,7 +51,7 @@ public class MarketingCampaignSessionBean implements MarketingCampaignSessionRem
             Set<Long> respondCustomers = getCustomers();
             for(Object o: respondCustomers){
                 MemberTransactionEntity thismt = em.find(MemberTransactionEntity.class, o);
-                System.out.println("This transaction is consumed by "+thismt.getMember().getMemberName());
+                System.out.println("This transaction is consumed by "+thismt.getMemberEmail());
                 System.out.println("At "+thismt.getMtDate()+ " and the consumption amount is "+thismt.getMtAmount());
          
             }
