@@ -17,9 +17,11 @@
         <jsp:include page="header.jsp"></jsp:include>
         
           <div class="row">
+              <h5> Please select your ticket for ${thisShow.showName} </h5>
                 <form id="member" action="memberInfo" method="POST">
                     <fieldset>
-                        <legend>Please Select Your Ticket</legend>
+                        <legend>Ticket</legend>
+                        
                         <p>${message}</p>
                     <table>
 
