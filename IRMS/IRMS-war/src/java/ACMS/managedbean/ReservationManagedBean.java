@@ -206,6 +206,7 @@ public class ReservationManagedBean implements Serializable {
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
             reservationList = reservationSessionBean.getTodayReservations();
+            System.out.println("after searching"+reservationList.size());
             
                 System.out.println("we are after session bean");
                 FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);

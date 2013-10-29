@@ -27,22 +27,12 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean
 @ViewScoped
 public class ReservationSearchResultManagedBean implements Serializable {
+
     @EJB
     private ReservationSessionBean reservationSessionBean;
-
     private ReservationEntity selectReservation;
     private List<ReservationEntity> reservationList;
     private Long reservationId;
-    
-
-    public List<ReservationEntity> getReservationList() {
-        System.err.println("in get all reservations");
-        return reservationSessionBean.getAllReservations();
-    }
-
-    public void setReservationList(List<ReservationEntity> reservationList) {
-        this.reservationList = reservationList;
-    }
 
     public ReservationEntity getSelectReservation() {
         return selectReservation;
@@ -50,6 +40,14 @@ public class ReservationSearchResultManagedBean implements Serializable {
 
     public void setSelectReservation(ReservationEntity selectReservation) {
         this.selectReservation = selectReservation;
+    }
+
+    public List<ReservationEntity> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<ReservationEntity> reservationList) {
+        this.reservationList = reservationList;
     }
 
     /**

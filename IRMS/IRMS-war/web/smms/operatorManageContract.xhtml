@@ -27,10 +27,14 @@
                             <h:outputText value="#{contract.outlet.id}"/>
                         </p:column>
                         <p:column headerText="Starting date" style="width:100px;">
-                            <h:outputText value="#{contract.last.eventStartDate}"/>
+                            <h:outputText value="#{contract.last.eventStartDate}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Ending date" style="width:100px;">
-                            <h:outputText value="#{contract.last.eventEndDate}"/>
+                            <h:outputText value="#{contract.last.eventEndDate}">
+                             <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Status" style="width:100px;">
                             <h:outputText value="#{contract.last.eventStatus}"/>

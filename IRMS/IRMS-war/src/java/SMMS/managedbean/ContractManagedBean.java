@@ -180,14 +180,16 @@ public class ContractManagedBean implements Serializable {
      * Creates a new instance of ContractManagedBean
      */
     public void addContract(ActionEvent event) throws ExistException, IOException {
-        System.out.println("in adding contract" + merchantId + "and outlet ID:" + outletId);
+        System.out.println("NO1: in adding contract" + merchantId + "and outlet ID:" + outletId);
         try {
 
             merchant = merchantSessionBean.getMerchantById(merchantId);
             outlet = outletSessionBean.getOutletById(outletId);
+            System.out.println("NO2: contract outlet id getting outlet"+ outlet.getOutletId());
 
             contract.setMerchant(merchant); //adding new merchant
             contract.setOutlet(outlet); //adding new outlet
+            System.out.println("NO3: contract outlet id setting done"+contract.getOutlet().getOutletId());
             contractSessionBean.addContract(contract);//persist contract entity
             System.out.println("after persisting contract" + contract.getContractId());
 

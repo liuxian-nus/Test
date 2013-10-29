@@ -63,6 +63,9 @@ public class RoomSearchResultManagedBean implements Serializable {
     }
 
     public void intiViewAgain(PhaseEvent event) {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+
         rooms = (List<RoomEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("Rooms");
     }
 
