@@ -255,7 +255,7 @@ public class EventSessionBean {
     }
 
     public List<EventEntity> getAllEvents() {
-        Query q = em.createQuery("SELECT m FROM eventEntity m");
+        Query q = em.createQuery("SELECT m FROM EventEntity m");
         return q.getResultList();
     }
 }

@@ -25,6 +25,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.primefaces.event.ToggleEvent;
 
 /**
  *
@@ -47,7 +48,7 @@ public class ShowTicketingManagedBean {
     private ShowTicketEntity selectedShowTicket;
     private ShowTicketSaleEntity selectedShowTicketSale;
     private List<ShowEntity> showList;
-    private List<ShowScheduleEntity> showSchedules = new ArrayList<ShowScheduleEntity>();
+    private List<ShowScheduleEntity> showSchedules;
     private List<ShowTicketEntity> showTickets = new ArrayList<ShowTicketEntity>();
     private String searchName;
     private Long showId;
@@ -89,6 +90,8 @@ public class ShowTicketingManagedBean {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Show does not exist!", ""));
                 return;
             } else {
+                System.out.println(showList.size());
+                System.out.println(showList.get(0).getShowSchedules().size());
                 System.out.println("we are after search");
                 FacesContext.getCurrentInstance().getExternalContext().getFlash().put("showList", showList);
                 System.out.println("we are after setting parameter");
@@ -100,10 +103,6 @@ public class ShowTicketingManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
             return;
         }
-    }
-
-    public void initViewList(PhaseEvent event) {
-        showList = (List<ShowEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("showList");
     }
 
     public void handleShowChanges() {

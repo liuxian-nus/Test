@@ -103,6 +103,10 @@ public class ShowSessionBean {
         System.err.println("getShowByName: " + searchName);
         shows = new ArrayList<ShowEntity>();
         shows = query.getResultList();
+        
+        for(ShowEntity s:shows)
+            s.getShowSchedules().size();
+        
         return shows;
     }
 }
