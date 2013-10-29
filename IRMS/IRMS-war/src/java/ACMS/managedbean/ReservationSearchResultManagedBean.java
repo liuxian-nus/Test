@@ -30,7 +30,6 @@ public class ReservationSearchResultManagedBean implements Serializable {
     @EJB
     private ReservationSessionBean reservationSessionBean;
 
-    @EJB
     private ReservationEntity selectReservation;
     private List<ReservationEntity> reservationList;
     private Long reservationId;
