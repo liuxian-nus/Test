@@ -223,7 +223,34 @@ public class EventSessionBean {
         System.out.println("EventSessionBean:listEvents: all events have been fully retrieved!" + events.size());
         return events;
     }
+    
+    public List <EventEntity> listConfirmedEvents()
+    {
+        List <EventEntity> confirmedEvents;
+        String status = "In Progress: booking completed!";
+        Query q = em.createQuery("SELECT e FROM EventEntity e WHERE e.status = '"+status+"'");
+        
+        confirmedEvents = q.getResultList();
+        System.out.println("EventSessionBean: "+q.getResultList().isEmpty());
+        return confirmedEvents;
+    }
+    
+    public List<EventEntity> listPublicEvents()
+    {
+        Query q = em.createQuery("SELECT e FROM EventEntity e WHERE e.isPublic = 'true'");
+        System.out.println("EventSessionBean: "+q.getResultList().isEmpty());
+        return q.getResultList();
+    }
 
+    public List<EventEntity> listConfirmedPublicEvents()
+    {
+        Query q = em.createQuery("SELECT e FROM EventEntity e WHERE e.isPublic = 'true' AND e.status = "
+                + "'In Progress: booking completed!'");
+        
+        List <EventEntity> eventList = q.getResultList();
+        System.out.println("EventSessionBean: "+q.getResultList().isEmpty());
+        return eventList;
+    }
     public VenueEntity getVenue(Long venueId) {
         VenueEntity thisV = em.find(VenueEntity.class, venueId);
         if (thisV != null) {
