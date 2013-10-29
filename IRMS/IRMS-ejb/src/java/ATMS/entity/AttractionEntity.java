@@ -25,8 +25,6 @@ public class AttractionEntity implements Serializable {
     private String attrName;
     @OneToOne (cascade ={CascadeType.ALL})  
     private QuotaEntity attrQuota=new QuotaEntity();
-    @OneToOne
-    private AttrTicketEntity attrTicket;
     
     public String getAttrId() {
         return attrId;
@@ -51,14 +49,6 @@ public class AttractionEntity implements Serializable {
 
     public void setAttrQuota(QuotaEntity attrQuota) {
         this.attrQuota = attrQuota;
-    }
-
-    public AttrTicketEntity getAttrTicket() {
-        return attrTicket;
-    }
-
-    public void setAttrTicket(AttrTicketEntity attrTicket) {
-        this.attrTicket = attrTicket;
     } 
 
     
