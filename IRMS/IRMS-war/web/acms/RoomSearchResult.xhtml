@@ -24,7 +24,7 @@
 
                             <h:outputText value="Corporate: " /> 
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomCorporate}" style="font-weight:bold" />
-                            
+
 
                             <h:outputText value="Room Type: " /> 
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomType}" style="font-weight:bold" /> 
@@ -48,7 +48,7 @@
 
                             <h:outputText value="Room Service Charge: " />  
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge}" style="font-weight:bold" > 
-                            <f:convertNumber pattern="#0.00" />
+                                <f:convertNumber pattern="#0.00" />
                             </h:outputText>
                             <p:commandButton oncomplete="clearConfirmation.show()" ajax="true" rendered="#{roomSearchResultManagedBean.thisRoom.roomServiceCharge!=0.0}" icon="ui-icon ui-icon-close" value ="Clear Service Charge" title="Clear the service charge">  
                             </p:commandButton>
@@ -79,23 +79,30 @@
 
                 <p:dialog width="500" showEffect="explode" hideEffect="explode" header="Room Service" widgetVar="checkService"> 
                     <br/>
-                    <p:dataTable id="roomServices" value="#{roomSearchResultManagedBean.thisRoom.roomService}" var="roomService" paginator="true" rows="3">
+                    <p:dataTable id="roomServices" value="#{roomSearchResultManagedBean.thisRoom.roomServiceExe}" var="roomService" paginator="true" rows="3">
                         <p:column headerText="Category: ">
-                            <h:outputText value="#{roomService.category}"/>
+                            <h:outputText value="#{roomServiceExe.roomService.category}"/>
                         </p:column>                         
                         <p:column headerText="Room Service: ">
-                            <h:outputText value="#{roomService.roomServiceName}"/>
+                            <h:outputText value="#{roomServiceExe.roomService.roomServiceName}"/>
                         </p:column>
                         <p:column headerText="Service Price: ">
-                            <h:outputText value="#{roomService.roomServicePrice}"/>
+                            <h:outputText value="#{roomServiceExe.roomService.roomServicePrice}"/>
                         </p:column> 
+                        <p:column headerText="Service Quantity: ">
+                            <h:outputText value="#{roomServiceExe.roomServiceQuantity}"/>
+                        </p:column> 
+                        <p:column headerText="Total (as per item): ">
+                            <h:outputText value="#{roomServiceExe.roomServiceQuantity * roomServiceExe.roomService.roomServicePrice}"/>
+                        </p:column> 
+
                     </p:dataTable>
                     <br/><br/>
                     <p:commandButton value="Okay" oncomplete="checkService.hide()">  
                     </p:commandButton>
                 </p:dialog>             
-                
-                
+
+
                 <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="clearConfirmation"> 
                     <br/>
                     Sure to Clear Service Charge?
@@ -104,15 +111,15 @@
                     </p:commandButton>
                     <p:commandButton value="Not yet" onclick="clearConfirmation.hide()" type="button"/>  
                 </p:dialog>  
-      <!--          
-                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Housekeeping" widgetVar="housekeeping"> 
-                    <br/>
-                    Is room cleaned up and ready for check in?
-                    <br/><br/>
-                    <p:commandButton value="Yes" actionListener="#{roomSearchResultManagedBean.updateHousekeeping}" update="display" onclick="growl" oncomplete="housekeeping.hide()">  
-                    </p:commandButton>
-                    <p:commandButton value="Not yet" onclick="clearConfirmation.hide()" type="button"/>  
-                </p:dialog>  -->
+                <!--          
+                          <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Housekeeping" widgetVar="housekeeping"> 
+                              <br/>
+                              Is room cleaned up and ready for check in?
+                              <br/><br/>
+                              <p:commandButton value="Yes" actionListener="#{roomSearchResultManagedBean.updateHousekeeping}" update="display" onclick="growl" oncomplete="housekeeping.hide()">  
+                              </p:commandButton>
+                              <p:commandButton value="Not yet" onclick="clearConfirmation.hide()" type="button"/>  
+                          </p:dialog>  -->
 
 
             </h:form> 

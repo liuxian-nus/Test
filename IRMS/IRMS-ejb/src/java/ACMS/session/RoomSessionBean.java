@@ -4,6 +4,7 @@ import ACMS.entity.RoomPriceEntity;
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
 import ACMS.entity.RoomServiceEntity;
+import ACMS.entity.RoomServiceExeEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.session.MemberTransactionSessionBean;
@@ -31,7 +32,7 @@ public class RoomSessionBean {
     private EmailSessionBean emailSessionBean;
     @EJB
     private MemberTransactionSessionBean mtSessionBean;
-    @PersistenceContext(unitName="IRMS-ejbPU")
+    @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     RoomEntity room = new RoomEntity();
     RoomServiceEntity roomService = new RoomServiceEntity();
@@ -45,23 +46,22 @@ public class RoomSessionBean {
 
     //room include or dis-include breakfast 
     /*
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public RoomEntity updateRoom(int roomId, boolean hasBreakfast) throws ExistException {
-        room = em.find(RoomEntity.class, roomId);
-        if (room == null) {
-            throw new ExistException("RoomSessionBean-->ExistException-->Room doesn't exist!");
-        }
-        room.setHasBreakfast(hasBreakfast);
-        if (hasBreakfast == true) {
-            System.out.println("RoomSessionBean--> " + roomId + " now includes breakfast");
-        } else {
-            System.out.println("RoomSessionBean--> " + roomId + " now cancel breakfast");
-        }
-        em.merge(room);
-        return room;
-    }
-    */
-
+     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+     public RoomEntity updateRoom(int roomId, boolean hasBreakfast) throws ExistException {
+     room = em.find(RoomEntity.class, roomId);
+     if (room == null) {
+     throw new ExistException("RoomSessionBean-->ExistException-->Room doesn't exist!");
+     }
+     room.setHasBreakfast(hasBreakfast);
+     if (hasBreakfast == true) {
+     System.out.println("RoomSessionBean--> " + roomId + " now includes breakfast");
+     } else {
+     System.out.println("RoomSessionBean--> " + roomId + " now cancel breakfast");
+     }
+     em.merge(room);
+     return room;
+     }
+     */
     public RoomEntity getRoomById(int id) throws ExistException {
         System.err.println("in get room by id sessionbean");
         RoomEntity thisRoom = em.find(RoomEntity.class, id);
@@ -118,7 +118,7 @@ public class RoomSessionBean {
         for (Object o : q.getResultList()) {
             RoomEntity r = (RoomEntity) o;
             roomList.add(r);
-            System.err.println("in get all rooms sessionbean: "+ r.getRoomId());
+            System.err.println("in get all rooms sessionbean: " + r.getRoomId());
         }
         if (roomList == null) {
             throw new ExistException("RoomEntity database is empty!");
@@ -145,14 +145,19 @@ public class RoomSessionBean {
 
     //add new charged service
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public RoomServiceEntity addRoomService(int roomId, String roomServiceName) throws ExistException {
+    public RoomServiceEntity addRoomService(int roomId, String roomServiceName,int quantity) throws ExistException {
         room = em.find(RoomEntity.class, roomId);
         roomService = em.find(RoomServiceEntity.class, roomServiceName);
         if (roomService == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->Invalid room service name!");
         }
-        room.addRoomService(roomService);
-        room.addRoomServiceCharge(roomService.getRoomServicePrice());
+        RoomServiceExeEntity newRoomServiceExe = new RoomServiceExeEntity();
+        newRoomServiceExe.setRoom(room);
+        newRoomServiceExe.setRoomService(roomService);
+        newRoomServiceExe.setRoomServiceQuantity(quantity);
+        em.persist(newRoomServiceExe);//add new entry of room service exe
+        room.addRoomService(newRoomServiceExe);
+        room.addRoomServiceCharge(newRoomServiceExe.getRoomService().getRoomServicePrice() * newRoomServiceExe.getRoomServiceQuantity());
         em.merge(room);
         System.out.println("RoomSessionBean--> " + roomId + " new include new service " + roomService.getRoomServiceName());
         System.out.println("RoomSessionBean--> " + roomId + " now has total outstanding payable: " + room.getRoomServiceCharge());
@@ -167,7 +172,7 @@ public class RoomSessionBean {
         }
 //        mtSessionBean.addMemberTransaction(room.getRoomMember(), room.getRoomServiceCharge(), room.getCheckOutDate(), "Hotel", null, false);
         room.setRoomServiceCharge(0);
-        room.setRoomService(null);
+        room.setRoomServiceExe(null);
         return room.getRoomServiceCharge();
     }
 
@@ -218,7 +223,7 @@ public class RoomSessionBean {
         room.setCheckInDate(null);
         room.setCheckOutDate(null);
         room.setGuestName(null);
- //       room.setHasBreakfast(false);
+        //       room.setHasBreakfast(false);
         room.setReservation(null);
         room.setRoomCreditCardNo(null);
         room.setRoomMember(null);
@@ -226,23 +231,22 @@ public class RoomSessionBean {
         room.setRoomStatus("checkedOut");
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
     }
-    
+
     public void updateHousekeeping(int roomId) {
-                room = em.find(RoomEntity.class, roomId);
-                room.setRoomStatus("available");
+        room = em.find(RoomEntity.class, roomId);
+        room.setRoomStatus("available");
     }
 
     /*public void sendBill(int roomId) throws RoomException {
-        room = em.find(RoomEntity.class, roomId);
-        bill = this.calculateBill(room);
-        System.out.println("accounts receivable: " + bill);
+     room = em.find(RoomEntity.class, roomId);
+     bill = this.calculateBill(room);
+     System.out.println("accounts receivable: " + bill);
 
-        if (room.getRoomCorporate() != null) {
-            emailSessionBean.emailCorporateBill("xinqi_wang@yahoo.com", room);
-        }
-        System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " bill is successfully send");
-    }*/
-
+     if (room.getRoomCorporate() != null) {
+     emailSessionBean.emailCorporateBill("xinqi_wang@yahoo.com", room);
+     }
+     System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " bill is successfully send");
+     }*/
     public double calculateBill(RoomEntity room) {
         //       double temp1 = room.getCheckInDate().get(Calendar.DAY_OF_YEAR);
         //       double temp2 = room.getCheckOutDate().get(Calendar.DAY_OF_YEAR);

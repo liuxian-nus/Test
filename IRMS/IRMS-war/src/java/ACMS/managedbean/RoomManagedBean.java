@@ -45,6 +45,15 @@ public class RoomManagedBean implements Serializable {
     private int roomId;
     private String serviceName;
     private String creditCardNo;
+    private int serviceQuantity = 1;
+
+    public int getServiceQuantity() {
+        return serviceQuantity;
+    }
+
+    public void setServiceQuantity(int serviceQuantity) {
+        this.serviceQuantity = serviceQuantity;
+    }
 
     public RoomServiceSessionBean getRs() {
         return rs;
@@ -109,8 +118,9 @@ public class RoomManagedBean implements Serializable {
         System.out.println("saving new room services...");
         System.out.println("SaveNewRoomService Name: " + serviceName);
         System.out.println("room ID: " + roomId);
+        System.out.println("service quantity is: " + serviceQuantity);
         try {
-            rm.addRoomService(roomId, serviceName);
+            rm.addRoomService(roomId, serviceName, serviceQuantity);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new room service", ""));
             return;

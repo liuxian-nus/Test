@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -41,8 +42,8 @@ public class RoomEntity implements Serializable {
     private double roomServiceCharge = 0;
     private String roomCorporate;
     
-    @ManyToMany(cascade={CascadeType.PERSIST})
-    private List<RoomServiceEntity> roomService = new ArrayList<RoomServiceEntity> ();
+    @OneToMany(cascade={CascadeType.PERSIST})
+    private List<RoomServiceExeEntity> roomServiceExe = new ArrayList<RoomServiceExeEntity> ();
     @ManyToOne(cascade={CascadeType.PERSIST})
     private RoomPriceEntity roomPrice = new RoomPriceEntity();
     @ManyToOne(cascade={CascadeType.PERSIST})
@@ -105,15 +106,15 @@ public class RoomEntity implements Serializable {
     public void setRoomNo(int roomNo) {
         this.roomNo = roomNo;
     }
-    
 
-    public List<RoomServiceEntity> getRoomService(){
-        return roomService;
+    public List<RoomServiceExeEntity> getRoomServiceExe() {
+        return roomServiceExe;
     }
-    
-    public void setRoomService(List<RoomServiceEntity> roomService){
-        this.roomService = roomService;
+
+    public void setRoomServiceExe(List<RoomServiceExeEntity> roomServiceExe) {
+        this.roomServiceExe = roomServiceExe;
     }
+
 
     public Date getCheckInDate() {
         return checkInDate;
@@ -131,9 +132,9 @@ public class RoomEntity implements Serializable {
         this.checkOutDate = checkOutDate;
     }
 
-    public void addRoomService(RoomServiceEntity newRoomService){
-       this.roomService.add(newRoomService);
-       System.out.println("RoomEntity-->new service added:" + newRoomService.getRoomServiceName());
+    public void addRoomService(RoomServiceExeEntity newRoomServiceExe){       
+       this.roomServiceExe.add(newRoomServiceExe);
+       System.out.println("RoomEntity-->new service added:" + newRoomServiceExe.getRoomService().getRoomServiceName());
     }
 
     public double getRoomServiceCharge() {

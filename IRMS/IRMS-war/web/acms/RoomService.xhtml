@@ -46,10 +46,14 @@
                     </h:panelGrid>
 
                     <p:commandButton value="Add" ajax="true" oncomplete="confirmation.show()" icon="ui-icon ui-icon-check"/>
-                    
-                    
+
+
                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">
-                        Sure to add this new service?
+                        <h:outputText value="Price per unit:"/>
+                        <h:outputText value="#{allRoomServices.roomServicePrice}"/>
+                        <h:outputText value="What is the quantity?:"/>
+                        <h:inputText value="#{roomManagedBean.serviceQuantity}"/>                                   
+
                         <br/><br/>
                         <p:commandButton value="Add" update="message" actionListener="#{roomManagedBean.saveNewRoomService}" oncomplete="confirmation.hide()">  
                         </p:commandButton>
