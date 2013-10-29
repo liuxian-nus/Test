@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+
+    <ui:define name="content">
+        <h:form id="addCombo">
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:panel id="addAttrCombo" header="Add Ticket Combo" style="height:440px;">
+                <h:panelGrid columns="2">
+                
+                <h:outputText value="Combo Name*: "/>                
+                <h:inputText id="comboName" required ="true" requiredMessage="Name cannot be empty" value="#{addComboManagedBean.attrCombo.attrComboName}"/>
+                
+                
+                <h:outputText value="Combo Type*:"/>
+                <h:selectOneMenu value ="#{addComboManagedBean.attrCombo.attrComboType}"  onchange="this.form.submit()" required ="true" requiredMessage="Combo type cannot be empty">
+                            <f:selectItem itemLabel="Select combo type" itemValue="" />  
+                            <f:selectItem itemLabel="one-day pass" itemValue="one-day pass" />  
+                            <f:selectItem itemLabel="two-day pass" itemValue="two-day pass" />  
+                            <f:selectItem itemLabel="annual pass" itemValue="annual pass" />  
+                        </h:selectOneMenu>
+                
+                
+                <h:outputText value="Combo Cluster*:"/>
+                <h:selectOneMenu value ="#{addComboManagedBean.attrCombo.attrComboCluster}"  onchange="this.form.submit()" required ="true" requiredMessage="Combo cluster cannot be empty">
+                            <f:selectItem itemLabel="Select ticket cluster" itemValue="" />  
+                            <f:selectItem itemLabel="Adult" itemValue="Adult" />  
+                            <f:selectItem itemLabel="Child" itemValue="Child" />  
+                            <f:selectItem itemLabel="Senior" itemValue="Senior" />  
+                        </h:selectOneMenu>
+                
+                
+                <h:outputText value="Combo Tickets:"/>                  
+                <p:selectManyMenu value="#{addComboManagedBean.tickets}" style="width:200px;height:175px;margin-bottom:10px;" showCheckbox="true">  
+                    <f:selectItems value="#{addComboManagedBean.ticketSessionBean.allTickets}" var="allTickets" itemLabel="#{allTickets.attrTicketName}" itemValue="#{allTickets.attrTicketId}" />  
+                        </p:selectManyMenu>
+           <!--     <h:outputText value="Combo Tickets:"/>                  
+                <p:selectManyMenu value="#{addComboManagedBean.tickets}"  style="width:200px;height:175px;margin-bottom:10px;" showCheckbox="true">  
+                    <f:selectItems value="#{addComboManagedBean.chooseSelectedTickets()}" var="selectedTickets" itemLabel="#{selectedTickets.attrTicketName}" itemValue="#{selectedTickets.attrTicketId}" />  
+                </p:selectManyMenu>-->
+                
+                
+                <h:outputText value="Combo Price*: "/>                
+                <h:inputText id="comboPrice" required ="true" requiredMessage="Price cannot be empty" value="#{addComboManagedBean.attrCombo.attrComboPrice}"/>
+                </h:panelGrid>
+                
+                <p:commandButton value ="Save" ajax ="true" actionListener = "#{addComboManagedBean.saveNewCombo}" update="growl" icon="ui-icon-check"/>
+                <p:commandButton value="Add more combo" actionListener="#{addComboManagedBean.oneMore}" />
+                
+            </p:panel>
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>
