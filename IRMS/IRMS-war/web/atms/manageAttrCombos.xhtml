@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="manageAttrCombos">
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:panel id="manageAttrCombo" header="Manage Combo" style="height:440px;">
+                <p:dataTable id="attrCombos" value="#{manageComboManagedBean.attrComboSessionBean.allAttrCombos}" 
+                                     var="attrComboList" paginator="true" rows="5" draggableColumns="true" scrollable="true" 
+                                     resizableColumns="true">
+                    
+                    <p:column style="width:2%">  
+                        <p:rowToggler id="combos"/>
+                    </p:column>
+                    
+                <p:column headerText="Combo name" style="width:60px;">
+                        <h:outputText value="#{attrComboList.attrComboName}"/>
+                    </p:column>
+      
+                    <p:column headerText="Combo type" style="width:60px;">
+                        <h:outputText value="#{attrComboList.attrComboType}"/>
+                    </p:column>
+      
+                    <p:column headerText="Combo cluster" style="width:60px;">
+                        <h:outputText value="#{attrComboList.attrComboCluster}"/>
+                    </p:column>
+      
+                    <p:column headerText="Combo price" style="width:60px;">
+                        <h:outputText value="#{attrComboList.attrComboPrice}"/>
+                    </p:column>
+                    
+                    <p:column style="width:100px">  
+                                <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
+                                    <p:commandButton update=":manageAttrCombos:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                        <f:setPropertyActionListener value="#{attrComboList}" target="#{manageComboManagedBean.combo}" />  
+                                        <f:setPropertyActionListener value="#{true}" target="#{manageComboManagedBean.editMode}" /> 
+                                    </p:commandButton>
+                                    <p:commandButton update=":manageAttrCombos:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                        <f:setPropertyActionListener value="#{attrComboList}" target="#{manageComboManagedBean.combo}" />  
+                                    </p:commandButton> 
+                                </h:panelGrid>
+                            </p:column> 
+                    
+                    <p:rowExpansion>
+                        <p:dataTable id="comboTickets" value="#{attrComboList.attrTickets}" var="comboTickets" rows="4" >
+                             <p:column headerText="Attraction name ">
+                                <h:outputText value="#{comboTickets.attr.attrName}"/>
+                            </p:column>
+                            <p:column headerText="Ticket name ">
+                                <h:outputText value="#{comboTickets.attrTicketName}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:rowExpansion>
+                    
+                    </p:dataTable>
+                
+                <p:dialog header="Edit Combo Tickets" widgetVar="carDialog" resizable="false" id="carDlg"  
+                                  showEffect="fade" hideEffect="explode" width="500">
+                            <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">
+
+                                <h:outputText value="Combo Price: " />  
+                                <h:panelGroup>  
+                                    <h:outputText value="#{manageComboManagedBean.combo.attrComboPrice}" style="font-weight:bold" rendered="#{!manageComboManagedBean.editMode}"/>  
+                                    <p:inputText id="ticketPrice"   requiredMessage="Ticket Price cannot be empty" value="#{manageComboManagedBean.combo.attrComboPrice}" rendered="#{manageComboManagedBean.editMode}" required="true" label="Combo Price"/>  
+      
+                                </h:panelGroup>
+                                
+                                <f:facet name="footer">  
+                                    <p:outputPanel rendered="#{manageComboManagedBean.editMode}" layout="block" style="text-align:right">  
+                                        <p:commandButton value="Save" actionListener="#{manageComboManagedBean.saveChanges}"   
+                                                         oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check" update="attrCombos"/>  
+                                        <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
+                                    </p:outputPanel>  
+                                </f:facet>              
+                            </h:panelGrid>
+                        </p:dialog>
+                
+                
+                <p:dialog  width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
+                            <br/>
+                            Are you sure?
+                            <br/><br/>
+                            <p:commandButton value="Yes" update="attrCombos" actionListener="#{manageComboManagedBean.deleteCombo}" oncomplete="confirmation.hide()">  
+                                <f:attribute name="code1" value="#{manageComboManagedBean.combo.attrComboId}" />
+                            </p:commandButton>
+                            <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
+                        </p:dialog> 
+                
+            </p:panel>
+            
+
+            
+        </h:form>
+   
+    </ui:define>
+
+</ui:composition>
