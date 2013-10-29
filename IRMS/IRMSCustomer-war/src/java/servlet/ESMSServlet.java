@@ -75,6 +75,8 @@ public class ESMSServlet extends HttpServlet {
                     showId = Long.parseLong(request.getParameter("showId"));
                     session.setAttribute("thisShow", showSessionBean.getShowById(showId));
                     showSchedule = showSessionBean.getAllShowSchedules(showId);
+                    System.out.println(showSchedule.isEmpty());
+                    request.setAttribute("showSchedule",showSchedule);
                     request.getRequestDispatcher("/entertainmentVenue.jsp").forward(request, response);
                 } else {
                     System.out.println("other page");
