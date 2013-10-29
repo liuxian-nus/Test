@@ -33,7 +33,7 @@
                     <div class="content" data-section-content>
                         <div class="row">
                             <div class="large-4 columns">
-                                <div class="panel">
+                                <div class="panel callout">
                                     <h5><strong>Orchard Suite</strong></h5>
                                     <a class="th radius" href="/IRMSCustomer-war/images/gallery/room1.jpg">
                                         <img src="/IRMSCustomer-war/images/gallery/room1.jpg">
@@ -47,14 +47,13 @@
                                     Set against the best view point of the island, guests can enjoy this stately suite with its spacious living
                                     and dining areas and a fully serviced open pantry that offers the ultimate in comfort and luxury. The adjacent media room 
                                     provides a cozy and more casual relaxation zone that comes complete with top of the line audio visual equipment for an 
-                                    unparalleled home entertainment experience. The suite’s two majestic bedrooms each feature direct access to a spacious dressing
-                                    room and vanity area, walk in wardrobes and oversized ensuite bathrooms.</p>
+                                    unparalleled home entertainment experience. </p>
 
                             </div>
                         </div>
                         <div class="row">
                             <div class="large-4 columns">
-                                <div class="panel">
+                                <div class="panel callout">
                                     <h5><strong>Deluxe Suite</strong></h5>
 
                                     <a class="th radius" href="/IRMSCustomer-war/images/gallery/room3-deluxe.jpg">
@@ -68,13 +67,13 @@
                                 <h5><a href="#" style="color:#4d4d4d"><strong>Deluxe Suite</strong></a></h5>
                                 <p style="color:#4d4d4d">Our one bedroom Deluxe Suites feature a luxurious king-sized bed, spacious formal living and dining area
                                     as well as an open pantry. Decked out in delicately muted colours to create a warm, homely feel, and a bathroom that features
-                                    both a circular shower and a large bath, Orchard Hotel’s Deluxe Suites elevate the hotel experience to an entirely new level.</p>
+                                    both a circular shower and a large bath, Orchard Hotel's Deluxe Suites elevate the hotel experience to an entirely new level.</p>
 
                             </div>
                         </div>
                         <div class="row">
                             <div class="large-4 columns">
-                                <div class="panel">
+                                <div class="panel callout">
                                     <h5><strong>Deluxe</strong></h5>
                                     <a class="th radius" href="/IRMSCustomer-war/images/gallery/room4.jpg">
                                         <img src="/IRMSCustomer-war/images/gallery/room4.jpg">
@@ -84,7 +83,7 @@
                             <div class="large-8 columns">
 
                                 <h5><a href="#" style="color:#4d4d4d"><strong>Deluxe</strong></a></h5>
-                                <p style="color:#4d4d4d">Michael Graves’ signature is firmly stamped in all our Deluxe Rooms, from the wash basin and the shower 
+                                <p style="color:#4d4d4d">Michael Graves' signature is firmly stamped in all our Deluxe Rooms, from the wash basin and the shower 
                                     stall to the gorgeous furnishings and art pieces that adorn the walls. In the bathrooms, the classic black and white marble
                                     flooring, as well as the flower-motif mosaic wall is a sight to behold.Designed in delicately muted colours for a warm and cosy
                                     feel, each room comes with a pull-out writing desk, a hidden vanity mirror, and ample storage space for personal effects.</p>
@@ -99,7 +98,7 @@
                     <div class="content" data-section-content>
                         <div class="row">
                             <div class="large-4 columns">
-                                <div class="panel">
+                                <div class="panel callout">
                                     <h5><strong>Chairman Suite</strong></h5>
                                     <a class="th radius" href="/IRMSCustomer-war/images/gallery/room2.jpg">
                                         <img src="/IRMSCustomer-war/images/gallery/room2.jpg">
@@ -111,17 +110,16 @@
 
                                 <h5><a href="#" style="color:#4d4d4d"><strong>Chairman Suite</strong></a></h5>
                                 <p style="color:#4d4d4d">The Chairman Suites offer panoramic views of the resort 
-                                    and its multitude attractions. Decorated in a soothing palette of silver and ivory, the suite’s exquisitely designed interior 
+                                    and its multitude attractions. Decorated in a soothing palette of silver and ivory, the suiteâ€™s exquisitely designed interior 
                                     balances contemporary decor with delicate oriental touches. Guests can relax in the spacious formal living and dining areas 
                                     with an open concept pantry or proceed to the entertainment room decked out with top of the line audio visual equipment 
-                                    providing unrivalled home entertainment. Boasting a dramatic champagne toned ceiling with silver leaf motifs, the master 
-                                    bedroom opens up to an adjacent oversized ensuite bathroom offering stunning views of the resort.</p>
+                                    providing unrivalled home entertainment.</p>
 
                             </div>
                         </div>
                         <div class="row">
                             <div class="large-4 columns">
-                                <div class="panel">
+                                <div class="panel callout">
                                     <h5><strong>Deluxe Suite</strong></h5>
 
                                     <a class="th radius" href="/IRMSCustomer-war/images/gallery/room7.jpg">
@@ -135,14 +133,14 @@
                                 <h5><a href="#" style="color:#4d4d4d"><strong>Deluxe Suite</strong></a></h5>
                                 <p style="color:#4d4d4d">Our one bedroom Deluxe Suites feature a luxurious king-sized bed, spacious formal living and 
                                     dining area as well as an open pantry. Decked out in delicately muted colours to create a warm, homely feel, and a bathroom 
-                                    that features both a circular shower and a large bath, Marina Hotel’s Deluxe Suites elevate the hotel experience to an 
+                                    that features both a circular shower and a large bath, Marina Hotel's Deluxe Suites elevate the hotel experience to an 
                                     entirely new level.</p>
 
                             </div>
                         </div>
                         <div class="row">
                             <div class="large-4 columns">
-                                <div class="panel">
+                                <div class="panel callout">
                                     <h5><strong>Deluxe</strong></h5>
                                     <a class="th radius" href="/IRMSCustomer-war/images/gallery/room6.jpg">
                                         <img src="/IRMSCustomer-war/images/gallery/room6.jpg">
@@ -152,7 +150,7 @@
                             <div class="large-8 columns">
 
                                 <h5><a href="#" style="color:#4d4d4d"><strong>Deluxe</strong></a></h5>
-                                <p style="color:#4d4d4d">Michael Graves’ signature is firmly stamped in all our Deluxe Rooms, from the wash basin and the shower 
+                                <p style="color:#4d4d4d">Michael Graves' signature is firmly stamped in all our Deluxe Rooms, from the wash basin and the shower 
                                     stall to the gorgeous furnishings and art pieces that adorn the walls. In the bathrooms, the classic black and white marble
                                     flooring, as well as the flower-motif mosaic wall is a sight to behold.Designed in delicately muted colours for a warm and cosy
                                     feel, each room comes with a pull-out writing desk, a hidden vanity mirror, and ample storage space for personal effects.</p>
@@ -167,7 +165,7 @@
                     <div class="content" data-section-content>
                         <div class="row">
                             <div class="large-4 columns">
-                                <div class="panel">
+                                <div class="panel callout">
                                     <h5><strong>Deluxe Suite</strong></h5>
                                     <a class="th radius" href="/IRMSCustomer-war/images/gallery/room9.jpg">
                                         <img src="/IRMSCustomer-war/images/gallery/room9.jpg">
@@ -180,13 +178,13 @@
                                 <h5><a href="#" style="color:#4d4d4d"><strong>Deluxe Suite</strong></a></h5>
                                 <p style="color:#4d4d4d">Our one bedroom Deluxe Suites feature a luxurious king-sized bed, spacious formal living and dining area 
                                     as well as an open pantry. Decked out in delicately muted colours to create a warm, homely feel, and a bathroom that features
-                                    both a circular shower and a large bath, BeachView Hotel’s Deluxe Suites elevate the hotel experience to an entirely new level.</p>
+                                    both a circular shower and a large bath, BeachView Hotel's Deluxe Suites elevate the hotel experience to an entirely new level.</p>
 
                             </div>
                         </div>
                         <div class="row">
                             <div class="large-4 columns">
-                                <div class="panel">
+                                <div class="panel callout">
                                     <h5><strong>Deluxe</strong></h5>
 
                                     <a class="th radius" href="/IRMSCustomer-war/images/gallery/room8.jpg">
@@ -198,7 +196,7 @@
                             <div class="large-8 columns">
 
                                 <h5><a href="#" style="color:#4d4d4d"><strong>Deluxe</strong></a></h5>
-                                <p style="color:#4d4d4d">Michael Graves’ signature is firmly stamped in all our Deluxe Rooms, from the wash basin and the shower 
+                                <p style="color:#4d4d4d">Michael Graves' signature is firmly stamped in all our Deluxe Rooms, from the wash basin and the shower 
                                     stall to the gorgeous furnishings and art pieces that adorn the walls. In the bathrooms, the classic black and white marble
                                     flooring, as well as the flower-motif mosaic wall is a sight to behold.Designed in delicately muted colours for a warm and cosy
                                     feel, each room comes with a pull-out writing desk, a hidden vanity mirror, and ample storage space for personal effects.</p>
@@ -207,7 +205,7 @@
                         </div>
                         <div class="row">
                             <div class="large-4 columns">
-                                <div class="panel">
+                                <div class="panel callout">
                                     <h5><strong>Superior</strong></h5>
                                     <a class="th radius" href="/IRMSCustomer-war/images/gallery/room5.jpg">
                                         <img src="/IRMSCustomer-war/images/gallery/room5.jpg">
@@ -236,47 +234,47 @@
                                             <table>
                                                 <tbody>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>Free form swimming pool at any hotel </td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>Complimentary access to gym facilities at CIR</td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>24-hour Laundry/Dry-Cleaning Service</td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>24 hour butler service</td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>24-hour In-Room Dining Menu (International & Oriental Selections Available)</td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>Buggy Service on-call</td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>42" Plasma TV with Cable Vision and a wide collection of the latest movies and radio channels in the bedroom</td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>22" LED TV with Cable Vision and a wide collection of the latest movies and radio channels in the bathroom </td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>Mini-bar with a wide range of snacks, soft drinks and juices</td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>Pantry area with microwave and refrigerator</td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="top"><font color="#E9C382">▸</font>&#160;</td>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
                                                         <td>Free Wireless High-Speed Broadband Internet access</td>
                                                     </tr>
                                                 </tbody>
