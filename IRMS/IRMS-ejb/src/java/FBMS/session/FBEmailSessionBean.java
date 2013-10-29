@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
@@ -51,7 +52,7 @@ import javax.mail.internet.MimeMultipart;
  */
 @Stateless
 @LocalBean
-public class FBEmailSessionBean implements FBEmailSessionBeanRemote {
+public class FBEmailSessionBean implements FBEmailSessionBeanRemote,Serializable {
 
     String emailServerName = "smtp.gmail.com";
   

@@ -44,6 +44,7 @@ public class EventEntity implements Serializable {
     private String preferLanguage = "English";
     private String eventIndustry;
     private String notes;
+    private String description;
     private Double estimatedBudget;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date startDate;
@@ -55,6 +56,15 @@ public class EventEntity implements Serializable {
     
     public EventEntity(){}
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
     public boolean isIsPublic() {
         return isPublic;
     }
