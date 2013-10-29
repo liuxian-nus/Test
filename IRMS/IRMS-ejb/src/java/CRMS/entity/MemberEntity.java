@@ -48,11 +48,6 @@ public class MemberEntity implements Serializable {
     private String securityQuestion;
     private String answer;
     
-    private String educationLevel;
-    private String incomeLevel;
-    private String occupation;
-    
-    
     
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "rcMember")
     private Set<ReservationEntity> hotelReservation;
@@ -228,32 +223,6 @@ public class MemberEntity implements Serializable {
     public void setPreferences(String preferences) {
         this.preferences = preferences;
     }
-
-    public String getEducationLevel() {
-        return educationLevel;
-    }
-
-    public void setEducationLevel(String educationLevel) {
-        this.educationLevel = educationLevel;
-    }
-
-    public String getIncomeLevel() {
-        return incomeLevel;
-    }
-
-    public void setIncomeLevel(String incomeLevel) {
-        this.incomeLevel = incomeLevel;
-    }
-
-    public String getOccupation() {
-        return occupation;
-    }
-
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
-    }
-    
-    
 
     /*public void addPreferences(String newPreference) {
         this.preferences.add(newPreference);
