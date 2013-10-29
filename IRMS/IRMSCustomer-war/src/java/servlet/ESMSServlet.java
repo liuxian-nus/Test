@@ -4,8 +4,13 @@
  */
 package servlet;
 
+import ESMS.entity.ShowEntity;
+import ESMS.entity.ShowScheduleEntity;
+import ESMS.session.ShowSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -21,7 +26,13 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ESMSServlet", urlPatterns = {"/ESMSServlet","/ESMSServlet/*"})
 public class ESMSServlet extends HttpServlet {
-
+    @EJB
+    private ShowSessionBean showSessionBean;
+    
+    private List<ShowEntity> shows;
+    private List<ShowScheduleEntity> showSchedule;
+    private Long showId;
+ 
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -32,6 +43,7 @@ public class ESMSServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -55,11 +67,14 @@ public class ESMSServlet extends HttpServlet {
 
                 if ("entertainment".equals(page)) {
                     System.out.println("***entertainment***");
-
+                    shows=showSessionBean.getAllShows();
+                    request.setAttribute("shows", shows);
                     request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
                 } else if ("entertainmentVenue".equals(page)) {
                     System.out.println("***entertainmentVenue***");
-
+                    showId = Long.parseLong(request.getParameter("showId"));
+                    session.setAttribute("thisShow", showSessionBean.getShowById(showId));
+                    showSchedule = showSessionBean.getAllShowSchedules(showId);
                     request.getRequestDispatcher("/entertainmentVenue.jsp").forward(request, response);
                 } else {
                     System.out.println("other page");
