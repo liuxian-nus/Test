@@ -44,6 +44,10 @@ public class AttractionSessionBean {
         return query.getResultList();
     }
     
+    public AttractionEntity getAttrById(String id){
+        return em.find(AttractionEntity.class,id);
+    }
+    
     public void updateAttraction(AttractionEntity attr){
         System.out.println("into AttractoinSessionBean: update Attraction");
         quota=attr.getAttrQuota();

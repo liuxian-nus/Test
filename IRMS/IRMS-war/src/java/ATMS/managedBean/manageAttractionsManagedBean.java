@@ -74,7 +74,7 @@ public class manageAttractionsManagedBean {
     }
 
     public AttractionEntity getAttr() {
-        System.out.println("attraction name: "+attr.getAttrName());
+     //   System.out.println("attraction name: "+attr.getAttrName());
         return attr;
     }
 

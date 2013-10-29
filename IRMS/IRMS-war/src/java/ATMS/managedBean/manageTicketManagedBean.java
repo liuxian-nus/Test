@@ -86,6 +86,7 @@ public class manageTicketManagedBean {
     }
 
     public AttrTicketEntity getTicket() {
+        System.out.println("ticket name: "+ticket.getAttrTicketName());
         return ticket;
     }
 

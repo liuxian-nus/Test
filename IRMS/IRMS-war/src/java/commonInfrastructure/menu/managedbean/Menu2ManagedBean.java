@@ -271,6 +271,12 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/atms/manageAttrTickets.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Add Ticket Combos");
+                item.setUrl("/atms/addAttrCombos.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
             }

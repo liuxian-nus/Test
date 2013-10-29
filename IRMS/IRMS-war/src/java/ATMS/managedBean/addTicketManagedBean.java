@@ -8,6 +8,7 @@ import ATMS.entity.AttrTicketEntity;
 import ATMS.entity.AttractionEntity;
 import ATMS.session.AttractionSessionBean;
 import ATMS.session.TicketSessionBean;
+import Exception.ExistException;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -29,7 +30,10 @@ public class addTicketManagedBean {
     @EJB
     private TicketSessionBean ticketSessionBean;    
     private AttrTicketEntity ticket;
+    private Long ticketId;
     private AttractionEntity attr;
+    private String attrId;
+    private boolean editMode;
     
     @PostConstruct
     public void init()
@@ -37,13 +41,6 @@ public class addTicketManagedBean {
         FacesContext.getCurrentInstance().getExternalContext().getSession(true);
     }
     
-    public AttrTicketEntity getTicket(){
-        return ticket;
-    }
-    
-    public void setTicket(AttrTicketEntity ticket){
-        this.ticket=ticket;
-    }
 
     /**
      * Creates a new instance of addTicketManagedBean
@@ -55,7 +52,10 @@ public class addTicketManagedBean {
     public void saveNewTicket(ActionEvent event) throws IOException{
         try{
             System.out.println("into addTicketManagedBean: saveNewTicket"); 
-      //      ticket=mapAttractionId(ticket);
+      //      ticket=mapAttractionId(ti=cket);
+            attr=attractionSessionBean.getAttrById(attrId);
+            System.out.println("attr: "+attr.getAttrName());
+            ticket.setAttr(attr);
             ticketSessionBean.addTicket(ticket);
             System.out.println("new ticket added");
         }catch (Exception e){
@@ -68,6 +68,21 @@ public class addTicketManagedBean {
     
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("addTicket.xhtml");
+    }
+    
+    public void saveChanges(ActionEvent event) throws ExistException
+    {
+        System.out.println("here");
+        System.out.println("addTicketManagedBean : saveChanges");
+        ticketSessionBean.updateTicket(ticket);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));        
+    }
+    
+    public void deleteAttrTicket(ActionEvent event) throws ExistException {
+        System.out.println("addTicketManagedBean : deleteAttrTicket");
+        setTicketId((Long)event.getComponent().getAttributes().get("code1"));
+        System.out.println(("attrTicketId ")+getTicketId());
+        ticketSessionBean.removeTicket(getTicketId());
     }
 
     /*  public AttrTicketEntity mapAttractionId(AttrTicketEntity ticket){
@@ -99,6 +114,24 @@ public class addTicketManagedBean {
     public void setTicketSessionBean(TicketSessionBean ticketSessionBean) {
         this.ticketSessionBean = ticketSessionBean;
     }
+    
+     public AttrTicketEntity getTicket(){
+        System.out.println("ticket name: "+ticket.getAttrTicketName());
+        return ticket;
+    }
+    
+    public void setTicket(AttrTicketEntity ticket){
+        this.ticket=ticket;
+    }
+
+    public Long getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
+    }
+    
 
     public AttractionEntity getAttr() {
         return attr;
@@ -107,7 +140,21 @@ public class addTicketManagedBean {
     public void setAttr(AttractionEntity attr) {
         this.attr = attr;
     }
-    
-    
-   
+
+    public String getAttrId() {
+        return attrId;
+    }
+
+    public void setAttrId(String attrId) {
+        this.attrId = attrId;
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    } 
+  
 }
