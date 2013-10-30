@@ -13,10 +13,8 @@
             <p:growl id="growl" showDetail="true" sticky="true" /> 
             <p:panel id="addAttrCombo" header="Add Ticket Combo" style="height:440px;">
                 <h:panelGrid columns="2">
-                
-                <h:outputText value="Combo Name*: "/>                
+                     <h:outputText value="Combo Name*: "/>                
                 <h:inputText id="comboName" required ="true" requiredMessage="Name cannot be empty" value="#{addComboManagedBean.attrCombo.attrComboName}"/>
-                
                 
                 <h:outputText value="Combo Type*:"/>
                 <h:selectOneMenu value ="#{addComboManagedBean.attrCombo.attrComboType}"  onchange="this.form.submit()" required ="true" requiredMessage="Combo type cannot be empty">
@@ -26,7 +24,6 @@
                             <f:selectItem itemLabel="annual pass" itemValue="annual pass" />  
                         </h:selectOneMenu>
                 
-                
                 <h:outputText value="Combo Cluster*:"/>
                 <h:selectOneMenu value ="#{addComboManagedBean.attrCombo.attrComboCluster}"  onchange="this.form.submit()" required ="true" requiredMessage="Combo cluster cannot be empty">
                             <f:selectItem itemLabel="Select ticket cluster" itemValue="" />  
@@ -35,19 +32,15 @@
                             <f:selectItem itemLabel="Senior" itemValue="Senior" />  
                         </h:selectOneMenu>
                 
-                
                 <h:outputText value="Combo Tickets:"/>                  
                 <p:selectManyMenu value="#{addComboManagedBean.tickets}" style="width:200px;height:175px;margin-bottom:10px;" showCheckbox="true">  
                     <f:selectItems value="#{addComboManagedBean.ticketSessionBean.allTickets}" var="allTickets" itemLabel="#{allTickets.attrTicketName}" itemValue="#{allTickets.attrTicketId}" />  
                         </p:selectManyMenu>
-           <!--     <h:outputText value="Combo Tickets:"/>                  
-                <p:selectManyMenu value="#{addComboManagedBean.tickets}"  style="width:200px;height:175px;margin-bottom:10px;" showCheckbox="true">  
-                    <f:selectItems value="#{addComboManagedBean.chooseSelectedTickets()}" var="selectedTickets" itemLabel="#{selectedTickets.attrTicketName}" itemValue="#{selectedTickets.attrTicketId}" />  
-                </p:selectManyMenu>-->
-                
+               
                 
                 <h:outputText value="Combo Price*: "/>                
                 <h:inputText id="comboPrice" required ="true" requiredMessage="Price cannot be empty" value="#{addComboManagedBean.attrCombo.attrComboPrice}"/>
+                
                 </h:panelGrid>
                 
                 <p:commandButton value ="Save" ajax ="true" actionListener = "#{addComboManagedBean.saveNewCombo}" update="growl" icon="ui-icon-check"/>

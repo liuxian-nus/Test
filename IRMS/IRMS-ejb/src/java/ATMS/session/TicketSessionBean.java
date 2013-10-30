@@ -38,7 +38,7 @@ public class TicketSessionBean {
     }
     
     public List<AttrTicketEntity> getAllTickets(){
-        Query query = em.createQuery("SELECT t FROM TicketEntity t");
+        Query query = em.createQuery("SELECT at FROM AttrTicketEntity at");
         return query.getResultList();
     }
     
@@ -62,9 +62,18 @@ public class TicketSessionBean {
         return true;
     } 
     
-    public AttrTicketEntity getTicketById(Long ticketId){
+    public AttrTicketEntity getTicketById(Long ticketId) throws ExistException{
+        System.out.println("TicketSessionBean : getTicketById");
+        System.out.println("ticketId passed in :"+ticketId);
         ticket=em.find(AttrTicketEntity.class, ticketId);
-        return ticket;
+        if(ticket==null){
+            throw new ExistException("ticket does not exist!");
+        }  
+        else{
+            System.out.println("ticket found");
+            return ticket;
+        }
+        
     }
     
     /*public AttrTicketEntity mapAttractionId(AttrTicketEntity ticket){

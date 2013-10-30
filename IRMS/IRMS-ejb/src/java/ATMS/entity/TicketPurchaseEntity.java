@@ -6,6 +6,7 @@ package ATMS.entity;
 
 import CRMS.entity.MemberEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -27,18 +28,17 @@ public class TicketPurchaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long tpId;
-    @OneToMany(cascade ={CascadeType.PERSIST})
-    private List<AttrTicketEntity> attrTickets;
+    @OneToMany(cascade ={CascadeType.MERGE})
+    private List<AttrTicketEntity> attrTickets=new ArrayList<AttrTicketEntity>();
     @ManyToOne
     private MemberEntity member;
-    private List<Integer> attrTicketQuantities;
+    private List<Integer> attrTicketQuantities=new ArrayList<Integer>();
     private double attrTicketFee;
     @Temporal(javax.persistence.TemporalType.DATE)
     Date attrTicketBookDate =new Date();
     private String attrTPStatus;
 
     public TicketPurchaseEntity() {
-        attrTPStatus = "in process";
     }
     
 

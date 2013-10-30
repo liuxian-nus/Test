@@ -8,6 +8,7 @@ import ATMS.entity.AttractionEntity;
 import ATMS.entity.AttrTicketEntity;
 import ATMS.entity.TicketPurchaseEntity;
 import CRMS.entity.MemberEntity;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -29,7 +30,7 @@ public class TicketPurchaseSessionBean {
     
     private TicketPurchaseEntity tp;
     private AttrTicketEntity ticket=new AttrTicketEntity();
-    private List<AttrTicketEntity> tkts;
+    private List<AttrTicketEntity> tkts=new ArrayList<AttrTicketEntity>();
     private MemberEntity member=new MemberEntity();
     
     
@@ -43,6 +44,7 @@ public class TicketPurchaseSessionBean {
         System.out.println("tpId: "+tp.getTpId());
         return tp.getTpId();
     }
+    
     
   /*  public Long updateTicketListAndQuantity(List<TicketEntity> tkts, int quantity){
         System.out.println("TicketPurchaseSessoinBean: updateTicketList");
@@ -97,6 +99,11 @@ public class TicketPurchaseSessionBean {
         em.merge(tp);
         em.flush();
         System.out.println("tp updated in database");
+    }
+    
+    public double calculateFee(AttrTicketEntity ticket, int quantity){
+        double ticketPrice=ticket.getAttrTicketPrice();
+        return ticketPrice*quantity;
     }
 
     

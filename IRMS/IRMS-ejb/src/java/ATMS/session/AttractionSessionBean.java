@@ -59,6 +59,11 @@ public class AttractionSessionBean {
         return; 
     }
     
+    public void updateAttractionAfterDecreaseQuota(AttractionEntity attr){
+        em.merge(attr);
+        em.flush();
+    }
+    
     public boolean removeAttraction(String attrId)throws ExistException {
         System.out.println("into removeAttraction");
         attr = em.find(AttractionEntity.class, attrId);
