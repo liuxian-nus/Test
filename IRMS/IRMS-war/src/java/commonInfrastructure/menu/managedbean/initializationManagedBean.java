@@ -202,7 +202,7 @@ public class initializationManagedBean implements Serializable {
         addMessage("Super Admin Created!");
     }
 
-    public void createSystemUser() {
+    public void createACMSAdmin() {
         System.out.println("go to create ACMS user");
 
 /*
@@ -256,7 +256,7 @@ public class initializationManagedBean implements Serializable {
         addMessage("ACMSAdmin Created!");
     }
     
-    public void createFrontDesk() {
+    public void createACMSFrontDesk() {
         System.err.println("go to create ACMS user");
 
         role = new RoleEntity();
