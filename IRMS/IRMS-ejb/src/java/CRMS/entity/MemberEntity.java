@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -51,8 +52,8 @@ public class MemberEntity implements Serializable {
     
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "rcMember")
     private Set<ReservationEntity> hotelReservation;
-    @OneToMany(cascade ={CascadeType.ALL})
-    private Set <MemberTransactionEntity> MemberTransactions;
+    @OneToMany(cascade ={CascadeType.MERGE})
+    private Set <MemberTransactionEntity> MemberTransactions=new HashSet<MemberTransactionEntity>();
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "mcMemberTargets")
     private Set <PromotionEntity> MarketingCampaigns;
     @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")

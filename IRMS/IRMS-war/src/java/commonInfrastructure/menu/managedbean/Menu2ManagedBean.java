@@ -303,7 +303,7 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setIcon("ui-icon ui-icon-contact");
                 
                 item = new MenuItem();
-                item.setValue("Adventure world ticket purchase");
+                item.setValue("Ticket purchase");
                 item.setUrl("/atms/adventureWorldTicketPurchase.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);

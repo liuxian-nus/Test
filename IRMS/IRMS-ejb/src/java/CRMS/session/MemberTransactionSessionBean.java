@@ -63,9 +63,13 @@ public class MemberTransactionSessionBean {
         }
         // mt.create(mtDate, mtAmount, mtDepartment, mtMode);
         em.persist(mt);
+        System.out.println("mt persist successful");
+        System.out.println("mt email"+mt.getMemberEmail());
+        
         Set temp = member.getMemberTransactions();
         System.out.println("The transaction record of " + memberEmail + "has been retrieved successfully!");
         if (temp.add(mt)) {
+            System.out.println("mt added to transactions");
             member.setMemberTransactions(temp);
         }
         mt.setMemberEmail(member.getMemberEmail());
