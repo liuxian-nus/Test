@@ -15,7 +15,8 @@
                     <p:autoComplete id="show" value="#{showTicketingManagedBean.searchName}" 
                                     required="true" requiredMessage="Show name Cannot be empty"   
                                     completeMethod="#{showTicketingManagedBean.complete}" />
-                    <br/>
+                    <h:outputText value=""/><br/>
+                    <h:outputText value=""/><br/>
                     <p:commandButton  value="Search" ajax="true" 
                                       actionListener="#{showTicketingManagedBean.searchByName}" update ="tab1msg"/>
                 </h:form>

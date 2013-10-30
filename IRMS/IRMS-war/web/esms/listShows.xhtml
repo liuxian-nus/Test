@@ -33,7 +33,9 @@
                     <p:rowExpansion>
                         <p:dataTable id="showSchedules" value="#{showList.showSchedules}" var="showScheduleList" rows="6" >
                             <p:column headerText="Show date and time ">
-                                <h:outputText value="#{showScheduleList.startDateTime}"/>
+                                <h:outputText value="#{showScheduleList.startDateTime}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm"/>
+                                </h:outputText>
                             </p:column>
                             <p:column headerText="Show duration ">
                                 <h:outputText value="#{showScheduleList.duration}"/>

@@ -155,6 +155,7 @@ public class ShowTicketingManagedBean {
             selectedShowTicketSale.setShowStartDateTime(selectedShowSchedule.getStartDateTime());
             selectedShowTicketSale.setShowTicketType(selectedShowTicket.getShowTicketType());
             selectedShowTicketSale.setShowTicketQuantity(showTicketQuota);
+            selectedShowTicketSale.setShowTicketPrice(selectedShowTicket.getShowTicketPrice());
 
             showTicketSessionBean.updateQuantity(showTicketId, showTicketQuota);
             showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
