@@ -437,13 +437,13 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setLabel("Show Management");
 
                 item = new MenuItem();
-                item.setValue("Create new show");
+                item.setValue("Create New Show");
                 item.setUrl("/esms/addShow.xhtml");
                 item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
 
                 item = new MenuItem();
-                item.setValue("Manage show");
+                item.setValue("Manage Show");
                 item.setUrl("/esms/manageShow.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
@@ -462,11 +462,28 @@ public class Menu2ManagedBean implements Serializable {
                 model.addSubmenu(submenu);
                 
                 submenu = new Submenu();
-                submenu.setLabel("Show billing");
+                submenu.setLabel("Show Billing");
 
                 item = new MenuItem();
-                item.setValue("View bill");
+                item.setValue("View Bill");
                 item.setUrl("/esms/showBilling.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+                
+                model.addSubmenu(submenu);
+                
+                submenu = new Submenu();
+                submenu.setLabel("Request Management");
+
+                item = new MenuItem();
+                item.setValue("View Request");
+                item.setUrl("/esms/viewShowRequest.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Manage Request");
+                item.setUrl("/esms/manageShowRequest.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
                 
