@@ -38,7 +38,9 @@
                                 </h:outputText>
                             </p:column>
                             <p:column headerText="Show duration ">
-                                <h:outputText value="#{showScheduleList.duration}"/>
+                                <h:outputText value="#{showScheduleList.duration}">
+                                    <f:convertDateTime pattern="HH:mm"/>
+                                </h:outputText>
                             </p:column>
                         </p:dataTable>
                     </p:rowExpansion> 
