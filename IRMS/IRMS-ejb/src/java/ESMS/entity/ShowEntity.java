@@ -37,6 +37,7 @@ public class ShowEntity implements Serializable {
     private byte[] image;
     private String imagePath;
     private boolean showStatus;
+    private boolean showPaymentStatus;
     @OneToMany(targetEntity = ShowScheduleEntity.class, cascade = {CascadeType.MERGE})
     private List<ShowScheduleEntity> showSchedules = new ArrayList<ShowScheduleEntity>();
     @OneToOne(cascade = {CascadeType.MERGE})
@@ -126,5 +127,13 @@ public class ShowEntity implements Serializable {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public boolean isShowPaymentStatus() {
+        return showPaymentStatus;
+    }
+
+    public void setShowPaymentStatus(boolean showPaymentStatus) {
+        this.showPaymentStatus = showPaymentStatus;
     }
 }
