@@ -164,6 +164,7 @@ public class addComboManagedBean {
         return true;
     }
     
+    
     public boolean checkTicketCluster(List<AttrTicketEntity> ticketEntities){
         System.out.println("addComboManagedBean: checkTicketCluster");
         String cluster1=attrCombo.getAttrComboCluster();
