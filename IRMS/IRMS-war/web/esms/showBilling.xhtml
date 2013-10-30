@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id ="form">
+            <p:panel id="show" header="View Bill" style="height:495px;">
+                <p:growl id="growl"/>
+                <h:outputText value="Show Name: "/>
+                <p:selectOneMenu value="#{showBillingManagedBean.showId}">  
+                    <f:selectItem itemLabel="Select Show" itemValue=""/>
+                    <f:selectItems value="#{showBillingManagedBean.showBillingSessionBean.allSelectedShows}" var="showList" 
+                                   itemLabel="#{showList.showName}" itemValue="#{showList.showId}" />  
+                </p:selectOneMenu>
+
+                <h:outputText value=""/><br/>
+                <h:outputText value=""/><br/>
+
+                <p:commandButton  value="View bill" ajax="true" actionListener="#{showBillingManagedBean.showBill}" 
+                                  update =":form:carDlg" oncomplete="carDialog.show()"/>
+            </p:panel>
+
+            <p:dialog header="View Bill" widgetVar="carDialog" resizable="true" id="carDlg"  
+                      showEffect="fade" hideEffect="explode" width="700">  
+
+                <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
+                    <h:outputText value="Show Name: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{showBillingManagedBean.selectedShow.showName}" style="font-weight:bold"/> 
+                    </h:panelGroup> 
+                    
+                    <h:outputText value="Show Deposit: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{showBillingManagedBean.selectedShow.showContract.showDeposit}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <h:outputText value="Venue Rental Rate: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{showBillingManagedBean.selectedShow.showContract.showVenueRate}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <h:outputText value="Venue Rental Duration: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{showBillingManagedBean.selectedShow.showContract.showVenueDuration}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <h:outputText value="Venue Rental Fee: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{showBillingManagedBean.rentalFee}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <h:outputText value="Ticketing Revenue: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{showBillingManagedBean.ticketRevenue}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <h:outputText value="Ticketing Commission Rate: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{showBillingManagedBean.selectedShow.showContract.showTicketCommission}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <h:outputText value="Ticketing Commission Fee: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{showBillingManagedBean.ticketCommission}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <p:separator/><br/>
+                    
+                    <h:outputText value="Total Bill: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{showBillingManagedBean.bill}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                </h:panelGrid>  
+            </p:dialog>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
