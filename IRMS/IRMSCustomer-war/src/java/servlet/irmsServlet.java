@@ -204,8 +204,12 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/ATMSServlet/adventureWorld").forward(request, response);
             } else if ("ticketBooking".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/ticketBooking").forward(request, response);
-            } else if ("ticketBookingConfirm".equals(page)) {
-                request.getRequestDispatcher("/ATMSServlet/ticketBookingConfirm").forward(request, response);
+            } else if ("ticketBookingInformation".equals(page)) {
+                request.getRequestDispatcher("/ATMSServlet/ticketBookingInformation").forward(request, response);
+            }else if ("ticketBookingPayment".equals(page)) {
+                request.getRequestDispatcher("/ATMSServlet/ticketBookingPayment").forward(request, response);
+            }else if ("ticketBookingConfirmation".equals(page)) {
+                request.getRequestDispatcher("/ATMSServlet/ticketBookingConfirmation").forward(request, response);
             } else {
                 System.out.println("other page");
 
