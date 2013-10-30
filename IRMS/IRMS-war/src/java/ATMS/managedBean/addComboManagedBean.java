@@ -164,7 +164,6 @@ public class addComboManagedBean {
         return true;
     }
     
-    
     public boolean checkTicketCluster(List<AttrTicketEntity> ticketEntities){
         System.out.println("addComboManagedBean: checkTicketCluster");
         String cluster1=attrCombo.getAttrComboCluster();
@@ -204,7 +203,7 @@ public class addComboManagedBean {
         }      
     }
     
-    public List<AttrTicketEntity> pushToTicketEntity(){
+    public List<AttrTicketEntity> pushToTicketEntity() throws ExistException{
         System.out.println("pushToTicketEntity...");
         Long id;
         List<AttrTicketEntity> tkts=new ArrayList<AttrTicketEntity>();
