@@ -113,7 +113,6 @@ public class initializationManagedBean implements Serializable {
     private ShowContractSessionBean showContractSessionBean;
     @EJB
     private EventSessionBean eventSessionBean;
-    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -136,7 +135,7 @@ public class initializationManagedBean implements Serializable {
     private ContracteventEntity event;
     private EventEntity eventEntity;
 //    private MemberEntity member;
-    
+
     @PostConstruct
     public void init() {
         FacesContext.getCurrentInstance().getExternalContext().getSession(true);
@@ -205,34 +204,34 @@ public class initializationManagedBean implements Serializable {
     public void createACMSAdmin() {
         System.out.println("go to create ACMS user");
 
-/*
-        functionality = new FunctionalityEntity();
-        functionality.setFuncName("overbookingManagement");
-        functionality.setFuncDescription("manage overbooking");
-        functionalitySessionBean.addFunctionality(functionality);
+        /*
+         functionality = new FunctionalityEntity();
+         functionality.setFuncName("overbookingManagement");
+         functionality.setFuncDescription("manage overbooking");
+         functionalitySessionBean.addFunctionality(functionality);
 
-        FunctionalityEntity functionality2 = new FunctionalityEntity();
-        functionality2.setFuncName("listAllRooms");
-        functionality2.setFuncDescription("oversee all room situation");
-        functionalitySessionBean.addFunctionality(functionality2);
+         FunctionalityEntity functionality2 = new FunctionalityEntity();
+         functionality2.setFuncName("listAllRooms");
+         functionality2.setFuncDescription("oversee all room situation");
+         functionalitySessionBean.addFunctionality(functionality2);
 
-        FunctionalityEntity functionality3 = new FunctionalityEntity();
-        functionality3.setFuncName("listAllRoomPrices");
-        functionality3.setFuncDescription("manage room price");
-        functionalitySessionBean.addFunctionality(functionality3);
+         FunctionalityEntity functionality3 = new FunctionalityEntity();
+         functionality3.setFuncName("listAllRoomPrices");
+         functionality3.setFuncDescription("manage room price");
+         functionalitySessionBean.addFunctionality(functionality3);
 
-        FunctionalityEntity functionality4 = new FunctionalityEntity();
-        functionality4.setFuncName("listReservations");
-        functionality4.setFuncDescription("oversee all reservations");
-        functionalitySessionBean.addFunctionality(functionality4);
-*/
+         FunctionalityEntity functionality4 = new FunctionalityEntity();
+         functionality4.setFuncName("listReservations");
+         functionality4.setFuncDescription("oversee all reservations");
+         functionalitySessionBean.addFunctionality(functionality4);
+         */
         role = new RoleEntity();
         role.setRoleId(20);
         role.setRoleName("ACMSAdmin"); //manager instead
 /*        role.addFunctionality(functionality);
-        role.addFunctionality(functionality2);
-        role.addFunctionality(functionality3);
-        role.addFunctionality(functionality4);*/
+         role.addFunctionality(functionality2);
+         role.addFunctionality(functionality3);
+         role.addFunctionality(functionality4);*/
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
@@ -255,17 +254,53 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("ACMSAdmin Created!");
     }
-    
+
     public void createACMSFrontDesk() {
         System.err.println("go to create ACMS user");
+
+        functionality = new FunctionalityEntity();
+        functionality.setFuncName("checkIncheckOut");
+        functionality.setFuncDescription("front desk: perform check in, check out, and make/cancel reservation");
+        functionalitySessionBean.addFunctionality(functionality);
+
+        FunctionalityEntity functionality2 = new FunctionalityEntity();
+        functionality2.setFuncName("listAllRooms");
+        functionality2.setFuncDescription("check in");
+        functionalitySessionBean.addFunctionality(functionality2);
+
+        FunctionalityEntity functionality3 = new FunctionalityEntity();
+        functionality3.setFuncName("listReservations");
+        functionality3.setFuncDescription("manage reservations");
+        functionalitySessionBean.addFunctionality(functionality3);
+
+        FunctionalityEntity functionality4 = new FunctionalityEntity();
+        functionality4.setFuncName("RoomSearchResult");
+        functionality4.setFuncDescription("check room details for check out");
+        functionalitySessionBean.addFunctionality(functionality4);
+
+        FunctionalityEntity functionality5 = new FunctionalityEntity();
+        functionality5.setFuncName("ReservationSearchResult");
+        functionality5.setFuncDescription("reservation detail for check in");
+        functionalitySessionBean.addFunctionality(functionality5);
+
+        FunctionalityEntity functionality6 = new FunctionalityEntity();
+        functionality6.setFuncName("logBook");
+        functionality6.setFuncDescription("employee shift log book");
+        functionalitySessionBean.addFunctionality(functionality6);
 
         role = new RoleEntity();
         role.setRoleId(21);
         role.setRoleName("ACMSFrontDesk");
+        role.addFunctionality(functionality);
+        role.addFunctionality(functionality2);
+        role.addFunctionality(functionality3);
+        role.addFunctionality(functionality4);
+        role.addFunctionality(functionality5);
+        role.addFunctionality(functionality6);
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
-        employee.setEmployeeId("B1000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeId("B1000"); //business assumption: 1000+2000+3000: hotel front desk
         employee.setEmployeeDepartment("hotel");
         employee.setEmployeeName("ACMSFrontDesk");
         employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B1000"));
@@ -284,8 +319,8 @@ public class initializationManagedBean implements Serializable {
         }
         System.out.println("Insert System User into database");
     }
-    
-        public void createACMSRoomService() {
+
+    public void createACMSRoomService() {
         System.err.println("go to create ACMS user");
 
         functionality = new FunctionalityEntity();
@@ -293,11 +328,11 @@ public class initializationManagedBean implements Serializable {
         functionality.setFuncDescription("list and manage room service");
         functionalitySessionBean.addFunctionality(functionality);
 
-/*        FunctionalityEntity functionality3 = new FunctionalityEntity();
-        functionality3.setFuncName("logBook");
-        functionality3.setFuncDescription("employee shift log book");
-        functionalitySessionBean.addFunctionality(functionality3);
-        */
+        /*        FunctionalityEntity functionality3 = new FunctionalityEntity();
+         functionality3.setFuncName("logBook");
+         functionality3.setFuncDescription("employee shift log book");
+         functionalitySessionBean.addFunctionality(functionality3);
+         */
         role = new RoleEntity();
         role.setRoleId(22);
         role.setRoleName("ACMSRoomService");
@@ -459,7 +494,7 @@ public class initializationManagedBean implements Serializable {
         functionality2.setFuncName("managerViewContract");
         functionality2.setFuncDescription("manager View Contract");
         functionalitySessionBean.addFunctionality(functionality2);
-        
+
 
         role = new RoleEntity();
         role.setRoleId(40);
@@ -1339,8 +1374,8 @@ public class initializationManagedBean implements Serializable {
         }
         addMessage("Show Contract Created!");
     }
-    
-    public void createEvent(){
+
+    public void createEvent() {
         eventEntity = new EventEntity();
         eventEntity.setEventName("Liu Xian");
         eventEntity.setEventType("Wedding");
