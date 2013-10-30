@@ -9,6 +9,10 @@ import ESMS.entity.ShowScheduleEntity;
 import ESMS.session.ShowSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -24,15 +28,15 @@ import javax.servlet.http.HttpSession;
  *
  * @author lionetdd
  */
-@WebServlet(name = "ESMSServlet", urlPatterns = {"/ESMSServlet","/ESMSServlet/*"})
+@WebServlet(name = "ESMSServlet", urlPatterns = {"/ESMSServlet", "/ESMSServlet/*"})
 public class ESMSServlet extends HttpServlet {
+
     @EJB
     private ShowSessionBean showSessionBean;
-    
     private List<ShowEntity> shows;
     private List<ShowScheduleEntity> showSchedule;
     private Long showId;
- 
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -43,7 +47,6 @@ public class ESMSServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -67,7 +70,7 @@ public class ESMSServlet extends HttpServlet {
 
                 if ("entertainment".equals(page)) {
                     System.out.println("***entertainment***");
-                    shows=showSessionBean.getAllShows();
+                    shows = showSessionBean.getAllShows();
                     request.setAttribute("shows", shows);
                     request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
                 } else if ("entertainmentVenue".equals(page)) {
@@ -76,7 +79,36 @@ public class ESMSServlet extends HttpServlet {
                     session.setAttribute("thisShow", showSessionBean.getShowById(showId));
                     showSchedule = showSessionBean.getAllShowSchedules(showId);
                     System.out.println(showSchedule.isEmpty());
-                    request.setAttribute("showSchedule",showSchedule);
+                    Iterator<ShowScheduleEntity> itr = showSchedule.iterator();
+                    List<Integer> dayList = new ArrayList();
+                    List<Integer> monthList = new ArrayList();
+                    List<Integer> yearList = new ArrayList();
+                    List<Integer> weekList = new ArrayList();
+                    List<Integer> minuteList = new ArrayList();
+                    List<Integer> hourList = new ArrayList();
+                    while (itr.hasNext()) {
+                        ShowScheduleEntity current = itr.next();                     
+                        Date date = current.getStartDateTime();
+                        dayList.add(date.getDate());
+                        System.out.println(date.getDate());
+                        monthList.add(date.getMonth());
+                        System.out.println(date.getMonth());
+                        yearList.add(date.getYear());
+                        System.out.println(date.getYear());
+                        weekList.add(date.getDay());
+                        System.out.println(date.getDay());
+                        hourList.add(date.getHours());
+                        System.out.println(date.getHours());
+                        minuteList.add(date.getMinutes());
+                        System.out.println(date.getMinutes());
+                    }
+                    request.setAttribute("showDays", dayList);
+                    request.setAttribute("showMonths",monthList);
+                    request.setAttribute("showYears",yearList);
+                    request.setAttribute("showWeeks",weekList);
+                    request.setAttribute("showMinutes",minuteList);
+                    request.setAttribute("showHours",hourList);
+                    request.setAttribute("showSchedules", showSchedule);
                     request.getRequestDispatcher("/entertainmentVenue.jsp").forward(request, response);
                 } else {
                     System.out.println("other page");
