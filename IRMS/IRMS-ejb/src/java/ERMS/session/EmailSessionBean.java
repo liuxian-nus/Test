@@ -637,7 +637,8 @@ public class EmailSessionBean {
         
         //Add table contents
         table.addCell("Attraction");
-        table.addCell("Lei Lei I can not get it from your entity!PLEASE MODIFY!");
+        table.addCell(tpe.getAttrTickets().get(0).getAttr().getAttrName());
+        
         if(!tpe.getAttrTickets().isEmpty())
         {
             Iterator <AttrTicketEntity> itr = tpe.getAttrTickets().iterator();
