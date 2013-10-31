@@ -25,33 +25,29 @@
 
                 <h5> Please select your ticket for <strong>${thisShow.showName}</strong> </h5>
             <c:forEach items="${showSchedules}" var="schedule">
-
-                <p><fmt:formatDate type="date" pattern="MMMM" 
-                                value="${schedule.startDateTime}" /></p>
-                
-                <input type="radio" name="schedule" value="${schedule.startDateTime}">${schedule.startDateTime}<br>
-                <p><fmt:formatDate type="date" pattern="E" 
-                                value="${schedule.startDateTime}" /></p>
-                
-                <div class="panel row">
-                <div class="large-4 columns">
-                <div style="width: 90px;
-                     height: 90px;background: url('/IRMSCustomer-war/images/Calendar_background.png'); background-size: 90px 90px">
-                    <!--<img src="/IRMSCustomer-war/images/Calendar_background.png" alt=" "  style="z-index: -1"/>
-                    <div style="position:absolute;left:0px;top:0px;font-size: 32px;display: none">-->
-                    <p style="padding-top: 10px; padding-left:12px; color:white"> <strong> <fmt:formatDate type="date" pattern="MMM yyyy" 
-                                    value="${schedule.startDateTime}" /></strong></p>
-                    <p style="margin-top:-15px;padding-left:22px; font-size: 32px"><strong><fmt:formatDate type="date" pattern="dd" 
-                                    value="${schedule.startDateTime}" /></strong></p>
-                         <p style="margin-top:-20px;padding-left:28px;"><strong><fmt:formatDate type="date" pattern="E" 
-                                         value="${schedule.startDateTime}" /></strong></p>
-                </div>
-                </div>
-                <div class="large-8 columns">
-                <input style="color:" type="radio" name="schedule" value="${schedule.showScheduleId}"><fmt:formatDate type="time" pattern="hh:mm a" 
-                                value="${schedule.startDateTime}" /><br>
-                </div>
+                <div class="row">
+                    <div class="panel large-10 large-offset-1 columns">
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <div style="width: 90px;
+                                     height: 90px;background: url('/IRMSCustomer-war/images/Calendar_background.png'); background-size: 90px 90px">
+                                    <!--<img src="/IRMSCustomer-war/images/Calendar_background.png" alt=" "  style="z-index: -1"/>
+                                    <div style="position:absolute;left:0px;top:0px;font-size: 32px;display: none">-->
+                                    <p style="padding-top: 10px; padding-left:12px; color:white"> <strong> <fmt:formatDate type="date" pattern="MMM yyyy" 
+                                                    value="${schedule.startDateTime}" /></strong></p>
+                                    <p style="margin-top:-15px;padding-left:22px; font-size: 32px"><strong><fmt:formatDate type="date" pattern="dd" 
+                                                    value="${schedule.startDateTime}" /></strong></p>
+                                    <p style="margin-top:-20px;padding-left:28px;"><strong><fmt:formatDate type="date" pattern="E" 
+                                                    value="${schedule.startDateTime}" /></strong></p>
+                                </div>
+                            </div>
+                            <div class="large-8 columns">
+                                <input type="radio" name="schedule" value="${schedule.showScheduleId}"><lable style="color:#4d4d4d;font-size: 18px"><fmt:formatDate type="time" pattern="hh:mm a" 
+                                                                                                                         value="${schedule.startDateTime}" /></lable><br>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
 
             </c:forEach>
@@ -74,212 +70,10 @@
             // </c:forEach>
 
             </script>
-
-            <form id="member" action="memberInfo" method="POST">
-                <fieldset>
-                    <legend>Ticket</legend>
-
-                    <p>${message}</p>
-                <table>
-
-                    <thead>
-                    <th width="300">Area</th>
-                    <th width="300">Ticket Price</th>
-                    <th width="300">Number of Tickets</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td width="300">&nbsp Area 1</td>
-                            <td width="300">&nbsp $168</td>
-                            <td width="300">   
-                                <select style="width:100px" required name="ticket1" id="ticket1"/>
-                    <option value="0">0</option>            
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    </select></td>
-
-                    </tr>
-                    <tr>
-                        <td width="300">&nbsp Area 2</td>
-                        <td width="300">&nbsp $68</td>
-                        <td width="300">   
-                            <select style="width:100px" required name="ticket2" id="ticket2"/>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    </select></td>
-
-
-                    </tr>
-
-                    <tr>
-                        <td width="300">&nbsp Area 3</td>
-                        <td width="300">&nbsp $268</td>
-                        <td width="300">   
-                            <select style="width:100px" required name="ticket3" id="ticket3"/>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    </select></td>
-
-                    </tr>
-
-                    <tr>
-                        <td width="300">&nbsp Area 4</td>
-                        <td width="300">&nbsp $198</td>
-                        <td width="300">   
-                            <select style="width:100px" required name="ticket4" id="ticket4"/>
-
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    </select></td>
-
-                    </tr>
-                    <tr>
-                        <td width="300">&nbsp Area 5</td>
-                        <td width="300">&nbsp $168</td>
-                        <td width="300">   
-                            <select style="width:100px" required name="ticket5" id="ticket5"/>
-
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    </select></td>
-
-                    </tr>
-                    <tr>
-                        <td width="300">&nbsp Area 6</td>
-                        <td width="300">&nbsp $68</td>
-                        <td width="300">   
-                            <select style="width:100px" required name="ticket6" id="ticket6"/>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    </select></td>
-
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="row">
-                    <div class="large-2 large-offset-10 columns">
-                        <input type="submit" value="Continue" class="small button secondary">
-                    </div>
-                </div>
-            </fieldset>         
-        </form>   
-    </div>
-    <div id="container"></div>
-    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.7.2.min.js"></script>
-    <script defer="defer">
+            <div class="row">
+        <div id="container" class="large-7 columns">
+            <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.7.2.min.js"></script>
+            <script defer="defer">
             var text;
             var price1 = 168;
             var price2 = 68;
@@ -289,37 +83,38 @@
             var price6 = 68;
             var stage = new Kinetic.Stage({
                 container: 'container',
-                width: 1000,
-                height: 600,
+                width: 500,
+                height: 300,
+                color: '#FFFFFF'
             });
 
             var layer = new Kinetic.Layer();
 
             var complexText = new Kinetic.Text({
-                x: 450,
-                y: 30,
+                x: 200,
+                y: 10,
                 text: 'Stage',
-                fontSize: 24,
+                fontSize: 20,
                 fontFamily: 'Calibri',
                 fill: '#555',
                 align: 'center'
             });
 
             var rect = new Kinetic.Rect({
-                x: 200,
-                y: 20,
+                x: 100,
+                y: 10,
                 stroke: '#555',
                 strokeWidth: 5,
                 fill: '#ddd',
-                width: 550,
-                height: 50,
+                width: 275,
+                height: 25,
             });
 
             layer.add(rect);
             layer.add(complexText);
-//Seating Area~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            //Seating Area~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             var poly1 = new Kinetic.Polygon({
-                points: [10, 100, 10, 480, 180, 300, 180, 100, 10, 100],
+                points: [5, 50, 5, 240, 90, 150, 90, 50, 5, 50],
                 fill: '#B5B5B5',
                 stroke: 'black',
                 strokeWidth: 2,
@@ -349,34 +144,35 @@
             });
 
             var text1 = new Kinetic.Text({
-                x: 30,
-                y: 200,
+                x: 15,
+                y: 100,
                 text: 'Area1 Price:$' + price1 + "  ",
-                fontSize: 18,
+                fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 200,
-                padding: 10,
+                width: 100,
+                height: 25,
+                padding: 5,
                 align: 'center'
             });
 
             var rect1 = new Kinetic.Rect({
-                x: 30,
-                y: 200,
+                x: 15,
+                y: 100,
                 fill: '#FFC0CB',
-                width: 180,
-                height: 35,
+                width: 100,
+                height: 25,
                 shadowColor: 'black',
                 shadowBlur: 10,
-                shadowOffset: [10, 10],
+                shadowOffset: [5, 5],
                 shadowOpacity: 0.2,
             });
             // add the shape to the layer
             layer.add(poly1);
 
-// Area 2~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            // Area 2~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             var poly2 = new Kinetic.Polygon({
-                points: [10, 500, 180, 500, 180, 320],
+                points: [5, 250, 90, 250, 90, 160],
                 fill: '#4F4F4F',
                 stroke: 'black',
                 strokeWidth: 2,
@@ -407,33 +203,34 @@
             });
 
             var text2 = new Kinetic.Text({
-                x: 50,
-                y: 380,
+                x: 25,
+                y: 190,
                 text: 'Area2 Price:$' + price2,
-                fontSize: 18,
+                fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 180,
-                padding: 10,
+                width: 100,
+                height: 25,
+                padding: 5,
                 align: 'center'
             });
 
             var rect2 = new Kinetic.Rect({
-                x: 50,
-                y: 380,
+                x: 25,
+                y: 190,
                 fill: '#FFC0CB',
-                width: 180,
-                height: 35,
+                width: 100,
+                height: 25,
                 shadowColor: 'black',
                 shadowBlur: 10,
-                shadowOffset: [10, 10],
+                shadowOffset: [5, 5],
                 shadowOpacity: 0.2,
             });
             // add the shape to the layer
             layer.add(poly2);
-//Area 3 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            //Area 3 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             var poly3 = new Kinetic.Polygon({
-                points: [200, 100, 200, 300, 750, 300, 750, 100],
+                points: [100, 50, 100, 150, 375, 150, 375, 50],
                 fill: '#FFFFFF',
                 stroke: 'black',
                 strokeWidth: 2,
@@ -464,34 +261,35 @@
             });
 
             var text3 = new Kinetic.Text({
-                x: 300,
-                y: 150,
+                x: 150,
+                y: 75,
                 text: 'Area3 Price:$' + price3,
-                fontSize: 18,
+                fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 180,
-                padding: 10,
+                width: 100,
+                height: 25,
+                padding: 5,
                 align: 'center'
             });
 
             var rect3 = new Kinetic.Rect({
-                x: 300,
-                y: 150,
+                x: 150,
+                y: 75,
                 fill: '#FFC0CB',
-                width: 180,
-                height: 35,
+                width: 100,
+                height: 25,
                 shadowColor: 'black',
                 shadowBlur: 10,
-                shadowOffset: [10, 10],
+                shadowOffset: [5, 5],
                 shadowOpacity: 0.2,
             });
 
             // add the shape to the layer
             layer.add(poly3);
-//Area 4~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            //Area 4~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             var poly4 = new Kinetic.Polygon({
-                points: [200, 320, 200, 500, 750, 500, 750, 320],
+                points: [100, 160, 100, 250, 375, 250, 375, 160],
                 fill: '#000000',
                 stroke: 'black',
                 strokeWidth: 2,
@@ -517,31 +315,31 @@
                 this.setStrokeWidth(0);
                 text4.remove();
                 rect4.remove();
-
                 layer.draw();
             });
 
             var text4 = new Kinetic.Text({
-                x: 300,
-                y: 400,
+                x: 150,
+                y: 200,
                 text: 'Area4 Price:$' + price4,
-                fontSize: 18,
+                fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 180,
-                padding: 10,
+                width: 100,
+                height: 25,
+                padding: 5,
                 align: 'center'
             });
 
             var rect4 = new Kinetic.Rect({
-                x: 300,
-                y: 400,
+                x: 150,
+                y: 200,
                 fill: '#FFC0CB',
-                width: 180,
-                height: 35,
+                width: 100,
+                height: 25,
                 shadowColor: 'black',
                 shadowBlur: 10,
-                shadowOffset: [10, 10],
+                shadowOffset: [5, 5],
                 shadowOpacity: 0.2,
             });
 
@@ -550,7 +348,7 @@
             layer.add(poly4);
             // Area 5 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             var poly5 = new Kinetic.Polygon({
-                points: [770, 100, 770, 300, 940, 480, 940, 100],
+                points: [385, 50, 385, 150, 470, 240, 470, 50],
                 fill: '#B5B5B5',
                 stroke: 'black',
                 strokeWidth: 2,
@@ -581,33 +379,34 @@
             });
 
             var text5 = new Kinetic.Text({
-                x: 800,
-                y: 200,
+                x: 400,
+                y: 100,
                 text: 'Area5 Price:$' + price5,
-                fontSize: 18,
+                fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 180,
-                padding: 10,
+                width: 100,
+                height: 25,
+                padding: 5,
                 align: 'center'
             });
 
             var rect5 = new Kinetic.Rect({
-                x: 800,
-                y: 200,
+                x: 400,
+                y: 100,
                 fill: '#FFC0CB',
-                width: 180,
-                height: 35,
+                width: 100,
+                height: 25,
                 shadowColor: 'black',
                 shadowBlur: 10,
-                shadowOffset: [10, 10],
+                shadowOffset: [5, 5],
                 shadowOpacity: 0.2,
             });
             // add the shape to the layer
             layer.add(poly5);
-//Area 6~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            //Area 6~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             var poly6 = new Kinetic.Polygon({
-                points: [770, 320, 770, 500, 940, 500],
+                points: [385, 160, 385, 250, 470, 250],
                 fill: '#4F4F4F',
                 stroke: 'black',
                 strokeWidth: 2,
@@ -632,39 +431,245 @@
                 this.setStrokeWidth(0);
                 text6.remove();
                 rect6.remove();
-
                 layer.draw();
             });
 
             var text6 = new Kinetic.Text({
-                x: 800,
-                y: 400,
+                x: 400,
+                y: 200,
                 text: 'Area6 Price:$' + price4,
-                fontSize: 18,
+                fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 180,
-                padding: 10,
+                width: 100,
+                height: 25,
+                padding: 5,
                 align: 'center'
             });
 
             var rect6 = new Kinetic.Rect({
-                x: 800,
-                y: 400,
+                x: 400,
+                y: 200,
                 fill: '#FFC0CB',
-                width: 180,
-                height: 35,
+                width: 100,
+                height: 25,
                 shadowColor: 'black',
                 shadowBlur: 10,
-                shadowOffset: [10, 10],
+                shadowOffset: [5, 5],
                 shadowOpacity: 0.2,
             });
             // add the shape to the layer
             layer.add(poly6);
 
             stage.add(layer);
-    </script>
+            </script>
+        </div>
+                <div class="large-5 columns">
+                    <form id="member" action="memberInfo" method="POST">
+                        <fieldset>
+                            <legend>Ticket</legend>
 
+                            <p>${message}</p>
+                        <table>
+
+                            <thead>
+                            <th width="300">Area</th>
+                            <th width="300">Ticket Price</th>
+                            <th width="300">Number of Tickets</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td width="300">&nbsp Area 1</td>
+                                    <td width="300">&nbsp $168</td>
+                                    <td width="300">   
+                                        <select style="width:80px" required name="ticket1" id="ticket1"/>
+                            <option value="0">0</option>            
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            </select></td>
+
+                            </tr>
+                            <tr>
+                                <td width="300">&nbsp Area 2</td>
+                                <td width="300">&nbsp $68</td>
+                                <td width="300">   
+                                    <select style="width:80px" required name="ticket2" id="ticket2"/>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            </select></td>
+
+
+                            </tr>
+
+                            <tr>
+                                <td width="300">&nbsp Area 3</td>
+                                <td width="300">&nbsp $268</td>
+                                <td width="300">   
+                                    <select style="width:80px" required name="ticket3" id="ticket3"/>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            </select></td>
+
+                            </tr>
+
+                            <tr>
+                                <td width="300">&nbsp Area 4</td>
+                                <td width="300">&nbsp $198</td>
+                                <td width="300">   
+                                    <select style="width:80px" required name="ticket4" id="ticket4"/>
+
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            </select></td>
+
+                            </tr>
+                            <tr>
+                                <td width="300">&nbsp Area 5</td>
+                                <td width="300">&nbsp $168</td>
+                                <td width="300">   
+                                    <select style="width:80px" required name="ticket5" id="ticket5"/>
+
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            </select></td>
+
+                            </tr>
+                            <tr>
+                                <td width="300">&nbsp Area 6</td>
+                                <td width="300">&nbsp $68</td>
+                                <td width="300">   
+                                    <select style="width:80px" required name="ticket6" id="ticket6"/>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            </select></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="large-2 large-offset-8 columns">
+                                <input type="submit" value="Continue" class="small button secondary">
+                            </div>
+                        </div>
+                    </fieldset>         
+                </form>   
+            </div>
+       
+
+    </div>
     <jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
