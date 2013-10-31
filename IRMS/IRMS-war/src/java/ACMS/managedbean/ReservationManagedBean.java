@@ -286,7 +286,7 @@ public class ReservationManagedBean implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Reservation saved.", ""));
 //            emailSessionBean.emailInitialPassward(employee.getPersonalEmail(), initialPwd); //send email
-        emailSessionBean.emailReservationConfirmation(newReservation.getRcEmail(), newReservation);
+//        emailSessionBean.emailReservationConfirmation(newReservation.getRcEmail(), newReservation);
         System.out.println("email already sent");
         FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
         newReservation = new ReservationEntity();

@@ -1403,11 +1403,11 @@ public class initializationManagedBean implements Serializable {
 //        createACMSRoomService();
         createMember();
         createVIP();
-        createReservation();
         createFBMSAdmin();
         createATMSAdmin();
         createCRMSAdmin();
         createRoom();
+        createReservation();
         createFunctionalities();
         createOverbooking();
         createRmService();
