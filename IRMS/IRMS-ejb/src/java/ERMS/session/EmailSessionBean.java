@@ -654,6 +654,6 @@ public class EmailSessionBean {
                 
             }
         }
-        
+        return OUTPUTFILE;
     }
 }
