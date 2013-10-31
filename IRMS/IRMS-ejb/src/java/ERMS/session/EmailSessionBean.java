@@ -189,7 +189,7 @@ public class EmailSessionBean {
         }
     }
     
-    public void emailReservationConfirmation(String toEmailAdress, ReservationEntity newReservation) {
+    public void emailReservationConfirmation(String toEmailAdress, ReservationEntity newReservation) throws IOException, FileNotFoundException, DocumentException {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -210,7 +210,7 @@ public class EmailSessionBean {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAdress));
             message.setSubject("Thank you for your reservation");
-            message.setText("Greeting from Coral Island Resort!"
+            String text = "Greeting from Coral Island Resort!"
                     +"\nYou have successfully make a reservation in Coral Island Resort Group. Thank you for your new reservation!"
                     + "\nHere is your Reservation Id:" + newReservation.getReservationId() 
                     + "\nBelow is your reservation detail:"
@@ -222,8 +222,32 @@ public class EmailSessionBean {
                     +"\nRoom Type" + newReservation.getReservationRoomType()
                     + "\n\nIn case of any issues and inqueries, you may contact our corporate service manager "
                     + "\n@ 65-8180 1380"
-                    + "\n\n\nBest Regards,\nThe Coral Island Management Team");
+                    + "\n\n\nBest Regards,\nThe Coral Island Management Team";
+            
+            String INPUTFILE;        
+            INPUTFILE = createBill(toEmailAdress,newReservation);
+            
+             MimeBodyPart messageBodyPart;
+             MimeBodyPart textBodyPart;
+             
+             Multipart multipart = new MimeMultipart();
+             messageBodyPart = new MimeBodyPart();
+             
+             String file;
+                    file = INPUTFILE;
                     
+             //Below attach a file within the email
+                String fileName = "CorelResort:Room Reservation Confirmation";
+                messageBodyPart.setFileName(fileName);
+                messageBodyPart.attachFile(file);
+                //Below draft the contents of email
+                textBodyPart = new MimeBodyPart();
+                textBodyPart.setText(text);
+                
+                ((MimeMessage)message).setContent(multipart);
+
+            System.out.println("Sending");
+             
             Transport.send(message);
 
             System.out.println("Done");
@@ -311,7 +335,7 @@ public class EmailSessionBean {
         //Below generate a PDF file
         Document document;
             document = new Document(PageSize.A4,50,50,50,50);
-            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Table_Reservation"+room.getRoomCorporate()
+            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Corporate_Bill "+room.getRoomCorporate()
                     +room.getReservation().getReservationId()+".pdf";
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
             document.open();
@@ -403,5 +427,72 @@ public class EmailSessionBean {
       paragraph.add(new Paragraph(" "));
     }
        return paragraph;
+    }
+
+    private String createBill(String toEmailAdress, ReservationEntity newReservation) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+        
+        //Below generate a PDF file
+        Document document;
+            document = new Document(PageSize.A4,50,50,50,50);
+            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\RoomReservationConfirmation "+newReservation.getRcName()+
+                    newReservation.getReservationId()+".pdf";
+                    
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+            document.open();
+            
+         //Below specify the font type
+            Font catFont = new Font(Font.TIMES_ROMAN, 18,
+      Font.BOLD);
+        Font redFont = new Font(Font.TIMES_ROMAN, 12,
+      Font.NORMAL,Color.RED);
+        Font subFont = new Font(Font.TIMES_ROMAN, 16,
+      Font.BOLD);
+        Font tableFont;
+        tableFont = new Font(Font.TIMES_ROMAN,16,Font.BOLD,Color.DARK_GRAY);
+        Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
+      Font.BOLDITALIC);
+        
+       //Below specify contents
+         String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+         Image image = Image.getInstance(imagePath);
+         document.add(image);
+         
+         Paragraph preface = new Paragraph();
+         addEmptyLine(preface, 1);
+         preface.add(new Paragraph("Your room booking confirmation summary", catFont));
+         addEmptyLine(preface, 1);
+         
+         document.add(preface); 
+         
+         //Below add a table
+         PdfPTable table = new PdfPTable(2);
+        table.setSpacingAfter(30);
+        table.setSpacingBefore(30);
+        table.setWidths(new int []{1,3});
+        
+        //Add table header
+        PdfPCell c1 = new PdfPCell(new Phrase("Reservation Info"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        
+        c1 = new PdfPCell(new Phrase("Details & Remarks"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        
+        table.setHeaderRows(1);
+        
+        //Add table contents
+        table.addCell("Reservation ID");
+        table.addCell(Long.toString(newReservation.getReservationId()));
+        table.addCell("Guest Name");
+        table.addCell(newReservation.getRcName());
+        table.addCell("Guest Email");
+        table.addCell(newReservation.getRcEmail());
+        table.addCell("Hotel");
+        table.addCell(Integer.toString(newReservation.getReservationHotelNo()));
+        table.addCell("Check-in Date");
+        table.addCell(newReservation.getRcCheckInDate().toString());
+        
+        return OUTPUTFILE;
     }
 }
