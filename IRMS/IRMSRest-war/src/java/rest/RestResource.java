@@ -53,6 +53,7 @@ public class RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     public MemberEntity getMember(@QueryParam("email") String email)
     {
+        System.err.println("Email is: " + email);
         if(memberSessionBean == null)
             System.err.println("memberSessionBean is null");
         MemberEntity member = memberSessionBean.getMemberByEmail(email);
@@ -68,16 +69,27 @@ public class RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<MemberTransactionEntity> getMemberTransaction(@QueryParam("email") String email)
     {
-        return memberSessionBean.getAllTransactions(email);
+        if(memberSessionBean == null)
+            System.err.println("memberSessionBean is null");
+        List<MemberTransactionEntity> mtlist = memberSessionBean.getAllTransactions(email);
+        if(mtlist!=null){
+            return mtlist;
+        }
+        else
+            throw new WebApplicationException(404);
     }
     
     @DELETE
     @Path("member")
-    public void deleteMember(@QueryParam("email") String email) throws ExistException
+    public boolean deleteMember(@QueryParam("email") String email) throws ExistException
     {
+         if(memberSessionBean == null)
+            System.err.println("memberSessionBean is null");
         if(email!=null){
             memberSessionBean.removeMember(email);
+            return true;
         }
+        else return false;
     }
     
     @POST
@@ -90,7 +102,7 @@ public class RestResource {
                                 @FormParam("maritalStatus") String maritalStatus,
                                 @FormParam("isSubscriber") boolean isSubscriber) throws ExistException
     {
-        memberSessionBean.updateMember(email,memberName,memberHP,memberDob,maritalStatus,memberGender,isSubscriber);
+        memberSessionBean.updateMember(email,memberName,memberHP,memberDob,maritalStatus,memberGender);
     }
      
     

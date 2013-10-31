@@ -235,7 +235,7 @@ public class CRMServlet extends HttpServlet {
                 
                      System.out.println("message, "+message);*/
 
-                    member = memberSession.updateMember(email, userName, mobile,date, maritalStatus, gender, subscribe);
+                    member = memberSession.updateMember(email, userName, mobile,date, maritalStatus, gender);
                     System.out.println("member email before setAttribute" + member.getMemberEmail());
                     System.out.println("member subscriber? :" + Boolean.toString(member.isSubscriber()));
                     request.setAttribute("data", member);

@@ -126,8 +126,7 @@ public class MemberSessionBean {
 
     //update member profile & password
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public MemberEntity updateMember(String memberEmail, String name, String memberHP, Date memberDob, String maritalStatus, String gender,
-            boolean subscribe) throws ExistException {
+    public MemberEntity updateMember(String memberEmail, String name, String memberHP, Date memberDob, String maritalStatus, String gender) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         //  if(member==null) throw new ExistException ("Member doesn't exist!");
         //     if (!(member.getMemberPassword().equals(memberPassword))) throw new ExistException("Wrong ID or password");
@@ -139,7 +138,7 @@ public class MemberSessionBean {
 //        member.setNationality(nationality);
         member.setMemberDob(memberDob);
         member.setMaritalStatus(maritalStatus);
-        member.setIsSubscriber(subscribe);
+     //   member.setIsSubscriber(subscribe);
         //       member.setSecurityQuestion(securityQuestion);
         //       member.setAnswer(answer);
         em.merge(member);
