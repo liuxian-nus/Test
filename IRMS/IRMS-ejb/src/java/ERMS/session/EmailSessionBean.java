@@ -31,10 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Properties;
 import javax.ejb.Stateless;
 import javax.mail.Message;
@@ -196,94 +193,7 @@ public class EmailSessionBean {
         }
     }
     
-    public void emailAttractionTicket(String toEmailAdress,TicketPurchaseEntity tp) throws IOException, FileNotFoundException, DocumentException {
-        System.out.println("EmailSessionBean : emailAttractionTicket");
-        
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
-
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("is3102.it09", "weloveTWK");
-            }
-        });
-        
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(toEmailAdress));
-            message.setSubject("Your attraction tickets from Coral Island Resort");
-            
-            AttrTicketEntity ticket;
-            List<AttrTicketEntity> tkts = tp.getAttrTickets();
-            List<Integer> quantities = tp.getAttrTicketQuantities();
-            Integer quantity = 0;
-            System.out.println("tkts size: " + tkts.size());
-            System.out.println("quantities size: " + quantities.size());
-            String information = "";
-            for (int i = 0; i < tkts.size(); i++) {
-                ticket = tkts.get(i);
-                quantity = quantities.get(i);
-                information += quantity + " " + ticket.getAttrTicketName() + ", \n";
-            }
-            
-            SimpleDateFormat sdf=new SimpleDateFormat("dd/MMM/yyyy");
-            String dateString=sdf.format(tp.getAttrTicketBookDate());
-            
-            String text = "Thank you for visiting attractions at Coral Island Resort!\n"
-                    +"\nHere's your ticket information: \n"
-                    + information
-                    + "\nDate: "+dateString
-                    + "\nTotal Price: "+tp.getAttrTicketFee()
-                    + "\nThe tickets sold are not refundable."
-                    + "\nPlease print the attached ticket on the day of visit." 
-                    + "\n\nIn case of any issues and inqueries, you may contact our corporate service manager "
-                    + "\n@ 65-8180 1380"
-                    + "\n\n\nBest Regards,\nThe Coral Island Management Team";
-            
-            message.setText(text);
-    
-//            String INPUTFILE;        
-//            INPUTFILE = createAttrTicket(toEmailAdress,tp);
-
-//            
-//                MimeBodyPart messageBodyPart;
-//                MimeBodyPart textBodyPart;
-//                
-//                Multipart multipart = new MimeMultipart();
-//                messageBodyPart = new MimeBodyPart();
-////                String file;
-////                    file = INPUTFILE;
-////                //Below attach a file within the email
-////                String fileName = "CorelResort:Attraction Ticket";
-////                messageBodyPart.setFileName(fileName);
-////                messageBodyPart.attachFile(file);
-//                
-//                //Below draft the contents of email
-//                textBodyPart = new MimeBodyPart();
-//                textBodyPart.setText(text);
-//                
-//                ((MimeMessage)message).setContent(multipart);
-
-            System.out.println("Sending");
-            Transport.send(message);
-
-            System.out.println("Done");
-
-        }catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
-        
-    }
-    
-    
-    public void emailReservationConfirmation(String toEmailAdress, ReservationEntity newReservation) {
+    public void emailReservationConfirmation(String toEmailAdress, ReservationEntity newReservation) throws IOException, FileNotFoundException, DocumentException {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -304,7 +214,7 @@ public class EmailSessionBean {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAdress));
             message.setSubject("Thank you for your reservation");
-            message.setText("Greeting from Coral Island Resort!"
+            String text = "Greeting from Coral Island Resort!"
                     +"\nYou have successfully make a reservation in Coral Island Resort Group. Thank you for your new reservation!"
                     + "\nHere is your Reservation Id:" + newReservation.getReservationId() 
                     + "\nBelow is your reservation detail:"
@@ -316,8 +226,32 @@ public class EmailSessionBean {
                     +"\nRoom Type" + newReservation.getReservationRoomType()
                     + "\n\nIn case of any issues and inqueries, you may contact our corporate service manager "
                     + "\n@ 65-8180 1380"
-                    + "\n\n\nBest Regards,\nThe Coral Island Management Team");
+                    + "\n\n\nBest Regards,\nThe Coral Island Management Team";
+            
+            String INPUTFILE;        
+            INPUTFILE = createBill(toEmailAdress,newReservation);
+            
+             MimeBodyPart messageBodyPart;
+             MimeBodyPart textBodyPart;
+             
+             Multipart multipart = new MimeMultipart();
+             messageBodyPart = new MimeBodyPart();
+             
+             String file;
+                    file = INPUTFILE;
                     
+             //Below attach a file within the email
+                String fileName = "CorelResort:Room Reservation Confirmation";
+                messageBodyPart.setFileName(fileName);
+                messageBodyPart.attachFile(file);
+                //Below draft the contents of email
+                textBodyPart = new MimeBodyPart();
+                textBodyPart.setText(text);
+                
+                ((MimeMessage)message).setContent(multipart);
+
+            System.out.println("Sending");
+             
             Transport.send(message);
 
             System.out.println("Done");
@@ -363,8 +297,7 @@ public class EmailSessionBean {
         }
     }
     
-    public void emailAttractionTicketSingle(String toEmailAdress,TicketPurchaseEntity tpe) throws IOException, FileNotFoundException, DocumentException
-    {
+     public void emailApprovalAction(String toEmailAdress, ContractEntity contract) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -399,6 +332,70 @@ public class EmailSessionBean {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public void emailAttractionTicketSingle(String toEmailAdress,TicketPurchaseEntity tpe) throws IOException, FileNotFoundException, DocumentException
+    {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+        
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmailAdress));
+            message.setSubject("Your ticket from Coral Island Resort: Attraction "+tpe.getTpId());
+            String text = "Thank you for booking ticket for Coral Island Resort Attraction services!"
+                    +"\nYour Ticket ID is "+tpe.getTpId()
+                    +"\nTicket purchase date is "+tpe.getAttrTicketBookDate().toString()
+                    +"\nThe fee of tickets you have purchased is "+tpe.getAttrTicketFee()
+                    +"\nPlease refer to the attachment for your e-ticket: print the pdf file and bring it on the show date"
+                    +"\nThank you for your support!"
+                    +"\n\n\n For any queries, please call (+65)9272-8760";
+            
+            
+            String INPUTFILE = createTicket(tpe);        
+           
+
+            
+                MimeBodyPart messageBodyPart;
+                MimeBodyPart textBodyPart;
+                
+                Multipart multipart = new MimeMultipart();
+                messageBodyPart = new MimeBodyPart();
+                String file;
+                    file = INPUTFILE;
+                //Below attach a file within the email
+                String fileName = "CorelResort:Room Reservation";
+                messageBodyPart.setFileName(fileName);
+                messageBodyPart.attachFile(file);
+                //Below draft the contents of email
+                textBodyPart = new MimeBodyPart();
+                textBodyPart.setText(text);
+                
+                ((MimeMessage)message).setContent(multipart);
+
+            System.out.println("Sending");
+            Transport.send(message);
+
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        
+        
     }
     public void emailAttractionTicketCombo(String toEmailAdress,AttrComboEntity combo) throws IOException, FileNotFoundException, DocumentException
     {
@@ -466,7 +463,7 @@ public class EmailSessionBean {
         //Below generate a PDF file
         Document document;
             document = new Document(PageSize.A4,50,50,50,50);
-            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Table_Reservation"+room.getRoomCorporate()
+            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Corporate_Bill "+room.getRoomCorporate()
                     +room.getReservation().getReservationId()+".pdf";
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
             document.open();
@@ -537,12 +534,19 @@ public class EmailSessionBean {
         table.addCell(Double.toString(room.getReservation().getReservationTotal()));
         
         //below add notes paragraph
-        document.add(new Paragraph("If it is a confirmed booking, please make sure you finish the booking"
+        Paragraph p = new Paragraph("If it is a confirmed booking, please make sure you finish the booking"
                 + "process within 3 days"
-                , FontFactory.getFont(FontFactory.COURIER, 10,Font.BOLDITALIC ,Color.RED)));
+                , FontFactory.getFont(FontFactory.COURIER, 10,Font.BOLDITALIC ,Color.RED));
+        
+        Chunk c;
+        c = new Chunk("via localhost:8080/IRMSCustomer-war/");
+        c.setAction(new PdfAction(new URL("localhost:8080/IRMSCustomer-war/")));
+        p.add(c);
+        document.add(p);
         document.add(new Paragraph(""));
+        document.close();
             
-            return OUTPUTFILE;
+        return OUTPUTFILE;
     }
     
     //Add a empty line
@@ -728,7 +732,7 @@ public class EmailSessionBean {
         return OUTPUTFILE;
     }
 
-    private String createTicketCombo(AttrComboEntity combo) throws FileNotFoundException, DocumentException {
+    private String createTicketCombo(AttrComboEntity combo) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
          //Below generate a PDF file
             Document document;
             document = new Document(PageSize.A4,50,50,50,50);
@@ -750,6 +754,38 @@ public class EmailSessionBean {
         Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
             Font.BOLDITALIC);
         
+            //Below specify contents
+         String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+         Image image = Image.getInstance(imagePath);
+         document.add(image);
+         
+         Paragraph preface = new Paragraph();
+         addEmptyLine(preface, 1);
+         preface.add(new Paragraph("Your e-ticket is displayed as below: ", catFont));
+         addEmptyLine(preface, 1);
+         
+         document.add(preface); 
+         
+            //Below add a table
+        PdfPTable table = new PdfPTable(2);
+        table.setSpacingAfter(30);
+        table.setSpacingBefore(30);
+        table.setWidths(new int []{1,3});
+        
+            //Add table header
+        PdfPCell c1 = new PdfPCell(new Phrase("Ticketing Info"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        
+        c1 = new PdfPCell(new Phrase("Details & Remarks"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+        
+        table.setHeaderRows(1);
+        
+            //Add Table Contents
+        
+        return OUTPUTFILE;
         
             
     }
