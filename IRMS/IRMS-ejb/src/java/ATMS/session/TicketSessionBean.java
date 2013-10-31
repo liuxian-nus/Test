@@ -8,6 +8,7 @@ import ATMS.entity.AttractionEntity;
 import javax.ejb.Stateless;
 import ATMS.entity.AttrTicketEntity;
 import Exception.ExistException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -93,6 +94,20 @@ public class TicketSessionBean {
         return ticket; 
     }*/
     
+    public List<AttrTicketEntity> selectTicketForOneAttraction(AttractionEntity attr){
+        System.out.println("TicketSessionBean : selectTicketForOneAttraction");
+        List<AttrTicketEntity> tkts=getAllTickets();
+        System.out.println("tkts size: "+tkts.size());
+        List<AttrTicketEntity> selectedTickets=new ArrayList<AttrTicketEntity>();
+        for(int i=0;i<tkts.size();i++){
+            System.out.println("i:"+i);
+            if(tkts.get(i).getAttr().equals(attr)){
+                System.out.println("correct ticket");
+                selectedTickets.add(tkts.get(i));
+            }      
+        }
+        return selectedTickets;
+    }
 
     public void persist(Object object) {
         em.persist(object);
