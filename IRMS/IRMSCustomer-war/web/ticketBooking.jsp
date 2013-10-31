@@ -4,12 +4,15 @@
     Author     : Jieqiong
 --%>
 
+<%@page import="ATMS.entity.AttrTicketEntity"%>
+<%@page import="java.util.List"%>
 <%@page import="CRMS.entity.MemberEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <%
     MemberEntity member=(MemberEntity)session.getAttribute("member");
+    List<AttrTicketEntity> tickets=(List<AttrTicketEntity>)session.getAttribute("tickets");
 %>
 
 <html>
@@ -37,7 +40,7 @@
             <section>
                 <p class="title" data-section-title><a href="#panel1"><strong>Adventure World</strong></a></p>
                 <div class="content" data-section-content>
-                    <form action="ticketBookingConfirm">
+                    <form action="ticketBookingInformation">
                         <h6><strong>Please Select a Ticket</strong><h6>
                                 </br>
                             <div class="row">
@@ -59,9 +62,9 @@
                                     
                                 </div>
                                 <div class="large-3 large columns">                                
-                                    <p>$75</p>
-                                    <p>$120</p>
-                                    <p>$375</p>
+                                    <p>$<%=tickets.get(0).getAttrTicketPrice()%></p>
+                                    <p>$<%=tickets.get(1).getAttrTicketPrice()%></p>
+                                    <p>$<%=tickets.get(2).getAttrTicketPrice()%></p>
                                 </div>
                                 <div class="large-3 large columns">                                
                                     <select required name="quantity1" id="customDropdown">
@@ -182,6 +185,9 @@
                                         <input type="text" id="datepicker1" name="startDate" id="startDate"/>
                                     </div>
                                 </div>-->
+                         
+                                     
+            <input type="hidden" name="attrId" value="OT"/>
                       
                                 <div class="row">
                                     <input type="submit" class="small button" value="Submit">

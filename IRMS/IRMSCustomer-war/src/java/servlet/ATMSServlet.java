@@ -5,9 +5,15 @@
 package servlet;
 
 import ATMS.entity.AttrTicketEntity;
+import ATMS.entity.AttractionEntity;
 import ATMS.entity.TicketPurchaseEntity;
+import ATMS.session.AttractionSessionBean;
 import ATMS.session.TicketPurchaseSessionBean;
 import ATMS.session.TicketSessionBean;
+import CRMS.entity.MemberEntity;
+import CRMS.session.GenerateBarcodeSessionBean;
+import CRMS.session.MemberSessionBean;
+import ERMS.session.EmailSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -31,13 +37,26 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/ATMSServlet", "/ATMSServlet/*"})
 public class ATMSServlet extends HttpServlet {
     @EJB
+    private GenerateBarcodeSessionBean generateBarcodeSessionBean;
+    @EJB
+    private EmailSessionBean emailSessionBean;
+    @EJB
+    private MemberSessionBean memberSessionBean;
+    @EJB
+    private AttractionSessionBean attractionSessionBean;
+    @EJB
     private TicketSessionBean ticketSessionBean;
     @EJB
     private TicketPurchaseSessionBean ticketPurchaseSessionBean;
     
+    
+    
+    
     AttrTicketEntity ticket;
+    AttractionEntity attr;
     List<AttrTicketEntity> tkts;
     TicketPurchaseEntity tp;
+    MemberEntity member;
 
     /**
      * Processes requests for both HTTP
@@ -79,31 +98,33 @@ public class ATMSServlet extends HttpServlet {
             
             if ("attraction".equals(page)) {
                 System.out.println("***attraction page***");
+                System.out.println("generating barcode");
+               generateBarcodeSessionBean.generate("1234567");
+               System.out.println("barcode generated");
                 
 
                 request.getRequestDispatcher("/attraction.jsp").forward(request, response);
             }else if("adventureWorld".equals(page)){
                  System.out.println("***adventureWorld page***");
-                
+                 attr=attractionSessionBean.getAttrById("OT");
+                 tkts=new ArrayList<AttrTicketEntity>();
+                 tkts=ticketSessionBean.selectTicketForOneAttraction(attr);
+                 
+                 
 
                 request.getRequestDispatcher("/adventureWorld.jsp").forward(request, response);
             }else if("ticketBooking".equals(page)){
                 System.out.println("***ticketBooking page***");
+                List<AttrTicketEntity> tickets=ticketSessionBean.getAllTickets();
+                session.setAttribute("tickets", tickets);
+                
+                
                 
 
                 request.getRequestDispatcher("/ticketBooking.jsp").forward(request, response);
-            }else if("ticketBookingConfirm".equals(page)){
-                System.out.println("***ticketBookingConfirm page***");
+            }else if("ticketBookingInformation".equals(page)){
+                System.out.println("***ticketBookingInformation page***");                    
                 
-        /*        Long ticketId=Long.parseLong(request.getParameter("OTticket"));
-                Integer quantity=Integer.parseInt(request.getParameter("quantity"));*/
-                
-            /*    String tickets=request.getParameter("OTticket");
-                System.out.println("OTticket: "+tickets);*/
-                
-        /*        Long quantity1=Long.parseLong(request.getParameter("quantity1"));
-                Long quantity2=Long.parseLong(request.getParameter("quantity2"));
-                Long quantity3=Long.parseLong(request.getParameter("quantity3"));*/
                 Integer quantity1=Integer.parseInt(request.getParameter("quantity1"));
                 Integer quantity2=Integer.parseInt(request.getParameter("quantity2"));
                 Integer quantity3=Integer.parseInt(request.getParameter("quantity3"));
@@ -114,61 +135,105 @@ public class ATMSServlet extends HttpServlet {
                 Date date;
                 date = new Date(year - 1900, month - 1, day);
                 
-                System.out.println("quantity1: "+quantity1);
- 
+                String attrId=request.getParameter("attrId");
+                System.out.println("attrId: "+attrId);
+                attr=attractionSessionBean.getAttrById(attrId);
+                session.setAttribute("attr", attr);
+                System.out.println("session set");
                 
+           //     boolean ticketAvailable;
+           //     ticketAvailable=checkTicketAvailability(quantity1, quantity2,date, attr);
+                               
                 tp=new TicketPurchaseEntity();
                 tkts=new ArrayList<AttrTicketEntity>();
-                boolean tpInitialised=false;
+                List<Integer> quantities=new ArrayList<Integer>();
+                double fee=0.0;
                 Long tpId=ticketPurchaseSessionBean.addTicketPurchase(tp);
+                int i=0;
                 
+                if(attrId.equals("OT")){
+                    System.out.println("attrId is OT");
+                    i=1;
+                }
+                    
                 if(quantity1!=0){
-      //              System.out.println("into if");
-                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(1)));
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(i)));
                     System.out.println("ticketName: "+ticket.getAttrTicketName());
                     tkts.add(ticket);
                     System.out.println("ticket added: "+tkts.get(0).getAttrTicketName());
-                    ticketPurchaseSessionBean.updateTicketListAndQuantity(tpId, tkts,quantity1);  
-                    System.out.println("tpId received: "+tpId);
-                    tpInitialised=true;
-                    System.out.println("tpInitialised: "+tpInitialised);
+                    quantities.add(quantity1);
+                    System.out.println("quantities size: "+quantities.size());
+                    fee+=ticket.getAttrTicketPrice()*quantity1;
+                    System.out.println("fee: "+fee);
                     System.out.println("ticket 1 added into tp");
-      //              ticketPurchaseSessionBean.addTicket(ticket);
                 }
                 
                 if(quantity2!=0){
-      //              System.out.println("into if");
-                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(2)));
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(i+1)));
                     System.out.println("ticketName: "+ticket.getAttrTicketName());
                     tkts.add(ticket);
+                    quantities.add(quantity2);
+                    System.out.println("quantities size: "+quantities.size());
                     System.out.println("tkts size: "+tkts.size());
-              //      System.out.println("ticket added: "+tkts.get(1).getTicketName());
-             /*       if(tpInitialised){
-                        System.out.println("tp has been initialised");
-                        System.out.println("tpId passed in: "+tpId);
-                        tpId=ticketPurchaseSessionBean.updateTicketListAndQuantity(tpId, tkts,quantity2);  
-                    }                 
-                    else{
-                        System.out.println("tp has not been initialised");
-                        ticketPurchaseSessionBean.updateTicketListAndQuantity(tkts,quantity2);
-                        tpInitialised=true;
-                    }*/
-                    ticketPurchaseSessionBean.updateTicketListAndQuantity(tpId, tkts,quantity2);
-                        
-          //          System.out.println("tpInitialised: "+tpInitialised);
+                    fee+=ticket.getAttrTicketPrice()*quantity2;
+                    System.out.println("fee: "+fee);
                     System.out.println("ticket 2 added into tp");
-      //              ticketPurchaseSessionBean.addTicket(ticket);
                 }
                 if(quantity3!=0){
-                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(3)));
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(i+2)));
                     System.out.println("ticketName: "+ticket.getAttrTicketName());
                     tkts.add(ticket);
+                    quantities.add(quantity3);
                     System.out.println("tkts size: "+tkts.size());
-                    ticketPurchaseSessionBean.updateTicketListAndQuantity(tpId, tkts,quantity3);
+                    System.out.println("quantities size: "+quantities.size());
+                    fee+=ticket.getAttrTicketPrice()*quantity3;
+                    System.out.println("fee: "+fee);
                     System.out.println("ticket 3 added into tp");
                 }
+                
+                System.out.println("tkts size: "+tkts.size());
+                System.out.println("quantities size: "+quantities.size());
+                ticketPurchaseSessionBean.updatePurchase(tpId, tkts, quantities, date, fee,"In Progress");
+                
+                System.out.println("ticket purchase in progress!");
+                
+                tp=ticketPurchaseSessionBean.getTicketPurchaseById(tpId);
+                System.out.println("tp fee: "+tp.getAttrTicketFee());
+                session.setAttribute("tp",tp);
+                System.out.println("session set!");
+
+
+                request.getRequestDispatcher("/ticketBookingInformation.jsp").forward(request, response);
+            }else if("ticketBookingPayment".equals(page)){
+                System.out.println("***ticketBookingPayment page***");
  
-                request.getRequestDispatcher("/ticketBookingConfirm.jsp").forward(request, response);
+                request.getRequestDispatcher("/ticketBookingPayment.jsp").forward(request, response);
+            }else if("ticketBookingConfirmation".equals(page)){
+                System.out.println("***ticketBookingConfirmation page***");
+                
+                String email=request.getParameter("email");
+                System.out.println("email: "+email);
+                tp=(TicketPurchaseEntity)session.getAttribute("tp");
+                System.out.println("tpStatus:"+tp.getAttrTPStatus());
+                attr=(AttractionEntity)session.getAttribute("attr");
+                System.out.println("attr: "+attr.getAttrName());
+                member=memberSessionBean.getMemberByEmail(email);
+                if(member!=null){
+                    System.out.println("is member");
+                    tp.setMember(member);
+                    ticketPurchaseSessionBean.updateTicketPurchase(tp);
+                }
+                tp.setAttrTPStatus("Purchased");
+                ticketPurchaseSessionBean.updateTicketPurchase(tp);          
+         //       emailSessionBean.emailAttractionTicketSingle(email, tp);
+         //       System.out.println("email sent");
+                
+//               System.out.println("generating barcode");
+//               System.out.println("tpId" +tp.getTpId());
+//               generateBarcodeSessionBean.generate(String.valueOf(tp.getTpId()));
+//               System.out.println("barcode generated");
+                
+                request.getRequestDispatcher("/ticketBookingConfirmation.jsp").forward(request, response);
             }else {
                 System.out.println("other page");
             }
@@ -178,6 +243,10 @@ public class ATMSServlet extends HttpServlet {
             //System.out.println(e);
         }       
     }
+    
+   /* public boolean checkTicketAvailability(int quantity1, int quantity2, Date date, AttractionEntity attr){
+        List<TicketPurchaseEntity> tickets=ticketPurchaseSessionBean.getTicketsForAttrDate(attr,date);
+    }*/
    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
