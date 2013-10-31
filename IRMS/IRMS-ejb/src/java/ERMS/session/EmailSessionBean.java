@@ -6,6 +6,7 @@ package ERMS.session;
 
 import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
+import ATMS.entity.AttrComboEntity;
 import ATMS.entity.AttrTicketEntity;
 import ATMS.entity.TicketPurchaseEntity;
 import SMMS.entity.ContractEntity;
@@ -333,7 +334,7 @@ public class EmailSessionBean {
         }
     }
     
-    public void emailAttractionTicket(String toEmailAdress,TicketPurchaseEntity tpe) throws IOException, FileNotFoundException, DocumentException
+    public void emailAttractionTicketSingle(String toEmailAdress,TicketPurchaseEntity tpe) throws IOException, FileNotFoundException, DocumentException
     {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -394,6 +395,68 @@ public class EmailSessionBean {
             throw new RuntimeException(e);
         }
         
+        
+    }
+    public void emailAttractionTicketCombo(String toEmailAdress,AttrComboEntity combo) throws IOException
+    {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+        
+         try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmailAdress));
+            message.setSubject("Your ticket from Coral Island Resort: Attraction "+combo.getAttrComboName());
+            String text = "Thank you for booking ticket for Coral Island Resort Attraction services!"
+                    +"\nYour Combo Ticket type is "+combo.getAttrComboType()
+                    +"\nThe Combo Ticket is "+combo.getAttrComboName()
+                    +"\nThe fee of tickets you have purchased is "+combo.getAttrComboPrice()
+                    +"\nPlease refer to the attachment for your e-ticket: print the pdf file and bring it on the show date"
+                    +"\nThank you for your support!"
+                    +"\n\n\n For any queries, please call (+65)9272-8760";
+            
+            
+                String INPUTFILE = createTicketCombo(combo);        
+           
+
+            
+                MimeBodyPart messageBodyPart;
+                MimeBodyPart textBodyPart;
+                
+                Multipart multipart = new MimeMultipart();
+                messageBodyPart = new MimeBodyPart();
+                String file;
+                    file = INPUTFILE;
+                //Below attach a file within the email
+                String fileName = "CorelResort:Room Reservation";
+                messageBodyPart.setFileName(fileName);
+                messageBodyPart.attachFile(file);
+                //Below draft the contents of email
+                textBodyPart = new MimeBodyPart();
+                textBodyPart.setText(text);
+                
+                ((MimeMessage)message).setContent(multipart);
+
+            System.out.println("Sending");
+            Transport.send(message);
+
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
         
     }
     private String createBill(String toEmailAdress, RoomEntity room) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
@@ -589,7 +652,7 @@ public class EmailSessionBean {
         //Below generate a PDF file
         Document document;
             document = new Document(PageSize.A4,50,50,50,50);
-            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\RoomReservationConfirmation "+
+            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\SingleTicketReservation "+
                     tpe.getTpId()+".pdf";
                     
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
@@ -637,25 +700,61 @@ public class EmailSessionBean {
         
         //Add table contents
         table.addCell("Attraction");
-        table.addCell(tpe.getAttrTickets().get(0).getAttr().getAttrName());
+        if(!tpe.getAttrTickets().isEmpty())
+            table.addCell(tpe.getAttrTickets().get(0).getAttr().getAttrName());
+        else
+            table.addCell("Attraction Not Assigned Yet!");
         
         if(!tpe.getAttrTickets().isEmpty())
         {
             Iterator <AttrTicketEntity> itr = tpe.getAttrTickets().iterator();
             Iterator <Integer> itr2 = tpe.getAttrTicketQuantities().iterator();
+            int i = 1;
             
             while(itr.hasNext()&&itr2.hasNext())
             {
                 AttrTicketEntity currentTicket = itr.next();
                 Integer currentNumber = itr2.next();
-                table.addCell("Ticket Name & Type");
+                table.addCell("No."+i+" Ticket Name & Type");
                 table.addCell(currentTicket.getAttrTicketName()+" "+currentTicket.getAttrTicketType());
                 table.addCell("Number of Tickets");
                 table.addCell(Integer.toString(currentNumber));
-                
+                table.addCell("Ticket Date");
+                table.addCell(tpe.getAttrTicketBookDate().toString());
+                table.addCell("Ticket Price");
+                table.addCell(Double.toString(tpe.getAttrTicketFee()));
+                i++;
+                System.out.println("EmailSessionBean: a ticket has been added!"+i);
             }
+            
         }
         
         return OUTPUTFILE;
+    }
+
+    private String createTicketCombo(AttrComboEntity combo) throws FileNotFoundException, DocumentException {
+         //Below generate a PDF file
+            Document document;
+            document = new Document(PageSize.A4,50,50,50,50);
+            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\ComboTicketConfirmation "+
+                    combo.getAttrComboName()+" "+combo.getAttrComboId()+".pdf";
+                    
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+            document.open();
+            
+            //Below specify the font type
+        Font catFont = new Font(Font.TIMES_ROMAN, 18,
+            Font.BOLD);
+        Font redFont = new Font(Font.TIMES_ROMAN, 12,
+            Font.NORMAL,Color.RED);
+        Font subFont = new Font(Font.TIMES_ROMAN, 16,
+            Font.BOLD);
+        Font tableFont;
+            tableFont = new Font(Font.TIMES_ROMAN,16,Font.BOLD,Color.DARK_GRAY);
+        Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
+            Font.BOLDITALIC);
+        
+        
+            
     }
 }
