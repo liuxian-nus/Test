@@ -8,6 +8,8 @@ import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
 import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
+import com.lowagie.text.DocumentException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -255,7 +257,7 @@ public class ReservationManagedBean implements Serializable {
     }
 //javax.el.PropertyNotFoundException: /acms/checkIncheckOut.xhtml @45,154 value="#{reservationManagedBean.selectReservation.rcName}": Target Unreachable, 'null' returned null
 
-    public void addReservation(ActionEvent event) throws IOException {
+    public void addReservation(ActionEvent event) throws IOException, FileNotFoundException, DocumentException {
         try {
             System.out.println("we are in addReservation in managedbean" + newReservation.getRcName());
             if (newReservation.getReservationRoomType().equals("1")) {

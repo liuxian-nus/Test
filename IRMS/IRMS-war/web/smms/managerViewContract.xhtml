@@ -48,7 +48,7 @@
                             <h:outputText value="Status: " />  
                             <h:outputText value="#{contractResultManagedBean.managerSelect.last.eventStatus}" style="font-weight:bold" />
 
-                            <p:commandButton  update=":form:pendingla" oncomplete="pending.show()" ajax="true" icon="ui-icon ui-icon-check" value ="Review" title="Review">  
+                            <p:commandButton  update="pendingla" oncomplete="pending.show()" ajax="true" icon="ui-icon ui-icon-check" value ="Review" title="Review">  
                                 <f:setPropertyActionListener target="#{managerApproveContractManagedBean.contract}" value="#{contractResultManagedBean.managerSelect}" /> 
                             </p:commandButton>
 
@@ -56,7 +56,7 @@
                                 <f:setPropertyActionListener target="#{managerApproveContractManagedBean.contract}" value="#{contractResultManagedBean.managerSelect}" /> 
                             </p:commandButton>
 
-                            <p:commandButton  update=":form:rejectla" oncomplete="reject.show()" ajax="true" rendered="#{contractResultManagedBean.selectedContract.last.eventStatus=='new'}" icon="ui-icon ui-icon-search" value ="Reject" title="Reject">  
+                            <p:commandButton  update=":form:rejectla" oncomplete="reject.show()" ajax="true"  icon="ui-icon ui-icon-search" value ="Reject" title="Reject">  
                                 <f:setPropertyActionListener target="#{managerApproveContractManagedBean.contract}" value="#{contractResultManagedBean.managerSelect}" /> 
                             </p:commandButton> 
                         </h:panelGrid>

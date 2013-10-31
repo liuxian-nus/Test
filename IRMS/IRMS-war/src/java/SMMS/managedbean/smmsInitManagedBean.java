@@ -14,6 +14,7 @@ import SMMS.session.ContractSessionBean;
 import SMMS.session.ContracteventSessionBean;
 import SMMS.session.MerchantSessionBean;
 import SMMS.session.OutletSessionBean;
+import java.io.Serializable;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -28,7 +29,7 @@ import javax.faces.event.ActionEvent;
  */
 @ManagedBean
 @ViewScoped
-public class smmsInitManagedBean {
+public class smmsInitManagedBean implements Serializable{
     @EJB
     private OutletSessionBean outletSessionBean;
     @EJB
@@ -130,12 +131,13 @@ public class smmsInitManagedBean {
     public void createOutlet() {
         System.out.println("go to create outlet page...");
 
-        OutletEntity outlet = new OutletEntity();
+        outlet = new OutletEntity();
         outlet.setOutletLevel(5);
         outlet.setOutletNo(03);
         outlet.setOutletId(5, 03);
         outlet.setOutletType("banks");
         outlet.setOutletArea(21.85);
+      
 
         OutletEntity outlet2 = new OutletEntity();
         outlet2.setOutletLevel(2);
@@ -201,7 +203,7 @@ public class smmsInitManagedBean {
             event1.setEventDeposit(55000.00);
             event1.setEventMonthRate(9000.00);
             event1.setEventCommissionRate(0.22);
-            event1.setEventStatus("newRequest");
+            event1.setEventStatus("newRejected");
             event1.setEventContract(contract1);
             contracteventSessionBean.addContractevent(event1);
             System.out.println("Contract saved....." + event1.getContracteventId());
@@ -231,8 +233,8 @@ public class smmsInitManagedBean {
 
             MerchantEntity merchantb = merchantSessionBean.getMerchantById("s.er3na.j@gmail.com");
             OutletEntity outletb = outletSessionBean.getOutletById(503);
-            contract1.setMerchant(merchantb);
-            contract1.setOutlet(outletb);
+            contract2.setMerchant(merchantb);
+            contract2.setOutlet(outletb);
             contractSessionBean.addContract(contract2);
             System.out.println("Contract saved....." + contract2.getContractId());
 
@@ -250,20 +252,21 @@ public class smmsInitManagedBean {
             System.out.println("Contract saved....." + event2.getContracteventId());
 
 
-            contractSessionBean.addContractevent(contract1.getContractId(), event2.getContracteventId());
-            merchantSessionBean.addContractInMerchant(contract1.getContractId(), merchantb.getMerchantEmail());
+            contractSessionBean.addContractevent(contract2.getContractId(), event2.getContracteventId());
+            merchantSessionBean.addContractInMerchant(contract2.getContractId(), merchantb.getMerchantEmail());
 
-            outletb.setContract(contract1);
+            outletb.setContract(contract2);
+            outletb.setOutletStatus("unavailable");
             outletSessionBean.updateOutlet(outletb);
 
-            System.out.println("Contract saved.....");
+            System.out.println("Contract4 saved.....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding merchant", ""));
             return;
         }
 
         System.out.println("Insert cart into database");
-        addMessage("Carts! Created!");
+        addMessage("Contrac4! Created!");
     }
     
     public void initla(ActionEvent event)

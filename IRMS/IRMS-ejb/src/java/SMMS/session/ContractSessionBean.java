@@ -40,15 +40,14 @@ public class ContractSessionBean {
     public void persist(Object object) {
         em.persist(object);
     }
-    
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public ContractEntity addContract(ContractEntity contract) {
         em.persist(contract);
         System.err.println("No3: In contractsessionbean adding contract: ");
         return contract;
     }
-    
+
     //add new contractEvent
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public ContracteventEntity addContractevent(Long contractId, Long cevent) throws ExistException {
@@ -67,53 +66,55 @@ public class ContractSessionBean {
         if (contract == null) {
             throw new ExistException("contract doesn't exist!");
         }
-         em.remove(contract);
+        em.remove(contract);
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean updateContract(ContractEntity contract) throws ExistException {
-        if ((contract.getStatus()!="new")||(contract.getStatus()!="rejected")) {
+        if ((contract.getStatus() != "new") || (contract.getStatus() != "rejected")) {
             throw new ExistException("contract cannot be updated because it has been approved!");
         }
         em.merge(contract);
         return true;
     }
-    
+
     public List<ContractEntity> getContractByMerchant(String merchantEmail) {
         System.err.println("in get contract by merchant session bean");
         Query q = em.createQuery("SELECT m FROM ContractEntity m");
         List OutletList = new ArrayList<ContractEntity>();
         for (Object o : q.getResultList()) {
             ContractEntity m = (ContractEntity) o;
-            if (m.getMerchant().getMerchantEmail()== merchantEmail) {
+            if (m.getMerchant().getMerchantEmail() == merchantEmail) {
                 OutletList.add(m);
             }
         }
         System.err.println("in get contract by merchant sessionbean: outlet list size=" + OutletList.size());
         return OutletList;
     }
-    
-    public List<ContractEntity> getContractByOutlet(int outletId) {
+
+    public ContractEntity getContractByOutlet(int outletId) {
         System.err.println("in get contract by outlet session bean");
-        Query q = em.createQuery("SELECT m FROM BillEntity m");
-        List TransactionList = new ArrayList<ContractEntity>();
+        Query q = em.createQuery("SELECT m FROM ContractEntity m");
+        ContractEntity lala = new ContractEntity();
         for (Object o : q.getResultList()) {
             ContractEntity m = (ContractEntity) o;
-            if (m.getOutlet().getOutletId()== outletId) {
-                TransactionList.add(m);
-            }
+            if (m.getOutlet().getOutletId() == outletId) {
+                lala = m;
+            } 
         }
-        System.err.println("in get contract by outlet sessionbean: Transaction List size=" + TransactionList.size());
-        return TransactionList;
+        System.out.println("lala value is "+ lala.getContractId());
+        return lala;
     }
-    
-    public ContractEntity getContractById(String contractId) throws ExistException{
+
+    public ContractEntity getContractById(String contractId) throws ExistException {
         contract = em.find(ContractEntity.class, contractId);
-        if(contract == null)  throw new ExistException("Contract does not exist!");
+        if (contract == null) {
+            throw new ExistException("Contract does not exist!");
+        }
         return contract;
     }
-    
-     public List<ContractEntity> getAllContracts() {
+
+    public List<ContractEntity> getAllContracts() {
         Query q = em.createQuery("SELECT m FROM ContractEntity m");
         List ContractList = new ArrayList<ContractEntity>();
         for (Object o : q.getResultList()) {
@@ -122,53 +123,51 @@ public class ContractSessionBean {
         }
         return ContractList;
     }
-    
-     public int getSize(ContractEntity newct) {
-     
+
+    public int getSize(ContractEntity newct) {
+
         return newct.getContractEvent().size();
-     }
-     
-     public List<ContractEntity> getNewRequestContract() {
+    }
+
+    public List<ContractEntity> getNewRequestContract() {
         System.err.println("in get new request contract session bean");
         Query q = em.createQuery("SELECT m FROM ContractEntity m");
         List TransactionList = new ArrayList<ContractEntity>();
         for (Object o : q.getResultList()) {
             ContractEntity m = (ContractEntity) o;
-            if (m.getLast().getEventStatus()=="newRequest") {
+            if (m.getLast().getEventStatus() == "newRequest") {
                 TransactionList.add(m);
             }
         }
         System.err.println("in get contract by outlet sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
-    
-         public List<ContractEntity> getRenewRequestContract() {
+
+    public List<ContractEntity> getRenewRequestContract() {
         System.err.println("in get new request contract session bean");
         Query q = em.createQuery("SELECT m FROM ContractEntity m");
         List TransactionList = new ArrayList<ContractEntity>();
         for (Object o : q.getResultList()) {
             ContractEntity m = (ContractEntity) o;
-            if (m.getLast().getEventStatus()=="renewRequest") {
+            if (m.getLast().getEventStatus() == "renewRequest") {
                 TransactionList.add(m);
             }
         }
         System.err.println("in get contract by outlet sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
-         
-             public List<ContractEntity> getEarlyTerminationRequestContract() {
+
+    public List<ContractEntity> getEarlyTerminationRequestContract() {
         System.err.println("in get new request contract session bean");
         Query q = em.createQuery("SELECT m FROM ContractEntity m");
         List TransactionList = new ArrayList<ContractEntity>();
         for (Object o : q.getResultList()) {
             ContractEntity m = (ContractEntity) o;
-            if (m.getLast().getEventStatus()=="earlyTerminationRequest") {
+            if (m.getLast().getEventStatus() == "earlyTerminationRequest") {
                 TransactionList.add(m);
             }
         }
         System.err.println("in get contract by outlet sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
- 
-    
 }

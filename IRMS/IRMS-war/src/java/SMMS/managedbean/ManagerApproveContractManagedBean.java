@@ -69,7 +69,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
     }
 
     public void approveNew(ActionEvent event) {
-        System.out.println("in getting new approve" + contract.getContractId());
+        System.out.println("in getting new approve");
         cevent = contract.getLast();
         if (cevent.getEventStatus().contains("new")) {
             cevent.setEventStatus("newApproved");

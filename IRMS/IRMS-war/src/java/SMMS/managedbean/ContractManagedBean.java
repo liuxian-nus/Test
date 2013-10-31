@@ -55,6 +55,11 @@ public class ContractManagedBean implements Serializable {
     private ContracteventEntity newevent;
     private Date currentDate = new Date();
     private ContractEntity selected;
+    private String searchId;
+    private List<ContractEntity> contracts;
+
+   
+  
 
     public ContractManagedBean() {
 
@@ -175,6 +180,22 @@ public class ContractManagedBean implements Serializable {
     public void setOutletId(int outletId) {
         this.outletId = outletId;
     }
+    
+      public String getSearchId() {
+        return searchId;
+    }
+
+    public void setSearchId(String searchId) {
+        this.searchId = searchId;
+    }
+
+     public List<ContractEntity> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<ContractEntity> contracts) {
+        this.contracts = contracts;
+    }
 
     /**
      * Creates a new instance of ContractManagedBean
@@ -216,8 +237,8 @@ public class ContractManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Contract has been added.", ""));
     }
 
-    // NOT USEFUL GETTINGS
-    public List<String> getAllMerchants() throws ExistException {
+    // USEFUL GETTINGS
+    public List<String> completeMerchants() throws ExistException {
         System.out.println("NO4: we are in ALL merchants bean BEFORE");
         List<String> results = new ArrayList<String>();
 
@@ -229,9 +250,24 @@ public class ContractManagedBean implements Serializable {
         System.out.println("NO5: we are in complete bean AFTER");
         return results;
     }
+    
+    
+     public List<String> completeContracts() throws ExistException {
+        System.out.println("NO4: we are in ALL contracts bean BEFORE");
+        List<String> results = new ArrayList<String>();
 
-    //NOT USEFUL THERE
-    public List<Integer> getAvailableOutlets() throws ExistException {
+        List<ContractEntity> merchantList = contractSessionBean.getAllContracts();
+        for (Object o : merchantList) {
+            ContractEntity rve = (ContractEntity) o;
+            results.add((rve.getContractId()).toString());
+        }
+        System.out.println("NO5: we are in complete bean AFTER");
+        return results;
+    }
+ 
+
+    //USEFUL THERE
+    public List<Integer> completeOutlets() throws ExistException {
         System.out.println("NO4: we are in ALL outlets bean BEFORE");
         List<Integer> results = new ArrayList<Integer>();
 
@@ -284,5 +320,63 @@ public class ContractManagedBean implements Serializable {
         }
     }
     
+    
+    public void searchById()
+    {
+        System.out.println("No1:in searching contract by Id bean " + searchId);
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            selected = contractSessionBean.getContractById(merchantId);
+            System.out.println("N02: in searching by id bean " + selected.getContractId());
+
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", selected);
+            System.out.println("we are after setting parameter");
+            request.getSession().setAttribute("contractId", selected.getContractId());
+            System.out.println("we are after setting contractId session attribute");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("operatorViewContract.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing contract", ""));
+            return;
+        }
+    }
+    
+    public void searchByOutlet()
+    {
+        System.out.println("No1:in searching contract by Id bean " + outletId);
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            selected = contractSessionBean.getContractByOutlet(outletId);
+            System.out.println("N02: in searching by id bean " + selected.getContractId());
+
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", selected);
+            System.out.println("we are after setting parameter");
+            request.getSession().setAttribute("contractId", selected.getContractId());
+            System.out.println("we are after setting contractId session attribute");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("operatorViewContract.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing contract", ""));
+            return;
+        }
+    }
+    
+    public void searchByMerchant()
+    {
+        System.out.println("No1:in searching contract by merchant bean " + merchantId);
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            merchant = merchantSessionBean.getMerchantById(merchantId);
+            System.out.println("N02: in searching by merchant bean " + merchant.getMerchantEmail());
+
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisMerchant", merchant);
+            System.out.println("we are after setting parameter");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("viewMerchant.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing merchant", ""));
+            return;
+        }
+    }
     
 }

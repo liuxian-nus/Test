@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -28,6 +29,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -44,6 +47,9 @@ public class MerchantManagedBean implements Serializable{
     @EJB
     private MerchantSessionBean merchantSessionBean;
     private MerchantEntity merchant;
+    private MerchantEntity selected;
+
+    
     
 
     @PostConstruct
@@ -53,6 +59,7 @@ public class MerchantManagedBean implements Serializable{
 
     public MerchantManagedBean() {
         merchant = new MerchantEntity();
+        selected = new MerchantEntity();
     }
 
 //    public void createTimers(ActionEvent event) {
@@ -133,6 +140,29 @@ public class MerchantManagedBean implements Serializable{
 
         }
     }
+    
+    public void viewMerchant(ActionEvent event)
+    {
+        System.out.println("No1:in displaying bean " + selected.getMerchantEmail());
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            selected = (MerchantEntity) event.getComponent().getAttributes().get("selectedMerchant");
+            System.out.println("N02: in displaying bean " + selected.getMerchantEmail());
+
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisMerchant", selected);
+            System.out.println("we are after setting parameter");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("viewMerchant.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing merchant", ""));
+            return;
+        }
+    }
+      
+     public List<MerchantEntity> getAllMerchants() throws ExistException {
+        System.out.println("in getting all merchants in session bean");
+        return merchantSessionBean.getAllMerchants();
+    }
 
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("addMerchant.xhtml");
@@ -145,6 +175,15 @@ public class MerchantManagedBean implements Serializable{
     public void setMerchant(MerchantEntity merchant) {
         this.merchant = merchant;
     }
+    
+    public MerchantEntity getSelected() {
+        return selected;
+    }
+
+    public void setSelected(MerchantEntity selected) {
+        this.selected = selected;
+    }
+ 
     /**
      * Creates a new instance of MerchantManagedBean
      */

@@ -238,6 +238,18 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
+                
+                submenu = new Submenu();
+                submenu.setLabel("Group Catering");
+                submenu.setIcon("ui-icon ui-icon-contact");
+
+                item = new MenuItem();
+                item.setValue("Add Group Catering");
+                item.setUrl("/fbms/addRestaurant.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
+                
+                model.addSubmenu(submenu);
             }
 
             if (userType.contains("ATMSAdmin")) {
@@ -356,7 +368,7 @@ public class Menu2ManagedBean implements Serializable {
                 
                 item = new MenuItem();
                 item.setValue("Manage Merchant");
-                item.setUrl("/smms/manageMerchant.xhtml");
+                item.setUrl("/smms/manageMerchants.xhtml");
                 item.setIcon("ui-icon ui-icon-lightbulb");
                 submenu.getChildren().add(item);
                 

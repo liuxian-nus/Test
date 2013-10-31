@@ -27,14 +27,6 @@
                         </h:selectOneMenu>                            
                         <h:outputText value=""/>
 
-                        <h:outputText value="Downpayment:"/>
-                        <h:inputText  title="Please enter down payment" required ="true" requiredMessage="Downpayment cannot be empty" value="#{contractManagedBean.newevent.eventDownPayment}"/>
-                        <h:outputText value=""/>
-
-                        <h:outputText value="Downpayment ending date:"/> 
-                        <p:calendar pattern="yyyy-MM-dd"  showButtonPanel="true" navigator="true"  value="#{contractManagedBean.newevent.eventDownDate}" mindate="#{contractManagedBean.currentDate}"/> 
-                        <h:outputText value=""/>
-
                         <h:outputText value="Deposit:"/>
                         <h:inputText  title="Please enter Deposit" required ="true" requiredMessage="Deposit cannot be empty" value="#{contractManagedBean.newevent.eventDeposit}"/>
                         <h:outputText value=""/>
@@ -65,13 +57,50 @@
             </p:tab>  
 
             <!-- view contracts tab starts!! -->
-            <p:tab id="tab2" title="View Contracts">  
-                <h:form id="formView">
-                    <p:growl id="growl" showDetail="true" sticky="true" />                    
-                    <h:panelGrid columns="2" cellpadding="10">  
-
-                    </h:panelGrid> 
+            <p:tab id="tab2" title="Search Contracts">  
+                <h:form id="formSearchById">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Search Contract By ID" toggleable="true" toggleSpeed="500" collapsed="true">  
+                        <h:panelGrid columns="2" cellpadding="10">  
+                            <h:outputText value="Contract ID: " style="margin-right: 10px;"/>
+                            <p:autoComplete id="reservation" value="#{contractManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                                            completeMethod="#{contractManagedBean.completeContracts}" />
+                            <p:spacer width="20"/>
+                            <p:commandButton  value="Search" ajax="true" actionListener="#{contractManagedBean.searchById}" update ="growl"/>
+                        </h:panelGrid> 
+                    </p:fieldset>
                 </h:form>
+                <br/>
+                
+                <h:form id="formSearchByOutlet">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Search Contract By Outlet" toggleable="true" toggleSpeed="500" collapsed="true">  
+                        <h:panelGrid columns="2" cellpadding="10">  
+                            <h:outputText value="Outlet ID: " style="margin-right: 10px;"/>
+                            <p:autoComplete id="reservation" value="#{contractManagedBean.outletId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                                            completeMethod="#{contractManagedBean.completeOutlets}" />
+                            <p:spacer width="20"/>
+                            <p:commandButton  value="Search" ajax="true" actionListener="#{contractManagedBean.searchByOutlet}" update ="growl"/>
+                        </h:panelGrid> 
+                    </p:fieldset>
+                </h:form>
+                <br/>
+                
+                
+                <h:form id="formSearchByMerchant">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Search Contract By Merchant" toggleable="true" toggleSpeed="500" collapsed="true">  
+                        <h:panelGrid columns="2" cellpadding="10">  
+                            <h:outputText value="Merchant Email: " style="margin-right: 10px;"/>
+                            <p:autoComplete id="reservation" value="#{contractManagedBean.merchantId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                                            completeMethod="#{contractManagedBean.completeMerchants}" />
+                            <p:spacer width="20"/>
+                            <p:commandButton  value="Search" ajax="true" actionListener="#{contractManagedBean.searchByMerchant}" update ="growl"/>
+                        </h:panelGrid> 
+                    </p:fieldset>
+                </h:form>
+                
+                
             </p:tab> 
 
 
