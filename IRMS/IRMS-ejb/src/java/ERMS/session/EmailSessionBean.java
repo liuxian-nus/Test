@@ -8,6 +8,7 @@ import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
 import SMMS.entity.ContractEntity;
 import com.lowagie.text.BadElementException;
+import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
@@ -17,6 +18,7 @@ import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfAction;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -25,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 import javax.ejb.Stateless;
 import javax.mail.Message;
@@ -379,12 +382,19 @@ public class EmailSessionBean {
         table.addCell(Double.toString(room.getReservation().getReservationTotal()));
         
         //below add notes paragraph
-        document.add(new Paragraph("If it is a confirmed booking, please make sure you finish the booking"
+        Paragraph p = new Paragraph("If it is a confirmed booking, please make sure you finish the booking"
                 + "process within 3 days"
-                , FontFactory.getFont(FontFactory.COURIER, 10,Font.BOLDITALIC ,Color.RED)));
+                , FontFactory.getFont(FontFactory.COURIER, 10,Font.BOLDITALIC ,Color.RED));
+        
+        Chunk c;
+        c = new Chunk("via localhost:8080/IRMSCustomer-war/");
+        c.setAction(new PdfAction(new URL("localhost:8080/IRMSCustomer-war/")));
+        p.add(c);
+        document.add(p);
         document.add(new Paragraph(""));
+        document.close();
             
-            return OUTPUTFILE;
+        return OUTPUTFILE;
     }
     
     //Add a empty line
