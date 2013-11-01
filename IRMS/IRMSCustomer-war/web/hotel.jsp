@@ -228,7 +228,7 @@
                         <div class="row">
                             <div class="large-12 columns">
                                 <div class="panel">
-                                    <h3><strong>Facilities</strong></h3>
+                                    <h3><strong>Orchard Hotel Facilities</strong></h3>
                                     <ul>
                                         <li>
                                             <table>
@@ -284,6 +284,127 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <div class="panel">
+                                    <h3><strong>Marina Hotel Facilities</strong></h3>
+                                    <ul>
+                                        <li>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Free form swimming pool at any hotel </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Complimentary access to gym facilities at CIR</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>24-hour Laundry/Dry-Cleaning Service</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>24 hour butler service</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>24-hour In-Room Dining Menu (International & Oriental Selections Available)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Buggy Service on-call</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>42" Plasma TV with Cable Vision and a wide collection of the latest movies and radio channels in the bedroom</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>22" LED TV with Cable Vision and a wide collection of the latest movies and radio channels in the bathroom </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Mini-bar with a wide range of snacks, soft drinks and juices</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Pantry area with microwave and refrigerator</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Free Wireless High-Speed Broadband Internet access</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <div class="panel">
+                                    <h3><strong>BeachView Hotel Facilities</strong></h3>
+                                    <ul>
+                                        <li>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Free form swimming pool at any hotel </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Complimentary access to gym facilities at CIR</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>24-hour Laundry/Dry-Cleaning Service</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>24 hour butler service</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>24-hour In-Room Dining Menu (International & Oriental Selections Available)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Buggy Service on-call</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>42" Plasma TV with Cable Vision and a wide collection of the latest movies and radio channels in the bedroom</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>22" LED TV with Cable Vision and a wide collection of the latest movies and radio channels in the bathroom </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Mini-bar with a wide range of snacks, soft drinks and juices</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Pantry area with microwave and refrigerator</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top"><font color="#E9C382"></font>&#160;</td>
+                                                        <td>Free Wireless High-Speed Broadband Internet access</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </section>

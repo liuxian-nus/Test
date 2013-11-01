@@ -132,6 +132,19 @@ public class ACMSServlet extends HttpServlet {
         //data should be in session
         return data;
     }
+    
+        private ReservationEntity continueRead2(HttpServletRequest request) throws ParseException {
+     //   ReservationEntity tempReservation = new ReservationEntity();
+        System.out.println("continue finish data entity");
+        //retrieve info
+        String creditCardNo = request.getParameter("cardNo");
+
+        //set to POJO
+        data.setRcCreditCardNo(creditCardNo);
+
+        //data should be in session
+        return data;
+    }
 
     private ReservationEntity createTempReservation(HttpServletRequest request) throws ParseException {
         ReservationEntity tempReservation = new ReservationEntity();
