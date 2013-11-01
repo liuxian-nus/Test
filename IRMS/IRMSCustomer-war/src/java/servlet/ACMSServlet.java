@@ -29,9 +29,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ACMSServlet", urlPatterns = {"/ACMSServlet", "/ACMSServlet/*"})
 public class ACMSServlet extends HttpServlet {
+
     @EJB
     private ReservationSessionBean reservationSessionBean;
-
     ReservationEntity data = new ReservationEntity();
     boolean isAvailable = false;
 
@@ -60,23 +60,26 @@ public class ACMSServlet extends HttpServlet {
 
             if ("hotelSearch".equals(page)) {
                 System.out.println("***hotel Search***");
-          
+
                 request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
-            }else if("searchAvailable".equals(page)){ 
+            } else if ("searchAvailable".equals(page)) {
                 System.out.println("***search hotel availability***");
                 data = createTempReservation(request);
                 isAvailable = checkAvailability(data);
                 System.out.println("data search has been performed and result has been returned by bean");
                 request.setAttribute("data", data);
-                if(isAvailable) request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
-                else request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
-            }else if ("hotelBook".equals(page)) {
+                if (isAvailable) {
+                    request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
+                }
+            } else if ("hotelBook".equals(page)) {
                 System.out.println("***hotel Book***");
-
+                data = continueRead1(request);
                 request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
             } else if ("hotelPay".equals(page)) {
                 System.out.println("***hotel payment***");
-
+ //               data = continueRead2(request);
                 request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
             } else if ("hotelPayConfirm".equals(page)) {
                 System.out.println("***hotel payment confirmation***");
@@ -111,6 +114,25 @@ public class ACMSServlet extends HttpServlet {
         System.out.println("irmsServlet: destroy()");
     }
 
+    private ReservationEntity continueRead1(HttpServletRequest request) throws ParseException {
+     //   ReservationEntity tempReservation = new ReservationEntity();
+        System.out.println("continue finish data entity");
+        //retrieve info
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String email = request.getParameter("email");
+        //missing with subscribe boolean
+        String hp = request.getParameter("phoneNo");
+        String nationality = request.getParameter("nationality");
+        //set to POJO
+        data.setRcName(firstName + lastName);
+        data.setRcEmail(email);
+        data.setRcHP(hp);
+        data.setRcNationality(nationality);
+        //data should be in session
+        return data;
+    }
+
     private ReservationEntity createTempReservation(HttpServletRequest request) throws ParseException {
         ReservationEntity tempReservation = new ReservationEntity();
         System.out.println("create temp reservation");
@@ -124,9 +146,15 @@ public class ACMSServlet extends HttpServlet {
         System.out.println("reservation data retrieved: " + shotel + sroomType + sinDate + soutDate + sroomCount + speopleCount);
         //change datatype
         int hotel = 0;
-        if(shotel.equals("Orchard Hotel")) hotel = 1;
-        if(shotel.equals("Marina Hotel")) hotel = 2;
-        if(shotel.equals("BeachView Hotel")) hotel = 3;
+        if (shotel.equals("Orchard Hotel")) {
+            hotel = 1;
+        }
+        if (shotel.equals("Marina Hotel")) {
+            hotel = 2;
+        }
+        if (shotel.equals("BeachView Hotel")) {
+            hotel = 3;
+        }
         int roomCount = Integer.valueOf(sroomCount);
         int guestCount = Integer.valueOf(speopleCount);
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -138,10 +166,10 @@ public class ACMSServlet extends HttpServlet {
         tempReservation.setReservationHotelNo(hotel);
         tempReservation.setReservationRoomType(sroomType);
         tempReservation.setReservationGuestCount(guestCount);
-        tempReservation.setReservationRoomCount(roomCount); 
+        tempReservation.setReservationRoomCount(roomCount);
         tempReservation.setRcCheckInDate(inDate);
         tempReservation.setRcCheckOutDate(outDate);
-        
+
         return tempReservation; //now we have POJO data
     }
 
@@ -149,27 +177,48 @@ public class ACMSServlet extends HttpServlet {
         List<ReservationEntity> reservationList = reservationSessionBean.getAllReservations();
         int count = 0;
         //set for total room number
-        if ((data.getReservationHotelNo() == 1)&&(data.getReservationRoomType().equals("Deluxe"))) count = 80;
-        else if ((data.getReservationHotelNo() == 1)&&(data.getReservationRoomType().equals("Deluxe Suite"))) count = 50;
-        else if ((data.getReservationHotelNo() == 1)&&(data.getReservationRoomType().equals("Orchard Suite"))) count = 30;
-        else if ((data.getReservationHotelNo() == 2)&&(data.getReservationRoomType().equals("Deluxe"))) count = 100;
-        else if ((data.getReservationHotelNo() == 2)&&(data.getReservationRoomType().equals("Deluxe Suite"))) count = 60;
-        else if ((data.getReservationHotelNo() == 2)&&(data.getReservationRoomType().equals("Chairman Suite"))) count = 20;
-        else if ((data.getReservationHotelNo() == 3)&&(data.getReservationRoomType().equals("Superior"))) count = 60;
-        else if ((data.getReservationHotelNo() == 3)&&(data.getReservationRoomType().equals("Deluxe"))) count = 60;
-        else if ((data.getReservationHotelNo() == 3)&&(data.getReservationRoomType().equals("Deluxe Suite"))) count = 50;
+        if ((data.getReservationHotelNo() == 1) && (data.getReservationRoomType().equals("Deluxe"))) {
+            count = 80;
+        } else if ((data.getReservationHotelNo() == 1) && (data.getReservationRoomType().equals("Deluxe Suite"))) {
+            count = 50;
+        } else if ((data.getReservationHotelNo() == 1) && (data.getReservationRoomType().equals("Orchard Suite"))) {
+            count = 30;
+        } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Deluxe"))) {
+            count = 100;
+        } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Deluxe Suite"))) {
+            count = 60;
+        } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Chairman Suite"))) {
+            count = 20;
+        } else if ((data.getReservationHotelNo() == 3) && (data.getReservationRoomType().equals("Superior"))) {
+            count = 60;
+        } else if ((data.getReservationHotelNo() == 3) && (data.getReservationRoomType().equals("Deluxe"))) {
+            count = 60;
+        } else if ((data.getReservationHotelNo() == 3) && (data.getReservationRoomType().equals("Deluxe Suite"))) {
+            count = 50;
+        }
         System.out.println("room information: " + data.getReservationHotelNo() + data.getReservationRoomType());
         System.err.println("Total number of rooms is: " + count);
         //while loop: deduct unavailable rooms
-        Iterator <ReservationEntity> itr = reservationList.iterator();
-        while(itr.hasNext()) {
-              ReservationEntity re = itr.next();
-              
+        Iterator<ReservationEntity> itr = reservationList.iterator();
+        while (itr.hasNext()) {
+            ReservationEntity re = itr.next();
+            if ((re.getRcCheckOutDate().after(data.getRcCheckInDate())) && (re.getRcCheckInDate().before(data.getRcCheckOutDate()))) {
+                count--;
+            }
         }
-
-        //for loop: for each reservation
-       //if RcCheckOutDate.after(inDate) && RcCheckInDate.before(outDate) availableCount--;
-        //if roomCount <= availableCount return true; else return false;
-       return true;
+        if (data.getReservationRoomCount() > count) {
+            return false;
+        } else {
+            return true;
+        }
+        /*
+         * check availability algorithm:
+         * notation: (re.getRcCheckInDate=)rIn, rOut, (data.getCheckInDate=)in, out
+         * unavailable condition 1: rIn<in and rOut>In
+         * unavailabel condition 2: in<rIn<out
+         * (hidden condition: rOut>rIn)
+         * therefore: [(rIn<in)&&(rOut>in)]||[(in<rIn<out)&&(rOut>in)]||[(in<rIn<out)&&(rOut<in)] (the 3rd part is an empty set)
+         * simplified result: rIn<out && rOut>in
+         */
     }
 }

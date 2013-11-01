@@ -33,6 +33,7 @@ public class ReservationEntity implements Serializable {
     private Date rcCheckInDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date rcCheckOutDate;
+    private String rcNationality;
     private int reservationHotelNo;
     private int reservationRoomCount;
     private int reservationGuestCount;
@@ -172,8 +173,14 @@ public class ReservationEntity implements Serializable {
     public void setReservationStatus(String reservationStatus) {
         this.reservationStatus = reservationStatus;
     }
-    
-    
+
+    public String getRcNationality() {
+        return rcNationality;
+    }
+
+    public void setRcNationality(String rcNationality) {
+        this.rcNationality = rcNationality;
+    }   
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the reservationId fields are not set
@@ -191,5 +198,6 @@ public class ReservationEntity implements Serializable {
     public String toString() {
         return "ACMS.entity.ReservationEntity[ reservationId=" + reservationId + " ]";
     }
+
 
 }
