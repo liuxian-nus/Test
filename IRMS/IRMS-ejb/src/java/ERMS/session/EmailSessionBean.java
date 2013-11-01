@@ -784,6 +784,7 @@ public class EmailSessionBean {
         table.setHeaderRows(1);
         
             //Add Table Contents
+        table.addCell("Attraction Name");
         
         return OUTPUTFILE;
         
