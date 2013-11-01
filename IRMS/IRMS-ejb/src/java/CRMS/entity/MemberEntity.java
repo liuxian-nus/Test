@@ -52,7 +52,7 @@ public class MemberEntity implements Serializable {
     
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "rcMember")
     private Set<ReservationEntity> hotelReservation;
-    @OneToMany(cascade ={CascadeType.MERGE})
+    @OneToMany(cascade ={CascadeType.ALL})
     private Set <MemberTransactionEntity> MemberTransactions=new HashSet<MemberTransactionEntity>();
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "mcMemberTargets")
     private Set <PromotionEntity> MarketingCampaigns;
@@ -76,6 +76,7 @@ public class MemberEntity implements Serializable {
     }
     
     public void addMemberTransaction(MemberTransactionEntity newTransaction) {
+        System.out.println("into addMemberTransaction");
         this.MemberTransactions.add(newTransaction);
     }
 

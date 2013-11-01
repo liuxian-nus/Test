@@ -17,6 +17,7 @@ import ATMS.session.TicketSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.session.GenerateBarcodeSessionBean;
 import CRMS.session.MemberSessionBean;
+import CRMS.session.MemberTransactionSessionBean;
 import ERMS.session.EmailSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,6 +41,8 @@ import javax.servlet.http.HttpSession;
 //@WebServlet(name = "ATMSServlet", urlPatterns = {"/ATMSServlet"})
 @WebServlet(urlPatterns = {"/ATMSServlet", "/ATMSServlet/*"})
 public class ATMSServlet extends HttpServlet {
+    @EJB
+    private MemberTransactionSessionBean memberTransactionSessionBean;
     @EJB
     private ExpressPassPurchaseSessionBean expressPassPurchaseSessionBean;
     @EJB
@@ -123,13 +126,19 @@ public class ATMSServlet extends HttpServlet {
                  tkts=new ArrayList<AttrTicketEntity>();
                  tkts=ticketSessionBean.selectTicketForOneAttraction(attr);
                  
+                 List<AttrTicketEntity> tickets=ticketSessionBean.getAllTickets();
+                 session.setAttribute("tickets", tickets);
+                 List<AttrExpressPassEntity> eps=attrExpressPassSessionBean.getAllEPs();
+                 session.setAttribute("eps",eps);
                  
 
                 request.getRequestDispatcher("/adventureWorld.jsp").forward(request, response);
             }else if("ticketBooking".equals(page)){
                 System.out.println("***ticketBooking page***");
-                List<AttrTicketEntity> tickets=ticketSessionBean.getAllTickets();
+            /*    List<AttrTicketEntity> tickets=ticketSessionBean.getAllTickets();
                 session.setAttribute("tickets", tickets);
+                List<AttrExpressPassEntity> eps=attrExpressPassSessionBean.getAllEPs();
+                session.setAttribute("eps",eps);*/
                 
                 
                 
@@ -293,6 +302,12 @@ public class ATMSServlet extends HttpServlet {
                     System.out.println("is member");
                     tp.setMember(member);
                     ticketPurchaseSessionBean.updateTicketPurchase(tp);
+                    memberSessionBean.updateMemberTicketPurchase(member, tp);
+//                    System.out.println("add member transaction");
+//                    memberTransactionSessionBean.addMemberTransaction(member,tp.getAttrTicketFee(),
+//                            tp.getAttrTicketBookDate(),"Attraction","", false);
+//                    System.out.println("transaction added");
+
                 }
                
                 tp.setAttrTPStatus("Purchased");
@@ -302,6 +317,8 @@ public class ATMSServlet extends HttpServlet {
                System.out.println("tpId" +tp.getTpId());
                generateBarcodeSessionBean.generate(String.valueOf(tp.getTpId()));
                System.out.println("barcode generated");
+               
+              
                   
                 eppurchase=(ExpressPassPurchaseEntity)session.getAttribute("eppurchase");
                 if(eppurchase.getAttrEPs().isEmpty()){

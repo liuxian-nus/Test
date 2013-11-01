@@ -4,10 +4,12 @@
  */
 package CRMS.session;
 
+import ATMS.entity.TicketPurchaseEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import Exception.ExistException;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -53,7 +55,10 @@ public class MemberTransactionSessionBean {
             System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
         }
         System.out.println("member transaction successfully added");
+        System.out.println("started to add member transaction");
         member.addMemberTransaction(mt);
+        em.merge(member);
+        System.out.println("member transaction added");
     }
     
     public double addMemberTransaction(String memberEmail, MemberTransactionEntity mt, boolean coinPay) throws ExistException {

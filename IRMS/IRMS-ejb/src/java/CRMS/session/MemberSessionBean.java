@@ -1,5 +1,6 @@
 package CRMS.session;
 
+import ATMS.entity.TicketPurchaseEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import ERMS.session.EPasswordHashSessionBean;
@@ -187,6 +188,14 @@ public class MemberSessionBean {
             memberList.add(m);
         }
         return memberList;
+    }
+    
+    public void updateMemberTicketPurchase(MemberEntity member, TicketPurchaseEntity tp){
+        System.out.println("updateMemberTicketPurchase");
+        List<TicketPurchaseEntity> tps=member.getTicketPurchases();
+        tps.add(tp);
+        member.setTicketPurchases(tps);
+        em.merge(member);
     }
 
     @Remove

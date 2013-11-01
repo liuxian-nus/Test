@@ -4,6 +4,7 @@
     Author     : Jieqiong
 --%>
 
+<%@page import="ATMS.entity.AttrExpressPassEntity"%>
 <%@page import="ATMS.entity.AttrTicketEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="CRMS.entity.MemberEntity"%>
@@ -13,6 +14,7 @@
 <%
     MemberEntity member=(MemberEntity)session.getAttribute("member");
     List<AttrTicketEntity> tickets=(List<AttrTicketEntity>)session.getAttribute("tickets");
+    List<AttrExpressPassEntity> eps=(List<AttrExpressPassEntity>)session.getAttribute("eps");
 %>
 
 <html>
@@ -58,7 +60,7 @@
                                     </div>
                                 </div>
                                 </br>
-                            <div class="row">
+                      <!--      <div class="row">
                                 <div class="large-3 large columns">
                                     <label for="right-label" class="left-align,inline"><strong>Ticket Type</label>
                                 </div>
@@ -120,14 +122,89 @@
                                 
                                 <p></p>
                                 
-                                </br>
+                                </br>-->
+                                <div class="row">
+                                     <div class="large-3 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>One-day Ticket</label>
+                                    </div>
+                                    <div class="large-1 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>$<%=tickets.get(0).getAttrTicketPrice()%></label>
+                                    </div>
+                                     <div class="large-2 columns">
+                                    <select required name="quantity1" id="customDropdown">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <p></p>
+                                <div class="row">
+                                     <div class="large-3 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>Two-day Ticket</label>
+                                    </div>
+                                    <div class="large-1 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>$<%=tickets.get(1).getAttrTicketPrice()%></label>
+                                    </div>
+                                     <div class="large-2 columns">
+                                    <select required name="quantity2" id="customDropdown">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <p></p>
+                                <div class="row">
+                                     <div class="large-3 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>Annual Ticket</label>
+                                    </div>
+                                    <div class="large-1 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>$<%=tickets.get(2).getAttrTicketPrice()%></label>
+                                    </div>
+                                     <div class="large-2 columns">
+                                    <select required name="quantity3" id="customDropdown">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                    </br>
 
                                 
                                 <div class="row">
                                      <div class="large-3 columns">
                                     <label for="right-label" class="left-align,inline"><strong>One-day Express Pass</label>
                                     </div>
-                                     <div class="large-3 columns">
+                                    <div class="large-1 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>$<%=eps.get(0).getAttrEPPrice()%></label>
+                                    </div>
+                                     <div class="large-2 columns">
                                     <select required name="epq1" id="customDropdown">
                                         <option value="0">--Select--</option>
                                         <option value="1">1</option>
@@ -148,7 +225,10 @@
                                      <div class="large-3 columns">
                                     <label for="right-label" class="left-align,inline"><strong>Two-day Express Pass</label>
                                     </div>
-                                     <div class="large-3 columns">
+                                    <div class="large-1 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>$<%=eps.get(1).getAttrEPPrice()%></label>
+                                    </div>
+                                     <div class="large-2 columns">
                                     <select required name="epq2" id="customDropdown">
                                         <option value="0">--Select--</option>
                                         <option value="1">1</option>
@@ -169,7 +249,10 @@
                                      <div class="large-3 columns">
                                     <label for="right-label" class="left-align,inline"><strong>Annual Express Pass</label>
                                     </div>
-                                     <div class="large-3 columns">
+                                    <div class="large-1 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>$<%=eps.get(2).getAttrEPPrice()%></label>
+                                    </div>
+                                     <div class="large-2 columns">
                                     <select required name="epq3" id="customDropdown">
                                         <option value="0">--Select--</option>
                                         <option value="1">1</option>
