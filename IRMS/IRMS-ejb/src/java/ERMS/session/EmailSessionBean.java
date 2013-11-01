@@ -4,8 +4,11 @@ package ERMS.session;
 import ACMS.entity.ReservationEntity; 
 import ACMS.entity.RoomEntity; 
 import ATMS.entity.AttrComboEntity; 
+import ATMS.entity.AttrExpressPassEntity;
 import ATMS.entity.AttrTicketEntity; 
+import ATMS.entity.ExpressPassPurchaseEntity;
 import ATMS.entity.TicketPurchaseEntity; 
+import CRMS.session.GenerateBarcodeSessionBean;
 import SMMS.entity.ContractEntity; 
 import com.lowagie.text.BadElementException; 
 import com.lowagie.text.Chunk; 
@@ -30,6 +33,7 @@ import java.net.MalformedURLException;
 import java.net.URL; 
 import java.util.Iterator; 
 import java.util.Properties; 
+import javax.ejb.EJB;
 import javax.ejb.Stateless; 
 import javax.mail.Message; 
 import javax.mail.MessagingException; 
@@ -48,8 +52,11 @@ import javax.mail.internet.MimeMultipart;
  */
 @Stateless
 public class EmailSessionBean { 
+    @EJB
+    private GenerateBarcodeSessionBean generateBarcodeSessionBean;
   
     String emailServerName = "smtp.gmail.com"; 
+    
   
     public EmailSessionBean() { 
     } 
@@ -177,6 +184,9 @@ public class EmailSessionBean {
                 //Below draft the contents of email 
                 textBodyPart = new MimeBodyPart(); 
                 textBodyPart.setText(text); 
+                
+                multipart.addBodyPart(messageBodyPart);
+                multipart.addBodyPart(textBodyPart);
                   
                 ((MimeMessage)message).setContent(multipart); 
   
@@ -244,6 +254,9 @@ public class EmailSessionBean {
                 //Below draft the contents of email 
                 textBodyPart = new MimeBodyPart(); 
                 textBodyPart.setText(text); 
+                
+                multipart.addBodyPart(messageBodyPart);
+                multipart.addBodyPart(textBodyPart);
                   
                 ((MimeMessage)message).setContent(multipart); 
   
@@ -380,8 +393,12 @@ public class EmailSessionBean {
                 //Below draft the contents of email 
                 textBodyPart = new MimeBodyPart(); 
                 textBodyPart.setText(text); 
+                
+                multipart.addBodyPart(messageBodyPart);
+                multipart.addBodyPart(textBodyPart);
                   
                 ((MimeMessage)message).setContent(multipart); 
+                
   
             System.out.println("Sending"); 
             Transport.send(message); 
@@ -394,6 +411,70 @@ public class EmailSessionBean {
           
           
     } 
+    public void emailAttractionTicketExpress(String toEmailAdress,ExpressPassPurchaseEntity eppe) throws IOException, FileNotFoundException, DocumentException
+    {
+       Properties props = new Properties(); 
+        props.put("mail.smtp.host", "smtp.gmail.com"); 
+        props.put("mail.smtp.socketFactory.port", "465"); 
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); 
+        props.put("mail.smtp.auth", "true"); 
+        props.put("mail.smtp.port", "465"); 
+        
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() { 
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() { 
+                return new PasswordAuthentication("is3102.it09", "weloveTWK"); 
+            } 
+        }); 
+        
+        try { 
+            Message message = new MimeMessage(session); 
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com")); 
+            message.setRecipients(Message.RecipientType.TO, 
+                    InternetAddress.parse(toEmailAdress)); 
+            message.setSubject("Your ticket from Coral Island Resort: Attraction "+eppe.getEppId()); 
+            String text = "Thank you for booking ticket for Coral Island Resort Attraction services!"
+                    +"\nYour Ticket ID is "+eppe.getEppId()
+                    +"\nTicket purchase date is "+eppe.getEpBookDate()
+                    +"\nThe fee of tickets you have purchased is "+eppe.getEpFee()
+                    +"\nPlease refer to the attachment for your e-ticket: print the pdf file and bring it on the show date"
+                    +"\nThank you for your support!"
+                    +"\n\n\n For any queries, please call (+65)9272-8760"; 
+              
+              
+            String INPUTFILE = createTicketExpress(eppe);         
+             
+  
+              
+                MimeBodyPart messageBodyPart; 
+                MimeBodyPart textBodyPart; 
+                  
+                Multipart multipart = new MimeMultipart(); 
+                messageBodyPart = new MimeBodyPart(); 
+                String file; 
+                    file = INPUTFILE; 
+                //Below attach a file within the email 
+                String fileName = "CorelResort:Room Reservation"; 
+                messageBodyPart.setFileName(fileName); 
+                messageBodyPart.attachFile(file); 
+                //Below draft the contents of email 
+                textBodyPart = new MimeBodyPart(); 
+                textBodyPart.setText(text); 
+                
+                multipart.addBodyPart(messageBodyPart);
+                multipart.addBodyPart(textBodyPart);
+                  
+                ((MimeMessage)message).setContent(multipart); 
+  
+            System.out.println("Sending"); 
+            Transport.send(message); 
+  
+            System.out.println("Done"); 
+  
+        } catch (MessagingException e) { 
+            throw new RuntimeException(e); 
+        } 
+    }
     public void emailAttractionTicketCombo(String toEmailAdress,AttrComboEntity combo) throws IOException, FileNotFoundException, DocumentException 
     { 
         Properties props = new Properties(); 
@@ -442,7 +523,10 @@ public class EmailSessionBean {
                 messageBodyPart.attachFile(file); 
                 //Below draft the contents of email 
                 textBodyPart = new MimeBodyPart(); 
-                textBodyPart.setText(text); 
+                textBodyPart.setText(text);
+                
+                multipart.addBodyPart(messageBodyPart);
+                multipart.addBodyPart(textBodyPart);
                   
                 ((MimeMessage)message).setContent(multipart); 
   
@@ -627,7 +711,8 @@ public class EmailSessionBean {
         table.addCell(newReservation.getRcHP()); 
         table.addCell("Credit Card Number"); 
         table.addCell(newReservation.getRcCreditCardNo()); 
-          
+        document.add(table);
+        
          //below add notes paragraph 
         Paragraph p = new Paragraph("If it is a confirmed booking, please make sure you finish the booking"
                 + "process within 3 days"
@@ -722,9 +807,13 @@ public class EmailSessionBean {
                 table.addCell(Double.toString(tpe.getAttrTicketFee())); 
                 i++; 
                 System.out.println("EmailSessionBean: a ticket has been added!"+i); 
-            } 
+            }
+            
+            
               
         } 
+        document.add(table);
+        document.close();
           
         return OUTPUTFILE; 
     } 
@@ -786,4 +875,92 @@ public class EmailSessionBean {
           
               
     } 
+
+    private String createTicketExpress(ExpressPassPurchaseEntity eppe) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+        //Below generate a PDF file 
+        Document document; 
+            document = new Document(PageSize.A4,50,50,50,50); 
+            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\ExpressTicketReservation "+ 
+                    eppe.getEppId()+".pdf"; 
+                      
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE)); 
+            document.open();
+            
+         //Below specify the font type 
+        Font catFont = new Font(Font.TIMES_ROMAN, 18, 
+      Font.BOLD); 
+        Font redFont = new Font(Font.TIMES_ROMAN, 12, 
+      Font.NORMAL,Color.RED); 
+        Font subFont = new Font(Font.TIMES_ROMAN, 16, 
+      Font.BOLD); 
+        Font tableFont; 
+        tableFont = new Font(Font.TIMES_ROMAN,16,Font.BOLD,Color.DARK_GRAY); 
+        Font smallItalic = new Font(Font.TIMES_ROMAN, 12, 
+      Font.BOLDITALIC); 
+        
+       //Below specify contents 
+         String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png"; 
+         Image image = Image.getInstance(imagePath); 
+         document.add(image); 
+           
+         Paragraph preface = new Paragraph(); 
+         addEmptyLine(preface, 1); 
+         preface.add(new Paragraph("Your e-ticket is displayed as below: ", catFont)); 
+         addEmptyLine(preface, 1); 
+           
+         document.add(preface); 
+         
+         //Below add a table 
+         PdfPTable table = new PdfPTable(2); 
+        table.setSpacingAfter(30); 
+        table.setSpacingBefore(30); 
+        table.setWidths(new int []{1,3}); 
+        
+         //Add table header 
+        PdfPCell c1 = new PdfPCell(new Phrase("Ticketing Info")); 
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER); 
+        table.addCell(c1); 
+          
+        c1 = new PdfPCell(new Phrase("Details & Remarks")); 
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER); 
+        table.addCell(c1); 
+          
+        table.setHeaderRows(1); 
+        
+        //below add table contents
+        table.addCell("Attraction");
+        if(!eppe.getAttrEPs().isEmpty())
+            table.addCell(eppe.getAttrEPs().get(0).getAttr().getAttrName());
+        else
+            table.addCell("Attraction Not Assigned Yet!");
+        
+        if(!eppe.getAttrEPs().isEmpty())
+        {
+            Iterator<AttrExpressPassEntity> itr = eppe.getAttrEPs().iterator();
+            Iterator<Integer> itr2 = eppe.getEpQuantities().iterator();
+            int i = 1;
+            
+            while(itr.hasNext()&&itr2.hasNext())
+            {
+                AttrExpressPassEntity currentAttrExpressPass = itr.next();
+                Integer currentInteger = itr2.next();
+                table.addCell("Express Pass");
+                table.addCell(currentAttrExpressPass.getAttrEPName());
+                table.addCell("Quantity");
+                table.addCell(Integer.toString(currentInteger));
+                
+                System.out.println("EmailSessionBean: A Express Ticket has been added!"+i);
+                i++;
+            }
+            
+            table.addCell("Date");
+            table.addCell(eppe.getEpBookDate().toString());
+            table.addCell("Price");
+            table.addCell(Double.toString(eppe.getEpFee()));
+        }
+        document.add(table);
+        document.close();
+            
+            return OUTPUTFILE;
+    }
 } 
