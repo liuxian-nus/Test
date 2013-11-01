@@ -31,6 +31,8 @@ public final class OrderEntity implements Serializable {
     private Long orderId;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date orderDateTime;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date hour;
     //@OneToMany (cascade ={CascadeType.ALL},mappedBy = "order")
     //private Set <DishEntity> Dishes;
     @OneToOne (cascade = {CascadeType.DETACH})
@@ -66,7 +68,13 @@ public final class OrderEntity implements Serializable {
         this.salePrice = salePrice;
     }
     
-    
+    public Date getHour() {
+        return hour;
+    }
+
+    public void setHour(Date hour) {
+        this.hour = hour;
+    }
     
     public OrderEntity(Date orderDateTime,MenuEntity menu,String status,String title,String name,String email,String mobile,String notes)
     {

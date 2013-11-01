@@ -4,6 +4,7 @@
  */
 package FBMS.session;
 
+import Exception.ExistException;
 import FBMS.entity.CourseEntity;
 import FBMS.entity.DishEntity;
 import FBMS.entity.MenuEntity;
@@ -141,5 +142,14 @@ public class InventorySessionBean {
         }
 
         return dishList;
+    }
+    
+    public DishEntity getDishById(Long dishId) throws ExistException
+    {
+         de = em.find(DishEntity.class, dishId);
+        if (de == null) {
+            throw new ExistException("Dish does not exist!");
+        }
+        return de;
     }
 }

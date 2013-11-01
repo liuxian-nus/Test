@@ -569,20 +569,20 @@ public class initializationManagedBean implements Serializable {
         functionality8.setFuncName("OperatorViewContract");
         functionality8.setFuncDescription("manager View Contract");
         functionalitySessionBean.addFunctionality(functionality8);
-        
+
         FunctionalityEntity functionality9 = new FunctionalityEntity();
-        functionality.setFuncName("manageMerchants");
-        functionality.setFuncDescription("manage merchants");
+        functionality9.setFuncName("manageMerchants");
+        functionality9.setFuncDescription("manage merchants");
         functionalitySessionBean.addFunctionality(functionality9);
-        
+
         FunctionalityEntity functionality10 = new FunctionalityEntity();
-        functionality.setFuncName("viewMerchant");
-        functionality.setFuncDescription("view merchant");
+        functionality10.setFuncName("viewMerchant");
+        functionality10.setFuncDescription("view merchant");
         functionalitySessionBean.addFunctionality(functionality10);
-        
+
         FunctionalityEntity functionality11 = new FunctionalityEntity();
-        functionality.setFuncName("viewTransaction");
-        functionality.setFuncDescription("add contract");
+        functionality11.setFuncName("viewTransaction");
+        functionality11.setFuncDescription("add contract");
         functionalitySessionBean.addFunctionality(functionality11);
 
         role = new RoleEntity();
@@ -596,6 +596,10 @@ public class initializationManagedBean implements Serializable {
         role.addFunctionality(functionality6);
         role.addFunctionality(functionality7);
         role.addFunctionality(functionality8);
+        role.addFunctionality(functionality9);
+        role.addFunctionality(functionality10);
+        role.addFunctionality(functionality11);
+
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();

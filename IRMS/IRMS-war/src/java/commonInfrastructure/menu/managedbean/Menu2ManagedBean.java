@@ -245,7 +245,13 @@ public class Menu2ManagedBean implements Serializable {
 
                 item = new MenuItem();
                 item.setValue("Add Group Catering");
-                item.setUrl("/fbms/addRestaurant.xhtml");
+                item.setUrl("/fbms/addGroupCatering.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Add Group Catering");
+                item.setUrl("/fbms/manageGroupCatering.xhtml");
                 item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
                 

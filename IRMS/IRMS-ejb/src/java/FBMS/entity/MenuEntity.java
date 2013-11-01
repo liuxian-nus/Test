@@ -22,20 +22,21 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class MenuEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long menuId;
-    @OneToMany (cascade={CascadeType.MERGE})
+    @OneToMany(cascade = {CascadeType.MERGE})
     private Set<CourseEntity> courses;
-    
-    @OneToOne(cascade={CascadeType.ALL},mappedBy = "menu")
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "menu")
     private OrderEntity order;
-    
     private Integer NumberOrder;
+    private String type;
 
-    public MenuEntity(){}
-    
+    public MenuEntity() {
+    }
+
     public Set<CourseEntity> getCourses() {
         return courses;
     }
@@ -51,7 +52,7 @@ public class MenuEntity implements Serializable {
     public void setNumberOrder(Integer NumberOrder) {
         this.NumberOrder = NumberOrder;
     }
-    
+
     public Long getMenuId() {
         return menuId;
     }
@@ -68,7 +69,16 @@ public class MenuEntity implements Serializable {
         this.order = order;
     }
 
-    
-   
-    
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void addCourse(CourseEntity course) {
+        this.courses.add(course);
+        System.out.println("MenuEntity-->new course added:" + course.getCourseId());
+    }
 }

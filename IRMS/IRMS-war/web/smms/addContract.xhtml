@@ -64,7 +64,7 @@
                         <h:panelGrid columns="2" cellpadding="10">  
                             <h:outputText value="Contract ID: " style="margin-right: 10px;"/>
                             <p:autoComplete id="reservation" value="#{contractManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
-                                            completeMethod="#{contractManagedBean.completeContracts}" />
+                                            completeMethod="#{contractManagedBean.completeContracts()}" />
                             <p:spacer width="20"/>
                             <p:commandButton  value="Search" ajax="true" actionListener="#{contractManagedBean.searchById}" update ="growl"/>
                         </h:panelGrid> 
@@ -78,7 +78,7 @@
                         <h:panelGrid columns="2" cellpadding="10">  
                             <h:outputText value="Outlet ID: " style="margin-right: 10px;"/>
                             <p:autoComplete id="reservation" value="#{contractManagedBean.outletId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
-                                            completeMethod="#{contractManagedBean.completeOutlets}" />
+                                            completeMethod="#{contractManagedBean.completeOutlets()}" />
                             <p:spacer width="20"/>
                             <p:commandButton  value="Search" ajax="true" actionListener="#{contractManagedBean.searchByOutlet}" update ="growl"/>
                         </h:panelGrid> 
@@ -93,7 +93,7 @@
                         <h:panelGrid columns="2" cellpadding="10">  
                             <h:outputText value="Merchant Email: " style="margin-right: 10px;"/>
                             <p:autoComplete id="reservation" value="#{contractManagedBean.merchantId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
-                                            completeMethod="#{contractManagedBean.completeMerchants}" />
+                                            completeMethod="#{contractManagedBean.completeMerchants()}" />
                             <p:spacer width="20"/>
                             <p:commandButton  value="Search" ajax="true" actionListener="#{contractManagedBean.searchByMerchant}" update ="growl"/>
                         </h:panelGrid> 

@@ -94,19 +94,13 @@ public class ContractSessionBean {
 
     public ContractEntity getContractByOutlet(int outletId) {
         System.err.println("in get contract by outlet session bean");
-        Query q = em.createQuery("SELECT m FROM ContractEntity m");
-        ContractEntity lala = new ContractEntity();
-        for (Object o : q.getResultList()) {
-            ContractEntity m = (ContractEntity) o;
-            if (m.getOutlet().getOutletId() == outletId) {
-                lala = m;
-            } 
-        }
-        System.out.println("lala value is "+ lala.getContractId());
-        return lala;
+        Query q = em.createQuery("SELECT m FROM ContractEntity m WHERE m.outlet.outletId = '" + outletId + "'");
+        ContractEntity select = (ContractEntity) q.getSingleResult();
+        System.out.println("lala value is " + select.getContractId());
+        return select;
     }
 
-    public ContractEntity getContractById(String contractId) throws ExistException {
+    public ContractEntity getContractById(Long contractId) throws ExistException {
         contract = em.find(ContractEntity.class, contractId);
         if (contract == null) {
             throw new ExistException("Contract does not exist!");

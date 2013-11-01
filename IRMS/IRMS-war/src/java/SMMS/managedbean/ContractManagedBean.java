@@ -327,7 +327,7 @@ public class ContractManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            selected = contractSessionBean.getContractById(merchantId);
+            selected = contractSessionBean.getContractById(Long.valueOf(searchId));
             System.out.println("N02: in searching by id bean " + selected.getContractId());
 
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", selected);
