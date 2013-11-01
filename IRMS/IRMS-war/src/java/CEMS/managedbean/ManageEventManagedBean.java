@@ -28,11 +28,12 @@ public class ManageEventManagedBean {
     @EJB
     EventSessionBean eventSessionBean;
     private EventEntity selectedEvent;
+    private List<EventEntity> events;
     private final static String[] eventStatus;    
     private boolean editMode;
     private String status;
     private Long id;
-    private List<EventEntity> events;
+    
     
     public ManageEventManagedBean() {
         selectedEvent = new EventEntity();
@@ -56,6 +57,7 @@ public class ManageEventManagedBean {
     
     public void deleteEvent(ActionEvent event) {
         setId((Long) event.getComponent().getAttributes().get("code1"));
+        System.err.println("id: "+getId());
         eventSessionBean.deleteEvent(getId());
     }
     
@@ -65,8 +67,8 @@ public class ManageEventManagedBean {
         Object newValue = event.getNewValue();
         
         
-        System.err.println(oldValue);
-        System.err.println(newValue);
+        System.err.println("old: "+oldValue);
+        System.err.println("new: "+newValue);
         System.err.println("Selected event: " + selectedEvent);
         
         if (newValue != null && !newValue.equals(oldValue)) {
