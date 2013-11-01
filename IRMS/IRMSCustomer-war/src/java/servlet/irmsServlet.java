@@ -142,6 +142,14 @@ public class irmsServlet extends HttpServlet {
                 System.out.println("***entertainment venue page***");
                 request.getRequestDispatcher("/ESMSServlet/entertainmentVenue").forward(request, response);
 
+            }else if ("entertainmentSchedule".equals(page)) {
+                System.out.println("***entertainment schedule page***");
+                request.getRequestDispatcher("/ESMSServlet/entertainmentSchedule").forward(request, response);
+
+            }else if ("entertainmentPay".equals(page)) {
+                System.out.println("***entertainment payment page***");
+                request.getRequestDispatcher("/ESMSServlet/entertainmentPay").forward(request, response);
+
             } else if ("member".equals(page)) {
                 //        System.out.println(request.getParameter("email"));
                 request.getRequestDispatcher("/CRMServlet/member").forward(request, response);
