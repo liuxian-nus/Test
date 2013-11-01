@@ -11,6 +11,7 @@ import CEMS.entity.VenueEntity;
 import CEMS.entity.VenueFunctionEntity;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -32,6 +33,8 @@ public class EventSessionBean {
     EventEntity ee;
     VenueEntity ve;
     EventServiceEntity se;
+    private List<EventEntity> requests;
+    private List<EventEntity> eventList;
 
     public void persist(Object object) {
         em.persist(object);
@@ -284,5 +287,22 @@ public class EventSessionBean {
     public List<EventEntity> getAllEvents() {
         Query q = em.createQuery("SELECT m FROM EventEntity m");
         return q.getResultList();
+    }
+    
+    // Request for Show
+    public List<EventEntity> getRequests() {
+        requests = new ArrayList<EventEntity>();
+        eventList = new ArrayList<EventEntity>();
+        Query q = em.createQuery("SELECT m FROM EventEntity m");
+        eventList = q.getResultList();
+
+        Iterator<EventEntity> itr = eventList.iterator();
+        while (itr.hasNext()) {
+            ee = itr.next();
+            if (ee.getEventType().equalsIgnoreCase("show")) {
+                requests.add(ee);
+            }
+        }
+        return requests;
     }
 }

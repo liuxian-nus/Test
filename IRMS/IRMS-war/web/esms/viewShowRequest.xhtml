@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel id="showRequest" header="Request Management" style="height:495px;">
+                <div style="margin-top:20px;">
+                    <p:growl id="growl" showDetail="true" />
+                    
+                    <p:contextMenu for="requests" widgetVar="cMenu">     
+                        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('carsTable').showCellEditor();return false;"/>    
+                        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide();"/>    
+                    </p:contextMenu> 
+
+                    <p:dataTable id="requests" value="#{viewShowRequestManagedBean.getRequests()}" 
+                                 var="requestList" paginator="true" rows="6" draggableColumns="true" scrollable="true"
+                                 resizableColumns="true" editMode="cell" editable="true" widgetVar="carsTable"
+                                 rowKey="#{requestList.eventId}"
+                                 selectionMode="single" selection="#{viewShowRequestManagedBean.selectedEvent}">
+
+                        <p:ajax event="cellEdit" listener="#{viewShowRequestManagedBean.onCellEdit}" update=":form:growl" />
+
+                        <p:column headerText="Show Name">
+                            <h:outputText value="#{requestList.eventName}"/>
+                        </p:column>
+
+                        <p:column headerText="Contact Name">
+                            <h:outputText value="#{requestList.name}"/>
+                        </p:column>
+
+                        <p:column headerText="Contact Email">
+                            <h:outputText value="#{requestList.email}"/>
+                        </p:column>
+
+                        <p:column headerText="Contact Number">
+                            <h:outputText value="#{requestList.eventContact}"/>
+                        </p:column>
+
+                        <p:column headerText="Description">
+                            <h:outputText value="#{requestList.description}"/>
+                        </p:column>
+
+                        <p:column headerText="Status" style="width:25%">  
+                            <p:cellEditor>  
+                                <f:facet name="output">
+                                    <h:outputText value="#{requestList.status}" />
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <h:selectOneMenu value="#{requestList.status}" style="width:100%">
+                                        <f:selectItems value="#{viewShowRequestManagedBean.eventStatus}" var="man" itemLabel="#{man}" itemValue="#{man}" />
+                                    </h:selectOneMenu>  
+                                </f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+
+                        <p:column style="width:5%">  
+                            <h:panelGrid columns="2" styleClass="actions" cellpadding="1">  
+                                <p:commandButton update="requests" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                    <f:setPropertyActionListener value="#{requestList}" target="#{viewShowRequestManagedBean.selectedEvent}" />  
+                                </p:commandButton>  
+                            </h:panelGrid>  
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
+                        <br/>
+                        Are you sure to delete?
+                        <br/><br/>
+                        <p:commandButton value="Yes" update="requests" actionListener="#{viewShowRequestManagedBean.deleteEvent}" oncomplete="confirmation.hide()">  
+                            <f:attribute name="code1" value="#{viewShowRequestManagedBean.selectedEvent.eventId}" />
+                        </p:commandButton>
+                        <p:commandButton value="Not yet" onclick="confirmation.hide();" type="button" />  
+                    </p:dialog>
+                </div>
+            </p:panel>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

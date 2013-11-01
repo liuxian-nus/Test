@@ -10,16 +10,12 @@ import ESMS.entity.ShowTicketSaleEntity;
 import ESMS.session.ShowBillingSessionBean;
 import ESMS.session.ShowContractSessionBean;
 import ESMS.session.ShowSessionBean;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
 
 /**
  *
