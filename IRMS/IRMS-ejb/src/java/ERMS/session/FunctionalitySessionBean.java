@@ -54,9 +54,4 @@ public class FunctionalitySessionBean {
         return query.getResultList();
     }
     
-    /*public FunctionalityEntity searchFunctionalityByName(String funcName){
-        FunctionalityEntity thisFunc = em.find(FunctionalityEntity.class, funcName);
-        return thisFunc;
-    }*/
-    
 }

@@ -29,7 +29,6 @@ public class ShowContractEntity implements Serializable {
     private Double showVenueRate;
     private Double showTicketCommission;
     private int showVenueDuration;
-    private Double showDeposit;
     
     @OneToOne(mappedBy="showContract", cascade = {CascadeType.MERGE})
     private ShowEntity show;
@@ -104,13 +103,5 @@ public class ShowContractEntity implements Serializable {
 
     public void setShow(ShowEntity show) {
         this.show = show;
-    }
-
-    public Double getShowDeposit() {
-        return showDeposit;
-    }
-
-    public void setShowDeposit(Double showDeposit) {
-        this.showDeposit = showDeposit;
     }
 }

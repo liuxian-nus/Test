@@ -14,7 +14,7 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-
+<!--Progress Widget-->
         <div class="row">
             <ul class="button-group round even-4">
                 <li><a href="#" class="button secondary small"><strong>Search your hotel ></strong></a></li>
