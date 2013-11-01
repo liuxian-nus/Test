@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+        <h:form>
+            <p:growl id="growl" sticky="true" showDetail="true"/>
+            <p:wizard flowListener="#{addGroupCateringManagedBean.onFlowProcess}">
+                <p:tab id="personal" title="Menu">
+                    <p:panel header="Select Menu">
+                        <h:messages errorClass="error"/>
+                        <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+                            <h:outputText value="Package: *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.menu.type}" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Package cannot be empty">
+                                <f:selectItem itemLabel="Select Package" itemValue="" />  
+                                <f:selectItem itemLabel="Deluxe Package" itemValue="Deluxe" /> 
+                                <f:selectItem itemLabel="Premium Package" itemValue="Premium" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="1.Noolde/Rice: " />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId1}" required ="true" requiredMessage="Noodle/rice cannot be empty">
+                                <f:selectItem itemLabel="Select noodle/rice" itemValue="" />  
+                                <f:selectItem itemLabel="Thai Pineapple Rice" itemValue="100001" /> 
+                                <f:selectItem itemLabel="Yong Chow Fried Rice" itemValue="100002" />
+                                <f:selectItem itemLabel="Mee Goreng" itemValue="100003" /> 
+                                <f:selectItem itemLabel="Fried Hong Kong Mee" itemValue="100004" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="2.Bean Curd/Vegetable: *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId2}" required ="true" requiredMessage="Bean curd/vegetable cannot be empty">
+                                <f:selectItem itemLabel="Select bean curd/vegetable" itemValue="" />  
+                                <f:selectItem itemLabel="Mushroom Broccoli" itemValue="100005" /> 
+                                <f:selectItem itemLabel="Mixed Cabbage" itemValue="100006" />
+                                <f:selectItem itemLabel="Braised Bean Curd" itemValue="100007" /> 
+                                <f:selectItem itemLabel="Loh Han Vegetable" itemValue="100008" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="3.Fish(White Dory): *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId3}" required ="true" requiredMessage="Fish cannot be empty">
+                                <f:selectItem itemLabel="Select fish" itemValue="" />  
+                                <f:selectItem itemLabel="Sweet and Sour Fish" itemValue="100009" /> 
+                                <f:selectItem itemLabel="Sze Chuan Fish" itemValue="100010" />
+                                <f:selectItem itemLabel="Lemon Fish" itemValue="100011" /> 
+                                <f:selectItem itemLabel="Cereal Fish" itemValue="100012" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="4.Chicken: *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId4}" required ="true" requiredMessage="Chicken cannot be empty">
+                                <f:selectItem itemLabel="Select chicken" itemValue="" />  
+                                <f:selectItem itemLabel="Curry Chicken" itemValue="100013" /> 
+                                <f:selectItem itemLabel="Honey Chicken" itemValue="100014" />
+                                <f:selectItem itemLabel="Thai Mango Chicken" itemValue="100015" /> 
+                                <f:selectItem itemLabel="Sweet and Sour Chicken" itemValue="100016" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="5.Prawn(S40-45)) *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId5}"  required ="true" requiredMessage="Prawn cannot be empty">
+                                <f:selectItem itemLabel="Select prawn" itemValue="" />  
+                                <f:selectItem itemLabel="Tempura Prawn" itemValue="100017" /> 
+                                <f:selectItem itemLabel="Sze Chuan Prawn" itemValue="100018" />
+                                <f:selectItem itemLabel="Thai Style Prawn" itemValue="100019" /> 
+                                <f:selectItem itemLabel="Cereal Prawn" itemValue="100020" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="6.Deep Fried: *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId6}" required ="true" requiredMessage="Deep fried cannot be empty">
+                                <f:selectItem itemLabel="Select deep fried" itemValue="" />  
+                                <f:selectItem itemLabel="Sotong Ball" itemValue="100021" /> 
+                                <f:selectItem itemLabel="Fish Ball" itemValue="100022" />
+                                <f:selectItem itemLabel="Spring Roll" itemValue="100023" /> 
+                                <f:selectItem itemLabel="Sotong Yu Tiao" itemValue="100024" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="7.Dessert: *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId7}" required ="true" requiredMessage="Dessert cannot be empty">
+                                <f:selectItem itemLabel="Select dessert" itemValue="" />  
+                                <f:selectItem itemLabel="Almond Jelly W Longan" itemValue="100025" /> 
+                                <f:selectItem itemLabel="Sago Honeydew" itemValue="100026" />
+                                <f:selectItem itemLabel="Sea Coconut With Longan" itemValue="100027" /> 
+                                <f:selectItem itemLabel="Bo Bo Cha Cha" itemValue="100028" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="8.Drinks: *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId8}" required ="true" requiredMessage="Drinks cannot be empty">
+                                <f:selectItem itemLabel="Select drinks" itemValue="" />  
+                                <f:selectItem itemLabel="Fruit Punch" itemValue="100029" /> 
+                                <f:selectItem itemLabel="Lime" itemValue="100030" />
+                                <f:selectItem itemLabel="Orange" itemValue="100031" /> 
+                                <f:selectItem itemLabel="Blackcurrant" itemValue="100032" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="9.Others: *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId9}" required ="true" requiredMessage="Others cannot be empty">
+                                <f:selectItem itemLabel="Select Others" itemValue="" />  
+                                <f:selectItem itemLabel="Mini Custard Puff" itemValue="100033" /> 
+                                <f:selectItem itemLabel="Mini Chocolate Puff" itemValue="100034" />
+                                <f:selectItem itemLabel="Mini Chocolate eclair" itemValue="100035" /> 
+                                <f:selectItem itemLabel="Steamed Siew Mai" itemValue="100036" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value="10.Prawn: *" />
+                            <h:selectOneMenu rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value ="#{addGroupCateringManagedBean.dishId10}" required ="true" requiredMessage="Package cannot be empty">
+                                <f:selectItem itemLabel="Select prawns" itemValue="" />  
+                                <f:selectItem itemLabel="Butter Prawn" itemValue="100037" /> 
+                                <f:selectItem itemLabel="Cereal Prawn" itemValue="100038" />
+                                <f:selectItem itemLabel="Stir Fried Prawn" itemValue="100039" /> 
+                                <f:selectItem itemLabel="Tempura Prawn" itemValue="100041" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value="11. Baby full month combo *" />
+                            <h:selectOneMenu rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value ="#{addGroupCateringManagedBean.dishId11}"  required ="true" requiredMessage="Package cannot be empty">
+                                <f:selectItem itemLabel="Select combp" itemValue="" />  
+                                <f:selectItem itemLabel="Blissful Red Eggs" itemValue="100047" /> 
+                                <f:selectItem itemLabel="Ang Ku Kueh" itemValue="100048" />
+                                <f:selectItem itemLabel="Mini Assorted Pastry" itemValue="100049" /> 
+                            </h:selectOneMenu> 
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+
+                <p:tab id="information" title="Catering Information">
+                    <p:panel header="Catering Information">
+                        <h:messages errorClass="error"/>				
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Catering Date: *"/>
+                            <p:calendar pattern="yyyy-MM-dd" mindate="#{addGroupCateringManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{addGroupCateringManagedBean.order.orderDateTime}" /> 
+
+                            <h:outputText value="Catering time: *"/>
+                            <p:calendar value="#{addGroupCateringManagedBean.order.hour}" pattern="HH:mm" timeOnly="true" required ="true" requiredMessage="Hour cannot be empty" /> 
+                            <h:outputText value=""/><br/>
+
+                            <h:outputText value="Number of People: *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.menu.numberOrder}" required ="true" requiredMessage="Number of people cannot be empty">
+                                <f:selectItem itemLabel="Select Number of people" itemValue="" />  
+                                <f:selectItem itemLabel="50 people" itemValue="50" /> 
+                                <f:selectItem itemLabel="60 people" itemValue="60" />
+                                <f:selectItem itemLabel="70 people" itemValue="70" /> 
+                                <f:selectItem itemLabel="80 people" itemValue="80" />
+                                <f:selectItem itemLabel="90 people" itemValue="90" /> 
+                                <f:selectItem itemLabel="100 people" itemValue="100" />
+                                <f:selectItem itemLabel="110 people" itemValue="110" /> 
+                                <f:selectItem itemLabel="120 people" itemValue="120" />
+                                <f:selectItem itemLabel="130 people" itemValue="130" /> 
+                                <f:selectItem itemLabel="140 people" itemValue="140" />
+                                <f:selectItem itemLabel="150 people" itemValue="150" /> 
+                                <f:selectItem itemLabel="160 people" itemValue="160" />
+                                <f:selectItem itemLabel="170 people" itemValue="170" /> 
+                                <f:selectItem itemLabel="180 people" itemValue="180" />
+                                <f:selectItem itemLabel="190 people" itemValue="190" /> 
+                                <f:selectItem itemLabel="200 people" itemValue="200" />
+                                <f:selectItem itemLabel="250 people" itemValue="250" />
+                                <f:selectItem itemLabel="300 people" itemValue="300" />
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="Title: *" />
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.order.title}" required ="true" requiredMessage="Title cannot be empty">
+                                <f:selectItem itemLabel="Select Number of people" itemValue="" />  
+                                <f:selectItem itemLabel="Mr." itemValue="Mr." /> 
+                                <f:selectItem itemLabel="Miss" itemValue="Miss" />
+                                <f:selectItem itemLabel="Mrs." itemValue="Mrs." /> 
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="Name: *" />
+                            <p:inputText value="#{addGroupCateringManagedBean.order.name}" required ="true" requiredMessage="Name cannot be empty"/>
+
+                            <h:outputText value="Email: * " />
+                            <p:inputText id="email" value="#{addGroupCateringManagedBean.order.email}" required ="true" requiredMessage="Email cannot be empty">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            </p:inputText>
+                            <p:message for="email" />
+                            
+                             <h:outputText value="Member Email: " />
+                             <p:inputText id="emaila" value="#{addGroupCateringManagedBean.memberId}">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            </p:inputText>
+                            <p:message for="emaila" />
+
+                            <h:outputText value="Phone number: *" />
+                            <p:inputText value="#{addGroupCateringManagedBean.order.mobile}" required ="true" requiredMessage="HP cannot be empty"/>
+
+                            <h:outputText value="Notes: " />
+                            <p:inputText value="#{addGroupCateringManagedBean.order.notes}" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+
+
+                <p:tab id="confirm" title="Confirmation">
+                    <p:panel header="Confirmation">			
+                        <h:panelGrid id="confirmation" columns="6">
+                            <h:outputText value="Catering Date: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{addGroupCateringManagedBean.order.orderDateTime}" />
+
+                            <h:outputText value="Hour: " />
+                            <h:outputText  styleClass="outputLabel"
+                                           value="#{addGroupCateringManagedBean.order.hour}"/>
+
+                            <h:outputText value="Number of People: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{addGroupCateringManagedBean.menu.numberOrder}" />>
+
+                            <h:outputText value="Title: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{addGroupCateringManagedBean.order.title}" />
+
+                            <h:outputText value="Name: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{addGroupCateringManagedBean.order.name}" />
+
+                            <h:outputText value="Email: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{addGroupCateringManagedBean.order.email}" />
+
+                            <h:outputText value="Member Email: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{addGroupCateringManagedBean.memberId}" />
+
+                            <h:outputText value="HP: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{addGroupCateringManagedBean.order.mobile}" />
+
+                            <h:outputText value="Notes: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{addGroupCateringManagedBean.order.notes}"/>
+
+                        </h:panelGrid>
+                        <p:commandButton value="Submit" update="growl" 
+                                         actionListener="#{addGroupCateringManagedBean.addOrder}"/>
+
+                    </p:panel>
+                </p:tab>
+            </p:wizard>
+        </h:form>
+    </ui:define>
+</ui:composition>
