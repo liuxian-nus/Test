@@ -55,7 +55,8 @@ public class GenerateBarcodeSessionBean {
     public void saveToFile(BufferedImage paramBufferedImage, String paramString1, String paramString2) {
         System.out.println("into saveToFile");
         try {
-            FileOutputStream localFileOutputStream = new FileOutputStream("C:\\Users\\Administrator\\Desktop/" + paramString1);
+           // FileOutputStream localFileOutputStream = new FileOutputStream("C:\\Users\\Administrator\\Desktop/" + paramString1);
+            FileOutputStream localFileOutputStream = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + paramString1);
             ImageUtil.encodeAndWrite(paramBufferedImage, paramString2, localFileOutputStream, 96, 96);
             localFileOutputStream.close();
         } catch (Exception localException) {
