@@ -4,10 +4,14 @@
  */
 package servlet;
 
+import ATMS.entity.AttrExpressPassEntity;
 import ATMS.entity.AttrTicketEntity;
 import ATMS.entity.AttractionEntity;
+import ATMS.entity.ExpressPassPurchaseEntity;
 import ATMS.entity.TicketPurchaseEntity;
+import ATMS.session.AttrExpressPassSessionBean;
 import ATMS.session.AttractionSessionBean;
+import ATMS.session.ExpressPassPurchaseSessionBean;
 import ATMS.session.TicketPurchaseSessionBean;
 import ATMS.session.TicketSessionBean;
 import CRMS.entity.MemberEntity;
@@ -37,6 +41,10 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/ATMSServlet", "/ATMSServlet/*"})
 public class ATMSServlet extends HttpServlet {
     @EJB
+    private ExpressPassPurchaseSessionBean expressPassPurchaseSessionBean;
+    @EJB
+    private AttrExpressPassSessionBean attrExpressPassSessionBean;
+    @EJB
     private GenerateBarcodeSessionBean generateBarcodeSessionBean;
     @EJB
     private EmailSessionBean emailSessionBean;
@@ -52,11 +60,16 @@ public class ATMSServlet extends HttpServlet {
     
     
     
+    
     AttrTicketEntity ticket;
     AttractionEntity attr;
     List<AttrTicketEntity> tkts;
     TicketPurchaseEntity tp;
     MemberEntity member;
+    ExpressPassPurchaseEntity eppurchase;
+    List<AttrExpressPassEntity> eps;
+    AttrExpressPassEntity ep;
+    
 
     /**
      * Processes requests for both HTTP
@@ -128,7 +141,7 @@ public class ATMSServlet extends HttpServlet {
                 Integer quantity1=Integer.parseInt(request.getParameter("quantity1"));
                 Integer quantity2=Integer.parseInt(request.getParameter("quantity2"));
                 Integer quantity3=Integer.parseInt(request.getParameter("quantity3"));
-                
+                             
                 Integer day=Integer.parseInt(request.getParameter("dateDay"));
                 Integer month=Integer.parseInt(request.getParameter("dateMonth"));
                 Integer year=Integer.parseInt(request.getParameter("dateYear"));
@@ -201,6 +214,63 @@ public class ATMSServlet extends HttpServlet {
                 System.out.println("tp fee: "+tp.getAttrTicketFee());
                 session.setAttribute("tp",tp);
                 System.out.println("session set!");
+                
+                System.out.println("start ep purchase");
+                Integer epq1=Integer.parseInt(request.getParameter("epq1"));
+                Integer epq2=Integer.parseInt(request.getParameter("epq2"));
+                Integer epq3=Integer.parseInt(request.getParameter("epq3"));
+                
+                eppurchase=new ExpressPassPurchaseEntity();
+                if(epq1==0&&epq2==0&&epq3==0){
+                    System.out.println("no ep purchase!");
+                    System.out.println(eppurchase);
+                    session.setAttribute("eppurchase",eppurchase);
+                    System.out.println("session set!");
+                }
+                else{
+                    System.out.println("have ep purchase");
+                    
+                    ep=new AttrExpressPassEntity();
+                    eps=new ArrayList<AttrExpressPassEntity>();
+                    List<Integer> epquantities=new ArrayList<Integer>();
+                    double epFee=0.0;
+   
+                    if(epq1!=0){
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(1)));
+                        System.out.println("epName: "+ep.getAttrEPName());
+                        eps.add(ep);
+                        epquantities.add(epq1);
+                        epFee+=ep.getAttrEPPrice();
+                    }
+                    if(epq2!=0){
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(2)));
+                        System.out.println("epName: "+ep.getAttrEPName());
+                        eps.add(ep);
+                        epquantities.add(epq2);
+                        epFee+=ep.getAttrEPPrice();
+                    }
+                    if(epq3!=0){
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(3)));
+                        System.out.println("epName: "+ep.getAttrEPName());
+                        eps.add(ep);
+                        epquantities.add(epq2);
+                        epFee+=ep.getAttrEPPrice();
+                    }
+                    
+                    eppurchase.setAttrEPs(eps);
+                    eppurchase.setEpBookDate(date);
+                    eppurchase.setEpQuantities(epquantities);
+                    eppurchase.setEppStatus("In Progress");
+                    eppurchase.setEpFee(epFee);
+                    System.out.println("eppurchase configured");
+                    
+                    expressPassPurchaseSessionBean.addEPPurchase(eppurchase);
+                    System.out.println("eppurchase added into database");
+                    
+                    session.setAttribute("eppurchase",eppurchase);
+                    System.out.println("session set!");
+                    
+                }
 
 
                 request.getRequestDispatcher("/ticketBookingInformation.jsp").forward(request, response);
@@ -217,14 +287,29 @@ public class ATMSServlet extends HttpServlet {
                 System.out.println("tpStatus:"+tp.getAttrTPStatus());
                 attr=(AttractionEntity)session.getAttribute("attr");
                 System.out.println("attr: "+attr.getAttrName());
+               
                 member=memberSessionBean.getMemberByEmail(email);
                 if(member!=null){
                     System.out.println("is member");
                     tp.setMember(member);
                     ticketPurchaseSessionBean.updateTicketPurchase(tp);
                 }
+               
                 tp.setAttrTPStatus("Purchased");
-                ticketPurchaseSessionBean.updateTicketPurchase(tp);          
+                ticketPurchaseSessionBean.updateTicketPurchase(tp); 
+                  
+                eppurchase=(ExpressPassPurchaseEntity)session.getAttribute("eppurchase");
+                if(eppurchase.getAttrEPs().isEmpty()){
+                    System.out.println("no eppurchase");
+                }
+                else{
+                    if(member!=null){
+                        eppurchase.setMember(member);                        
+                    }
+                }
+                eppurchase.setEppStatus("Purchased");
+                expressPassPurchaseSessionBean.updateEPPurchase(eppurchase);
+                
          //       emailSessionBean.emailAttractionTicketSingle(email, tp);
          //       System.out.println("email sent");
                 

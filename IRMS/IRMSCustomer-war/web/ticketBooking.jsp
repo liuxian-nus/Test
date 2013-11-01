@@ -43,23 +43,29 @@
                     <form action="ticketBookingInformation">
                         <h6><strong>Please Select a Ticket</strong><h6>
                                 </br>
+                                <div class="row">
+                                    <div class="large-3 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>Space</label>
+                                    </div>
+                                    <div class="large-3 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>Adult</label>
+                                    </div>
+                                    <div class="large-3 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>Child</label>
+                                    </div>
+                                    <div class="large-3 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>Senior</label>
+                                    </div>
+                                </div>
+                                </br>
                             <div class="row">
                                 <div class="large-3 large columns">
                                     <label for="right-label" class="left-align,inline"><strong>Ticket Type</label>
                                 </div>
-                                <div class="large-3 large columns">                                
-                            <!--        <input type="radio" name="OTticket" value="1">1-Day Pass, Adult<br>
-                                    <input type="radio" name="OTticket" value="2">2-Day Pass, Adult<br>
-                                    <input type="radio" name="OTticket" value="3">Annual Pass, Adult<br> -->
-                            
-                            
-                            
-                            <p>1-Day Pass, Adult</p>
-                            <p>2-Day Pass, Adult</p>
-                            <p>Annual Pass, Adult<p>
-                                    
-                                    
-                                    
+                                <div class="large-3 large columns">                                                           
+                                    <p>1-Day Pass, Adult</p>
+                                    <p>2-Day Pass, Adult</p>
+                                    <p>Annual Pass, Adult<p>                                 
                                 </div>
                                 <div class="large-3 large columns">                                
                                     <p>$<%=tickets.get(0).getAttrTicketPrice()%></p>
@@ -111,6 +117,75 @@
                                     
                                 </div>
                             </div>
+                                
+                                <p></p>
+                                
+                                </br>
+
+                                
+                                <div class="row">
+                                     <div class="large-3 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>One-day Express Pass</label>
+                                    </div>
+                                     <div class="large-3 columns">
+                                    <select required name="epq1" id="customDropdown">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <p></p>
+                                <div class="row">
+                                     <div class="large-3 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>Two-day Express Pass</label>
+                                    </div>
+                                     <div class="large-3 columns">
+                                    <select required name="epq2" id="customDropdown">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <p></p>
+                                <div class="row">
+                                     <div class="large-3 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>Annual Express Pass</label>
+                                    </div>
+                                     <div class="large-3 columns">
+                                    <select required name="epq3" id="customDropdown">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                
                                 
                                 <p></p>
                             <div class="row">

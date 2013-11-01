@@ -652,7 +652,7 @@ public class EmailSessionBean {
         //Below generate a PDF file
         Document document;
             document = new Document(PageSize.A4,50,50,50,50);
-            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\SingleTicketReservation "+
+            String OUTPUTFILE = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf "+
                     tpe.getTpId()+".pdf";
                     
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
@@ -671,7 +671,7 @@ public class EmailSessionBean {
       Font.BOLDITALIC);
         
         //Below specify contents
-         String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+         String imagePath = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf\\coral_island_banner_customer.png";
          Image image = Image.getInstance(imagePath);
          document.add(image);
          

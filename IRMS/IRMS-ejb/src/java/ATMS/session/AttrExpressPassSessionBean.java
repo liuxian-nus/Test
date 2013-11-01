@@ -63,14 +63,14 @@ public class AttrExpressPassSessionBean {
     } 
     
     public AttrExpressPassEntity getEPById(Long EPId) throws ExistException{
-        System.out.println("TicketSessionBean : getTicketById");
+        System.out.println("EPPurchaseSessionBean : getEPById");
         //System.out.println("ticketId passed in :"+ticketId);
         ep=em.find(AttrExpressPassEntity.class, EPId);
         if(ep==null){
             throw new ExistException("ticket does not exist!");
         }  
         else{
-            System.out.println("ticket found");
+            System.out.println("ep found");
             return ep;
         }
         

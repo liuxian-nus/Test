@@ -4,6 +4,8 @@
     Author     : Jieqiong
 --%>
 
+<%@page import="ATMS.entity.AttrExpressPassEntity"%>
+<%@page import="ATMS.entity.ExpressPassPurchaseEntity"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -25,12 +27,32 @@
     for(int i=0;i<tkts.size();i++){
         ticket=tkts.get(i);
         quantity=quantities.get(i);
-        information+=quantity+" "+ticket.getAttrTicketName()+", \n";
+        information+=quantity+" "+ticket.getAttrTicketName()+". \n";
     }
     SimpleDateFormat sdf=new SimpleDateFormat("dd/MMM/yyyy");
     String dateString=sdf.format(tp.getAttrTicketBookDate());
     session.setAttribute("tp",tp);
    // System.out.println("information: "+information);
+    
+    ExpressPassPurchaseEntity eppurchase=(ExpressPassPurchaseEntity)session.getAttribute("eppurchase");
+    String epInfo="";
+    if(eppurchase.getAttrEPs().size()==0){
+        System.out.println("eppurchase is null");
+        epInfo="you have not purchased any express pass";
+    }
+    else{
+        List<AttrExpressPassEntity> eps=new ArrayList<AttrExpressPassEntity>();
+        AttrExpressPassEntity ep=new AttrExpressPassEntity();
+        eps=eppurchase.getAttrEPs();
+        List<Integer> epquantities=eppurchase.getEpQuantities();
+        int epquantity;
+        for(int i=0;i<eps.size();i++){
+            ep=eps.get(i);
+            epquantity=epquantities.get(i);
+            epInfo+=epquantity+" "+ep.getAttrEPName()+".\n";
+        }
+        session.setAttribute("eppurchase", eppurchase);
+    }
 %>
 <html>
     <head>
@@ -42,13 +64,19 @@
         <div class="panel">
             <h4>Here's your booking information:</h4>
             </br>
-            <h6>
-            <%=information%>
-         </h6>
-            <h6>Date: <%=dateString%></h6>
+            <h5>Ticket: </h5>
+            <h6><%=information%></h6>          
             <h6>Fee: <%=tp.getAttrTicketFee()%></h6>
-       
+            </br>
+            <h5>Express pass: </h5>
+            <h6><%=epInfo%></h6>
+            <h6>Fee: <%=eppurchase.getEpFee()%></h6>
+            </br>
+            <h6>Date: <%=dateString%></h6>
+            <h6>Total Fee: <%=tp.getAttrTicketFee()+eppurchase.getEpFee()%></h6>
+            
         </div>
+            
         <form action="ticketBookingPayment">
             <button type="Submit" class="button">Confirm</button>
         </form>
