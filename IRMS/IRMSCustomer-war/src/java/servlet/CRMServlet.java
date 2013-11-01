@@ -109,7 +109,7 @@ public class CRMServlet extends HttpServlet {
                     }
                     else{
                         String password = request.getParameter("password");
-                       System.out.println(email);
+                        System.out.println(email);
                         System.out.println(password);
 
                         boolean isLogin = memberManagementSessionBean.login(email, password);
@@ -117,6 +117,7 @@ public class CRMServlet extends HttpServlet {
                             System.out.println(isLogin);
                             member = memberSession.getMemberByEmail(email);
                             System.out.println(member.getMemberName());
+                            session.setAttribute("member",member);
                             request.setAttribute("data", member);
                             request.setAttribute("memberEmail",member.getMemberEmail());
                             request.setAttribute("loginStatus","true");
