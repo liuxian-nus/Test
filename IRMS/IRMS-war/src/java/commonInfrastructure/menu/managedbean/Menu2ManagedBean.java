@@ -471,6 +471,23 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
                 
                 model.addSubmenu(submenu);
+                
+                submenu = new Submenu();
+                submenu.setLabel("Request Management");
+
+                item = new MenuItem();
+                item.setValue("View Request");
+                item.setUrl("/esms/viewShowRequest.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Manage Request");
+                item.setUrl("/esms/manageShowRequest.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+                
+                model.addSubmenu(submenu);
             }
 
         }

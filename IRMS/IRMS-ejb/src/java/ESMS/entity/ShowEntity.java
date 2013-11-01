@@ -22,9 +22,9 @@ import javax.persistence.UniqueConstraint;
  * @author Ser3na
  */
 @Entity
-//@Table(
-//        uniqueConstraints =
-//        @UniqueConstraint(columnNames = {"showName"}))
+@Table(
+        uniqueConstraints =
+        @UniqueConstraint(columnNames = {"showName"}))
 public class ShowEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
