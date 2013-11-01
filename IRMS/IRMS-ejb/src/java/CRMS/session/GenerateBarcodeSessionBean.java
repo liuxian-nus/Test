@@ -35,6 +35,8 @@ public class GenerateBarcodeSessionBean {
             JBarcode localJBarcode = new JBarcode(EAN8Encoder.getInstance(), WidthCodedPainter.getInstance(), EAN8TextPainter.getInstance());
             //String str = "2219644";
             System.out.println("content: "+content);
+            content=makeToSevenDigit(content);
+            System.out.println("content: "+content);
             BufferedImage localBufferedImage = localJBarcode.createBarcode(content);
             String name=content+".jpg";
 
@@ -60,6 +62,27 @@ public class GenerateBarcodeSessionBean {
             localException.printStackTrace();
         }
     } 
+    
+    public String makeToSevenDigit(String content){
+        if(content.length()==1)
+            return "000000"+content;
+        else if(content.length()==2)
+            return "00000"+content;
+        else if(content.length()==3)
+            return "0000"+content;
+        else if(content.length()==4)
+            return "000"+content;
+        else if(content.length()==5)
+            return "00"+content;
+        else if(content.length()==6)
+            return "0"+content;
+        else if(content.length()==7)
+            return content;
+        else{
+            int length=content.length();
+            return content.substring(length-7);
+        }
+    }
     
     
 

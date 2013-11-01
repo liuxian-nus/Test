@@ -297,6 +297,11 @@ public class ATMSServlet extends HttpServlet {
                
                 tp.setAttrTPStatus("Purchased");
                 ticketPurchaseSessionBean.updateTicketPurchase(tp); 
+                
+               System.out.println("generating barcode");
+               System.out.println("tpId" +tp.getTpId());
+               generateBarcodeSessionBean.generate(String.valueOf(tp.getTpId()));
+               System.out.println("barcode generated");
                   
                 eppurchase=(ExpressPassPurchaseEntity)session.getAttribute("eppurchase");
                 if(eppurchase.getAttrEPs().isEmpty()){
@@ -313,10 +318,7 @@ public class ATMSServlet extends HttpServlet {
          //       emailSessionBean.emailAttractionTicketSingle(email, tp);
          //       System.out.println("email sent");
                 
-//               System.out.println("generating barcode");
-//               System.out.println("tpId" +tp.getTpId());
-//               generateBarcodeSessionBean.generate(String.valueOf(tp.getTpId()));
-//               System.out.println("barcode generated");
+//               
                 
                 request.getRequestDispatcher("/ticketBookingConfirmation.jsp").forward(request, response);
             }else {
