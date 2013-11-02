@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <f:view beforePhase="#{orderResultManagedBean.initViewSelect}"> 
+            <h:form id="form">
+                <p:growl id="growl" showDetail="true" sticky="true" /> 
+                <p:panel id="viewContract" header="View Contract Detail" style="height:495px;">
+                    <div style="margin-left:10px;margin-right:50px;margin-top:30px;">
+                        <h:panelGrid id="contractView" columns="2" cellpadding="4" style="margin:0 auto;">  
+                            <h:outputText value="ID: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.orderId}" />
+
+                            <h:outputText value="Catering Date: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.orderDateTime}" >
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+
+                            <h:outputText value="Hour: " />
+                            <h:outputText  styleClass="outputLabel"
+                                           value="#{orderResultManagedBean.order.hour}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+
+                            <h:outputText value="Menu ID: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.menu.menuId}" />
+
+                            <h:outputText value="Number of People: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.menu.numberOrder}" />
+
+                            <h:outputText value="Title: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.title}" />
+
+                            <h:outputText value="Name: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.name}" />
+
+                            <h:outputText value="Email: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.email}" />
+
+                            <h:outputText value="Member Email: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.member.memberEmail}" />
+
+                            <h:outputText value="HP: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.mobile}" />
+
+                            <h:outputText value="Notes: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.notes}"/>
+                            
+                            <h:outputText value="Status: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{orderResultManagedBean.order.status}" />
+
+                            <!-- confirm this order-->
+                            <p:commandButton  oncomplete="confirmla.show()" ajax="true" update="approveNew"
+                                              rendered="#{orderResultManagedBean.order.status=='Requested'}" 
+                                              icon="ui-icon ui-icon-check" value ="Confirm" title="Confirm"> 
+                                <f:attribute name="viewOrder" value="#{orderResultManagedBean.order}" /> 
+                            </p:commandButton>  
+
+                        </h:panelGrid>
+                    </div>
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmla"> 
+                        <br/>
+                        Are you sure to confirm this order?
+                        <br/><br/>
+                        <h:panelGrid columns="2" id="approveNew">
+                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{orderResultManagedBean.confirmOrder}" oncomplete="confirmla.hide()"/>
+                            <p:commandButton value="Not yet" onclick="confirmla.hide()" type="button"/>  
+                        </h:panelGrid>
+                    </p:dialog> 
+                
+                
+                </p:panel>
+            </h:form>
+        </f:view>
+    </ui:define>
+</ui:composition>

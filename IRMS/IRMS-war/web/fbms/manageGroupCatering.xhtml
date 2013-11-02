@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <ui:define name="content">
+        <p:accordionPanel multiple="true">  
+            <p:tab title="Requested Group Catering Order">  
+                <h:form id="form">
+                    <p:growl id="message" showDetail="true" /> 
+                    <p:panel id="contracts" header="Requested Order" style="height:500px;">
+                        <div style="margin-top:20px;margin-bottom:20px;">
+
+                            <p:dataTable id="contract" value="#{addGroupCateringManagedBean.requested}" var="rorder" 
+                                         paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                                <p:column headerText="ID" style="width:50px;">
+                                    <h:outputText value="#{rorder.orderId}"/>
+                                </p:column>
+                                <p:column headerText="Date" style="width:100px;">
+                                    <h:outputText value="#{rorder.orderDateTime}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Time" style="width:100px;">
+                                    <h:outputText value="#{rorder.hour}">
+                                        <f:convertDateTime pattern="HH:MM" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Title" style="width:50px;">
+                                    <h:outputText value="#{rorder.title}"/>
+                                </p:column>
+                                <p:column headerText="Name" style="width:100px;">
+                                    <h:outputText value="#{rorder.name}"/>
+                                </p:column>
+                                <p:column style="width:100px">  
+                                    <p:commandButton actionListener="#{addGroupCateringManagedBean.viewOrder}" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                        <f:attribute name="selectOrder" value="#{rorder}" />
+                                    </p:commandButton>
+                                </p:column>  
+                            </p:dataTable>  
+                        </div>
+                    </p:panel>
+                </h:form>
+            </p:tab>  
+
+
+
+            <p:tab title="Confirmed Group Catering Order">  
+               <h:form id="form1">
+                    <p:growl id="message" showDetail="true" /> 
+                    <p:panel id="contracts" header="Confirmed Order" style="height:500px;">
+                        <div style="margin-top:20px;margin-bottom:20px;">
+
+                            <p:dataTable id="contract" value="#{addGroupCateringManagedBean.confirmed}" var="corder" 
+                                         paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+                               <p:column headerText="ID" style="width:50px;">
+                                    <h:outputText value="#{corder.orderId}"/>
+                                </p:column>
+                                <p:column headerText="Date" style="width:100px;">
+                                    <h:outputText value="#{corder.orderDateTime}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Time" style="width:100px;">
+                                    <h:outputText value="#{corder.hour}">
+                                        <f:convertDateTime pattern="HH:MM" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Title" style="width:50px;">
+                                    <h:outputText value="#{corder.title}"/>
+                                </p:column>
+                                <p:column headerText="Name" style="width:100px;">
+                                    <h:outputText value="#{corder.name}"/>
+                                </p:column>
+                                <p:column style="width:100px">  
+                                    <p:commandButton actionListener="#{addGroupCateringManagedBean.viewOrder}" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                        <f:attribute name="selectOrder" value="#{corder}" />
+                                    </p:commandButton>
+                                </p:column>  
+                            </p:dataTable>  
+                        </div>
+                    </p:panel>
+                </h:form>
+            </p:tab>  
+         
+        </p:accordionPanel>  
+   </ui:define>
+</ui:composition>
