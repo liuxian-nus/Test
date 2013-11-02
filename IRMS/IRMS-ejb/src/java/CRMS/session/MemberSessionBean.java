@@ -5,11 +5,14 @@ import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import ERMS.session.EPasswordHashSessionBean;
 import Exception.ExistException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.ejb.Stateless;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
@@ -27,7 +30,7 @@ public class MemberSessionBean {
 
     @EJB
     private EPasswordHashSessionBean ePasswordHashSessionBean;
-    @PersistenceContext(unitName="IRMS-ejbPU")
+    @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     MemberEntity member = new MemberEntity();
 
@@ -105,8 +108,9 @@ public class MemberSessionBean {
     }
 
     public MemberEntity getMemberByEmail(String email) {
-        if(em == null)
+        if (em == null) {
             System.err.println("EM IS NULL");
+        }
         member = em.find(MemberEntity.class, email);
         if (member == null) {
             System.out.println("in MemberSessionBean: member doesn't exist");
@@ -126,11 +130,50 @@ public class MemberSessionBean {
     }
 
     //update member profile & password
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public MemberEntity updateMember(String memberEmail, String name, String memberHP, Date memberDob, String maritalStatus, String gender) throws ExistException {
+//    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public MemberEntity updateMember(String memberEmail, String name, String memberHP, String memberDob, String maritalStatus, String gender) throws ExistException, ParseException {
         member = em.find(MemberEntity.class, memberEmail);
-        //  if(member==null) throw new ExistException ("Member doesn't exist!");
-        //     if (!(member.getMemberPassword().equals(memberPassword))) throw new ExistException("Wrong ID or password");
+        System.out.println("member session bean: email is " + memberEmail);
+        if (member == null) {
+            throw new ExistException("Member doesn't exist!");
+        }
+        //    if (!(member.getMemberPassword().equals(memberPassword))) throw new ExistException("Wrong ID or password");
+        System.out.println("email: " + memberEmail);
+        if (name != null) {
+            member.setMemberName(name);
+        }
+//        member.setMemberPassword(memberPassword);
+        if (memberHP != null) {
+            member.setMemberHP(memberHP);
+        }
+        if (gender != null) {
+            member.setGender(gender);
+        }
+//        member.setNationality(nationality);
+        if (memberDob != null) {
+            System.out.println(memberDob);
+            //           Date date = new SimpleDateFormat("yyyy-dd-mm", Locale.ENGLISH).parse(memberDob);
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(memberDob);
+
+            member.setMemberDob(date);
+        }
+        if (maritalStatus != null) {
+            member.setMaritalStatus(maritalStatus);
+        }
+        //   member.setIsSubscriber(subscribe);
+        //       member.setSecurityQuestion(securityQuestion);
+        //       member.setAnswer(answer);
+        em.merge(member);
+        return member;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public MemberEntity updateMember(String memberEmail, String name, String memberHP, Date memberDob, String maritalStatus, String gender) throws ExistException, ParseException {
+        member = em.find(MemberEntity.class, memberEmail);
+        if (member == null) {
+            throw new ExistException("Member doesn't exist!");
+        }
+        //    if (!(member.getMemberPassword().equals(memberPassword))) throw new ExistException("Wrong ID or password");
         System.out.println("email: " + memberEmail);
         member.setMemberName(name);
 //        member.setMemberPassword(memberPassword);
@@ -139,14 +182,22 @@ public class MemberSessionBean {
 //        member.setNationality(nationality);
         member.setMemberDob(memberDob);
         member.setMaritalStatus(maritalStatus);
-     //   member.setIsSubscriber(subscribe);
+        //   member.setIsSubscriber(subscribe);
         //       member.setSecurityQuestion(securityQuestion);
         //       member.setAnswer(answer);
         em.merge(member);
         return member;
     }
 
-    public boolean updatePassword(String memberPassword) {
+    public boolean updatePassword(String memberEmail, String memberPassword) {
+        System.out.println("updatePassword: member Email is: " + memberEmail);
+        member = em.find(MemberEntity.class, memberEmail);
+        if (member == null) {
+            System.err.println("member not found!");
+        } else {
+            System.err.println("member found!");
+        }
+        System.out.println("UpdatePassword: member Name is: " + member.getMemberName());
         member.setMemberPassword(memberPassword);
         em.merge(member);
         return true;
@@ -172,8 +223,8 @@ public class MemberSessionBean {
     public List<MemberTransactionEntity> getAllTransactions(String memberEmail) {
 //        member = em.find(MemberEntity.class, memberEmail);
         Query q = em.createQuery("SELECT mt FROM MemberTransactionEntity mt where mt.memberEmail = '" + memberEmail + "'");
-        List memberTransactionList = new ArrayList<MemberTransactionEntity> ();
-        for(Object o: q.getResultList()) {
+        List memberTransactionList = new ArrayList<MemberTransactionEntity>();
+        for (Object o : q.getResultList()) {
             MemberTransactionEntity mt = (MemberTransactionEntity) o;
             memberTransactionList.add(mt);
         }
@@ -189,10 +240,10 @@ public class MemberSessionBean {
         }
         return memberList;
     }
-    
-    public void updateMemberTicketPurchase(MemberEntity member, TicketPurchaseEntity tp){
+
+    public void updateMemberTicketPurchase(MemberEntity member, TicketPurchaseEntity tp) {
         System.out.println("updateMemberTicketPurchase");
-        List<TicketPurchaseEntity> tps=member.getTicketPurchases();
+        List<TicketPurchaseEntity> tps = member.getTicketPurchases();
         tps.add(tp);
         member.setTicketPurchases(tps);
         em.merge(member);
@@ -206,5 +257,4 @@ public class MemberSessionBean {
     public void persist(Object object) {
         em.persist(object);
     }
-    
 }
