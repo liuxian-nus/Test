@@ -16,10 +16,11 @@
                         <h:messages errorClass="error"/>
                         <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
                             <h:outputText value="Package: *" />
-                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.menu.type}" onchange="this.form.submit()" immediate="true" required ="true" requiredMessage="Package cannot be empty">
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.menu.type}"  required ="true" requiredMessage="Package cannot be empty">
                                 <f:selectItem itemLabel="Select Package" itemValue="" />  
                                 <f:selectItem itemLabel="Deluxe Package" itemValue="Deluxe" /> 
                                 <f:selectItem itemLabel="Premium Package" itemValue="Premium" />
+                                <p:ajax update="op1 op2 sm1 sm2" listener="#{addGroupCateringManagedBean.handleMenuChanges}" />
                             </h:selectOneMenu> 
 
                             <h:outputText value="1.Noolde/Rice: " />
@@ -103,8 +104,8 @@
                                 <f:selectItem itemLabel="Steamed Siew Mai" itemValue="100036" />
                             </h:selectOneMenu> 
 
-                            <h:outputText rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value="10.Prawn: *" />
-                            <h:selectOneMenu rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value ="#{addGroupCateringManagedBean.dishId10}" required ="true" requiredMessage="Package cannot be empty">
+                            <h:outputText id="op1" rendered="#{addGroupCateringManagedBean.menuChange}" value="10.Prawn: *" />
+                            <h:selectOneMenu id="sm1" rendered="#{addGroupCateringManagedBean.menuChange}" value ="#{addGroupCateringManagedBean.dishId10}" required ="true" requiredMessage="Package cannot be empty">
                                 <f:selectItem itemLabel="Select prawns" itemValue="" />  
                                 <f:selectItem itemLabel="Butter Prawn" itemValue="100037" /> 
                                 <f:selectItem itemLabel="Cereal Prawn" itemValue="100038" />
@@ -112,8 +113,8 @@
                                 <f:selectItem itemLabel="Tempura Prawn" itemValue="100041" />
                             </h:selectOneMenu> 
 
-                            <h:outputText rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value="11. Baby full month combo *" />
-                            <h:selectOneMenu rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value ="#{addGroupCateringManagedBean.dishId11}"  required ="true" requiredMessage="Package cannot be empty">
+                            <h:outputText id="op2" rendered="#{addGroupCateringManagedBean.menuChange}" value="11. Baby full month combo *" />
+                            <h:selectOneMenu id="sm2" rendered="#{addGroupCateringManagedBean.menuChange}" value ="#{addGroupCateringManagedBean.dishId11}"  required ="true" requiredMessage="Package cannot be empty">
                                 <f:selectItem itemLabel="Select combp" itemValue="" />  
                                 <f:selectItem itemLabel="Blissful Red Eggs" itemValue="100047" /> 
                                 <f:selectItem itemLabel="Ang Ku Kueh" itemValue="100048" />
@@ -126,13 +127,14 @@
                 <p:tab id="information" title="Catering Information">
                     <p:panel header="Catering Information">
                         <h:messages errorClass="error"/>				
-                        <h:panelGrid columns="2" columnClasses="label, value">
+                        <h:panelGrid columns="3" columnClasses="label, value">
                             <h:outputText value="Catering Date: *"/>
                             <p:calendar pattern="yyyy-MM-dd" mindate="#{addGroupCateringManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{addGroupCateringManagedBean.order.orderDateTime}" /> 
+                            <h:outputText value=""/>
 
                             <h:outputText value="Catering time: *"/>
                             <p:calendar value="#{addGroupCateringManagedBean.order.hour}" pattern="HH:mm" timeOnly="true" required ="true" requiredMessage="Hour cannot be empty" /> 
-                            <h:outputText value=""/><br/>
+                            <h:outputText value=""/>
 
                             <h:outputText value="Number of People: *" />
                             <h:selectOneMenu value ="#{addGroupCateringManagedBean.menu.numberOrder}" required ="true" requiredMessage="Number of people cannot be empty">
@@ -156,35 +158,39 @@
                                 <f:selectItem itemLabel="250 people" itemValue="250" />
                                 <f:selectItem itemLabel="300 people" itemValue="300" />
                             </h:selectOneMenu> 
+                            <h:outputText value=""/>
 
                             <h:outputText value="Title: *" />
                             <h:selectOneMenu value ="#{addGroupCateringManagedBean.order.title}" required ="true" requiredMessage="Title cannot be empty">
-                                <f:selectItem itemLabel="Select Number of people" itemValue="" />  
+                                <f:selectItem itemLabel="Select Title" itemValue="" />  
                                 <f:selectItem itemLabel="Mr." itemValue="Mr." /> 
                                 <f:selectItem itemLabel="Miss" itemValue="Miss" />
                                 <f:selectItem itemLabel="Mrs." itemValue="Mrs." /> 
                             </h:selectOneMenu> 
+                            <h:outputText value=""/>
 
                             <h:outputText value="Name: *" />
                             <p:inputText value="#{addGroupCateringManagedBean.order.name}" required ="true" requiredMessage="Name cannot be empty"/>
+                            <h:outputText value=""/>
 
                             <h:outputText value="Email: * " />
                             <p:inputText id="email" value="#{addGroupCateringManagedBean.order.email}" required ="true" requiredMessage="Email cannot be empty">
                                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                             </p:inputText>
                             <p:message for="email" />
-                            
-                             <h:outputText value="Member Email: " />
-                             <p:inputText id="emaila" value="#{addGroupCateringManagedBean.memberId}">
-                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                            </p:inputText>
-                            <p:message for="emaila" />
+
+                            <h:outputText value="Member Email: " />
+                            <p:inputText id="emaila" value="#{addGroupCateringManagedBean.memberId}"/>
+                            <h:outputText value=""/>
 
                             <h:outputText value="Phone number: *" />
                             <p:inputText value="#{addGroupCateringManagedBean.order.mobile}" required ="true" requiredMessage="HP cannot be empty"/>
+                            <h:outputText value=""/>
 
                             <h:outputText value="Notes: " />
                             <p:inputText value="#{addGroupCateringManagedBean.order.notes}" />
+                            <h:outputText value=""/>
+
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -192,18 +198,22 @@
 
                 <p:tab id="confirm" title="Confirmation">
                     <p:panel header="Confirmation">			
-                        <h:panelGrid id="confirmation" columns="6">
+                        <h:panelGrid id="confirmation" columns="2">
                             <h:outputText value="Catering Date: " />
                             <h:outputText styleClass="outputLabel"
-                                          value="#{addGroupCateringManagedBean.order.orderDateTime}" />
+                                          value="#{addGroupCateringManagedBean.order.orderDateTime}" >
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
 
                             <h:outputText value="Hour: " />
                             <h:outputText  styleClass="outputLabel"
-                                           value="#{addGroupCateringManagedBean.order.hour}"/>
+                                           value="#{addGroupCateringManagedBean.order.hour}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
 
                             <h:outputText value="Number of People: " />
                             <h:outputText styleClass="outputLabel"
-                                          value="#{addGroupCateringManagedBean.menu.numberOrder}" />>
+                                          value="#{addGroupCateringManagedBean.menu.numberOrder}" />
 
                             <h:outputText value="Title: " />
                             <h:outputText styleClass="outputLabel"

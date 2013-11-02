@@ -54,6 +54,11 @@ public class OutletEntity implements Serializable {
 
     public OutletEntity(){}
     
+     public void addTransaction(OutletTransactionEntity otransaction) {
+        this.outletTransaction.add(otransaction);
+        System.out.println("OutletEntity-->new transaction added:" + this.outletTransaction.size());
+    }
+    
     public ContractEntity getContract() {
         return contract;
     }

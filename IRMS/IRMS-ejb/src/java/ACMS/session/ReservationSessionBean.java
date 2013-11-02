@@ -61,7 +61,7 @@ public class ReservationSessionBean {
         List reservationList = new ArrayList<ReservationEntity>();
         for (Object o : q.getResultList()) {
             ReservationEntity re = (ReservationEntity) o;
-            if (re.getRcCheckInDate().before(currentDate)){
+            if (re.getRcCheckOutDate().before(currentDate)){
             reservationList.add(re);}
         }
         System.out.println("session bean return a full list of all reservations");

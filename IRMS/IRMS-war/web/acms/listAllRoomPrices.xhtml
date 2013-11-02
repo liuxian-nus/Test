@@ -15,11 +15,11 @@
                     <p:growl id="msgs" showDetail="true" /> 
                     <p:dataTable id="rooms" value="#{roomPriceManagedBean.getAllRoomPrices()}" var="roomPrices" paginator="true" rows="6">
 
-                        <p:column  headerText="Hotel: ">
-                            <h:outputText rendered="#{roomPrices.hotelId==1}" value="Orchard Hotel"/>
+                     <!--   <p:column  headerText="Hotel: ">
+                            <h:outputText rendered="#{roomPrices}" value="Orchard Hotel"/>
                             <h:outputText rendered="#{roomPrices.hotelId==2}" value="Beach View Hotel" />
                             <h:outputText rendered="#{roomPrices.hotelId==3}" value="Bay View Hotel" />
-                        </p:column>
+                        </p:column> -->
                         <p:column  headerText="Room Type: ">
                             <h:outputText value="#{roomPrices.priceType}"/>
                         </p:column>

@@ -56,8 +56,8 @@
                                 <f:setPropertyActionListener target="#{managerApproveContractManagedBean.contract}" value="#{contractResultManagedBean.managerSelect}" /> 
                             </p:commandButton>
 
-                            <p:commandButton  update=":form:rejectla" oncomplete="reject.show()" ajax="true"  icon="ui-icon ui-icon-search" value ="Reject" title="Reject">  
-                                <f:setPropertyActionListener target="#{managerApproveContractManagedBean.contract}" value="#{contractResultManagedBean.managerSelect}" /> 
+                            <p:commandButton  update="rejectla" oncomplete="reject.show()" ajax="true"  icon="ui-icon ui-icon-search" value ="Reject" title="Reject">  
+                                <f:attribute name="managerViewSelect" value="#{contractResultManagedBean.managerSelect}"/>
                             </p:commandButton> 
                         </h:panelGrid>
                     </div>

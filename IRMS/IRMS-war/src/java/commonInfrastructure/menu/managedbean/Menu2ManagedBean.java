@@ -147,7 +147,7 @@ public class Menu2ManagedBean implements Serializable {
                 
                 item = new MenuItem();
                 item.setValue("Price Mgt");
-                item.setUrl("/acms/roomPrice.xhtml");
+                item.setUrl("/acms/listAllRoomPrices.xhtml");
                 item.setIcon("ui-icon ui-icon-tag");
                 submenu.getChildren().add(item);
                 
@@ -250,9 +250,9 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
                 
                 item = new MenuItem();
-                item.setValue("Add Group Catering");
+                item.setValue("Manage Group Catering");
                 item.setUrl("/fbms/manageGroupCatering.xhtml");
-                item.setIcon("ui-icon ui-icon-plus");
+                item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
                 
                 model.addSubmenu(submenu);

@@ -7,6 +7,7 @@ package FBMS.managedbean;
 import CRMS.entity.MemberEntity;
 import CRMS.session.MemberSessionBean;
 import ERMS.session.EmailSessionBean;
+import Exception.ExistException;
 import FBMS.entity.CourseEntity;
 import FBMS.entity.DishEntity;
 import FBMS.entity.MenuEntity;
@@ -14,6 +15,7 @@ import FBMS.entity.OrderEntity;
 import FBMS.session.InventorySessionBean;
 import FBMS.session.OrderSessionBean;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -45,9 +47,12 @@ public class AddGroupCateringManagedBean {
     private static final Logger logger = Logger.getLogger(AddGroupCateringManagedBean.class.getName());
     private MenuEntity menu;
     private OrderEntity order;
+    private OrderEntity selectOrder;
     private Date currentDate = new Date();
     private String memberId;
     private MemberEntity member;
+    private String type;
+    boolean menuChange = false;
     private Set<CourseEntity> courses;
     private CourseEntity course1;
     private CourseEntity course2;
@@ -91,6 +96,7 @@ public class AddGroupCateringManagedBean {
         menu = new MenuEntity();
         order = new OrderEntity();
         member = new MemberEntity();
+        selectOrder = new OrderEntity();
 
         course1 = new CourseEntity();
         course2 = new CourseEntity();
@@ -125,6 +131,17 @@ public class AddGroupCateringManagedBean {
 
     }
 
+    public boolean handleMenuChanges() {
+
+        System.out.println("lalala here see ajax changes lah! menu:" + menu.getType() + "menuchange is what?" + menuChange);
+        type = menu.getType();
+        if (type == "Premium") {
+            menuChange = true;
+        }
+        System.out.println("haha so whats now for change" + menu);
+        return menuChange;
+    }
+
     public void addMenu() {
         System.out.println("NO1: in adding menu" + menu.getMenuId());
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -134,7 +151,7 @@ public class AddGroupCateringManagedBean {
             // create menu first
             orderSessionBean.setMenu(menu);
             System.out.println("NO2: saving menu" + menu.getMenuId());
-
+            System.err.println("here after setting menu");
             //  persist course
             dish1 = inventorySessionBean.getDishById(dishId1); //get existing dish
             course1.setDish(dish1); //set dish to course        
@@ -200,7 +217,7 @@ public class AddGroupCateringManagedBean {
 
             System.out.println("after adding courese to menu" + menu.getCourses().size());
             request.getSession().setAttribute("menuId", menu.getMenuId());
-            
+
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new menu", ""));
             return;
@@ -209,23 +226,115 @@ public class AddGroupCateringManagedBean {
         menu = new MenuEntity();
     }
 
-    public void addOrder(ActionEvent event) {
+    public void addOrder(ActionEvent event) throws ExistException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
         System.out.println("in adding order");
-        addMenu();
+        //addMenu();
+
+        System.out.println("NO1: in adding menu" + menu.getMenuId());
+
+        // create menu first
+        orderSessionBean.setMenu(menu);
+        System.out.println("NO2: saving menu" + menu.getMenuId());
+        System.err.println("here after setting menu, course/dish starting");
+
+        // addding course to dish starts here
+        //  persist course
+        System.err.println("NO3:here in setting dish 1" + dishId1);
+        dish1 = inventorySessionBean.getDishById(dishId1); //get existing dish
+        System.err.println("NO4: here after getting dish by Id" + dish1.getDishId());
+        course1.setDish(dish1); //set dish to course
+        orderSessionBean.setCourse(course1); // persist course
+        System.err.println("NO5: here after setting course" + course1.getCourseId());
+
+        dish2 = inventorySessionBean.getDishById(dishId2); //get existing dish
+        course2.setDish(dish2); //set dish to course
+        orderSessionBean.setCourse(course2);
+
+        dish3 = inventorySessionBean.getDishById(dishId3); //get existing dish
+        course3.setDish(dish3); //set dish to course
+        orderSessionBean.setCourse(course3);
+
+        dish4 = inventorySessionBean.getDishById(dishId4); //get existing dish
+        course4.setDish(dish4); //set dish to course
+        orderSessionBean.setCourse(course4);
+
+        dish5 = inventorySessionBean.getDishById(dishId5); //get existing dish
+        course5.setDish(dish5); //set dish to course
+        orderSessionBean.setCourse(course5);
+
+        dish6 = inventorySessionBean.getDishById(dishId6); //get existing dish
+        course6.setDish(dish6); //set dish to course
+        orderSessionBean.setCourse(course6);
+
+        System.err.println("NO6:here in setting dish 7" + dishId7);
+        dish7 = inventorySessionBean.getDishById(dishId7); //get existing dish
+        System.err.println("NO7: here after getting dish by Id" + dish7.getDishId());
+        course7.setDish(dish7); //set dish to course
+        orderSessionBean.setCourse(course7);
+        System.err.println("NO5: here after setting course" + course7.getCourseId());
+
+        dish8 = inventorySessionBean.getDishById(dishId8); //get existing dish
+        course8.setDish(dish8); //set dish to course
+        orderSessionBean.setCourse(course8);
+
+        dish9 = inventorySessionBean.getDishById(dishId9); //get existing dish
+        course9.setDish(dish9); //set dish to course
+        orderSessionBean.setCourse(course9);
+
+        System.out.println("NO6: saving COURSES" + course6.getCourseId());
+        System.out.println("NO7: saving COURSES" + course2.getCourseId());
+        System.out.println("NO8: saving COURSES" + course4.getCourseId());
+        System.out.println("NO9: saving COURSES" + course9.getCourseId());
+
+        System.out.println("NO10: after setting 9 courses" + menu.getType());
+
+        if (menu.getType() == "Premium") {
+            dish10 = inventorySessionBean.getDishById(dishId10); //get existing dish
+            course10.setDish(dish10); //set dish to course
+            orderSessionBean.setCourse(course10);
+
+            dish11 = inventorySessionBean.getDishById(dishId11); //get existing dish
+            course11.setDish(dish11); //set dish to course
+            orderSessionBean.setCourse(course11);
+        }
+
+
+        System.out.println("NO11: STARTING to add courses to menu");
+        // add course to menu
+        orderSessionBean.addCourseToMenu(menu.getMenuId(), course1.getCourseId());
+        orderSessionBean.addCourseToMenu(menu.getMenuId(), course2.getCourseId());
+        orderSessionBean.addCourseToMenu(menu.getMenuId(), course3.getCourseId());
+        orderSessionBean.addCourseToMenu(menu.getMenuId(), course4.getCourseId());
+        orderSessionBean.addCourseToMenu(menu.getMenuId(), course5.getCourseId());
+        orderSessionBean.addCourseToMenu(menu.getMenuId(), course6.getCourseId());
+        orderSessionBean.addCourseToMenu(menu.getMenuId(), course7.getCourseId());
+        orderSessionBean.addCourseToMenu(menu.getMenuId(), course8.getCourseId());
+        orderSessionBean.addCourseToMenu(menu.getMenuId(), course9.getCourseId());
+        
+        if (menu.getType() == "Premium") {
+            orderSessionBean.addCourseToMenu(menu.getMenuId(), course10.getCourseId());
+            orderSessionBean.addCourseToMenu(menu.getMenuId(), course11.getCourseId());
+        }
+        
+        System.out.println("after adding courese to menu" + menu.getCourses().size());
+        request.getSession().setAttribute("menuId", menu.getMenuId());
         System.out.println("after creating menu:" + menu.getMenuId() + "order:" + order.getOrderId());
+
         try {
             System.out.println("we are in save new order in managedbean");
             order.setMenu(menu); // setting menu
             //setting member
-            if (memberId != null) {
-                member = memberSessionBean.getMemberByEmail(memberId);
-                order.setMember(member);
+            System.out.println("in adding member"+memberId);
+            if (memberSessionBean.getMemberById(memberId)!=null)
+            {   
+                System.out.println(memberSessionBean.getMemberById(memberId).getMemberName());
+                order.setMember(memberSessionBean.getMemberById(memberId));
                 System.out.println("we are in setting member" + order.getMember().getMemberEmail());
             }
-
+            order.setStatus("Requested");
             orderSessionBean.placeOrder(order); //persisting order
             System.out.println("we are after setting order in managedbean" + order.getOrderId());
 
@@ -242,6 +351,55 @@ public class AddGroupCateringManagedBean {
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New order saved.", ""));
         order = new OrderEntity();
+    }
+
+    public void viewOrder(ActionEvent event) {
+        System.out.println("No1:in displaying bean lalalala " + selectOrder.getOrderId());
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            selectOrder = (OrderEntity) event.getComponent().getAttributes().get("selectOrder");
+            System.out.println("N02: in displaying bean " + selectOrder.getOrderId());
+
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisOrder", selectOrder);
+            System.out.println("we are after setting contractId session attribute");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("viewOrder.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing order", ""));
+            return;
+        }
+    }
+
+    public OrderEntity getSelectOrder() {
+        return selectOrder;
+    }
+
+    public void setSelectOrder(OrderEntity selectOrder) {
+        this.selectOrder = selectOrder;
+    }
+
+    public List<OrderEntity> getRequested() {
+        return orderSessionBean.getRequestedOrders();
+    }
+
+    public List<OrderEntity> getConfirmed() {
+        return orderSessionBean.getConfirmedOrders();
+    }
+
+    public boolean isMenuChange() {
+        return menuChange;
+    }
+
+    public void setMenuChange(boolean menuChange) {
+        this.menuChange = menuChange;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public MemberEntity getMember() {

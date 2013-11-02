@@ -118,6 +118,15 @@ public class MemberSessionBean {
         //       System.out.println("member name: "+member.getMemberName());
         return member;
     }
+    
+    public MemberEntity getMemberById(String email) {
+        if(em == null)
+            System.err.println("EM IS NULL");
+        member = em.find(MemberEntity.class, email);
+       
+        //       System.out.println("member name: "+member.getMemberName());
+        return member;
+    }
 
     //cancel membership: member is not removed, it is inactivated
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

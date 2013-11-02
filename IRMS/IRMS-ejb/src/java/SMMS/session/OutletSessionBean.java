@@ -6,6 +6,7 @@ package SMMS.session;
 
 import Exception.ExistException;
 import SMMS.entity.OutletEntity;
+import SMMS.entity.OutletTransactionEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -27,6 +28,8 @@ public class OutletSessionBean {
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     OutletEntity outlet = new OutletEntity();
+    OutletEntity thisOutlet = new OutletEntity();
+    OutletTransactionEntity otransaction = new OutletTransactionEntity();
 
     public OutletSessionBean() {
     }
@@ -45,6 +48,18 @@ public class OutletSessionBean {
         em.persist(outlet);
         System.out.println("OutletSessionBean: outlet " + outlet.getOutletId() + " is successfully added");
         return outlet;
+    }
+    
+    public OutletTransactionEntity addOutletTransaction(Long otransactionId, String outletId) throws ExistException {
+        otransaction = em.find(OutletTransactionEntity.class, otransactionId);
+        thisOutlet = em.find(OutletEntity.class, outletId);
+        if (otransaction == null) {
+            throw new ExistException("OutletSessionBean-->ExistException-->Invalid outlet transaction!");
+        }
+        thisOutlet.addTransaction(otransaction);
+        em.merge(thisOutlet);
+        System.out.println("OutletSessionBean--> Outlet" + thisOutlet.getOutletId() + " include new transaction " + otransaction.getId());
+        return otransaction;
     }
 
 //    @TransactionAttribute(TransactionAttributeType.REQUIRED)

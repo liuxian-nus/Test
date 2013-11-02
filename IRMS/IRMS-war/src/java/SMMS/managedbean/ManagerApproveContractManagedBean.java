@@ -69,7 +69,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
     }
 
     public void approveNew(ActionEvent event) {
-        System.out.println("in getting new approve");
+        System.out.println("in getting new approve the contract is" + contract.getContractId());
         cevent = contract.getLast();
         if (cevent.getEventStatus().contains("new")) {
             cevent.setEventStatus("newApproved");
@@ -88,7 +88,11 @@ public class ManagerApproveContractManagedBean implements Serializable {
     }
 
     public void rejectNew(ActionEvent event) {
-        System.out.println("in getting new approve" + contract.getContractId());
+        System.out.println("NO1: in getting new REJECT" + contract.getContractId());
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        contract = (ContractEntity) event.getComponent().getAttributes().get("managerViewSelect");
+        System.out.println("NO2: in getting new approve" + contract.getContractId());
         cevent = contract.getLast();
         if (cevent.getEventStatus().contains("new")) {
             cevent.setEventStatus("newRejected");

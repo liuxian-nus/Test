@@ -10,13 +10,16 @@ import CRMS.entity.MemberEntity;
 import Exception.ExistException;
 import FBMS.entity.CourseEntity;
 import FBMS.entity.MenuEntity;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -173,7 +176,7 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         System.out.println("orderSessionBean: order " + order.getOrderId() + " is successfully updated");
         return true;
     }
-    
+
     public boolean updateMenu(MenuEntity menu) {
         em.merge(menu);
         System.out.println("orderSessionBean: menu " + menu.getMenuId() + " is successfully updated");
@@ -247,5 +250,29 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         em.merge(thisMenu);
         System.out.println("OrderSessionBean--> new menu " + thisMenu.getMenuId() + " new include new course " + thisCourse.getCourseId() + "size equal to" + thisMenu.getCourses().size());
         return thisCourse;
+    }
+
+    public List<OrderEntity> getRequestedOrders() {
+        Query q = em.createQuery("SELECT m FROM OrderEntity m");
+        List orderList = new ArrayList<OrderEntity>();
+        for (Object o : q.getResultList()) {
+            OrderEntity m = (OrderEntity) o;
+            if (m.getStatus() == "Requested") {
+                orderList.add(m);
+            }
+        }
+        return orderList;
+    }
+
+    public List<OrderEntity> getConfirmedOrders() {
+         Query q = em.createQuery("SELECT m FROM OrderEntity m");
+        List orderList = new ArrayList<OrderEntity>();
+        for (Object o : q.getResultList()) {
+            OrderEntity m = (OrderEntity) o;
+            if (m.getStatus() == "Confirmed") {
+                orderList.add(m);
+            }
+        }
+        return orderList;
     }
 }
