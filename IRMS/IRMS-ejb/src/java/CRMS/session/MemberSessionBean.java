@@ -190,6 +190,7 @@ public class MemberSessionBean {
         return member;
     }
 
+    //for mobile application
     public boolean updatePassword(String memberEmail, String memberPassword) {
         System.out.println("updatePassword: member Email is: " + memberEmail);
         member = em.find(MemberEntity.class, memberEmail);

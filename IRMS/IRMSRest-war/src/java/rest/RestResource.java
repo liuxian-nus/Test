@@ -46,9 +46,6 @@ public class RestResource {
     @Context
     private UriInfo context;
 
-    /**
-     * Creates a new instance of RestResource
-     */
     public RestResource() {
     }
 
@@ -73,8 +70,8 @@ public class RestResource {
     @Path("member/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public MemberEntity login(@QueryParam("email") String email, @QueryParam("password") String password) {
-         System.out.println("Email is: " + email);
-         System.out.println("Password is: " + password);
+        System.out.println("Email is: " + email);
+        System.out.println("Password is: " + password);
         if (memberSessionBean == null) {
             System.err.println("memberSessionBean is null");
         }
@@ -86,6 +83,7 @@ public class RestResource {
             throw new WebApplicationException(404);
         }
     }
+
     @GET
     @Path("member/transactions")
     @Produces(MediaType.APPLICATION_JSON)

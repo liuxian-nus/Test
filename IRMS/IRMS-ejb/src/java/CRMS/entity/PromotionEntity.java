@@ -30,70 +30,94 @@ public class PromotionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long mcId;//marketing campaign id
+    private Long promotionId;//marketing campaign id
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date mcStartDate;
+    private Date promotionStartDate;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date mcEndDate;
-    private String mcRemarks;
-    private String mcPromotionCode;
+    private Date promotionEndDate;
+    private String promotionRemarks;
+    private String promotionCode;
+    private String promotionCategory;
+    private String promotionTitle;
 
-
-    public String getMcPromotionCode() {
-        return mcPromotionCode;
-    }
-
-    public void setMcPromotionCode(String mcPromotionCode) {
-        this.mcPromotionCode = mcPromotionCode;
-    }
     @ManyToMany(cascade = {CascadeType.ALL})
     private Set<MemberEntity> mcMemberTargets;
 
-  /*  public void create(Date startDate, Date endDate, String remarks, Set<MemberEntity> memberTargets) {
-        this.setMcEndDate(endDate);
-        this.setMcStartDate(startDate);
-        this.setMcMemberTargets(memberTargets);
-        this.setMcRemarks(remarks);
-        this.setMcId(System.nanoTime());
-        
-        Random ran = new Random();
-        int top = 3;
-        char data = ' ';
-        String dat = "";
-
-        for (int i = 0; i <= top; i++) {
-            data = (char) (ran.nextInt(25) + 97);
-            dat = data + dat;
-        }
-        this.setMcPromotionCode(dat);
-
-        System.out.println("MarketingCampaignEntity: a new marketing campaign has been added!");
+    /*  public void create(Date startDate, Date endDate, String remarks, Set<MemberEntity> memberTargets) {
+    this.setMcEndDate(endDate);
+    this.setMcStartDate(startDate);
+    this.setMcMemberTargets(memberTargets);
+    this.setMcRemarks(remarks);
+    this.setMcId(System.nanoTime());
+    Random ran = new Random();
+    int top = 3;
+    char data = ' ';
+    String dat = "";
+    for (int i = 0; i <= top; i++) {
+    data = (char) (ran.nextInt(25) + 97);
+    dat = data + dat;
     }
-*/
-    public Date getMcStartDate() {
-        return mcStartDate;
+    this.setMcPromotionCode(dat);
+    System.out.println("MarketingCampaignEntity: a new marketing campaign has been added!");
+    }
+     */
+    public Long getPromotionId() {
+        return promotionId;
     }
 
-    public void setMcStartDate(Date mcStartDate) {
-        this.mcStartDate = mcStartDate;
+    public void setPromotionId(Long promotionId) {
+        this.promotionId = promotionId;
     }
 
-    public Date getMcEndDate() {
-        return mcEndDate;
+    public Date getPromotionStartDate() {
+        return promotionStartDate;
     }
 
-    public void setMcEndDate(Date mcEndDate) {
-        this.mcEndDate = mcEndDate;
+    public void setPromotionStartDate(Date promotionStartDate) {
+        this.promotionStartDate = promotionStartDate;
     }
 
-    public String getMcRemarks() {
-        return mcRemarks;
+    public Date getPromotionEndDate() {
+        return promotionEndDate;
     }
 
-    public void setMcRemarks(String mcRemarks) {
-        this.mcRemarks = mcRemarks;
+    public void setPromotionEndDate(Date promotionEndDate) {
+        this.promotionEndDate = promotionEndDate;
     }
 
+    public String getPromotionRemarks() {
+        return promotionRemarks;
+    }
+
+    public void setPromotionRemarks(String promotionRemarks) {
+        this.promotionRemarks = promotionRemarks;
+    }
+
+    public String getPromotionCode() {
+        return promotionCode;
+    }
+
+    public void setPromotionCode(String promotionCode) {
+        this.promotionCode = promotionCode;
+    }
+
+    public String getPromotionCategory() {
+        return promotionCategory;
+    }
+
+    public void setPromotionCategory(String promotionCategory) {
+        this.promotionCategory = promotionCategory;
+    }
+
+    public String getPromotionTitle() {
+        return promotionTitle;
+    }
+
+    public void setPromotionTitle(String promotionTitle) {
+        this.promotionTitle = promotionTitle;
+    }
+    
+    
     public Set<MemberEntity> getMcMemberTargets() {
         return mcMemberTargets;
     }
@@ -102,18 +126,12 @@ public class PromotionEntity implements Serializable {
         this.mcMemberTargets = mcMemberTargets;
     }
 
-    public Long getMcId() {
-        return mcId;
-    }
-
-    public void setMcId(Long mcId) {
-        this.mcId = mcId;
-    }
+    
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (mcId != null ? mcId.hashCode() : 0);
+        hash += (promotionId != null ? promotionId.hashCode() : 0);
         return hash;
     }
 
@@ -124,7 +142,7 @@ public class PromotionEntity implements Serializable {
             return false;
         }
         PromotionEntity other = (PromotionEntity) object;
-        if ((this.mcId == null && other.mcId != null) || (this.mcId != null && !this.mcId.equals(other.mcId))) {
+        if ((this.promotionId == null && other.promotionId != null) || (this.promotionId != null && !this.promotionId.equals(other.promotionId))) {
             return false;
         }
         return true;
@@ -132,6 +150,6 @@ public class PromotionEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "CRMS.entity.MarketingCampaignEntity[ id=" + mcId + " ]";
+        return "CRMS.entity.MarketingCampaignEntity[ id=" + promotionId + " ]";
     }
 }
