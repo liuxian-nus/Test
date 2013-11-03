@@ -38,14 +38,14 @@ public class MemberSessionBean {
     public MemberSessionBean() {
     }
 
-    //member registration
+    //member registration: used for jsf managed bean
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public MemberEntity addMember(MemberEntity member) {
         //member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
         em.persist(member);
         return member;
     }
-
+    //member registration: used for jsp servlet
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public MemberEntity addMember(String memberEmail, String memberName, String memberPassword, String memberPassword2,
             String memberHP, String gender, String nationality, Date memberDob, String maritalStatus,
@@ -119,18 +119,18 @@ public class MemberSessionBean {
         return member;
     }
 
-    //cancel membership
+    //cancel membership: member is not removed, it is inactivated
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeMember(String memberEmail) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {
             throw new ExistException("Member doesn't exist!");
         }
-        em.remove(member);
+        member.setMemberAccountStatus(false);
+        em.merge(member);
     }
 
-    //update member profile & password
-//    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    //used for mobile application: memberDob as string
     public MemberEntity updateMember(String memberEmail, String name, String memberHP, String memberDob, String maritalStatus, String gender) throws ExistException, ParseException {
         member = em.find(MemberEntity.class, memberEmail);
         System.out.println("member session bean: email is " + memberEmail);
@@ -167,13 +167,14 @@ public class MemberSessionBean {
         return member;
     }
 
+   //used for jsp servlet
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public MemberEntity updateMember(String memberEmail, String name, String memberHP, Date memberDob, String maritalStatus, String gender) throws ExistException, ParseException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {
             throw new ExistException("Member doesn't exist!");
         }
-        //    if (!(member.getMemberPassword().equals(memberPassword))) throw new ExistException("Wrong ID or password");
+    //    if (!(member.getMemberPassword().equals(memberPassword))) throw new ExistException("Wrong ID or password");
         System.out.println("email: " + memberEmail);
         member.setMemberName(name);
 //        member.setMemberPassword(memberPassword);
@@ -198,11 +199,11 @@ public class MemberSessionBean {
             System.err.println("member found!");
         }
         System.out.println("UpdatePassword: member Name is: " + member.getMemberName());
-        member.setMemberPassword(memberPassword);
+        member.setMemberPassword(ePasswordHashSessionBean.hashPassword(memberPassword));
         em.merge(member);
         return true;
     }
-
+    //used of jsf managed bean
     public boolean updateMember(MemberEntity member) {
         em.merge(member);
         System.out.println("MemberSessionBean: member " + member.getMemberEmail() + " is successfully updated");
@@ -256,5 +257,24 @@ public class MemberSessionBean {
 
     public void persist(Object object) {
         em.persist(object);
+    }
+
+    //used for mobile app log in
+    public MemberEntity checkLogIn(String email, String password) {
+        MemberEntity thisMember = em.find(MemberEntity.class, email);
+        if(thisMember != null){
+        if(ePasswordHashSessionBean.hashPassword(password).equals(thisMember.getMemberPassword())){
+            System.out.println("member log in from mobile successful!"); 
+            return thisMember;
+        }
+        else {
+            System.out.println("invalid password! please try again");
+            return null;
+        }
+        }
+        else {
+            System.out.println("this email is not regisgered");
+            return null;
+        }
     }
 }

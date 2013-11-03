@@ -70,6 +70,23 @@ public class RestResource {
     }
 
     @GET
+    @Path("member/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public MemberEntity login(@QueryParam("email") String email, @QueryParam("password") String password) {
+         System.out.println("Email is: " + email);
+         System.out.println("Password is: " + password);
+        if (memberSessionBean == null) {
+            System.err.println("memberSessionBean is null");
+        }
+        MemberEntity member = memberSessionBean.checkLogIn(email, password);
+        if (member != null) {
+            System.err.println("member name is: " + member.getMemberName());
+            return member;
+        } else {
+            throw new WebApplicationException(404);
+        }
+    }
+    @GET
     @Path("member/transactions")
     @Produces(MediaType.APPLICATION_JSON)
     public List<MemberTransactionEntity> getMemberTransaction(@QueryParam("email") String email) {
@@ -86,8 +103,8 @@ public class RestResource {
 
     @PUT
     @Path("member/{email}")
- //   @Consumes(MediaType.APPLICATION_JSON)
- //   @Produces(MediaType.APPLICATION_JSON)
+    //   @Consumes(MediaType.APPLICATION_JSON)
+    //   @Produces(MediaType.APPLICATION_JSON)
     public void updateMember(@PathParam("email") String email,
             @FormParam("memberName") String memberName,
             @FormParam("memberHP") String memberHP,

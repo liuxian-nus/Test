@@ -48,6 +48,7 @@ public class MemberEntity implements Serializable {
     private String preferences;
     private String securityQuestion;
     private String answer;
+    private boolean memberAccountStatus = true;
     
     
     @OneToMany(cascade = {CascadeType.ALL},mappedBy = "rcMember")
@@ -257,6 +258,15 @@ public class MemberEntity implements Serializable {
     public void setAnswer(String answer){
         this.answer=answer;
     }
+
+    public boolean isMemberAccountStatus() {
+        return memberAccountStatus;
+    }
+
+    public void setMemberAccountStatus(boolean memberAccountStatus) {
+        this.memberAccountStatus = memberAccountStatus;
+    }
+    
     
     @Override
     public int hashCode() {
