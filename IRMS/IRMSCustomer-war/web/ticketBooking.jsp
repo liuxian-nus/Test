@@ -59,70 +59,7 @@
                                     <label for="right-label" class="left-align,inline"><strong>Senior</label>
                                     </div>
                                 </div>
-                                </br>
-                      <!--      <div class="row">
-                                <div class="large-3 large columns">
-                                    <label for="right-label" class="left-align,inline"><strong>Ticket Type</label>
-                                </div>
-                                <div class="large-3 large columns">                                                           
-                                    <p>1-Day Pass, Adult</p>
-                                    <p>2-Day Pass, Adult</p>
-                                    <p>Annual Pass, Adult<p>                                 
-                                </div>
-                                <div class="large-3 large columns">                                
-                                    <p>$<%=tickets.get(0).getAttrTicketPrice()%></p>
-                                    <p>$<%=tickets.get(1).getAttrTicketPrice()%></p>
-                                    <p>$<%=tickets.get(2).getAttrTicketPrice()%></p>
-                                </div>
-                                <div class="large-3 large columns">                                
-                                    <select required name="quantity1" id="customDropdown">
-                                        <option value="0">--Select--</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                    </select>
-                                    <p></p>
-                                    <select required name="quantity2" id="customDropdown">
-                                        <option value="0">--Select--</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                    </select>
-                                    <p></p>
-                                    <select required name="quantity3" id="customDropdown">
-                                        <option value="0">--Select--</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                    </select>
-                                    
-                                </div>
-                            </div>
-                                
-                                <p></p>
-                                
-                                </br>-->
+                                </br>              
                                 <div class="row">
                                      <div class="large-3 columns">
                                     <label for="right-label" class="left-align,inline"><strong>One-day Ticket</label>
