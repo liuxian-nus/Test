@@ -45,21 +45,21 @@
                         <tr>
                             <td class="subhead" style="text-align: left;">One Day Pass</td>
                             <td style="text-align: center;">$<%=tickets.get(0).getAttrTicketPrice()%></td>
-                            <td style="text-align: center;">$55</td>
-                            <td style="text-align: center;">$35</td>
+                            <td style="text-align: center;">$<%=tickets.get(3).getAttrTicketPrice()%></td>
+                            <td style="text-align: center;">$<%=tickets.get(6).getAttrTicketPrice()%></td>
                         </tr>
                         <tr>
                             <td class="subhead" style="text-align: left;">Two Day Pass<br />
                                 <span style="font-size: smaller;">(Two consecutive days)</span></td>
                             <td style="text-align: center;">$<%=tickets.get(1).getAttrTicketPrice()%></td>
-                            <td style="text-align: center;">$80</td>
-                            <td style="text-align: center;">$50</td>
+                            <td style="text-align: center;">$<%=tickets.get(4).getAttrTicketPrice()%></td>
+                            <td style="text-align: center;">$<%=tickets.get(7).getAttrTicketPrice()%></td>
                         </tr>
                         <tr>
                             <td class="subhead" style="text-align: left;">Annual Pass<br />
                             <td style="text-align: center;">$<%=tickets.get(2).getAttrTicketPrice()%></td>
-                            <td style="text-align: center;">$80</td>
-                            <td style="text-align: center;">$50</td>
+                            <td style="text-align: center;">$<%=tickets.get(5).getAttrTicketPrice()%></td>
+                            <td style="text-align: center;">$<%=tickets.get(8).getAttrTicketPrice()%></td>
                         </tr>
                     </tbody>
                 </table>
@@ -123,13 +123,6 @@
                 </table>
   <!--              Each regular priced day pass has a validity period of 180 days from the selected date of visit.<br />
                 For Terms &amp; Conditions, <a href="/language/en-US/Homepage/ThingsToDo/UniversalStudiosSingapore/TicketingTermsConditions">click here</a>.</p>-->
-                <table width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="right"><a class="BoxButton" href="ticketBooking" target="_blank">Book Now</a></td>
-                        </tr>
-                    </tbody>
-                </table>
         </ul>
 
 

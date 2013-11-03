@@ -133,23 +133,64 @@ public class ATMSServlet extends HttpServlet {
                  
 
                 request.getRequestDispatcher("/adventureWorld.jsp").forward(request, response);
+            }else if("horrorHouse".equals(page)){
+                 System.out.println("***horrorHouse page***");
+                 attr=attractionSessionBean.getAttrById("IT");
+                 tkts=new ArrayList<AttrTicketEntity>();
+                 tkts=ticketSessionBean.selectTicketForOneAttraction(attr);
+                 
+                 List<AttrTicketEntity> tickets=ticketSessionBean.getAllTickets();
+                 session.setAttribute("tickets", tickets);
+                 List<AttrExpressPassEntity> eps=attrExpressPassSessionBean.getAllEPs();
+                 session.setAttribute("eps",eps);
+                request.getRequestDispatcher("/horrorHouse.jsp").forward(request, response);
+            }else if("museum".equals(page)){
+                 System.out.println("***museum page***");
+                 attr=attractionSessionBean.getAttrById("MU");
+                 tkts=new ArrayList<AttrTicketEntity>();
+                 tkts=ticketSessionBean.selectTicketForOneAttraction(attr);
+                 
+                 List<AttrTicketEntity> tickets=ticketSessionBean.getAllTickets();
+                 session.setAttribute("tickets", tickets);
+       
+                request.getRequestDispatcher("/museum.jsp").forward(request, response);
+            }else if("aquarium".equals(page)){
+                 System.out.println("***aquarium page***");
+                 attr=attractionSessionBean.getAttrById("AQ");
+                 tkts=new ArrayList<AttrTicketEntity>();
+                 tkts=ticketSessionBean.selectTicketForOneAttraction(attr);
+                 
+                 List<AttrTicketEntity> tickets=ticketSessionBean.getAllTickets();
+                 session.setAttribute("tickets", tickets);
+                 
+                 request.getRequestDispatcher("/aquarium.jsp").forward(request, response);
             }else if("ticketBooking".equals(page)){
                 System.out.println("***ticketBooking page***");
             /*    List<AttrTicketEntity> tickets=ticketSessionBean.getAllTickets();
                 session.setAttribute("tickets", tickets);
                 List<AttrExpressPassEntity> eps=attrExpressPassSessionBean.getAllEPs();
                 session.setAttribute("eps",eps);*/
-                
-                
-                
 
                 request.getRequestDispatcher("/ticketBooking.jsp").forward(request, response);
+            }else if("horrorHouseTicketBooking".equals(page)){
+                System.out.println("***horrorHouseTicketBooking page***");
+              request.getRequestDispatcher("/horrorHouseTicketBooking.jsp").forward(request, response);
             }else if("ticketBookingInformation".equals(page)){
                 System.out.println("***ticketBookingInformation page***");                    
+ 
                 
                 Integer quantity1=Integer.parseInt(request.getParameter("quantity1"));
                 Integer quantity2=Integer.parseInt(request.getParameter("quantity2"));
                 Integer quantity3=Integer.parseInt(request.getParameter("quantity3"));
+                Integer quantity4=Integer.parseInt(request.getParameter("quantity4"));
+                Integer quantity5=Integer.parseInt(request.getParameter("quantity5"));
+                Integer quantity6=Integer.parseInt(request.getParameter("quantity6"));
+                Integer quantity7=Integer.parseInt(request.getParameter("quantity7"));
+                Integer quantity8=Integer.parseInt(request.getParameter("quantity8"));
+                Integer quantity9=Integer.parseInt(request.getParameter("quantity9"));
+//                Integer quantity10=Integer.parseInt(request.getParameter("quantity10"));
+//                Integer quantity13=Integer.parseInt(request.getParameter("quantity13"));
+//                Integer quantity16=Integer.parseInt(request.getParameter("quantity16"));
                              
                 Integer day=Integer.parseInt(request.getParameter("dateDay"));
                 Integer month=Integer.parseInt(request.getParameter("dateMonth"));
@@ -163,8 +204,8 @@ public class ATMSServlet extends HttpServlet {
                 session.setAttribute("attr", attr);
                 System.out.println("session set");
                 
-           //     boolean ticketAvailable;
-           //     ticketAvailable=checkTicketAvailability(quantity1, quantity2,date, attr);
+         /*       boolean ticketAvailable;
+                ticketAvailable=checkTicketAvailability(quantity1, quantity2,date, attr);*/
                                
                 tp=new TicketPurchaseEntity();
                 tkts=new ArrayList<AttrTicketEntity>();
@@ -173,9 +214,13 @@ public class ATMSServlet extends HttpServlet {
                 Long tpId=ticketPurchaseSessionBean.addTicketPurchase(tp);
                 int i=0;
                 
-                if(attrId.equals("OT")){
+               if(attrId.equals("OT")){
                     System.out.println("attrId is OT");
                     i=1;
+                }
+                if(attrId.equals("IT")){
+                    System.out.println("attrId is IT");
+                    i=10;
                 }
                     
                 if(quantity1!=0){
@@ -211,6 +256,72 @@ public class ATMSServlet extends HttpServlet {
                     fee+=ticket.getAttrTicketPrice()*quantity3;
                     System.out.println("fee: "+fee);
                     System.out.println("ticket 3 added into tp");
+                }
+                if(quantity4!=0){
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(i+3)));
+                    System.out.println("ticketName: "+ticket.getAttrTicketName());
+                    tkts.add(ticket);
+                    quantities.add(quantity4);
+                    System.out.println("tkts size: "+tkts.size());
+                    System.out.println("quantities size: "+quantities.size());
+                    fee+=ticket.getAttrTicketPrice()*quantity4;
+                    System.out.println("fee: "+fee);
+                    System.out.println("ticket 4 added into tp");
+                }
+                if(quantity5!=0){
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(i+4)));
+                    System.out.println("ticketName: "+ticket.getAttrTicketName());
+                    tkts.add(ticket);
+                    quantities.add(quantity5);
+                    System.out.println("tkts size: "+tkts.size());
+                    System.out.println("quantities size: "+quantities.size());
+                    fee+=ticket.getAttrTicketPrice()*quantity5;
+                    System.out.println("fee: "+fee);
+                    System.out.println("ticket 5 added into tp");
+                }
+                if(quantity6!=0){
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(i+5)));
+                    System.out.println("ticketName: "+ticket.getAttrTicketName());
+                    tkts.add(ticket);
+                    quantities.add(quantity6);
+                    System.out.println("tkts size: "+tkts.size());
+                    System.out.println("quantities size: "+quantities.size());
+                    fee+=ticket.getAttrTicketPrice()*quantity6;
+                    System.out.println("fee: "+fee);
+                    System.out.println("ticket 6 added into tp");
+                }
+                if(quantity7!=0){
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(i+6)));
+                    System.out.println("ticketName: "+ticket.getAttrTicketName());
+                    tkts.add(ticket);
+                    quantities.add(quantity7);
+                    System.out.println("tkts size: "+tkts.size());
+                    System.out.println("quantities size: "+quantities.size());
+                    fee+=ticket.getAttrTicketPrice()*quantity7;
+                    System.out.println("fee: "+fee);
+                    System.out.println("ticket 7 added into tp");
+                }
+                if(quantity8!=0){
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(i+7)));
+                    System.out.println("ticketName: "+ticket.getAttrTicketName());
+                    tkts.add(ticket);
+                    quantities.add(quantity8);
+                    System.out.println("tkts size: "+tkts.size());
+                    System.out.println("quantities size: "+quantities.size());
+                    fee+=ticket.getAttrTicketPrice()*quantity8;
+                    System.out.println("fee: "+fee);
+                    System.out.println("ticket 3 added into tp");
+                }
+                if(quantity9!=0){
+                    ticket=ticketSessionBean.getTicketById(Long.parseLong(String.valueOf(i+8)));
+                    System.out.println("ticketName: "+ticket.getAttrTicketName());
+                    tkts.add(ticket);
+                    quantities.add(quantity9);
+                    System.out.println("tkts size: "+tkts.size());
+                    System.out.println("quantities size: "+quantities.size());
+                    fee+=ticket.getAttrTicketPrice()*quantity9;
+                    System.out.println("fee: "+fee);
+                    System.out.println("ticket 9 added into tp");
                 }
                 
                 System.out.println("tkts size: "+tkts.size());
@@ -281,7 +392,6 @@ public class ATMSServlet extends HttpServlet {
                     
                 }
 
-
                 request.getRequestDispatcher("/ticketBookingInformation.jsp").forward(request, response);
             }else if("ticketBookingPayment".equals(page)){
                 System.out.println("***ticketBookingPayment page***");
@@ -332,8 +442,8 @@ public class ATMSServlet extends HttpServlet {
                 eppurchase.setEppStatus("Purchased");
                 expressPassPurchaseSessionBean.updateEPPurchase(eppurchase);
                 
-         //       emailSessionBean.emailAttractionTicketSingle(email, tp);
-         //       System.out.println("email sent");
+                emailSessionBean.emailAttractionTicketSingle(email, tp);
+                System.out.println("email sent");
                 
 //               
                 
