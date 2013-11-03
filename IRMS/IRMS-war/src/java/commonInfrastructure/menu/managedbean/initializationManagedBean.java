@@ -111,7 +111,6 @@ public class initializationManagedBean implements Serializable {
     private ShowContractSessionBean showContractSessionBean;
     @EJB
     private EventSessionBean eventSessionBean;
-    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -202,7 +201,7 @@ public class initializationManagedBean implements Serializable {
 
     public void createACMSAdmin() {
         System.out.println("go to create ACMS user");
-        
+
         /*
          functionality = new FunctionalityEntity();
          functionality.setFuncName("overbookingManagement");
@@ -254,11 +253,11 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("ACMSAdmin Created!");
     }
-    
+
     public void createACMSFrontDesk() {
         System.err.println("go to create ACMS user");
 
-         functionality = new FunctionalityEntity();
+        functionality = new FunctionalityEntity();
         functionality.setFuncName("checkIncheckOut");
         functionality.setFuncDescription("front desk: perform check in, check out, and make/cancel reservation");
         functionalitySessionBean.addFunctionality(functionality);
@@ -288,7 +287,7 @@ public class initializationManagedBean implements Serializable {
         functionality6.setFuncDescription("employee shift log book");
         functionalitySessionBean.addFunctionality(functionality6);
 
-        
+
         role = new RoleEntity();
         role.setRoleId(21);
         role.setRoleName("ACMSFrontDesk");
@@ -320,7 +319,7 @@ public class initializationManagedBean implements Serializable {
         }
         System.err.println("Insert System User into database");
     }
-    
+
     public void createACMSRoomService() {
         System.err.println("go to create ACMS user");
 
@@ -360,7 +359,7 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.out.println("Insert System User into database");
-   
+
     }
 
     public void createReservation() {
@@ -496,7 +495,7 @@ public class initializationManagedBean implements Serializable {
         functionality2.setFuncName("managerViewContract");
         functionality2.setFuncDescription("manager View Contract");
         functionalitySessionBean.addFunctionality(functionality2);
-        
+
 
         role = new RoleEntity();
         role.setRoleId(40);
@@ -581,9 +580,14 @@ public class initializationManagedBean implements Serializable {
         functionalitySessionBean.addFunctionality(functionality10);
 
         FunctionalityEntity functionality11 = new FunctionalityEntity();
-        functionality11.setFuncName("viewTransaction");
-        functionality11.setFuncDescription("add contract");
+        functionality11.setFuncName("operatorViewTransaction");
+        functionality11.setFuncDescription("view Transaction");
         functionalitySessionBean.addFunctionality(functionality11);
+
+        FunctionalityEntity functionality12 = new FunctionalityEntity();
+        functionality12.setFuncName("addOutlet");
+        functionality12.setFuncDescription("add outlet");
+        functionalitySessionBean.addFunctionality(functionality12);
 
         role = new RoleEntity();
         role.setRoleId(41);
@@ -599,6 +603,7 @@ public class initializationManagedBean implements Serializable {
         role.addFunctionality(functionality9);
         role.addFunctionality(functionality10);
         role.addFunctionality(functionality11);
+        role.addFunctionality(functionality12);
 
         System.out.println("Create role :" + role.getRoleName());
 
@@ -1052,6 +1057,7 @@ public class initializationManagedBean implements Serializable {
         merchant.setMerchantAddress("35 Prince George's Park");
         merchant.setSecurityQuestion("What is your mother's original surname?");
         merchant.setAnswer("Gu");
+        merchant.setIsFirstTimeLogin(false);
         merchant.setPartnerType("shoppingMall");
 
 
@@ -1063,6 +1069,7 @@ public class initializationManagedBean implements Serializable {
         merchant2.setMerchantAddress("30 Prince George's Park");
         merchant2.setSecurityQuestion("What is your mother's original surname?");
         merchant2.setAnswer("Gu");
+        merchant2.setIsFirstTimeLogin(false);
         merchant2.setPartnerType("shoppingMall");
 
         MerchantEntity merchant3 = new MerchantEntity();
@@ -1073,6 +1080,7 @@ public class initializationManagedBean implements Serializable {
         merchant3.setMerchantAddress("25 Prince George's Park");
         merchant3.setSecurityQuestion("What is your mother's original surname?");
         merchant3.setAnswer("Gu");
+        merchant3.setIsFirstTimeLogin(false);
         merchant3.setPartnerType("shoppingMall");
 
         try {
@@ -1098,28 +1106,24 @@ public class initializationManagedBean implements Serializable {
         outlet.setOutletLevel(2);
         outlet.setOutletNo(17);
         outlet.setOutletId(2, 17);
-        outlet.setOutletType("appliance");
         outlet.setOutletArea(17.85);
 
         OutletEntity outlet2 = new OutletEntity();
         outlet2.setOutletLevel(2);
         outlet2.setOutletNo(10);
         outlet2.setOutletId(2, 10);
-        outlet2.setOutletType("jewelery");
         outlet2.setOutletArea(14.07);
 
         OutletEntity outlet3 = new OutletEntity();
         outlet3.setOutletLevel(3);
         outlet3.setOutletNo(11);
         outlet3.setOutletId(3, 11);
-        outlet3.setOutletType("appareal");
         outlet3.setOutletArea(21.33);
 
         OutletEntity outlet4 = new OutletEntity();
         outlet3.setOutletLevel(4);
         outlet3.setOutletNo(12);
         outlet3.setOutletId(4, 12);
-        outlet3.setOutletType("cosmetics");
         outlet3.setOutletArea(19.23);
 
         try {
@@ -1212,6 +1216,8 @@ public class initializationManagedBean implements Serializable {
             merchantSessionBean.addContractInMerchant(contract1.getContractId(), merchanta.getMerchantEmail());
 
             outleta.setContract(contract1);
+            outleta.setOutletType("Cafes");
+            outleta.setOutletName("Starbucks");
             outleta.setOutletStatus("unavailable");
             outletSessionBean.updateOutlet(outleta);
 
@@ -1254,7 +1260,9 @@ public class initializationManagedBean implements Serializable {
             merchantSessionBean.addContractInMerchant(contract2.getContractId(), merchantb.getMerchantEmail());
 
             outletb.setContract(contract2);
+            outletb.setOutletType("Lifestyle and Gifts");
             outletb.setOutletStatus("unavailable");
+            outletb.setOutletName("Resort Suvovior");
             outletSessionBean.updateOutlet(outletb);
 
             System.out.println("Contract2 saved.....");
@@ -1390,8 +1398,8 @@ public class initializationManagedBean implements Serializable {
         }
         addMessage("Show Contract Created!");
     }
-    
-    public void createEvent(){
+
+    public void createEvent() {
         eventEntity = new EventEntity();
         eventEntity.setEventName("Liu Xian");
         eventEntity.setEventType("Wedding");

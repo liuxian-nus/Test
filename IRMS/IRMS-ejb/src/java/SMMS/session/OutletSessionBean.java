@@ -95,6 +95,21 @@ public class OutletSessionBean {
         return OutletList;
     }
     
+    
+     public List<OutletEntity> getUnavailableOutlets() {
+        System.err.println("in getAvailableoutlet session bean");
+        Query q = em.createQuery("SELECT m FROM OutletEntity m");
+        List OutletList = new ArrayList<OutletEntity>();
+        for (Object o : q.getResultList()) {
+            OutletEntity m = (OutletEntity) o;
+            if (m.getOutletStatus() == "unavailable") {
+                OutletList.add(m);
+            }
+        }
+        System.err.println("in get available outlets sessionbean: outlet list size=" + OutletList.size());
+        return OutletList;
+    }
+    
     public OutletEntity getOutletById(int id) throws ExistException {
         System.err.println("in get outlet by id sessionbean");
         OutletEntity thisOutlet = em.find(OutletEntity.class, id);
@@ -115,6 +130,20 @@ public class OutletSessionBean {
             }
         }
         System.err.println("in get outlets by merchant sessionbean: outlet list size=" + OutletList.size());
+        return OutletList;
+    }
+    
+    public List<OutletTransactionEntity> getTransactions(int outletId) {
+        System.err.println("in get transactions session bean");
+        Query q = em.createQuery("SELECT m FROM OutletTransactionEntity m");
+        List OutletList = new ArrayList<OutletEntity>();
+        for (Object o : q.getResultList()) {
+            OutletTransactionEntity m = (OutletTransactionEntity) o;
+            if (m.getTransactionOutlet().getOutletId()==outletId) {
+                OutletList.add(m);
+            }
+        }
+        System.err.println("in get transactions sessionbean: outlet list size=" + OutletList.size());
         return OutletList;
     }
 

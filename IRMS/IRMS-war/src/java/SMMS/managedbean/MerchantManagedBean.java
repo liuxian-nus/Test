@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @ManagedBean
 @ViewScoped
-public class MerchantManagedBean implements Serializable{
+public class MerchantManagedBean implements Serializable {
 
     @EJB
     private EmailSessionBean emailSessionBean;
@@ -48,9 +48,6 @@ public class MerchantManagedBean implements Serializable{
     private MerchantSessionBean merchantSessionBean;
     private MerchantEntity merchant;
     private MerchantEntity selected;
-
-    
-    
 
     @PostConstruct
     public void init() {
@@ -77,15 +74,12 @@ public class MerchantManagedBean implements Serializable{
 //            }
 //        }
 //    }
-
 //    @Timeout
 //    public void handleTimeout(Timer timer) {
 ////        if (timer.toString().equals("EJBTIMER")) {//Do something}}}
 //            Date currentDate = new Date();
 //            System.out.println("No1: we are in merchant managedbean: trying this hahaha lalala" + currentDate);
-        
 //    }
-
 //    public static int count = 0;
 //    public Timer timer = new Timer();
 //    public TimerTask task = new TimerTask() {
@@ -137,12 +131,11 @@ public class MerchantManagedBean implements Serializable{
             emailSessionBean.emailInitialPassward(merchant.getMerchantEmail(), initialPwd);
             System.out.println("email already sent");
             merchant = new MerchantEntity();
-
+            FacesContext.getCurrentInstance().getExternalContext().redirect("manageMerchants.xhtml");
         }
     }
-    
-    public void viewMerchant(ActionEvent event)
-    {
+
+    public void viewMerchant(ActionEvent event) {
         System.out.println("No1:in displaying bean " + selected.getMerchantEmail());
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -158,8 +151,8 @@ public class MerchantManagedBean implements Serializable{
             return;
         }
     }
-      
-     public List<MerchantEntity> getAllMerchants() throws ExistException {
+
+    public List<MerchantEntity> getAllMerchants() throws ExistException {
         System.out.println("in getting all merchants in session bean");
         return merchantSessionBean.getAllMerchants();
     }
@@ -175,7 +168,7 @@ public class MerchantManagedBean implements Serializable{
     public void setMerchant(MerchantEntity merchant) {
         this.merchant = merchant;
     }
-    
+
     public MerchantEntity getSelected() {
         return selected;
     }
@@ -183,7 +176,6 @@ public class MerchantManagedBean implements Serializable{
     public void setSelected(MerchantEntity selected) {
         this.selected = selected;
     }
- 
     /**
      * Creates a new instance of MerchantManagedBean
      */

@@ -369,7 +369,7 @@ public class Menu2ManagedBean implements Serializable {
                 item = new MenuItem();
                 item.setValue("Add Merchant");
                 item.setUrl("/smms/addMerchant.xhtml");
-                item.setIcon("ui-icon ui-icon-pencil");
+                item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
                 
                 item = new MenuItem();
@@ -394,6 +394,12 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/smms/pushingcartManagement.xhtml");
                 item.setIcon("ui-icon ui-icon-cart");
                 submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Create Outlet");
+                item.setUrl("/smms/addOutlet.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
 
                 item = new MenuItem();
                 item.setValue("Manage Outlets");
@@ -408,13 +414,13 @@ public class Menu2ManagedBean implements Serializable {
                 item = new MenuItem();
                 item.setValue("Add Contract");
                 item.setUrl("/smms/addContract.xhtml");
-                item.setIcon("ui-icon ui-icon-document");
+                item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
 
                 item = new MenuItem();
                 item.setValue("View Contracts");
                 item.setUrl("/smms/operatorManageContract.xhtml");
-                item.setIcon("ui-icon ui-icon-pencil");
+                item.setIcon("ui-icon ui-icon-document");
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);

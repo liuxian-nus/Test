@@ -16,16 +16,16 @@
                     <p:dataTable id="contract" value="#{merchantManagedBean.allMerchants}" var="merchant" 
                                  paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
 
-                        <p:column headerText="Email" style="width:50px;">
+                        <p:column headerText="Email" style="width:100px;">
                             <h:outputText value="#{merchant.merchantEmail}"/>
                         </p:column>
-                        <p:column headerText="Name" style="width:100px;">
+                        <p:column headerText="Name" style="width:50px;">
                             <h:outputText value="#{merchant.merchantName}"/>
                         </p:column>
-                        <p:column headerText="Address" style="width:100px;">
+                        <p:column headerText="Address" style="width:150px;">
                             <h:outputText value="#{merchant.merchantAddress}"/>
                         </p:column>
-                        <p:column headerText="HP" style="width:100px;">
+                        <p:column headerText="HP" style="width:70px;">
                             <h:outputText value="#{merchant.merchantHP}"/>
                         </p:column>
                         <p:column headerText="Partnership" style="width:100px;">

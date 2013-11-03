@@ -38,7 +38,7 @@ public class OutletEntity implements Serializable {
     private String outletType; //jewelery,FNB,appareal,appliance,toys,exibition
     private String outletName;
     private String outletStatus = "available";
-    private String outletCondition = "in use";
+    private String outletCondition = "ready for use";
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date outletCStartingDate;
     @Temporal(javax.persistence.TemporalType.DATE)

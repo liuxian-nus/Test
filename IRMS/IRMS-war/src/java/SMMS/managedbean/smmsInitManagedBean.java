@@ -6,14 +6,17 @@ package SMMS.managedbean;
 
 import CRMS.session.CPasswordHashSessionBean;
 import ERMS.session.EPasswordHashSessionBean;
+import Exception.ExistException;
 import SMMS.entity.ContractEntity;
 import SMMS.entity.ContracteventEntity;
 import SMMS.entity.MerchantEntity;
 import SMMS.entity.OutletEntity;
+import SMMS.entity.OutletTransactionEntity;
 import SMMS.session.ContractSessionBean;
 import SMMS.session.ContracteventSessionBean;
 import SMMS.session.MerchantSessionBean;
 import SMMS.session.OutletSessionBean;
+import SMMS.session.OutletTransactionSessionBean;
 import java.io.Serializable;
 import java.util.Date;
 import javax.ejb.EJB;
@@ -29,7 +32,10 @@ import javax.faces.event.ActionEvent;
  */
 @ManagedBean
 @ViewScoped
-public class smmsInitManagedBean implements Serializable{
+public class smmsInitManagedBean implements Serializable {
+
+    @EJB
+    private OutletTransactionSessionBean outletTransactionSessionBean;
     @EJB
     private OutletSessionBean outletSessionBean;
     @EJB
@@ -40,7 +46,7 @@ public class smmsInitManagedBean implements Serializable{
     private ContracteventSessionBean contracteventSessionBean;
     @EJB
     private ContractSessionBean contractSessionBean;
- 
+
     /**
      * Creates a new instance of smmsInitManagedBean
      */
@@ -50,11 +56,13 @@ public class smmsInitManagedBean implements Serializable{
     private ContracteventEntity event;
     private MerchantEntity merchant;
     private OutletEntity outlet;
-    
+    private OutletTransactionEntity otransaction;
+
     public void addMessage(String summary) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
     public void createMerchant() {
         System.out.println("go to create merchant page...");
 //        functionality = new FunctionalityEntity();
@@ -83,33 +91,36 @@ public class smmsInitManagedBean implements Serializable{
         merchant = new MerchantEntity();
 //        merchant.setRoles(role);
         merchant.setMerchantEmail("xinqi_wang@yahoo.com");
-        merchant.setMerchantName("dayanqi");
+        merchant.setMerchantName("Wang Dayan");
         merchant.setMerchantPassword(ePasswordHashSessionBean.hashPassword("M3000"));
         merchant.setMerchantHP("12345678");
         merchant.setMerchantAddress("35 Prince George's Park");
         merchant.setSecurityQuestion("What is your mother's original surname?");
         merchant.setAnswer("Gu");
+        merchant.setIsFirstTimeLogin(false);
         merchant.setPartnerType("shoppingMall");
 
 
         MerchantEntity merchant2 = new MerchantEntity();
         merchant2.setMerchantEmail("s.er3na.j@gmail.com");
-        merchant2.setMerchantName("meizi");
+        merchant2.setMerchantName("Zheng Bowen");
         merchant2.setMerchantPassword(ePasswordHashSessionBean.hashPassword("M4000"));
         merchant2.setMerchantHP("87654321");
         merchant2.setMerchantAddress("30 Prince George's Park");
         merchant2.setSecurityQuestion("What is your mother's original surname?");
         merchant2.setAnswer("Gu");
+        merchant2.setIsFirstTimeLogin(false);
         merchant2.setPartnerType("shoppingMall");
 
         MerchantEntity merchant3 = new MerchantEntity();
         merchant3.setMerchantEmail("a0077867@nus.edu.sg");
-        merchant3.setMerchantName("liudede");
+        merchant3.setMerchantName("Liu Yudi");
         merchant3.setMerchantPassword(ePasswordHashSessionBean.hashPassword("M5000"));
         merchant3.setMerchantHP("09876234");
         merchant3.setMerchantAddress("25 Prince George's Park");
         merchant3.setSecurityQuestion("What is your mother's original surname?");
         merchant3.setAnswer("Gu");
+        merchant3.setIsFirstTimeLogin(false);
         merchant3.setPartnerType("shoppingMall");
 
         try {
@@ -135,30 +146,26 @@ public class smmsInitManagedBean implements Serializable{
         outlet.setOutletLevel(5);
         outlet.setOutletNo(03);
         outlet.setOutletId(5, 03);
-        outlet.setOutletType("banks");
         outlet.setOutletArea(21.85);
-      
+
 
         OutletEntity outlet2 = new OutletEntity();
         outlet2.setOutletLevel(2);
         outlet2.setOutletNo(31);
         outlet2.setOutletId(2, 31);
-        outlet2.setOutletType("lifestyle");
         outlet2.setOutletArea(18.27);
 
         OutletEntity outlet3 = new OutletEntity();
         outlet3.setOutletLevel(5);
         outlet3.setOutletNo(16);
         outlet3.setOutletId(5, 16);
-        outlet3.setOutletType("sports");
         outlet3.setOutletArea(21.33);
 
         OutletEntity outlet4 = new OutletEntity();
-        outlet3.setOutletLevel(4);
-        outlet3.setOutletNo(31);
-        outlet3.setOutletId(4, 31);
-        outlet3.setOutletType("celebRestaurants");
-        outlet3.setOutletArea(16.93);
+        outlet4.setOutletLevel(4);
+        outlet4.setOutletNo(31);
+        outlet4.setOutletId(4, 31);
+        outlet4.setOutletArea(16.93);
 
         try {
             System.out.println("Saving outlets....");
@@ -177,8 +184,7 @@ public class smmsInitManagedBean implements Serializable{
 
         addMessage("Outlets! Created!");
     }
-    
-    
+
     public void createContract() {
         System.out.println("go to create Contract Page...");
 
@@ -190,7 +196,7 @@ public class smmsInitManagedBean implements Serializable{
             System.out.println("Saving cart....");
 
             MerchantEntity merchanta = merchantSessionBean.getMerchantById("xinqi_wang@yahoo.com");
-            OutletEntity outleta = outletSessionBean.getOutletById(516);
+            OutletEntity outleta = outletSessionBean.getOutletById(210);
             contract1.setMerchant(merchanta);
             contract1.setOutlet(outleta);
             contractSessionBean.addContract(contract1);
@@ -213,12 +219,14 @@ public class smmsInitManagedBean implements Serializable{
             merchantSessionBean.addContractInMerchant(contract1.getContractId(), merchanta.getMerchantEmail());
 
             outleta.setContract(contract1);
+            outleta.setOutletType("Lingerie");
+            outleta.setOutletName("Victoria's Secret");
             outleta.setOutletStatus("unavailable");
             outletSessionBean.updateOutlet(outleta);
 
-            System.out.println("Contract saved.....");
+            System.out.println("Contract3 saved.....");
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding merchant", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding conract3", ""));
             return;
         }
 
@@ -249,30 +257,107 @@ public class smmsInitManagedBean implements Serializable{
             event2.setEventStatus("newPending");
             event2.setEventContract(contract2);
             contracteventSessionBean.addContractevent(event2);
-            System.out.println("Contract saved....." + event2.getContracteventId());
+            System.out.println("Contract4 saved....." + event2.getContracteventId());
 
 
             contractSessionBean.addContractevent(contract2.getContractId(), event2.getContracteventId());
             merchantSessionBean.addContractInMerchant(contract2.getContractId(), merchantb.getMerchantEmail());
 
             outletb.setContract(contract2);
+            outletb.setOutletType("Bars and Nightclubs");
+            outletb.setOutletName("Zouk");
             outletb.setOutletStatus("unavailable");
             outletSessionBean.updateOutlet(outletb);
 
             System.out.println("Contract4 saved.....");
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding merchant", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding contract 4", ""));
             return;
         }
 
-        System.out.println("Insert cart into database");
+        System.out.println("Insert contract into database");
         addMessage("Contrac4! Created!");
     }
-    
-    public void initla(ActionEvent event)
-    {
+
+    public void createTransaction() throws ExistException {
+        System.out.println("go to create outlet transaction page...");
+        Date date1 = new Date(2013, 6, 1);
+        Date date2 = new Date(2013, 2, 1);
+        Date date3 = new Date(2013, 1, 1);
+        Date date4 = new Date(2013, 6, 11);
+        Date date5 = new Date(2013, 5, 13);
+        Date date6 = new Date(2013, 8, 21);
+        Date date7 = new Date(2013, 11, 1);
+        Date date8 = new Date(2012, 2, 17);
+        Date date9 = new Date(2013, 10, 1);
+        Date date10 = new Date(2013, 9, 18);
+
+        try {
+            System.out.println("Saving outlet Transactions....");
+
+            otransaction = new OutletTransactionEntity();
+            otransaction.setTransactionDate(date1);
+            otransaction.setTransactionAmount(13.45);
+            otransaction.setTransactionOutlet(outletSessionBean.getOutletById(217));
+            outletTransactionSessionBean.addTransaction(otransaction); //persisting transaction
+            outletSessionBean.getOutletById(217).addTransaction(otransaction); //add transaction to outlet
+            outletSessionBean.updateOutlet(outletSessionBean.getOutletById(217)); //update outlet
+            System.out.println("in saving transaction1:" + otransaction.getTransactionId() + "size now of 217 =" + outletSessionBean.getOutletById(217).getOutletTransaction().size());
+
+            OutletTransactionEntity otransaction1 = new OutletTransactionEntity();
+            otransaction1.setTransactionDate(date2);
+            otransaction1.setTransactionAmount(22.98);
+            otransaction1.setTransactionOutlet(outletSessionBean.getOutletById(217));
+            outletTransactionSessionBean.addTransaction(otransaction1); //persisting transaction
+            outletSessionBean.getOutletById(217).addTransaction(otransaction1);
+            outletSessionBean.updateOutlet(outletSessionBean.getOutletById(217));
+
+            OutletTransactionEntity otransaction2 = new OutletTransactionEntity();
+            otransaction2.setTransactionDate(date3);
+            otransaction2.setTransactionAmount(102.98);
+            otransaction2.setTransactionOutlet(outletSessionBean.getOutletById(217));
+            outletTransactionSessionBean.addTransaction(otransaction2); //persisting transaction
+            outletSessionBean.getOutletById(217).addTransaction(otransaction2);
+            outletSessionBean.updateOutlet(outletSessionBean.getOutletById(217));
+
+            OutletTransactionEntity otransaction3 = new OutletTransactionEntity();
+            otransaction3.setTransactionDate(date4);
+            otransaction3.setTransactionAmount(345.98);
+            otransaction3.setTransactionOutlet(outletSessionBean.getOutletById(217));
+            outletTransactionSessionBean.addTransaction(otransaction3); //persisting transaction
+            outletSessionBean.getOutletById(217).addTransaction(otransaction3);
+            outletSessionBean.updateOutlet(outletSessionBean.getOutletById(217));
+
+            OutletTransactionEntity otransaction4 = new OutletTransactionEntity();
+            otransaction4.setTransactionDate(date5);
+            otransaction4.setTransactionAmount(11.98);
+            otransaction4.setTransactionOutlet(outletSessionBean.getOutletById(412));
+            outletTransactionSessionBean.addTransaction(otransaction4); //persisting transaction
+            outletSessionBean.getOutletById(412).addTransaction(otransaction4);
+            outletSessionBean.updateOutlet(outletSessionBean.getOutletById(412));
+
+            OutletTransactionEntity otransaction5 = new OutletTransactionEntity();
+            otransaction5.setTransactionDate(date6);
+            otransaction5.setTransactionAmount(22.01);
+            otransaction5.setTransactionOutlet(outletSessionBean.getOutletById(412));
+            outletTransactionSessionBean.addTransaction(otransaction5); //persisting transaction
+            outletSessionBean.getOutletById(412).addTransaction(otransaction5);
+            outletSessionBean.updateOutlet(outletSessionBean.getOutletById(412));
+
+            System.out.println("transactions saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding transaction", ""));
+            return;
+        }
+        System.out.println("Insert transaction into database");
+
+        addMessage("Transaction1! Created!");
+    }
+
+    public void initla(ActionEvent event) throws ExistException {
         createMerchant();
         createOutlet();
         createContract();
+        createTransaction();
     }
 }

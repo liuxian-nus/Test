@@ -34,7 +34,7 @@ public class AddPushingcartManagedBean {
     public void saveNew(ActionEvent event) throws IOException {
         pushingcartSessionBean.addPushingcart(pushingcart);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New pushing cart saved.", ""));
-        FacesContext.getCurrentInstance().getExternalContext().redirect("addPushingcart.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("pushingcartManagement.xhtml");
     }
 
     public PushingcartSessionBean getPushingcartSessionBean() {

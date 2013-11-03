@@ -14,21 +14,49 @@
                     <p:growl id="growl" showDetail="true" sticky="true" />                    
                     <h:panelGrid columns="3" cellpadding="10">  
                         <h:outputText value="Merchant:"/>
-                        <h:selectOneMenu value ="#{contractManagedBean.merchantId}"  required ="true" requiredMessage="Merchant cannot be empty">
+                        <p:selectOneMenu value ="#{contractManagedBean.merchantId}"  required ="true" requiredMessage="Merchant cannot be empty">
                             <f:selectItem itemLabel="Select Merchant" itemValue=""/>
                             <f:selectItems value="#{contractManagedBean.merchantSessionBean.allMerchants}" var="allMerchants" itemLabel="#{allMerchants.merchantName}" itemValue="#{allMerchants.merchantEmail}" />  
-                        </h:selectOneMenu>                                    
+                        </p:selectOneMenu>                                    
                         <h:outputText value=""/>
 
                         <h:outputText value="Outlet:"/>
-                        <h:selectOneMenu value ="#{contractManagedBean.outletId}"  required ="true" requiredMessage="Outlet cannot be empty">
+                        <p:selectOneMenu value ="#{contractManagedBean.outletId}"  required ="true" requiredMessage="Outlet cannot be empty">
                             <f:selectItem itemLabel="Select Outlet" itemValue="" />  
                             <f:selectItems value="#{contractManagedBean.outletSessionBean.availableOutlets}" var="allMerchants" itemLabel="#{allMerchants.id}" itemValue="#{allMerchants.id}" />  
-                        </h:selectOneMenu>                            
+                        </p:selectOneMenu>                            
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Outlet Type: " />  
+                        <p:selectOneMenu value ="#{contractManagedBean.outletType}" required ="true" requiredMessage="Outlet type cannot be empty">
+                            <f:selectItem itemLabel="Select Outlet Type" itemValue="" />  
+                            <f:selectItem itemLabel="Banks" itemValue="banks" />  
+                            <f:selectItem itemLabel="Bars and Nightclubs" itemValue="clubs" />
+                            <f:selectItem itemLabel="Cafes" itemValue="cafes" />  
+                            <f:selectItem itemLabel="Celebrity Chef Restaurants" itemValue="celebRestaurants" />  
+                            <f:selectItem itemLabel="Childrens Fashion and Maternity" itemValue="children" />  
+                            <f:selectItem itemLabel="Electronics and Telecommunications" itemValue="electronics" />
+                            <f:selectItem itemLabel="General" itemValue="general" />  
+                            <f:selectItem itemLabel="Gourmet and Speciality Food" itemValue="gourmet" />  
+                            <f:selectItem itemLabel="Handbags Shoes and Accessories" itemValue="handbags" />  
+                            <f:selectItem itemLabel="Jewelry" itemValue="jewely" />
+                            <f:selectItem itemLabel="Lifestyle and Gifts " itemValue="lifestyle" />  
+                            <f:selectItem itemLabel="Lingerie" itemValue="lingerie" />  
+                            <f:selectItem itemLabel="Men's Fashion" itemValue="menfashion" />  
+                            <f:selectItem itemLabel="Restaurants" itemValue="restaurants" />
+                            <f:selectItem itemLabel="Sports Beauty and Wellness" itemValue="sports" />  
+                            <f:selectItem itemLabel="Watches" itemValue="watches" />
+                            <f:selectItem itemLabel="Womens Fashion" itemValue="fashion" />  
+                            <f:selectItem itemLabel="Others" itemValue="others" />  
+                        </p:selectOneMenu> 
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Outlet Name: " />  
+                        <p:inputText value="#{contractManagedBean.outletName}" required ="true" requiredMessage="Outlet name cannot be empty"/>
                         <h:outputText value=""/>
 
                         <h:outputText value="Deposit:"/>
-                        <h:inputText  title="Please enter Deposit" required ="true" requiredMessage="Deposit cannot be empty" value="#{contractManagedBean.newevent.eventDeposit}"/>
+                        <p:inputText  title="Please enter Deposit" required ="true" requiredMessage="Deposit cannot be empty" value="#{contractManagedBean.newevent.eventDeposit}"/>
                         <h:outputText value=""/>
 
                         <h:outputText value="Commission Rate:"/>
@@ -36,11 +64,11 @@
                         <h:outputText value=""/>
 
                         <h:outputText value="Monthly Rate:"/>
-                        <h:inputText  title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{contractManagedBean.newevent.eventMonthRate}"/>
+                        <p:inputText  title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{contractManagedBean.newevent.eventMonthRate}"/>
                         <h:outputText value=""/>
 
                         <h:outputText value="Early Termination charge:"/>
-                        <h:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{contractManagedBean.newevent.eventEarlyCharge}"/>
+                        <p:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{contractManagedBean.newevent.eventEarlyCharge}"/>
                         <h:outputText value=""/>
 
                         <h:outputText value="Starting Date:"/>
@@ -71,7 +99,7 @@
                     </p:fieldset>
                 </h:form>
                 <br/>
-                
+
                 <h:form id="formSearchByOutlet">
                     <p:growl id="growl" showDetail="true" sticky="true" />   
                     <p:fieldset legend="Search Contract By Outlet" toggleable="true" toggleSpeed="500" collapsed="true">  
@@ -85,8 +113,8 @@
                     </p:fieldset>
                 </h:form>
                 <br/>
-                
-                
+
+
                 <h:form id="formSearchByMerchant">
                     <p:growl id="growl" showDetail="true" sticky="true" />   
                     <p:fieldset legend="Search Contract By Merchant" toggleable="true" toggleSpeed="500" collapsed="true">  
@@ -99,8 +127,8 @@
                         </h:panelGrid> 
                     </p:fieldset>
                 </h:form>
-                
-                
+
+
             </p:tab> 
 
 

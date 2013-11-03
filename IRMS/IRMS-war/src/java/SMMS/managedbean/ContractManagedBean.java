@@ -57,9 +57,8 @@ public class ContractManagedBean implements Serializable {
     private ContractEntity selected;
     private String searchId;
     private List<ContractEntity> contracts;
-
-   
-  
+    private String outletType;
+    private String outletName;
 
     public ContractManagedBean() {
 
@@ -67,6 +66,22 @@ public class ContractManagedBean implements Serializable {
         newevent = new ContracteventEntity();
         selected = new ContractEntity();
 
+    }
+
+    public String getOutletType() {
+        return outletType;
+    }
+
+    public void setOutletType(String outletType) {
+        this.outletType = outletType;
+    }
+
+    public String getOutletName() {
+        return outletName;
+    }
+
+    public void setOutletName(String outletName) {
+        this.outletName = outletName;
     }
 
     public ContractEntity getSelected() {
@@ -180,8 +195,8 @@ public class ContractManagedBean implements Serializable {
     public void setOutletId(int outletId) {
         this.outletId = outletId;
     }
-    
-      public String getSearchId() {
+
+    public String getSearchId() {
         return searchId;
     }
 
@@ -189,7 +204,7 @@ public class ContractManagedBean implements Serializable {
         this.searchId = searchId;
     }
 
-     public List<ContractEntity> getContracts() {
+    public List<ContractEntity> getContracts() {
         return contracts;
     }
 
@@ -202,15 +217,16 @@ public class ContractManagedBean implements Serializable {
      */
     public void addContract(ActionEvent event) throws ExistException, IOException {
         System.out.println("NO1: in adding contract" + merchantId + "and outlet ID:" + outletId);
+        System.out.println("outlet name and type" + outletType + outletName);
         try {
 
             merchant = merchantSessionBean.getMerchantById(merchantId);
             outlet = outletSessionBean.getOutletById(outletId);
-            System.out.println("NO2: contract outlet id getting outlet"+ outlet.getOutletId());
+            System.out.println("NO2: contract outlet id getting outlet" + outlet.getOutletId());
 
             contract.setMerchant(merchant); //adding new merchant
             contract.setOutlet(outlet); //adding new outlet
-            System.out.println("NO3: contract outlet id setting done"+contract.getOutlet().getOutletId());
+            System.out.println("NO3: contract outlet id setting done" + contract.getOutlet().getOutletId());
             contractSessionBean.addContract(contract);//persist contract entity
             System.out.println("after persisting contract" + contract.getContractId());
 
@@ -228,6 +244,8 @@ public class ContractManagedBean implements Serializable {
 
             outlet.setContract(contract);
             outlet.setOutletStatus("unavailable");
+            outlet.setOutletName(outletName);
+            outlet.setOutletType(outletType);
             outletSessionBean.updateOutlet(outlet);//merge outlet
             System.out.println("after adding contract to outlet" + outlet.getOutletId());
         } catch (Exception e) {
@@ -235,6 +253,7 @@ public class ContractManagedBean implements Serializable {
             return;
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Contract has been added.", ""));
+        FacesContext.getCurrentInstance().getExternalContext().redirect("operatorManageContract.xhtml");
     }
 
     // USEFUL GETTINGS
@@ -250,9 +269,8 @@ public class ContractManagedBean implements Serializable {
         System.out.println("NO5: we are in complete bean AFTER");
         return results;
     }
-    
-    
-     public List<String> completeContracts() throws ExistException {
+
+    public List<String> completeContracts() throws ExistException {
         System.out.println("NO4: we are in ALL contracts bean BEFORE");
         List<String> results = new ArrayList<String>();
 
@@ -264,7 +282,6 @@ public class ContractManagedBean implements Serializable {
         System.out.println("NO5: we are in complete bean AFTER");
         return results;
     }
- 
 
     //USEFUL THERE
     public List<Integer> completeOutlets() throws ExistException {
@@ -319,10 +336,8 @@ public class ContractManagedBean implements Serializable {
             return;
         }
     }
-    
-    
-    public void searchById()
-    {
+
+    public void searchById() {
         System.out.println("No1:in searching contract by Id bean " + searchId);
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -340,9 +355,8 @@ public class ContractManagedBean implements Serializable {
             return;
         }
     }
-    
-    public void searchByOutlet()
-    {
+
+    public void searchByOutlet() {
         System.out.println("No1:in searching contract by Id bean " + outletId);
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -360,9 +374,8 @@ public class ContractManagedBean implements Serializable {
             return;
         }
     }
-    
-    public void searchByMerchant()
-    {
+
+    public void searchByMerchant() {
         System.out.println("No1:in searching contract by merchant bean " + merchantId);
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -378,5 +391,4 @@ public class ContractManagedBean implements Serializable {
             return;
         }
     }
-    
 }
