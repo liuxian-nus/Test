@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="AddOutlet">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+
+            <p:panel id="Home" header="Add New Outlet" style="height:440px;">
+                <h:panelGrid columns="3" >
+                    <h:outputText value="Level*:"/>
+                    <h:inputText required ="true" requiredMessage="Level cannot be empty" value="#{outletManagedBean.outletLevel}"/>                                   
+                    <h:outputText value=""/>
+
+                    <h:outputText value="Number *:"/>
+                    <h:inputText title="Please enter outlet number" required ="true" requiredMessage="Outlet number cannot be empty" value="#{outletManagedBean.outletNo}"/>
+                    <h:outputText value=""/>
+
+                    <h:outputText value="Area*:"/>
+                    <h:inputText id ="address" title="Please enter area" required ="true" requiredMessage="Area cannot be empty" value="#{outletManagedBean.outlet.outletArea}"/>
+                    <h:outputText value=""/>
+                    
+                     <h:outputText value="Condition*:"/>
+                     <h:selectOneMenu value ="#{outletManagedBean.outlet.outletCondition}" required ="true" requiredMessage="Condition cannot be empty">
+                        <f:selectItem itemLabel="Select Condition" itemValue="" />  
+                        <f:selectItem itemLabel="Under Construction" itemValue="under construction" />  
+                        <f:selectItem itemLabel="Ready for use" itemValue="ready for use" />  
+                    </h:selectOneMenu> 
+
+                    <p:commandButton  value="Save" ajax="true" actionListener="#{outletManagedBean.addOutlet}" update ="growl"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>
