@@ -7,8 +7,11 @@ package CRMS.session;
 import CRMS.entity.PromotionEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
+import Exception.ExistException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,6 +40,21 @@ public class PromotionSessionBean {
         timer.schedule(new EndTask(), endDate);
         timer.cancel();
         return "The promotion has been ended by endMarketingCampaign";
+    }
+
+    public List<PromotionEntity> getPromotionByMemberEmail(String email) throws ExistException {
+        System.out.println("promotion session bean: get promotion by email: " + email);
+        MemberEntity thisMember = em.find(MemberEntity.class, email);
+        if(thisMember == null) throw new ExistException("this member email is invalid");
+        Query q = em.createQuery("SELECT p FROM PromotionEntity p");
+        List promotions = new ArrayList<PromotionEntity>();
+        for (Object o : q.getResultList()) {
+            PromotionEntity p = (PromotionEntity) o;
+            if(p.getMcMemberTargets().contains(thisMember)){
+            promotions.add(p);
+            }
+        }
+        return promotions;
     }
 
     class EndTask extends TimerTask {

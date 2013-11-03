@@ -5,8 +5,12 @@
 package rest;
 
 import CRMS.entity.MemberEntity;
+import CRMS.entity.MemberMessageEntity;
 import CRMS.entity.MemberTransactionEntity;
+import CRMS.entity.PromotionEntity;
+import CRMS.session.MemberMessageSessionBean;
 import CRMS.session.MemberSessionBean;
+import CRMS.session.PromotionSessionBean;
 import Exception.ExistException;
 import java.text.ParseException;
 import java.util.Date;
@@ -40,30 +44,17 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 @Path("rest")
 public class RestResource {
-
+    @EJB
+    private MemberMessageSessionBean memberMessageSessionBean;
     @EJB
     MemberSessionBean memberSessionBean;
+    @EJB
+    PromotionSessionBean promotionSessionBean;    
+    
     @Context
     private UriInfo context;
 
     public RestResource() {
-    }
-
-    @GET
-    @Path("member")
-    @Produces(MediaType.APPLICATION_JSON)
-    public MemberEntity getMember(@QueryParam("email") String email) {
-        System.err.println("Email is: " + email);
-        if (memberSessionBean == null) {
-            System.err.println("memberSessionBean is null");
-        }
-        MemberEntity member = memberSessionBean.getMemberByEmail(email);
-        if (member != null) {
-            System.err.println("member name is: " + member.getMemberName());
-            return member;
-        } else {
-            throw new WebApplicationException(404);
-        }
     }
 
     @GET
@@ -83,21 +74,24 @@ public class RestResource {
             throw new WebApplicationException(404);
         }
     }
-
+    
     @GET
-    @Path("member/transactions")
+    @Path("member")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<MemberTransactionEntity> getMemberTransaction(@QueryParam("email") String email) {
+    public MemberEntity getMember(@QueryParam("email") String email) {
+        System.err.println("Email is: " + email);
         if (memberSessionBean == null) {
             System.err.println("memberSessionBean is null");
         }
-        List<MemberTransactionEntity> mtlist = memberSessionBean.getAllTransactions(email);
-        if (mtlist != null) {
-            return mtlist;
+        MemberEntity member = memberSessionBean.getMemberByEmail(email);
+        if (member != null) {
+            System.err.println("member name is: " + member.getMemberName());
+            return member;
         } else {
             throw new WebApplicationException(404);
         }
     }
+
 
     @PUT
     @Path("member/{email}")
@@ -128,6 +122,61 @@ public class RestResource {
         System.err.println("email is: " + email);
         System.err.println("member Password is " + memberPassword);
         memberSessionBean.updatePassword(email, memberPassword);
+    }
+
+    @GET
+    @Path("member/transactions")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MemberTransactionEntity> getMemberTransaction(@QueryParam("email") String email) {
+        if (memberSessionBean == null) {
+            System.err.println("memberSessionBean is null");
+        }
+        List<MemberTransactionEntity> mtlist = memberSessionBean.getAllTransactions(email);
+        if (mtlist != null) {
+            return mtlist;
+        } else {
+            throw new WebApplicationException(404);
+        }
+    }
+
+    @GET
+    @Path("member/messages")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MemberMessageEntity> getMemberMessage(@QueryParam("email") String email) throws ExistException {
+        if (memberMessageSessionBean == null) {
+            System.err.println("memberMessageSessionBean is null");
+        }
+        List<MemberMessageEntity> messageList = memberMessageSessionBean.getMessageByMemberEmail(email);
+        if (messageList != null) {
+            return messageList;
+        } else {
+            throw new WebApplicationException(404);
+        }
+    }
+    
+    @DELETE
+    @Path("member/messages")
+    public void deleteMemberMessage(@QueryParam("messageId") Long messageId) throws ExistException {
+        if (memberMessageSessionBean == null) {
+            System.err.println("memberMessageSessionBean is null");
+        }
+        MemberMessageEntity thisMessage = memberMessageSessionBean.getMessageById(messageId);
+        memberMessageSessionBean.deleteMessage(thisMessage);
+    }
+    
+    @GET
+    @Path("member/promotions")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<PromotionEntity> getMemberPromotion(@QueryParam("email") String email) throws ExistException {
+        if (promotionSessionBean == null) {
+            System.err.println("promotionSessionBean is null");
+        }
+        List<PromotionEntity> promotionList = promotionSessionBean.getPromotionByMemberEmail(email);
+        if (promotionList != null) {
+            return promotionList;
+        } else {
+            throw new WebApplicationException(404);
+        }
     }
 
     private MemberSessionBean lookupMemberSessionBeanBean() {

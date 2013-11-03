@@ -43,7 +43,18 @@ public class MemberMessageSessionBean {
     public MemberMessageEntity getMessageById(Long messageId) throws ExistException {
         MemberMessageEntity thisMessage = em.find(MemberMessageEntity.class, messageId);
         if(thisMessage == null) throw new ExistException("This message does not exist");
+        System.out.println("Message found: " + thisMessage.getMessageTitle());
         return thisMessage;
+    }
+    
+    public void createMessage(MemberMessageEntity newMessage) {
+        em.persist(newMessage);
+    }
+    
+    public boolean deleteMessage(MemberMessageEntity thisMessage) {
+        em.remove(thisMessage);
+        System.out.println("this message is successfully deleted");
+        return true;
     }
     
 }
