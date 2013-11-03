@@ -33,6 +33,9 @@
                 <li><a href="attraction">Attraction</a>
                     <ul>
                         <li><a href="adventureWorld">Adventure World</a></li>
+                        <li><a href="horrorHouse">Horror House</a></li>
+                        <li><a href="museum">the Art Museum</a></li>
+                        <li><a href="aquarium">Underwater Aquarium</a></li>
                     </ul>
                 </li>
                 <li><a href="shopping" >Shopping</a></li>
