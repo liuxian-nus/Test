@@ -20,6 +20,10 @@ public class FeedbackEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long feedbackId;
+    private String content;
+    private String customerEmail;
+    private String status;
+            
 
     public Long getId() {
         return feedbackId;
@@ -28,6 +32,40 @@ public class FeedbackEntity implements Serializable {
     public void setId(Long feedbackId) {
         this.feedbackId = feedbackId;
     }
+
+    public Long getFeedbackId() {
+        return feedbackId;
+    }
+
+    public void setFeedbackId(Long feedbackId) {
+        this.feedbackId = feedbackId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
 
     @Override
     public int hashCode() {
