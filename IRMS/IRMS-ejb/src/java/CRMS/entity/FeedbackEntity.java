@@ -23,6 +23,9 @@ public class FeedbackEntity implements Serializable {
     private String content;
     private String customerEmail;
     private String status;
+    private String title;
+    private String department;
+    private Integer rating;
             
 
     public Long getId() {
@@ -33,6 +36,31 @@ public class FeedbackEntity implements Serializable {
         this.feedbackId = feedbackId;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    
     public Long getFeedbackId() {
         return feedbackId;
     }
