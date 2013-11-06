@@ -59,6 +59,8 @@ public class MemberEntity implements Serializable {
     private Set <PromotionEntity> MarketingCampaigns;
     @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
     private List <TicketPurchaseEntity> ticketPurchases=new ArrayList<TicketPurchaseEntity>();
+    @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
+    private List <CouponEntity> coupons=new ArrayList<CouponEntity>();
     
     public Set<PromotionEntity> getMarketingCampaigns() {
         return MarketingCampaigns;
@@ -266,6 +268,16 @@ public class MemberEntity implements Serializable {
     public void setMemberAccountStatus(boolean memberAccountStatus) {
         this.memberAccountStatus = memberAccountStatus;
     }
+
+    public List<CouponEntity> getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(List<CouponEntity> coupons) {
+        this.coupons = coupons;
+    }
+    
+    
     
     
     @Override
