@@ -8,7 +8,6 @@ import CRMS.entity.FeedbackEntity;
 import Exception.ExistException;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -20,7 +19,6 @@ import javax.persistence.Query;
  * @author Jieqiong
  */
 @Stateless
-@LocalBean
 public class FeedbackSessionBean {
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -32,10 +30,16 @@ public class FeedbackSessionBean {
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addFeedback(FeedbackEntity feedback){
+    public void createFeedback(FeedbackEntity feedback){
         System.out.println("FeedbackSessionBean: addFeedback");
         em.persist(feedback);
         System.out.println("feedback added!");
+    }
+
+    //used for mobile app
+    public void createNewFeedback(String email, String feedbackTitle, String feedbackSentDate, String feedbackContent, String feedbackDepartment, String rating) {
+        //algorithm missing
+        em.persist(feedback);
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -64,7 +68,8 @@ public class FeedbackSessionBean {
         }      
     }
     
-    public void removeFeedback(Long feedbackId)throws ExistException {
+    /* shouldn't implement this method
+     * public void removeFeedback(Long feedbackId)throws ExistException {
         System.out.println("FeedbackSessionBean:removeFeedback");
         feedback= em.find(FeedbackEntity.class, feedbackId);
         if(feedback == null) {
@@ -73,14 +78,10 @@ public class FeedbackSessionBean {
         em.remove(feedback);
         System.out.println("the feedback has been removed.");
         return;
-    }
+    }*/
 
     public void persist(Object object) {
         em.persist(object);
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-    
 
 }

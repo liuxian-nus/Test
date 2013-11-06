@@ -8,6 +8,7 @@ import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberMessageEntity;
 import Exception.ExistException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -48,13 +49,20 @@ public class MemberMessageSessionBean {
     }
     
     public void createMessage(MemberMessageEntity newMessage) {
+        newMessage.setMessageStatus("unread");
         em.persist(newMessage);
     }
     
     public boolean deleteMessage(MemberMessageEntity thisMessage) {
-        em.remove(thisMessage);
+        thisMessage.setMessageStatus("deleted");
+        em.merge(thisMessage);
         System.out.println("this message is successfully deleted");
         return true;
     }
-    
+        public boolean updateMessage(MemberMessageEntity thisMessage) {
+        thisMessage.setMessageStatus("read");
+        em.merge(thisMessage);
+        System.out.println("this message is successfully updated to read");
+        return true;
+    }
 }

@@ -5,10 +5,12 @@
 package CRMS.entity;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -20,38 +22,14 @@ public class FeedbackEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long feedbackId;
-    private String content;
-    private String customerEmail;
-    private String status;
-    private String title;
-    private String department;
+    private String feedbackContent;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    private MemberEntity feedbackOwner;
+    private String feedbackStatus;
+    private String feedbackTitle;
+    private String feedbackDepartment;
     private Integer rating;
             
-
-    public Long getId() {
-        return feedbackId;
-    }
-
-    public void setId(Long feedbackId) {
-        this.feedbackId = feedbackId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
     public Integer getRating() {
         return rating;
     }
@@ -69,31 +47,47 @@ public class FeedbackEntity implements Serializable {
         this.feedbackId = feedbackId;
     }
 
-    public String getContent() {
-        return content;
+    public String getFeedbackContent() {
+        return feedbackContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setFeedbackContent(String feedbackContent) {
+        this.feedbackContent = feedbackContent;
     }
 
-    public String getCustomerEmail() {
-        return customerEmail;
+    public MemberEntity getFeedbackOwner() {
+        return feedbackOwner;
     }
 
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
+    public void setFeedbackOwner(MemberEntity feedbackOwner) {
+        this.feedbackOwner = feedbackOwner;
     }
 
-    public String getStatus() {
-        return status;
+    public String getFeedbackStatus() {
+        return feedbackStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setFeedbackStatus(String feedbackStatus) {
+        this.feedbackStatus = feedbackStatus;
     }
-    
-    
+
+    public String getFeedbackTitle() {
+        return feedbackTitle;
+    }
+
+    public void setFeedbackTitle(String feedbackTitle) {
+        this.feedbackTitle = feedbackTitle;
+    }
+
+    public String getFeedbackDepartment() {
+        return feedbackDepartment;
+    }
+
+    public void setFeedbackDepartment(String feedbackDepartment) {
+        this.feedbackDepartment = feedbackDepartment;
+    }
+
+
 
     @Override
     public int hashCode() {

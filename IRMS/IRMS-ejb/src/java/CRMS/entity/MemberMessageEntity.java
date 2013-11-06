@@ -34,6 +34,7 @@ public class MemberMessageEntity implements Serializable {
     private Date messageSentDate;
     @ManyToOne(cascade = {CascadeType.ALL})
     private MemberEntity memberReceiver;
+    private String messageStatus;
 
     public Long getMessageId() {
         return messageId;
@@ -81,6 +82,14 @@ public class MemberMessageEntity implements Serializable {
 
     public void setMemberReceiver(MemberEntity memberReceiver) {
         this.memberReceiver = memberReceiver;
+    }
+
+    public String getMessageStatus() {
+        return messageStatus;
+    }
+
+    public void setMessageStatus(String messageStatus) {
+        this.messageStatus = messageStatus;
     }
     
     @Override

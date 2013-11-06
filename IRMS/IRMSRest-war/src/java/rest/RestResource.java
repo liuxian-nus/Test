@@ -4,10 +4,12 @@
  */
 package rest;
 
+import CRMS.entity.FeedbackEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberMessageEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.entity.PromotionEntity;
+import CRMS.session.FeedbackSessionBean;
 import CRMS.session.MemberMessageSessionBean;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.PromotionSessionBean;
@@ -49,7 +51,9 @@ public class RestResource {
     @EJB
     MemberSessionBean memberSessionBean;
     @EJB
-    PromotionSessionBean promotionSessionBean;    
+    PromotionSessionBean promotionSessionBean;  
+    @EJB
+    FeedbackSessionBean feedbackSessionBean;
     
     @Context
     private UriInfo context;
@@ -114,7 +118,6 @@ public class RestResource {
     @PUT
     @Path("member/password/{email}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public void updatePassword(@PathParam("email") String email, @FormParam("memberPassword") String memberPassword) {
         if (memberSessionBean == null) {
             System.err.println("memberSessionBean is null");
@@ -154,6 +157,16 @@ public class RestResource {
         }
     }
     
+    @PUT
+    @Path("member/messages")
+    public void changeMessageStatus(@QueryParam("messageId") Long messageId) throws ExistException {
+        if (memberMessageSessionBean == null) {
+            System.err.println("memberMessageSessionBean is null");
+        }
+        MemberMessageEntity thisMessage = memberMessageSessionBean.getMessageById(messageId);
+        memberMessageSessionBean.updateMessage(thisMessage);
+    }
+    
     @DELETE
     @Path("member/messages")
     public void deleteMemberMessage(@QueryParam("messageId") Long messageId) throws ExistException {
@@ -177,6 +190,20 @@ public class RestResource {
         } else {
             throw new WebApplicationException(404);
         }
+    }   
+    @PUT
+    @Path("member/feedback")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean sendNewFeedback(@PathParam("email") String email,
+            @FormParam("feedbackTitle") String feedbackTitle,
+            @FormParam("feedbackDate") String feedbackSentDate,
+            @FormParam("feedbackContent") String feedbackContent,
+            @FormParam("feedbackDepartment") String feedbackDepartment,
+            @FormParam("rating") String rating) throws ExistException, ParseException {
+        if(feedbackSessionBean == null) System.err.println("feedbackSessionBean is null");
+        System.out.println("from user: " + email);
+        feedbackSessionBean.createNewFeedback(email,feedbackTitle,feedbackSentDate, feedbackContent,feedbackDepartment,rating);
+        return true;
     }
 
     private MemberSessionBean lookupMemberSessionBeanBean() {
