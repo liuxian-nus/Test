@@ -813,6 +813,8 @@ public class EmailSessionBean {
               
         } 
         document.add(table);
+        
+        
         document.close();
           
         return OUTPUTFILE; 
