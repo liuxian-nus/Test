@@ -692,14 +692,14 @@ public class initializationManagedBean implements Serializable {
 
     public void createVIP() {
         System.err.println("go to create VIP page...");
-        Date bowendate = new Date(90, 10, 8);
+        Date bowendate = new Date(90, 11, 9);
 
         member2 = new MemberEntity();
-        member2.setMemberEmail("bowen@nus.edu.sg");
-        member2.setMemberPassword("ABCabc123");
-        member2.setMemberName("Bowen");
+        member2.setMemberEmail("leijq369@gmail.com");
+        member2.setMemberPassword(ePasswordHashSessionBean.hashPassword("ABCabc123"));
+        member2.setMemberName("Jieqiong");
         System.out.println("Create a new member: welcome! " + member2.getMemberName());
-        member2.setMemberHP("92728760");
+        member2.setMemberHP("93402884");
         member2.setNationality("China");
         member2.setMemberDob(bowendate);
         member2.setGender("Female");
@@ -707,7 +707,7 @@ public class initializationManagedBean implements Serializable {
         member2.setIsVIP(true);
         member2.setIsSubscriber(true);
         member2.setSecurityQuestion("What is your mother's original surname?");
-        member2.setAnswer("Zheng");
+        member2.setAnswer("Zhang");
         member2.setPreferences("to be set");
         member2.setPoint(10000);
         member2.setCoin(200);
