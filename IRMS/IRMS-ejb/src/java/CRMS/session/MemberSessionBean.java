@@ -241,7 +241,7 @@ public class MemberSessionBean {
         }
         return memberTransactionList;
     }
-
+    
     public List<MemberEntity> getAllMembers() {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -258,6 +258,8 @@ public class MemberSessionBean {
         tps.add(tp);
         member.setTicketPurchases(tps);
         em.merge(member);
+        em.flush();
+        return;
     }
 
     @Remove
