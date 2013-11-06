@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,6 +33,12 @@ public class MemberTransactionSessionBean {
     MemberTransactionEntity mt;
 
     public MemberTransactionSessionBean() {
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public MemberTransactionEntity addMemberTransaction(MemberTransactionEntity mt){
+        em.persist(mt);
+        return mt;
     }
 
     public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay) {
@@ -51,13 +59,12 @@ public class MemberTransactionSessionBean {
             System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
         } else {
             double tempCoin = member.getCoin();
-            member.setCoin(0);
+            member.setCoin(0); //why set coin to 0??
             System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
         }
         System.out.println("member transaction successfully added");
         System.out.println("started to add member transaction");
         member.addMemberTransaction(mt);
-        em.merge(member);
         System.out.println("member transaction added");
     }
     
@@ -97,7 +104,10 @@ public class MemberTransactionSessionBean {
         double point = member.getPoint();
         point = point + mtAmount * 0.01;
         member.setPoint(point);
+        em.merge(member);
+        em.flush();
         System.out.println("Member : " + member.getMemberName() + " account has been credited by" + point + "points");
+        System.out.println("point has been updated to "+member.getPoint());
         }
         else return;
     }
@@ -107,9 +117,32 @@ public class MemberTransactionSessionBean {
         double coin = member.getCoin();
         coin = coin + mtAmount * 0.01;
         member.setCoin(coin);
+        em.merge(member);
+        em.flush();
+        System.out.println("coin has been updated to "+member.getCoin());
         }
         else return;
     }
+    
+    public void payByCoin(MemberEntity member, double mtAmount){
+        double coin=member.getCoin();
+        coin-=mtAmount;
+        member.setCoin(coin);
+        em.merge(member);
+        em.flush();
+        System.out.println("member coin has been deducted to "+member.getCoin());
+    }
+    
+    public boolean checkCoinAmount(MemberEntity member, double mtAmount){
+        double coin=member.getCoin();
+        System.out.println("coins: "+coin);
+        if(coin>=mtAmount){
+            System.out.println("enough coin");
+            return true;
+        }
+        else return false;
+    }
+    
 
     private void updateVIP(double point) {
         if (point >= 500) {
@@ -120,6 +153,24 @@ public class MemberTransactionSessionBean {
             System.out.println("MTSessionBean: Member does not meet the requirement for VIP upgrade!");
         }
     }
+    
+    public void updateVIP(MemberEntity member){
+        if(member.isVIP()) {
+            System.out.println("member is VIP already");
+            return;
+        }
+        else{
+            if (member.getPoint() >= 500) {
+                member.setIsVIP(true);
+                em.merge(member);
+                em.flush();
+                System.out.println("Member has been upgraded to VIP!");
+            } else
+                System.out.println("Member does not meet the requirement for VIP upgrade!");
+        }
+    }
+    
+    
 }
 // Add business logic below. (Right-click in editor and choose
 // "Insert Code > Add Business Method")

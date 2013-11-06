@@ -15,6 +15,7 @@ import ATMS.session.ExpressPassPurchaseSessionBean;
 import ATMS.session.TicketPurchaseSessionBean;
 import ATMS.session.TicketSessionBean;
 import CRMS.entity.MemberEntity;
+import CRMS.entity.MemberTransactionEntity;
 import CRMS.session.GenerateBarcodeSessionBean;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
@@ -24,6 +25,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -72,6 +74,8 @@ public class ATMSServlet extends HttpServlet {
     ExpressPassPurchaseEntity eppurchase;
     List<AttrExpressPassEntity> eps;
     AttrExpressPassEntity ep;
+    MemberTransactionEntity mt;
+    String message="";
     
 
     /**
@@ -197,6 +201,8 @@ public class ATMSServlet extends HttpServlet {
                 Integer year=Integer.parseInt(request.getParameter("dateYear"));
                 Date date;
                 date = new Date(year - 1900, month - 1, day);
+                session.setAttribute("date",date);
+                System.out.println("new date session set");
                 
                 String attrId=request.getParameter("attrId");
                 System.out.println("attrId: "+attrId);
@@ -406,18 +412,59 @@ public class ATMSServlet extends HttpServlet {
                 System.out.println("tpStatus:"+tp.getAttrTPStatus());
                 attr=(AttractionEntity)session.getAttribute("attr");
                 System.out.println("attr: "+attr.getAttrName());
+                Boolean coinPay=false;
+                Boolean enoughCoin=false;
+                
+                String paymentMethod =request.getParameter("paymentMethod");
+                if(paymentMethod.equals("Coin")){
+                    coinPay=true;
+                    System.out.println("pay by coin");
+                }
                
                 member=memberSessionBean.getMemberByEmail(email);
+                if(member==null&&coinPay==true){
+                    message="You must be a member to pay by coins";
+                    request.setAttribute("message", message);
+                    request.getRequestDispatcher("/ticketBookingPayment.jsp").forward(request, response);            
+                }
                 if(member!=null){
                     System.out.println("is member");
+                    if(coinPay){
+                        enoughCoin=memberTransactionSessionBean.checkCoinAmount(member,tp.getAttrTicketFee());
+                        if(!enoughCoin){
+                            System.out.println("coin is not enough");
+                            message = "Coin is not enough.";
+                            request.setAttribute("message", message);
+                            request.getRequestDispatcher("/ticketBookingPayment.jsp").forward(request, response);
+                            return;
+                        }
+                        memberTransactionSessionBean.payByCoin(member,tp.getAttrTicketFee());
+                        System.out.println("pay by coin successful");
+                    }else{
+                        System.out.println("not coinpay");
+                        memberTransactionSessionBean.addPoint(member, tp.getAttrTicketFee());
+                        memberTransactionSessionBean.addCoin(member, tp.getAttrTicketFee());
+                        memberTransactionSessionBean.updateVIP(member);
+                    }                  
                     tp.setMember(member);
                     ticketPurchaseSessionBean.updateTicketPurchase(tp);
                     memberSessionBean.updateMemberTicketPurchase(member, tp);
-//                    System.out.println("add member transaction");
-//                    memberTransactionSessionBean.addMemberTransaction(member,tp.getAttrTicketFee(),
-//                            tp.getAttrTicketBookDate(),"Attraction","", false);
-//                    System.out.println("transaction added");
-
+                    System.out.println("add member transaction");
+                    mt=new MemberTransactionEntity();
+                    Date date=(Date)session.getAttribute("date");
+                    mt.setMtDate(date);
+                    mt.setMtAmount(tp.getAttrTicketFee());
+                    mt.setMtDepartment("Attraction");
+                    mt.setMtMode(true);
+                    mt.setPaymentStatus(true);
+                    mt.setMemberEmail(email);
+                    mt=memberTransactionSessionBean.addMemberTransaction(mt);
+                    System.out.println("member transaction added");
+                    Set<MemberTransactionEntity> allMTs=member.getMemberTransactions();
+                    allMTs.add(mt);
+                    member.setMemberTransactions(allMTs);
+                    memberSessionBean.updateMember(member);
+                    System.out.println("member updated"); 
                 }
                
                 tp.setAttrTPStatus("Purchased");
@@ -442,11 +489,9 @@ public class ATMSServlet extends HttpServlet {
                 eppurchase.setEppStatus("Purchased");
                 expressPassPurchaseSessionBean.updateEPPurchase(eppurchase);
                 
-                emailSessionBean.emailAttractionTicketSingle(email, tp);
-                System.out.println("email sent");
-                
-//               
-                
+//                emailSessionBean.emailAttractionTicketSingle(email, tp);
+//                System.out.println("email sent");
+                           
                 request.getRequestDispatcher("/ticketBookingConfirmation.jsp").forward(request, response);
             }else {
                 System.out.println("other page");

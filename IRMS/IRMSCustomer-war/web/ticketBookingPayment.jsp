@@ -25,6 +25,21 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="large-2 large columns">
+                    <label for="right-label" class="left-align,inline"><strong>Payment method</label>
+                </div>
+                <div class="small-6 columns"> 
+
+                    <select required id="customDropdown" name="paymentMethod">
+                        <option value="Card">Credit card</option>
+                        <option value="Coin">Coins</option>
+                    </select>
+                </div>
+                <div class="large-4 columns">
+                    <p>${message}</p>
+                </div>
+            </div>
             <p>Please use your registered email if you are a member.</p>
             <div class="row">
                 <input type="submit" class="small button" value="Submit">
