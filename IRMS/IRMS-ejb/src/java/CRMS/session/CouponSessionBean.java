@@ -40,7 +40,7 @@ public class CouponSessionBean {
         System.out.println("CouponSessionBean : generateCoupon");
         coupon=new CouponEntity();
         coupon.setCouponIssueDate(date);
-        coupon.setMember(member);
+        coupon.setCouponOwner(member);
         coupon.setCouponType(type);
         coupon.setStatus("New");
         em.persist(coupon);
