@@ -1,5 +1,6 @@
 package CRMS.session;
 
+import ATMS.entity.ExpressPassPurchaseEntity;
 import ATMS.entity.TicketPurchaseEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
@@ -257,6 +258,16 @@ public class MemberSessionBean {
         List<TicketPurchaseEntity> tps = member.getTicketPurchases();
         tps.add(tp);
         member.setTicketPurchases(tps);
+        em.merge(member);
+        em.flush();
+        return;
+    }
+    
+    public void updateMemberExpressPassPurchase(MemberEntity member, ExpressPassPurchaseEntity epp) {
+        System.out.println("updateMemberExpressPassPurchase");
+        List<ExpressPassPurchaseEntity> epps = member.getExpressPassPurchases();
+        epps.add(epp);
+        member.setExpressPassPurchases(epps);
         em.merge(member);
         em.flush();
         return;

@@ -5,6 +5,7 @@
 package CRMS.entity;
 
 import ACMS.entity.ReservationEntity;
+import ATMS.entity.ExpressPassPurchaseEntity;
 import ATMS.entity.TicketPurchaseEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -59,6 +60,8 @@ public class MemberEntity implements Serializable {
     private Set <PromotionEntity> MarketingCampaigns;
     @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
     private List <TicketPurchaseEntity> ticketPurchases=new ArrayList<TicketPurchaseEntity>();
+    @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
+    private List <ExpressPassPurchaseEntity> expressPassPurchases=new ArrayList<ExpressPassPurchaseEntity>();
     @OneToMany (cascade={CascadeType.ALL}, mappedBy ="couponOwner")
     private List <CouponEntity> coupons=new ArrayList<CouponEntity>();
     @OneToMany (cascade={CascadeType.ALL}, mappedBy ="feedbackOwner")
@@ -95,6 +98,15 @@ public class MemberEntity implements Serializable {
     public void setTicketPurchases(List<TicketPurchaseEntity> ticketPurchases) {
         this.ticketPurchases = ticketPurchases;
     }
+
+    public List<ExpressPassPurchaseEntity> getExpressPassPurchases() {
+        return expressPassPurchases;
+    }
+
+    public void setExpressPassPurchases(List<ExpressPassPurchaseEntity> expressPassPurchases) {
+        this.expressPassPurchases = expressPassPurchases;
+    }
+
 
     public List<FeedbackEntity> getFeedbacks() {
         return feedbacks;
