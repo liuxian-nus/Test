@@ -5,8 +5,10 @@
 package CRMS.session;
 
 import CRMS.entity.FeedbackEntity;
+import CRMS.entity.MemberEntity;
 import Exception.ExistException;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -20,10 +22,13 @@ import javax.persistence.Query;
  */
 @Stateless
 public class FeedbackSessionBean {
+    @EJB
+    private MemberSessionBean memberSessionBean;
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     
     FeedbackEntity feedback;
+    
     
     public FeedbackSessionBean(){
         feedback=new FeedbackEntity();
@@ -31,9 +36,27 @@ public class FeedbackSessionBean {
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void createFeedback(FeedbackEntity feedback){
-        System.out.println("FeedbackSessionBean: addFeedback");
+        System.out.println("FeedbackSessionBean: createFeedback");
         em.persist(feedback);
-        System.out.println("feedback added!");
+        System.out.println("feedback created!");
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void createFeedback(String content, String title, String email, String department, int rating){
+        System.out.println("FeedbackSessionBean: createFeedback");
+        feedback.setFeedbackContent(content);
+        feedback.setFeedbackTitle(title);
+        feedback.setFeedbackDepartment(department);
+        feedback.setFeedbackOwnerEmail(email);
+        feedback.setRating(rating);
+        feedback.setFeedbackStatus("New");
+        MemberEntity member=memberSessionBean.getMemberByEmail(email);
+        if(member!=null){
+            System.out.println("member found: "+member.getMemberName());
+            feedback.setFeedbackOwner(member);
+        }
+        em.persist(feedback);
+        System.out.println("feedback created!");
     }
 
     //used for mobile app

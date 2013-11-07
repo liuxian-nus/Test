@@ -61,6 +61,8 @@ public class MemberEntity implements Serializable {
     private List <TicketPurchaseEntity> ticketPurchases=new ArrayList<TicketPurchaseEntity>();
     @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
     private List <CouponEntity> coupons=new ArrayList<CouponEntity>();
+    @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
+    private List <FeedbackEntity> feedbacks=new ArrayList<FeedbackEntity>();
     
     public Set<PromotionEntity> getMarketingCampaigns() {
         return MarketingCampaigns;
@@ -93,6 +95,16 @@ public class MemberEntity implements Serializable {
     public void setTicketPurchases(List<TicketPurchaseEntity> ticketPurchases) {
         this.ticketPurchases = ticketPurchases;
     }
+
+    public List<FeedbackEntity> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(List<FeedbackEntity> feedbacks) {
+        this.feedbacks = feedbacks;
+    }
+    
+    
     
  
     //create a new MemberEntity instance

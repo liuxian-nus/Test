@@ -25,7 +25,8 @@ public class FeedbackEntity implements Serializable {
     private String feedbackContent;
     @ManyToOne(cascade = {CascadeType.ALL})
     private MemberEntity feedbackOwner;
-    private String feedbackStatus;
+    private String feedbackOwnerEmail;
+    private String feedbackStatus; //New, In Progress, Handled
     private String feedbackTitle;
     private String feedbackDepartment;
     private Integer rating;
@@ -87,7 +88,14 @@ public class FeedbackEntity implements Serializable {
         this.feedbackDepartment = feedbackDepartment;
     }
 
+    public String getFeedbackOwnerEmail() {
+        return feedbackOwnerEmail;
+    }
 
+    public void setFeedbackOwnerEmail(String feedbackOwnerEmail) {
+        this.feedbackOwnerEmail = feedbackOwnerEmail;
+    }
+    
 
     @Override
     public int hashCode() {
