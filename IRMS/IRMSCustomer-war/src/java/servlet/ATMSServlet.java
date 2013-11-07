@@ -168,19 +168,19 @@ public class ATMSServlet extends HttpServlet {
                  session.setAttribute("tickets", tickets);
                  
                  request.getRequestDispatcher("/aquarium.jsp").forward(request, response);
-            }else if("ticketBooking".equals(page)){
-                System.out.println("***ticketBooking page***");
+            }else if("attrTicketBooking".equals(page)){
+                System.out.println("***attrTicketBooking page***");
             /*    List<AttrTicketEntity> tickets=ticketSessionBean.getAllTickets();
                 session.setAttribute("tickets", tickets);
                 List<AttrExpressPassEntity> eps=attrExpressPassSessionBean.getAllEPs();
                 session.setAttribute("eps",eps);*/
 
-                request.getRequestDispatcher("/ticketBooking.jsp").forward(request, response);
+                request.getRequestDispatcher("/attrTicketBooking.jsp").forward(request, response);
             }else if("horrorHouseTicketBooking".equals(page)){
                 System.out.println("***horrorHouseTicketBooking page***");
               request.getRequestDispatcher("/horrorHouseTicketBooking.jsp").forward(request, response);
-            }else if("ticketBookingInformation".equals(page)){
-                System.out.println("***ticketBookingInformation page***");                    
+            }else if("attrTicketBookingInformation".equals(page)){
+                System.out.println("***attrTicketBookingInformation page***");                    
  
                 
                 Integer quantity1=Integer.parseInt(request.getParameter("quantity1"));
@@ -398,13 +398,13 @@ public class ATMSServlet extends HttpServlet {
                     
                 }
 
-                request.getRequestDispatcher("/ticketBookingInformation.jsp").forward(request, response);
-            }else if("ticketBookingPayment".equals(page)){
-                System.out.println("***ticketBookingPayment page***");
+                request.getRequestDispatcher("/attrTicketBookingInformation.jsp").forward(request, response);
+            }else if("attrTicketBookingPayment".equals(page)){
+                System.out.println("***attrTicketBookingPayment page***");
  
-                request.getRequestDispatcher("/ticketBookingPayment.jsp").forward(request, response);
-            }else if("ticketBookingConfirmation".equals(page)){
-                System.out.println("***ticketBookingConfirmation page***");
+                request.getRequestDispatcher("/attrTicketBookingPayment.jsp").forward(request, response);
+            }else if("attrTicketBookingConfirmation".equals(page)){
+                System.out.println("***attrTicketBookingConfirmation page***");
                 
                 String email=request.getParameter("email");
                 System.out.println("email: "+email);
@@ -425,7 +425,7 @@ public class ATMSServlet extends HttpServlet {
                 if(member==null&&coinPay==true){
                     message="You must be a member to pay by coins";
                     request.setAttribute("message", message);
-                    request.getRequestDispatcher("/ticketBookingPayment.jsp").forward(request, response);            
+                    request.getRequestDispatcher("/attrTicketBookingPayment.jsp").forward(request, response);            
                 }
                 if(member!=null){
                     System.out.println("is member");
@@ -435,7 +435,7 @@ public class ATMSServlet extends HttpServlet {
                             System.out.println("coin is not enough");
                             message = "Coin is not enough.";
                             request.setAttribute("message", message);
-                            request.getRequestDispatcher("/ticketBookingPayment.jsp").forward(request, response);
+                            request.getRequestDispatcher("/attrTicketBookingPayment.jsp").forward(request, response);
                             return;
                         }
                         memberTransactionSessionBean.payByCoin(member,tp.getAttrTicketFee());
@@ -492,7 +492,7 @@ public class ATMSServlet extends HttpServlet {
 //                emailSessionBean.emailAttractionTicketSingle(email, tp);
 //                System.out.println("email sent");
                            
-                request.getRequestDispatcher("/ticketBookingConfirmation.jsp").forward(request, response);
+                request.getRequestDispatcher("/attrTicketBookingConfirmation.jsp").forward(request, response);
             }else {
                 System.out.println("other page");
             }

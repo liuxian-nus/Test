@@ -69,7 +69,7 @@
                 <table width="100%">
                     <tbody>
                         <tr>
-                            <td align="right"><a class="BoxButton" href="ticketBooking" target="_blank">Book Now</a></td>
+                            <td align="right"><a class="BoxButton" href="attrTicketBooking" target="_blank">Book Now</a></td>
                         </tr>
                     </tbody>
                 </table>

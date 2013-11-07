@@ -210,8 +210,8 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/ATMSServlet/attraction").forward(request, response);
             } else if ("adventureWorld".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/adventureWorld").forward(request, response);
-            } else if ("ticketBooking".equals(page)) {
-                request.getRequestDispatcher("/ATMSServlet/ticketBooking").forward(request, response);
+            } else if ("attrTicketBooking".equals(page)) {
+                request.getRequestDispatcher("/ATMSServlet/attrTicketBooking").forward(request, response);
             }else if ("horrorHouse".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/horrorHouse").forward(request, response);
             }else if ("museum".equals(page)) {
@@ -220,12 +220,12 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/ATMSServlet/aquarium").forward(request, response);
             }else if ("horrorHouseTicketBooking".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/horrorHouseTicketBooking").forward(request, response);
-            } else if ("ticketBookingInformation".equals(page)) {
-                request.getRequestDispatcher("/ATMSServlet/ticketBookingInformation").forward(request, response);
-            }else if ("ticketBookingPayment".equals(page)) {
-                request.getRequestDispatcher("/ATMSServlet/ticketBookingPayment").forward(request, response);
-            }else if ("ticketBookingConfirmation".equals(page)) {
-                request.getRequestDispatcher("/ATMSServlet/ticketBookingConfirmation").forward(request, response);
+            } else if ("attrTicketBookingInformation".equals(page)) {
+                request.getRequestDispatcher("/ATMSServlet/attrTicketBookingInformation").forward(request, response);
+            }else if ("attrTicketBookingPayment".equals(page)) {
+                request.getRequestDispatcher("/ATMSServlet/attrTicketBookingPayment").forward(request, response);
+            }else if ("attrTicketBookingConfirmation".equals(page)) {
+                request.getRequestDispatcher("/ATMSServlet/attrTicketBookingConfirmation").forward(request, response);
             } else {
                 System.out.println("other page");
 
