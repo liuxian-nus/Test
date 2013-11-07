@@ -358,6 +358,13 @@ public class ATMSServlet extends HttpServlet {
                 Integer epq1=Integer.parseInt(request.getParameter("epq1"));
                 Integer epq2=Integer.parseInt(request.getParameter("epq2"));
                 Integer epq3=Integer.parseInt(request.getParameter("epq3"));
+                Integer epq4=Integer.parseInt(request.getParameter("epq4"));
+                Integer epq5=Integer.parseInt(request.getParameter("epq5"));
+                Integer epq6=Integer.parseInt(request.getParameter("epq6"));
+                Integer epq7=Integer.parseInt(request.getParameter("epq7"));
+                Integer epq8=Integer.parseInt(request.getParameter("epq8"));
+                Integer epq9=Integer.parseInt(request.getParameter("epq9"));
+                
                 
                 eppurchase=new ExpressPassPurchaseEntity();
                 if(epq1==0&&epq2==0&&epq3==0){
@@ -375,24 +382,66 @@ public class ATMSServlet extends HttpServlet {
                     double epFee=0.0;
    
                     if(epq1!=0){
-                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(1)));
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(i)));
                         System.out.println("epName: "+ep.getAttrEPName());
                         eps.add(ep);
                         epquantities.add(epq1);
                         epFee+=ep.getAttrEPPrice();
                     }
                     if(epq2!=0){
-                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(2)));
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(i+1)));
                         System.out.println("epName: "+ep.getAttrEPName());
                         eps.add(ep);
                         epquantities.add(epq2);
                         epFee+=ep.getAttrEPPrice();
                     }
                     if(epq3!=0){
-                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(3)));
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(i+2)));
                         System.out.println("epName: "+ep.getAttrEPName());
                         eps.add(ep);
-                        epquantities.add(epq2);
+                        epquantities.add(epq3);
+                        epFee+=ep.getAttrEPPrice();
+                    }
+                    if(epq4!=0){
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(i+3)));
+                        System.out.println("epName: "+ep.getAttrEPName());
+                        eps.add(ep);
+                        epquantities.add(epq4);
+                        epFee+=ep.getAttrEPPrice();
+                    }
+                    if(epq5!=0){
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(i+4)));
+                        System.out.println("epName: "+ep.getAttrEPName());
+                        eps.add(ep);
+                        epquantities.add(epq5);
+                        epFee+=ep.getAttrEPPrice();
+                    }
+                    if(epq6!=0){
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(i+5)));
+                        System.out.println("epName: "+ep.getAttrEPName());
+                        eps.add(ep);
+                        epquantities.add(epq6);
+                        epFee+=ep.getAttrEPPrice();
+                    }
+                    if(epq7!=0){
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(i+6)));
+                        System.out.println("epName: "+ep.getAttrEPName());
+                        eps.add(ep);
+                        epquantities.add(epq7);
+                        epFee+=ep.getAttrEPPrice();
+                    }
+                    if(epq8!=0){
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(i+7)));
+                        System.out.println("epName: "+ep.getAttrEPName());
+                        eps.add(ep);
+                        epquantities.add(epq8);
+                        epFee+=ep.getAttrEPPrice();
+                    }
+                    if(epq9!=0){
+                        ep=attrExpressPassSessionBean.getEPById(Long.parseLong(String.valueOf(i+8)));
+                        System.out.println("epName: "+ep.getAttrEPName());
+                        eps.add(ep);
+                        epquantities.add(epq9);
                         epFee+=ep.getAttrEPPrice();
                     }
                     

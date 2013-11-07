@@ -16,6 +16,7 @@
 <html>
     <head>
         <jsp:include page="base.jsp"></jsp:include>
+        <title>CIR Attractions</title>
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
@@ -27,7 +28,7 @@
         
         <ul>
             <li>
-                <h2>Adventure World Day Pass</h2>
+                <h3>Adventure World Tickets</h3>
                 <p>Purchase your day passes to Adventure World online and save time queuing when you arrive at the park. It’s quick and easy!<br />
                     We have passes for one day, two days, and a great value Annual/ Season Pass that treats you to a whole year of cutting-edge rides, shows and attractions!<br />
                     <br />
@@ -85,9 +86,9 @@
            
         <ul>
             <li>
-                <h2>Adventure World Express Pass</h2>
+                <h3>Adventure World Express Pass</h3>
                 <p>Express pass provides you a short cut to the rides. No more long queue!.<br />
-                    We have express passes for one day, two days, and a great value Annual/ Season Pass<br />
+                    We have express passes for one day, two days, and a great value Annual Pass<br />
                     <br />
                 <table class="styled" cellpadding="0" cellspacing="0" border="1" width="100%">
                     <tbody>
@@ -103,21 +104,21 @@
                         <tr>
                             <td class="subhead" style="text-align: left;">One Day Express Pass</td>
                             <td style="text-align: center;">$<%=eps.get(0).getAttrEPPrice()%></td>
-                            <td style="text-align: center;">$55</td>
-                            <td style="text-align: center;">$35</td>
+                            <td style="text-align: center;">$<%=eps.get(3).getAttrEPPrice()%></td>
+                            <td style="text-align: center;">$<%=eps.get(6).getAttrEPPrice()%></td>
                         </tr>
                         <tr>
                             <td class="subhead" style="text-align: left;">Two Day Pass<br />
                                 <span style="font-size: smaller;">(Two consecutive days)</span></td>
                             <td style="text-align: center;">$<%=eps.get(1).getAttrEPPrice()%></td>
-                            <td style="text-align: center;">$80</td>
-                            <td style="text-align: center;">$50</td>
+                            <td style="text-align: center;">$<%=eps.get(4).getAttrEPPrice()%></td>
+                            <td style="text-align: center;">$<%=eps.get(7).getAttrEPPrice()%></td>
                         </tr>
                         <tr>
                             <td class="subhead" style="text-align: left;">Annual Pass<br />
                             <td style="text-align: center;">$<%=eps.get(2).getAttrEPPrice()%></td>
-                            <td style="text-align: center;">$80</td>
-                            <td style="text-align: center;">$50</td>
+                            <td style="text-align: center;">$<%=eps.get(5).getAttrEPPrice()%></td>
+                            <td style="text-align: center;">$<%=eps.get(8).getAttrEPPrice()%></td>
                         </tr>
                     </tbody>
                 </table>
