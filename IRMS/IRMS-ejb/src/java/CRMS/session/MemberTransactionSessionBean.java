@@ -58,8 +58,9 @@ public class MemberTransactionSessionBean {
             updateVIP(member.getPoint());
             System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
         } else {
-            double tempCoin = member.getCoin();
-            member.setCoin(0); //why set coin to 0??
+//            double tempCoin = member.getCoin();
+//            member.setCoin(0); //why set coin to 0??
+            payByCoin(member, amount);
             System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
         }
         System.out.println("member transaction successfully added");
