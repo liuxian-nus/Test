@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -36,7 +35,7 @@ public class CouponEntity implements Serializable {
     private String status; //New,Used, Expired
     private String department; //used at attraction or show
     @ManyToOne
-    MemberEntity member; //the owner of this coupon
+    MemberEntity couponOwner; //the owner of this coupon
     @ManyToOne
     CouponTypeEntity couponType;
 
@@ -80,12 +79,12 @@ public class CouponEntity implements Serializable {
         this.department = department;
     }
 
-    public MemberEntity getMember() {
-        return member;
+    public MemberEntity getCouponOwner() {
+        return couponOwner;
     }
 
-    public void setMember(MemberEntity member) {
-        this.member = member;
+    public void setCouponOwner(MemberEntity couponOwner) {
+        this.couponOwner = couponOwner;
     }
 
     public CouponTypeEntity getCouponType() {
