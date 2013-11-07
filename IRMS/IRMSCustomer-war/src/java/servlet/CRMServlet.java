@@ -118,6 +118,7 @@ public class CRMServlet extends HttpServlet {
                             member = memberSession.getMemberByEmail(email);
                             System.out.println(member.getMemberName());
                             session.setAttribute("member",member);
+                            session.setAttribute("memberEmail",email);
                             request.setAttribute("data", member);
                             request.setAttribute("memberEmail",member.getMemberEmail());
                             request.setAttribute("loginStatus","true");
