@@ -59,9 +59,9 @@ public class MemberEntity implements Serializable {
     private Set <PromotionEntity> MarketingCampaigns;
     @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
     private List <TicketPurchaseEntity> ticketPurchases=new ArrayList<TicketPurchaseEntity>();
-    @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
+    @OneToMany (cascade={CascadeType.ALL}, mappedBy ="couponOwner")
     private List <CouponEntity> coupons=new ArrayList<CouponEntity>();
-    @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
+    @OneToMany (cascade={CascadeType.ALL}, mappedBy ="feedbackOwner")
     private List <FeedbackEntity> feedbacks=new ArrayList<FeedbackEntity>();
     
     public Set<PromotionEntity> getMarketingCampaigns() {
