@@ -49,14 +49,20 @@
                         <h:panelGroup>  
                             <h:outputText value="#{manageAttractionsManagedBean.attr.attrName}" style="font-weight:bold" rendered="#{!manageAttractionsManagedBean.editMode}"/>  
                             <p:inputText id="name"   requiredMessage="Name cannot be empty" value="#{manageAttractionsManagedBean.attr.attrName}" rendered="#{manageAttractionsManagedBean.editMode}" required="true" label="Name"/>  
-                            <p:message for="name"/>
+                          
                         </h:panelGroup>  
                         <h:outputText value="Maximum Daily Quota: " /> 
                         <h:panelGroup>  
                             <h:outputText value="#{manageAttractionsManagedBean.attr.attrQuota.maxQuota}" style="font-weight:bold" rendered="#{!manageAttractionsManagedBean.editMode}"/>  
-                            <p:inputText id="quota2"   requiredMessage="Quota cannot be empty" value="#{manageAttractionsManagedBean.attr.attrQuota.maxQuota}" rendered="#{manageAttractionsManagedBean.editMode}" required="true" label="Quota"/>  
-                            <p:message for="name"/>
-                        </h:panelGroup>   
+                            <p:inputText id="quota2"   requiredMessage="Daily maximum quota cannot be empty" value="#{manageAttractionsManagedBean.attr.attrQuota.maxQuota}" rendered="#{manageAttractionsManagedBean.editMode}" required="true" label="Quota2"/>  
+                         
+                        </h:panelGroup>
+                        <h:outputText value="Available Quota: " /> 
+                        <h:panelGroup>  
+                            <h:outputText value="#{manageAttractionsManagedBean.attr.attrQuota.restQuota}" style="font-weight:bold" rendered="#{!manageAttractionsManagedBean.editMode}"/>  
+                            <p:inputText id="quota3"   requiredMessage="Available quota cannot be empty" value="#{manageAttractionsManagedBean.attr.attrQuota.restQuota}" rendered="#{manageAttractionsManagedBean.editMode}" required="true" label="Quota3"/>  
+                      
+                        </h:panelGroup> 
 
                         <f:facet name="footer">  
                             <p:outputPanel rendered="#{manageAttractionsManagedBean.editMode}" layout="block" style="text-align:right">  

@@ -50,9 +50,9 @@ public class AttractionSessionBean {
     
     public void updateAttraction(AttractionEntity attr){
         System.out.println("into AttractoinSessionBean: update Attraction");
-        quota=attr.getAttrQuota();
-        quota.setRestQuota(quota.getMaxQuota());
-        attr.setAttrQuota(quota);      
+//        quota=attr.getAttrQuota();
+//        quota.setRestQuota(quota.getMaxQuota());
+//        attr.setAttrQuota(quota);      
         em.merge(attr);
         em.flush();
         System.out.println("updated");
