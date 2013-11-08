@@ -7,121 +7,393 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        <h:form id="form">
-            <p:panel id="event" header="Event Management" style="height:495px;">
-                <div style="margin-top:20px;">
-                    <p:growl id="growl" showDetail="true" /> 
-                    
-                    <p:contextMenu for="events" widgetVar="cMenu">     
-                        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('carsTable').showCellEditor();return false;"/>    
-                        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide();"/>    
-                    </p:contextMenu> 
-                    
-                    <p:dataTable id="events" value="#{manageEventManagedBean.getEvents()}" 
-                                 var="eventList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
-                                 resizableColumns="true" editMode="cell" editable="true" widgetVar="carsTable"
-                                 rowKey="#{eventList.eventId}"
-                                 selectionMode="single" selection="#{manageEventManagedBean.selectedEvent}">
+        <p:tabView id="tabView">  
 
-                        <p:ajax event="cellEdit" listener="#{manageEventManagedBean.onCellEdit}" update=":form:growl" /> 
+            <p:tab id="tab1" title="Manage Reguest">  
+                <h:form id="form1">
+                    <div style="margin-top:20px;">
+                        <p:growl id="form1Msg" showDetail="true" /> 
 
-                        <p:column style="width:2%">  
-                            <p:rowToggler />  
-                        </p:column> 
+                        <p:contextMenu for="events" widgetVar="Menu1">     
+                            <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('pendingTable').showCellEditor();
+                                        return false;"/>    
+                            <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('Menu1').hide();"/>    
+                        </p:contextMenu> 
 
-                        <p:column headerText="Event Name">
-                            <h:outputText value="#{eventList.eventName}"/>
-                        </p:column>
+                        <p:dataTable id="events" value="#{manageEventManagedBean.pendingEvents}" 
+                                     var="eventList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
+                                     resizableColumns="true" editMode="cell" editable="true" widgetVar="pendingTable"
+                                     rowKey="#{eventList.eventId}"
+                                     selectionMode="single" selection="#{manageEventManagedBean.selectedEvent}">
 
-                        <p:column headerText="Event Type">
-                            <h:outputText value="#{eventList.eventType}"/>
-                        </p:column>
+                            <p:ajax event="cellEdit" listener="#{manageEventManagedBean.onCellEdit}" update=":tabView:form1:form1Msg" /> 
 
-                        <p:column headerText="Contact Name">
-                            <h:outputText value="#{eventList.title} #{eventList.name}"/>
-                        </p:column>
+                            <p:column style="width:15px">  
+                                <p:rowToggler />  
+                            </p:column> 
 
-                        <p:column headerText="Email">
-                            <h:outputText value="#{eventList.email}"/>
-                        </p:column>
+                            <p:column headerText="Event Name">
+                                <h:outputText value="#{eventList.eventName}"/>
+                            </p:column>
 
-                        <p:column headerText="Contact Number">
-                            <h:outputText value="#{eventList.eventContact}"/>
-                        </p:column>
+                            <p:column headerText="Event Type">
+                                <h:outputText value="#{eventList.eventType}"/>
+                            </p:column>
 
-                        <p:rowExpansion>
+                            <p:column headerText="Contact Name">
+                                <h:outputText value="#{eventList.title} #{eventList.name}"/>
+                            </p:column>
 
-                            <p:panel id="eventDetail" header="Event Details">
-                                <p:panelGrid id="grid" columns="4">
-                                    <h:outputText value="Estimared Start Date: "/>
-                                    <h:outputText value="#{eventList.startDate}"/>
+                            <p:column headerText="Email">
+                                <h:outputText value="#{eventList.email}"/>
+                            </p:column>
 
-                                    <h:outputText value="Estimared End Date: "/>
-                                    <h:outputText value="#{eventList.endDate}"/>
+                            <p:column headerText="Contact Number">
+                                <h:outputText value="#{eventList.eventContact}"/>
+                            </p:column>
 
-                                    <h:outputText value="Number of Attendees: "/>
-                                    <h:outputText value="#{eventList.eventScale}"/>
+                            <p:rowExpansion>
+                                <p:panel id="eventDetail" header="Event Details">
+                                    <p:panelGrid id="grid" columns="4">
+                                        <h:outputText value="Estimared Start Date: "/>
+                                        <h:outputText value="#{eventList.startDate}"/>
 
-                                    <h:outputText value="Estimated Budget: "/>
-                                    <h:outputText value="#{eventList.estimatedBudget}"/>
+                                        <h:outputText value="Estimared End Date: "/>
+                                        <h:outputText value="#{eventList.endDate}"/>
 
-                                    <h:outputText value="Address: "/>
-                                    <h:outputText value="#{eventList.address}"/>
+                                        <h:outputText value="Number of Attendees: "/>
+                                        <h:outputText value="#{eventList.eventScale}"/>
 
-                                    <h:outputText value="Country of Residence: "/>
-                                    <h:outputText value="#{eventList.countryOfResidence}"/>
+                                        <h:outputText value="Estimated Budget: "/>
+                                        <h:outputText value="#{eventList.estimatedBudget}"/>
 
-                                    <h:outputText value="Company: "/>
-                                    <h:outputText value="#{eventList.eventCorporate}"/>
+                                        <h:outputText value="Address: "/>
+                                        <h:outputText value="#{eventList.address}"/>
 
-                                    <h:outputText value="Industry: "/>
-                                    <h:outputText value="#{eventList.eventIndustry}"/>
+                                        <h:outputText value="Country of Residence: "/>
+                                        <h:outputText value="#{eventList.countryOfResidence}"/>
 
-                                    <h:outputText value="Preferred Language: "/>
-                                    <h:outputText value="#{eventList.preferLanguage}"/>
+                                        <h:outputText value="Company: "/>
+                                        <h:outputText value="#{eventList.eventCorporate}"/>
 
-                                    <h:outputText value="Notes: "/>
-                                    <h:outputText value="#{eventList.notes}"/>
-                                </p:panelGrid>
-                            </p:panel>
-                        </p:rowExpansion>
+                                        <h:outputText value="Industry: "/>
+                                        <h:outputText value="#{eventList.eventIndustry}"/>
 
-                        <p:column headerText="Status" style="width:25%">  
-                            <p:cellEditor>  
-                                <f:facet name="output">
-                                    <h:outputText value="#{eventList.status}" />
-                                </f:facet>
-                                <f:facet name="input">  
-                                    <h:selectOneMenu value="#{eventList.status}" style="width:100%">
-                                        <f:selectItems value="#{manageEventManagedBean.eventStatus}" var="man" itemLabel="#{man}" itemValue="#{man}" />
-                                    </h:selectOneMenu>  
-                                </f:facet>  
-                            </p:cellEditor>  
-                        </p:column>  
+                                        <h:outputText value="Preferred Language: "/>
+                                        <h:outputText value="#{eventList.preferLanguage}"/>
 
-                        <p:column style="width:5%">  
-                            <h:panelGrid columns="2" styleClass="actions" cellpadding="1">  
-                                <p:commandButton update="events" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
-                                    <f:setPropertyActionListener value="#{eventList}" target="#{manageEventManagedBean.selectedEvent}" />  
-                                </p:commandButton>  
-                            </h:panelGrid>  
-                        </p:column>  
+                                        <h:outputText value="Notes: "/>
+                                        <h:outputText value="#{eventList.notes}"/>
+                                    </p:panelGrid>
+                                </p:panel>
+                            </p:rowExpansion>
 
-                    </p:dataTable>  
+                            <p:column headerText="Status" style="width:70px">  
+                                <p:cellEditor>  
+                                    <f:facet name="output">
+                                        <h:outputText value="#{eventList.status}" />
+                                    </f:facet>
+                                    <f:facet name="input">  
+                                        <h:selectOneMenu value="#{eventList.status}" style="width:100%">
+                                            <f:selectItems value="#{manageEventManagedBean.eventStatus}" var="man" itemLabel="#{man}" itemValue="#{man}" />
+                                        </h:selectOneMenu>  
+                                    </f:facet>  
+                                </p:cellEditor>  
+                            </p:column>  
 
-                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
-                        <br/>
-                        Are you sure to delete?
-                        <br/><br/>
-                        <p:commandButton value="Yes" update="events" actionListener="#{manageEventManagedBean.deleteEvent}" oncomplete="confirmation.hide()">  
-                            <f:attribute name="code1" value="#{manageEventManagedBean.selectedEvent.eventId}" />
-                        </p:commandButton>
-                        <p:commandButton value="Not yet" onclick="confirmation.hide();" type="button" />  
-                    </p:dialog>  
-                </div>
-            </p:panel>
-        </h:form>  
+                            <p:column style="width:50px">  
+                                <h:panelGrid columns="2" styleClass="actions" cellpadding="1">  
+                                    <p:commandButton update="events" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                        <f:setPropertyActionListener value="#{eventList}" target="#{manageEventManagedBean.selectedEvent}" />  
+                                    </p:commandButton>  
+                                </h:panelGrid>  
+                            </p:column>  
 
+                        </p:dataTable>  
+
+                        <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
+                            <br/>
+                            Are you sure to delete?
+                            <br/><br/>
+                            <p:commandButton value="Yes" update="events" actionListener="#{manageEventManagedBean.deleteEvent}" oncomplete="confirmation.hide()">  
+                                <f:attribute name="code1" value="#{manageEventManagedBean.selectedEvent.eventId}" />
+                            </p:commandButton>
+                            <p:commandButton value="Not yet" onclick="confirmation.hide();" type="button" />  
+                        </p:dialog>  
+                    </div>
+                </h:form>  
+            </p:tab>
+            
+            <p:tab id="tab2" title="Manage Reserved Event">  
+                <h:form id="form2">
+                    <div style="margin-top:20px;">
+                        <p:growl id="form2Msg" showDetail="true" /> 
+
+                        <p:contextMenu for="reservedEvents" widgetVar="Menu2">     
+                            <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('reservedTable').showCellEditor();
+                                        return false;"/>    
+                            <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('Menu2').hide();"/>    
+                        </p:contextMenu> 
+
+                        <p:dataTable id="reservedEvents" value="#{manageEventManagedBean.reservedEvents}" 
+                                     var="eventList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
+                                     resizableColumns="true" editMode="cell" editable="true" widgetVar="reservedTable"
+                                     rowKey="#{eventList.eventId}"
+                                     selectionMode="single" selection="#{manageEventManagedBean.selectedEvent}">
+
+                            <p:ajax event="cellEdit" listener="#{manageEventManagedBean.onCellEdit}" update=":tabView:form2:form2Msg" /> 
+
+                            <p:column style="width:15px">  
+                                <p:rowToggler />  
+                            </p:column> 
+
+                            <p:column headerText="Event Name">
+                                <h:outputText value="#{eventList.eventName}"/>
+                            </p:column>
+
+                            <p:column headerText="Event Type">
+                                <h:outputText value="#{eventList.eventType}"/>
+                            </p:column>
+
+                            <p:column headerText="Contact Name">
+                                <h:outputText value="#{eventList.title} #{eventList.name}"/>
+                            </p:column>
+
+                            <p:column headerText="Email">
+                                <h:outputText value="#{eventList.email}"/>
+                            </p:column>
+
+                            <p:column headerText="Contact Number">
+                                <h:outputText value="#{eventList.eventContact}"/>
+                            </p:column>
+
+                            <p:rowExpansion>
+                                <p:panel id="eventDetail" header="Event Details">
+                                    <p:panelGrid id="grid" columns="4">
+                                        <h:outputText value="Estimared Start Date: "/>
+                                        <h:outputText value="#{eventList.startDate}"/>
+
+                                        <h:outputText value="Estimared End Date: "/>
+                                        <h:outputText value="#{eventList.endDate}"/>
+
+                                        <h:outputText value="Number of Attendees: "/>
+                                        <h:outputText value="#{eventList.eventScale}"/>
+
+                                        <h:outputText value="Estimated Budget: "/>
+                                        <h:outputText value="#{eventList.estimatedBudget}"/>
+
+                                        <h:outputText value="Address: "/>
+                                        <h:outputText value="#{eventList.address}"/>
+
+                                        <h:outputText value="Country of Residence: "/>
+                                        <h:outputText value="#{eventList.countryOfResidence}"/>
+
+                                        <h:outputText value="Company: "/>
+                                        <h:outputText value="#{eventList.eventCorporate}"/>
+
+                                        <h:outputText value="Industry: "/>
+                                        <h:outputText value="#{eventList.eventIndustry}"/>
+
+                                        <h:outputText value="Preferred Language: "/>
+                                        <h:outputText value="#{eventList.preferLanguage}"/>
+
+                                        <h:outputText value="Notes: "/>
+                                        <h:outputText value="#{eventList.notes}"/>
+                                    </p:panelGrid>
+                                </p:panel>
+                            </p:rowExpansion>
+
+                            <p:column headerText="Status" style="width:70px">  
+                                <p:cellEditor>  
+                                    <f:facet name="output">
+                                        <h:outputText value="#{eventList.status}" />
+                                    </f:facet>
+                                    <f:facet name="input">  
+                                        <h:selectOneMenu value="#{eventList.status}" style="width:100%">
+                                            <f:selectItems value="#{manageEventManagedBean.eventStatus2}" var="man2" itemLabel="#{man2}" itemValue="#{man2}" />
+                                        </h:selectOneMenu>  
+                                    </f:facet>  
+                                </p:cellEditor>  
+                            </p:column>  
+                        </p:dataTable>  
+                    </div>
+                </h:form>  
+            </p:tab>
+            
+            
+            <p:tab id="tab3" title="Manage Confirmed Event">  
+                <h:form id="form3">
+                    <div style="margin-top:20px;">
+                        <p:growl id="form3Msg" showDetail="true" /> 
+
+                        <p:contextMenu for="confirmedEvents" widgetVar="Menu3">     
+                            <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('confirmedTable').showCellEditor();
+                                        return false;"/>    
+                            <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('Menu3').hide();"/>    
+                        </p:contextMenu> 
+
+                        <p:dataTable id="confirmedEvents" value="#{manageEventManagedBean.confirmedEvents}" 
+                                     var="eventList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
+                                     resizableColumns="true" editMode="cell" editable="true" widgetVar="confirmedTable"
+                                     rowKey="#{eventList.eventId}"
+                                     selectionMode="single" selection="#{manageEventManagedBean.selectedEvent}">
+
+                            <p:ajax event="cellEdit" listener="#{manageEventManagedBean.onCellEdit}" update=":tabView:form3:form3Msg" /> 
+
+                            <p:column style="width:15px">  
+                                <p:rowToggler />  
+                            </p:column> 
+
+                            <p:column headerText="Event Name">
+                                <h:outputText value="#{eventList.eventName}"/>
+                            </p:column>
+
+                            <p:column headerText="Event Type">
+                                <h:outputText value="#{eventList.eventType}"/>
+                            </p:column>
+
+                            <p:column headerText="Contact Name">
+                                <h:outputText value="#{eventList.title} #{eventList.name}"/>
+                            </p:column>
+
+                            <p:column headerText="Email">
+                                <h:outputText value="#{eventList.email}"/>
+                            </p:column>
+
+                            <p:column headerText="Contact Number">
+                                <h:outputText value="#{eventList.eventContact}"/>
+                            </p:column>
+
+                            <p:rowExpansion>
+                                <p:panel id="eventDetail" header="Event Details">
+                                    <p:panelGrid id="grid" columns="4">
+                                        <h:outputText value="Estimared Start Date: "/>
+                                        <h:outputText value="#{eventList.startDate}"/>
+
+                                        <h:outputText value="Estimared End Date: "/>
+                                        <h:outputText value="#{eventList.endDate}"/>
+
+                                        <h:outputText value="Number of Attendees: "/>
+                                        <h:outputText value="#{eventList.eventScale}"/>
+
+                                        <h:outputText value="Estimated Budget: "/>
+                                        <h:outputText value="#{eventList.estimatedBudget}"/>
+
+                                        <h:outputText value="Address: "/>
+                                        <h:outputText value="#{eventList.address}"/>
+
+                                        <h:outputText value="Country of Residence: "/>
+                                        <h:outputText value="#{eventList.countryOfResidence}"/>
+
+                                        <h:outputText value="Company: "/>
+                                        <h:outputText value="#{eventList.eventCorporate}"/>
+
+                                        <h:outputText value="Industry: "/>
+                                        <h:outputText value="#{eventList.eventIndustry}"/>
+
+                                        <h:outputText value="Preferred Language: "/>
+                                        <h:outputText value="#{eventList.preferLanguage}"/>
+
+                                        <h:outputText value="Notes: "/>
+                                        <h:outputText value="#{eventList.notes}"/>
+                                    </p:panelGrid>
+                                </p:panel>
+                            </p:rowExpansion>
+
+                            <p:column headerText="Status" style="width:70px">  
+                                <p:cellEditor>  
+                                    <f:facet name="output">
+                                        <h:outputText value="#{eventList.status}" />
+                                    </f:facet>
+                                    <f:facet name="input">  
+                                        <h:selectOneMenu value="#{eventList.status}" style="width:100%">
+                                            <f:selectItems value="#{manageEventManagedBean.eventStatus3}" var="man3" itemLabel="#{man3}" itemValue="#{man3}" />
+                                        </h:selectOneMenu>  
+                                    </f:facet>  
+                                </p:cellEditor>  
+                            </p:column>  
+                        </p:dataTable>  
+                    </div>
+                </h:form>  
+            </p:tab>
+            
+                        
+            <p:tab id="tab4" title="View Canceled Event">  
+                <h:form id="form4">
+                    <div style="margin-top:20px;">
+                        <p:growl id="form4Msg" showDetail="true" /> 
+
+                        <p:dataTable id="canceledEvents" value="#{manageEventManagedBean.canceledEvents}" 
+                                     var="eventList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
+                                     resizableColumns="true">
+
+                            <p:column style="width:15px">  
+                                <p:rowToggler />  
+                            </p:column> 
+                            
+                            <p:column headerText="Event ID">
+                                <h:outputText value="#{eventList.eventId}"/>
+                            </p:column>
+
+                            <p:column headerText="Event Name">
+                                <h:outputText value="#{eventList.eventName}"/>
+                            </p:column>
+
+                            <p:column headerText="Event Type">
+                                <h:outputText value="#{eventList.eventType}"/>
+                            </p:column>
+
+                            <p:column headerText="Contact Name">
+                                <h:outputText value="#{eventList.title} #{eventList.name}"/>
+                            </p:column>
+
+                            <p:column headerText="Email">
+                                <h:outputText value="#{eventList.email}"/>
+                            </p:column>
+
+                            <p:column headerText="Contact Number">
+                                <h:outputText value="#{eventList.eventContact}"/>
+                            </p:column>
+
+                            <p:rowExpansion>
+                                <p:panel id="eventDetail" header="Event Details">
+                                    <p:panelGrid id="grid" columns="4">
+                                        <h:outputText value="Estimared Start Date: "/>
+                                        <h:outputText value="#{eventList.startDate}"/>
+
+                                        <h:outputText value="Estimared End Date: "/>
+                                        <h:outputText value="#{eventList.endDate}"/>
+
+                                        <h:outputText value="Number of Attendees: "/>
+                                        <h:outputText value="#{eventList.eventScale}"/>
+
+                                        <h:outputText value="Estimated Budget: "/>
+                                        <h:outputText value="#{eventList.estimatedBudget}"/>
+
+                                        <h:outputText value="Address: "/>
+                                        <h:outputText value="#{eventList.address}"/>
+
+                                        <h:outputText value="Country of Residence: "/>
+                                        <h:outputText value="#{eventList.countryOfResidence}"/>
+
+                                        <h:outputText value="Company: "/>
+                                        <h:outputText value="#{eventList.eventCorporate}"/>
+
+                                        <h:outputText value="Industry: "/>
+                                        <h:outputText value="#{eventList.eventIndustry}"/>
+
+                                        <h:outputText value="Preferred Language: "/>
+                                        <h:outputText value="#{eventList.preferLanguage}"/>
+
+                                        <h:outputText value="Notes: "/>
+                                        <h:outputText value="#{eventList.notes}"/>
+                                    </p:panelGrid>
+                                </p:panel>
+                            </p:rowExpansion>
+                        </p:dataTable>  
+                    </div>
+                </h:form>  
+            </p:tab>
+        </p:tabView>
     </ui:define>
-
 </ui:composition>

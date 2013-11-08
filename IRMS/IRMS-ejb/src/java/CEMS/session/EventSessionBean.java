@@ -283,6 +283,70 @@ public class EventSessionBean {
         return q.getResultList();
     }
 
+    public List<EventEntity> getPendingEvents() {
+        Query q = em.createQuery("SELECT m FROM EventEntity m");
+        requests = new ArrayList<EventEntity>();
+        eventList = new ArrayList<EventEntity>();
+        eventList = q.getResultList();
+
+        Iterator<EventEntity> itr = eventList.iterator();
+        while (itr.hasNext()) {
+            ee = itr.next();
+            if (ee.getStatus().equalsIgnoreCase("Pending")) {
+                requests.add(ee);
+            }
+        }
+        return requests;
+    }
+
+    public List<EventEntity> getReservedEvents() {
+        Query q = em.createQuery("SELECT m FROM EventEntity m");
+        requests = new ArrayList<EventEntity>();
+        eventList = new ArrayList<EventEntity>();
+        eventList = q.getResultList();
+
+        Iterator<EventEntity> itr = eventList.iterator();
+        while (itr.hasNext()) {
+            ee = itr.next();
+            if (ee.getStatus().equalsIgnoreCase("Reserved")) {
+                requests.add(ee);
+            }
+        }
+        return requests;
+    }
+
+    public List<EventEntity> getConfirmedEvents() {
+        Query q = em.createQuery("SELECT m FROM EventEntity m");
+        requests = new ArrayList<EventEntity>();
+        eventList = new ArrayList<EventEntity>();
+        eventList = q.getResultList();
+
+        Iterator<EventEntity> itr = eventList.iterator();
+        while (itr.hasNext()) {
+            ee = itr.next();
+            if (ee.getStatus().equalsIgnoreCase("Confirmed")) {
+                requests.add(ee);
+            }
+        }
+        return requests;
+    }
+
+    public List<EventEntity> getCanceledEvents() {
+        Query q = em.createQuery("SELECT m FROM EventEntity m");
+        requests = new ArrayList<EventEntity>();
+        eventList = new ArrayList<EventEntity>();
+        eventList = q.getResultList();
+
+        Iterator<EventEntity> itr = eventList.iterator();
+        while (itr.hasNext()) {
+            ee = itr.next();
+            if (ee.getStatus().equalsIgnoreCase("Cancel")) {
+                requests.add(ee);
+            }
+        }
+        return requests;
+    }
+
     // Request for Show
     public List<EventEntity> getRequests() {
         requests = new ArrayList<EventEntity>();
