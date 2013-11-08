@@ -8,23 +8,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script>
-            $(document).ready(function() {
-                $("#reg-form").submit(function() {
-                    if ($("#input-name").val().length < 1) {
-                        $("#input-name").addClass("error");
-                    }
-                });
-            });
-        </script>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <script type='text/javascript' src="/IRMSCustomer-war/js/jquery.js"></script>
+     <script type="text/javascript" src="/IRMSCustomer-war/js/ddsmoothmenu.js"></script>
+       <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
+    <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
         <script type="text/javascript" src="/IRMSCustomer-war/js/bootstrap-datepicker.js"></script>
         <jsp:include page="base.jsp"></jsp:include>
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-
-
 
             <div class="section-container tabs" data-section="tabs">
                 <!--first section: orchard hotel -->

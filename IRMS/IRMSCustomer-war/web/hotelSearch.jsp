@@ -152,27 +152,19 @@
                                     <option>38</option>
                                     <option>39</option>
                                     <option>40</option>
+                                 </select>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="large-12 columns">
                                 <input type="submit" class="small button" value="Search Availability">
-                                <input type="hidden" name="availableHotel" value="${data.reservationHotel}"/>
-                            <input type="hidden" name="availableType" value="${data.reservationRoomType}"/>
-                            <input type="hidden" name="availableCheckInDate" value="${data.rcCheckInDate}"/>
-                            <input type="hidden" name="availableCheckOutDate" value="${data.rcCheckOutDate}"/>
-                            <input type="hidden" name="availableCheckOutDate" value="${data.reservationRoomCount}"/>
+                                
 
                         </div>
                     </div>
                 </fieldset>
-                <!--                   <form action="restaurantBook"><input class="small button" type="Search" value ="Search Availability"/>
-                                       <input type="hidden" name="availableHotel" value="${data.availableHotel}"/>
-                                   <input type="hidden" name="availableType" value="${data.availableType}"/>
-                                   <input type="hidden" name="availableCheckInDate" value="${data.availableCheckInDate}"/>
-                                   <input type="hidden" name="availableCheckOutDate" value="${data.availableCheckOutDate}"/>
-                               </form>-->
+
             </form>
         </div>
         <div class="large-9 columns"> 
@@ -180,7 +172,7 @@
                 <div class="panel">
                     <div class="row">
                         <div class="large-5 columns">
-                        <h5><strong>&nbsp Orchard Hotelâ„¢</strong></h5>
+                        <h5><strong>&nbsp Orchard Hotel</strong></h5>
                         </div>
                         <div class="large-7 columns">
                         <img style="vertical-align:text-bottom;" src="/IRMSCustomer-war/images/star.png">
@@ -215,7 +207,7 @@
                     <br>
                     <div class="row">
                         <div class="large-5 columns">
-                                <h5><strong>&nbsp Marina Hotelâ„¢</strong></h5>
+                                <h5><strong>&nbsp Marina Hotel</strong></h5>
 
                                 <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel1.jpg">
                                     <img src="/IRMSCustomer-war/images/gallery/hotel1.jpg">
@@ -229,9 +221,9 @@
                         <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
                         <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
                         <img style="vertical-align:text-bottom;"src="/IRMSCustomer-war/images/star.png">
-                            <p style="color:#4d4d4d">Marina Hotel is a luxurious treat for art lovers. A tribute to one of Americaâ€™s greatest contemporary architects 
-                                Michael Graves, we let this boutique hotel speak for itself through the designerâ€™s elegant and distinctive touches, from lamps and
-                                crockery to furnishings and the decor.We enrich all our guestsâ€™ stay experience with art through our art gallery-like atmosphere in 
+                            <p style="color:#4d4d4d">Marina Hotel is a luxurious treat for art lovers. A tribute to one of America's greatest contemporary architects 
+                                Michael Graves, we let this boutique hotel speak for itself through the designer's elegant and distinctive touches, from lamps and
+                                crockery to furnishings and the decor.We enrich all our guests' stay experience with art through our art gallery-like atmosphere in 
                                 every maple-accented room, which features mural-adorned walls and artistic furniture pieces. Even the bathrooms are works of art, with
                                 flower-motif mosaics on the walls and the unusual blue mosaic-tiled circular shower.</p>
 
@@ -240,7 +232,7 @@
                     <br>
                     <div class="row">
                         <div class="large-5 columns">
-                                <h5><strong>&nbsp BeachView Hotelâ„¢</strong></h5>
+                                <h5><strong>&nbsp BeachView Hotel</strong></h5>
                                 <a class="th radius" href="/IRMSCustomer-war/images/gallery/hotel3.jpg">
                                     <img src="/IRMSCustomer-war/images/gallery/hotel3.jpg">
                                 </a>

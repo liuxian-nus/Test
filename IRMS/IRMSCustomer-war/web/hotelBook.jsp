@@ -6,23 +6,33 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.io.*,java.util.*" %>
+<%@page import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/flipclock.css" type="text/css" media="screen">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type='text/javascript' src="/IRMSCustomer-war/js/jquery.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/ddsmoothmenu.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/countdown.js"></script> 
         <jsp:include page="base.jsp"></jsp:include>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-<!--Progress Widget-->
-        <div class="row">
-            <ul class="button-group round even-4">
-                <li><a href="#" class="button secondary small"><strong>Search your hotel ></strong></a></li>
-                <li><a href="#" class="button small" disabled ><strong>Fill in your information ></strong></a></li>
-                <li><a href="#" class="button small secondary"><strong>Make payment ></strong></a></li>
-                <li><a href="#" class="button small secondary"><strong>Confirm your reservation ></strong></a></li>
-            </ul>
-        </div>
+            <!--Progress Widget-->
+            <div class="row">
+                <ul class="button-group round even-4">
+                    <li><a href="#" class="button secondary small"><strong>Search your hotel ></strong></a></li>
+                    <li><a href="#" class="button small" disabled ><strong>Fill in your information ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>Make payment ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>Confirm your reservation ></strong></a></li>
+                </ul>
+            </div>
             <div class ="row">
                 <!--<div class="panel">-->  
                 <div class="large-7 columns">
@@ -39,8 +49,10 @@
                                 <h6>Hotel Reservation for <strong class="right-align,inline"> BeachView Hotel</strong></h6>
                             </c:if>
                             <h6>Room Type: <strong class="right-align,inline"> ${data.reservationRoomType} </strong></h6>
-                            <h6>Check-In Date: <strong class="right-align,inline"> ${data.rcCheckInDate} </strong></h6>
-                            <h6>Check-Out Date: <strong class="right-align,inline">${data.rcCheckOutDate} </strong></h6>
+                            <h6>Check-In Date: <strong class="right-align,inline"> <fmt:formatDate type="date" pattern="MMM dd yyyy" 
+                                            value="${data.rcCheckInDate}" /> </strong></h6>
+                            <h6>Check-Out Date: <strong class="right-align,inline"><fmt:formatDate type="date" pattern="MMM dd yyyy" 
+                                            value="${data.rcCheckOutDate}" /></strong></h6>
                         </div>
 
                         <div class="large-4 columns">
@@ -68,7 +80,9 @@
             <div class="large-5 columns">
                 <div class="panel">
                     <div class="row">
-                        <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h4><strong>Coral Island Members</strong></h4></label>
+                        <div class='large-12 columns'>
+                            <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h4><strong>Coral Island Members</strong></h4></label>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="large-12 columns">
@@ -77,10 +91,10 @@
                     </div>
                     <div class="row">
                         <div class="large-4 columns">                               
-                                <a href="member" class="small button">Log In</a>
+                            <a href="member" class="small button">Log In</a>
                         </div>
                         <div class="large-8 columns">
-                           <a href="memberRegister" style="color:#4d4d4d"> Not a member?</a>
+                            <a href="memberRegister" style="color:#4d4d4d"> Not a member?</a>
                         </div>
                     </div>
                 </div>
@@ -147,14 +161,7 @@
                                     <small class="error">Please enter your email.</small>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="small-1 columns">
-                                    <input type="checkbox" name="subscribe" value="true">
-                                </div>
-                                <div class="small-11 columns"> 
-                                    <strong><label><strong>Send me Coral Island’s latest offers – special discounts, last minute promotions, free nights, free upgrades!</label>
-                                </div>
-                            </div>
+
                             <div class="row">                    
                                 <div class="large-6 columns">
                                     <label for="right-label" class="left-align,inline"><strong>Phone Number</label>
@@ -168,7 +175,7 @@
                                     <input  required pattern="[0-9]{8}" required type="text" id="input-phoneNo"  placeholder="phoneNo" name="phoneNo">
                                     <small class="error">Please enter your phone number.</small>
                                 </div>
-                                <div class="large-5 columns">
+                                <div class="large-6 columns">
                                     <select required name="nationality" id="customDropdown">
                                         <option value="Afghan">Afghan</option>
                                         <option value="Swedish">Swedish</option>
@@ -418,9 +425,20 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="small-1 columns">
+                                    <input type="checkbox" name="subscribe" value="true">
+                                </div>
+                                <div class="small-11 columns"> 
+                                    <strong><label><strong>Send me Coral Island’s latest offers – special discounts, last minute promotions, free nights, free upgrades!</label>
+                                </div>
+                            </div>
+
 
                             <div class="row">
-                                <input type="submit" class="small button" class="center-align" value="Continue">
+                                <div class="small-2 columns">
+                                    <input type="submit" class="small button" class="center-align" value="Continue">
+                                </div>
                             </div>
 
 
@@ -461,22 +479,12 @@
                                 <label for="right-label" class="right-align,inline"><strong></strong></label>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="large-7 columns">
-                                <label for="right-label" class="left-align,inline"><h6>Service Charge:</h6></label>
-                            </div>
-                            <div class="large-5 columns">
-                                <label for="right-label" class="right-align,inline"><strong></strong></label>
-                            </div>
+              
+                
                         </div>
                     </fieldset>
                     <br><br>
-                    <div class="row">
-                        <div class="large-1 columns"></div>
-                        <div class="large-11 columns">
-                            <label for="right-label" class="left-align,inline"><strong>15% of the total room reservation fee will be deducted from your credit card after making the reservation. This service charge will not be refundable nor transferable</strong></label>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
