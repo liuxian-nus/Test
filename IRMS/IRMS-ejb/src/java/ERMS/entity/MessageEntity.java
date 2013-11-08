@@ -25,7 +25,7 @@ public class MessageEntity implements Serializable {
     private String sendTime;
     private String senderName;
     private String status;
-    private String type;
+    private String messageType;
     
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy="message")
     private List<ReceiverInfoEntity> recInfo = new ArrayList<ReceiverInfoEntity>();
@@ -93,11 +93,11 @@ public class MessageEntity implements Serializable {
     }
 
     public String getType() {
-        return type;
+        return messageType;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.messageType = type;
     }
 
     @Override
