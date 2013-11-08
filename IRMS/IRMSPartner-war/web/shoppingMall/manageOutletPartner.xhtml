@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplatePartner.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel id="outlet" header="Rented Outlets" style="height:500px;">
+                <div style="margin-top:20px;margin-bottom:20px;">
+                    <p:growl id="message" showDetail="true" /> 
+                    <p:dataTable id="outlets" value="#{outletPartnerManagedBean.outlets}" var="outletList" 
+                                 paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                        <p:column headerText="Outlet ID" style="width:30px;">
+                            <h:outputText value="#{outletList.id}"/>
+                        </p:column> 
+                        <p:column headerText="Type" style="width:110px;">
+                            <h:outputText value="#{outletList.outletType}"/>
+                        </p:column>
+                        <p:column headerText="Name" style="width:100px;">
+                            <h:outputText value="#{outletList.outletName}"/>
+                        </p:column>
+                        <p:column headerText="Condition" style="width:100px;">
+                            <h:outputText value="#{outletList.outletCondition}"/>
+                        </p:column>
+                        <p:column headerText="Level" style="width:30px;">
+                            <h:outputText value="#{outletList.outletLevel}"/>
+                        </p:column>
+                        <p:column headerText="Number" style="width:30px;">
+                            <h:outputText value="#{outletList.outletNo}"/>
+                        </p:column>
+                        <p:column headerText="Area" style="width:50px;">
+                            <h:outputText value="#{outletList.outletArea}"/>
+                        </p:column>
+                        
+                        <p:column style="width:100px">  
+
+                            <p:commandButton  value="Transactions" actionListener="#{outletPartnerManagedBean.viewTransaction}"  icon="ui-icon ui-icon-calendar" title="View Transaction">  
+                                <f:attribute name="selectedOutlet" value="#{outletList}" />
+                            </p:commandButton>
+                        </p:column>  
+                    </p:dataTable>  
+
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
