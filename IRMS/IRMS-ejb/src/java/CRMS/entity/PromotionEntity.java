@@ -39,7 +39,6 @@ public class PromotionEntity implements Serializable {
     private String promotionCode;
     private String promotionCategory;
     private String promotionTitle;
-
     @ManyToMany(cascade = {CascadeType.ALL})
     private Set<MemberEntity> mcMemberTargets;
 

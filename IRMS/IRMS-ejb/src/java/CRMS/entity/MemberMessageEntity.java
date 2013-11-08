@@ -15,12 +15,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author liuxian
  */
+
 @Entity
+@XmlRootElement
+@XmlType(name="memberMessageEntity")
 public class MemberMessageEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

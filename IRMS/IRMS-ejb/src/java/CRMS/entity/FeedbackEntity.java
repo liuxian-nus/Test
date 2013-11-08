@@ -11,12 +11,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author liuxian
  */
 @Entity
+@XmlRootElement
+@XmlType(name="feedbackEntity")
+
 public class FeedbackEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
