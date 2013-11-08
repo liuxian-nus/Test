@@ -106,13 +106,14 @@ public class RestResource {
             @FormParam("hp") String hp,
             @FormParam("dob") String dob,
             @FormParam("gender") String gender,
-            @FormParam("maritalStatus") String maritalStatus) throws ExistException, ParseException {
+            @FormParam("maritalStatus") String maritalStatus,
+            @FormParam("subscription") String subscription) throws ExistException, ParseException {
         if (memberSessionBean == null) {
             System.err.println("memberSessionBean is null");
         }
         System.err.println("email is" + email);
         System.err.println("name is " + name);
-        memberSessionBean.updateMember(email, name, hp, dob, maritalStatus, gender);
+        memberSessionBean.updateMember(email, name, hp, dob, maritalStatus, gender, subscription);
     }
 
     //RegisterViewController
@@ -120,6 +121,7 @@ public class RestResource {
     @Path("member/register")
     public MemberEntity createNewMember(@PathParam("email") String email,
             @FormParam("password") String password,
+            @FormParam("password2") String password2, 
             @FormParam("name") String name,
             @FormParam("hp") String hp,
             @FormParam("dob") String dob,
@@ -133,7 +135,7 @@ public class RestResource {
         }
         System.err.println("email is" + email);
         System.err.println("name is " + name);
-        MemberEntity newMember = memberSessionBean.createNewMember(email, password, name, hp, dob, gender, maritalStatus, nationality, securityQuestion, answer);
+        MemberEntity newMember = memberSessionBean.createNewMember(email, password, password2, name, hp, dob, gender, maritalStatus, nationality, securityQuestion, answer);
         return newMember;
     }
 
@@ -226,7 +228,7 @@ public class RestResource {
     }
 
     //MessageDetailViewController
-    @DELETE
+    @DELETE//????
     @Path("member/messages")
     public void deleteMemberMessage(@QueryParam("messageId") Long messageId) throws ExistException {
         if (memberMessageSessionBean == null) {
