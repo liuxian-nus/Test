@@ -57,7 +57,7 @@ public class MemberEntity implements Serializable {
     @OneToMany(cascade ={CascadeType.ALL})
     private Set <MemberTransactionEntity> MemberTransactions=new HashSet<MemberTransactionEntity>();
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy = "mcMemberTargets")
-    private Set <PromotionEntity> MarketingCampaigns;
+    private Set <PromotionEntity> Promotions;
     @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
     private List <TicketPurchaseEntity> ticketPurchases=new ArrayList<TicketPurchaseEntity>();
     @OneToMany (cascade={CascadeType.ALL}, mappedBy ="member")
@@ -67,12 +67,12 @@ public class MemberEntity implements Serializable {
     @OneToMany (cascade={CascadeType.ALL}, mappedBy ="feedbackOwner")
     private List <FeedbackEntity> feedbacks=new ArrayList<FeedbackEntity>();
     
-    public Set<PromotionEntity> getMarketingCampaigns() {
-        return MarketingCampaigns;
+    public Set<PromotionEntity> getPromotions() {
+        return Promotions;
     }
 
-    public void setMarketingCampaigns(Set<PromotionEntity> MarketingCampaigns) {
-        this.MarketingCampaigns = MarketingCampaigns;
+    public void setPromotions(Set<PromotionEntity> MarketingCampaigns) {
+        this.Promotions = MarketingCampaigns;
     }
 
     public Set<MemberTransactionEntity> getMemberTransactions() {

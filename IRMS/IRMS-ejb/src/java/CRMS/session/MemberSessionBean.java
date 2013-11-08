@@ -47,6 +47,7 @@ public class MemberSessionBean {
         return member;
     }
     //member registration: used for jsp servlet
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public MemberEntity addMember(String memberEmail, String memberName, String memberPassword, String memberPassword2,
             String memberHP, String gender, String nationality, Date memberDob, String maritalStatus,
@@ -102,7 +103,6 @@ public class MemberSessionBean {
 
         System.out.println(answer);
         member.setAnswer(answer);
-        //member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
         em.persist(member);
         System.out.println("new member add successfully!");
         return member;
@@ -119,12 +119,13 @@ public class MemberSessionBean {
         //       System.out.println("member name: "+member.getMemberName());
         return member;
     }
-    
+
     public MemberEntity getMemberById(String email) {
-        if(em == null)
+        if (em == null) {
             System.err.println("EM IS NULL");
+        }
         member = em.find(MemberEntity.class, email);
-       
+
         //       System.out.println("member name: "+member.getMemberName());
         return member;
     }
@@ -177,14 +178,14 @@ public class MemberSessionBean {
         return member;
     }
 
-   //used for jsp servlet
+    //used for jsp servlet
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public MemberEntity updateMember(String memberEmail, String name, String memberHP, Date memberDob, String maritalStatus, String gender) throws ExistException, ParseException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {
             throw new ExistException("Member doesn't exist!");
         }
-    //    if (!(member.getMemberPassword().equals(memberPassword))) throw new ExistException("Wrong ID or password");
+        //    if (!(member.getMemberPassword().equals(memberPassword))) throw new ExistException("Wrong ID or password");
         System.out.println("email: " + memberEmail);
         member.setMemberName(name);
 //        member.setMemberPassword(memberPassword);
@@ -215,6 +216,7 @@ public class MemberSessionBean {
         return true;
     }
     //used of jsf managed bean
+
     public boolean updateMember(MemberEntity member) {
         em.merge(member);
         System.out.println("MemberSessionBean: member " + member.getMemberEmail() + " is successfully updated");
@@ -242,7 +244,7 @@ public class MemberSessionBean {
         }
         return memberTransactionList;
     }
-    
+
     public List<MemberEntity> getAllMembers() {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -262,7 +264,7 @@ public class MemberSessionBean {
         em.flush();
         return;
     }
-    
+
     public void updateMemberExpressPassPurchase(MemberEntity member, ExpressPassPurchaseEntity epp) {
         System.out.println("updateMemberExpressPassPurchase");
         List<ExpressPassPurchaseEntity> epps = member.getExpressPassPurchases();
@@ -285,19 +287,42 @@ public class MemberSessionBean {
     //used for mobile app log in
     public MemberEntity checkLogIn(String email, String password) {
         MemberEntity thisMember = em.find(MemberEntity.class, email);
-        if(thisMember != null){
-        if(ePasswordHashSessionBean.hashPassword(password).equals(thisMember.getMemberPassword())){
-            System.out.println("member log in from mobile successful!"); 
-            return thisMember;
-        }
-        else {
-            System.out.println("invalid password! please try again");
-            return null;
-        }
-        }
-        else {
+        if (thisMember != null) {
+            if (ePasswordHashSessionBean.hashPassword(password).equals(thisMember.getMemberPassword())) {
+                System.out.println("member log in from mobile successful!");
+                return thisMember;
+            } else {
+                System.out.println("invalid password! please try again");
+                return null;
+            }
+        } else {
             System.out.println("this email is not regisgered");
             return null;
         }
+    }
+
+    //used for mobile app RegisterViewController
+    public MemberEntity createNewMember(String email, String password, String name, String hp, String dob, String gender, String maritalStatus, String nationality, String securityQuestion, String answer) throws ParseException {
+        MemberEntity newMember = new MemberEntity();
+        newMember.setMemberEmail(email);
+        newMember.setMemberPassword(password);
+        newMember.setMemberName(name);
+        newMember.setMemberHP(hp);
+        System.out.println(dob);
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dob);
+        newMember.setMemberDob(date);
+        newMember.setGender(gender);
+        newMember.setMaritalStatus(maritalStatus);
+        newMember.setNationality(nationality);
+        newMember.setSecurityQuestion(securityQuestion);
+        newMember.setAnswer(answer);
+        newMember.setCoin(0);
+        newMember.setIsSubscriber(true);
+        newMember.setIsVIP(false);
+        newMember.setPoint(0);
+        newMember.setPreferences("to be set");
+        em.persist(newMember);
+        System.out.println("New member created via mobile application");
+        return newMember;
     }
 }

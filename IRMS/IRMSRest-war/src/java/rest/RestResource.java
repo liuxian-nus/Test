@@ -46,23 +46,24 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 @Path("rest")
 public class RestResource {
+
     @EJB
     private MemberMessageSessionBean memberMessageSessionBean;
     @EJB
     MemberSessionBean memberSessionBean;
     @EJB
-    PromotionSessionBean promotionSessionBean;  
+    PromotionSessionBean promotionSessionBean;
     @EJB
     FeedbackSessionBean feedbackSessionBean;
-    
     @Context
     private UriInfo context;
 
     public RestResource() {
     }
 
+    //LoginViewController
     @GET
-    @Path("member/{email}")
+    @Path("member/login")
     @Produces(MediaType.APPLICATION_JSON)
     public MemberEntity login(@QueryParam("email") String email, @QueryParam("password") String password) {
         System.out.println("Email is: " + email);
@@ -78,7 +79,8 @@ public class RestResource {
             throw new WebApplicationException(404);
         }
     }
-    
+
+    //ProfileViewController
     @GET
     @Path("member")
     @Produces(MediaType.APPLICATION_JSON)
@@ -96,37 +98,59 @@ public class RestResource {
         }
     }
 
-
+    //ProfileViewController
     @PUT
     @Path("member/{email}")
-    //   @Consumes(MediaType.APPLICATION_JSON)
-    //   @Produces(MediaType.APPLICATION_JSON)
     public void updateMember(@PathParam("email") String email,
-            @FormParam("memberName") String memberName,
-            @FormParam("memberHP") String memberHP,
-            @FormParam("memberDob") String memberDob,
-            @FormParam("memberGender") String memberGender,
+            @FormParam("name") String name,
+            @FormParam("hp") String hp,
+            @FormParam("dob") String dob,
+            @FormParam("gender") String gender,
             @FormParam("maritalStatus") String maritalStatus) throws ExistException, ParseException {
         if (memberSessionBean == null) {
             System.err.println("memberSessionBean is null");
         }
         System.err.println("email is" + email);
-        System.err.println("memberName is " + memberName);
-        memberSessionBean.updateMember(email, memberName, memberHP, memberDob, maritalStatus, memberGender);
+        System.err.println("name is " + name);
+        memberSessionBean.updateMember(email, name, hp, dob, maritalStatus, gender);
     }
 
+    //RegisterViewController
+    @PUT
+    @Path("member/register")
+    public MemberEntity createNewMember(@PathParam("email") String email,
+            @FormParam("password") String password,
+            @FormParam("name") String name,
+            @FormParam("hp") String hp,
+            @FormParam("dob") String dob,
+            @FormParam("gender") String gender,
+            @FormParam("maritalStatus") String maritalStatus,
+            @FormParam("nationality") String nationality,
+            @FormParam("securityQuestion") String securityQuestion,
+            @FormParam("answer") String answer) throws ExistException, ParseException {
+        if (memberSessionBean == null) {
+            System.err.println("memberSessionBean is null");
+        }
+        System.err.println("email is" + email);
+        System.err.println("name is " + name);
+        MemberEntity newMember = memberSessionBean.createNewMember(email, password, name, hp, dob, gender, maritalStatus, nationality, securityQuestion, answer);
+        return newMember;
+    }
+
+    //updatePassword: haven't implemented
     @PUT
     @Path("member/password/{email}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updatePassword(@PathParam("email") String email, @FormParam("memberPassword") String memberPassword) {
+    public void updatePassword(@PathParam("email") String email, @FormParam("password") String password) {
         if (memberSessionBean == null) {
             System.err.println("memberSessionBean is null");
         }
         System.err.println("email is: " + email);
-        System.err.println("member Password is " + memberPassword);
-        memberSessionBean.updatePassword(email, memberPassword);
+        System.err.println("member Password is " + password);
+        memberSessionBean.updatePassword(email, password);
     }
 
+    //TransactionViewController
     @GET
     @Path("member/transactions")
     @Produces(MediaType.APPLICATION_JSON)
@@ -142,21 +166,55 @@ public class RestResource {
         }
     }
 
+    //MessageViewController
     @GET
-    @Path("member/messages")
+    @Path("member/bookingSummary")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<MemberMessageEntity> getMemberMessage(@QueryParam("email") String email) throws ExistException {
+    public List<MemberMessageEntity> getBookingSummary(@QueryParam("email") String email) throws ExistException {
         if (memberMessageSessionBean == null) {
             System.err.println("memberMessageSessionBean is null");
         }
-        List<MemberMessageEntity> messageList = memberMessageSessionBean.getMessageByMemberEmail(email);
+        List<MemberMessageEntity> messageList = memberMessageSessionBean.getBookingSummaryByMemberEmail(email);
         if (messageList != null) {
             return messageList;
         } else {
             throw new WebApplicationException(404);
         }
     }
-    
+
+    //MessageViewController
+    @GET
+    @Path("member/memberSummary")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MemberMessageEntity> getMemberSummary(@QueryParam("email") String email) throws ExistException {
+        if (memberMessageSessionBean == null) {
+            System.err.println("memberMessageSessionBean is null");
+        }
+        List<MemberMessageEntity> messageList = memberMessageSessionBean.getMemberSummaryByMemberEmail(email);
+        if (messageList != null) {
+            return messageList;
+        } else {
+            throw new WebApplicationException(404);
+        }
+    }
+
+    //MessageViewController
+    @GET
+    @Path("member/notification")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MemberMessageEntity> getNotification(@QueryParam("email") String email) throws ExistException {
+        if (memberMessageSessionBean == null) {
+            System.err.println("memberMessageSessionBean is null");
+        }
+        List<MemberMessageEntity> messageList = memberMessageSessionBean.getNotificationByMemberEmail(email);
+        if (messageList != null) {
+            return messageList;
+        } else {
+            throw new WebApplicationException(404);
+        }
+    }
+
+    //MessageDetailViewController
     @PUT
     @Path("member/messages")
     public void changeMessageStatus(@QueryParam("messageId") Long messageId) throws ExistException {
@@ -166,7 +224,8 @@ public class RestResource {
         MemberMessageEntity thisMessage = memberMessageSessionBean.getMessageById(messageId);
         memberMessageSessionBean.updateMessage(thisMessage);
     }
-    
+
+    //MessageDetailViewController
     @DELETE
     @Path("member/messages")
     public void deleteMemberMessage(@QueryParam("messageId") Long messageId) throws ExistException {
@@ -176,7 +235,8 @@ public class RestResource {
         MemberMessageEntity thisMessage = memberMessageSessionBean.getMessageById(messageId);
         memberMessageSessionBean.deleteMessage(thisMessage);
     }
-    
+
+    //PromotionViewController
     @GET
     @Path("member/promotions")
     @Produces(MediaType.APPLICATION_JSON)
@@ -190,7 +250,9 @@ public class RestResource {
         } else {
             throw new WebApplicationException(404);
         }
-    }   
+    }
+
+    //FeedbackViewController
     @PUT
     @Path("member/feedback")
     @Produces(MediaType.APPLICATION_JSON)
@@ -200,9 +262,11 @@ public class RestResource {
             @FormParam("feedbackContent") String feedbackContent,
             @FormParam("feedbackDepartment") String feedbackDepartment,
             @FormParam("rating") String rating) throws ExistException, ParseException {
-        if(feedbackSessionBean == null) System.err.println("feedbackSessionBean is null");
+        if (feedbackSessionBean == null) {
+            System.err.println("feedbackSessionBean is null");
+        }
         System.out.println("from user: " + email);
-        feedbackSessionBean.createNewFeedback(email,feedbackTitle,feedbackSentDate, feedbackContent,feedbackDepartment,rating);
+        feedbackSessionBean.createNewFeedback(email, feedbackTitle, feedbackSentDate, feedbackContent, feedbackDepartment, rating);
         return true;
     }
 
