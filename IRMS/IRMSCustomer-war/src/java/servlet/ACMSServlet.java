@@ -34,6 +34,7 @@ public class ACMSServlet extends HttpServlet {
     private ReservationSessionBean reservationSessionBean;
     ReservationEntity data = new ReservationEntity();
     boolean isAvailable = false;
+    int SessionTime;
 
     @Override
     public void init() {
@@ -44,7 +45,7 @@ public class ACMSServlet extends HttpServlet {
             throws ServletException, IOException {
         System.out.println("ACMSERVLET: processRequest()");
         HttpSession session = request.getSession(true);
-
+         SessionTime=(int)session.getMaxInactiveInterval();
         /* response.setContentType("text/html;charset=UTF-8");
          PrintWriter out = response.getWriter();*/
         try {
@@ -67,7 +68,10 @@ public class ACMSServlet extends HttpServlet {
                 data = createTempReservation(request);
                 isAvailable = checkAvailability(data);
                 System.out.println("data search has been performed and result has been returned by bean");
-                request.setAttribute("data", data);
+                session.setAttribute("data", data);
+                 SessionTime=(int)session.getMaxInactiveInterval();
+                 System.out.println("Timeleft"+SessionTime);
+                 request.setAttribute("SessionTime",SessionTime);
                 if (isAvailable) {
                     request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
                 } else {
@@ -75,13 +79,24 @@ public class ACMSServlet extends HttpServlet {
                 }
             } else if ("hotelBook".equals(page)) {
                 System.out.println("***hotel Book***");
-                data = continueRead1(request);
+                 SessionTime=(int)session.getMaxInactiveInterval();
+                 System.out.println("Timeleft"+SessionTime);
+                 request.setAttribute("SessionTime",SessionTime);
+                
                 request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
             } else if ("hotelPay".equals(page)) {
                 System.out.println("***hotel payment***");
+                data = continueRead1(request);
  //               data = continueRead2(request);
+                
+                SessionTime=(int)session.getMaxInactiveInterval();
+                 System.out.println("Time left"+SessionTime);
+                 request.setAttribute("SessionTime",SessionTime);
+                 
                 request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
             } else if ("hotelPayConfirm".equals(page)) {
+                data.setRcCreditCardNo(request.getParameter("cardNo"));
+               // reservationSessionBean.addReservation(data);
                 System.out.println("***hotel payment confirmation***");
 
                 request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
@@ -119,11 +134,16 @@ public class ACMSServlet extends HttpServlet {
         System.out.println("continue finish data entity");
         //retrieve info
         String firstName = request.getParameter("firstName");
+        System.out.println(firstName);
         String lastName = request.getParameter("lastName");
+        System.out.println(lastName);
         String email = request.getParameter("email");
+        System.out.println(email);
         //missing with subscribe boolean
         String hp = request.getParameter("phoneNo");
+        System.out.println(hp);
         String nationality = request.getParameter("nationality");
+        System.out.println(nationality);
         //set to POJO
         data.setRcName(firstName + lastName);
         data.setRcEmail(email);
