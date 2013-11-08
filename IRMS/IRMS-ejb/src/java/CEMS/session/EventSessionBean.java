@@ -4,7 +4,7 @@
  */
 package CEMS.session;
 
-import CEMS.entity.BookingEntity;
+import CEMS.entity.EventBookingEntity;
 import CEMS.entity.EventEntity;
 import CEMS.entity.EventServiceEntity;
 import CEMS.entity.VenueEntity;
@@ -29,16 +29,12 @@ public class EventSessionBean {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
-    BookingEntity be;
+    EventBookingEntity be;
     EventEntity ee;
     VenueEntity ve;
     EventServiceEntity se;
     private List<EventEntity> requests;
     private List<EventEntity> eventList;
-
-    public void persist(Object object) {
-        em.persist(object);
-    }
 
     public EventSessionBean() {
     }
@@ -107,7 +103,7 @@ public class EventSessionBean {
         System.out.println("EventSessionBean:venueBooking: start booking! " + eventId);
         ee = em.find(EventEntity.class, eventId);
         if (ee != null) {
-            be = new BookingEntity();
+            be = new EventBookingEntity();
             ve = em.find(VenueEntity.class, venueId);
             if (ve == null) {
                 System.out.println("EventSessionBean:venueBooking: venue does not exist! " + venueId);
@@ -116,13 +112,13 @@ public class EventSessionBean {
 
             System.out.println("EventSessionBean:venueBooking: venue has been found! " + venueId);
             be.setBookingDate(startDate);
-            be.setEndingDate(endDate);
+//            be.setEndingDate(endDate);
             be.setEvent(ee);
             be.setVenue(ve);
             em.persist(be);
             System.out.println("EventSessionBean:venueBooking: booking has been persistd! " + be.getId());
 
-            List<BookingEntity> bookings = new ArrayList<BookingEntity>();
+            List<EventBookingEntity> bookings = new ArrayList<EventBookingEntity>();
             bookings = ee.getBookings();
             bookings.add(be);
             ee.setBookings(bookings);
@@ -147,20 +143,20 @@ public class EventSessionBean {
             List<Date> unavailDates = new ArrayList<Date>();
 
             for (Object o : q.getResultList()) {
-                BookingEntity booking = (BookingEntity) o;
+                EventBookingEntity booking = (EventBookingEntity) o;
                 Date startDate = booking.getBookingDate();
-                Date endDate = booking.getEndingDate();
+//                Date endDate = booking.getEndingDate();
 
                 Date unavailDate = startDate;
-                while (unavailDate.before(endDate)) {
-                    unavailDates.add(unavailDate);
-                    System.out.println("EventSessionBean:CheckVenueAvailability: date unavailable is "
-                            + unavailDate);
-                    unavailDate.setTime(unavailDate.getTime() + 1 * 24 * 60 * 60 * 1000);
-                    System.out.println("EventSessionBean:CheckVenueAvailability: date has been incremented to "
-                            + unavailDate);
+//                while (unavailDate.before(endDate)) {
+                unavailDates.add(unavailDate);
+                System.out.println("EventSessionBean:CheckVenueAvailability: date unavailable is "
+                        + unavailDate);
+                unavailDate.setTime(unavailDate.getTime() + 1 * 24 * 60 * 60 * 1000);
+                System.out.println("EventSessionBean:CheckVenueAvailability: date has been incremented to "
+                        + unavailDate);
 
-                }
+//                }
                 System.out.println("EventSessionBean:CheckVenueAvailability: date list has been partially retrieved "
                         + unavailDates.size());
             }
@@ -226,34 +222,32 @@ public class EventSessionBean {
         System.out.println("EventSessionBean:listEvents: all events have been fully retrieved!" + events.size());
         return events;
     }
-    
-    public List <EventEntity> listConfirmedEvents()
-    {
-        List <EventEntity> confirmedEvents;
+
+    public List<EventEntity> listConfirmedEvents() {
+        List<EventEntity> confirmedEvents;
         String status = "In Progress: booking completed!";
-        Query q = em.createQuery("SELECT e FROM EventEntity e WHERE e.status = '"+status+"'");
-        
+        Query q = em.createQuery("SELECT e FROM EventEntity e WHERE e.status = '" + status + "'");
+
         confirmedEvents = q.getResultList();
-        System.out.println("EventSessionBean: "+q.getResultList().isEmpty());
+        System.out.println("EventSessionBean: " + q.getResultList().isEmpty());
         return confirmedEvents;
     }
-    
-    public List<EventEntity> listPublicEvents()
-    {
+
+    public List<EventEntity> listPublicEvents() {
         Query q = em.createQuery("SELECT e FROM EventEntity e WHERE e.isPublic = 'true'");
-        System.out.println("EventSessionBean: "+q.getResultList().isEmpty());
+        System.out.println("EventSessionBean: " + q.getResultList().isEmpty());
         return q.getResultList();
     }
 
-    public List<EventEntity> listConfirmedPublicEvents()
-    {
+    public List<EventEntity> listConfirmedPublicEvents() {
         Query q = em.createQuery("SELECT e FROM EventEntity e WHERE e.isPublic = 'true' AND e.status = "
                 + "'In Progress: booking completed!'");
-        
-        List <EventEntity> eventList = q.getResultList();
-        System.out.println("EventSessionBean: "+q.getResultList().isEmpty());
+
+        List<EventEntity> eventList = q.getResultList();
+        System.out.println("EventSessionBean: " + q.getResultList().isEmpty());
         return eventList;
     }
+
     public VenueEntity getVenue(Long venueId) {
         VenueEntity thisV = em.find(VenueEntity.class, venueId);
         if (thisV != null) {
@@ -288,7 +282,7 @@ public class EventSessionBean {
         Query q = em.createQuery("SELECT m FROM EventEntity m");
         return q.getResultList();
     }
-    
+
     // Request for Show
     public List<EventEntity> getRequests() {
         requests = new ArrayList<EventEntity>();

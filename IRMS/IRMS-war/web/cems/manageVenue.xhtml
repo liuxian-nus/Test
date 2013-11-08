@@ -15,12 +15,16 @@
                              paginator="true" rows="6" draggableColumns="true" scrollable="true" 
                              resizableColumns="true">
 
-                    <p:column headerText="Venue Name: ">
+                    <p:column headerText="Venue Name ">
                         <h:outputText value="#{venues.venueName}"/>
                     </p:column>
 
-                    <p:column  headerText="Venue Capacity: ">
+                    <p:column  headerText="Venue Capacity ">
                         <h:outputText value="#{venues.venueCapacity}"/>
+                    </p:column>
+
+                    <p:column headerText="Functions">
+                        <h:outputText value="#{manageVenueManagedBean.toSentence(venues.venueFunction)}"/>
                     </p:column>
 
                     <p:column style="width:100px">  
@@ -52,6 +56,14 @@
                             <p:inputText id="venueCapacity" required="true" requiredMessage="Venue Capacity cannot be empty" value="#{manageVenueManagedBean.selectedVenue.venueCapacity}" rendered="#{manageVenueManagedBean.editMode}"  label="Venue Capacity"/>  
                             <p:message for="venueCapacity"/>
                         </h:panelGroup>
+
+                        <h:outputText value="Select Functions: "/>
+                        <p:selectManyMenu value="#{manageVenueManagedBean.selectedFunc}" style="height:200px;width:200px;" showCheckbox="true">  
+                            <f:selectItems value="#{manageVenueManagedBean.venueFunctionSessionBean.allVenueFunctions}"  
+                                           var="allFunc" itemLabel="#{allFunc.functionName}" 
+                                           itemValue="#{allFunc.venueFunctionId}" />  
+                        </p:selectManyMenu>
+                        <h:outputText value=""/>
 
                         <f:facet name="footer">
                             <p:outputPanel rendered="#{manageVenueManagedBean.editMode}" layout="block" style="text-align:right">

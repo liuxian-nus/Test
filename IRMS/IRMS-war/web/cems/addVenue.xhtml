@@ -8,11 +8,9 @@
 
     <ui:define name="content">
         <h:form id="addVenueForm">
-
             <p:growl id="addVenueMsg" showDetail="true" sticky="true"/>
             <p:panel id="addVenuePanel" header="Add Venue">
-
-                <p:panelGrid id="addVenueGrid" columns="2">
+                <h:panelGrid id="addVenueGrid" columns="2">
 
                     <h:outputText value="Venue Name: " />
                     <h:inputText required="true" requiredMessage="Venue name cannot be empty" value="#{addVenueManagedBean.venue.venueName}" style="margin-bottom:10px;"/>
@@ -24,9 +22,14 @@
                     </h:inputText>
                     <h:outputText value=""/><br/>
 
+                    <h:outputText value="Functions" style="margin-right: 20px;"/>
+                    <p:selectManyMenu value="#{addVenueManagedBean.selectedFunc}" style="width:200px;height:175px;margin-bottom:10px;" showCheckbox="true">  
+                        <f:selectItems value="#{addVenueManagedBean.venueFunctionSessionBean.allVenueFunctions}" var="allFunc" itemLabel="#{allFunc.functionName}" itemValue="#{allFunc.venueFunctionId}" />  
+                    </p:selectManyMenu>  
+
                     <p:commandButton value="Save" ajax="true" actionListener="#{addVenueManagedBean.saveNewVenue}" update="addVenueMsg"/>
 
-                </p:panelGrid>
+                </h:panelGrid>
             </p:panel>
         </h:form>
     </ui:define>

@@ -25,8 +25,8 @@ public class VenueEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long venueId;
     private String venueName;
-   
     private int venueCapacity;
+    
     @ManyToMany (cascade = {CascadeType.MERGE})
     private List<VenueFunctionEntity> venueFunction = new ArrayList<VenueFunctionEntity>();
 
