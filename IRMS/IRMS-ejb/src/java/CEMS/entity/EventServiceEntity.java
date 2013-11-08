@@ -23,7 +23,6 @@ public class EventServiceEntity implements Serializable {
     
     private String serviceName;
     private String serviceCategory;
-    private Integer serviceQuantity;
     private Double serviceCost;
     
     public EventServiceEntity(){}
@@ -54,14 +53,6 @@ public class EventServiceEntity implements Serializable {
 
     public void setServiceCategory(String serviceCategory) {
         this.serviceCategory = serviceCategory;
-    }
-
-    public Integer getServiceQuantity() {
-        return serviceQuantity;
-    }
-
-    public void setServiceQuantity(Integer serviceQuantity) {
-        this.serviceQuantity = serviceQuantity;
     }
 
     public Double getServiceCost() {

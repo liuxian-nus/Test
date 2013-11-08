@@ -31,11 +31,7 @@ public class EventEntity implements Serializable {
     private String eventType;
     private String eventContact;
     private int eventScale;
-    @OneToMany(cascade={CascadeType.ALL},mappedBy="event")
-    private List<BookingEntity> bookings;
     private String status;
-
-
     private String title;
     private String name;
     private String email;
@@ -50,8 +46,11 @@ public class EventEntity implements Serializable {
     private Date startDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date endDate;
-    private EmployeeEntity eventManager;
+    private String eventManagerId;
     private boolean isPublic;
+    
+    @OneToMany(cascade={CascadeType.ALL},mappedBy="event")
+    private List<EventBookingEntity> bookings;
     
     
     public EventEntity(){}
@@ -73,16 +72,14 @@ public class EventEntity implements Serializable {
         this.isPublic = isPublic;
     }
 
-    
-    public EmployeeEntity getEventManager() {
-        return eventManager;
+    public String getEventManagerId() {
+        return eventManagerId;
     }
 
-    public void setEventManager(EmployeeEntity eventManager) {
-        this.eventManager = eventManager;
+    public void setEventManagerId(String eventManagerId) {
+        this.eventManagerId = eventManagerId;
     }
     
-     
     public String getStatus() {
         return status;
     }
@@ -178,11 +175,11 @@ public class EventEntity implements Serializable {
         this.endDate = endDate;
     }
 
-    public List<BookingEntity> getBookings() {
+    public List<EventBookingEntity> getBookings() {
         return bookings;
     }
 
-    public void setBookings(List<BookingEntity> bookings) {
+    public void setBookings(List<EventBookingEntity> bookings) {
         this.bookings = bookings;
     }
 
