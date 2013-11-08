@@ -23,6 +23,7 @@ import com.lowagie.text.pdf.PdfWriter;
  * @author Diana Wang
  */
 @Stateless
+@LocalBean
 public class IndReservationSessionBean implements IndReservationSessionBeanRemote {
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;

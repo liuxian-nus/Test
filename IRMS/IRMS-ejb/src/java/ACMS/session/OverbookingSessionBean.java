@@ -15,6 +15,7 @@ package ACMS.session;
 import ACMS.entity.OverbookingQuotaEntity;
 import ACMS.entity.RoomPriceEntity;
 import java.math.BigDecimal;
+import javax.ejb.LocalBean;
 //import ACMS.entity.RoomEntity;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,7 +27,8 @@ import org.apache.commons.math3.distribution.*;
  * @author liuxian
  */
 @Stateless
-public class OverbookingSessionBean {
+@LocalBean
+public class OverbookingSessionBean implements OverbookingSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -42,12 +44,14 @@ public class OverbookingSessionBean {
     public OverbookingSessionBean() {
     }
 
+    @Override
     public void initOverbooking(OverbookingQuotaEntity ob) {
         em.persist(ob);
 
     }
 
     //compensation to be discussed, now assume as direct human input
+    @Override
     public int calculateSuggestedQuota(int demandMean, int demandSD, double ce) {
 
         //algorithm missing here.
@@ -72,52 +76,63 @@ public class OverbookingSessionBean {
         return suggestedQuota;
     }
 
+    @Override
     public int resetQuota(int quota) {
         overbooking.setQuota(quota);
         em.merge(overbooking);
         return overbooking.getQuota();
     }
 
+    @Override
     public OverbookingQuotaEntity getQuota() {
         int id = 1;
         OverbookingQuotaEntity overbooking = em.find(OverbookingQuotaEntity.class, id);
         return overbooking;
     }
 
+    @Override
     public void setQuota(int newQuota) {
         int id = 1;
         OverbookingQuotaEntity quota = em.find(OverbookingQuotaEntity.class, id);
         quota.setQuota(newQuota);
     }
 
+    @Override
     public int getSuggestedQuota() {
         return suggestedQuota;
     }
 
+    @Override
     public void setSuggestedQuota(int suggestedQuota) {
         this.suggestedQuota = suggestedQuota;
     }
 
+    @Override
     public OverbookingQuotaEntity getOverbooking() {
         return overbooking;
     }
 
+    @Override
     public void setOverbooking(OverbookingQuotaEntity overbooking) {
         this.overbooking = overbooking;
     }
 
+    @Override
     public int getDemandMean() {
         return demandMean;
     }
 
+    @Override
     public void setDemandMean(int demandMean) {
         this.demandMean = demandMean;
     }
 
+    @Override
     public int getDemandSD() {
         return demandSD;
     }
 
+    @Override
     public void setDemandSD(int demandSD) {
         this.demandSD = demandSD;
     }
