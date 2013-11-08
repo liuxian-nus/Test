@@ -199,6 +199,36 @@ public class initializationManagedBean implements Serializable {
         addMessage("Super Admin Created!");
     }
 
+    public void createCEMSEvent() {
+        System.out.println("go to create CEMSEvent manager");
+
+        role = new RoleEntity();
+        role.setRoleId(31);
+        role.setRoleName("CEMSEvent");
+        System.out.println("Create role :" + role.getRoleName());
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("C1000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeName("CEMSEvent");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("C1000"));
+        employee.addRole(role);
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving CEMSEvent manager....");
+
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("CEMSEvent manager saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
+            return;
+        }
+        System.out.println("Insert Employee into database");
+
+        addMessage("CEMSEvent manager Created!");
+    }
+
     public void createACMSAdmin() {
         System.out.println("go to create ACMS user");
 
@@ -1417,6 +1447,7 @@ public class initializationManagedBean implements Serializable {
     //Add new test cases below!!!!!!!!!
 
     public void initialize() throws ExistException {
+        createCEMSEvent();
         createEvent();
         createShowContract();
         createCEMSAdmin();
