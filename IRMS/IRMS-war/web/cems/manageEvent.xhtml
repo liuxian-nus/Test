@@ -9,14 +9,14 @@
     <ui:define name="content">
         <p:tabView id="tabView">  
 
-            <p:tab id="tab1" title="Manage Reguest">  
+            <p:tab id="tab1" title="Manage Request">  
                 <h:form id="form1">
                     <div style="margin-top:20px;">
                         <p:growl id="form1Msg" showDetail="true" /> 
 
                         <p:contextMenu for="events" widgetVar="Menu1">     
                             <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('pendingTable').showCellEditor();
-                                        return false;"/>    
+                                    return false;"/>    
                             <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('Menu1').hide();"/>    
                         </p:contextMenu> 
 
@@ -123,7 +123,7 @@
                     </div>
                 </h:form>  
             </p:tab>
-            
+
             <p:tab id="tab2" title="Manage Reserved Event">  
                 <h:form id="form2">
                     <div style="margin-top:20px;">
@@ -131,7 +131,7 @@
 
                         <p:contextMenu for="reservedEvents" widgetVar="Menu2">     
                             <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('reservedTable').showCellEditor();
-                                        return false;"/>    
+                                    return false;"/>    
                             <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('Menu2').hide();"/>    
                         </p:contextMenu> 
 
@@ -219,8 +219,8 @@
                     </div>
                 </h:form>  
             </p:tab>
-            
-            
+
+
             <p:tab id="tab3" title="Manage Confirmed Event">  
                 <h:form id="form3">
                     <div style="margin-top:20px;">
@@ -228,7 +228,7 @@
 
                         <p:contextMenu for="confirmedEvents" widgetVar="Menu3">     
                             <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('confirmedTable').showCellEditor();
-                                        return false;"/>    
+                                    return false;"/>    
                             <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('Menu3').hide();"/>    
                         </p:contextMenu> 
 
@@ -262,6 +262,10 @@
 
                             <p:column headerText="Contact Number">
                                 <h:outputText value="#{eventList.eventContact}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Employee ID">
+                                <h:outputText value="#{eventList.eventManagerId}"/>
                             </p:column>
 
                             <p:rowExpansion>
@@ -311,13 +315,46 @@
                                         </h:selectOneMenu>  
                                     </f:facet>  
                                 </p:cellEditor>  
-                            </p:column>  
+                            </p:column>   
+
+                            <p:column style="width:50px">  
+                                <h:panelGrid styleClass="actions" cellpadding="2">  
+                                    <p:commandButton update=":tabView:form3:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Assign Employee">  
+                                        <f:setPropertyActionListener value="#{eventList}" target="#{manageEventManagedBean.selectedEvent}" />
+                                    </p:commandButton>   
+                                </h:panelGrid>  
+                            </p:column> 
                         </p:dataTable>  
+
+                        <p:dialog header="Assign Employee" widgetVar="carDialog" resizable="true" id="carDlg"  
+                                  showEffect="fade" hideEffect="explode" width="700">  
+                            <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
+                                <h:outputText value="Event Name: "/>
+                                <h:outputText value="#{manageEventManagedBean.selectedEvent.eventName}"/>
+
+                                <h:outputText value="Select Employee: "/>
+                                <p:selectOneMenu value="#{manageEventManagedBean.selectedManager}">  
+                                    <f:selectItem itemLabel="Assign Employee" itemValue=""/>
+                                    <f:selectItems value="#{manageEventManagedBean.managers}"  
+                                                   var="allManager" itemLabel="#{allManager.employeeName}" 
+                                                   itemValue="#{allManager.employeeId}" />  
+                                </p:selectOneMenu>
+
+                                <p:outputPanel layout="block" style="text-align:left;">  
+                                    <p:commandButton value="Save" update="form3Msg" actionListener="#{manageEventManagedBean.saveChanges}"   
+                                                     oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check"/>  
+                                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
+
+                                </p:outputPanel>
+                            </h:panelGrid>  
+                        </p:dialog>
+
+
                     </div>
                 </h:form>  
             </p:tab>
-            
-                        
+
+
             <p:tab id="tab4" title="View Canceled Event">  
                 <h:form id="form4">
                     <div style="margin-top:20px;">
@@ -330,7 +367,7 @@
                             <p:column style="width:15px">  
                                 <p:rowToggler />  
                             </p:column> 
-                            
+
                             <p:column headerText="Event ID">
                                 <h:outputText value="#{eventList.eventId}"/>
                             </p:column>

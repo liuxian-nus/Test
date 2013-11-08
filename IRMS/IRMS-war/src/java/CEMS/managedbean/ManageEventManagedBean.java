@@ -6,8 +6,11 @@ package CEMS.managedbean;
 
 import CEMS.entity.EventEntity;
 import CEMS.session.EventSessionBean;
+import ERMS.entity.EmployeeEntity;
+import ERMS.session.EmployeeSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -28,30 +31,35 @@ public class ManageEventManagedBean {
 
     @EJB
     EventSessionBean eventSessionBean;
+    @EJB
+    EmployeeSessionBean employeeSessionBean;
     private EventEntity selectedEvent;
     private List<EventEntity> events;
     private List<EventEntity> pendingEvents;
     private List<EventEntity> reservedEvents;
     private List<EventEntity> confirmedEvents;
     private List<EventEntity> canceledEvents;
+    private List<EmployeeEntity> managers;
     private final static String[] eventStatus;
     private final static String[] eventStatus2;
     private final static String[] eventStatus3;
     private boolean editMode;
     private String status;
     private Long id;
+    private String selectedManager;
 
     public ManageEventManagedBean() {
         selectedEvent = new EventEntity();
     }
 
     @PostConstruct
-    public void init() {
+    public void init() throws ExistException {
         events = eventSessionBean.getAllEvents();
         pendingEvents = eventSessionBean.getPendingEvents();
         reservedEvents = eventSessionBean.getReservedEvents();
         confirmedEvents = eventSessionBean.getConfirmedEvents();
         canceledEvents = eventSessionBean.getCanceledEvents();
+        managers = employeeSessionBean.getCEMSEvent();
     }
 
     static {
@@ -100,6 +108,12 @@ public class ManageEventManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
         FacesContext.getCurrentInstance().getExternalContext().redirect("manageEvent.xhtml");
+    }
+
+    public void saveChanges(ActionEvent event) throws ExistException {
+        selectedEvent.setEventManagerId(selectedManager);
+        eventSessionBean.updateEvent(selectedEvent);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));
     }
 
     public EventSessionBean getEventSessionBean() {
@@ -153,8 +167,8 @@ public class ManageEventManagedBean {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-        public List<EventEntity> getPendingEvents() {
+
+    public List<EventEntity> getPendingEvents() {
         return pendingEvents;
     }
 
@@ -168,5 +182,29 @@ public class ManageEventManagedBean {
 
     public List<EventEntity> getCanceledEvents() {
         return canceledEvents;
+    }
+
+    public List<EmployeeEntity> getManagers() {
+        return managers;
+    }
+
+    public void setManagers(List<EmployeeEntity> managers) {
+        this.managers = managers;
+    }
+
+    public EmployeeSessionBean getEmployeeSessionBean() {
+        return employeeSessionBean;
+    }
+
+    public void setEmployeeSessionBean(EmployeeSessionBean employeeSessionBean) {
+        this.employeeSessionBean = employeeSessionBean;
+    }
+
+    public String getSelectedManager() {
+        return selectedManager;
+    }
+
+    public void setSelectedManager(String selectedManager) {
+        this.selectedManager = selectedManager;
     }
 }
