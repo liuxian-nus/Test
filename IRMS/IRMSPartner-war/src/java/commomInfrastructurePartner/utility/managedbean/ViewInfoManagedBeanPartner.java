@@ -45,6 +45,8 @@ public class ViewInfoManagedBeanPartner {
     public MerchantEntity getMerchants() throws ExistException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String loginId = (String) request.getSession().getAttribute("userId");
+//        System.out.println("in case login session gone, here set again");
+//        request.getSession().setAttribute("userId", loginId);
 
         return em.getMerchantById(loginId);
     }

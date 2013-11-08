@@ -10,8 +10,11 @@ import Exception.ExistException;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.CellEditEvent;
 
 /**
  *
@@ -35,6 +38,17 @@ public class RoomPriceManagedBean {
         System.err.println("in getAll rooms");
         return roomPriceSessionBean.getAllRoomPrices();
     }
+      
+      public void onCellEdit(CellEditEvent event) {  
+        System.out.println("in editing roolslslslsls");
+        Object oldValue = event.getOldValue();  
+        Object newValue = event.getNewValue();  
+          
+        if(newValue != null && !newValue.equals(oldValue)) {  
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Room Price updated", "Original: " + oldValue + ", New:" + newValue);  
+            FacesContext.getCurrentInstance().addMessage(null, msg);  
+        }  
+    }  
       
      //public doUpdate(ActionEvent event)
 }

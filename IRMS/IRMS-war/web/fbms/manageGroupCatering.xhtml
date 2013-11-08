@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    
+
     <ui:define name="content">
         <p:accordionPanel multiple="true">  
             <p:tab title="Requested Group Catering Order">  
@@ -17,6 +17,10 @@
 
                             <p:dataTable id="contract" value="#{addGroupCateringManagedBean.requested}" var="rorder" 
                                          paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                                <p:column style="width:2%">  
+                                    <p:rowToggler />  
+                                </p:column> 
 
                                 <p:column headerText="ID" style="width:50px;">
                                     <h:outputText value="#{rorder.orderId}"/>
@@ -37,12 +41,60 @@
                                 <p:column headerText="Name" style="width:100px;">
                                     <h:outputText value="#{rorder.name}"/>
                                 </p:column>
+
+                                <p:rowExpansion>
+                                    <p:panel id="eventDetail" header="Group Order Details">
+                                        <p:panelGrid id="grid" columns="4">
+
+                                            <h:outputText value="Menu ID: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rorder.menu.menuId}" />
+
+                                            <h:outputText value="Menu Type: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rorder.menu.type}" />                                       
+
+                                            <h:outputText value="Number of People: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rorder.menu.numberOrder}" />                                         
+
+                                            <h:outputText value="Email: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rorder.email}" />
+
+                                            <h:outputText value="Member Email: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rorder.member.memberEmail}" />
+
+                                            <h:outputText value="HP: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rorder.mobile}" />
+
+                                            <h:outputText value="Notes: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rorder.notes}"/>
+
+                                        </p:panelGrid>
+                                    </p:panel>
+                                </p:rowExpansion>
+
+
                                 <p:column style="width:100px">  
-                                    <p:commandButton actionListener="#{addGroupCateringManagedBean.viewOrder}" icon="ui-icon ui-icon-pencil" title="Edit">  
-                                        <f:attribute name="selectOrder" value="#{rorder}" />
-                                    </p:commandButton>
+                                    <p:commandButton  oncomplete="confirmla.show()" ajax="true" icon="ui-icon ui-icon-check" value ="Confirm" title="Confirm"> 
+                                        <f:setPropertyActionListener target="#{orderResultManagedBean.thisOrder}" value="#{rorder}" />
+                                    </p:commandButton>  
                                 </p:column>  
-                            </p:dataTable>  
+                            </p:dataTable> 
+
+                            <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmla"> 
+                                <br/>
+                                Are you sure to confirm this order?
+                                <br/><br/>
+                                <h:panelGrid columns="2" id="approveNew">
+                                    <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{orderResultManagedBean.confirmOrder}" oncomplete="confirmla.hide()"/>
+                                    <p:commandButton value="Not yet" onclick="confirmla.hide()" type="button"/>  
+                                </h:panelGrid>
+                            </p:dialog> 
                         </div>
                     </p:panel>
                 </h:form>
@@ -51,14 +103,19 @@
 
 
             <p:tab title="Confirmed Group Catering Order">  
-               <h:form id="form1">
+                <h:form id="form1">
                     <p:growl id="message" showDetail="true" /> 
                     <p:panel id="contracts" header="Confirmed Order" style="height:500px;">
                         <div style="margin-top:20px;margin-bottom:20px;">
 
                             <p:dataTable id="contract" value="#{addGroupCateringManagedBean.confirmed}" var="corder" 
                                          paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
-                               <p:column headerText="ID" style="width:50px;">
+
+                                <p:column style="width:2%">  
+                                    <p:rowToggler />  
+                                </p:column> 
+
+                                <p:column headerText="ID" style="width:50px;">
                                     <h:outputText value="#{corder.orderId}"/>
                                 </p:column>
                                 <p:column headerText="Date" style="width:100px;">
@@ -77,17 +134,47 @@
                                 <p:column headerText="Name" style="width:100px;">
                                     <h:outputText value="#{corder.name}"/>
                                 </p:column>
-                                <p:column style="width:100px">  
-                                    <p:commandButton actionListener="#{addGroupCateringManagedBean.viewOrder}" icon="ui-icon ui-icon-pencil" title="Edit">  
-                                        <f:attribute name="selectOrder" value="#{corder}" />
-                                    </p:commandButton>
-                                </p:column>  
+                                <p:rowExpansion>
+                                    <p:panel id="eventDetail" header="Group Order Details">
+                                        <p:panelGrid id="grid" columns="4">
+
+                                            <h:outputText value="Menu ID: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{corder.menu.menuId}" />
+
+                                            <h:outputText value="Menu Type: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{corder.menu.type}" />                                       
+
+                                            <h:outputText value="Number of People: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{corder.menu.numberOrder}" />                                         
+
+                                            <h:outputText value="Email: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{corder.email}" />
+
+                                            <h:outputText value="Member Email: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{corder.member.memberEmail}" />
+
+                                            <h:outputText value="HP: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{corder.mobile}" />
+
+                                            <h:outputText value="Notes: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{corder.notes}"/>
+
+                                        </p:panelGrid>
+                                    </p:panel>
+                                </p:rowExpansion>
                             </p:dataTable>  
                         </div>
                     </p:panel>
                 </h:form>
             </p:tab>  
-         
+
         </p:accordionPanel>  
-   </ui:define>
+    </ui:define>
 </ui:composition>

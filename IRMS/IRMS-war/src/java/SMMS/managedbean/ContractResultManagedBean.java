@@ -6,6 +6,7 @@ package SMMS.managedbean;
 
 import SMMS.entity.ContractEntity;
 import SMMS.session.ContractSessionBean;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -27,17 +28,25 @@ public class ContractResultManagedBean {
     private ContractEntity selectedContract;
     private ContractEntity managerSelect;
 
+//    
+//    @PostConstruct
+//    public void init() {
+//        System.err.println("in init getting managerselect");
+//        managerSelect = (ContractEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("managerContract");
+//        System.err.println("after initing managerSelect" + managerSelect.getContractId());
+//        selectedContract = (ContractEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("thisContract");
+//    }
+
+    public ContractResultManagedBean() {
+        selectedContract = new ContractEntity();
+    }
+    
     public ContractEntity getManagerSelect() {
         return managerSelect;
     }
 
     public void setManagerSelect(ContractEntity managerSelect) {
         this.managerSelect = managerSelect;
-    }
-
-    public ContractResultManagedBean() {
-        selectedContract = new ContractEntity();
-        managerSelect = new ContractEntity();
     }
 
     public ContractEntity getSelectedContract() {

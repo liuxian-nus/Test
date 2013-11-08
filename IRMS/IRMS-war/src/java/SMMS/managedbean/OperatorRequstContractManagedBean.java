@@ -77,7 +77,7 @@ public class OperatorRequstContractManagedBean {
         }
         contracteventSessionBean.updateContractEvent(cevent);
         System.out.println("after setting new request" + contract.getLast().getEventStatus());
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
+//        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
 
     }
 
@@ -88,7 +88,7 @@ public class OperatorRequstContractManagedBean {
         contracteventSessionBean.updateContractEvent(cevent);
         System.out.println("after setting renew request" + contract.getLast().getEventStatus());
         emailSessionBean.emailRequest("cookiewxy@hotmail.com", contract);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
+//        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
 
 
     }

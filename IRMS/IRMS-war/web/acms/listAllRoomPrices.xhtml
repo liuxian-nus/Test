@@ -12,20 +12,30 @@
             <p:growl id="growl" showDetail="true" sticky="true" /> 
             <p:panel id="search" header="Search Result" style="height:495px;">
                 <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
-                    <p:growl id="msgs" showDetail="true" /> 
-                    <p:dataTable id="rooms" value="#{roomPriceManagedBean.getAllRoomPrices()}" var="roomPrices" paginator="true" rows="6">
+                    <p:growl id="messages" showDetail="true" /> 
 
-                     <!--   <p:column  headerText="Hotel: ">
-                            <h:outputText rendered="#{roomPrices}" value="Orchard Hotel"/>
-                            <h:outputText rendered="#{roomPrices.hotelId==2}" value="Beach View Hotel" />
-                            <h:outputText rendered="#{roomPrices.hotelId==3}" value="Bay View Hotel" />
-                        </p:column> -->
+                    <p:contextMenu for="rooms" widgetVar="cMenu">     
+                        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('priceTable').showCellEditor();
+                                return false;"/>    
+                        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>    
+                    </p:contextMenu>   
+
+                    <p:dataTable id="rooms" value="#{roomPriceManagedBean.getAllRoomPrices()}" editable="true" editMode="cell" widgetVar="priceTable" var="roomPrices" paginator="true" rows="6">
+                        
+                        
+                        <p:ajax event="cellEdit" listener="#{roomPriceManagedBean.onCellEdit}" update=":form:messages" />  
+
                         <p:column  headerText="Room Type: ">
                             <h:outputText value="#{roomPrices.priceType}"/>
                         </p:column>
+
                         <p:column  headerText="Status: ">
-                            <h:outputText value="#{roomPrices.price}"/>
+                            <p:cellEditor>  
+                                <f:facet name="output"><h:outputText value="#{roomPrices.price}" /></f:facet>  
+                                <f:facet name="input"><p:inputText id="modelInput" value="#{roomPrices.price}" style="width:96%"/></f:facet>  
+                            </p:cellEditor> 
                         </p:column>
+                        
                     </p:dataTable>
                 </div>
             </p:panel>

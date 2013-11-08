@@ -12,6 +12,7 @@ import SMMS.session.ContractSessionBean;
 import SMMS.session.ContracteventSessionBean;
 import java.io.IOException;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -47,6 +48,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
         selected = new ContractEntity();
         cevent = new ContracteventEntity();
     }
+
 
     public void managerViewContract(ActionEvent event) throws IOException, ExistException {
 
@@ -130,6 +132,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
     }
 
     public ContractEntity getSelected() {
+   
         return selected;
     }
 

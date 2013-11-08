@@ -66,7 +66,8 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @RequestScoped
 public class initializationManagedBean implements Serializable {
-
+    @EJB
+    private RoomServiceSessionBean roomServiceSessionBean;
     @EJB
     private ContracteventSessionBean contracteventSessionBean;
     @EJB
@@ -89,8 +90,6 @@ public class initializationManagedBean implements Serializable {
     private ReservationSessionBean reservationSessionBean;
     @EJB
     private RoomSessionBean roomSessionBean;
-    @EJB
-    private RoomServiceSessionBean roomServiceSessionBean;
     @EJB
     private EmployeeSessionBean employeeSessionBean = new EmployeeSessionBean();
     @EJB

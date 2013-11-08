@@ -5,6 +5,7 @@
 package FBMS.managedbean;
 
 import FBMS.entity.OrderEntity;
+import FBMS.session.FBEmailSessionBean;
 import FBMS.session.OrderSessionBean;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean
 @ViewScoped
 public class OrderResultManagedBean {
+    @EJB
+    private FBEmailSessionBean fBEmailSessionBean;
 
     @EJB
     private OrderSessionBean orderSessionBean;
@@ -63,12 +66,13 @@ public class OrderResultManagedBean {
     public void confirmOrder(ActionEvent event) {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-
-        thisOrder = (OrderEntity) event.getComponent().getAttributes().get("viewOrder");
+        System.err.println("hahaha teest");
+//        thisOrder = (OrderEntity) event.getComponent().getAttributes().get("viewOrder");
         System.out.println("No1: in confirming order" + thisOrder.getOrderId());
         thisOrder.setStatus("Confirmed");
         orderSessionBean.updateOrder(thisOrder);
         System.out.println("NO2: After confirming" + thisOrder.getStatus());
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisOrder", thisOrder);
+        fBEmailSessionBean.sendConfirmation(thisOrder.getEmail(), thisOrder);
+//        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisOrder", thisOrder);
     }
 }

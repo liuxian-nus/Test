@@ -9,6 +9,8 @@ import ERMS.entity.FunctionalityEntity;
 import ERMS.entity.RoleEntity;
 import ERMS.session.EmployeeSessionBean;
 import Exception.ExistException;
+import SMMS.entity.MerchantEntity;
+import SMMS.session.MerchantSessionBean;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -40,6 +42,8 @@ public class IRMSFilter implements Filter {
     private FilterConfig filterConfig = null;
     @EJB
     EmployeeSessionBean employeeManager;
+    @EJB
+    MerchantSessionBean merchantManager;
 
     public IRMSFilter() {
     }
@@ -237,6 +241,29 @@ public class IRMSFilter implements Filter {
         return false;
 
     }
+
+//    private Boolean excludeMerchantCheck(String merchantId, String path) throws ExistException {
+//
+//        //System.err.println("excludeAdminCheck...");
+//
+//        MerchantEntity merchant = merchantManager.getMerchantById(merchantId);
+//        //System.err.println("excludeAdminCheck: " + user.getEmployeeName());
+//        String userType = merchant.getPartnerType();
+//
+//        if (userType.contains("shoppingMall")) {
+//            if (path.contains("shoppingMall")) {
+//                return true;
+//            }
+//        } else if (userType.contains("foodAndBeverage")) {
+//            if (path.contains("foodAndBeverage")) {
+//                return true;
+//            }
+//        } else {
+//            return false;
+//        }
+//        return false;
+//
+//    }
 
     private Boolean excludeRoleCheck(String path) {
         if (path.contains("commonInfrastructure")

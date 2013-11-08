@@ -15,7 +15,12 @@
                 <div style="margin-top:20px;margin-bottom:20px;">
 
                     <p:dataTable id="contract" value="#{contractManagedBean.allContracts}" var="contract" 
-                                 paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+                                 paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true"
+                                 >
+
+                        <p:column style="width:2%">  
+                            <p:rowToggler />  
+                        </p:column> 
 
                         <p:column headerText="Contract ID" style="width:50px;">
                             <h:outputText value="#{contract.contractId}"/>
@@ -26,25 +31,111 @@
                         <p:column headerText="Outlet" style="width:100px;">
                             <h:outputText value="#{contract.outlet.id}"/>
                         </p:column>
-                        <p:column headerText="Starting date" style="width:100px;">
-                            <h:outputText value="#{contract.last.eventStartDate}">
-                                <f:convertDateTime pattern="dd-MM-yyyy" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Ending date" style="width:100px;">
-                            <h:outputText value="#{contract.last.eventEndDate}">
-                             <f:convertDateTime pattern="dd-MM-yyyy" />
-                            </h:outputText>
-                        </p:column>
+
                         <p:column headerText="Status" style="width:100px;">
                             <h:outputText value="#{contract.last.eventStatus}"/>
                         </p:column>
-                        <p:column style="width:100px">  
-                            <p:commandButton actionListener="#{contractManagedBean.viewContract}" icon="ui-icon ui-icon-pencil" title="Edit">  
-                                <f:attribute name="selectedContract" value="#{contract}" />
-                            </p:commandButton>
+
+                        <p:rowExpansion>
+                            <p:panel id="eventDetail" header="Contract Details">
+                                <p:panelGrid id="grid" columns="4">
+                                    <h:outputText value="Contract Outlet: " /> 
+                                    <h:outputText value="#{contract.outlet.id}" style="font-weight:bold" />
+
+                                    <h:outputText value="Merchant Outlet: " /> 
+                                    <h:outputText value="#{contract.merchant.merchantName}" style="font-weight:bold" />
+
+                                    <h:outputText value="Start Date: " /> 
+                                    <h:outputText value="#{contract.last.eventStartDate}" style="font-weight:bold" > 
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+
+                                    <h:outputText value="End Date: " />  
+                                    <h:outputText value="#{contract.last.eventEndDate}" style="font-weight:bold" > 
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+
+                                    <h:outputText value="Down Payment: " />  
+                                    <h:outputText value="#{contract.last.eventDownPayment}" style="font-weight:bold" /> 
+
+                                    <h:outputText value="Monthly Rate: " />  
+                                    <h:outputText value="#{contract.last.eventMonthRate}" style="font-weight:bold" /> 
+
+                                    <h:outputText value="Commissioni Rate: " />  
+                                    <h:outputText value="#{contract.last.eventCommissionRate}" style="font-weight:bold" /> 
+
+                                    <h:outputText value="Deposit: " />  
+                                    <h:outputText value="#{contract.last.eventDeposit}" style="font-weight:bold" /> 
+                                </p:panelGrid>
+                            </p:panel>
+                        </p:rowExpansion>
+
+                        <!--     <p:column style="width:100px">  
+                                 <p:commandButton actionListener="#{contractManagedBean.viewContract}" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                     <f:attribute name="selectedContract" value="#{contract}" />
+                                 </p:commandButton>
+                             </p:column> -->  
+                        <p:column style="width:10%">  
+                            <!-- update when new or rejected-->
+                            <p:commandButton  oncomplete="upadte.show()" ajax="true" 
+                                              rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
+                                              icon="ui-icon ui-icon-check" value ="Update" title="Update">  
+                            </p:commandButton>  
+
+                            <!-- send out for request when new-->
+                            <p:commandButton   oncomplete="confirmSend.show()" ajax="true" 
+                                              rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='earlyTermination')}" 
+                                              icon="ui-icon ui-icon-search"  title="Send for approval">  
+                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
+                            </p:commandButton> 
+
+                            <!-- delete when new or rejected-->
+                            <p:commandButton   oncomplete="confirmaDelete.show()" ajax="true" 
+                                              rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
+                                              icon="ui-icon ui-icon-close" title="Delete">  
+                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
+                            </p:commandButton> 
+
+                            <!-- withdraw when being requested-->
+                            <p:commandButton  oncomplete="confirmaWithdraw.show()" ajax="true"  
+                                              rendered="#{(contract.last.eventStatus=='newRequest')||(contract.last.eventStatus=='renewRequest')||(contract.last.eventStatus=='earlyTerminationRequest')}" 
+                                              icon="ui-icon ui-icon-close"  title="Withdraw">   
+                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
+                            </p:commandButton> 
                         </p:column>  
+
                     </p:dataTable>  
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmSend"> 
+                        <br/>
+                        Are you sure to send for approval?
+                        <br/><br/>
+                        <h:panelGrid columns="2" id="approveNew">
+                            <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.requestNew}" oncomplete="confirmSend.hide()"/>
+                            <p:commandButton value="Not yet" onclick="confirmSend.hide()" type="button"/>  
+                        </h:panelGrid>
+                    </p:dialog> 
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmaDelete"> 
+                        <br/>
+                        Are you sure to delete this contract?
+                        <br/><br/>
+                        <h:panelGrid columns="2" id="delete">
+                            <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.delete}" oncomplete="confirmaDelete.hide()"/>
+                            <p:commandButton value="Not yet" onclick="confirmaDelete.hide()" type="button"/>  
+                        </h:panelGrid>
+                    </p:dialog>  
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmaWithdraw"> 
+                        <br/>
+                        Are you sure to withdraw this request?
+                        <br/><br/>
+                        <h:panelGrid columns="2" id="withdraw">
+                            <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.withdraw}" oncomplete="confirmaWithdraw.hide()"/>
+                            <p:commandButton value="Not yet" onclick="confirmaWithdraw.hide()" type="button"/>  
+                        </h:panelGrid>
+                    </p:dialog>  
+
                 </div>
             </p:panel>
         </h:form>

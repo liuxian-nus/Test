@@ -70,15 +70,21 @@ public class Menu2ManagedBeanPartner implements Serializable {
                 submenu.setLabel("Manage Contracts");
 
                 item = new MenuItem();
-                item.setValue("View Contracts");
-                item.setUrl("/shoppingmall/viewContractPartner.xhtml");
+                item.setValue("Manage Contracts");
+                item.setUrl("/shoppingMall/manageContractPartner.xhtml");
                 item.setIcon("ui-icon ui-icon-suitcase");
                 submenu.getChildren().add(item);
 
                 item = new MenuItem();
-                item.setValue("View Outlets");
-                item.setUrl("/shoppingmall/viewOutletPartner.xhtml");
+                item.setValue("Manage Outlets");
+                item.setUrl("/shoppingMall/manageOutletPartner.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+                
+                 item = new MenuItem();
+                item.setValue("Manage Bills");
+                item.setUrl("/shoppingMall/manageBillPartner.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
