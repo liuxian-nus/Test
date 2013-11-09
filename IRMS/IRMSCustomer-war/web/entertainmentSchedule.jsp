@@ -12,24 +12,43 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/flipclock.css" type="text/css" media="screen">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+     
         <title>Event Venue Booking</title>
         <jsp:include page="base.jsp"></jsp:include>
+    
+         <script type="text/javascript" src="/IRMSCustomer-war/js/countdown.js"></script>
+               <script type='text/javascript' src="/IRMSCustomer-war/js/jquery.js"></script>
+     <script type="text/javascript" src="/IRMSCustomer-war/js/ddsmoothmenu.js"></script>
+       <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
+    <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/bootstrap-datepicker.js"></script>
+         
         </head>
         <body>
-
+            
         <jsp:include page="header.jsp"></jsp:include>
         <h5> Please select your ticket for <strong>${thisShow.showName}</strong> </h5>
-
+        
+       
+        <script type="text/javascript">
+       
+           var myCountdown1 = new Countdown({time:316});
+   
+            </script>
+            
         <div class="row">
             <ul class="button-group round even-4">
                 <li><p style="color:white"class = "button small disabled"><strong>Select date and time ></strong></li>
                 <li><p class="button small secondary"><strong>Select your seats ></strong></li>
                 <li><p class="button small secondary"><strong>Make payment ></strong></li>
                 <li><p class="button small secondary"><strong>Confirm your reservation ></strong></li>
-            </ul>
-        </div>
+            </ul> 
+       </div>
+        <div class="row" style="width:600px;height:100px" >
+       
+         </div>
         <div class="row">
             <div class="large-4 columns">
                 <fieldset>
@@ -87,5 +106,6 @@
 
 
 <jsp:include page="footer.jsp"></jsp:include>
+  
 </body>
 </html>
