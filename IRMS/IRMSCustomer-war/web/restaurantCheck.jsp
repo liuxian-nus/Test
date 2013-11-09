@@ -8,18 +8,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script>
-            $(document).ready(function() {
-                $("#reg-form").submit(function() {
-                    if ($("#input-name").val().length < 1) {
-                        $("#input-name").addClass("error");
-                    }
-                });
-            });
-        </script>
+
         <jsp:include page="base.jsp"></jsp:include>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <script type="text/javascript" src="/IRMSCustomer-war/js/bootstrap-datepicker.js"></script>
+
             <title>Your order has been updated!</title>
         </head>
         <body>
