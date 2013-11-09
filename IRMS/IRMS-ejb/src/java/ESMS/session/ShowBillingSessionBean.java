@@ -9,6 +9,7 @@ import ESMS.entity.ShowTicketSaleEntity;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -20,7 +21,8 @@ import javax.persistence.Query;
  * @author Ser3na
  */
 @Stateless
-public class ShowBillingSessionBean {
+@LocalBean
+public class ShowBillingSessionBean implements ShowBillingSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -36,6 +38,7 @@ public class ShowBillingSessionBean {
     }
 
     //Methods
+    @Override
     public List<ShowEntity> getAllSelectedShows() throws NoResultException {
         showList = new ArrayList<ShowEntity>();
         Query q = em.createQuery("SELECT m FROM ShowEntity m");
@@ -55,6 +58,7 @@ public class ShowBillingSessionBean {
         return showList;
     }
     
+    @Override
     public List<ShowTicketSaleEntity> getAllSelectedShowTicketSales(Long showId){
         showTicketSales = new ArrayList<ShowTicketSaleEntity>();
         showTicketSaleList = new ArrayList<ShowTicketSaleEntity>();
@@ -76,50 +80,62 @@ public class ShowBillingSessionBean {
     }
 
     //Getters and Setters
+    @Override
     public ShowEntity getShow() {
         return show;
     }
 
+    @Override
     public void setShow(ShowEntity show) {
         this.show = show;
     }
 
+    @Override
     public List<ShowEntity> getShows() {
         return shows;
     }
 
+    @Override
     public void setShows(List<ShowEntity> shows) {
         this.shows = shows;
     }
 
+    @Override
     public List<ShowEntity> getShowList() {
         return showList;
     }
 
+    @Override
     public void setShowList(List<ShowEntity> showList) {
         this.showList = showList;
     }
 
+    @Override
     public ShowTicketSaleEntity getShowTicketSale() {
         return showTicketSale;
     }
 
+    @Override
     public void setShowTicketSale(ShowTicketSaleEntity showTicketSale) {
         this.showTicketSale = showTicketSale;
     }
 
+    @Override
     public List<ShowTicketSaleEntity> getShowTicketSales() {
         return showTicketSales;
     }
 
+    @Override
     public void setShowTicketSales(List<ShowTicketSaleEntity> showTicketSales) {
         this.showTicketSales = showTicketSales;
     }
 
+    @Override
     public List<ShowTicketSaleEntity> getShowTicketSaleList() {
         return showTicketSaleList;
     }
 
+    @Override
     public void setShowTicketSaleList(List<ShowTicketSaleEntity> showTicketSaleList) {
         this.showTicketSaleList = showTicketSaleList;
     }
