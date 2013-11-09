@@ -10,6 +10,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+
+         <script type='text/javascript' src="/IRMSCustomer-war/js/jquery.js"></script>
+    <script type="text/javascript" src="/IRMSCustomer-war/js/ddsmoothmenu.js"></script>
+    <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
+    <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
+
+
         <jsp:include page="base.jsp"></jsp:include>
             <script type="text/javascript" src="/IRMSCustomer-war/js/checkpass.js"></script>
 
