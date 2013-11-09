@@ -45,7 +45,14 @@
                         <li><a href="eventList">Events Happening</a></li>
                     </ul>
                 </li>
-                <li><a href="member">Member</a></li>
+                <li><a href="member">Member</a>
+                    <ul>
+                         <li><a href="memberFeedback">Feedback</a></li>
+                       
+                    </ul>
+                </li>
+                  <li><a href="memberPromotion">Promotions</a>
+                </li>
             </ul>
 
         </div>
