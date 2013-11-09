@@ -14,6 +14,7 @@
             <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" media="screen" />
             <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
             <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+            
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -60,7 +61,7 @@
                         </p>
                     </div>
                     <div class="large-2 columns">
-                        <form action="entertainmentVenue">
+                        <form action="entertainmentSchedule">
                             <input class="button" type="submit" value ="Buy Now"/>
                             <input type="hidden" name="showId" value="${show.showId}"/>
                         </form> 
