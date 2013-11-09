@@ -432,14 +432,14 @@ public class CRMServlet extends HttpServlet {
     }
 
     private void addFeedback(HttpServletRequest request, String memberEmail) {
+        System.out.println(memberEmail);
         String content = request.getParameter("content");
         String title = request.getParameter("title");
-//        System.out.println(request.getParameter("rating"));
         Integer rating = Integer.parseInt(request.getParameter("rating"));
 
         String department = request.getParameter("department");
         Date currentDate = new Date();
-
+        System.out.println(memberEmail);
         feedbackSessionBean.createFeedback(content, title, memberEmail, department, currentDate, rating);
         System.out.println("CRMServlet:addFeedback:feedback has been added!");
     }
