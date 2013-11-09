@@ -28,7 +28,7 @@
                           headerText="Venue Name" filterMatchMode="contains">  
                     <h:outputText value="#{venueList.venueName}" />  
                 </p:column>  
-                
+
                 <p:column id="capacityColumn" filterBy="#{venueList.venueCapacity}" headerText="Venue Capacity" filterMatchMode="contains">  
                     <h:outputText value="#{venueList.venueCapacity}" />  
                 </p:column>
@@ -37,7 +37,13 @@
                           filterOptions="#{venueBookingManagedBean.functionOptions}" filterMatchMode="contains">  
                     <h:outputText value="#{manageVenueManagedBean.toSentence(venueList.venueFunction)}" />  
                 </p:column>
-                
+
+                <p:column>
+                    <p:commandButton icon="ui-icon ui-icon-check" action="#{venueBookingManagedBean.checkSchedule(event)}">
+                        <f:setPropertyActionListener value="#{venueList}" target="#{venueBookingManagedBean.selectedVenue}" />  
+                    </p:commandButton>
+                </p:column>
+
             </p:dataTable>  
 
         </h:form>  

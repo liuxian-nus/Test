@@ -8,6 +8,7 @@ import CEMS.entity.VenueEntity;
 import CEMS.session.VenueFunctionSessionBean;
 import CEMS.session.VenueSessionBean;
 import Exception.ExistException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -29,6 +33,7 @@ public class VenueBookingManagedBean implements Serializable {
     VenueSessionBean venueSessionBean;
     @EJB
     VenueFunctionSessionBean venueFunctionSessionBean;
+    private VenueEntity selectedVenue;
     private List<VenueEntity> venues;
     private List<VenueEntity> filteredVenues;
     private SelectItem[] functionOptions;
@@ -40,6 +45,7 @@ public class VenueBookingManagedBean implements Serializable {
     public VenueBookingManagedBean() {
         venues = new ArrayList<VenueEntity>();
         functions = new ArrayList();
+        selectedVenue = new VenueEntity();
     }
 
     @PostConstruct
@@ -58,6 +64,12 @@ public class VenueBookingManagedBean implements Serializable {
             options[i + 1] = new SelectItem(functions.get(i), functions.get(i));
         }
         return options;
+    }
+    
+    public void checkSchedule(ActionEvent event) throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("venue", selectedVenue);
+        System.err.println("check schedule: "+selectedVenue.getVenueName());
+        FacesContext.getCurrentInstance().getExternalContext().redirect("venueSchedule.xhtml");
     }
 
     public VenueSessionBean getVenueSessionBean() {
@@ -106,5 +118,13 @@ public class VenueBookingManagedBean implements Serializable {
 
     public void setFunctions(List<String> functions) {
         this.functions = functions;
+    }
+
+    public VenueEntity getSelectedVenue() {
+        return selectedVenue;
+    }
+
+    public void setSelectedVenue(VenueEntity selectedVenue) {
+        this.selectedVenue = selectedVenue;
     }
 }
