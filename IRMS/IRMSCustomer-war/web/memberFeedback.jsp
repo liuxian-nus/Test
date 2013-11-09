@@ -18,18 +18,18 @@
             <h3>Welcome, ${member.memberName}!</h3>
         <form>
             <fieldset> 
-                <legend>Feedback Form!</legend>
+                <legend>Feedback Form</legend>
                 <h6>Thank you for your feedback.Your voice is appreciated.</h6>
                 <div class="row">
                     <div class="large-8 columns">
                         <label>Feedback Title</label>
-                        <input type="text" placeholder="Please put your feedback keywords here">
+                        <input name="content" type="text" placeholder="Please put your feedback keywords here">
                     </div>
 
 
                     <div class="large-4 columns">
                         <label for="customDropdown1">Department</label>
-                        <select id="customDropdown1" class="medium">
+                        <select id="customDropdown1" class="medium" name="department">
                             <option DISABLED>Please select which department you would like to suggest to</option>
                             <option>Accommodation & Hotel Department</option>
                             <option>Attraction Management Department</option>
@@ -49,17 +49,24 @@
                 </div>
 
                 <div class="row">
-                    <div class="large-4 columns">
+                    <div class="large-8 columns">
                         <label>Feedback Rating</label>
                         <div class="row">
-                        <label style="float: left"for="radio1"><input name="radio1" type="radio" id="radio1" style="display:inline" CHECKED><span class="custom radio checked"></span>1</label>
-                        <label style="float: left"for="radio1"><input name="radio1" type="radio" id="radio1" style="display:inline"><span class="custom radio"></span>2</label>
-                        <label style="float: left"for="radio1"><input name="radio1" type="radio" id="radio1" style="display:inline"><span class="custom radio"></span>3</label>
-                        <label style="float: left"for="radio1"><input name="radio1" type="radio" id="radio1" style="display:inline"><span class="custom radio"></span>4</label>
-                        <label style="float: left"for="radio1"><input name="radio1" type="radio" id="radio1" style="display:inline"><span class="custom radio"></span>5</label>
+                            <label style="float: left"for="radio1"><input name="rating" type="radio" id="radio1" value="1" style="display:inline" CHECKED><span class="custom radio checked"></span>1 Very Poor </label>
+                            <label style="float: left"for="radio1"><input name="rating" type="radio" id="radio1" value="2" style="display:inline"><span class="custom radio"></span>2 Poor </label>
+                            <label style="float: left"for="radio1"><input name="rating" type="radio" id="radio1" value="3" style="display:inline"><span class="custom radio"></span>3 Average </label>
+                            <label style="float: left"for="radio1"><input name="rating" type="radio" id="radio1" value="4" style="display:inline"><span class="custom radio"></span>4 Good </label>
+                            <label style="float: left"for="radio1"><input name="rating" type="radio" id="radio1" value="5" style="display:inline"><span class="custom radio"></span>5 Very Good </label>
                         </div>
-                        </div>
+                    </div>
                 </div>
+                <br>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <input type="submit" class="small button" value="Submit">
+
+                                </div>
+                            </div>
 
             </fieldset>
         </form>
