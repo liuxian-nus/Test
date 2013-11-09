@@ -328,10 +328,10 @@ public class AddGroupCateringManagedBean {
             order.setMenu(menu); // setting menu
             //setting member
             System.out.println("in adding member"+memberId);
-            if (memberSessionBean.getMemberById(memberId)!=null)
+            if (memberSessionBean.getMemberByEmail(memberId)!=null)
             {   
-                System.out.println(memberSessionBean.getMemberById(memberId).getMemberName());
-                order.setMember(memberSessionBean.getMemberById(memberId));
+                System.out.println(memberSessionBean.getMemberByEmail(memberId).getMemberName());
+                order.setMember(memberSessionBean.getMemberByEmail(memberId));
                 System.out.println("we are in setting member" + order.getMember().getMemberEmail());
             }
             order.setStatus("Requested");

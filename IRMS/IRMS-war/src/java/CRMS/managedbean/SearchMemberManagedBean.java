@@ -15,8 +15,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.primefaces.event.ToggleEvent;
 
 /**
  *
@@ -51,6 +53,11 @@ public class SearchMemberManagedBean {
             }
         }       
         return results;     
+    }
+    
+    public List<MemberEntity> getAllMembers() throws ExistException, IOException {
+        System.err.println("in search member managed bean");
+        return memberSessionBean.getAllMembers();
     }
     
     public void searchByEmail() throws IOException, ExistException{
@@ -117,4 +124,13 @@ public class SearchMemberManagedBean {
     public void setMemberSessionBean(MemberSessionBean memberSessionBean){
         this.memberSessionBean=memberSessionBean;
     }
+    
+        public void onRowToggle(ToggleEvent event) {
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Row State " + event.getVisibility(),
+                "Model:" + ((MemberEntity) event.getData()).getMemberEmail());
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+        
 }

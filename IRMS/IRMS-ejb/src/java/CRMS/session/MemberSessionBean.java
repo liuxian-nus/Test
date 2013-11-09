@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import javax.ejb.Stateless;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
@@ -120,16 +119,54 @@ public class MemberSessionBean {
         return member;
     }
 
-    public MemberEntity getMemberById(String email) {
-        if (em == null) {
-            System.err.println("EM IS NULL");
+    public List<MemberEntity> getMemberByBirthMonth(int month) {
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List memberList = new ArrayList<MemberEntity>();
+        for (Object o : q.getResultList()) {
+            MemberEntity thisMember = (MemberEntity) o;
+            if (thisMember.getMemberDob().getMonth() == month) {
+                memberList.add(thisMember);
+            }
         }
-        member = em.find(MemberEntity.class, email);
-
-        //       System.out.println("member name: "+member.getMemberName());
-        return member;
+        return memberList;
     }
 
+    public List<MemberEntity> getMemberByNationality(String nationality) {
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List memberList = new ArrayList<MemberEntity>();
+        for (Object o : q.getResultList()) {
+            MemberEntity thisMember = (MemberEntity) o;
+            if (thisMember.getNationality().equals(nationality)) {
+                memberList.add(thisMember);
+            }
+        }
+        return memberList;
+    }
+    
+    public List<MemberEntity> getMemberByMaritalStatus(String maritalStatus) {
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List memberList = new ArrayList<MemberEntity>();
+        for (Object o : q.getResultList()) {
+            MemberEntity thisMember = (MemberEntity) o;
+            if (thisMember.getMaritalStatus().equals(maritalStatus)) {
+                memberList.add(thisMember);
+            }
+        }
+        return memberList;
+    }
+    
+    public List<MemberEntity> getMemberBySubscription() {
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List memberList = new ArrayList<MemberEntity>();
+        for (Object o : q.getResultList()) {
+            MemberEntity thisMember = (MemberEntity) o;
+            if (thisMember.isSubscriber()==true) {
+                memberList.add(thisMember);
+            }
+        }
+        return memberList;
+    }
+    
     //cancel membership: member is not removed, it is inactivated
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeMember(String memberEmail) throws ExistException {
@@ -168,9 +205,12 @@ public class MemberSessionBean {
         if (maritalStatus != null) {
             member.setMaritalStatus(maritalStatus);
         }
-        if(subscription != null){
-        if(subscription.equals("true")) member.setIsSubscriber(true);
-        else if(subscription.equals("false")) member.setIsSubscriber(false);
+        if (subscription != null) {
+            if (subscription.equals("true")) {
+                member.setIsSubscriber(true);
+            } else if (subscription.equals("false")) {
+                member.setIsSubscriber(false);
+            }
         }
         em.merge(member);
         return member;
@@ -232,6 +272,18 @@ public class MemberSessionBean {
         em.merge(member);
     }
 
+    public void updateVIP(String memberEmail) throws ExistException {
+        member = em.find(MemberEntity.class, memberEmail);
+        if (member == null) {
+            throw new ExistException("Member doesn't exist!");
+        }
+        if (member.isVIP() == true) {
+            throw new ExistException("This member is already a VIP");
+        }
+        member.setIsVIP(true);
+        em.merge(member);
+    }
+
     public List<MemberTransactionEntity> getAllTransactions(String memberEmail) {
 //        member = em.find(MemberEntity.class, memberEmail);
         Query q = em.createQuery("SELECT mt FROM MemberTransactionEntity mt where mt.memberEmail = '" + memberEmail + "'");
@@ -287,8 +339,8 @@ public class MemberSessionBean {
         MemberEntity thisMember = em.find(MemberEntity.class, email);
         if (thisMember != null) {
 //            if (ePasswordHashSessionBean.hashPassword(password).equals(thisMember.getMemberPassword())) {
-            if(password.equals(thisMember.getMemberPassword())) {
-            System.out.println("member log in from mobile successful!");
+            if (password.equals(thisMember.getMemberPassword())) {
+                System.out.println("member log in from mobile successful!");
                 return thisMember;
             } else {
                 System.out.println("invalid password! please try again");
@@ -304,15 +356,15 @@ public class MemberSessionBean {
     public MemberEntity createNewMember(String email, String password, String password2, String name, String hp, String dob, String gender, String maritalStatus, String nationality, String securityQuestion, String answer) throws ParseException {
         MemberEntity newMember = new MemberEntity();
         member = em.find(MemberEntity.class, email);
-         if(member!=null) {
-         System.out.println(member.getMemberEmail());
-         System.out.println("You have registered already. Please log in.");
-         return member;
-         }
-         if(!password.equals(password2)){
-         System.out.println("Two passwords are not the same. Please register again.");
-         return null;
-         }
+        if (member != null) {
+            System.out.println(member.getMemberEmail());
+            System.out.println("You have registered already. Please log in.");
+            return member;
+        }
+        if (!password.equals(password2)) {
+            System.out.println("Two passwords are not the same. Please register again.");
+            return null;
+        }
         newMember.setMemberEmail(email);
         newMember.setMemberPassword(password);
         newMember.setMemberName(name);
