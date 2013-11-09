@@ -144,13 +144,13 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/acms/logBook.xhtml");
                 item.setIcon("ui-icon ui-icon-comment");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Price Mgt");
                 item.setUrl("/acms/listAllRoomPrices.xhtml");
                 item.setIcon("ui-icon ui-icon-tag");
                 submenu.getChildren().add(item);
-                
+
                 model.addSubmenu(submenu);
             }
 
@@ -187,8 +187,8 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
-                
-                
+
+
                 submenu = new Submenu();
                 submenu.setLabel("Event Management");
 
@@ -205,7 +205,7 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Venue Booking");
 
@@ -249,7 +249,7 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Group Catering");
                 submenu.setIcon("ui-icon ui-icon-contact");
@@ -259,13 +259,13 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/fbms/addGroupCatering.xhtml");
                 item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Manage Group Catering");
                 item.setUrl("/fbms/manageGroupCatering.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
-                
+
                 model.addSubmenu(submenu);
             }
 
@@ -300,25 +300,25 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/atms/manageAttrTickets.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Add Ticket Combos");
                 item.setUrl("/atms/addAttrCombos.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Manage Ticket Combos");
                 item.setUrl("/atms/manageAttrCombos.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Add Express Ticket");
                 item.setUrl("/atms/addAttrExpressPass.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Manage Express Combos");
                 item.setUrl("/atms/manageAttrExpressPass.xhtml");
@@ -326,35 +326,47 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Ticket Purchase");
                 submenu.setIcon("ui-icon ui-icon-contact");
-                
+
                 item = new MenuItem();
                 item.setValue("Ticket Purchase");
                 item.setUrl("/atms/attrTicketPurchase.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Express Pass Purchase");
                 item.setUrl("/atms/attrExpressPassPurchase.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-                
+
                 model.addSubmenu(submenu);
             }
 
             if (userType.contains("CRMSAdmin")) {
                 System.out.println("CRMSAdmin menu bar");
                 submenu = new Submenu();
-                submenu.setLabel("VIP management");
+                submenu.setLabel("Member management");
                 submenu.setIcon("ui-icon ui-icon-contact");
 
                 item = new MenuItem();
-                item.setValue("Search VIP");
+                item.setValue("VIP Management");
                 item.setUrl("/crms/searchVIP.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("All Members");
+                item.setUrl("/crms/listAllMembers.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("Promotions");
+                item.setUrl("/crms/listPromotions.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
 
@@ -379,7 +391,7 @@ public class Menu2ManagedBean implements Serializable {
 
             if (userType.contains("SMMSOps")) {
                 System.out.println("SMMSAdmin menu bar");
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Manage Merchants");
 
@@ -388,15 +400,15 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/smms/addMerchant.xhtml");
                 item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Manage Merchant");
                 item.setUrl("/smms/manageMerchants.xhtml");
                 item.setIcon("ui-icon ui-icon-lightbulb");
                 submenu.getChildren().add(item);
-                
+
                 model.addSubmenu(submenu);
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Manage Property");
 
@@ -411,7 +423,7 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/smms/pushingcartManagement.xhtml");
                 item.setIcon("ui-icon ui-icon-cart");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Create Outlet");
                 item.setUrl("/smms/addOutlet.xhtml");
@@ -456,7 +468,7 @@ public class Menu2ManagedBean implements Serializable {
 
             if (userType.contains("ESMSAdmin")) {
                 System.out.println("ESMSAdmin menu bar");
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Contract Management");
 
@@ -465,7 +477,7 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/esms/showContract.xhtml");
                 item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("View Contracts");
                 item.setUrl("/esms/viewShowContract.xhtml");
@@ -473,7 +485,7 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Show Management");
 
@@ -490,7 +502,7 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Show Ticketing");
 
@@ -499,9 +511,9 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/esms/showTicketing.xhtml");
                 item.setIcon("ui-icon ui-icon-contact");
                 submenu.getChildren().add(item);
-                
+
                 model.addSubmenu(submenu);
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Show billing");
 
@@ -510,9 +522,9 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/esms/showBilling.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
-                
+
                 model.addSubmenu(submenu);
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Request Management");
 
@@ -521,13 +533,13 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/esms/viewShowRequest.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Manage Request");
                 item.setUrl("/esms/manageShowRequest.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
-                
+
                 model.addSubmenu(submenu);
             }
 
