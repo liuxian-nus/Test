@@ -97,6 +97,20 @@ public class Menu3ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
             }
+            
+            if (userType.contains("CEMSEvent")) {
+                System.out.println("CEMSEvent menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("Event Management");
+
+                item = new MenuItem();
+                item.setValue("Event Management");
+                item.setUrl("/cems/eventService.xhtml");
+                item.setIcon("ui-icon ui-icon-suitcase");
+                submenu.getChildren().add(item);
+               
+                model.addSubmenu(submenu);
+            }
 
         }
         return model;

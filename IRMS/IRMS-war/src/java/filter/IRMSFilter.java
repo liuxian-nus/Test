@@ -211,6 +211,10 @@ public class IRMSFilter implements Filter {
             if (path.contains("crms")) {
                 return true;
             }
+        } else if (userType.contains("CEMSEvent")) {
+            if (path.contains("cems")) {
+                return true;
+            }
         } else if (userType.contains("CEMSAdmin")) {
             if (path.contains("cems")) {
                 return true;
@@ -264,7 +268,6 @@ public class IRMSFilter implements Filter {
 //        return false;
 //
 //    }
-
     private Boolean excludeRoleCheck(String path) {
         if (path.contains("commonInfrastructure")
                 || path.contains("message")
