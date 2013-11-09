@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -50,5 +51,15 @@ public class EventBookingSessionBean {
             }
         }
         return eventBookings;
+    }
+    
+    public EventBookingEntity addEventBooking(EventBookingEntity eventBooking) {
+
+ 
+        em.persist(eventBooking);
+        System.out.println(eventBooking.getId());
+
+        
+        return eventBooking;
     }
 }

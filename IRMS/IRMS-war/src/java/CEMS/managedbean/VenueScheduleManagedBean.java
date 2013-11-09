@@ -5,8 +5,11 @@
 package CEMS.managedbean;
 
 import CEMS.entity.EventBookingEntity;
+import CEMS.entity.EventEntity;
 import CEMS.entity.VenueEntity;
 import CEMS.session.EventBookingSessionBean;
+import CEMS.session.EventSessionBean;
+import CEMS.session.VenueSessionBean;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -35,13 +38,19 @@ public class VenueScheduleManagedBean {
 
     @EJB
     EventBookingSessionBean eventBookingSessionBean;
-    List<EventBookingEntity> eventBookings;
+    @EJB
+    EventSessionBean eventSessionBean;
+    @EJB
+    VenueSessionBean venueSessionBean;
+    
     VenueEntity venue;
     EventBookingEntity eventBooking;
+    EventEntity eventEntity;
     
     private Long eventId;
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
+    List<EventBookingEntity> eventBookings;
 
     /**
      * Creates a new instance of VenueScheduleManagedBean
@@ -49,6 +58,7 @@ public class VenueScheduleManagedBean {
     public VenueScheduleManagedBean() {
         eventBookings = new ArrayList<EventBookingEntity>();
         venue = new VenueEntity();
+        eventEntity = new EventEntity();
         eventBooking = new EventBookingEntity();
         eventModel = new DefaultScheduleModel();
     }
@@ -63,7 +73,7 @@ public class VenueScheduleManagedBean {
         eventBookings = new ArrayList<EventBookingEntity>();
         System.err.println("get flash venue: " + venue.getVenueId());
         eventBookings = (List<EventBookingEntity>) eventBookingSessionBean.getEventBookings(venue);
-        System.err.println("doThis size: "+eventBookings.size());
+        System.err.println("doThis size: " + eventBookings.size());
         Iterator<EventBookingEntity> itr = eventBookings.iterator();
         while (itr.hasNext()) {
             eventBooking = itr.next();
@@ -72,9 +82,19 @@ public class VenueScheduleManagedBean {
     }
 
     public void addEvent(ActionEvent actionEvent) {
-        System.err.println("add eventBooking: "+eventId);
+        System.err.println("add eventBooking: " + eventId);
         if (event.getId() == null) {
             eventModel.addEvent(event);
+            eventEntity = eventSessionBean.getReservation(eventId);
+            System.err.println(eventEntity.getEventId());
+            
+            eventBooking = new EventBookingEntity();
+            eventBooking.setEvent(eventEntity);
+            eventBooking.setVenue(venue);
+            eventBooking.setBookingDate(event.getStartDate());
+            eventBookingSessionBean.addEventBooking(eventBooking);
+            System.err.println("New event booking..."+ eventBooking.getId());
+           
         } else {
             eventModel.updateEvent(event);
         }
@@ -83,7 +103,6 @@ public class VenueScheduleManagedBean {
 
     public void onDateSelect(SelectEvent selectEvent) {
         System.err.println("onDateSelect...");
-//        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
     }
 
     public EventBookingSessionBean getEventBookingSessionBean() {
