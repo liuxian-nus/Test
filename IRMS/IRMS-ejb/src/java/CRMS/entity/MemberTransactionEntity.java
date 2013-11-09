@@ -35,6 +35,7 @@ public class MemberTransactionEntity implements Serializable {
     private boolean paymentStatus;
     private String mtPromotion;
     private String memberEmail;
+    private String mtDescription;
     
 
     public String getMtPromotion() {
@@ -111,6 +112,14 @@ public class MemberTransactionEntity implements Serializable {
 
     public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
+    }
+
+    public String getMtDescription() {
+        return mtDescription;
+    }
+
+    public void setMtDescription(String mtDescription) {
+        this.mtDescription = mtDescription;
     }
 
     @Override
