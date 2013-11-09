@@ -10,6 +10,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -21,6 +22,7 @@ import javax.persistence.Query;
  */
 
 @Stateless
+@LocalBean
 public class RestaurantSessionBean implements RestaurantSessionBeanRemote{
     
     

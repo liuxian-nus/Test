@@ -7,6 +7,7 @@ package FBMS.session;
 import Exception.ExistException;
 import FBMS.entity.RestaurantEntity;
 import java.util.List;
+import javax.ejb.Remote;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.NoResultException;
@@ -15,6 +16,7 @@ import javax.persistence.NoResultException;
  *
  * @author Diana Wang
  */
+@Remote
 public interface RestaurantSessionBeanRemote {
 
     /*E.4.2.1 Create restaurant*/
