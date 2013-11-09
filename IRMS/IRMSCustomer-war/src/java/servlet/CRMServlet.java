@@ -5,6 +5,7 @@ package servlet;
  * and open the template in the editor.
  */
 import CRMS.entity.MemberEntity;
+import CRMS.session.FeedbackSessionBean;
 import CRMS.session.MemberManagementSessionBean;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
@@ -33,6 +34,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
+    @EJB
+    private FeedbackSessionBean feedbackSessionBean;
 
     
     @EJB
@@ -88,10 +91,12 @@ public class CRMServlet extends HttpServlet {
 
             } else if ("memberFeedback".equals(page)) {
                 System.out.println("***member feedback page***");
-
+                String memberEmail = (String) session.getAttribute("memberEmail");
+                addFeedback(request,memberEmail);
+                System.out.println("CRMServlet:Going to next page");
                 request.getRequestDispatcher("/memberFeedback.jsp").forward(request, response);
 
-            } else if ("memberFeedback".equals(page)) {
+            } else if ("memberPromotion".equals(page)) {
                 System.out.println("***member promotion page***");
 
                 request.getRequestDispatcher("/memberPromotion.jsp").forward(request, response);
@@ -429,5 +434,16 @@ public class CRMServlet extends HttpServlet {
     @Override
     public void destroy() {
         System.out.println("CRMServlet: destroy()");
+    }
+
+    private void addFeedback(HttpServletRequest request, String memberEmail) {
+       String content = request.getParameter("content");
+       String title = request.getParameter("title");
+       Integer rating = Integer.parseInt(request.getParameter("rating"));
+       String department = request.getParameter("department");
+       Date currentDate = new Date();
+       
+       feedbackSessionBean.createFeedback(content, title, memberEmail, department, currentDate, rating);
+       System.out.println("CRMServlet:addFeedback:feedback has been added!");
     }
 }

@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="large-8 columns">
                         <label>Feedback Title</label>
-                        <input name="content" type="text" placeholder="Please put your feedback keywords here">
+                        <input name="title" type="text" placeholder="Please put your feedback keywords here">
                     </div>
 
 
@@ -44,7 +44,7 @@
                 <div class="row">
                     <div class="large-12 columns">
                         <label>Feedback Content</label>
-                        <textarea rows="4" cols="50" placeholder="Please put your feedback here"></textarea>
+                        <textarea name ="content" rows="10" cols="50" placeholder="Please put your feedback here"></textarea>
                     </div>
                 </div>
 
