@@ -142,11 +142,11 @@ public class irmsServlet extends HttpServlet {
                 System.out.println("***entertainment venue page***");
                 request.getRequestDispatcher("/ESMSServlet/entertainmentVenue").forward(request, response);
 
-            }else if ("entertainmentSchedule".equals(page)) {
+            } else if ("entertainmentSchedule".equals(page)) {
                 System.out.println("***entertainment schedule page***");
                 request.getRequestDispatcher("/ESMSServlet/entertainmentSchedule").forward(request, response);
 
-            }else if ("entertainmentPay".equals(page)) {
+            } else if ("entertainmentPay".equals(page)) {
                 System.out.println("***entertainment payment page***");
                 request.getRequestDispatcher("/ESMSServlet/entertainmentPay").forward(request, response);
 
@@ -205,32 +205,32 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/CEMSServlet/eventVenueBook").forward(request, response);
             } else if ("eventRegister".equals(page)) {
                 request.getRequestDispatcher("/CEMSServlet/eventRegister").forward(request, response);
-            }else if ("eventResource".equals(page)) {
+            } else if ("eventResource".equals(page)) {
                 request.getRequestDispatcher("/CEMSServlet/eventResource").forward(request, response);
             } else if ("eventRegisterResult".equals(page)) {
                 request.getRequestDispatcher("/CEMSServlet/eventRegisterResult").forward(request, response);
             } else if ("eventList".equals(page)) {
                 request.getRequestDispatcher("/CEMSServlet/eventList").forward(request, response);
-            }else if ("attraction".equals(page)) {
+            } else if ("attraction".equals(page)) {
                 System.out.println("find attraction");
                 request.getRequestDispatcher("/ATMSServlet/attraction").forward(request, response);
             } else if ("adventureWorld".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/adventureWorld").forward(request, response);
             } else if ("attrTicketBooking".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/attrTicketBooking").forward(request, response);
-            }else if ("horrorHouse".equals(page)) {
+            } else if ("horrorHouse".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/horrorHouse").forward(request, response);
-            }else if ("museum".equals(page)) {
+            } else if ("museum".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/museum").forward(request, response);
-            }else if ("aquarium".equals(page)) {
+            } else if ("aquarium".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/aquarium").forward(request, response);
-            }else if ("horrorHouseTicketBooking".equals(page)) {
+            } else if ("horrorHouseTicketBooking".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/horrorHouseTicketBooking").forward(request, response);
             } else if ("attrTicketBookingInformation".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/attrTicketBookingInformation").forward(request, response);
-            }else if ("attrTicketBookingPayment".equals(page)) {
+            } else if ("attrTicketBookingPayment".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/attrTicketBookingPayment").forward(request, response);
-            }else if ("attrTicketBookingConfirmation".equals(page)) {
+            } else if ("attrTicketBookingConfirmation".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/attrTicketBookingConfirmation").forward(request, response);
             } else {
                 System.out.println("other page");
