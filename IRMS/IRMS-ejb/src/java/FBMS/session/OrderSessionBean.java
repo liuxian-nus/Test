@@ -27,7 +27,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class OrderSessionBean implements OrderSessionBeanRemote {
+public class OrderSessionBean implements OrderSessionBeanRemote  {
 
     public OrderSessionBean() {
     }
@@ -44,6 +44,7 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
      * @return
      */
     // ADD MENU
+    @Override
     public boolean setMenu(MenuEntity me) {
         em.persist(me);
         return true;
@@ -140,13 +141,13 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
     public boolean confirmOrder(OrderEntity order) {
         System.out.println("OrderSessionBean: confirm order starts!");
         order.setStatus("Confirmed");
-        em.persist(order);
+        em.merge(order);
         System.out.println("OrderSessionBean: confirm order successfully!");
         return true;
     }
 
     @Override
-    public OrderEntity viewOrder(Long orderId) {
+        public OrderEntity viewOrder(Long orderId) {
         OrderEntity this_order = em.find(OrderEntity.class, orderId);
         System.out.println("OrderSessionBean: the order has been found!");
         return this_order;
@@ -171,12 +172,14 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         return true;
     }
 
+    @Override
     public boolean updateOrder(OrderEntity order) {
         em.merge(order);
         System.out.println("orderSessionBean: order " + order.getOrderId() + " is successfully updated");
         return true;
     }
 
+    @Override
     public boolean updateMenu(MenuEntity menu) {
         em.merge(menu);
         System.out.println("orderSessionBean: menu " + menu.getMenuId() + " is successfully updated");
@@ -240,6 +243,8 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         em.persist(object);
     }
 
+
+    @Override
     public CourseEntity addCourseToMenu(Long menuId, Long courseId) throws ExistException {
         thisMenu = em.find(MenuEntity.class, menuId);
         thisCourse = em.find(CourseEntity.class, courseId);
@@ -252,6 +257,7 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         return thisCourse;
     }
 
+    @Override
     public List<OrderEntity> getRequestedOrders() {
         Query q = em.createQuery("SELECT m FROM OrderEntity m");
         List orderList = new ArrayList<OrderEntity>();
@@ -264,6 +270,7 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         return orderList;
     }
 
+    @Override
     public List<OrderEntity> getConfirmedOrders() {
          Query q = em.createQuery("SELECT m FROM OrderEntity m");
         List orderList = new ArrayList<OrderEntity>();

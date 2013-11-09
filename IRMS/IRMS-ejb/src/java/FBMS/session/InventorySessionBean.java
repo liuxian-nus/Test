@@ -25,7 +25,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class InventorySessionBean {
+public class InventorySessionBean implements InventorySessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -35,11 +35,13 @@ public class InventorySessionBean {
     public InventorySessionBean() {
     }
 
+    @Override
     public DishEntity addDish(DishEntity dish) {
         em.persist(dish);
         return dish;
     }
 
+    @Override
     public boolean deleteDish(Long dishId) {
         de = em.find(DishEntity.class, dishId);
         if (de != null) {
@@ -52,12 +54,14 @@ public class InventorySessionBean {
         }
     }
 
+    @Override
     public DishEntity updateDish(DishEntity dish) {
         em.merge(dish);
         System.out.println("InventorySessionBean: The dish has been updated successfully!" + dish.getDishName() + dish.getDishCost() + dish.getDishQuantity());
         return dish;
     }
 
+    @Override
     public OrderEntity issueGoods(Long orderId) {
         oe = em.find(OrderEntity.class, orderId);
         if (oe != null) {
@@ -91,6 +95,7 @@ public class InventorySessionBean {
         }
     }
 
+    @Override
     public Double assignCost(Long orderId) {
         Double currentCost = 0.00;
         oe = em.find(OrderEntity.class, orderId);
@@ -127,10 +132,12 @@ public class InventorySessionBean {
         }
     }
 
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
 
+    @Override
     public List<DishEntity> listDishes() {
         Query q = em.createQuery("SELECT d FROM DishEntity d");
 
@@ -144,6 +151,7 @@ public class InventorySessionBean {
         return dishList;
     }
     
+    @Override
     public DishEntity getDishById(Long dishId) throws ExistException
     {
          de = em.find(DishEntity.class, dishId);
