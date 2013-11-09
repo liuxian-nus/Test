@@ -167,6 +167,19 @@ public class MemberSessionBean {
         return memberList;
     }
     
+    public List<MemberEntity> getMemberByAge(int ageYoung, int ageOld) {
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List memberList = new ArrayList<MemberEntity>();
+        for (Object o : q.getResultList()) {
+            MemberEntity thisMember = (MemberEntity) o;
+            int memberAge = 2013 - thisMember.getMemberDob().getYear();
+            if ((memberAge > ageYoung)&&(memberAge<ageOld)) {
+                memberList.add(thisMember);
+            }
+        }
+        return memberList;
+    }
+    
     //cancel membership: member is not removed, it is inactivated
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeMember(String memberEmail) throws ExistException {
