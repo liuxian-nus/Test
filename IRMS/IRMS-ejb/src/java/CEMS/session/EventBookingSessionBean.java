@@ -37,6 +37,8 @@ public class EventBookingSessionBean {
         bookingList = new ArrayList<EventBookingEntity>();
         bookingList = q.getResultList();
         Iterator<EventBookingEntity> itr = bookingList.iterator();
+        eventBooking = new EventBookingEntity();
+        eventBookings = new ArrayList<EventBookingEntity>();
         while (itr.hasNext()) {
             eventBooking = itr.next();
             System.err.println("Booking List Size: "+bookingList.size());
@@ -44,6 +46,7 @@ public class EventBookingSessionBean {
             System.err.println("venue id:"+venue.getVenueId());
             if (eventBooking.getVenue().getVenueId().equals(venue.getVenueId())) {
                 eventBookings.add(eventBooking);
+                System.err.println(eventBooking+" added to eventBookings list");
             }
         }
         return eventBookings;

@@ -11,7 +11,20 @@
             <h:form>
                 <p:growl id="messages" showDetail="true" />  
                 <p:schedule id="schedule" value="#{venueScheduleManagedBean.eventModel}" widgetVar="myschedule">  
-                </p:schedule>  
+                    <p:ajax event="dateSelect" listener="#{venueScheduleManagedBean.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  
+                </p:schedule> 
+
+                <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">  
+                    <h:panelGrid id="eventDetails" columns="2">  
+                        <h:outputLabel value="Event Name: " />  
+                        <p:selectOneMenu value="#{venueScheduleManagedBean.eventId}">  
+                            <f:selectItem itemLabel="Select One" itemValue="" />  
+                            <f:selectItems value="#{manageEventManagedBean.reservedEvents}" var="event" itemLabel="#{event.eventId}:#{event.name},#{event.eventName}" itemValue="#{event.eventId}"/>  
+                        </p:selectOneMenu>
+                        <p:commandButton type="reset" value="Reset" />  
+                        <p:commandButton id="addButton" value="Save" actionListener="#{venueScheduleManagedBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
+                    </h:panelGrid>  
+                </p:dialog>  
             </h:form>
         </f:view>
     </ui:define>
