@@ -39,6 +39,7 @@ public class PromotionEntity implements Serializable {
     private String promotionCode;
     private String promotionCategory;
     private String promotionTitle;
+    private boolean promotionMemberExclusive;
     @ManyToMany(cascade = {CascadeType.ALL})
     private Set<MemberEntity> mcMemberTargets;
 
@@ -60,6 +61,15 @@ public class PromotionEntity implements Serializable {
     System.out.println("MarketingCampaignEntity: a new marketing campaign has been added!");
     }
      */
+    public boolean isPromotionMemberExclusive() {
+        return promotionMemberExclusive;
+    }
+
+    public void setPromotionMemberExclusive(boolean promotionMemberExclusive) {
+        this.promotionMemberExclusive = promotionMemberExclusive;
+    }
+    
+    
     public Long getPromotionId() {
         return promotionId;
     }

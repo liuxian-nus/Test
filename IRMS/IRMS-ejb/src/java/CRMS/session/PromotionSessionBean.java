@@ -11,6 +11,7 @@ import Exception.ExistException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Timer;
@@ -34,6 +35,26 @@ public class PromotionSessionBean {
 
     PromotionEntity promotion = new PromotionEntity();
     MemberEntity member = new MemberEntity();
+    
+    public List<PromotionEntity> getMemberExclusivePromotions()
+    {
+        Query q = em.createQuery("SELECT p FROM PromotionEntity p");
+        
+        List<PromotionEntity> resultList = q.getResultList();
+        Iterator <PromotionEntity> itr = resultList.iterator();
+        List<PromotionEntity> returnList = new ArrayList();
+        
+        while(itr.hasNext())
+        {
+            PromotionEntity current = itr.next();
+            if(current.isPromotionMemberExclusive())
+            {
+                returnList.add(current);
+            System.out.println("Promotion Entity has been added!");
+            }
+        }
+        return returnList;
+    }
 
     public String endMarketingCampaign(Date endDate) {
         Timer timer = new Timer();
