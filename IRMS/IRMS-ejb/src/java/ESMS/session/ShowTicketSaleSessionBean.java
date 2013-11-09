@@ -6,6 +6,7 @@ package ESMS.session;
 
 import ESMS.entity.ShowTicketSaleEntity;
 import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -17,7 +18,8 @@ import javax.persistence.Query;
  * @author Ser3na
  */
 @Stateless
-public class ShowTicketSaleSessionBean {
+@LocalBean
+public class ShowTicketSaleSessionBean implements ShowTicketSaleSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -25,11 +27,13 @@ public class ShowTicketSaleSessionBean {
     
     public ShowTicketSaleSessionBean(){}
     
+    @Override
     public ShowTicketSaleEntity addShowTicketSale(ShowTicketSaleEntity showTicketSale) {
         em.persist(showTicketSale);
         return showTicketSale;
     }
     
+    @Override
     public boolean deleteShowTicketSale(Long showTicketSaleId) {
         showTicketSale = em.find(ShowTicketSaleEntity.class, showTicketSaleId);
         if (showTicketSale == null) {
@@ -39,12 +43,14 @@ public class ShowTicketSaleSessionBean {
         return true;
     }
     
+    @Override
     public boolean updateShowTicketSale(ShowTicketSaleEntity showTicketSale) {
         em.merge(showTicketSale);
         System.out.println("ShowTicketSaleSessionBean: " + showTicketSale.getShowTicketSaleId() + " is successfully updated");
         return true;
     }
     
+    @Override
     public List<ShowTicketSaleEntity> getAllShowTicketSales() throws NoResultException {
         Query q = em.createQuery("SELECT m FROM ShowTicketSaleEntity m");
         return q.getResultList();
