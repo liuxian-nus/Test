@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.ejb.Stateless;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
@@ -142,7 +143,7 @@ public class MemberSessionBean {
         }
         return memberList;
     }
-    
+
     public List<MemberEntity> getMemberByMaritalStatus(String maritalStatus) {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -154,32 +155,32 @@ public class MemberSessionBean {
         }
         return memberList;
     }
-    
+
     public List<MemberEntity> getMemberBySubscription() {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
         for (Object o : q.getResultList()) {
             MemberEntity thisMember = (MemberEntity) o;
-            if (thisMember.isSubscriber()==true) {
+            if (thisMember.isSubscriber() == true) {
                 memberList.add(thisMember);
             }
         }
         return memberList;
     }
-    
+
     public List<MemberEntity> getMemberByAgeRange(int ageYoung, int ageOld) {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
         for (Object o : q.getResultList()) {
             MemberEntity thisMember = (MemberEntity) o;
             int memberAge = 2013 - thisMember.getMemberDob().getYear();
-            if ((memberAge > ageYoung)&&(memberAge<ageOld)) {
+            if ((memberAge > ageYoung) && (memberAge < ageOld)) {
                 memberList.add(thisMember);
             }
         }
         return memberList;
     }
-    
+
     //cancel membership: member is not removed, it is inactivated
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeMember(String memberEmail) throws ExistException {
@@ -318,6 +319,22 @@ public class MemberSessionBean {
         return memberList;
     }
 
+    public List<String> getAllNationalities() {
+        List memberList = this.getAllMembers();
+        List<String> nationalityList = new ArrayList();
+        System.err.println("Getting all nationality names...");
+        String nationality;
+        Iterator<MemberEntity> itr = memberList.iterator();
+        while (itr.hasNext()) {
+            System.err.println("While looping...");
+            member = itr.next();
+            nationality = member.getNationality();
+            System.err.println("nationality: " + nationality);
+            if(!(nationalityList.contains(nationality))) nationalityList.add(nationality);
+        }
+        return nationalityList;
+    }
+    
     public void updateMemberTicketPurchase(MemberEntity member, TicketPurchaseEntity tp) {
         System.out.println("updateMemberTicketPurchase");
         List<TicketPurchaseEntity> tps = member.getTicketPurchases();

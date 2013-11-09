@@ -6,7 +6,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-     <ui:define name="content">
+    <ui:define name="content">
         <h:form>  
 
             <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.memberList}" widgetVar="membersTable"   
@@ -18,7 +18,9 @@
                         <p:inputText id="globalFilter" onkeyup="membersTable.filter();" style="width:150px" />  
                     </p:outputPanel>  
                 </f:facet>  
-
+                <p:column style="width:2%">  
+                    <p:rowToggler />  
+                </p:column> 
                 <p:column id="idColumn" filterBy="#{memberList.memberEmail}"   
                           headerText="Member Email" filterMatchMode="contains">  
                     <h:outputText value="#{memberList.memberEmail}" />  
@@ -29,24 +31,60 @@
                     <h:outputText value="#{memberList.memberName}" />  
                 </p:column>  
 
-                <p:column id="dobColumn" filterBy="#{memberList.memberDob}" headerText="Date of Birth" filterMatchMode="contains">  
-                    <h:outputText value="#{memberList.memberDob}" />  
+                <p:column id="genderColumn" filterBy="#{memberList.gender}" headerText="Gender" 
+                          filterOptions="#{memberManagedBean.genderOptions}" filterMatchMode="equals">  
+                    <h:outputText value="#{memberList.gender}" />  
                 </p:column>
 
-                <p:column id="nationalityColumn" filterBy="#{manageVenueManagedBean.toSentence(memberList.nationality)}" headerText="Nationality"  
+                <p:column id="nationalityColumn" filterBy="#{memberList.nationality}" headerText="Nationality"  
                           filterOptions="#{memberManagedBean.nationalityOptions}" filterMatchMode="contains">  
-                    <h:outputText value="#{manageVenueManagedBean.toSentence(memberList.nationality)}" />  
+                    <h:outputText value="#{memberList.nationality}" />  
                 </p:column>
 
                 <p:column>
-                    <p:commandButton icon="ui-icon ui-icon-check" action="#{memberManagedBean.getFilteredMember}">
-                        <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.filteredMember}" />  
+                    <p:commandButton icon="ui-icon ui-icon-flag" title="Transactions" value ="Transactions" action="#{memberManagedBean.getAllTransactions}">
+                        <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.member}" />  
                     </p:commandButton>
+                
                 </p:column>
+                <p:rowExpansion>  
+                    <h:panelGrid id="display" columns="2" cellpadding="4" style="width:100px;"  
+                                 styleClass=" ui-widget-content grid">  
 
+                        <f:facet name="header">  
+                            #{memberList.memberEmail}
+                        </f:facet>  
+
+                        <h:outputText value="Name:" />  
+                        <h:outputText id="name" value="#{memberList.memberName}" style="width:100px;"   />  
+
+                        <h:outputText value="Phone Number:" />  
+                        <h:outputText id="hp" value="#{memberList.memberHP}"  style="width:100px;"  />  
+
+                        <h:outputText value="Marital Status:" />  
+                        <h:outputText value="#{memberList.maritalStatus}" style="width:100px;"  />  
+
+                        <h:outputText value="Date of Birth:" />  
+                        <h:outputText value="#{memberList.memberDob}">  
+                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="Points:" />  
+                        <h:outputText value="#{memberList.point}" style="width:100px;"  />  
+
+                        <h:outputText value="Coins:" />  
+                        <h:outputText value="#{memberList.coin}" style="width:100px;"  />  
+
+                        <h:outputText value="VIP Status:" />  
+                        <h:outputText value="#{memberList.isVIP}" style="width:100px;"  />  
+
+                        <h:outputText value="Subscription:" />  
+                        <h:outputText value="#{memberList.isSubscriber}" style="width:100px;"  />  
+
+                    </h:panelGrid>  
+                </p:rowExpansion>           
             </p:dataTable>  
 
         </h:form>  
     </ui:define>
-
 </ui:composition>

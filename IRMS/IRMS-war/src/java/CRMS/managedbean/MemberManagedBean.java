@@ -4,12 +4,15 @@
  */
 package CRMS.managedbean;
 
+import CEMS.entity.VenueFunctionEntity;
 import CRMS.entity.MemberEntity;
+import CRMS.entity.MemberTransactionEntity;
 import CRMS.session.MemberSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -40,13 +43,23 @@ public class MemberManagedBean {
     private String nationality;
     private String maritalStatus;
     private List<MemberEntity> memberList;
+    private List<String> nationalityList;
     private List<MemberEntity> filteredMember;
     private SelectItem[] nationalityOptions;
+    private SelectItem[] genderOptions;
 
     /**
      * Creates a new instance of SearchMemberManagedBean
      */
     public MemberManagedBean() {
+    }
+
+    @PostConstruct
+    public void init() throws ExistException {
+        memberList = memberSessionBean.getAllMembers();
+        nationalityList = memberSessionBean.getAllNationalities();
+        nationalityOptions = createNationalityOptions(nationalityList);
+        genderOptions = createGenderOptions();
     }
 
     public List<String> complete(String query) {
@@ -65,6 +78,24 @@ public class MemberManagedBean {
     public List<MemberEntity> getAllMembers() throws ExistException, IOException {
         System.err.println("in search member managed bean");
         return memberSessionBean.getAllMembers();
+    }
+
+    public List<MemberTransactionEntity> getAllTransactions(ActionEvent event) throws ExistException, IOException {
+        System.err.println("in getting member transactions: member managed bean");
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            List<MemberTransactionEntity> transactions = memberSessionBean.getAllTransactions(member.getMemberEmail());
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("member", member);
+            System.out.println("we are after setting parameter");
+            request.getSession().setAttribute("memberEmail", member.getMemberEmail());
+            System.out.println("we are after setting reservationId session attribute");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("listMemberTransactions.xhtml");
+            return transactions;
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return null;
+        }
     }
 
     public void searchByEmail() throws IOException, ExistException {
@@ -246,7 +277,6 @@ public class MemberManagedBean {
     public void setNationalityOptions(SelectItem[] nationalityOptions) {
         this.nationalityOptions = nationalityOptions;
     }
-    
 
     public void setMemberList(List<MemberEntity> memberList) {
         this.memberList = memberList;
@@ -260,11 +290,49 @@ public class MemberManagedBean {
         this.memberSessionBean = memberSessionBean;
     }
 
+    public List<String> getNationalityList() {
+        return nationalityList;
+    }
+
+    public void setNationalityList(List<String> nationalityList) {
+        this.nationalityList = nationalityList;
+    }
+
+    public SelectItem[] getGenderOptions() {
+        return genderOptions;
+    }
+
+    public void setGenderOptions(SelectItem[] genderOptions) {
+        this.genderOptions = genderOptions;
+    }
+
     public void onRowToggle(ToggleEvent event) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Row State " + event.getVisibility(),
                 "Model:" + ((MemberEntity) event.getData()).getMemberEmail());
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    private SelectItem[] createNationalityOptions(List<String> nationalityList) {
+        SelectItem[] options = new SelectItem[nationalityList.size() + 1];
+
+        System.err.println("Creating filter options");
+        options[0] = new SelectItem("", "Select");
+        for (int i = 0; i < nationalityList.size(); i++) {
+            options[i + 1] = new SelectItem(nationalityList.get(i), nationalityList.get(i));
+        }
+        return options;
+    }
+
+    private SelectItem[] createGenderOptions() {
+        SelectItem[] options = new SelectItem[4];
+        System.out.println("Creating gender options");
+        options[0] = new SelectItem("", "Select");
+        options[1] = new SelectItem("Male", "Male");
+        options[2] = new SelectItem("Female", "Female");
+        options[3] = new SelectItem("Not Specified", "Not Specified");
+        return options;
+
     }
 }

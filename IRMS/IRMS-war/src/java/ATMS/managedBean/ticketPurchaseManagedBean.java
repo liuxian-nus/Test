@@ -37,6 +37,7 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @ViewScoped
 public class ticketPurchaseManagedBean {
+
     @EJB
     private MemberTransactionSessionBean memberTransactionSessionBean;
     @EJB
@@ -47,97 +48,89 @@ public class ticketPurchaseManagedBean {
     private TicketSessionBean ticketSessionBean;
     @EJB
     private TicketPurchaseSessionBean ticketPurchaseSessionBean;
-    
-    
-    
-    
-    private TicketPurchaseEntity tp=new TicketPurchaseEntity();
+    private TicketPurchaseEntity tp = new TicketPurchaseEntity();
     private Long attrTicketId;
     private AttrTicketEntity attrTicket;
     private int quantity;
-    private double fee=0.0;
+    private double fee = 0.0;
     private int restQuota;
     private String memberEmail;
     private MemberTransactionEntity mt;
-    
+
     @PostConstruct
-    public void init()
-    {
+    public void init() {
         FacesContext.getCurrentInstance().getExternalContext().getSession(true);
     }
 
     /**
      * Creates a new instance of ticketPurchaseManagedBean
      */
-   
     public ticketPurchaseManagedBean() {
-        attrTicket=new AttrTicketEntity();
-        tp=new TicketPurchaseEntity();
+        attrTicket = new AttrTicketEntity();
+        tp = new TicketPurchaseEntity();
     }
- 
-    
-    public void purchaseTicket(ActionEvent event) throws IOException{
-        try{
+
+    public void purchaseTicket(ActionEvent event) throws IOException {
+        try {
             System.out.println("ticketPurchaseManagedBean : purchaseTicket");
-            System.out.println("attrTicketId:"+attrTicketId);
-            attrTicket=ticketSessionBean.getTicketById(attrTicketId);
+            System.out.println("attrTicketId:" + attrTicketId);
+            attrTicket = ticketSessionBean.getTicketById(attrTicketId);
             System.out.println("attrTicket set!");
-            if(!ticketAvailable(attrTicket,quantity)){
+            if (!ticketAvailable(attrTicket, quantity)) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No enough ticket", ""));
                 return;
             }
             System.out.println("ticket available");
-            List<Integer>qty=new ArrayList<Integer>();
+            List<Integer> qty = new ArrayList<Integer>();
             System.out.println("qty instantiated");
-            qty=tp.getAttrTicketQuantities();
+            qty = tp.getAttrTicketQuantities();
             System.out.println("get tp quantity");
-            System.out.println("qty size: "+qty.size());
+            System.out.println("qty size: " + qty.size());
             qty.add(quantity);
-            System.out.println("qty size: "+qty.size());
+            System.out.println("qty size: " + qty.size());
             tp.setAttrTicketQuantities(qty);
             System.out.println("tp qty set!");
-            System.out.println("quantity: "+tp.getAttrTicketQuantities().get(0));
+            System.out.println("quantity: " + tp.getAttrTicketQuantities().get(0));
             System.out.println("quantity successfully added");
-            List<AttrTicketEntity> tickets=tp.getAttrTickets();
+            List<AttrTicketEntity> tickets = tp.getAttrTickets();
             tickets.add(attrTicket);
             tp.setAttrTickets(tickets);
-            System.out.println("ticket: "+tp.getAttrTickets().get(0).getAttrTicketName());
+            System.out.println("ticket: " + tp.getAttrTickets().get(0).getAttrTicketName());
             System.out.println("ticket successfully added");
-            System.out.println("fee: "+fee);
+            System.out.println("fee: " + fee);
             tp.setAttrTicketFee(fee);
             System.out.println("fee set!");
-            boolean isMember=addMember();
-      /*      if(isMember){
-                addMemberTransaction();
-                System.out.println("member transaction added!");
-            }*/
+            boolean isMember = addMember();
+            /*      if(isMember){
+             addMemberTransaction();
+             System.out.println("member transaction added!");
+             }*/
             tp.setAttrTPStatus("purchased");
             System.out.println("purchase status set to purchased");
             ticketPurchaseSessionBean.addTicketPurchase(tp);
             System.out.println("ticket purchase successful");
-            decreaseRestQuota(attrTicket,quantity);
+            decreaseRestQuota(attrTicket, quantity);
             System.out.println("available quota decreased");
-        }catch (Exception e){
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when purchase ticket", ""));
             return;
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ticket purchased.", ""));
-        tp=new TicketPurchaseEntity();
+        tp = new TicketPurchaseEntity();
     }
-    
-    public boolean ticketAvailable(AttrTicketEntity ticket,int quantity){
-        AttractionEntity attr=ticket.getAttr();
-        int this_restQuota=attr.getAttrQuota().getRestQuota();
-        if(this_restQuota>=quantity){
+
+    public boolean ticketAvailable(AttrTicketEntity ticket, int quantity) {
+        AttractionEntity attr = ticket.getAttr();
+        int this_restQuota = attr.getAttrQuota().getRestQuota();
+        if (this_restQuota >= quantity) {
             System.out.println("enough ticket");
             return true;
-        }
-        else{
+        } else {
             System.out.println("ticket sold out");
             return false;
         }
     }
-    
+
     public boolean addMember() {
         System.out.println("addMember...");
         if (memberEmail != null) {
@@ -155,70 +148,70 @@ public class ticketPurchaseManagedBean {
         }
         return false;
     }
-    
-    public void addMemberTransaction(){
-        System.out.println("addMemberTransaction...");
-        MemberEntity member=memberSessionBean.getMemberByEmail(memberEmail);
-        Date date=null;
-     /*   mt=new MemberTransactionEntity();
-        
-        mt.setMemberEmail(memberEmail);
-        mt.setMtAmount(fee);
-        mt.setMtDepartment("Attraction");
-        mt.setMtMode(false); //assume use cash now
-        mt.setPaymentStatus(true);
-        System.out.println("mt set!");
 
-            memberTransactionSessionBean.addMemberTransaction(memberEmail, mt); //assume pay by cash
-            System.out.println("transaction add successful!");*/
-        String description = member.getMemberName() + ": Your purchase of attraction ticket at " + date + " with a total expense of: " + fee;   
-        memberTransactionSessionBean.addMemberTransaction(member, fee, date, "Attraction", "",description, false);
-        System.out.println("transaction add successful!");       
+    public void addMemberTransaction() {
+        System.out.println("addMemberTransaction...");
+        MemberEntity member = memberSessionBean.getMemberByEmail(memberEmail);
+        Date date = null;
+        /*   mt=new MemberTransactionEntity();
+        
+         mt.setMemberEmail(memberEmail);
+         mt.setMtAmount(fee);
+         mt.setMtDepartment("Attraction");
+         mt.setMtMode(false); //assume use cash now
+         mt.setPaymentStatus(true);
+         System.out.println("mt set!");
+
+         memberTransactionSessionBean.addMemberTransaction(memberEmail, mt); //assume pay by cash
+         System.out.println("transaction add successful!");*/
+        String description = member.getMemberName() + ": Your purchase of attraction ticket at " + date + " with a total expense of: " + fee;
+        memberTransactionSessionBean.addMemberTransaction(member, fee, date, "Attraction", "", description, false);
+        System.out.println("transaction add successful!");
     }
-    
-    public void decreaseRestQuota(AttrTicketEntity ticket,int quantity){
-        AttractionEntity attr=ticket.getAttr();
-        QuotaEntity quota=attr.getAttrQuota();
-        int this_restQuota=quota.getRestQuota();
-        this_restQuota-=quantity;
+
+    public void decreaseRestQuota(AttrTicketEntity ticket, int quantity) {
+        AttractionEntity attr = ticket.getAttr();
+        QuotaEntity quota = attr.getAttrQuota();
+        int this_restQuota = quota.getRestQuota();
+        this_restQuota -= quantity;
         quota.setRestQuota(this_restQuota);
         attr.setAttrQuota(quota);
         attractionSessionBean.updateAttractionAfterDecreaseQuota(attr);
         System.out.println("quota updated");
-        
+
     }
-    
-    public void checkFee(ActionEvent event)throws IOException, ExistException{
+
+    public void checkFee(ActionEvent event) throws IOException, ExistException {
         System.out.println("ticketPurchaseManagedBean : checkFee");
-        try{
-            System.out.println("quantity: "+quantity);
-            attrTicket=ticketSessionBean.getTicketById(attrTicketId);
-            fee=ticketPurchaseSessionBean.calculateFee(attrTicket, quantity);
-            System.out.println("fee calculated: "+fee);
-        } catch (Exception e){
+        try {
+            System.out.println("quantity: " + quantity);
+            attrTicket = ticketSessionBean.getTicketById(attrTicketId);
+            fee = ticketPurchaseSessionBean.calculateFee(attrTicket, quantity);
+            System.out.println("fee calculated: " + fee);
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when calculate fee", ""));
             return;
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "System Calculated fee.", ""));
     }
-    
-    public void checkQuota(ActionEvent event)throws IOException, ExistException{
+
+    public void checkQuota(ActionEvent event) throws IOException, ExistException {
         System.out.println("ticketPurchaseManagedBean : checkQuota");
-        try{
-            System.out.println("quantity: "+quantity);
-            attrTicket=ticketSessionBean.getTicketById(attrTicketId);
-            AttractionEntity attr=attrTicket.getAttr();
-            QuotaEntity quota=attr.getAttrQuota();
-            restQuota=quota.getRestQuota();
-            System.out.println("rest quota: "+restQuota);
-        } catch (Exception e){
+        try {
+            System.out.println("quantity: " + quantity);
+            attrTicket = ticketSessionBean.getTicketById(attrTicketId);
+            AttractionEntity attr = attrTicket.getAttr();
+            QuotaEntity quota = attr.getAttrQuota();
+            restQuota = quota.getRestQuota();
+            System.out.println("rest quota: " + restQuota);
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when retrieving available quota", ""));
             return;
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Available quota.", ""));
     }
-    
-    public void checkMember(ActionEvent event){
+
+    public void checkMember(ActionEvent event) {
         System.out.println("check member..");
         if (memberEmail != null) {
             System.out.println("email entered");
@@ -228,11 +221,11 @@ public class ticketPurchaseManagedBean {
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Member exists", ""));
             }
-        }
-        else
+        } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Please enter member email", ""));
+        }
     }
-    
+
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("adventureWorldTicketPurchase.xhtml");
     }
@@ -252,8 +245,6 @@ public class ticketPurchaseManagedBean {
     public void setTicketSessionBean(TicketSessionBean ticketSessionBean) {
         this.ticketSessionBean = ticketSessionBean;
     }
-    
-    
 
     public TicketPurchaseEntity getTp() {
         return tp;
@@ -318,5 +309,4 @@ public class ticketPurchaseManagedBean {
     public void setMemberEmail(String memberEmail) {
         this.memberEmail = memberEmail;
     }
-      
 }
