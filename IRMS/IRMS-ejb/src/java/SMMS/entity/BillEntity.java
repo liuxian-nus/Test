@@ -26,10 +26,12 @@ public class BillEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long billId;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date billDate;
+    private Date billDate; // current date
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dueDate;   
     private double billAmount;
     private String billType; //commission, month rate,early terminate,deposit
-    private String billStatus;
+    private String billStatus; // unpaid, paid, overdue,available(to send out)
     @ManyToOne
     private ContractEntity contract = new ContractEntity();
 
@@ -88,6 +90,14 @@ public class BillEntity implements Serializable {
 
     public void setId(Long billId) {
         this.billId = billId;
+    }
+    
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     @Override

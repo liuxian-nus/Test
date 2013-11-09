@@ -1,26 +1,224 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../Template/generalTemplate.xhtml">
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:define name="top">
-        top
-    </ui:define>
 
-    <ui:define name="bottom">
-        bottom
-    </ui:define>
+    <!-- tab 1: view available bills to send out, view bills need to pay, view bills overdue, tab-->
+    <ui:define name="content">  
+        <p:tabView id="tabView">  
 
-    <ui:define name="left">
-        left
-    </ui:define>
+            <!--tab 1-->
+            <p:tab id="tab1" title="Bills Summary">  
 
-    <ui:define name="right">
-        right
-    </ui:define>
+                <h:form id="available">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Bills available" toggleable="true" toggleSpeed="500" collapsed="true">  
+                        <p:panel id="bills" header="Available Bills" style="height:500px;">
+                            <div style="margin-top:20px;margin-bottom:20px;">
 
-    <ui:define name="content">
-        content
+                                <p:dataTable id="availableBill" value="#{operatorBillManagedBean.availableBills}" var="aBill" 
+                                             paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                                    <p:column headerText="Bill ID" style="width:50px;">
+                                        <h:outputText value="#{aBill.billId}"/>
+                                    </p:column>
+                                    <p:column headerText="Issue Date" style="width:100px;">
+                                        <h:outputText value="#{aBill.billDate}"/>
+                                    </p:column>
+                                    <p:column headerText="Amount" style="width:100px;">
+                                        <h:outputText value="#{aBill.billAmount}"/>
+                                    </p:column>
+                                    <p:column headerText="Merchant" style="width:100px;">
+                                        <h:outputText value="#{aBill.contract.merchant.merchantName}"/>
+                                    </p:column>
+                                    <p:column headerText="Contract" style="width:100px;">
+                                        <h:outputText value="#{aBill.contract.contractId}"/>
+                                    </p:column>
+                                    <p:column headerText="Type" style="width:100px;">
+                                        <h:outputText value="#{aBill.billType}"/>
+                                    </p:column>
+
+                                    <p:column style="width:100px">  
+                                        <p:commandButton   oncomplete="confirmSend.show()" ajax="true" 
+                                                           icon="ui-icon ui-icon-check"  title="Send Bill to Merchant">  
+                                            <f:setPropertyActionListener target="#{operatorBillManagedBean.bill}" value="#{aBill}" /> 
+                                        </p:commandButton> 
+                                    </p:column>  
+                                </p:dataTable>  
+
+                                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmSend"> 
+                                    <br/>
+                                    Are you sure to send to merchant?
+                                    <br/><br/>
+                                    <h:panelGrid columns="2" id="approveNew">
+                                        <p:commandButton value="Yes" update="availableBill" onclick ="growl" actionListener="#{operatorBillManagedBean.sendBill}" oncomplete="confirmSend.hide()"/>
+                                        <p:commandButton value="Not yet" onclick="confirmSend.hide()" type="button"/>  
+                                    </h:panelGrid>
+                                </p:dialog> 
+
+                            </div>
+                        </p:panel>
+
+                    </p:fieldset>
+                </h:form>
+                <br/>
+
+                <h:form id="unpaid">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Unpaid Bills" toggleable="true" toggleSpeed="500" collapsed="true"> 
+
+                        <p:panel id="bills" header="Unpaid Bills" style="height:500px;">
+                            <div style="margin-top:20px;margin-bottom:20px;">
+
+                                <p:dataTable id="unpaidBills" value="#{operatorBillManagedBean.unpaidBills}" var="uBill" 
+                                             paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                                    <p:column headerText="Bill ID" style="width:50px;">
+                                        <h:outputText value="#{uBill.billId}"/>
+                                    </p:column>
+                                    <p:column headerText="Issue Date" style="width:100px;">
+                                        <h:outputText value="#{uBill.billDate}"/>
+                                    </p:column>
+                                    <p:column headerText="Amount" style="width:100px;">
+                                        <h:outputText value="#{uBill.billAmount}"/>
+                                    </p:column>
+                                    <p:column headerText="Merchant" style="width:100px;">
+                                        <h:outputText value="#{uBill.contract.merchant.merchantName}"/>
+                                    </p:column>
+                                    <p:column headerText="Contract" style="width:100px;">
+                                        <h:outputText value="#{uBill.contract.contractId}"/>
+                                    </p:column>
+                                    <p:column headerText="Type" style="width:100px;">
+                                        <h:outputText value="#{uBill.billType}"/>
+                                    </p:column>
+
+                                    <p:column style="width:100px">  
+                                        <p:commandButton   oncomplete="confirmSend.show()" ajax="true" 
+                                                           icon="ui-icon ui-icon-check"  title="Send Reminder to merchant">  
+                                            <f:setPropertyActionListener target="#{operatorBillManagedBean.bill}" value="#{uBill}" /> 
+                                        </p:commandButton> 
+                                    </p:column>  
+                                </p:dataTable>  
+
+                                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmSend"> 
+                                    <br/>
+                                    Are you sure to send reminder to merchant?
+                                    <br/><br/>
+                                    <h:panelGrid columns="2" id="approveNew">
+                                        <p:commandButton value="Yes" update="availableBill" onclick ="growl" actionListener="#{operatorBillManagedBean.sendReminder}" oncomplete="confirmSend.hide()"/>
+                                        <p:commandButton value="Not yet" onclick="confirmSend.hide()" type="button"/>  
+                                    </h:panelGrid>
+                                </p:dialog> 
+
+                            </div>
+                        </p:panel>
+
+                    </p:fieldset>
+                </h:form>
+                <br/>
+
+
+                <h:form id="overdue">
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
+                    <p:fieldset legend="Overdue Bills" toggleable="true" toggleSpeed="500" collapsed="true"> 
+
+                        <p:panel id="bills" header="Overdue Bills" style="height:500px;">
+                            <div style="margin-top:20px;margin-bottom:20px;">
+
+                                <p:dataTable id="overdueBills" value="#{operatorBillManagedBean.overdueBills}" var="oBill" 
+                                             paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                                    <p:column headerText="Bill ID" style="width:50px;">
+                                        <h:outputText value="#{oBill.billId}"/>
+                                    </p:column>
+                                    <p:column headerText="Issue Date" style="width:100px;">
+                                        <h:outputText value="#{oBill.billDate}"/>
+                                    </p:column>
+                                    <p:column headerText="Amount" style="width:100px;">
+                                        <h:outputText value="#{oBill.billAmount}"/>
+                                    </p:column>
+                                    <p:column headerText="Merchant" style="width:100px;">
+                                        <h:outputText value="#{oBill.contract.merchant.merchantName}"/>
+                                    </p:column>
+                                    <p:column headerText="Contract" style="width:100px;">
+                                        <h:outputText value="#{oBill.contract.contractId}"/>
+                                    </p:column>
+                                    <p:column headerText="Type" style="width:100px;">
+                                        <h:outputText value="#{oBill.billType}"/>
+                                    </p:column>
+                                    <p:column style="width:100px">  
+
+                                    </p:column>  
+                                </p:dataTable>  
+                            </div>
+                        </p:panel>
+
+                    </p:fieldset>
+                </h:form>
+            </p:tab>  
+
+            <!-- Various Actions of bills start!! -->
+            <p:tab id="tab2" title="Search Bills">  
+
+                <h:form id="SearchById">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Search Bill by ID" toggleable="true" toggleSpeed="500" collapsed="true">  
+                        <p:panel id="bills" header="Search" style="height:500px;">
+                            <h:panelGrid columns="2" cellpadding="10">      
+                                <h:outputText value="Bill ID: " style="margin-right: 10px;"/>
+                                <p:autoComplete id="reservation" value="#{operatorBillManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                                                completeMethod="#{operatorBillManagedBean.completeBillsId()}" />
+                                <p:spacer width="20"/>
+                                <p:commandButton  value="Search" ajax="true" actionListener="#{operatorBillManagedBean.searchById}" update ="growl"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:fieldset>
+                </h:form>
+                <br/>
+
+                <h:form id="SearchByMerchant">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Search Bill by Merchant" toggleable="true" toggleSpeed="500" collapsed="true">  
+                        <p:panel id="bills" header="Search" style="height:500px;">
+                            <h:panelGrid columns="2" cellpadding="10">      
+                                <h:outputText value="Merchant Email: " style="margin-right: 10px;"/>
+                                <p:autoComplete id="reservation" value="#{contractManagedBean.merchantId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                                                completeMethod="#{contractManagedBean.completeMerchants()}" />
+                                <p:spacer width="20"/>
+                                <p:commandButton  value="Search" ajax="true" actionListener="#{contractManagedBean.searchByMerchant}" update ="growl"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:fieldset>
+                </h:form>
+                <br/>
+
+                <h:form id="SearchByContract">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Search Bill by Contract ID" toggleable="true" toggleSpeed="500" collapsed="true">  
+                        <p:panel id="bills" header="Search" style="height:500px;">
+                            <h:panelGrid columns="2" cellpadding="10">      
+                                <h:outputText value="Bill ID: " style="margin-right: 10px;"/>
+                                <p:autoComplete id="reservation" value="#{operatorBillManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
+                                                completeMethod="#{operatorBillManagedBean.completeBillsContract()}" />
+                                <p:spacer width="20"/>
+                                <p:commandButton  value="Search" ajax="true" actionListener="#{operatorBillManagedBean.searchByContract}" update ="growl"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:fieldset>
+                </h:form>
+            </p:tab> 
+
+            <p:tab id="tab1" title="Generate Bill">  
+            </p:tab>
+
+        </p:tabView>
     </ui:define>
 
 </ui:composition>

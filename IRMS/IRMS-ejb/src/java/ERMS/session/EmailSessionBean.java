@@ -9,6 +9,7 @@ import ATMS.entity.AttrTicketEntity;
 import ATMS.entity.ExpressPassPurchaseEntity;
 import ATMS.entity.TicketPurchaseEntity; 
 import CRMS.session.GenerateBarcodeSessionBean;
+import SMMS.entity.BillEntity;
 import SMMS.entity.ContractEntity; 
 import com.lowagie.text.BadElementException; 
 import com.lowagie.text.Chunk; 
@@ -475,6 +476,47 @@ public class EmailSessionBean {
             throw new RuntimeException(e); 
         } 
     }
+    
+    
+    public void emailMerchantBill(String toEmailAdress, BillEntity bill) { 
+        Properties props = new Properties(); 
+        props.put("mail.smtp.host", "smtp.gmail.com"); 
+        props.put("mail.smtp.socketFactory.port", "465"); 
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); 
+        props.put("mail.smtp.auth", "true"); 
+        props.put("mail.smtp.port", "465"); 
+  
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() { 
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() { 
+                return new PasswordAuthentication("is3102.it09", "weloveTWK"); 
+            } 
+        }); 
+  
+        try { 
+            Message message = new MimeMessage(session); 
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com")); 
+            message.setRecipients(Message.RecipientType.TO, 
+                    InternetAddress.parse(toEmailAdress)); 
+            message.setSubject("New Bill"); 
+            message.setText("Dear "+bill.getContract().getMerchant().getMerchantName()+" manager: "
+                    +"\n Greetings from Coral Island Resort!"
+                    + "\n Your contract "+ bill.getContract().getContractId()+" has a new bill available"
+                    + "\n Bill Amount: "+ bill.getBillAmount()
+                    + "\n Bill Type: "+ bill.getBillType()
+                    +"\n Please login immediately and make the payment.\n\n\nBest Regards,\nThe Coral Island Management Team"); 
+                      
+  
+            Transport.send(message); 
+  
+            System.out.println("Done"); 
+  
+        } catch (MessagingException e) { 
+            throw new RuntimeException(e); 
+        } 
+    } 
+    
+    
     public void emailAttractionTicketCombo(String toEmailAdress,AttrComboEntity combo) throws IOException, FileNotFoundException, DocumentException 
     { 
         Properties props = new Properties(); 

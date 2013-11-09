@@ -119,6 +119,20 @@ public class OutletSessionBean {
         return thisOutlet;
     }
     
+     public List<OutletEntity> getOutletsByType(String type) {
+        System.err.println("in get outlet by merchant session bean");
+        Query q = em.createQuery("SELECT m FROM OutletEntity m where m.outletStatus='unavailable'");
+        List OutletList = new ArrayList<OutletEntity>();
+        for (Object o : q.getResultList()) {
+            OutletEntity m = (OutletEntity) o;
+            if (m.getOutletType()==type) {
+                OutletList.add(m);
+            }
+        }
+        System.err.println("in get outlets by merchant sessionbean: outlet list size=" + OutletList.size());
+        return OutletList;
+    }
+    
     public List<OutletEntity> getOutletsByMerchant(String merchantEmail) {
         System.err.println("in get outlet by merchant session bean");
         Query q = em.createQuery("SELECT m FROM OutletEntity m where m.outletStatus='unavailable'");

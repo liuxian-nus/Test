@@ -20,7 +20,7 @@
                                 <f:selectItem itemLabel="Select Package" itemValue="" />  
                                 <f:selectItem itemLabel="Deluxe Package" itemValue="Deluxe" /> 
                                 <f:selectItem itemLabel="Premium Package" itemValue="Premium" />
-                                <p:ajax update="op1 op2 sm1 sm2" listener="#{addGroupCateringManagedBean.handleMenuChanges}" />
+                                <f:ajax render="op1 op2 sm1 sm2"/>
                             </h:selectOneMenu> 
 
                             <h:outputText value="1.Noolde/Rice: " />

@@ -8,6 +8,8 @@
 
 
     <ui:define name="content">
+        <f:view beforePhase="#{contractResultManagedBean.initViewSelect}"> 
+
             <h:form id="form">
                 <p:growl id="growl" showDetail="true" sticky="true" /> 
                 <p:panel id="viewContract" header="View Contract Detail" style="height:495px;">
@@ -47,68 +49,12 @@
                             <h:outputText value="Status: " />  
                             <h:outputText value="#{contractResultManagedBean.selectedContract.last.eventStatus}" style="font-weight:bold" />
 
-                            <!-- update when new or rejected-->
-                            <p:commandButton  oncomplete="upadte.show()" ajax="true" 
-                                              rendered="#{(contractResultManagedBean.selectedContract.last.eventStatus=='new')||(contractResultManagedBean.selectedContract.last.eventStatus=='newRejected')||(contractResultManagedBean.selectedContract.last.eventStatus=='renew')||(contractResultManagedBean.selectedContract.last.eventStatus=='renewRejected')||(contractResultManagedBean.selectedContract.last.eventStatus=='earlyTermination') ||(contractResultManagedBean.selectedContract.last.eventStatus=='earlyTerminationRejected')}" 
-                                              icon="ui-icon ui-icon-check" value ="Update" title="Update">  
-                            </p:commandButton>  
-                            
-                            <!-- send out for request when new-->
-                            <p:commandButton  update="approveNew" oncomplete="confirmSend.show()" ajax="true" 
-                                              rendered="#{(contractResultManagedBean.selectedContract.last.eventStatus=='new')||(contractResultManagedBean.selectedContract.last.eventStatus=='renew')||(contractResultManagedBean.selectedContract.last.eventStatus=='earlyTermination')}" 
-                                              icon="ui-icon ui-icon-search" value ="Send for Approval" title="Send for approval">  
-                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contractResultManagedBean.selectedContract}" /> 
-                            </p:commandButton> 
-                            
-                            <!-- delete when new or rejected-->
-                            <p:commandButton  update=":form:delete" oncomplete="confirmaDelete.show()" ajax="true" 
-                                              rendered="#{(contractResultManagedBean.selectedContract.last.eventStatus=='new')||(contractResultManagedBean.selectedContract.last.eventStatus=='newRejected')||(contractResultManagedBean.selectedContract.last.eventStatus=='renew')||(contractResultManagedBean.selectedContract.last.eventStatus=='renewRejected')||(contractResultManagedBean.selectedContract.last.eventStatus=='earlyTermination') ||(contractResultManagedBean.selectedContract.last.eventStatus=='earlyTerminationRejected')}" 
-                                              icon="ui-icon ui-icon-search" value ="Delete" title="Delete">  
-                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contractResultManagedBean.selectedContract}" /> 
-                            </p:commandButton> 
-                            
-                           <!-- withdraw when being requested-->
-                            <p:commandButton  update=":form:withdraw" oncomplete="confirmaWithdraw.show()" ajax="true"  
-                                              rendered="#{(contractResultManagedBean.selectedContract.last.eventStatus=='newRequest')||(contractResultManagedBean.selectedContract.last.eventStatus=='renewRequest')||(contractResultManagedBean.selectedContract.last.eventStatus=='earlyTerminationRequest')}" 
-                                              icon="ui-icon ui-icon-check" value ="Withdraw" title="Withdraw">   
-                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contractResultManagedBean.selectedContract}" /> 
-                            </p:commandButton> 
                         </h:panelGrid>
                     </div>
 
-                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmSend"> 
-                        <br/>
-                        Are you sure to send for approval?
-                        <br/><br/>
-                        <h:panelGrid columns="2" id="approveNew">
-                            <p:commandButton value="Yes" update="contractView" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.requestNew}" oncomplete="confirmSend.hide()"/>
-                            <p:commandButton value="Not yet" onclick="confirmSend.hide()" type="button"/>  
-                        </h:panelGrid>
-                    </p:dialog> 
-
-                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmaDelete"> 
-                        <br/>
-                        Are you sure to delete this contract?
-                        <br/><br/>
-                        <h:panelGrid columns="2" id="delete">
-                            <p:commandButton value="Yes" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.delete}" oncomplete="confirmaDelete.hide()"/>
-                            <p:commandButton value="Not yet" onclick="confirmaDelete.hide()" type="button"/>  
-                        </h:panelGrid>
-                    </p:dialog>  
-
-                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmaWithdraw"> 
-                        <br/>
-                        Are you sure to withdraw this request?
-                        <br/><br/>
-                        <h:panelGrid columns="2" id="withdraw">
-                            <p:commandButton value="Yes" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.withdraw}" oncomplete="confirmaWithdraw.hide()"/>
-                            <p:commandButton value="Not yet" onclick="confirmaWithdraw.hide()" type="button"/>  
-                        </h:panelGrid>
-                    </p:dialog>  
-
                 </p:panel>
             </h:form>
-
+        </f:view>
     </ui:define>
 
 </ui:composition>

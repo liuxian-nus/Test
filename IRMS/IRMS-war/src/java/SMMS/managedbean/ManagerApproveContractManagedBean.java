@@ -6,10 +6,12 @@ package SMMS.managedbean;
 
 import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
+import SMMS.entity.BillEntity;
 import SMMS.entity.ContractEntity;
 import SMMS.entity.ContracteventEntity;
 import SMMS.session.ContractSessionBean;
 import SMMS.session.ContracteventSessionBean;
+import SMMS.session.MerchantBillSessionBean;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -29,6 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean
 @ViewScoped
 public class ManagerApproveContractManagedBean implements Serializable {
+    @EJB
+    private MerchantBillSessionBean merchantBillSessionBean;
 
     @EJB
     private EmailSessionBean emailSessionBean;
@@ -39,6 +43,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
     private ContractEntity selected;
     private ContractEntity contract;
     private ContracteventEntity cevent;
+    private BillEntity bill;
 
     /**
      * Creates a new instance of ManagerApproveContractManagedBean
@@ -47,6 +52,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
         contract = new ContractEntity();
         selected = new ContractEntity();
         cevent = new ContracteventEntity();
+        bill = new BillEntity();
     }
 
 
@@ -84,8 +90,9 @@ public class ManagerApproveContractManagedBean implements Serializable {
         }
         contracteventSessionBean.updateContractEvent(cevent);
         System.out.println("after setting new request" + contract.getLast().getEventStatus());
-        emailSessionBean.emailRequest("a0077969@nus.edu.sg", contract);
+        emailSessionBean.emailApprovalAction("a0077969@nus.edu.sg", contract);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
+        addDepositBill(contract);
 
     }
 
@@ -107,7 +114,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
         }
         contracteventSessionBean.updateContractEvent(cevent);
         System.out.println("after setting new request" + contract.getLast().getEventStatus());
-        emailSessionBean.emailRequest("a0077969@nus.edu.sg", contract);
+        emailSessionBean.emailApprovalAction("a0077969@nus.edu.sg", contract);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
 
     }
@@ -126,7 +133,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
         }
         contracteventSessionBean.updateContractEvent(cevent);
         System.out.println("after setting new request" + contract.getLast().getEventStatus());
-        emailSessionBean.emailRequest("a0077969@nus.edu.sg", contract);
+        emailSessionBean.emailApprovalAction("a0077969@nus.edu.sg", contract);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
 
     }
@@ -146,5 +153,14 @@ public class ManagerApproveContractManagedBean implements Serializable {
 
     public void setContract(ContractEntity contract) {
         this.contract = contract;
+    }
+    
+    public void addDepositBill(ContractEntity contract)
+    {
+        bill.setBillAmount(contract.getLast().getEventDeposit());
+        bill.setBillStatus("unpaid");
+        bill.setBillType("deposit");
+        bill.setContract(contract);
+        merchantBillSessionBean.addBill(bill);
     }
 }

@@ -92,4 +92,68 @@ public class MerchantBillSessionBean {
         System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
+    
+    public List<BillEntity> getAvailableBills() {
+        System.err.println("in get bill by merchant session bean");
+        Query q = em.createQuery("SELECT m FROM BillEntity m");
+        List TransactionList = new ArrayList<BillEntity>();
+        for (Object o : q.getResultList()) {
+            BillEntity m = (BillEntity) o;
+            if (m.getBillStatus()=="available") {
+                TransactionList.add(m);
+            }
+        }
+        System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
+        return TransactionList;
+    }
+    
+    public List<BillEntity> getUnpaidBills(){  
+            System.err.println("in get bill by merchant session bean");
+        Query q = em.createQuery("SELECT m FROM BillEntity m");
+        List TransactionList = new ArrayList<BillEntity>();
+        for (Object o : q.getResultList()) {
+            BillEntity m = (BillEntity) o;
+            if (m.getBillStatus()=="unpaid") {
+                TransactionList.add(m);
+            }
+        }
+        System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
+        return TransactionList;
+    }
+    
+    public List<BillEntity> getOverdueBills() {
+        System.err.println("in get bill by merchant session bean");
+        Query q = em.createQuery("SELECT m FROM BillEntity m");
+        List TransactionList = new ArrayList<BillEntity>();
+        for (Object o : q.getResultList()) {
+            BillEntity m = (BillEntity) o;
+            if (m.getBillStatus()=="overdue") {
+                TransactionList.add(m);
+            }
+        }
+        System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
+        return TransactionList;
+    }
+    
+    public List<BillEntity> getAllBills() {
+        System.err.println("in get bill by merchant session bean");
+        Query q = em.createQuery("SELECT m FROM BillEntity m");
+        List TransactionList = new ArrayList<BillEntity>();
+        for (Object o : q.getResultList()) {
+            BillEntity m = (BillEntity) o;
+                TransactionList.add(m);
+        }
+        System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
+        return TransactionList;
+    }
+    
+     public BillEntity getBillById(Long billId) throws ExistException {
+        bill = em.find(BillEntity.class, billId);
+        if (bill == null) {
+            throw new ExistException("Bill does not exist!");
+        }
+        return bill;
+    }
+    
+    
 }
