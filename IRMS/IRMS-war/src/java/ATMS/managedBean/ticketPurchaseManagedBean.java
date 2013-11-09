@@ -171,8 +171,8 @@ public class ticketPurchaseManagedBean {
 
             memberTransactionSessionBean.addMemberTransaction(memberEmail, mt); //assume pay by cash
             System.out.println("transaction add successful!");*/
-           
-        memberTransactionSessionBean.addMemberTransaction(member, fee, date, "Attraction", "",false);
+        String description = member.getMemberName() + ": Your purchase of attraction ticket at " + date + " with a total expense of: " + fee;   
+        memberTransactionSessionBean.addMemberTransaction(member, fee, date, "Attraction", "",description, false);
         System.out.println("transaction add successful!");       
     }
     
