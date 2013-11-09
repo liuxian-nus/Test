@@ -46,7 +46,7 @@ public class CRMServlet extends HttpServlet {
     private MemberEntity member;
     private MemberEntity data;
     private String data2;
-
+   
     //private String keyword=null;
     /**
      * Processes requests for both HTTP
@@ -86,7 +86,17 @@ public class CRMServlet extends HttpServlet {
 
                 request.getRequestDispatcher("/member.jsp").forward(request, response);
 
-            } else if ("memberInfo".equals(page)) {
+            } else if ("memberFeedback".equals(page)) {
+                System.out.println("***member feedback page***");
+
+                request.getRequestDispatcher("/memberFeedback.jsp").forward(request, response);
+
+            } else if ("memberFeedback".equals(page)) {
+                System.out.println("***member promotion page***");
+
+                request.getRequestDispatcher("/memberPromotion.jsp").forward(request, response);
+
+            }else if ("memberInfo".equals(page)) {
                 
 
                 System.out.println(request.getParameter("email"));

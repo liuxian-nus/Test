@@ -73,42 +73,18 @@ public class ESMSServlet extends HttpServlet {
                     shows = showSessionBean.getAllShows();
                     request.setAttribute("shows", shows);
                     request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
-                } else if ("entertainmentVenue".equals(page)) {
-                    System.out.println("***entertainmentVenue***");
+                } else if ("entertainmentSchedule".equals(page)) {
+         
+                    System.out.println("***entertainmentSchedule***");
                     showId = Long.parseLong(request.getParameter("showId"));
                     session.setAttribute("thisShow", showSessionBean.getShowById(showId));
                     showSchedule = showSessionBean.getAllShowSchedules(showId);
                     System.out.println(showSchedule.isEmpty());
-                    Iterator<ShowScheduleEntity> itr = showSchedule.iterator();
-                    List<Integer> dayList = new ArrayList();
-                    List<Integer> monthList = new ArrayList();
-                    List<Integer> yearList = new ArrayList();
-                    List<Integer> weekList = new ArrayList();
-                    List<Integer> minuteList = new ArrayList();
-                    List<Integer> hourList = new ArrayList();
-                    while (itr.hasNext()) {
-                        ShowScheduleEntity current = itr.next();                     
-                        Date date = current.getStartDateTime();
-                        dayList.add(date.getDate());
-                        System.out.println(date.getDate());
-                        monthList.add(date.getMonth());
-                        System.out.println(date.getMonth());
-                        yearList.add(date.getYear());
-                        System.out.println(date.getYear());
-                        weekList.add(date.getDay());
-                        System.out.println(date.getDay());
-                        hourList.add(date.getHours());
-                        System.out.println(date.getHours());
-                        minuteList.add(date.getMinutes());
-                        System.out.println(date.getMinutes());
-                    }
-                    request.setAttribute("showDays", dayList);
-                    request.setAttribute("showMonths",monthList);
-                    request.setAttribute("showYears",yearList);
-                    request.setAttribute("showWeeks",weekList);
-                    request.setAttribute("showMinutes",minuteList);
-                    request.setAttribute("showHours",hourList);
                     request.setAttribute("showSchedules", showSchedule);
+                    request.getRequestDispatcher("/entertainmentSchedule.jsp").forward(request, response);
+                }  else if ("entertainmentVenue".equals(page)) {
+                    System.out.println("***entertainmentVenue***");
+
                     request.getRequestDispatcher("/entertainmentVenue.jsp").forward(request, response);
                 } else {
                     System.out.println("other page");
