@@ -53,7 +53,7 @@
                     <br/>
                      Sure to cancel this reservation?
                     <br/><br/>
-                    <p:commandButton value="Yes" action="#{reservationSearchResultManagedBean.cancelReservation}" oncomplete="confirmation.hide()">  
+                    <p:commandButton value="Yes" action="#{reservationSearchResultManagedBean.cancelReservation()}" oncomplete="confirmation.hide()">  
                     </p:commandButton>
                     <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
                 </p:dialog> 

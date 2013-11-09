@@ -220,7 +220,8 @@ public class RoomSessionBean {
         }
         bill = this.calculateRoomFee(room);
         System.out.println("accounts receivable: " + bill);
-        mtSessionBean.addMemberTransaction(room.getRoomMember(), bill, room.getCheckOutDate(), "Hotel", null, false);
+        String description = "Hotel Reservation from " + room.getCheckInDate() + " to " + room.getCheckOutDate() + " with a total room fee: " + bill;
+        mtSessionBean.addMemberTransaction(room.getRoomMember(), bill, room.getCheckOutDate(), "Hotel", null, description, false);
         System.out.println("room check out: member transaction captured!");
         room.setCheckInDate(null);
         room.setCheckOutDate(null);
