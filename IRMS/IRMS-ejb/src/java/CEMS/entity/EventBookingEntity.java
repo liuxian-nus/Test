@@ -35,9 +35,9 @@ public class EventBookingEntity implements Serializable {
     
     @OneToMany(cascade={CascadeType.ALL})
     private List<EventServiceBookingEntity> serviceBookings;
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne(cascade={CascadeType.MERGE})
     private EventEntity event;
-    @OneToOne(cascade={CascadeType.ALL})
+    @OneToOne(cascade={CascadeType.MERGE})
     private VenueEntity venue;
 
     public Integer getNumberNightRoom() {

@@ -16,12 +16,11 @@ import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseEvent;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -42,11 +41,9 @@ public class VenueScheduleManagedBean {
     EventSessionBean eventSessionBean;
     @EJB
     VenueSessionBean venueSessionBean;
-    
     VenueEntity venue;
     EventBookingEntity eventBooking;
     EventEntity eventEntity;
-    
     private Long eventId;
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
@@ -66,10 +63,12 @@ public class VenueScheduleManagedBean {
     public void init(PhaseEvent event) {
         venue = new VenueEntity();
         venue = (VenueEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("venue");
+
         doThis();
     }
 
     public void doThis() {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         eventBookings = new ArrayList<EventBookingEntity>();
         System.err.println("get flash venue: " + venue.getVenueId());
         eventBookings = (List<EventBookingEntity>) eventBookingSessionBean.getEventBookings(venue);
@@ -79,22 +78,33 @@ public class VenueScheduleManagedBean {
             eventBooking = itr.next();
             eventModel.addEvent(new DefaultScheduleEvent(eventBooking.getEvent().getEventName(), eventBooking.getBookingDate(), eventBooking.getBookingDate()));
         }
+//        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("venue2", venue);
+        request.getSession().setAttribute("venueId", Long.valueOf(venue.getVenueId()));
     }
 
     public void addEvent(ActionEvent actionEvent) {
-        System.err.println("add eventBooking: " + eventId);
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        System.err.println("add eventBooking: " + event.getTitle());
+        eventId = Long.parseLong(event.getTitle());
+        System.err.println("eventId" + eventId);
         if (event.getId() == null) {
-            eventModel.addEvent(event);
+
             eventEntity = eventSessionBean.getReservation(eventId);
             System.err.println(eventEntity.getEventId());
-            
+
             eventBooking = new EventBookingEntity();
             eventBooking.setEvent(eventEntity);
+//            System.err.println("1."+eventEntity.getEventId());
+            Long venueId = (Long) request.getSession().getAttribute("venueId");
+//            System.err.println(venueId);
+            venue = venueSessionBean.getVenueById(venueId);
             eventBooking.setVenue(venue);
+//            System.err.println("2."+venue.getVenueId());
+//            System.err.println("3."+event.getStartDate());
             eventBooking.setBookingDate(event.getStartDate());
             eventBookingSessionBean.addEventBooking(eventBooking);
-            System.err.println("New event booking..."+ eventBooking.getId());
-           
+//            System.err.println("New event booking..."+ eventBooking.getId());
+            eventModel.addEvent(event);
         } else {
             eventModel.updateEvent(event);
         }
@@ -102,7 +112,9 @@ public class VenueScheduleManagedBean {
     }
 
     public void onDateSelect(SelectEvent selectEvent) {
-        System.err.println("onDateSelect...");
+//        System.err.println("onDateSelect...");
+        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+//        event = new DefaultScheduleEvent((String) selectEvent.getSource(), (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
     }
 
     public EventBookingSessionBean getEventBookingSessionBean() {

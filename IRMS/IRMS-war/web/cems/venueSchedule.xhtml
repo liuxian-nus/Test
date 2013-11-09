@@ -16,12 +16,17 @@
 
                 <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">  
                     <h:panelGrid id="eventDetails" columns="2">  
-                        <h:outputLabel value="Event: " />  
-                        <p:selectOneMenu value="#{venueScheduleManagedBean.eventId}">  
+                        <h:outputLabel for="title" value="Event: " />  
+                        <p:selectOneMenu id="title" value="#{venueScheduleManagedBean.event.title}">  
                             <f:selectItem itemLabel="Select One" itemValue="" />  
-                            <f:selectItems value="#{manageEventManagedBean.reservedEvents}" var="event" itemLabel="ID:#{event.eventId}; Event: #{event.eventName} by #{event.name}" itemValue="#{event.eventId}"/>  
-                        </p:selectOneMenu> 
-                        <p:commandButton id="addButton" value="Save" actionListener="#{venueScheduleManagedBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
+                            <f:selectItems value="#{manageEventManagedBean.reservedEvents}" var="selectedEvent" itemLabel="ID:#{selectedEvent.eventId}; Event: #{selectedEvent.eventName} by #{selectedEvent.name}" itemValue="#{selectedEvent.eventId}"/>  
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="from" value="Date: " />  
+                        <p:calendar id="from" value="#{venueScheduleManagedBean.event.startDate}"  
+                                    pattern="MM/dd/yyyy" mindate="#{addShowManagedBean.currentDate}"/> 
+                        
+                        <p:commandButton id="addButton" value="Save" actionListener="#{venueScheduleManagedBean.addEvent}" oncomplete="myschedule.update();eventDialog.hide();"/>  
                     </h:panelGrid>  
                 </p:dialog>  
             </h:form>

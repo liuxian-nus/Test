@@ -49,6 +49,10 @@ public class VenueSessionBean {
         Query q = em.createQuery("SELECT m FROM VenueEntity m");
         return q.getResultList();
     }
+    
+    public VenueEntity getVenueById(Long venueId) {
+        return em.find(VenueEntity.class, venueId);
+    }
 
     public VenueEntity getVenue() {
         return venue;

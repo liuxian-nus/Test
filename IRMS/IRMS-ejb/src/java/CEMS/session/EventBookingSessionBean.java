@@ -54,12 +54,7 @@ public class EventBookingSessionBean {
     }
     
     public EventBookingEntity addEventBooking(EventBookingEntity eventBooking) {
-
- 
         em.persist(eventBooking);
-        System.out.println(eventBooking.getId());
-
-        
         return eventBooking;
     }
 }

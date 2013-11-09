@@ -49,7 +49,7 @@ public class EventEntity implements Serializable {
     private String eventManagerId;
     private boolean isPublic;
     
-    @OneToMany(cascade={CascadeType.ALL},mappedBy="event")
+    @OneToMany(cascade={CascadeType.MERGE},mappedBy="event")
     private List<EventBookingEntity> bookings;
     
     
