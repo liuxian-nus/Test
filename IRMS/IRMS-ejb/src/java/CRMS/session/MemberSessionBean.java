@@ -167,7 +167,7 @@ public class MemberSessionBean {
         return memberList;
     }
     
-    public List<MemberEntity> getMemberByAge(int ageYoung, int ageOld) {
+    public List<MemberEntity> getMemberByAgeRange(int ageYoung, int ageOld) {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
         for (Object o : q.getResultList()) {

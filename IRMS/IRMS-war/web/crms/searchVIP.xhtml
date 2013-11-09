@@ -13,10 +13,10 @@
             <p:panel id="search" header="Search VIP" style="height:495px;">
                 <div style="margin-left:100px;margin-right:50px;margin-top:120px;">
                     <h:outputText value="VIP email:" style="margin-right: 10px;"/>
-                    <p:autoComplete id="email" value="#{searchMemberManagedBean.searchEmail}" required="true" requiredMessage="Email Cannot be Null"  
-                                    completeMethod="#{searchMemberManagedBean.complete}" />
+                    <p:autoComplete id="email" value="#{memberManagedBean.searchEmail}" required="true" requiredMessage="Email Cannot be Null"  
+                                    completeMethod="#{memberManagedBean.complete}" />
                     <p:spacer width="20"/>
-                    <p:commandButton value="Search" ajax="true" actionListener="#{searchMemberManagedBean.searchByEmail}" update="growl"/>
+                    <p:commandButton value="Search" ajax="true" actionListener="#{memberManagedBean.searchByEmail}" update="growl"/>
                     <p:message for="email"/>
                 </div>
             </p:panel>
