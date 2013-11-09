@@ -31,57 +31,64 @@ public class MemberMessageSessionBean {
     public MemberMessageSessionBean() {
     }
 
-    public List<MemberMessageEntity> getBookingSummaryByMemberEmail(String memberEmail) throws ExistException {
+    public List<MemberMessageEntity> getAllMessages() {
+        Query query = em.createQuery("SELECT mm FROM MemberMessageEntity mm");
+        messages = new ArrayList<MemberMessageEntity>();
+        messages = query.getResultList();
+        return messages;
+    }
+
+    public List<MemberMessageEntity> getBookingSummaryByMemberEmail(String memberEmail) {
         System.out.println("in member message session bean: get message by email " + memberEmail);
-        MemberEntity thisMember = em.find(MemberEntity.class, memberEmail);
-        if (thisMember == null) {
-            throw new ExistException("Member email is invalid!");
-        }
-        System.out.println("member is found! name is: " + thisMember.getMemberName());
+        //       MemberEntity thisMember = em.find(MemberEntity.class, memberEmail);
+        //       if (thisMember == null) {
+        //           throw new ExistException("Member email is invalid!");
+        //       }
+        //      System.out.println("member is found! name is: " + thisMember.getMemberName());
         Query query = em.createQuery("SELECT mm FROM MemberMessageEntity mm WHERE mm. messageCategory = 'bookingSummary'");
         //mm.memberReceiver.memberEmail ='" + memberEmail + "' 
         messages = new ArrayList<MemberMessageEntity>();
         for (Object o : query.getResultList()) {
             MemberMessageEntity thisMessage = (MemberMessageEntity) o;
-            if (thisMessage.getMemberReceiver().getMemberEmail().equals(memberEmail)) {
+            if (thisMessage.getMemberReceiver().equals(memberEmail)) {
                 messages.add(thisMessage);
             }
         }
         return messages;
     }
 
-    public List<MemberMessageEntity> getMemberSummaryByMemberEmail(String memberEmail) throws ExistException {
+    public List<MemberMessageEntity> getMemberSummaryByMemberEmail(String memberEmail) {
         System.out.println("in member message session bean: get message by email " + memberEmail);
-        MemberEntity thisMember = em.find(MemberEntity.class, memberEmail);
-        if (thisMember == null) {
-            throw new ExistException("Member email is invalid!");
-        }
-        System.out.println("member is found! name is: " + thisMember.getMemberName());
+        /*        MemberEntity thisMember = em.find(MemberEntity.class, memberEmail);
+         if (thisMember == null) {
+         throw new ExistException("Member email is invalid!");
+         }
+         System.out.println("member is found! name is: " + thisMember.getMemberName());*/
         Query query = em.createQuery("SELECT mm FROM MemberMessageEntity mm WHERE mm. messageCategory = 'memberSummary'");
         //mm.memberReceiver.memberEmail ='" + memberEmail + "' 
         messages = new ArrayList<MemberMessageEntity>();
         for (Object o : query.getResultList()) {
             MemberMessageEntity thisMessage = (MemberMessageEntity) o;
-            if (thisMessage.getMemberReceiver().getMemberEmail().equals(memberEmail)) {
+            if (thisMessage.getMemberReceiver().equals(memberEmail)) {
                 messages.add(thisMessage);
             }
         }
         return messages;
     }
 
-    public List<MemberMessageEntity> getNotificationByMemberEmail(String memberEmail) throws ExistException {
+    public List<MemberMessageEntity> getNotificationByMemberEmail(String memberEmail) {
         System.out.println("in member message session bean: get message by email " + memberEmail);
-        MemberEntity thisMember = em.find(MemberEntity.class, memberEmail);
-        if (thisMember == null) {
-            throw new ExistException("Member email is invalid!");
-        }
-        System.out.println("member is found! name is: " + thisMember.getMemberName());
+        /*     MemberEntity thisMember = em.find(MemberEntity.class, memberEmail);
+         if (thisMember == null) {
+         throw new ExistException("Member email is invalid!");
+         }
+         System.out.println("member is found! name is: " + thisMember.getMemberName());*/
         Query query = em.createQuery("SELECT mm FROM MemberMessageEntity mm WHERE mm. messageCategory = 'notification'");
         //mm.memberReceiver.memberEmail ='" + memberEmail + "' 
         messages = new ArrayList<MemberMessageEntity>();
         for (Object o : query.getResultList()) {
             MemberMessageEntity thisMessage = (MemberMessageEntity) o;
-            if (thisMessage.getMemberReceiver().getMemberEmail().equals(memberEmail)) {
+            if (thisMessage.getMemberReceiver().equals(memberEmail)) {
                 messages.add(thisMessage);
             }
         }

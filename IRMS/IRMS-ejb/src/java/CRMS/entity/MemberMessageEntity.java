@@ -6,13 +6,11 @@ package CRMS.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,8 +35,9 @@ public class MemberMessageEntity implements Serializable {
     private String messageContent;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date messageSentDate;
-    @ManyToOne(cascade = {CascadeType.ALL})
-    private MemberEntity memberReceiver;
+//    @ManyToOne(cascade = {CascadeType.ALL})
+    private String memberReceiver;
+//    private MemberEntity memberReceiver;
     private String messageStatus;
 
     public Long getMessageId() {
@@ -81,11 +80,17 @@ public class MemberMessageEntity implements Serializable {
         this.messageSentDate = messageSentDate;
     }
 
-    public MemberEntity getMemberReceiver() {
+    /* public MemberEntity getMemberReceiver() {
+    return memberReceiver;
+    }
+    public void setMemberReceiver(MemberEntity memberReceiver) {
+    this.memberReceiver = memberReceiver;
+    }*/
+    public String getMemberReceiver() {
         return memberReceiver;
     }
 
-    public void setMemberReceiver(MemberEntity memberReceiver) {
+    public void setMemberReceiver(String memberReceiver) {
         this.memberReceiver = memberReceiver;
     }
 

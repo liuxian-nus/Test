@@ -5,12 +5,14 @@
 package CRMS.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -35,7 +37,16 @@ public class FeedbackEntity implements Serializable {
     private String feedbackTitle;
     private String feedbackDepartment;
     private Integer rating;
-            
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date feedbackSentDate;
+
+    public Date getFeedbackSentDate() {
+        return feedbackSentDate;
+    }
+
+    public void setFeedbackSentDate(Date feedbackSentDate) {
+        this.feedbackSentDate = feedbackSentDate;
+    }
     public Integer getRating() {
         return rating;
     }

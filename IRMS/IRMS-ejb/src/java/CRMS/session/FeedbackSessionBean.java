@@ -7,6 +7,9 @@ package CRMS.session;
 import CRMS.entity.FeedbackEntity;
 import CRMS.entity.MemberEntity;
 import Exception.ExistException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -22,37 +25,38 @@ import javax.persistence.Query;
  */
 @Stateless
 public class FeedbackSessionBean {
+
     @EJB
     private MemberSessionBean memberSessionBean;
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
-    
     FeedbackEntity feedback;
-    
-    
-    public FeedbackSessionBean(){
-        feedback=new FeedbackEntity();
+
+    public FeedbackSessionBean() {
+        feedback = new FeedbackEntity();
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void createFeedback(FeedbackEntity feedback){
+    public void createFeedback(FeedbackEntity feedback) {
         System.out.println("FeedbackSessionBean: createFeedback");
         em.persist(feedback);
         System.out.println("feedback created!");
     }
-    
+
+    //for jsp page
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void createFeedback(String content, String title, String email, String department, int rating){
+    public void createFeedback(String content, String title, String email, String department, Date feedbackSentDate, int rating) {
         System.out.println("FeedbackSessionBean: createFeedback");
         feedback.setFeedbackContent(content);
         feedback.setFeedbackTitle(title);
         feedback.setFeedbackDepartment(department);
         feedback.setFeedbackOwnerEmail(email);
         feedback.setRating(rating);
+        feedback.setFeedbackSentDate(feedbackSentDate);
         feedback.setFeedbackStatus("New");
-        MemberEntity member=memberSessionBean.getMemberByEmail(email);
-        if(member!=null){
-            System.out.println("member found: "+member.getMemberName());
+        MemberEntity member = memberSessionBean.getMemberByEmail(email);
+        if (member != null) {
+            System.out.println("member found: " + member.getMemberName());
             feedback.setFeedbackOwner(member);
         }
         em.persist(feedback);
@@ -60,51 +64,65 @@ public class FeedbackSessionBean {
     }
 
     //used for mobile app
-    public void createNewFeedback(String email, String feedbackTitle, String feedbackSentDate, String feedbackContent, String feedbackDepartment, String rating) {
-        //algorithm missing
+    public void createFeedback(String email, String feedbackTitle, String feedbackSentDate, String feedbackContent, String feedbackDepartment, String ratingString) throws ParseException {
+        feedback.setFeedbackContent(feedbackContent);
+        feedback.setFeedbackOwnerEmail(email);
+        feedback.setFeedbackStatus("new");
+        feedback.setFeedbackTitle(feedbackTitle);
+        feedback.setFeedbackDepartment(feedbackDepartment);
+        if (ratingString != null) {
+            int rating = Integer.parseInt(ratingString);
+            feedback.setRating(rating);
+        }
+        if (feedbackSentDate != null) {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(feedbackSentDate);
+            feedback.setFeedbackSentDate(date);
+        }
         em.persist(feedback);
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void updateFeedback(FeedbackEntity feedback){
-        System.out.println("FeedbackSessionBean: updateFeedback");   
+    public void updateFeedback(FeedbackEntity feedback) {
+        System.out.println("FeedbackSessionBean: updateFeedback");
         em.merge(feedback);
         em.flush();
         System.out.println("feedback updated");
-        return; 
+        return;
     }
-    
-    public List<FeedbackEntity> getAllFeedbacks(){
-        Query q=em.createQuery("SELECT f from FeedbackEntity f"); 
+
+    public List<FeedbackEntity> getAllFeedbacks() {
+        Query q = em.createQuery("SELECT f from FeedbackEntity f");
         return q.getResultList();
     }
-    
-    public FeedbackEntity getFeedbackById(Long feedbackId) throws ExistException{
+
+    public FeedbackEntity getFeedbackById(Long feedbackId) throws ExistException {
         System.out.println("FeedbackSessionBean: getFeedbackById");
-        feedback=em.find(FeedbackEntity.class, feedbackId);
-        if(feedback==null){
+        feedback = em.find(FeedbackEntity.class, feedbackId);
+        if (feedback == null) {
             throw new ExistException("feedback does not exist!");
-        }  
-        else{
+        } else {
             System.out.println("feedback found");
             return feedback;
-        }      
+        }
     }
-    
+
+    public List<FeedbackEntity> getFeedbackByEmail(String email) {
+        Query q = em.createQuery("SELECT f from FeedbackEntity f WHERE f.feedbackOwnerEmail = '" + email + "'");
+        return q.getResultList();
+    }
+
     /* shouldn't implement this method
      * public void removeFeedback(Long feedbackId)throws ExistException {
-        System.out.println("FeedbackSessionBean:removeFeedback");
-        feedback= em.find(FeedbackEntity.class, feedbackId);
-        if(feedback == null) {
-            throw new ExistException("Feedback does not exist!");
-        }
-        em.remove(feedback);
-        System.out.println("the feedback has been removed.");
-        return;
-    }*/
-
+     System.out.println("FeedbackSessionBean:removeFeedback");
+     feedback= em.find(FeedbackEntity.class, feedbackId);
+     if(feedback == null) {
+     throw new ExistException("Feedback does not exist!");
+     }
+     em.remove(feedback);
+     System.out.println("the feedback has been removed.");
+     return;
+     }*/
     public void persist(Object object) {
         em.persist(object);
     }
-
 }

@@ -168,8 +168,10 @@ public class MemberSessionBean {
         if (maritalStatus != null) {
             member.setMaritalStatus(maritalStatus);
         }
+        if(subscription != null){
         if(subscription.equals("true")) member.setIsSubscriber(true);
         else if(subscription.equals("false")) member.setIsSubscriber(false);
+        }
         em.merge(member);
         return member;
     }
@@ -284,8 +286,9 @@ public class MemberSessionBean {
     public MemberEntity checkLogIn(String email, String password) {
         MemberEntity thisMember = em.find(MemberEntity.class, email);
         if (thisMember != null) {
-            if (ePasswordHashSessionBean.hashPassword(password).equals(thisMember.getMemberPassword())) {
-                System.out.println("member log in from mobile successful!");
+//            if (ePasswordHashSessionBean.hashPassword(password).equals(thisMember.getMemberPassword())) {
+            if(password.equals(thisMember.getMemberPassword())) {
+            System.out.println("member log in from mobile successful!");
                 return thisMember;
             } else {
                 System.out.println("invalid password! please try again");
