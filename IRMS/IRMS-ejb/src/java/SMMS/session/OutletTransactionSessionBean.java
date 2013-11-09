@@ -41,6 +41,9 @@ public class OutletTransactionSessionBean {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public OutletTransactionEntity addTransaction(OutletTransactionEntity transaction) {
+//        OutletTransactionEntity at = transaction;
+//        at.getTransactionDate().setYear(transaction.getTransactionDate().getYear()-1990);
+//        at.getTransactionDate().setMonth(transaction.getTransactionDate().getMonth()-1);
         em.persist(transaction);
         return transaction;
     }

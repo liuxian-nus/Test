@@ -14,6 +14,8 @@ import SMMS.session.ContracteventSessionBean;
 import SMMS.session.MerchantBillSessionBean;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -31,9 +33,9 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean
 @ViewScoped
 public class ManagerApproveContractManagedBean implements Serializable {
+
     @EJB
     private MerchantBillSessionBean merchantBillSessionBean;
-
     @EJB
     private EmailSessionBean emailSessionBean;
     @EJB
@@ -44,6 +46,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
     private ContractEntity contract;
     private ContracteventEntity cevent;
     private BillEntity bill;
+    private Date currentDate = new Date();
 
     /**
      * Creates a new instance of ManagerApproveContractManagedBean
@@ -54,7 +57,6 @@ public class ManagerApproveContractManagedBean implements Serializable {
         cevent = new ContracteventEntity();
         bill = new BillEntity();
     }
-
 
     public void managerViewContract(ActionEvent event) throws IOException, ExistException {
 
@@ -93,6 +95,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
         emailSessionBean.emailApprovalAction("a0077969@nus.edu.sg", contract);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
         addDepositBill(contract);
+        emailSessionBean.emailMerchantBill(contract.getMerchant().getMerchantEmail(), bill);
 
     }
 
@@ -138,8 +141,23 @@ public class ManagerApproveContractManagedBean implements Serializable {
 
     }
 
+    public void addDepositBill(ContractEntity contract) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 14);
+        Date dueDate = cal.getTime();
+        System.out.println("in setting due date" + dueDate);
+
+        bill.setBillAmount(contract.getLast().getEventDeposit());
+        bill.setBillStatus("unpaid");
+        bill.setBillType("deposit");
+        bill.setBillDate(currentDate);
+        bill.setContract(contract);
+        bill.setDueDate(dueDate);
+        merchantBillSessionBean.addBill(bill);
+    }
+
     public ContractEntity getSelected() {
-   
+
         return selected;
     }
 
@@ -154,13 +172,20 @@ public class ManagerApproveContractManagedBean implements Serializable {
     public void setContract(ContractEntity contract) {
         this.contract = contract;
     }
-    
-    public void addDepositBill(ContractEntity contract)
-    {
-        bill.setBillAmount(contract.getLast().getEventDeposit());
-        bill.setBillStatus("unpaid");
-        bill.setBillType("deposit");
-        bill.setContract(contract);
-        merchantBillSessionBean.addBill(bill);
+
+    public BillEntity getBill() {
+        return bill;
+    }
+
+    public void setBill(BillEntity bill) {
+        this.bill = bill;
+    }
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
     }
 }

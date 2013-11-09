@@ -109,7 +109,7 @@
                                     Are you sure to send reminder to merchant?
                                     <br/><br/>
                                     <h:panelGrid columns="2" id="approveNew">
-                                        <p:commandButton value="Yes" update="availableBill" onclick ="growl" actionListener="#{operatorBillManagedBean.sendReminder}" oncomplete="confirmSend.hide()"/>
+                                        <p:commandButton value="Yes" update="unpaidBills" onclick ="growl" actionListener="#{operatorBillManagedBean.sendReminder}" oncomplete="confirmSend.hide()"/>
                                         <p:commandButton value="Not yet" onclick="confirmSend.hide()" type="button"/>  
                                     </h:panelGrid>
                                 </p:dialog> 
@@ -203,7 +203,7 @@
                     <p:fieldset legend="Search Bill by Contract ID" toggleable="true" toggleSpeed="500" collapsed="true">  
                         <p:panel id="bills" header="Search" style="height:500px;">
                             <h:panelGrid columns="2" cellpadding="10">      
-                                <h:outputText value="Bill ID: " style="margin-right: 10px;"/>
+                                <h:outputText value="Contract ID: " style="margin-right: 10px;"/>
                                 <p:autoComplete id="reservation" value="#{operatorBillManagedBean.searchId}" required="true" requiredMessage="Reservation ID Cannot be Null"   
                                                 completeMethod="#{operatorBillManagedBean.completeBillsContract()}" />
                                 <p:spacer width="20"/>
@@ -215,7 +215,7 @@
                 </h:form>
             </p:tab> 
 
-            <p:tab id="tab1" title="Generate Bill">  
+            <p:tab id="tab3" title="Generate Bill">  
             </p:tab>
 
         </p:tabView>

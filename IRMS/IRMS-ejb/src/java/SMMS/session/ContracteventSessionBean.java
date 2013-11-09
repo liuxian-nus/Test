@@ -19,25 +19,46 @@ import javax.persistence.PersistenceContext;
 @Stateless
 @LocalBean
 public class ContracteventSessionBean {
+
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
 
     public void persist(Object object) {
         em.persist(object);
     }
-
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-     ContracteventEntity newevent = new ContracteventEntity();
-     
-     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    ContracteventEntity newevent = new ContracteventEntity();
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public ContracteventEntity addContractevent(ContracteventEntity contractevent) {
         System.out.println("ContractEvent Session bean: add contractevent called");
+//        ContracteventEntity thisevent = contractevent;
+//        thisevent.getEventStartDate().setYear(contractevent.getEventStartDate().getYear() - 1990);
+//        thisevent.getEventStartDate().setMonth(contractevent.getEventStartDate().getMonth() - 1);
+//
+//        thisevent.getEventEndDate().setYear(contractevent.getEventEndDate().getYear() - 1990);
+//        thisevent.getEventEndDate().setMonth(contractevent.getEventEndDate().getMonth() - 1);
+//
+//        thisevent.getEventTime().setYear(contractevent.getEventTime().getYear() - 1990);
+//        thisevent.getEventTime().setMonth(contractevent.getEventTime().getMonth() - 1);
+
         em.persist(contractevent);
         return contractevent;
     }
-     
-      public boolean updateContractEvent(ContracteventEntity cevent) {
+
+    public boolean updateContractEvent(ContracteventEntity cevent) {
+
+//        ContracteventEntity thisevent = cevent;
+//        thisevent.getEventStartDate().setYear(cevent.getEventStartDate().getYear() - 1990);
+//        thisevent.getEventStartDate().setMonth(cevent.getEventStartDate().getMonth() - 1);
+//
+//        thisevent.getEventEndDate().setYear(cevent.getEventEndDate().getYear() - 1990);
+//        thisevent.getEventEndDate().setMonth(cevent.getEventEndDate().getMonth() - 1);
+//
+//        thisevent.getEventTime().setYear(cevent.getEventTime().getYear() - 1990);
+//        thisevent.getEventTime().setMonth(cevent.getEventTime().getMonth() - 1);
+
         em.merge(cevent);
         System.out.println("CEventSessionBean: outlet " + cevent.getContracteventId() + " is successfully updated");
         return true;

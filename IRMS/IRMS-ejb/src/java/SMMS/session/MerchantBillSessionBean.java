@@ -40,6 +40,13 @@ public class MerchantBillSessionBean {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public BillEntity addBill(BillEntity bill) {
+//        BillEntity thisbill = bill;
+//        thisbill.getBillDate().setYear(bill.getBillDate().getYear() - 1990);
+//        thisbill.getBillDate().setMonth(bill.getBillDate().getMonth() - 1);
+//        
+//        thisbill.getDueDate().setYear(bill.getDueDate().getYear() - 1990);
+//        thisbill.getDueDate().setMonth(bill.getDueDate().getMonth() - 1);
+        
         em.persist(bill);
         return bill;
     }

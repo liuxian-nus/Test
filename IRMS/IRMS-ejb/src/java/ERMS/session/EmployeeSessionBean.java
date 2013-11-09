@@ -82,6 +82,19 @@ public class EmployeeSessionBean {
         }
         return employeeList;
     }
+    
+     public List<EmployeeEntity> getHotelEmployees() throws ExistException {
+        Query q = em.createQuery("SELECT m FROM EmployeeEntity m where m.employeeDepartment='Hotel'");
+        List employeeList = new ArrayList<EmployeeEntity>();
+        for (Object o : q.getResultList()) {
+            EmployeeEntity m = (EmployeeEntity) o;
+            employeeList.add(m);
+        }
+        if (employeeList.isEmpty()) {
+            throw new ExistException("Employee database is empty!");
+        }
+        return employeeList;
+    }
 
     public List<EmployeeEntity> getCEMSEvent() throws ExistException {
         Query q = em.createQuery("SELECT m FROM EmployeeEntity m");

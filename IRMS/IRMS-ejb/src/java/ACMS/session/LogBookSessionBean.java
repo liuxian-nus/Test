@@ -60,7 +60,7 @@ public class LogBookSessionBean {
         public void markResolved(LogBookEntity thisLog) {
         System.out.println("mark resolve session bean");
         thisLog.setResolved(true);
-        em.persist(thisLog);
+        em.merge(thisLog);
     }
     
     public LogBookEntity removeLog(Long logId) {

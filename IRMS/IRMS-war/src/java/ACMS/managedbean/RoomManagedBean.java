@@ -142,6 +142,15 @@ public class RoomManagedBean implements Serializable {
     //capture member transaction missing.....
     //check-in, sessionScope reservationId missing..........
 
+    public List<RoomEntity> getCheckInRooms() throws ExistException {
+        System.err.println("we are in checkin managedbean");
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
+        System.out.println(" getting chekin rooms" + getRerservationId);
+//        request.getSession().setAttribute("reservationId", getRerservationId);
+        return rm.getCheckInRooms(getRerservationId);
+    }
+
     public void searchById(ActionEvent event) throws IOException, ExistException {
 
         System.out.println("Check-out: searching room by Id " + searchId);
@@ -153,15 +162,13 @@ public class RoomManagedBean implements Serializable {
                 System.out.println("we are in no room loop");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The room does not exist!", ""));
                 return;
-            }
-            else
-            {
-            System.out.println("we are after search");
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", thisRoom);
-            System.out.println("we are after setting parameter");
-            request.getSession().setAttribute("roomId", getSearchId());
-            System.out.println("we are after setting reservationId session attribute");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("RoomSearchResult.xhtml");
+            } else {
+                System.out.println("we are after search");
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", thisRoom);
+                System.out.println("we are after setting parameter");
+                request.getSession().setAttribute("roomId", getSearchId());
+                System.out.println("we are after setting reservationId session attribute");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("RoomSearchResult.xhtml");
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
@@ -220,8 +227,6 @@ public class RoomManagedBean implements Serializable {
     public void setCreditCardNo(String creditCardNo) {
         this.creditCardNo = creditCardNo;
     }
-    
-    
 
     //this one copied from PrimeFace showcase
     public void onRowToggle(ToggleEvent event) {

@@ -31,6 +31,8 @@ import org.joda.time.DateMidnight;
 public class RoomSessionBean {
 
     @EJB
+    private ReservationSessionBean reservationSessionBean;
+    @EJB
     private EmailSessionBean emailSessionBean;
     @EJB
     private MemberTransactionSessionBean mtSessionBean;
@@ -145,9 +147,28 @@ public class RoomSessionBean {
         return roomList;
     }
 
+    public List<RoomEntity> getCheckInRooms(Long reservationId) throws ExistException {
+        System.err.println("in getOccupiedrooms session bean");
+        Query q = em.createQuery("SELECT r FROM RoomEntity r");
+        ReservationEntity aiyou = reservationSessionBean.getReservationById(reservationId);
+        System.out.println("gett reservation" + aiyou.getReservationId());
+        List roomList = new ArrayList<RoomEntity>();
+        for (Object o : q.getResultList()) {
+            RoomEntity r = (RoomEntity) o;
+            if ((r.getRoomHotel() == aiyou.getReservationHotelNo())&&(r.getRoomType()==aiyou.getReservationRoomType())) {
+                roomList.add(r);
+            }
+        }
+        if (roomList == null) {
+            throw new ExistException("RoomEntity database is empty!");
+        }
+        System.err.println("in get all rooms sessionbean: room list size=" + roomList.size());
+        return roomList;
+    }
+
     //add new charged service
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public RoomServiceEntity addRoomService(int roomId, String roomServiceName,int quantity) throws ExistException {
+    public RoomServiceEntity addRoomService(int roomId, String roomServiceName, int quantity) throws ExistException {
         room = em.find(RoomEntity.class, roomId);
         roomService = em.find(RoomServiceEntity.class, roomServiceName);
         if (roomService == null) {

@@ -48,6 +48,7 @@ public class MerchantSessionBean {
     }
 
     public MerchantEntity addMerchant(MerchantEntity merchant) {
+
         em.persist(merchant);
         return merchant;
     }
