@@ -41,7 +41,36 @@ public class MemberTransactionSessionBean {
         return mt;
     }
 
-    public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay) {
+    public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay, String mtDescription) {
+        System.out.println("creating member transaction....");
+        mt = new MemberTransactionEntity();
+        mt.setMemberEmail(member.getMemberEmail());
+        mt.setMtAmount(amount);
+        mt.setMtDate(mtDate);
+        mt.setMtDepartment(mtDepartment);
+        mt.setMtPromotion(mtPromotion);
+        mt.setMtMode(true); //later add in cash or card
+        mt.setPaymentStatus(true);//later add in paid or not paid
+        mt.setMtDescription(mtDescription);
+        em.persist(mt);
+         if (!coinPay) {
+            addPoint(member, amount);
+            addCoin(member, amount);
+            updateVIP(member.getPoint());
+            System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
+        } else {
+//            double tempCoin = member.getCoin();
+//            member.setCoin(0); //why set coin to 0??
+            payByCoin(member, amount);
+            System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
+        }
+        System.out.println("member transaction successfully added");
+        System.out.println("started to add member transaction");
+        member.addMemberTransaction(mt);
+        System.out.println("member transaction added");
+    }
+    
+        public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay) {
         System.out.println("creating member transaction....");
         mt = new MemberTransactionEntity();
         mt.setMemberEmail(member.getMemberEmail());
