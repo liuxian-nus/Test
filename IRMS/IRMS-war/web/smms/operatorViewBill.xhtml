@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+
+    <ui:define name="content">
+        <f:view beforePhase="#{billResultManagedBean.initViewSelect}"> 
+            <h:form id="formSearchById">
+                <p:growl id="growl" showDetail="true" sticky="true" />   
+                <p:panel id="bills" header="View Bill" style="height:500px;">
+                    <div style="margin-top:20px;margin-bottom:20px;">
+                         <h:panelGrid id="contractView" columns="2" cellpadding="4" style="margin:0 auto;">  
+                            <h:outputText value="Bill ID: " />  
+                            <h:outputText value="#{billResultManagedBean.bill.billId}" style="font-weight:bold" /> 
+
+                            <h:outputText value="Bill Generated Date: " /> 
+                            <h:outputText value="#{billResultManagedBean.bill.billDate}" style="font-weight:bold" >
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+
+                            <h:outputText value="Due Date: " /> 
+                            <h:outputText value="#{billResultManagedBean.bill.dueDate}" style="font-weight:bold" >
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+
+                            <h:outputText value="Type: " />  
+                            <h:outputText value="#{billResultManagedBean.bill.billType}" style="font-weight:bold" /> 
+
+                            <h:outputText value="Amount:  " />  
+                            <h:outputText value="#{billResultManagedBean.bill.billAmount}" style="font-weight:bold" /> 
+
+                            <h:outputText value="Contract: " />  
+                            <h:outputText value="#{billResultManagedBean.bill.contract.contractId}" style="font-weight:bold" /> 
+
+                            <h:outputText value="Merchant: " />  
+                            <h:outputText value="#{billResultManagedBean.bill.contract.merchant.merchantName}" style="font-weight:bold" /> 
+
+                            <h:outputText value="Status: " />  
+                            <h:outputText value="#{billResultManagedBean.bill.billStatus}" style="font-weight:bold" />
+                        </h:panelGrid>
+                    </div>
+                </p:panel>
+            </h:form>
+        </f:view>
+    </ui:define>
+
+</ui:composition>

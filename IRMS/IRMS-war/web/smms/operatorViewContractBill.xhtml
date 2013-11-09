@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <f:view beforePhase="#{billResultManagedBean.initViewSelect2}"> 
+
+            <h:form id="form">
+                <p:growl id="growl" showDetail="true" sticky="true" /> 
+                <p:panel id="viewContract" header="View Contract Detail" style="height:495px;">
+                    <div style="margin-left:10px;margin-right:50px;margin-top:30px;">
+
+                        <p:dataTable id="contract" value="#{billResultManagedBean.bills}" var="bill" 
+                                     paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+                            <p:column style="width:2%">  
+                                <p:rowToggler />  
+                            </p:column> 
+
+                            <p:column headerText="Bill ID" style="width:50px;">
+                                <h:outputText value="#{bill.billId}"/>
+                            </p:column>
+                            <p:column headerText="Issue Date" style="width:100px;">
+                                <h:outputText value="#{bill.billDate}"/>
+                            </p:column>
+                            <p:column headerText="Amount" style="width:100px;">
+                                <h:outputText value="#{bill.billAmount}"/>
+                            </p:column>
+                            <p:column headerText="Status" style="width:100px;">
+                                <h:outputText value="#{bill.billStatus}"/>
+                            </p:column>
+
+                            <p:rowExpansion>
+                                <p:panel id="eventDetail" header="Contract Details">
+                                    <h:panelGrid id="contractView" columns="2" cellpadding="4" style="margin:0 auto;">  
+                                        <h:outputText value="Bill ID: " />  
+                                        <h:outputText value="#{bill.billId}" style="font-weight:bold" /> 
+
+                                        <h:outputText value="Bill Generated Date: " /> 
+                                        <h:outputText value="#{bill.billDate}" style="font-weight:bold" >
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+
+                                        <h:outputText value="Due Date: " /> 
+                                        <h:outputText value="#{bill.dueDate}" style="font-weight:bold" >
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+
+                                        <h:outputText value="Type: " />  
+                                        <h:outputText value="#{bill.billType}" style="font-weight:bold" /> 
+
+                                        <h:outputText value="Amount:  " />  
+                                        <h:outputText value="#{bill.billAmount}" style="font-weight:bold" /> 
+
+                                        <h:outputText value="Contract: " />  
+                                        <h:outputText value="#{bill.contract.contractId}" style="font-weight:bold" /> 
+
+                                        <h:outputText value="Merchant: " />  
+                                        <h:outputText value="#{bill.contract.merchant.merchantName}" style="font-weight:bold" /> 
+
+                                        <h:outputText value="Outlet:  " />  
+                                        <h:outputText value="#{bill.contract.outlet.outletId}" style="font-weight:bold" /> 
+
+                                        <h:outputText value="Status: " />  
+                                        <h:outputText value="#{bill.billStatus}" style="font-weight:bold" />
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:rowExpansion>
+                        </p:dataTable>
+
+                    </div>
+                </p:panel>
+            </h:form>
+        </f:view>
+    </ui:define>
+
+</ui:composition>
