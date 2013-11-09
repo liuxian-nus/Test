@@ -173,6 +173,8 @@ public class irmsServlet extends HttpServlet {
             } else if ("memberFeedback".equals(page)) {
                 request.getRequestDispatcher("/CRMServlet/memberFeedback").forward(request, response);
 
+            } else if ("memberFeedbackResult".equals(page)) {
+                request.getRequestDispatcher("/CRMServlet/memberFeedbackResult").forward(request, response);
             } else if ("memberPromotion".equals(page)) {
                 request.getRequestDispatcher("/CRMServlet/memberPromotion").forward(request, response);
 
