@@ -18,8 +18,8 @@
             <h3>Welcome, ${member.memberName}!</h3>
         <form>
             <fieldset> 
-                <legend>Feedback For Our Service!Your voice is appreciated!</legend>
-
+                <legend>Feedback Form!</legend>
+                <h6>Thank you for your feedback.Your voice is appreciated.</h6>
                 <div class="row">
                     <div class="large-8 columns">
                         <label>Feedback Title</label>
@@ -44,19 +44,21 @@
                 <div class="row">
                     <div class="large-12 columns">
                         <label>Feedback Content</label>
-                        <textarea placeholder="Please put your feedback here"></textarea>
+                        <textarea rows="4" cols="50" placeholder="Please put your feedback here"></textarea>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="large-4 columns">
                         <label>Feedback Rating</label>
-                        <label for="radio1"><input name="radio1" type="radio" id="radio1" style="display:none;" CHECKED><span class="custom radio checked"></span>1</label>
-                        <label for="radio1"><input name="radio1" type="radio" id="radio2" style="display:none;"><span class="custom radio"></span>2</label>
-                        <label for="radio1"><input name="radio1" type="radio" id="radio3" style="display:none;"><span class="custom radio"></span>3</label>
-                        <label for="radio1"><input name="radio1" type="radio" id="radio4" style="display:none;"><span class="custom radio"></span>4</label>
-                        <label for="radio1"><input name="radio1" type="radio" id="radio5" style="display:none;"><span class="custom radio"></span>5</label>
-                    </div>
+                        <div class="row">
+                        <label style="float: left"for="radio1"><input name="radio1" type="radio" id="radio1" style="display:inline" CHECKED><span class="custom radio checked"></span>1</label>
+                        <label style="float: left"for="radio1"><input name="radio1" type="radio" id="radio1" style="display:inline"><span class="custom radio"></span>2</label>
+                        <label style="float: left"for="radio1"><input name="radio1" type="radio" id="radio1" style="display:inline"><span class="custom radio"></span>3</label>
+                        <label style="float: left"for="radio1"><input name="radio1" type="radio" id="radio1" style="display:inline"><span class="custom radio"></span>4</label>
+                        <label style="float: left"for="radio1"><input name="radio1" type="radio" id="radio1" style="display:inline"><span class="custom radio"></span>5</label>
+                        </div>
+                        </div>
                 </div>
 
             </fieldset>
