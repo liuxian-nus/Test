@@ -19,9 +19,34 @@
             <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
             <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
             <script type="text/javascript" src="/IRMSCustomer-war/js/countdown.js"></script> 
+
         </head>
         <body>
+
         <jsp:include page="header.jsp"></jsp:include>
+
+            <script type="text/javascript">
+   
+                function paypal(){
+                    alert("jj");
+                    $.get("https://api-3t.sandbox.paypal.com/nvp", {
+                        USER: "xinyusoc-facilitator_api1.gmail.com",
+                        PWD: "1383997852",
+                        SIGNATURE: "AFcWxV21C7fd0v3bYYYRCpSSRl31A4L4WLmbdOQyA2Nn26.xecMb47ed",
+                        METHOD: "SetExpressCheckout",
+                        VERSION: "78",
+                        PAYMENTREQUEST_0_PAYMENTACTION: "SALE",
+                        PAYMENTREQUEST_0_AMT: "10",
+                        PAYMENTREQUEST_0_CURRENCYCODE: "SGD",
+                        cancelUrl: "home",
+                        returnUrl: "home",
+                    })
+                            .done(function(data) {
+                        alert("Data Loaded:" + data.TOKEN);
+                    });
+                  return false; 
+                }
+            </script> 
             <div class="row">
                 <ul class="button-group round even-4">
                     <li><a href="#" class="button secondary small"><strong>Search your hotel ></strong></a></li>
@@ -73,7 +98,7 @@
                     </div>
                 </div>
                 <div class="panel callout">
-                    <form data-abide action="hotelPayConfirm" method="POST">
+                    <form data-abide id="paymentForm" action="hotelPayConfirm" method="POST">
                         <fieldset>
                             <p>${message}</p>
                             <div class="row">
@@ -169,115 +194,117 @@
                                     <small class="error">Please enter the card CVC number.</small>
                                 </div>
                             </div>
-                        
-                
 
-                                    <br>
-                                    <div class="row">
-                                        <div class="small-1 columns">
-                                            <input type="checkbox" name="subscribe" value="true" required>
-                                        </div>
-                                        <div class="small-11 columns"> 
-                                            <strong><label><strong>I agree with the booking conditions and general terms by booking this room</label>
-                                        </div>
-                                    </div>
-                                 
-                                    <div class="row">
-                                        <div class="large-12 columns">
-                                        <input type="submit" class="small button" class="center-align" value="Pay & Book Now!">
-                                    </div>
-                                        </div>
-                                    </fieldset>
-                                    </form>                     
+
+
+                            <br>
+                            <div class="row">
+                                <div class="small-1 columns">
+                                    <input type="checkbox" name="subscribe" value="true" required>
+                                </div>
+                                <div class="small-11 columns"> 
+                                    <strong><label><strong>I agree with the booking conditions and general terms by booking this room</label>
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <input type="submit" class="small button" class="center-align" onclick="return paypal();" value="Pay & Book Now!">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>                     
+                </div>
+            </div>
 
 
 
 
+
+            <div class="large-6 columns">
+                <div class="panel">
+                    <fieldset>
+                        <legend style="color:#4d4d4d">Booking Summary</legend>
+                        <p>${message}</p>
+                        <div class="row">
+                            <div class="large-5 columns">
+                                <label for="right-label" class="left-align,inline"><h6>Rate: </h6></label>
+                            </div>
+                            <div class="large-7 columns">
+                                <label for="right-label" class="right-align,inline"><strong></strong></label>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="large-6 columns">
-                                <div class="panel">
-                                    <fieldset>
-                                        <legend style="color:#4d4d4d">Booking Summary</legend>
-                                        <p>${message}</p>
-                                        <div class="row">
-                                            <div class="large-5 columns">
-                                                <label for="right-label" class="left-align,inline"><h6>Rate: </h6></label>
-                                            </div>
-                                            <div class="large-7 columns">
-                                                <label for="right-label" class="right-align,inline"><strong></strong></label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="large-6 columns">
-                                                <label for="right-label" class="left-align,inline"><h6>Number of nights:</h6></label>
-                                            </div>
-                                            <div class="large-6 columns">
-                                                <label for="right-label" class="right-align,inline"><strong>${data.reservationRoomCount}</strong></label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="large-6 columns">
-                                                <label for="right-label" class="left-align,inline"><h6>Total:</h6></label>
-                                            </div>
-                                            <div class="large-6 columns">
-                                                <label for="right-label" class="right-align,inline"><strong></strong></label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="large-6 columns">
-                                                <label for="right-label" class="left-align,inline"><h6>Guest Name:</h6></label>
-                                            </div>
-                                            <div class="large-6 columns">
-                                                <label for="right-label" class="right-align,inline"><strong>${data.rcName}</strong></label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="large-6 columns">
-                                                <label for="right-label" class="left-align,inline"><h6>Guest Email:</h6></label>
-                                            </div>
-                                            <div class="large-6 columns">
-                                                <label for="right-label" class="right-align,inline"><strong>${data.rcEmail}</strong></label>
-                                            </div>
-                                        </div>
-                                        <div class='row'>
-                                            <div class='large-12 columns'>
-                                                <label for="right-label" class="left-align,inline"><h6>Your reservation session will be time out in :</h6></label>
-                                            </div>
-                                        </div>
-                                        <div class='row'>
-                                            <div class='large-12 columns'>
-                                                <script type="text/javascript">
-
-                                                    var myCountdown2 = new Countdown({
-                                                        time: "${SessionTime}", width: 100, height: 50, rangeHi: "minute"
-                                                    });
-                                                </script>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <br><br>
-
-                                </div>
+                                <label for="right-label" class="left-align,inline"><h6>Number of nights:</h6></label>
                             </div>
-
-
-
-
+                            <div class="large-6 columns">
+                                <label for="right-label" class="right-align,inline"><strong>${data.reservationRoomCount}</strong></label>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-6 columns">
+                                <label for="right-label" class="left-align,inline"><h6>Total:</h6></label>
+                            </div>
+                            <div class="large-6 columns">
+                                <label for="right-label" class="right-align,inline"><strong></strong></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-6 columns">
+                                <label for="right-label" class="left-align,inline"><h6>Guest Name:</h6></label>
+                            </div>
+                            <div class="large-6 columns">
+                                <label for="right-label" class="right-align,inline"><strong>${data.rcName}</strong></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-6 columns">
+                                <label for="right-label" class="left-align,inline"><h6>Guest Email:</h6></label>
+                            </div>
+                            <div class="large-6 columns">
+                                <label for="right-label" class="right-align,inline"><strong>${data.rcEmail}</strong></label>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='large-12 columns'>
+                                <label for="right-label" class="left-align,inline"><h6>Your reservation session will be time out in :</h6></label>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='large-12 columns'>
+                                <script type="text/javascript">
+
+                                    var myCountdown2 = new Countdown({
+                                        time: "${SessionTime}", width: 100, height: 50, rangeHi: "minute"
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br><br>
+
+                </div>
+            </div>
 
 
 
-                            <jsp:include page="footer.jsp"></jsp:include>
-                            <script>
-                                document.write('<script src=' +
-                                        ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
-                                        '.js><\/script>')
-                            </script> 
 
-                            <script>
-                                $(document).foundation();
-                            </script>
-                            </body>
-                            </html>
+        </div>
+
+
+
+        <jsp:include page="footer.jsp"></jsp:include>
+        <script>
+            document.write('<script src=' +
+                    ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
+                    '.js><\/script>')
+        </script> 
+
+
+
+        <script>
+            $(document).foundation();
+        </script>
+    </body>
+</html>
