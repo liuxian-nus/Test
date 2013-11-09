@@ -9,6 +9,7 @@ import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -20,7 +21,8 @@ import javax.persistence.Query;
  * @author Ser3na
  */
 @Stateless
-public class ShowSessionBean {
+@LocalBean
+public class ShowSessionBean implements ShowSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -31,11 +33,13 @@ public class ShowSessionBean {
     public ShowSessionBean() {
     }
 
+    @Override
     public ShowEntity addShow(ShowEntity show) {
         em.persist(show);
         return show;
     }
 
+    @Override
     public boolean deleteShow(Long showId) {
         show = em.find(ShowEntity.class, showId);
         if (show == null) {
@@ -46,17 +50,20 @@ public class ShowSessionBean {
         return true;
     }
 
+    @Override
     public boolean updateShow(ShowEntity show) {
         em.merge(show);
         System.out.println("ShowSessionBean: show " + show.getShowName() + " is successfully updated");
         return true;
     }
 
+    @Override
     public List<ShowEntity> getAllShows() throws NoResultException {
         Query q = em.createQuery("SELECT m FROM ShowEntity m");
         return q.getResultList();
     }
 
+    @Override
     public List<ShowScheduleEntity> getAllShowSchedules(Long showId) throws NoResultException {
         show = em.find(ShowEntity.class, showId);
         List q = show.getShowSchedules();
@@ -65,6 +72,7 @@ public class ShowSessionBean {
         return q;
     }
 
+    @Override
     public void addShowSchedule(Long showId, ShowScheduleEntity showSchedule) {
         System.err.println("show session bean: add show schedule");
         show = em.find(ShowEntity.class, showId);
@@ -72,6 +80,7 @@ public class ShowSessionBean {
         em.merge(show);
     }
 
+    @Override
     public void addShowTicket(Long showScheduleId, ShowTicketEntity showTicket) {
         System.err.println("show session bean: add show ticket");
 //        show = em.find(ShowEntity.class, showId);
@@ -80,6 +89,7 @@ public class ShowSessionBean {
         em.merge(showSchedule);
     }
 
+    @Override
     public void uploadFile(Long showId, byte[] buffer) {
         show = em.find(ShowEntity.class, showId);
         show.setImage(buffer);
@@ -87,6 +97,7 @@ public class ShowSessionBean {
         em.flush();
     }
 
+    @Override
     public void uploadImage(Long showId, String fileName) {
         show = em.find(ShowEntity.class, showId);
         show.setImagePath(fileName);
@@ -94,10 +105,12 @@ public class ShowSessionBean {
         em.flush();
     }
 
+    @Override
     public ShowEntity getShowById(Long showId) {
         return em.find(ShowEntity.class, showId);
     }
 
+    @Override
     public List<ShowEntity> getShowByName(String searchName) {
         Query query = em.createQuery("SELECT r FROM ShowEntity r WHERE r.showName ='" + searchName + "'");
         System.err.println("getShowByName: " + searchName);
