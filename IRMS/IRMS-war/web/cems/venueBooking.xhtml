@@ -9,31 +9,38 @@
     <ui:define name="content">
         <h:form>  
 
-            <p:dataTable id="venueList" value="#{venueBookingManagedBean.venues}" var="venueList" widgetVar="venueTable" 
-                         paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true"
-                         filteredValue="#{venueBookingManagedBean.filteredVenues}">  
+            <p:dataTable id="dataTable" var="venueList" value="#{venueBookingManagedBean.venues}" widgetVar="venuesTable"   
+                         emptyMessage="No venues found with given criteria" filteredValue="#{venueBookingManagedBean.filteredVenues}">  
 
-                <p:column headerText="Venue ID">  
+                <f:facet name="header">  
+                    <p:outputPanel>  
+                        <h:outputText value="Search all fields:" />  
+                        <p:inputText id="globalFilter" onkeyup="venuesTable.filter();" style="width:150px" />  
+                    </p:outputPanel>  
+                </f:facet>  
+
+                <p:column id="idColumn" filterBy="#{venueList.venueId}"   
+                          headerText="Venue Id" filterMatchMode="contains">  
                     <h:outputText value="#{venueList.venueId}" />  
                 </p:column>  
 
-                <p:column headerText="Venue Name">  
+                <p:column id="nameColumn" filterBy="#{venueList.venueName}"   
+                          headerText="Venue Name" filterMatchMode="contains">  
                     <h:outputText value="#{venueList.venueName}" />  
-                </p:column> 
-
-                <p:column headerText="Venue Capacity">  
+                </p:column>  
+                
+                <p:column id="capacityColumn" filterBy="#{venueList.venueCapacity}" headerText="Venue Capacity" filterMatchMode="contains">  
                     <h:outputText value="#{venueList.venueCapacity}" />  
                 </p:column>
 
-                <p:column id="functionColumn" filterBy="functions"   
-                          headerText="Functions"  
-                          filterOptions="#{tableBean.manufacturerOptions}"  
-                          filterMatchMode="contains">  
-                    <h:outputText value="#{venueList.venueFunction}" />  
-                </p:column> 
+                <p:column id="functionColumn" filterBy="#{manageVenueManagedBean.toSentence(venueList.venueFunction)}" headerText="Function"  
+                          filterOptions="#{venueBookingManagedBean.functionOptions}" filterMatchMode="contains">  
+                    <h:outputText value="#{manageVenueManagedBean.toSentence(venueList.venueFunction)}" />  
+                </p:column>
+                
             </p:dataTable>  
 
-        </h:form> 
+        </h:form>  
     </ui:define>
 
 </ui:composition>
