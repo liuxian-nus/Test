@@ -20,6 +20,8 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.joda.time.Days;
+import org.joda.time.DateMidnight;
 
 /**
  *
@@ -216,7 +218,7 @@ public class RoomSessionBean {
         if (room.getRoomServiceCharge() != 0) {
             throw new RoomException("RoomSessionBean-->RoomException-->There is uncleared room service charge!");
         }
-        bill = this.calculateBill(room);
+        bill = this.calculateRoomFee(room);
         System.out.println("accounts receivable: " + bill);
         mtSessionBean.addMemberTransaction(room.getRoomMember(), bill, room.getCheckOutDate(), "Hotel", null, false);
         System.out.println("room check out: member transaction captured!");
@@ -247,12 +249,15 @@ public class RoomSessionBean {
      }
      System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " bill is successfully send");
      }*/
-    public double calculateBill(RoomEntity room) {
+    public double calculateRoomFee(RoomEntity room) {
         //       double temp1 = room.getCheckInDate().get(Calendar.DAY_OF_YEAR);
         //       double temp2 = room.getCheckOutDate().get(Calendar.DAY_OF_YEAR);
-        double roomCharge = room.getRoomPrice().getPrice() * 5; // 5 should be outDate - inDate
-        double roomServiceCharge = room.getRoomServiceCharge();
-        return roomCharge + roomServiceCharge;
+        int daysBetween;
+        DateMidnight start = new DateMidnight(room.getCheckInDate());
+        DateMidnight end = new DateMidnight(room.getCheckOutDate());
+        daysBetween = Days.daysBetween(start, end).getDays();
+        double roomCharge = room.getRoomPrice().getPrice() * daysBetween; // 5 should be outDate - inDate
+        return roomCharge;
     }
 
     public void addMembership(int roomId, MemberEntity thisMember) {
