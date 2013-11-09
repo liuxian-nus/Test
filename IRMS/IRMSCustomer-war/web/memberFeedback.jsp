@@ -16,7 +16,8 @@
         <jsp:include page="header.jsp"></jsp:include>
             <h1>Member Feedback!</h1>
             <h3>Welcome, ${member.memberName}!</h3>
-        <form>
+        <form id="search-form" action="memberFeedbackResult" method="POST">
+            
             <fieldset> 
                 <legend>Feedback Form</legend>
                 <h6>Thank you for your feedback.Your voice is appreciated.</h6>

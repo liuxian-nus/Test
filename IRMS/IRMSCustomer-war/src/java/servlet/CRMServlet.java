@@ -27,17 +27,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
  *
  * @author lionetdd
  */
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
+
     @EJB
     private FeedbackSessionBean feedbackSessionBean;
-
-    
     @EJB
     private MemberManagementSessionBean memberManagementSessionBean;
     @EJB
@@ -49,7 +47,7 @@ public class CRMServlet extends HttpServlet {
     private MemberEntity member;
     private MemberEntity data;
     private String data2;
-   
+
     //private String keyword=null;
     /**
      * Processes requests for both HTTP
@@ -91,38 +89,40 @@ public class CRMServlet extends HttpServlet {
 
             } else if ("memberFeedback".equals(page)) {
                 System.out.println("***member feedback page***");
-                String memberEmail = (String) session.getAttribute("memberEmail");
-                addFeedback(request,memberEmail);
-                System.out.println("CRMServlet:Going to next page");
                 request.getRequestDispatcher("/memberFeedback.jsp").forward(request, response);
 
+            } else if ("memberFeedbackResult".equals(page)) {
+                System.out.println("***member Feedback Result page***");
+                String memberEmail = (String) session.getAttribute("memberEmail");
+                addFeedback(request, memberEmail);
+                System.out.println("CRMServlet:Going to next page");
+                request.getRequestDispatcher("/memberFeedbackResult.jsp").forward(request, response);
             } else if ("memberPromotion".equals(page)) {
                 System.out.println("***member promotion page***");
 
                 request.getRequestDispatcher("/memberPromotion.jsp").forward(request, response);
 
-            }else if ("memberInfo".equals(page)) {
-                
+            } else if ("memberInfo".equals(page)) {
+
 
                 System.out.println(request.getParameter("email"));
                 System.out.println(request.getParameter("password"));
-                
+
                 String email = request.getParameter("email");
-                
-                if(email==null)
+
+                if (email == null) {
                     request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
-                else{
+                } else {
                     System.out.println("email is not null");
-                    String loginStatus=request.getParameter("loginStatus");
-                    
-                    if(loginStatus.equals("true")){
+                    String loginStatus = request.getParameter("loginStatus");
+
+                    if (loginStatus.equals("true")) {
                         System.out.println("has logged in before");
                         member = memberSession.getMemberByEmail(email);
                         System.out.println(member.getMemberName());
                         request.setAttribute("data", member);
                         request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
-                    }
-                    else{
+                    } else {
                         String password = request.getParameter("password");
                         System.out.println(email);
                         System.out.println(password);
@@ -132,11 +132,11 @@ public class CRMServlet extends HttpServlet {
                             System.out.println(isLogin);
                             member = memberSession.getMemberByEmail(email);
                             System.out.println(member.getMemberName());
-                            session.setAttribute("member",member);
-                            session.setAttribute("memberEmail",email);
+                            session.setAttribute("member", member);
+                            session.setAttribute("memberEmail", email);
                             request.setAttribute("data", member);
-                            request.setAttribute("memberEmail",member.getMemberEmail());
-                            request.setAttribute("loginStatus","true");
+                            request.setAttribute("memberEmail", member.getMemberEmail());
+                            request.setAttribute("loginStatus", "true");
                             request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
                         } else {
                             message = "Wrong password or username entered";
@@ -158,30 +158,29 @@ public class CRMServlet extends HttpServlet {
 
             } else if ("resetMemberPassword".equals(page)) {
                 System.out.println("***resetMemberPassword page***");
-                
-                String email=request.getParameter("email");
-                System.out.println("email get from request: "+email);
-                        
-                if(email==null)
+
+                String email = request.getParameter("email");
+                System.out.println("email get from request: " + email);
+
+                if (email == null) {
                     request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
-                else{
+                } else {
                     member = memberSession.getMemberByEmail(email);
                     request.setAttribute("data", member);
 
                     request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
                 }
-                
+
             } else if ("resetMemberPasswordConfirmation".equals(page)) {
                 System.out.println("***resetMemberPasswordConfirmation page***");
-            
-                
-               
-                String email=request.getParameter("email");
-                
-                if(email==null)
+
+
+
+                String email = request.getParameter("email");
+
+                if (email == null) {
                     request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
-                
-                else{
+                } else {
                     String oldPassword = request.getParameter("oldPwd");
                     String newPassword1 = request.getParameter("newPwd1");
                     String newPassword2 = request.getParameter("newPwd2");
@@ -198,18 +197,17 @@ public class CRMServlet extends HttpServlet {
                         request.getRequestDispatcher("/resetMemberPasswordConfirmation.jsp").forward(request, response);
                     }
                 }
-                
-                
-            }else if ("memberInfoEditionConfirmation".equals(page)) {
+
+
+            } else if ("memberInfoEditionConfirmation".equals(page)) {
                 System.out.println("***memberInfoEdictionConfirmation page***");
 
                 String email = request.getParameter("email");
                 System.out.println(email);
-                
-                if(email==null)
+
+                if (email == null) {
                     request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
-                
-                else{
+                } else {
                     String userName = request.getParameter("userName");
                     System.out.println(userName);
 
@@ -252,11 +250,11 @@ public class CRMServlet extends HttpServlet {
                 
                      System.out.println("message, "+message);*/
 
-                    member = memberSession.updateMember(email, userName, mobile,date, maritalStatus, gender);
+                    member = memberSession.updateMember(email, userName, mobile, date, maritalStatus, gender);
                     System.out.println("member email before setAttribute" + member.getMemberEmail());
                     System.out.println("member subscriber? :" + Boolean.toString(member.isSubscriber()));
                     request.setAttribute("data", member);
-                    request.setAttribute("data2","true");
+                    request.setAttribute("data2", "true");
 
                     request.getRequestDispatcher("/memberInfoEditionConfirmation.jsp").forward(request, response);
                 }
@@ -268,13 +266,12 @@ public class CRMServlet extends HttpServlet {
             } else if ("memberRegisterResult".equals(page)) {
 
                 System.out.println("***memberRegisterResult page***");
-                
+
                 String email = request.getParameter("e-mail");
-                if(email==null)
+                if (email == null) {
                     request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
-                
-                else{
-     
+                } else {
+
                     String userName = request.getParameter("username");
 
                     String password1 = request.getParameter("password");
@@ -307,25 +304,24 @@ public class CRMServlet extends HttpServlet {
 
             } else if ("memberForgetPassword".equals(page)) {
                 System.out.println("***memberForgetPassword page***");
-                
+
                 request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
 
             } else if ("memberForgetPasswordResult".equals(page)) {
                 System.out.println("***memberForgetPasswordResult***");
 
                 String email = request.getParameter("email");
-                System.out.println("email: "+email);
-                
-                
-                if(email==null)
+                System.out.println("email: " + email);
+
+
+                if (email == null) {
                     request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
-                else if(memberSession.getMemberByEmail(email)==null){
-                    System.out.println("invalid email: "+email);
+                } else if (memberSession.getMemberByEmail(email) == null) {
+                    System.out.println("invalid email: " + email);
                     message = "This email is not registered yet.";
                     request.setAttribute("message", message);
-                    request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);                   
-                }
-                else{
+                    request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
+                } else {
                     String question = request.getParameter("question");
                     String answer = request.getParameter("answer");
                     boolean correctAnswer = memberManagementSessionBean.checkAnswer(email, answer);
@@ -334,7 +330,7 @@ public class CRMServlet extends HttpServlet {
                         request.getRequestDispatcher("/memberForgetPasswordResult.jsp").forward(request, response);
                     } else {
                         System.out.println("wrong answer");
-                        message="Your question or answer is not correct";
+                        message = "Your question or answer is not correct";
                         request.setAttribute("message", message);
                         request.getRequestDispatcher("/memberForgetPassword.jsp").forward(request, response);
                     }
@@ -342,13 +338,13 @@ public class CRMServlet extends HttpServlet {
 
                 //       memberManagementSessionBean.ResetPassword("leijq369@gmail.com");
 
-            } else if("accessDenied".equals(page)){
+            } else if ("accessDenied".equals(page)) {
                 System.out.println("***accessDenied***");
                 request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
-            } else if("logOut".equals(page)){
+            } else if ("logOut".equals(page)) {
                 System.out.println("***logOut***");
                 request.getRequestDispatcher("/logOut.jsp").forward(request, response);
-            }else {
+            } else {
                 System.out.println("other page");
             }
 //          
@@ -372,7 +368,6 @@ public class CRMServlet extends HttpServlet {
         }
     }
 
-    
     /* TODO output your page here. You may use following sample code. */
     /* TODO output your page here. You may use following sample code. */
 
@@ -437,13 +432,15 @@ public class CRMServlet extends HttpServlet {
     }
 
     private void addFeedback(HttpServletRequest request, String memberEmail) {
-       String content = request.getParameter("content");
-       String title = request.getParameter("title");
-       Integer rating = Integer.parseInt(request.getParameter("rating"));
-       String department = request.getParameter("department");
-       Date currentDate = new Date();
-       
-       feedbackSessionBean.createFeedback(content, title, memberEmail, department, currentDate, rating);
-       System.out.println("CRMServlet:addFeedback:feedback has been added!");
+        String content = request.getParameter("content");
+        String title = request.getParameter("title");
+//        System.out.println(request.getParameter("rating"));
+        Integer rating = Integer.parseInt(request.getParameter("rating"));
+
+        String department = request.getParameter("department");
+        Date currentDate = new Date();
+
+        feedbackSessionBean.createFeedback(content, title, memberEmail, department, currentDate, rating);
+        System.out.println("CRMServlet:addFeedback:feedback has been added!");
     }
 }
