@@ -46,28 +46,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel">
-                <div class="row">
-                    <div class="large-4 columns">
-                        <a class="th radius" href="/IRMS-war/images/Harry-Potter.jpg" >
-                            <img src="/IRMS-war/images/Harry-Potter.jpg" width="100" height="100">
-                        </a>
 
-                    </div>
-                    <div class="large-6 columns">
-                        <h5><strong>${show.showName}</strong></h5>
-                        <p>
-                            ${show.showDescription}
-                        </p>
-                    </div>
-                    <div class="large-2 columns">
-                        <form action="entertainmentSchedule">
-                            <input class="button" type="submit" value ="Buy Now"/>
-                            <input type="hidden" name="showId" value="${show.showId}"/>
-                        </form> 
-                    </div>
-                </div>
-            </div>
             <br>             
         </c:forEach>
         <jsp:include page="footer.jsp"></jsp:include>
