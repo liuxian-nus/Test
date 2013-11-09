@@ -16,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +40,8 @@ public class MemberManagedBean {
     private String nationality;
     private String maritalStatus;
     private List<MemberEntity> memberList;
+    private List<MemberEntity> filteredMember;
+    private SelectItem[] nationalityOptions;
 
     /**
      * Creates a new instance of SearchMemberManagedBean
@@ -227,6 +230,23 @@ public class MemberManagedBean {
     public List<MemberEntity> getMemberList() {
         return memberList;
     }
+
+    public List<MemberEntity> getFilteredMember() {
+        return filteredMember;
+    }
+
+    public void setFilteredMember(List<MemberEntity> filteredMember) {
+        this.filteredMember = filteredMember;
+    }
+
+    public SelectItem[] getNationalityOptions() {
+        return nationalityOptions;
+    }
+
+    public void setNationalityOptions(SelectItem[] nationalityOptions) {
+        this.nationalityOptions = nationalityOptions;
+    }
+    
 
     public void setMemberList(List<MemberEntity> memberList) {
         this.memberList = memberList;

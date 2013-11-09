@@ -1,10 +1,52 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../Template/generalTemplate.xhtml">
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:define name="content">
-        content
+     <ui:define name="content">
+        <h:form>  
+
+            <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.memberList}" widgetVar="membersTable"   
+                         emptyMessage="No members found with given criteria" filteredValue="#{memberManagedBean.filteredMember}">  
+
+                <f:facet name="header">  
+                    <p:outputPanel>  
+                        <h:outputText value="Search all fields:" />  
+                        <p:inputText id="globalFilter" onkeyup="membersTable.filter();" style="width:150px" />  
+                    </p:outputPanel>  
+                </f:facet>  
+
+                <p:column id="idColumn" filterBy="#{memberList.memberEmail}"   
+                          headerText="Member Email" filterMatchMode="contains">  
+                    <h:outputText value="#{memberList.memberEmail}" />  
+                </p:column>  
+
+                <p:column id="nameColumn" filterBy="#{memberList.memberName}"   
+                          headerText="Member Name" filterMatchMode="contains">  
+                    <h:outputText value="#{memberList.memberName}" />  
+                </p:column>  
+
+                <p:column id="dobColumn" filterBy="#{memberList.memberDob}" headerText="Date of Birth" filterMatchMode="contains">  
+                    <h:outputText value="#{memberList.memberDob}" />  
+                </p:column>
+
+                <p:column id="nationalityColumn" filterBy="#{manageVenueManagedBean.toSentence(memberList.nationality)}" headerText="Nationality"  
+                          filterOptions="#{memberManagedBean.nationalityOptions}" filterMatchMode="contains">  
+                    <h:outputText value="#{manageVenueManagedBean.toSentence(memberList.nationality)}" />  
+                </p:column>
+
+                <p:column>
+                    <p:commandButton icon="ui-icon ui-icon-check" action="#{memberManagedBean.getFilteredMember}">
+                        <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.filteredMember}" />  
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>  
+
+        </h:form>  
     </ui:define>
 
 </ui:composition>
