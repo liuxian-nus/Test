@@ -232,6 +232,8 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/ATMSServlet/attrTicketBookingPayment").forward(request, response);
             } else if ("attrTicketBookingConfirmation".equals(page)) {
                 request.getRequestDispatcher("/ATMSServlet/attrTicketBookingConfirmation").forward(request, response);
+            } else if ("shopping".equals(page)) {
+                request.getRequestDispatcher("/SMMSServlet/shopping").forward(request, response);
             } else {
                 System.out.println("other page");
 
