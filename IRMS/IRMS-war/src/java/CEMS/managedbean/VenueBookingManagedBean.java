@@ -48,7 +48,7 @@ public class VenueBookingManagedBean implements Serializable {
         selectedVenue = new VenueEntity();
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void init() throws ExistException {
         venues = venueSessionBean.getAllVenues();
         functions = venueFunctionSessionBean.getAllVenueFunctionNames();
