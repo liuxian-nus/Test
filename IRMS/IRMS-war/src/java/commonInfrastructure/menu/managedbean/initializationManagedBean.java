@@ -1288,8 +1288,22 @@ public class initializationManagedBean implements Serializable {
 
 
         ContractEntity contract2 = new ContractEntity();
-        Date cidate1 = new Date(2014, 7, 1);
-        Date codate1 = new Date(2017, 7, 1);
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MINUTE, 3);
+        Date cidate1 = cal.getTime();
+        System.err.println("in setting due date" + cidate1);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.add(Calendar.MINUTE, 4);
+        Date codate1 = cal2.getTime();
+        System.err.println("in setting due date" + codate1);
+
+
+
+
+//        Date cidate1 = new Date(2014, 7, 1);
+//        Date codate1 = new Date(2017, 7, 1);
         try {
 
             System.out.println("Saving contract2....");
@@ -1312,6 +1326,10 @@ public class initializationManagedBean implements Serializable {
             event2.setEventTime(currentDate);
             event2.setEventContract(contract2);
             contracteventSessionBean.addContractevent(event2);
+
+            //setting to active ah yao si le 
+            merchantBillSessionBean.setContract(contract2);
+            merchantBillSessionBean.createActiveTimers(cidate1);
             System.out.println("Contract2 saved updated....." + event2.getContracteventId());
 
 
@@ -1324,10 +1342,12 @@ public class initializationManagedBean implements Serializable {
             outletb.setOutletName("Resort Suvovior");
             outletSessionBean.updateOutlet(outletb);
 
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.MINUTE, 1); // set overdue date = 1 minute
-            Date dueDate = cal.getTime();
-            System.out.println("in setting due date" + dueDate);
+            Calendar cal3 = Calendar.getInstance();
+            cal3.add(Calendar.MINUTE, 2); // set overdue date = 1 minute
+            Date dueDate = cal3.getTime();
+            System.err.println("in setting due date" + dueDate);
+            System.err.println("current calendar time is" + cal.getTime());
+            System.err.println("current time is" + currentDate);
 
             BillEntity bill = new BillEntity();
             bill.setBillAmount(contract2.getLast().getEventDeposit());
@@ -1337,6 +1357,7 @@ public class initializationManagedBean implements Serializable {
             bill.setContract(contract2);
             bill.setDueDate(dueDate);
             merchantBillSessionBean.addBill(bill);
+            merchantBillSessionBean.createOverDueTimers(dueDate);
 
             System.out.println("Contract2 saved.....");
         } catch (Exception e) {

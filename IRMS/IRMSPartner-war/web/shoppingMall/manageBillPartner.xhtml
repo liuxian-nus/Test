@@ -1,11 +1,104 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../Template/generalTemplatePartner.xhtml">
+                template="./../Template/generalTemplatePartner.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-   
+
     <ui:define name="content">
-        content
-    </ui:define>
+        <h:form id="unpaidoverdue">
+            <p:growl id="growl" showDetail="true" sticky="true" />   
+            <p:fieldset legend="Bills Unpaid" toggleable="true" toggleSpeed="500" collapsed="true">  
+                <p:panel id="bills" header="Unpaid Bills" style="height:500px;">
+                    <div style="margin-top:20px;margin-bottom:20px;">
 
+                        <p:dataTable id="availableBill" value="#{billPartnerManagedBean.merchantUnpaidBills}" var="aBill" 
+                                     paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                            <p:column headerText="Bill ID" style="width:50px;">
+                                <h:outputText value="#{aBill.billId}"/>
+                            </p:column>
+                            <p:column headerText="Issue Date" style="width:100px;">
+                                <h:outputText value="#{aBill.billDate}"/>
+                            </p:column>
+                            <p:column headerText="Amount" style="width:100px;">
+                                <h:outputText value="#{aBill.billAmount}"/>
+                            </p:column>
+                            <p:column headerText="Contract" style="width:100px;">
+                                <h:outputText value="#{aBill.contract.contractId}"/>
+                            </p:column>
+                            <p:column headerText="Type" style="width:100px;">
+                                <h:outputText value="#{aBill.billType}"/>
+                            </p:column>
+
+                            <p:column style="width:100px">  
+                                <p:commandButton   oncomplete="confirmSend.show()" ajax="true" 
+                                                   icon="ui-icon ui-icon-check"  title="Send Bill to Merchant">  
+                                    <f:setPropertyActionListener target="#{billPartnerManagedBean.bill}" value="#{aBill}" /> 
+                                </p:commandButton> 
+                            </p:column>  
+                        </p:dataTable>  
+
+                        <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmSend"> 
+                            <br/>
+                            Are you sure to make payment?
+                            <br/><br/>
+                            <h:panelGrid columns="2" id="approveNew">
+                                <p:commandButton value="Yes" update="availableBill" onclick ="growl" actionListener="#{billPartnerManagedBean.makePayament}" oncomplete="confirmSend.hide()"/>
+                                <p:commandButton value="Not yet" onclick="confirmSend.hide()" type="button"/>  
+                            </h:panelGrid>
+                        </p:dialog> 
+
+                    </div>
+                </p:panel>
+
+            </p:fieldset>
+        </h:form>
+        <br/>
+
+        <h:form id="paid">
+            <p:growl id="growl" showDetail="true" sticky="true" />   
+            <p:fieldset legend="Paid Bills" toggleable="true" toggleSpeed="500" collapsed="true"> 
+
+                <p:panel id="bills" header="Paid Bills" style="height:500px;">
+                    <div style="margin-top:20px;margin-bottom:20px;">
+
+                        <p:dataTable id="unpaidBills" value="#{billPartnerManagedBean.merchantPaidBills}" var="uBill" 
+                                     paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                            <p:column style="width:2%">  
+                                <p:rowToggler />  
+                            </p:column> 
+
+                            <p:column headerText="Bill ID" style="width:50px;">
+                                <h:outputText value="#{uBill.billId}"/>
+                            </p:column>
+                            <p:column headerText="Issue Date" style="width:100px;">
+                                <h:outputText value="#{uBill.billDate}"/>
+                            </p:column>
+                            <p:column headerText="Amount" style="width:100px;">
+                                <h:outputText value="#{uBill.billAmount}"/>
+                            </p:column>
+                            <p:column headerText="Merchant" style="width:100px;">
+                                <h:outputText value="#{uBill.contract.merchant.merchantName}"/>
+                            </p:column>
+                            <p:column headerText="Contract" style="width:100px;">
+                                <h:outputText value="#{uBill.contract.contractId}"/>
+                            </p:column>
+                            <p:column headerText="Type" style="width:100px;">
+                                <h:outputText value="#{uBill.billType}"/>
+                            </p:column>
+
+                            
+                        </p:dataTable>
+                    </div>
+                </p:panel>
+            </p:fieldset>
+        </h:form>
+        <br/>
+        
+        
+    </ui:define>
 </ui:composition>

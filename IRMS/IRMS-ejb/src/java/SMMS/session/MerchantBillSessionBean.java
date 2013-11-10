@@ -6,6 +6,7 @@ package SMMS.session;
 
 import Exception.ExistException;
 import SMMS.entity.BillEntity;
+import SMMS.entity.ContractEntity;
 import SMMS.entity.OutletTransactionEntity;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
@@ -35,11 +37,14 @@ import org.joda.time.DateTime;
 @LocalBean
 public class MerchantBillSessionBean {
 
+    @EJB
+    private ContractSessionBean contractSessionBean;
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     @Resource
     private SessionContext ctx;
     private BillEntity bill = new BillEntity();
+    private ContractEntity contract;
 
     public MerchantBillSessionBean() {
     }
@@ -51,24 +56,24 @@ public class MerchantBillSessionBean {
     }
 
     //onetime bill would be overdue  one minute will be set to overdue
-    public void createOverDueTimers(Date overdue) { 
+    public void createOverDueTimers(Date overdue) {
         System.out.println("in session bean create timers");
-        TimerService timerService = ctx.getTimerService(); 
-        
+        TimerService timerService = ctx.getTimerService();
+
         TimerConfig config = new TimerConfig("setOverdue", true);
         Timer timer = (Timer) timerService.createSingleActionTimer(overdue, config);
         System.out.println("in session bean test" + timer.getInfo().toString());
     }
-    
+
     //one time, bill would be set at that contract start date 4 minutes will be set to active
     public void createActiveTimers(Date startDate) {
         System.out.println("in session bean create timers");
-        TimerService timerService = ctx.getTimerService();           
-        TimerConfig config = new TimerConfig("setActive", true);  
+        TimerService timerService = ctx.getTimerService();
+        TimerConfig config = new TimerConfig("setActive", true);
         Timer timer = (Timer) timerService.createSingleActionTimer(startDate, config);
         System.out.println("in session bean test" + timer.getInfo().toString());
     }
-    
+
 //    // generate
 //    public void createMonthlyBillTimers(Date startdate) {
 //        //method1
@@ -90,22 +95,31 @@ public class MerchantBillSessionBean {
 //        System.out.println("in session bean test" + timer.getInfo().toString());
 //    }
 //    
-     
-
     @Timeout
-    public void handleTimeout(Timer timer) {
-        
+    public void handleTimeout(Timer timer) throws ExistException {
+
         System.out.println("in handle timeout test");
         if (timer.getInfo().toString().equals("setOverdue")) {
-         System.out.println("in setting overdue time lah ahahah");
+            System.err.println("in setting overdue time lah ahahah");
+            System.err.println("in setting overdue time lah ahahah");
+            System.err.println("in setting overdue time lah ahahah");
+            System.err.println("in setting overdue time lah ahahah");
+            System.err.println("in setting overdue time lah ahahah");
         }
-        
+
         if (timer.getInfo().toString().equals("setActive")) {
-         System.out.println("in setting active time ah lah ahahah");
+            System.out.println("in setting ACTIVE time ah lah ahahah");
+            System.out.println("in setting ACTIVE time ah lah ahahah");
+            System.out.println("in setting ACTIVE time ah lah ahahah");
+            System.out.println("in setting ACTIVE time ah lah ahahah");
+            System.out.println("in setting ACTIVE time ah lah ahahah" + contract.getContractId());
+            contract.setStatus("newApproved");
+            contractSessionBean.updateContract(contract);
+            System.err.println("the current status is " + contract.getStatus());
         }
-        
-        
-        
+
+
+
 //        }
     }
 
@@ -223,6 +237,38 @@ public class MerchantBillSessionBean {
         return TransactionList;
     }
 
+    public List<BillEntity> getUnpaidBillsByMerchant(String merchantId) {
+        System.err.println("in get bill by merchant session bean");
+        Query q = em.createQuery("SELECT m FROM BillEntity m");
+        List TransactionList = new ArrayList<BillEntity>();
+        for (Object o : q.getResultList()) {
+            BillEntity m = (BillEntity) o;
+            if (m.getContract().getMerchant().getMerchantEmail() == merchantId) {
+                if (m.getBillStatus().equals("unpaid") || m.getBillStatus().equals("overdue")) {
+                    TransactionList.add(m);
+                }
+            }
+        }
+        System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
+        return TransactionList;
+    }
+
+    public List<BillEntity> getPaidBillsByMerchant(String merchantId) {
+       System.err.println("in get bill by merchant session bean");
+        Query q = em.createQuery("SELECT m FROM BillEntity m");
+        List TransactionList = new ArrayList<BillEntity>();
+        for (Object o : q.getResultList()) {
+            BillEntity m = (BillEntity) o;
+            if (m.getContract().getMerchant().getMerchantEmail() == merchantId) {
+                if (m.getBillStatus().equals("paid")) {
+                    TransactionList.add(m);
+                }
+            }
+        }
+        System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
+        return TransactionList;
+    }
+
     public List<BillEntity> getAllBills() {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
@@ -241,5 +287,21 @@ public class MerchantBillSessionBean {
             throw new ExistException("Bill does not exist!");
         }
         return bill;
+    }
+
+    public BillEntity getBill() {
+        return bill;
+    }
+
+    public void setBill(BillEntity bill) {
+        this.bill = bill;
+    }
+
+    public ContractEntity getContract() {
+        return contract;
+    }
+
+    public void setContract(ContractEntity contract) {
+        this.contract = contract;
     }
 }
