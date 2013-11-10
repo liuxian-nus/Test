@@ -68,7 +68,7 @@ public class Menu3ManagedBean implements Serializable {
                 item.setUrl("/acms/checkIncheckOut.xhtml");
                 item.setIcon("ui-icon ui-icon-suitcase");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("log book");
                 item.setUrl("/acms/logBook.xhtml");
@@ -77,7 +77,7 @@ public class Menu3ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
             }
-            
+
             if (userType.contains("ACMSRoomService")) {
                 System.out.println("Room service menu bar");
                 submenu = new Submenu();
@@ -88,7 +88,7 @@ public class Menu3ManagedBean implements Serializable {
                 item.setUrl("/acms/RoomService.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("log book");
                 item.setUrl("/acms/logBook.xhtml");
@@ -97,18 +97,46 @@ public class Menu3ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
             }
-            
+
             if (userType.contains("CEMSEvent")) {
                 System.out.println("CEMSEvent menu bar");
                 submenu = new Submenu();
-                submenu.setLabel("Event Management");
+                submenu.setLabel("Event Service Management");
 
                 item = new MenuItem();
                 item.setValue("Event Management");
                 item.setUrl("/cems/eventService.xhtml");
                 item.setIcon("ui-icon ui-icon-suitcase");
                 submenu.getChildren().add(item);
-               
+
+                model.addSubmenu(submenu);
+
+                submenu = new Submenu();
+                submenu.setLabel("Service Management");
+
+                item = new MenuItem();
+                item.setValue("Create New Service");
+                item.setUrl("/cems/eventServiceCreate.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("Manage Services");
+                item.setUrl("/cems/eventServiceManage.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
+                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
+
+                submenu = new Submenu();
+                submenu.setLabel("Event Billing");
+
+                item = new MenuItem();
+                item.setValue("Event Bill");
+                item.setUrl("/cems/eventServiceBill.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
+                submenu.getChildren().add(item);
+
                 model.addSubmenu(submenu);
             }
 
