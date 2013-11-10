@@ -11,7 +11,6 @@
         <h:form id="form"> 
             <p:panel id="transaction" header="Member Transactions" style="height:495px;">
                 <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
-                    <p:growl id="msgs" showDetail="true" /> 
                     <p:dataTable id="transactions" value="#{transactionManagedBean.transactions}" var="transactions" paginator="true" rows="10">
                         <p:column style="width:2%">  
                             <p:rowToggler />  

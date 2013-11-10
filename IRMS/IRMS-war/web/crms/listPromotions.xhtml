@@ -1,9 +1,80 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../Template/generalTemplate.xhtml">
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-        content
+        <h:form id="form"> 
+            <p:panel id="promotions" header="Promotions" style="height:495px;">
+                <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
+                    <p:dataTable id="promtions" value="#{promotionManagedBean.promotions}" var="promotions" paginator="true" rows="10">
+                        <p:column style="width:2%">  
+                            <p:rowToggler />  
+                        </p:column> 
+
+                        <p:column id="idColumn" filterBy="#{promotions.memberEmail}" headerText="Member Email" filterMatchMode="contains">  
+                            <h:outputText value="#{promotions.memberEmail}"/>
+                        </p:column>
+
+                        <p:column id="departmentColumn" filterBy="#{promotions.mtDepartment}" headerText="Department: " filterMatchMode="contains">
+                            <h:outputText value="#{promotions.mtDepartment}"/>
+                        </p:column>
+
+
+                        <p:column id="promotionColumn" filterBy="#{promotions.mtPromotion}" headerText="Promotion Code: " filterMatchMode="contains">
+                            <h:outputText value="#{promotions.mtPromotion}"/>
+                        </p:column>
+
+                        <p:column id="modeColumn" filterBy="#{promotions.mtMode}" headerText="Payment Mode: " filterOptions="#{promotionManagedBean.option1}" filterMatchMode="contains">
+                            <h:outputText rendered="#{promotions.mtMode==true}" value="Cash/Card Payment"/>
+                            <h:outputText rendered="#{promotions.mtMode==false}" value="Coin Payment"/>
+                        </p:column>
+
+                        <p:column id="statusColumn" filterBy="#{promotions.paymentStatus}" headerText="Payment Status: " filterOptions="#{promotionManagedBean.option2}" filterMatchMode="contains">
+                            <h:outputText rendered="#{promotions.paymentStatus==true}" value="Cash Payment"/>
+                            <h:outputText rendered="#{promotions.paymentStatus==false}" value="Credit Card Payment"/>
+                        </p:column>
+
+                        <p:rowExpansion>  
+                            <h:panelGrid id="display" columns="2" cellpadding="4" style="width:400px;"  
+                                         styleClass=" ui-widget-content grid">  
+
+                                <f:facet name="header">  
+                                    #{promotions.memberEmail}
+                                </f:facet>  
+
+                                <h:outputText value="Transaction Amount:" />  
+                                <h:outputText id="amount" value="#{promotions.mtAmount}" style="width:400px;"   />  
+
+                                <h:outputText value="Transaction Date:" />  
+                                <h:outputText id="hp" value="#{promotions.mtDate}"  style="width:400px;"  >  
+                                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Department:" />  
+                                <h:outputText value="#{promotions.mtDepartment}"  style="width:400px;"/>
+
+
+                                <h:outputText value="Promotion Codes:" />  
+                                <h:outputText value="#{promotions.mtPromotion}"  style="width:400px;"/>
+
+                                <h:outputText value="Payment Mode:" />  
+                                <h:outputText rendered="#{promotions.mtMode==true}" value="Cash/Card Payment" style="width:400px;"/>
+                                <h:outputText rendered="#{promotions.mtMode==false}" value="Coin Payment" style="width:400px;"/>
+
+                                <h:outputText value="Payment Status:" />  
+                                <h:outputText rendered="#{promotions.paymentStatus==true}" value="Cash Payment" style="width:400px;"/>
+                                <h:outputText rendered="#{promotions.paymentStatus==false}" value="Credit Card Payment" style="width:400px;"/>
+
+                            </h:panelGrid>  
+                        </p:rowExpansion>           
+                    </p:dataTable>
+                </div>
+            </p:panel>
+
+        </h:form> 
     </ui:define>
 </ui:composition>

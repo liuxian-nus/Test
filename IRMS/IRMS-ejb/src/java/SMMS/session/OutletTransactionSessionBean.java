@@ -24,7 +24,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class OutletTransactionSessionBean {
+public class OutletTransactionSessionBean implements OutletTransactionSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -35,11 +35,13 @@ public class OutletTransactionSessionBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public OutletTransactionEntity addTransaction(OutletTransactionEntity transaction) {
 //        OutletTransactionEntity at = transaction;
 //        at.getTransactionDate().setYear(transaction.getTransactionDate().getYear()-1990);
@@ -49,11 +51,13 @@ public class OutletTransactionSessionBean {
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public void removeTransaction(OutletTransactionEntity transaction)throws ExistException {
         if(transaction==null) throw new ExistException ("Transaction doesn't exist!");
         em.remove(transaction);
     }
     
+    @Override
     public List<OutletTransactionEntity> getTransactionByOutlet(int outletId) {
         System.err.println("in get transaction by outlet session bean");
         Query q = em.createQuery("SELECT m FROM OutletTransactionEntity m");
@@ -68,6 +72,7 @@ public class OutletTransactionSessionBean {
         return TransactionList;
     }
     
+    @Override
     public double calculateCommission(int month, int outletId) {
         System.err.println("in calculate transaction commission session bean");
         Query q = em.createQuery("SELECT m FROM OutletTransactionEntity m");
@@ -82,6 +87,14 @@ public class OutletTransactionSessionBean {
         }
         System.err.println("in get TransactionList by outlet sessionbean: Transaction List size=" + TransactionList.size()+amount);
         return amount;
+    }
+    
+    public OutletTransactionEntity getTransaction(Long transactionId)
+    {
+        System.out.println("OutletTransactionSessionBean: in GetTransaction");
+        
+        OutletTransactionEntity current = em.find(OutletTransactionEntity.class, transactionId);
+        return current;
     }
     
 }
