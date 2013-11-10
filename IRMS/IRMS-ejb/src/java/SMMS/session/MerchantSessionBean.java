@@ -29,7 +29,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class MerchantSessionBean {
+public class MerchantSessionBean implements MerchantSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -43,22 +43,26 @@ public class MerchantSessionBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
 
+    @Override
     public MerchantEntity addMerchant(MerchantEntity merchant) {
 
         em.persist(merchant);
         return merchant;
     }
 
+    @Override
     public boolean updateMerchant(MerchantEntity merchant) {
         em.merge(merchant);
         System.out.println("MerchantSessionBean: merchant " + merchant.getId() + " is successfully updated");
         return true;
     }
 
+    @Override
     public List<MerchantEntity> getAllMerchants() throws ExistException {
         Query q = em.createQuery("SELECT m FROM MerchantEntity m");
         List merchantList = new ArrayList<EmployeeEntity>();
@@ -72,11 +76,13 @@ public class MerchantSessionBean {
         return merchantList;
     }
 
+    @Override
     public MerchantEntity getMerchantById(String merchantId) throws ExistException {
         merchant = em.find(MerchantEntity.class, merchantId);
         return merchant;
     }
 
+    @Override
     public ContractEntity addContractInMerchant(Long contractId, String merchantId) throws ExistException {
         contract = em.find(ContractEntity.class, contractId);
         merchant = em.find(MerchantEntity.class, merchantId);
@@ -89,6 +95,7 @@ public class MerchantSessionBean {
         return contract;
     }
 
+    @Override
     public void createTimers() {
         System.out.println("in session bean test");
         TimerService timerService = ctx.getTimerService();
@@ -101,6 +108,7 @@ public class MerchantSessionBean {
 
     }
   @Timeout
+    @Override
     public void handleTimeout(Timer timer) {
 //        if (timer.toString().equals("EJBTIMER")) {//Do something}}}
         System.out.println("in handle timeout test");
