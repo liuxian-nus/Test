@@ -89,6 +89,7 @@ public class OutletTransactionSessionBean implements OutletTransactionSessionBea
         return amount;
     }
     
+    @Override
     public OutletTransactionEntity getTransaction(Long transactionId)
     {
         System.out.println("OutletTransactionSessionBean: in GetTransaction");
