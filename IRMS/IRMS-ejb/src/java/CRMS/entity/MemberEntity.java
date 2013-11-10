@@ -87,7 +87,7 @@ public class MemberEntity implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "couponOwner")
     private List<CouponEntity> coupons = new ArrayList<CouponEntity>();
     @XmlTransient
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "feedbackOwner")
+    @OneToMany(cascade = {CascadeType.MERGE}, mappedBy = "feedbackOwner")
     private List<FeedbackEntity> feedbacks = new ArrayList<FeedbackEntity>();
 
     public Set<PromotionEntity> getPromotions() {
