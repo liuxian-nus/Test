@@ -53,6 +53,22 @@ public class EventServiceBookingSessionBean {
         return eventServiceBookingList;
     }
     
+    public List<EventServiceBookingEntity> getServiceByEventId(Long id){
+        Query q = em.createQuery("SELECT m FROM EventServiceBookingEntity m");
+        temp = new ArrayList<EventServiceBookingEntity>();
+        temp = q.getResultList();
+        eventServiceBookingList = new ArrayList<EventServiceBookingEntity>();
+        eventServiceBooking = new EventServiceBookingEntity();
+        Iterator<EventServiceBookingEntity> itr = temp.iterator();
+        while (itr.hasNext()) {
+            eventServiceBooking = itr.next();
+            if (eventServiceBooking.getEventBooking().getEvent().getEventId().equals(id)) {
+                eventServiceBookingList.add(eventServiceBooking);
+            }
+        }
+        return eventServiceBookingList;
+    }
+    
     public EventServiceBookingEntity addEventServiceBooking(EventServiceBookingEntity eventServiceBooking) {
         em.persist(eventServiceBooking);
         return eventServiceBooking;

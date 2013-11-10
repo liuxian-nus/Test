@@ -28,6 +28,7 @@ public class EventBookingSessionBean {
     List<EventBookingEntity> eventBookings = new ArrayList<EventBookingEntity>();
     List<EventBookingEntity> bookingList;
     EventBookingEntity eventBooking;
+    List<EventBookingEntity> temp = new ArrayList<EventBookingEntity>();
 
     public EventBookingSessionBean() {
     }
@@ -70,6 +71,22 @@ public class EventBookingSessionBean {
             }
         }
 //        System.out.println("Count2:"+eventBookings.size());
+        return eventBookings;
+    }
+
+    public List<EventBookingEntity> getEventBookingByEventId(Long id) {
+        Query q = em.createQuery("SELECT e FROM EventBookingEntity e");
+        bookingList = new ArrayList<EventBookingEntity>();
+        bookingList = q.getResultList();
+        Iterator<EventBookingEntity> itr = bookingList.iterator();
+        eventBookings = new ArrayList<EventBookingEntity>();
+        while (itr.hasNext()) {
+            eventBooking = new EventBookingEntity();
+            eventBooking = itr.next();
+            if (eventBooking.getEvent().getEventId().equals(id)) {
+                eventBookings.add(eventBooking);
+            }
+        }
         return eventBookings;
     }
 

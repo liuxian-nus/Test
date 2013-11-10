@@ -32,6 +32,7 @@ public class EventBookingEntity implements Serializable {
 //    @Temporal(javax.persistence.TemporalType.DATE)
 //    private Date endingDate;
     private Integer numberNightRoom;
+    private double venueRate;
     
     @OneToMany(cascade={CascadeType.MERGE})
     private List<EventServiceBookingEntity> serviceBookings;
@@ -99,6 +100,22 @@ public class EventBookingEntity implements Serializable {
 
     public void setId(Long id) {
         this.bookingId = id;
+    }
+
+    public Long getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(Long bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public double getVenueRate() {
+        return venueRate;
+    }
+
+    public void setVenueRate(double venueRate) {
+        this.venueRate = venueRate;
     }
 
     @Override
