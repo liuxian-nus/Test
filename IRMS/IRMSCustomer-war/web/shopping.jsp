@@ -36,89 +36,236 @@
                 <div class="section-container vertical-tabs" data-section="vertical-tabs">
                     <section class="active">
                         <p class="title" data-section-title><a href="#">Accessories</a></p>
-                       <div class="content" data-section-content>
-                            <c:forEach items="${LingrieList}" var="lingrie">            
-                          
-                                    <div class="large-6 columns">
-                                        <h5><strong>${lingrie.outletName}</strong></h5>
-                                    </div>
-                                         
-                        </c:forEach>
+                        <div class="content" data-section-content>
+                            <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${AccessoriesList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Banks</a></p>
+                    <div class="content" data-section-content>
+                              <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${BanksList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
 
                     </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Banks</a></p>
-                        <div class="content" data-section-content>
+                </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Childrens Fashion</a></p>
+                    <div class="content" data-section-content>
+                            <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${ChildrensList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Electronics</a></p>
+                    <div class="content" data-section-content>
+                            <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${ElectronicsList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+        
+                <section>
+                    <p class="title" data-section-title><a href="#">Handbags and Shoes</a></p>
+                    <div class="content" data-section-content>
+                               <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${HandbagsList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Jewelry</a></p>
+                    <div class="content" data-section-content>
+                              <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${JewelryList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Lifestyle and Gifts</a></p>
+                    <div class="content" data-section-content>
+                               <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${LifestyleList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Lingerie</a></p>
+                    <div class="content" data-section-content>
 
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Childrens Fashion</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 2.</p>
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Electronics</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 3.</p>
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">General</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 3.</p>
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Handbags and Shoes</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 3.</p>
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Jewelry</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 3.</p>
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Lifestyle and Gifts</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 3.</p>
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Lingerie</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 3.</p>
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Mens Fashion</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 3.</p>
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Sports Beauty and Wellness</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 3.</p>
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Watches</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 3.</p>
-                        </div>
-                    </section>
-                    <section>
-                        <p class="title" data-section-title><a href="#">Womens Fashion</a></p>
-                        <div class="content" data-section-content>
-                            <p>Content of section 3.</p>
-                        </div>
-                    </section>
+                        <table class="tablesorter">
+                            <thead>
+                            <th width="800">Shop</td>
+                            <th width="200">Location</td>              
+                                </thead>
+                            <tbody>
+                                <c:forEach items="${LingrieList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Mens Fashion</a></p>
+                    <div class="content" data-section-content>
+                                 <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${MensList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Sports Beauty and Wellness</a></p>
+                    <div class="content" data-section-content>
+                             <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${SportsList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Watches</a></p>
+                    <div class="content" data-section-content>
+                           <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${WatchesList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Womens Fashion</a></p>
+                    <div class="content" data-section-content>
+                             <table class="tablesorter">
+                                <thead>
+                                <th width="800">Shop</td>
+                                <th width="200">Location</td>              
+                                    </thead>
+                                <tbody>
+                                <c:forEach items="${WomensList}" var="data">
+                                    <tr>
+                                        <td width="800">&nbsp${data.outletName}</td>
+                                        <td width="200">&nbsp${data.outletId}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </div>
 
         </div>
@@ -132,7 +279,7 @@
 
         <script src="js/foundation.min.js"></script>
         <script>
-                    $(document).foundation();
+            $(document).foundation();
         </script>
 
     </body>
