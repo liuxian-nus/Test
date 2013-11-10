@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:form id="form"> 
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:panel id="search" header="Manage Events" style="height:495px;">
+                <p:dataTable id="events" value="#{eventServiceManagedBean.allEventBookings}" var="eventList"
+                             paginator="true" rows="6" draggableColumns="true" scrollable="true" 
+                             resizableColumns="true">
+                    <p:column headerText="Event Name ">
+                        <h:outputText value="#{eventList.event.eventName}"/>
+                    </p:column>
+                    <p:column headerText="Venue Assigned ">
+                        <h:outputText value="#{eventList.venue.venueName}"/>
+                    </p:column>
+                    <p:column headerText="Date ">
+                        <h:outputText value="#{eventList.bookingDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton icon="ui-icon ui-icon-check" action="#{eventServiceManagedBean.addService(event)}">
+                            <f:setPropertyActionListener value="#{eventList}" target="#{eventServiceManagedBean.selectedEventBooking}" />  
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>  
+    </ui:define>
+
+</ui:composition>
