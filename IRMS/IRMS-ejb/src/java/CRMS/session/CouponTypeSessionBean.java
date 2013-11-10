@@ -37,6 +37,7 @@ public class CouponTypeSessionBean {
    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addCouponType(CouponTypeEntity ct){
         System.out.println("CouponTypeSessionBean : addCouponType");
+        System.out.println("ct id: "+ct.getCouponTypeId());
         em.persist(ct);
         return;
     }

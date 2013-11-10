@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author Administrator
+ * @author Jieqiong
  */
 @Entity
 public class CouponTypeEntity implements Serializable {
@@ -25,6 +25,7 @@ public class CouponTypeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long couponTypeId;
+    private String couponName;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date cpStartDate;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -39,6 +40,16 @@ public class CouponTypeEntity implements Serializable {
     public void setCouponTypeId(Long couponTypeId) {
         this.couponTypeId = couponTypeId;
     }
+
+    public String getCouponName() {
+        return couponName;
+    }
+
+    public void setCouponName(String couponName) {
+        this.couponName = couponName;
+    }
+    
+    
 
     public Date getCpStartDate() {
         return cpStartDate;

@@ -1,11 +1,120 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../Template/generalTemplate.xhtml">
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
 
 
     <ui:define name="content">
-        content
+        <h:form id="formListCouponTypes">
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:fieldset legend="Coupon Type List" toggleable="true" toggleSpeed="500">
+                <h:panelGrid columns="2" cellpadding="10" id="listCouponTypes">
+                    <p:dataTable id="couponTypes" value="#{couponTypesManagedBean.couponTypeSessionBean.allCouponTypes}" 
+                                     var="couponTypeList" paginator="true" rows="5" draggableColumns="true" scrollable="true" 
+                                     resizableColumns="true">
+                        <p:column headerText="Coupon Type Name" style="width:60px;">
+                            <h:outputText value="#{couponTypeList.couponName}"/>
+                        </p:column>
+                        <p:column headerText="Start Date" style="width:60px;">
+                            <h:outputText value="#{couponTypeList.cpStartDate}">
+                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="End Date" style="width:60px;">
+                            <h:outputText value="#{couponTypeList.cpEndDate}">
+                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Coupon Type Remarks" style="width:60px;">
+                            <h:outputText value="#{couponTypeList.couponTypeRemarks}"/>
+                        </p:column>
+                        <p:column headerText="Coupon Type Discount" style="width:60px;">
+                            <h:outputText value="#{couponTypeList.discount}"/>
+                        </p:column> 
+                        
+                        <p:column style="width:100px">  
+                        <h:panelGrid columns="2"    styleClass="actions" cellpadding="2">  
+                            <p:commandButton update=":formListCouponTypes:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                <f:setPropertyActionListener value="#{couponTypeList}" target="#{couponTypesManagedBean.ct}" />  
+                                <f:setPropertyActionListener value="#{true}" target="#{couponTypesManagedBean.editMode}" /> 
+                            </p:commandButton>
+                            <p:commandButton update=":formListCouponTypes:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                <f:setPropertyActionListener value="#{couponTypeList}" target="#{couponTypesManagedBean.ct}" />  
+                            </p:commandButton> 
+                        </h:panelGrid>
+                    </p:column> 
+                        
+                    </p:dataTable>
+                    <p:dialog header="Edit Coupon Types" widgetVar="carDialog" resizable="false" id="carDlg"  
+                          showEffect="fade" hideEffect="explode" width="500">
+                    <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">
+                        <h:outputText value="Coupon Type Name*:" />  
+                        <h:panelGroup>  
+                            <h:outputText value="#{couponTypesManagedBean.ct.couponName}" style="font-weight:bold" rendered="#{!couponTypesManagedBean.editMode}"/>  
+                            <p:inputText id="name"   requiredMessage="Name cannot be empty" value="#{couponTypesManagedBean.ct.couponName}" rendered="#{couponTypesManagedBean.editMode}" required="true" label="Name"/>    
+                        </h:panelGroup>  
+                        <h:outputText value="Start Date*:" />  
+                        <h:panelGroup>
+                            <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="ctStartDate2"  requiredMessage="Start date cannot be empty" value="#{couponTypesManagedBean.ct.cpStartDate}" rendered="#{couponTypesManagedBean.editMode}" required="true" label="Start date"/> 
+                        </h:panelGroup>
+                        <h:outputText value="End Date*:" />  
+                        <h:panelGroup>
+                            <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="ctEndDate2"  requiredMessage="End date cannot be empty" value="#{couponTypesManagedBean.ct.cpEndDate}" rendered="#{couponTypesManagedBean.editMode}" required="true" label="End date"/> 
+                        </h:panelGroup>
+                        <h:outputText value="Coupon Type Remarks:" />  
+                        <h:panelGroup>  
+                            <h:outputText value="#{couponTypesManagedBean.ct.couponTypeRemarks}" style="font-weight:bold" rendered="#{!couponTypesManagedBean.editMode}"/>  
+                            <p:inputText id="remark" value="#{couponTypesManagedBean.ct.couponTypeRemarks}" rendered="#{couponTypesManagedBean.editMode}" label="Remarks"/>    
+                        </h:panelGroup>
+                        <h:outputText value="Coupon Type Discount:" />  
+                        <h:panelGroup>  
+                            <h:outputText value="#{couponTypesManagedBean.ct.discount}" style="font-weight:bold" rendered="#{!couponTypesManagedBean.editMode}"/>  
+                            <p:inputText id="discount" requiredMessage="Discount cannot be empty" value="#{couponTypesManagedBean.ct.discount}" rendered="#{couponTypesManagedBean.editMode}" required="true"  label="Discount"/>    
+                        </h:panelGroup>
+                       
+                        <f:facet name="footer">  
+                            <p:outputPanel rendered="#{couponTypesManagedBean.editMode}" layout="block" style="text-align:right">  
+                                <p:commandButton value="Save" actionListener="#{couponTypesManagedBean.saveChanges}"   
+                                                 oncomplete="carDialog.hide()" icon="ui-icon ui-icon-check" update="couponTypes"/>  
+                                <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" icon="ui-icon ui-icon-close"/>  
+                            </p:outputPanel>  
+                            
+                        </f:facet>              
+                    </h:panelGrid>
+                </p:dialog>
+                    <p:dialog  width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
+                        <br/>
+                        Are you sure?
+                        <br/><br/>
+                        <p:commandButton value="Yes" update="couponTypes" actionListener="#{couponTypesManagedBean.deleteCouponType}" oncomplete="confirmation.hide()">  
+                            <f:attribute name="code1" value="#{couponTypesManagedBean.ct.couponTypeId}" />
+                        </p:commandButton>
+                        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  
+
+                    </p:dialog> 
+                    </h:panelGrid>
+            </p:fieldset>
+            <p:fieldset legend="Add Coupon Type" toggleable="true" toggleSpeed="500" collapsed="true">
+            <h:panelGrid columns="2" cellpadding="10" id="addCouponType">
+                <h:outputText value="Coupon Type Name*: "/>
+                <h:inputText id="ctName" required ="true" requiredMessage="Coupon name cannot be empty" value="#{addCouponTypesManagedBean.ct.couponName}"/>
+                <h:outputText value="Start Date*: "/>
+                <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="ctStartDate" value="#{addCouponTypesManagedBean.ct.cpStartDate}" /> 
+                <h:outputText value="End Date*: "/>
+                <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="ctEndDate" value="#{addCouponTypesManagedBean.ct.cpEndDate}" /> 
+                <h:outputText value="Coupon Type Remarks: "/>
+                <h:inputText id="ctRemarks" value="#{addCouponTypesManagedBean.ct.couponTypeRemarks}"/>
+                <h:outputText value="Coupon Type Discount*: "/>
+                <h:inputText id="ctDiscount" required ="true" requiredMessage="Coupon type discount cannot be empty" value="#{addCouponTypesManagedBean.ct.discount}"/>           
+            </h:panelGrid>
+            <p:commandButton value ="Save" ajax ="true" actionListener = "#{addCouponTypesManagedBean.saveNewCouponType}" update="couponTypes" icon="ui-icon-check"/>    
+        </p:fieldset>
+        <p:commandButton value="List all coupons" actionListener="#{couponTypesManagedBean.listCoupons}" />
+        </h:form>
+
     </ui:define>
 
 </ui:composition>
