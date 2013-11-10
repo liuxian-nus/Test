@@ -8,6 +8,7 @@ import CEMS.entity.EventServiceEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -23,7 +24,7 @@ public class EventServiceSessionBean {
     public EventServiceSessionBean() {
     }
     
-    public List<EventServiceEntity> getAllEventServices() {
+    public List<EventServiceEntity> getAllEventServices() throws NoResultException  {
         Query q = em.createQuery("SELECT m FROM EventServiceEntity m");
         return q.getResultList();
     }
@@ -37,5 +38,18 @@ public class EventServiceSessionBean {
         em.persist(eventService);
         return eventService;
     }
+     
+     public boolean updateService(EventServiceEntity eventService) {
+        em.merge(eventService);
+        return true;
+    }
 
+     public boolean deleteService(Long id) {
+        EventServiceEntity eventService = em.find(EventServiceEntity.class, id);
+        if (eventService == null) {
+            return false;
+        }
+        em.remove(eventService);
+        return true;
+    }
 }

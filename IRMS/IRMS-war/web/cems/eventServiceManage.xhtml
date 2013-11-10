@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="form"> 
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:panel id="search" header="Manage Service" style="height:495px;">
+
+                <p:dataTable id="services" value="#{eventServiceManageManagedBean.allEventServices}" var="services" widgetVar="serviceTable"
+                             resizableColumns="true" emptyMessage="No service found with given criteria">
+
+                    <f:facet name="header">  
+                        <p:outputPanel>  
+                            <h:outputText value="Search all fields:" />  
+                            <p:inputText id="globalFilter" onkeyup="serviceTable.filter();" style="width:150px" />  
+                        </p:outputPanel>  
+                    </f:facet>  
+
+                    <p:column id="nameColumn" filterBy="#{services.serviceName}" headerText="Service Name" filterMatchMode="contains">
+                        <h:outputText value="#{services.serviceName}"/>
+                    </p:column>
+
+                    <p:column id="costColumn" filterBy="#{services.serviceCost}" filterMatchMode="contains" headerText="Service Cost">
+                        <h:outputText value="#{services.serviceCost}"/>
+                    </p:column>
+
+                    <p:column id="categoryColumn" filterBy="#{services.serviceCategory}" filterMatchMode="contains" headerText="Service Category">
+                        <h:outputText value="#{services.serviceCategory}"/>
+                    </p:column>
+
+                    <p:column style="width:100px">  
+                        <h:panelGrid columns="2" styleClass="actions" cellpadding="2">  
+                            <p:commandButton update=":form:display" oncomplete="editVenue.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                <f:setPropertyActionListener value="#{services}" target="#{eventServiceManageManagedBean.selectedEventService}" /> 
+                                <f:setPropertyActionListener value="#{true}" target="#{eventServiceManageManagedBean.editMode}" />
+                            </p:commandButton>  
+                            <p:commandButton update=":form:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
+                                <f:setPropertyActionListener value="#{services}" target="#{eventServiceManageManagedBean.selectedEventService}" />  
+                            </p:commandButton>
+                        </h:panelGrid>  
+                    </p:column> 
+
+                </p:dataTable>
+
+                <p:dialog width="420" showEffect="explode" hideEffect="explode" header="Edit service" widgetVar="editVenue"> 
+                    <h:panelGrid id="display" columns="2" columnClasses="column" cellpadding="5"> 
+                        <h:outputText value="Service Name: " />  
+                        <h:panelGroup>
+                            <h:outputText value="#{eventServiceManageManagedBean.selectedEventService.serviceName}" style="font-weight:bold" rendered="#{!eventServiceManageManagedBean.editMode}"/>  
+                            <p:inputText id="serviceName" required="true" requiredMessage="Service Name cannot be empty" value="#{eventServiceManageManagedBean.selectedEventService.serviceName}" rendered="#{eventServiceManageManagedBean.editMode}"  label="Service Name"/>  
+                            <p:message for="serviceName"/>
+                        </h:panelGroup>
+
+                        <h:outputText value="Service Cost: " />  
+                        <h:panelGroup>
+                            <h:outputText value="#{eventServiceManageManagedBean.selectedEventService.serviceCost}" style="font-weight:bold" rendered="#{!eventServiceManageManagedBean.editMode}"/>  
+                            <p:inputText id="serviceCost" required="true" requiredMessage="Service cost cannot be empty" value="#{eventServiceManageManagedBean.selectedEventService.serviceCost}" rendered="#{eventServiceManageManagedBean.editMode}"  label="Service Cost"/>  
+                            <p:message for="serviceCost"/>
+                        </h:panelGroup>
+
+                        <h:outputText value="Service Category: " />  
+                        <h:panelGroup>
+                            <p:inplace >
+                                <p:selectOneMenu value="#{eventServiceManageManagedBean.selectedEventService.serviceCategory}">
+                                    <f:selectItem itemLabel="Select Category" itemValue=""/>
+                                    <f:selectItem itemLabel="Food and Beverage Services" itemValue="Food and Beverage Services"/>
+                                    <f:selectItem itemLabel="Audio and Video Requirements" itemValue="Audio and Video Requirements"/>
+                                    <f:selectItem itemLabel="Floral and Landscaping Services" itemValue="Floral and Landscaping Services"/>
+                                    <f:selectItem itemLabel="Personnel Services" itemValue="Personnel Services"/>
+                                    <f:selectItem itemLabel="Miscellaneous" itemValue="Miscellaneous"/>
+                                </p:selectOneMenu></p:inplace>
+                                <!--<h:outputText value="#{eventServiceManageManagedBean.selectedEventService.serviceCategory}" style="font-weight:bold" rendered="#{!eventServiceManageManagedBean.editMode}"/>  
+                                <p:inputText id="serviceCategory" required="true" requiredMessage="Service category cannot be empty" value="#{eventServiceManageManagedBean.selectedEventService.serviceCategory}" rendered="#{eventServiceManageManagedBean.editMode}"  label="Service Category"/>  
+                                <p:message for="serviceCategory"/>-->
+                        </h:panelGroup>
+
+                        <f:facet name="footer">
+                            <p:outputPanel rendered="#{eventServiceManageManagedBean.editMode}" layout="block" style="text-align:right">
+                                <p:commandButton value="Save" update ="services" actionListener="#{eventServiceManageManagedBean.saveChanges}"
+                                                 oncomplete="editVenue.hide()" icon="ui-icon ui-icon-check"/>                    
+                                <p:commandButton value="Cancel" onclick="editVenue.hide()" type="button" icon="ui-icon ui-icon-close"/> 
+                            </p:outputPanel>
+                        </f:facet>
+
+                    </h:panelGrid>
+                </p:dialog>  
+
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                    <h:outputText value="Are you sure to delete?"/>
+                    <br/><br/>
+                    <p:commandButton value="Yes" update ="services" actionListener="#{eventServiceManageManagedBean.delete}" oncomplete="confirmation.hide()">  
+                        <f:attribute name="code1" value="#{eventServiceManageManagedBean.selectedEventService.serviceId}" />
+                    </p:commandButton>
+                    <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                </p:dialog>  
+
+            </p:panel>
+        </h:form>  
+    </ui:define>
+
+</ui:composition>
