@@ -29,6 +29,17 @@ public class SMMSServlet extends HttpServlet {
     private OutletSessionBean outletSessionBean;
 
      private List<OutletEntity> LingrieList = null;
+     private List<OutletEntity> AccessoriesList = null;
+     private List<OutletEntity> BanksList = null;
+     private List<OutletEntity> ChildrensList = null;
+     private List<OutletEntity> ElectronicsList = null;
+     private List<OutletEntity> HandbagsList = null;
+     private List<OutletEntity> JewelryList = null;
+     private List<OutletEntity> LifestyleList = null;
+     private List<OutletEntity> MensList = null;
+     private List<OutletEntity> SportsList = null;
+     private List<OutletEntity> WatchesList = null;
+     private List<OutletEntity> WomensList = null;
 
     //private String keyword=null;
 
@@ -67,8 +78,30 @@ public class SMMSServlet extends HttpServlet {
                 System.out.println("***shopping***");
  
                 LingrieList =outletSessionBean.getOutletsByType("Lingerie");
-                System.out.println(outletSessionBean.getOutletsByType("Lingerie"));
                 request.setAttribute("LingrieList",LingrieList);
+                LingrieList =outletSessionBean.getOutletsByType("Accessories");
+                request.setAttribute("AccessoriesList",AccessoriesList);
+                LingrieList =outletSessionBean.getOutletsByType("Banks");
+                request.setAttribute("BanksList",BanksList);
+                LingrieList =outletSessionBean.getOutletsByType("Childrens");
+                request.setAttribute("ChildrensList",ChildrensList);
+                LingrieList =outletSessionBean.getOutletsByType("Electronics");
+                request.setAttribute("ElectronicsList",ElectronicsList);
+                LingrieList =outletSessionBean.getOutletsByType("Handbags");
+                request.setAttribute("HandbagsList",HandbagsList);
+                LingrieList =outletSessionBean.getOutletsByType("Jewelry");
+                request.setAttribute("JewelryList",JewelryList);
+                LingrieList =outletSessionBean.getOutletsByType("Lifestyle");
+                request.setAttribute("LifestyleList",LifestyleList);
+                LingrieList =outletSessionBean.getOutletsByType("Mens");
+                request.setAttribute("MensList",MensList);
+                LingrieList =outletSessionBean.getOutletsByType("Sports");
+                request.setAttribute("SportsList",SportsList);
+                LingrieList =outletSessionBean.getOutletsByType("Watches");
+                request.setAttribute("WatchesList",WatchesList);
+                LingrieList =outletSessionBean.getOutletsByType("Womens");
+                request.setAttribute("WomensList",WomensList);
+        
                 request.getRequestDispatcher("/shopping.jsp").forward(request, response);
             } 
         } catch (Exception e) {
