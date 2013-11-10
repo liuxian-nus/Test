@@ -49,7 +49,7 @@ public class AddEventServiceManagedBean {
     public void init(PhaseEvent event) {
         eventBooking = new EventBookingEntity();
         eventBooking = (EventBookingEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("eventService");
-        System.err.println("eventBooking: ...: "+eventBooking.getId());
+//        System.err.println("eventBooking: ...: "+eventBooking.getId());
         doThis();
     }
 
@@ -72,13 +72,13 @@ public class AddEventServiceManagedBean {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         eventBooking = new EventBookingEntity();
         eventBooking = (EventBookingEntity) request.getSession().getAttribute("eventBooking");
-        System.err.println("eventBooking: "+eventBooking.getId());
+//        System.err.println("eventBooking: "+eventBooking.getId());
         eventServiceBooking =  new EventServiceBookingEntity();
         eventServiceBooking.setEventBooking(eventBooking);
         eventServiceBooking.setEventService(eventServiceSessionBean.getEventServiceById(serviceId));
-        System.err.println("eventService: "+eventServiceSessionBean.getEventServiceById(serviceId).getServiceName());
+//        System.err.println("eventService: "+eventServiceSessionBean.getEventServiceById(serviceId).getServiceName());
         eventServiceBooking.setEventServiceQuantity(serviceQuantity);
-        System.err.println("serviceQuantity: "+serviceQuantity);
+//        System.err.println("serviceQuantity: "+serviceQuantity);
         eventServiceBookingSessionBean.addEventServiceBooking(eventServiceBooking);
         FacesContext.getCurrentInstance().getExternalContext().redirect("eventService.xhtml");
     }

@@ -47,7 +47,7 @@
                             <p:selectOneMenu value="#{addEventServiceManagedBean.serviceId}">  
                                 <f:selectItem itemLabel="Select Service" itemValue=""/>
                                 <f:selectItems value="#{addEventServiceManagedBean.allEventServices}"  
-                                               var="allES" itemLabel="#{allES.serviceName}" 
+                                               var="allES" itemLabel="#{allES.serviceCategory}: #{allES.serviceName}" 
                                                itemValue="#{allES.serviceId}" />  
                             </p:selectOneMenu>
 

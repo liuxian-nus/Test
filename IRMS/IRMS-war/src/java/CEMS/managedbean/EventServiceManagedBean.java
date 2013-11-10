@@ -47,6 +47,7 @@ public class EventServiceManagedBean {
 //        System.err.println("userId: "+userId);
         eventBookingList = new ArrayList<EventBookingEntity>();
         eventBookingList = eventBookingSessionBean.getManagerEvent(userId);
+//        System.err.println("getAllEventBookings: "+ eventBookingList.size());
         return eventBookingList;
     }
     
