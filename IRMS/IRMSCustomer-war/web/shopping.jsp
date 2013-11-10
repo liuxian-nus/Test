@@ -46,7 +46,7 @@
                                 <c:forEach items="${AccessoriesList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -65,7 +65,7 @@
                                 <c:forEach items="${BanksList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -85,7 +85,7 @@
                                 <c:forEach items="${ChildrensList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -104,7 +104,7 @@
                                 <c:forEach items="${ElectronicsList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -124,7 +124,7 @@
                                 <c:forEach items="${HandbagsList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -143,7 +143,7 @@
                                 <c:forEach items="${JewelryList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -162,7 +162,7 @@
                                 <c:forEach items="${LifestyleList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -182,7 +182,7 @@
                                 <c:forEach items="${LingrieList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -202,7 +202,7 @@
                                 <c:forEach items="${MensList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -221,7 +221,7 @@
                                 <c:forEach items="${SportsList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -240,7 +240,7 @@
                                 <c:forEach items="${WatchesList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -259,7 +259,7 @@
                                 <c:forEach items="${WomensList}" var="data">
                                     <tr>
                                         <td width="800">&nbsp${data.outletName}</td>
-                                        <td width="200">&nbsp${data.outletId}</td>
+                                        <td width="200">&nbsp${data.outletLevel}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
