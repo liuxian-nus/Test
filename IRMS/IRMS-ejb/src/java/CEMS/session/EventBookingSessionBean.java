@@ -58,16 +58,19 @@ public class EventBookingSessionBean {
         bookingList = new ArrayList<EventBookingEntity>();
         bookingList = q.getResultList();
         Iterator<EventBookingEntity> itr = bookingList.iterator();
-        eventBooking = new EventBookingEntity();
         eventBookings = new ArrayList<EventBookingEntity>();
         while (itr.hasNext()) {
+            eventBooking = new EventBookingEntity();
             eventBooking = itr.next();
-//            System.err.println("Compare:"+eventBooking.getEvent().getEventManagerId());
-            if (eventBooking.getEvent().getStatus().equalsIgnoreCase("confirmed") && eventBooking.getEvent().getEventManagerId()!= null && eventBooking.getEvent().getEventManagerId().equals(userId)) {
+//            System.err.println("Compare:" + eventBooking.getEvent().getStatus() + eventBooking.getEvent().getEventManagerId() + eventBooking.getEvent().getEventId());
+            if ((eventBooking.getEvent().getStatus().equalsIgnoreCase("Confirmed")) && (eventBooking.getEvent().getEventManagerId() != null) && (eventBooking.getEvent().getEventManagerId().equals(userId))) {
                 eventBookings.add(eventBooking);
+//                System.err.println("Count: "+eventBookings.size());
+//                System.err.println("getManagerEvent: " + eventBooking.getEvent().getStatus() + eventBooking.getEvent().getEventManagerId() + eventBooking.getEvent().getEventId());
             }
         }
-        return bookingList;
+//        System.out.println("Count2:"+eventBookings.size());
+        return eventBookings;
     }
 
     public EventBookingEntity addEventBooking(EventBookingEntity eventBooking) {
