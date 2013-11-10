@@ -23,7 +23,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class OutletSessionBean {
+public class OutletSessionBean implements OutletSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -37,6 +37,7 @@ public class OutletSessionBean {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public boolean updateOutlet(OutletEntity outlet) {
         em.merge(outlet);
         System.out.println("OutletSessionBean: outlet " + outlet.getOutletName() + " is successfully updated");
@@ -44,12 +45,14 @@ public class OutletSessionBean {
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public OutletEntity addOutlet(OutletEntity outlet) {
         em.persist(outlet);
         System.out.println("OutletSessionBean: outlet " + outlet.getOutletId() + " is successfully added");
         return outlet;
     }
     
+    @Override
     public OutletTransactionEntity addOutletTransaction(Long otransactionId, String outletId) throws ExistException {
         otransaction = em.find(OutletTransactionEntity.class, otransactionId);
         thisOutlet = em.find(OutletEntity.class, outletId);
@@ -71,6 +74,7 @@ public class OutletSessionBean {
 //        em.remove(outlet);
 //    }
 
+    @Override
     public List<OutletEntity> getAllOutlets() {
         Query q = em.createQuery("SELECT m FROM OutletEntity m");
         List OutletList = new ArrayList<OutletEntity>();
@@ -81,6 +85,7 @@ public class OutletSessionBean {
         return OutletList;
     }
 
+    @Override
     public List<OutletEntity> getAvailableOutlets() {
         System.err.println("in getAvailableoutlet session bean");
         Query q = em.createQuery("SELECT m FROM OutletEntity m");
@@ -96,6 +101,7 @@ public class OutletSessionBean {
     }
     
     
+    @Override
      public List<OutletEntity> getUnavailableOutlets() {
         System.err.println("in getAvailableoutlet session bean");
         Query q = em.createQuery("SELECT m FROM OutletEntity m");
@@ -110,6 +116,7 @@ public class OutletSessionBean {
         return OutletList;
     }
     
+    @Override
     public OutletEntity getOutletById(int id) throws ExistException {
         System.err.println("in get outlet by id sessionbean");
         OutletEntity thisOutlet = em.find(OutletEntity.class, id);
@@ -119,6 +126,7 @@ public class OutletSessionBean {
         return thisOutlet;
     }
     
+    @Override
      public List<OutletEntity> getOutletsByType(String type) {
         System.err.println("in get outlet by merchant session bean");
         Query q = em.createQuery("SELECT m FROM OutletEntity m where m.outletStatus='unavailable'");
@@ -133,6 +141,7 @@ public class OutletSessionBean {
         return OutletList;
     }
     
+    @Override
     public List<OutletEntity> getOutletsByMerchant(String merchantEmail) {
         System.err.println("in get outlet by merchant session bean");
         Query q = em.createQuery("SELECT m FROM OutletEntity m where m.outletStatus='unavailable'");
@@ -147,6 +156,7 @@ public class OutletSessionBean {
         return OutletList;
     }
     
+    @Override
     public List<OutletTransactionEntity> getTransactions(int outletId) {
         System.err.println("in get transactions session bean");
         Query q = em.createQuery("SELECT m FROM OutletTransactionEntity m");
@@ -161,6 +171,7 @@ public class OutletSessionBean {
         return OutletList;
     }
 
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
