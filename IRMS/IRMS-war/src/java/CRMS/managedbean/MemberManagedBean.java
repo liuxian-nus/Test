@@ -58,7 +58,7 @@ public class MemberManagedBean {
     public MemberManagedBean() {
     }
 
-   // @PostConstruct
+    @PostConstruct
     public void init() throws ExistException {
         memberList = memberSessionBean.getAllMembers();
         nationalityList = memberSessionBean.getAllNationalities();

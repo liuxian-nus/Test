@@ -12,8 +12,6 @@ import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -54,22 +52,15 @@ public class ManageEventManagedBean {
         selectedEvent = new EventEntity();
     }
 
-  //  @PostConstruct
-    public void init() {
-                try {
-            // -- do stuff
-        
+    @PostConstruct
+    public void init() throws ExistException {
         events = eventSessionBean.getAllEvents();
         pendingEvents = eventSessionBean.getPendingEvents();
         reservedEvents = eventSessionBean.getReservedEvents();
         confirmedEvents = eventSessionBean.getConfirmedEvents();
         canceledEvents = eventSessionBean.getCanceledEvents();
-        } catch (Throwable e) {
-      
-            throw new RuntimeException(e);
-        }
+        managers = employeeSessionBean.getCEMSEvent();
     }
-  
 
     static {
         eventStatus = new String[2];
