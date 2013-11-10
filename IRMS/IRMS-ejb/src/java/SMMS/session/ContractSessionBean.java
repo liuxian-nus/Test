@@ -25,7 +25,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class ContractSessionBean {
+public class ContractSessionBean implements ContractSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -37,11 +37,13 @@ public class ContractSessionBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public ContractEntity addContract(ContractEntity contract) {
         em.persist(contract);
         System.err.println("No3: In contractsessionbean adding contract: ");
@@ -50,6 +52,7 @@ public class ContractSessionBean {
 
     //add new contractEvent
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public ContracteventEntity addContractevent(Long contractId, Long cevent) throws ExistException {
         contract = em.find(ContractEntity.class, contractId);
         newevent = em.find(ContracteventEntity.class, cevent);
@@ -62,6 +65,7 @@ public class ContractSessionBean {
         return newevent;
     }
 
+    @Override
     public void removeContract(ContractEntity contract) throws ExistException {
         if (contract == null) {
             throw new ExistException("contract doesn't exist!");
@@ -70,6 +74,7 @@ public class ContractSessionBean {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public boolean updateContract(ContractEntity contract) throws ExistException {
         if ((contract.getStatus() != "new") || (contract.getStatus() != "rejected")) {
             throw new ExistException("contract cannot be updated because it has been approved!");
@@ -78,6 +83,7 @@ public class ContractSessionBean {
         return true;
     }
 
+    @Override
     public List<ContractEntity> getContractByMerchant(String merchantEmail) {
         System.err.println("in get contract by merchant session bean");
         Query q = em.createQuery("SELECT m FROM ContractEntity m");
@@ -92,6 +98,7 @@ public class ContractSessionBean {
         return OutletList;
     }
 
+    @Override
     public ContractEntity getContractByOutlet(int outletId) {
         System.err.println("in get contract by outlet session bean");
         Query q = em.createQuery("SELECT m FROM ContractEntity m WHERE m.outlet.outletId = '" + outletId + "'");
@@ -100,6 +107,7 @@ public class ContractSessionBean {
         return select;
     }
 
+    @Override
     public ContractEntity getContractById(Long contractId) throws ExistException {
         contract = em.find(ContractEntity.class, contractId);
         if (contract == null) {
@@ -108,6 +116,7 @@ public class ContractSessionBean {
         return contract;
     }
 
+    @Override
     public List<ContractEntity> getAllContracts() {
         Query q = em.createQuery("SELECT m FROM ContractEntity m");
         List ContractList = new ArrayList<ContractEntity>();
@@ -118,11 +127,13 @@ public class ContractSessionBean {
         return ContractList;
     }
 
+    @Override
     public int getSize(ContractEntity newct) {
 
         return newct.getContractEvent().size();
     }
 
+    @Override
     public List<ContractEntity> getNewRequestContract() {
         System.err.println("in get new request contract session bean");
         Query q = em.createQuery("SELECT m FROM ContractEntity m");
@@ -137,6 +148,7 @@ public class ContractSessionBean {
         return TransactionList;
     }
 
+    @Override
     public List<ContractEntity> getRenewRequestContract() {
         System.err.println("in get new request contract session bean");
         Query q = em.createQuery("SELECT m FROM ContractEntity m");
@@ -151,6 +163,7 @@ public class ContractSessionBean {
         return TransactionList;
     }
 
+    @Override
     public List<ContractEntity> getEarlyTerminationRequestContract() {
         System.err.println("in get new request contract session bean");
         Query q = em.createQuery("SELECT m FROM ContractEntity m");
