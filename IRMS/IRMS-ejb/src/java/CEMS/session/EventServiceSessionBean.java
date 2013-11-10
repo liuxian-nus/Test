@@ -32,5 +32,10 @@ public class EventServiceSessionBean {
         EventServiceEntity eventService = em.find(EventServiceEntity.class, serviceId);
         return eventService;
     }
+    
+     public EventServiceEntity addEventService(EventServiceEntity eventService) {
+        em.persist(eventService);
+        return eventService;
+    }
 
 }

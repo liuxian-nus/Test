@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="addServiceForm">
+            <p:growl id="addServiceMsg" showDetail="true" sticky="true"/>
+            <p:panel id="addServicePanel" header="Add Service">
+                <h:panelGrid id="addServiceGrid" columns="2">
+
+                    <h:outputText value="Service Name: " />
+                    <h:inputText required="true" requiredMessage="Service name cannot be empty" value="#{eventServiceCreateManagedBean.selectedEventService.serviceName}" style="margin-bottom:10px;"/>
+                    <h:outputText value=""/><br/>
+
+                    <h:outputText value="Service Category: " />
+                    <p:selectOneMenu value="#{eventServiceCreateManagedBean.selectedEventService.serviceCategory}">
+                        <f:selectItem itemLabel="Select Category" itemValue=""/>
+                        <f:selectItem itemLabel="Food and Beverage Services" itemValue="Food and Beverage Services"/>
+                        <f:selectItem itemLabel="Audio and Video Requirements" itemValue="Audio and Video Requirements"/>
+                        <f:selectItem itemLabel="Floral and Landscaping Services" itemValue="Floral and Landscaping Services"/>
+                        <f:selectItem itemLabel="Personnel Services" itemValue="Personnel Services"/>
+                        <f:selectItem itemLabel="Miscellaneous" itemValue="Miscellaneous"/>
+                    </p:selectOneMenu>
+                    <h:outputText value=""/><br/>
+
+                    <h:outputText value="Service Cost: " />
+                    <h:inputText required="true" requiredMessage="Service category cannot be empty" value="#{eventServiceCreateManagedBean.selectedEventService.serviceCost}" style="margin-bottom:10px;">
+                        <f:convertNumber type="number" />
+                    </h:inputText>
+                    <h:outputText value="(Per hour rate for venue overtime)"/><br/>
+
+                    <p:commandButton value="Save" ajax="true" actionListener="#{eventServiceCreateManagedBean.saveNew}" update="addServiceMsg"/>
+
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
