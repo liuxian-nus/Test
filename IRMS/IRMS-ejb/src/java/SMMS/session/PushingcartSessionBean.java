@@ -23,7 +23,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class PushingcartSessionBean {
+public class PushingcartSessionBean implements PushingcartSessionBeanRemote {
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     
@@ -35,16 +35,19 @@ public class PushingcartSessionBean {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public PushingcartEntity addPushingcart(PushingcartEntity pushingcart) {
         em.persist(pushingcart);
         return pushingcart;
     }
 
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public boolean updatePushingcart(PushingcartEntity pushingcart)
     {
         em.merge(pushingcart);
@@ -53,6 +56,7 @@ public class PushingcartSessionBean {
     }
     
      @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public boolean removePushingcart(Long pushingcartId) throws ExistException {
         pushingcart = em.find(PushingcartEntity.class, pushingcartId);
         if (pushingcart != null) {
@@ -66,11 +70,13 @@ public class PushingcartSessionBean {
     }
      
      @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public void remove(PushingcartEntity pushingcart) throws ExistException {
         if(pushingcart==null) throw new ExistException ("Pushingcart doesn't exist!");
         em.remove(pushingcart);
     }
      
+    @Override
     public List<PushingcartEntity> getAllPushingcarts(){
         Query q = em.createQuery("SELECT m FROM PushingcartEntity m");
         List PushingcartList = new ArrayList<PushingcartEntity>();
@@ -83,6 +89,7 @@ public class PushingcartSessionBean {
      
      
      @Remove
+    @Override
     public void remove() {
         System.out.println("PushingcartManagerBean: remove()");
     }
