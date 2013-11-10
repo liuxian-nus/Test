@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.XmlType;
 public class FeedbackEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long feedbackId;
     private String feedbackContent;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private MemberEntity feedbackOwner;
     private String feedbackOwnerEmail;
     private String feedbackStatus; //New, In Progress, Handled

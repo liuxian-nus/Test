@@ -47,6 +47,7 @@ public class FeedbackSessionBean {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void createFeedback(String content, String title, String email, String department, Date feedbackSentDate, int rating) {
         System.out.println("FeedbackSessionBean: createFeedback");
+        System.out.println(feedback);
         feedback.setFeedbackContent(content);
         feedback.setFeedbackTitle(title);
         feedback.setFeedbackDepartment(department);
@@ -60,6 +61,7 @@ public class FeedbackSessionBean {
             feedback.setFeedbackOwner(member);
         }
         em.persist(feedback);
+        System.out.println(feedback);
         System.out.println("feedback created!");
     }
 
