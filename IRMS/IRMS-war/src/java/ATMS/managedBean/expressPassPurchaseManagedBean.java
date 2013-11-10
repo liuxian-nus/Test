@@ -13,10 +13,12 @@ import ATMS.session.ExpressPassPurchaseSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.session.MemberSessionBean;
+import CRMS.session.MemberTransactionSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -33,6 +35,8 @@ import javax.faces.event.ActionEvent;
 @ViewScoped
 public class expressPassPurchaseManagedBean {
     @EJB
+    private MemberTransactionSessionBean memberTransactionSessionBean;
+    @EJB
     private ExpressPassPurchaseSessionBean expressPassPurchaseSessionBean;
     @EJB
     private AttrExpressPassSessionBean attrExpressPassSessionBean;
@@ -41,6 +45,7 @@ public class expressPassPurchaseManagedBean {
     @EJB
     private MemberSessionBean memberSessionBean;
     
+    
     private ExpressPassPurchaseEntity epp=new ExpressPassPurchaseEntity();
     private Long epId;
     private AttrExpressPassEntity ep;
@@ -48,6 +53,7 @@ public class expressPassPurchaseManagedBean {
     private double fee=0.0;
     private int restQuota;
     private String memberEmail;
+    private MemberEntity member;
     private MemberTransactionEntity mt;
     
     @PostConstruct
@@ -90,17 +96,119 @@ public class expressPassPurchaseManagedBean {
             System.out.println("fee: "+fee);
             epp.setEpFee(fee);
             System.out.println("fee set!");
-            boolean isMember=addMember();
             epp.setEppStatus("Purchased");
             System.out.println("purchase status set to purchased");
             expressPassPurchaseSessionBean.addEPPurchase(epp);
             System.out.println("ticket purchase successful");
+            if (member != null) {
+                System.out.println("member exist");
+                addMemberExpressPassPurchase();
+                mt = new MemberTransactionEntity();
+                memberTransactionSessionBean.addPoint(member, fee);
+                memberTransactionSessionBean.addCoin(member, fee);
+                memberTransactionSessionBean.updateVIP(member);
+                mt.setMtAmount(fee);
+                mt.setMtDepartment("Attraction");
+                mt.setMtMode(true);
+                mt.setPaymentStatus(true);
+                mt.setMemberEmail(memberEmail);
+                String description = member.getMemberName() + ": Your purchase of attraction ticket at this date with a total expense of: " + fee;
+                mt.setMtDescription(description);
+                mt = memberTransactionSessionBean.addMemberTransaction(mt);
+                System.out.println("member transaction added");
+                Set<MemberTransactionEntity> allMTs = member.getMemberTransactions();
+                allMTs.add(mt);
+                member.setMemberTransactions(allMTs);
+                memberSessionBean.updateMember(member);
+                System.out.println("member updated");
+            }
         }catch (Exception e){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when purchase express pass", ""));
             return;
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Express pass purchased.", ""));
         epp=new ExpressPassPurchaseEntity();
+    }
+    
+    public void purchaseExpressPassWithCoin(ActionEvent event) throws IOException {
+        try {
+            System.out.println("expressPassPurchaseManagedBean : purchaseEP");
+            System.out.println("epId:"+epId);
+            ep=attrExpressPassSessionBean.getEPById(epId);
+            System.out.println("ep set!");  
+            if(member==null){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "You must be a member to pay by coins", ""));
+                return;
+            }
+            else{
+                Boolean enoughCoin=memberTransactionSessionBean.checkCoinAmount(member,fee);
+                if(!enoughCoin){
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Coin is not enough to make this purchase", ""));
+                    return;
+                }
+                else{
+                    List<Integer> qty = new ArrayList<Integer>();
+                    System.out.println("qty instantiated");
+                    qty = epp.getEpQuantities();
+                    System.out.println("get tp quantity");
+                    System.out.println("qty size: " + qty.size());
+                    qty.add(quantity);
+                    System.out.println("qty size: " + qty.size());
+                    epp.setEpQuantities(qty);
+                    System.out.println("tp qty set!");
+                    System.out.println("quantity: " + epp.getEpQuantities().get(0));
+                    System.out.println("quantity successfully added");
+                    List<AttrExpressPassEntity> eps = new ArrayList<AttrExpressPassEntity>();
+                    eps = epp.getAttrEPs();
+                    eps.add(ep);
+                    epp.setAttrEPs(eps);
+                    System.out.println("ep: " + epp.getAttrEPs().get(0).getAttrEPName());
+                    System.out.println("ep successfully added");
+                    System.out.println("fee: " + fee);
+                    epp.setEpFee(fee);
+                    System.out.println("fee set!");
+                    epp.setEppStatus("Purchased");
+                    System.out.println("purchase status set to purchased");
+                    expressPassPurchaseSessionBean.addEPPurchase(epp);
+                    System.out.println("ticket purchase successful");
+                    addMemberExpressPassPurchase();
+                    memberTransactionSessionBean.payByCoin(member,fee);
+                    System.out.println("pay by coin successful");
+                    mt = new MemberTransactionEntity();
+                    mt.setMtAmount(fee);
+                    mt.setMtDepartment("Attraction");
+                    mt.setMtMode(true);
+                    mt.setPaymentStatus(true);
+                    mt.setMemberEmail(memberEmail);
+                    String description = member.getMemberName() + ": Your purchase of attraction ticket at this date with a total expense of: " + fee;
+                    mt.setMtDescription(description);
+                    mt = memberTransactionSessionBean.addMemberTransaction(mt);
+                    System.out.println("member transaction added");
+                    Set<MemberTransactionEntity> allMTs = member.getMemberTransactions();
+                    allMTs.add(mt);
+                    member.setMemberTransactions(allMTs);
+                    memberSessionBean.updateMember(member);
+                    System.out.println("member updated");
+                }    
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when purchase ticket", ""));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ticket purchased.", ""));
+        epp = new ExpressPassPurchaseEntity();
+        member=new MemberEntity();
+        mt=new MemberTransactionEntity();
+    }
+
+    
+    
+    public void addMemberExpressPassPurchase() {
+        System.out.println("epPurchaseManagedBean : addMemberTransaction");
+        epp.setMember(member);
+        expressPassPurchaseSessionBean.updateEPPurchase(epp);
+        memberSessionBean.updateMemberExpressPassPurchase(member, epp);
+        System.out.println("ticket purchase and member cross set!");
     }
     
     public boolean addMember() {
@@ -139,7 +247,7 @@ public class expressPassPurchaseManagedBean {
         System.out.println("check member..");
         if (memberEmail != null) {
             System.out.println("email entered");
-            MemberEntity member = memberSessionBean.getMemberByEmail(memberEmail);
+            member = memberSessionBean.getMemberByEmail(memberEmail);
             if (member == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Member email not valid", ""));
             } else {

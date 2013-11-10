@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-        <p:panel id="EPPurchase" header="Purchase Express Pass" style="height:495px;">
+        <p:panel id="EPPurchase" header="Purchase Ticket" style="height:495px;">
                 <h:form id="purchaseTicket">
                     <p:growl id="growl1" showDetail="true" sticky="true" /> 
                    
@@ -38,8 +38,10 @@
                         <p:commandButton value ="Check quota" ajax ="true" actionListener="#{ticketPurchaseManagedBean.checkQuota}" update="restQuota1" onclick="growl"/>
                         <p:commandButton value ="Calculate fee" ajax ="true" actionListener="#{ticketPurchaseManagedBean.checkFee}" update="fee1" onclick="growl"/>
                         <p:commandButton value ="Check member" ajax ="true" actionListener="#{ticketPurchaseManagedBean.checkMember}" onclick="growl"/>
+   
                         <br/>
-                        <p:commandButton value ="Save" ajax ="true" actionListener = "#{ticketPurchaseManagedBean.purchaseTicket}" update="growl1" icon="ui-icon-check"/>
+                        <p:commandButton value ="Purchase Directly" ajax ="true" actionListener = "#{ticketPurchaseManagedBean.purchaseTicket}" update="growl1" icon="ui-icon-check"/>
+                        <p:commandButton value ="Purchase With Coin" ajax ="true" actionListener = "#{ticketPurchaseManagedBean.purchaseTicketWithCoin}" update="growl1" icon="ui-icon-check"/>
                         <p:commandButton value="Purchase more ticket" actionListener="#{ticketPurchaseManagedBean.oneMore}" />
                 </h:form>    
             </p:panel>
