@@ -51,6 +51,10 @@
                             <p:column headerText="Contact Number">
                                 <h:outputText value="#{eventList.eventContact}"/>
                             </p:column>
+                            
+                            <p:column headerText="Deposit">
+                                <h:outputText value="#{eventList.deposit}"/>
+                            </p:column>
 
                             <p:rowExpansion>
                                 <p:panel id="eventDetail" header="Event Details">
@@ -101,15 +105,35 @@
                                 </p:cellEditor>  
                             </p:column>  
 
-                            <p:column style="width:50px">  
+                            <p:column style="width:100px">  
                                 <h:panelGrid columns="2" styleClass="actions" cellpadding="1">  
+                                    <p:commandButton update="events" oncomplete="deposit.show()" icon="ui-icon ui-icon-pencil" title="Edit">  
+                                        <f:setPropertyActionListener value="#{eventList}" target="#{manageEventManagedBean.selectedEvent}" />  
+                                    </p:commandButton>
                                     <p:commandButton update="events" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
                                         <f:setPropertyActionListener value="#{eventList}" target="#{manageEventManagedBean.selectedEvent}" />  
                                     </p:commandButton>  
                                 </h:panelGrid>  
                             </p:column>  
 
-                        </p:dataTable>  
+                        </p:dataTable> 
+
+                        <p:dialog showEffect="explode" hideEffect="explode" header="Event Deposit" widgetVar="deposit">
+                            <h:panelGrid columns="2" cellpadding="4" style="margin:0 auto;"> 
+                                
+                                <h:outputText value="Event Deposit Paid: "/> 
+                                
+                                <h:panelGroup>
+                                    <h:inputText value="#{manageEventManagedBean.selectedEvent.deposit}"/>
+                                </h:panelGroup>
+
+                                <p:outputPanel layout="block" style="text-align:left;">  
+                                    <p:commandButton value="Save" update="events" actionListener="#{manageEventManagedBean.saveDeposit}" oncomplete="deposit.hide()"/>
+                                    <p:commandButton value="Cancel" onclick="deposit.hide();" type="button" />  
+                                </p:outputPanel>
+
+                            </h:panelGrid>  
+                        </p:dialog>
 
                         <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">  
                             <br/>
@@ -263,7 +287,7 @@
                             <p:column headerText="Contact Number">
                                 <h:outputText value="#{eventList.eventContact}"/>
                             </p:column>
-                            
+
                             <p:column headerText="Employee ID">
                                 <h:outputText value="#{eventList.eventManagerId}"/>
                             </p:column>

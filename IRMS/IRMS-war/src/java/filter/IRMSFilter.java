@@ -212,7 +212,7 @@ public class IRMSFilter implements Filter {
                 return true;
             }
         } else if (userType.contains("CEMSEvent")) {
-            if (path.contains("cems")) {
+            if (path.contains("cems/eventService")) {
                 return true;
             }
         } else if (userType.contains("CEMSAdmin")) {

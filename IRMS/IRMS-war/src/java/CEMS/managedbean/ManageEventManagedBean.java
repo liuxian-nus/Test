@@ -90,6 +90,11 @@ public class ManageEventManagedBean {
 //        System.err.println("id: " + getId());
         eventSessionBean.deleteEvent(getId());
     }
+    
+    public void saveDeposit(ActionEvent event){
+        System.err.println("Deposit: "+selectedEvent.getDeposit());
+        eventSessionBean.updateEvent(selectedEvent);
+    }
 
     public void onCellEdit(CellEditEvent event) throws IOException {
 //        System.err.println("onCellEdit Now");

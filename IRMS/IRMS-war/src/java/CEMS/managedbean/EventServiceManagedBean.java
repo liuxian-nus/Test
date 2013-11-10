@@ -54,7 +54,7 @@ public class EventServiceManagedBean {
     public void addService(ActionEvent event) throws IOException{
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("eventService", selectedEventBooking);
 //        System.err.println("add service: "+selectedEventBooking.getId());
-        FacesContext.getCurrentInstance().getExternalContext().redirect("addEventService.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("eventServiceAdd.xhtml");
     }
 
     public EventBookingSessionBean getEventBookingSessionBean() {
