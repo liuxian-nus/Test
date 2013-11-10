@@ -23,9 +23,9 @@ public class EventServiceBookingEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long eventBookingId;
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne(cascade={CascadeType.MERGE})
     private EventBookingEntity eventBooking;
-    @OneToOne(cascade={CascadeType.ALL})
+    @OneToOne(cascade={CascadeType.MERGE})
     private EventServiceEntity eventService;
     
     private int eventServiceQuantity;

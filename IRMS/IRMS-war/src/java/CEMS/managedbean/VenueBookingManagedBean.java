@@ -58,7 +58,7 @@ public class VenueBookingManagedBean implements Serializable {
     private SelectItem[] createFilterOptions(List<String> functions) {
         SelectItem[] options = new SelectItem[functions.size() + 1];
 
-        System.err.println("Creating filter options");
+//        System.err.println("Creating filter options");
         options[0] = new SelectItem("", "Select");
         for (int i = 0; i < functions.size(); i++) {
             options[i + 1] = new SelectItem(functions.get(i), functions.get(i));
@@ -68,7 +68,7 @@ public class VenueBookingManagedBean implements Serializable {
     
     public void checkSchedule(ActionEvent event) throws IOException{
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("venue", selectedVenue);
-        System.err.println("check schedule: "+selectedVenue.getVenueName());
+//        System.err.println("check schedule: "+selectedVenue.getVenueName());
         FacesContext.getCurrentInstance().getExternalContext().redirect("venueSchedule.xhtml");
     }
 

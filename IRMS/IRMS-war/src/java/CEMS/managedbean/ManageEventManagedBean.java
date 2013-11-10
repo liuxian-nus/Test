@@ -87,22 +87,22 @@ public class ManageEventManagedBean {
 
     public void deleteEvent(ActionEvent event) {
         setId((Long) event.getComponent().getAttributes().get("code1"));
-        System.err.println("id: " + getId());
+//        System.err.println("id: " + getId());
         eventSessionBean.deleteEvent(getId());
     }
 
     public void onCellEdit(CellEditEvent event) throws IOException {
-        System.err.println("onCellEdit Now");
+//        System.err.println("onCellEdit Now");
         Object oldValue = event.getOldValue();
         Object newValue = event.getNewValue();
 
-        System.err.println("old: " + oldValue);
-        System.err.println("new: " + newValue);
-        System.err.println("Selected event: " + selectedEvent);
+//        System.err.println("old: " + oldValue);
+//        System.err.println("new: " + newValue);
+//        System.err.println("Selected event: " + selectedEvent);
 
         if (newValue != null && !newValue.equals(oldValue)) {
             selectedEvent.setStatus((String) newValue);
-            System.err.println("event: " + selectedEvent.getEventName());
+//            System.err.println("event: " + selectedEvent.getEventName());
             eventSessionBean.updateEvent(selectedEvent);
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Status Changed", "Previously: " + oldValue + ", Now:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);

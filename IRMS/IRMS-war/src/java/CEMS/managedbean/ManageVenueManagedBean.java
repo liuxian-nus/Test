@@ -57,13 +57,13 @@ public class ManageVenueManagedBean {
         Long id;
         id = Long.valueOf(selectedFunc.get(i));
         selectedVenue.getVenueFunction().add(venueFunctionSessionBean.getVenueFunctionById(id));
-        System.out.println(selectedFunc.get(i));
+//        System.out.println(selectedFunc.get(i));
 
         while (i < (selectedFunc.size() - 1)) {
             i++;
             id = Long.valueOf(selectedFunc.get(i));
             selectedVenue.getVenueFunction().add(venueFunctionSessionBean.getVenueFunctionById(id));
-            System.out.println(selectedFunc.get(i));
+//            System.out.println(selectedFunc.get(i));
         }
     }
 
@@ -79,7 +79,7 @@ public class ManageVenueManagedBean {
         while (i < func.size()) {
             sb.append(func.get(i).getFunctionName());
             sb.append(";");
-            System.out.println(func.get(i).getFunctionName());
+//            System.out.println(func.get(i).getFunctionName());
             i++;
         }
         output = sb.toString();

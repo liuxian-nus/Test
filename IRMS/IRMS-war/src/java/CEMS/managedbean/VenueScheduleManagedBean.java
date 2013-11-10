@@ -70,9 +70,9 @@ public class VenueScheduleManagedBean {
     public void doThis() {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         eventBookings = new ArrayList<EventBookingEntity>();
-        System.err.println("get flash venue: " + venue.getVenueId());
+//        System.err.println("get flash venue: " + venue.getVenueId());
         eventBookings = (List<EventBookingEntity>) eventBookingSessionBean.getEventBookings(venue);
-        System.err.println("doThis size: " + eventBookings.size());
+//        System.err.println("doThis size: " + eventBookings.size());
         Iterator<EventBookingEntity> itr = eventBookings.iterator();
         while (itr.hasNext()) {
             eventBooking = itr.next();
@@ -84,13 +84,13 @@ public class VenueScheduleManagedBean {
 
     public void addEvent(ActionEvent actionEvent) {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        System.err.println("add eventBooking: " + event.getTitle());
+//        System.err.println("add eventBooking: " + event.getTitle());
         eventId = Long.parseLong(event.getTitle());
-        System.err.println("eventId" + eventId);
+//        System.err.println("eventId" + eventId);
         if (event.getId() == null) {
 
             eventEntity = eventSessionBean.getReservation(eventId);
-            System.err.println(eventEntity.getEventId());
+//            System.err.println(eventEntity.getEventId());
 
             eventBooking = new EventBookingEntity();
             eventBooking.setEvent(eventEntity);
