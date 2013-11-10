@@ -32,11 +32,13 @@
                     <h:panelGroup>  
                         <h:outputText value="#{showBillingManagedBean.selectedShow.showName}" style="font-weight:bold"/> 
                     </h:panelGroup> 
+                    <p:separator/><br/>
 
                     <h:outputText value="Show Deposit: " />  
                     <h:panelGroup>  
                         <h:outputText value="#{showBillingManagedBean.selectedShow.showContract.showDeposit}" style="font-weight:bold"/> 
                     </h:panelGroup>
+                    <p:separator/><br/>
 
                     <h:outputText value="Venue Rental Rate: " />  
                     <h:panelGroup>  
@@ -45,13 +47,14 @@
 
                     <h:outputText value="Venue Rental Duration: " />  
                     <h:panelGroup>  
-                        <h:outputText value="#{showBillingManagedBean.selectedShow.showContract.showVenueDuration}" style="font-weight:bold"/> 
+                        <h:outputText value="x #{showBillingManagedBean.selectedShow.showContract.showVenueDuration}" style="font-weight:bold"/> 
                     </h:panelGroup>
 
                     <h:outputText value="Venue Rental Fee: " />  
                     <h:panelGroup>  
-                        <h:outputText value="#{showBillingManagedBean.rentalFee}" style="font-weight:bold"/> 
+                        <h:outputText value="- #{showBillingManagedBean.rentalFee}" style="font-weight:bold"/> 
                     </h:panelGroup>
+                    <p:separator/><br/>
 
                     <h:outputText value="Ticketing Revenue: " />  
                     <h:panelGroup>  
@@ -60,19 +63,21 @@
 
                     <h:outputText value="Ticketing Commission Rate: " />  
                     <h:panelGroup>  
-                        <h:outputText value="#{showBillingManagedBean.selectedShow.showContract.showTicketCommission}" style="font-weight:bold"/> 
+                        <h:outputText value="x #{showBillingManagedBean.selectedShow.showContract.showTicketCommission}" style="font-weight:bold"/> 
                     </h:panelGroup>
 
                     <h:outputText value="Ticketing Commission Fee: " />  
                     <h:panelGroup>  
                         <h:outputText value="#{showBillingManagedBean.ticketCommission}" style="font-weight:bold"/> 
                     </h:panelGroup>                    
-                    <p:separator/><br/>
+                    <p:separator/><p:separator/>
 
                     <h:outputText value="Total Bill: " />  
                     <h:panelGroup>  
                         <h:outputText value="#{showBillingManagedBean.bill}" style="font-weight:bold"/> 
                     </h:panelGroup>
+                    
+                     <p:commandButton value="Confirm" actionListener="#{showBillingManagedBean.oneMore}"/>
                 </h:panelGrid>  
             </p:dialog>
 

@@ -10,11 +10,13 @@ import ESMS.entity.ShowTicketSaleEntity;
 import ESMS.session.ShowBillingSessionBean;
 import ESMS.session.ShowContractSessionBean;
 import ESMS.session.ShowSessionBean;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -62,6 +64,10 @@ public class ShowBillingManagedBean {
         ticketCommission = ticketRevenue * selectedShow.getShowContract().getShowTicketCommission();
         rentalFee = selectedShow.getShowContract().getShowVenueDuration() * selectedShow.getShowContract().getShowVenueRate();
         bill = ticketCommission + selectedShow.getShowContract().getShowDeposit() - rentalFee;
+    }
+    
+     public void oneMore(ActionEvent event) throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("showBilling.xhtml");
     }
 
     // Getters and Setters
