@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id ="form">
+            <p:panel id="bill" header="View Bill" style="height:495px;">
+                <p:growl id="growl"/>
+                <h:outputText value="Even Name: "/>
+                <p:selectOneMenu value="#{eventServiceBillManagedBean.id}">  
+                    <f:selectItem itemLabel="Select Event" itemValue=""/>
+                    <f:selectItems value="#{eventServiceBillManagedBean.eventSessionBean.confirmedEvents}" var="eventList" 
+                                   itemLabel="#{eventList.eventId}: #{eventList.eventName}" itemValue="#{eventList.eventId}"/>  
+                </p:selectOneMenu>
+
+                <h:outputText value=""/><br/>
+                <h:outputText value=""/><br/>
+
+                <p:commandButton  value="View bill" ajax="true" actionListener="#{eventServiceBillManagedBean.showBill}" 
+                                  update =":form:carDlg" oncomplete="carDialog.show()"/>
+            </p:panel>
+
+            <p:dialog header="View Bill" widgetVar="carDialog" resizable="true" id="carDlg"  
+                      showEffect="fade" hideEffect="explode" width="700">  
+
+                <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
+
+                    <h:outputText value="Event ID: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{eventServiceBillManagedBean.selectedEvent.eventId}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+
+                    <h:outputText value="Event Name: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{eventServiceBillManagedBean.selectedEvent.eventName}" style="font-weight:bold"/> 
+                    </h:panelGroup> 
+
+                    <h:outputText value="Contact: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{eventServiceBillManagedBean.selectedEvent.title} #{eventServiceBillManagedBean.selectedEvent.name}:
+                                      #{eventServiceBillManagedBean.selectedEvent.eventContact}, #{eventServiceBillManagedBean.selectedEvent.email}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+
+                    <h:outputText value="Event Deposit: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="+#{eventServiceBillManagedBean.selectedEvent.deposit}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <h:outputText value="Service Charge: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="-#{eventServiceBillManagedBean.serviceTotalCost}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <h:outputText value="Venue Rental Rate: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="-#{eventServiceBillManagedBean.venueRate}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <p:separator/><p:separator/>
+
+                    <h:outputText value="Total Bill: " />  
+                    <h:panelGroup>  
+                        <h:outputText value="#{eventServiceBillManagedBean.finalBill}" style="font-weight:bold"/> 
+                    </h:panelGroup>
+                    
+                    <p:commandButton value="Confirm" actionListener="#{eventServiceBillManagedBean.oneMore}"/>
+                </h:panelGrid>  
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
