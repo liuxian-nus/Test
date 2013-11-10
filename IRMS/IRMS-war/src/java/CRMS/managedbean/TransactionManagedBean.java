@@ -16,12 +16,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseEvent;
 import javax.faces.model.SelectItem;
 import org.primefaces.event.ToggleEvent;
 
 /**
  *
- * @author liudazhi
+ * @author liuxian
  */
 @ManagedBean
 @ViewScoped
@@ -45,6 +46,11 @@ public class TransactionManagedBean {
         option2 = createOption2();
 
     }
+    public void initViewSelect(PhaseEvent event) {
+        System.err.println("in initial view function");
+        this.member = (MemberEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("member");
+        System.err.println("select transaction with this member: " + member.getMemberName());
+    }
 
     private SelectItem[] createOption1() {
         SelectItem[] options = new SelectItem[3];
@@ -54,7 +60,8 @@ public class TransactionManagedBean {
         options[2] = new SelectItem(false, "Coin Payment");
         return options;
     }
-        private SelectItem[] createOption2() {
+
+    private SelectItem[] createOption2() {
         SelectItem[] options = new SelectItem[3];
         System.out.println("Creating boolean options");
         options[0] = new SelectItem("", "Select");
@@ -78,7 +85,6 @@ public class TransactionManagedBean {
     public void setOption2(SelectItem[] option2) {
         this.option2 = option2;
     }
-
 
     public MemberTransactionSessionBean getTransactionSessionBean() {
         return transactionSessionBean;

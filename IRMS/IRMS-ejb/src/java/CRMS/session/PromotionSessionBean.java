@@ -32,31 +32,32 @@ public class PromotionSessionBean {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
-
     PromotionEntity promotion = new PromotionEntity();
     MemberEntity member = new MemberEntity();
-    
-    public List<PromotionEntity> getMemberExclusivePromotions()
-    {
+
+    public List<PromotionEntity> getAllPromotions() {
         Query q = em.createQuery("SELECT p FROM PromotionEntity p");
-        
+        return q.getResultList();
+    }
+
+    public List<PromotionEntity> getMemberExclusivePromotions() {
+        Query q = em.createQuery("SELECT p FROM PromotionEntity p");
+
         List<PromotionEntity> resultList = q.getResultList();
-        Iterator <PromotionEntity> itr = resultList.iterator();
+        Iterator<PromotionEntity> itr = resultList.iterator();
         List<PromotionEntity> returnList = new ArrayList();
-        
-        while(itr.hasNext())
-        {
+
+        while (itr.hasNext()) {
             PromotionEntity current = itr.next();
-            if(current.isPromotionMemberExclusive())
-            {
+            if (current.isPromotionMemberExclusive()) {
                 returnList.add(current);
-            System.out.println("Promotion Entity has been added!");
+                System.out.println("Promotion Entity has been added!");
             }
         }
         return returnList;
     }
 
-    public String endMarketingCampaign(Date endDate) {
+    public String endPromotion(Date endDate) {
         Timer timer = new Timer();
         timer.schedule(new EndTask(), endDate);
         timer.cancel();
@@ -66,20 +67,21 @@ public class PromotionSessionBean {
     public List<PromotionEntity> getPromotionByMemberEmail(String email) throws ExistException {
         System.out.println("promotion session bean: get promotion by email: " + email);
         MemberEntity thisMember = em.find(MemberEntity.class, email);
-        if(thisMember == null) throw new ExistException("this member email is invalid");
+        if (thisMember == null) {
+            throw new ExistException("this member email is invalid");
+        }
         Query q = em.createQuery("SELECT p FROM PromotionEntity p");
         List promotions = new ArrayList<PromotionEntity>();
         for (Object o : q.getResultList()) {
             PromotionEntity p = (PromotionEntity) o;
-            if(p.getMcMemberTargets().contains(thisMember)){
-            promotions.add(p);
+            if (p.getMcMemberTargets().contains(thisMember)) {
+                promotions.add(p);
             }
         }
         return promotions;
     }
 
     class EndTask extends TimerTask {
-
 
         public void run() {
             System.out.println("The promotion has reached the end ");
@@ -103,11 +105,22 @@ public class PromotionSessionBean {
         }
     }
 
-    public void addMarketingCampaign(PromotionEntity promotion) {
+    public List<MemberEntity> getPromotionMembers(Long promotionId) {
+        Query q = em.createNamedQuery("SELECT mt FROM MemberTransactionEntity mt WHERE mt.mtPromotion =" + promotionId);//this sentence got big problem
+        List memberList = new ArrayList<MemberEntity>();
+        for (Object o : q.getResultList()) {
+            MemberTransactionEntity thisTransaction = (MemberTransactionEntity) o;
+            MemberEntity thisMember = em.find(MemberEntity.class, thisTransaction.getMemberEmail());
+            memberList.add(thisMember);
+        }
+        return memberList;
+        }
+
+    public void addPromotion(PromotionEntity promotion) {
         // mc.create(startDate, endDate, remarks, memberTargets);
         System.out.println("MarketingCampaignSessionBean: reference Id is " + promotion.getPromotionId());
         em.persist(promotion);
-        endMarketingCampaign(promotion.getPromotionEndDate());
+        endPromotion(promotion.getPromotionEndDate());
         System.out.println("MarketingCampaignSessionBean: Marketing campaign has been ended " + promotion.getPromotionId());
     }
 

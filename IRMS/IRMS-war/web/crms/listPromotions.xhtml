@@ -15,59 +15,49 @@
                             <p:rowToggler />  
                         </p:column> 
 
-                        <p:column id="idColumn" filterBy="#{promotions.memberEmail}" headerText="Member Email" filterMatchMode="contains">  
-                            <h:outputText value="#{promotions.memberEmail}"/>
+                        <p:column id="idColumn" filterBy="#{promotions.promotionId}" headerText="ID" filterMatchMode="contains">  
+                            <h:outputText value="#{promotions.promotionId}"/>
                         </p:column>
 
-                        <p:column id="departmentColumn" filterBy="#{promotions.mtDepartment}" headerText="Department: " filterMatchMode="contains">
-                            <h:outputText value="#{promotions.mtDepartment}"/>
+                        <p:column id="titleColumn" filterBy="#{promotions.promotionTitle}" headerText="Promotion Title: " filterMatchMode="contains">
+                            <h:outputText value="#{promotions.promotionTitle}"/>
+                        </p:column>
+
+                        <p:column id="codeColumn" filterBy="#{promotions.promotionCode}" headerText="Promotion Code: " filterMatchMode="contains">
+                            <h:outputText value="#{promotions.promotionCode}"/>
                         </p:column>
 
 
-                        <p:column id="promotionColumn" filterBy="#{promotions.mtPromotion}" headerText="Promotion Code: " filterMatchMode="contains">
-                            <h:outputText value="#{promotions.mtPromotion}"/>
+                        <p:column id="startDateColumn" filterBy="#{promotions.promotionStartDate}" headerText="Start Date: " filterMatchMode="contains">
+                            <h:outputText value="#{promotions.promotionStartDate}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
                         </p:column>
 
-                        <p:column id="modeColumn" filterBy="#{promotions.mtMode}" headerText="Payment Mode: " filterOptions="#{promotionManagedBean.option1}" filterMatchMode="contains">
-                            <h:outputText rendered="#{promotions.mtMode==true}" value="Cash/Card Payment"/>
-                            <h:outputText rendered="#{promotions.mtMode==false}" value="Coin Payment"/>
-                        </p:column>
-
-                        <p:column id="statusColumn" filterBy="#{promotions.paymentStatus}" headerText="Payment Status: " filterOptions="#{promotionManagedBean.option2}" filterMatchMode="contains">
-                            <h:outputText rendered="#{promotions.paymentStatus==true}" value="Cash Payment"/>
-                            <h:outputText rendered="#{promotions.paymentStatus==false}" value="Credit Card Payment"/>
+                        <p:column id="endDateColumn" filterBy="#{promotions.promotionEndDate}" headerText="End Date: " filterMatchMode="contains">
+                            <h:outputText value="#{promotions.promotionEndDate}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <p:rowExpansion>  
                             <h:panelGrid id="display" columns="2" cellpadding="4" style="width:400px;"  
                                          styleClass=" ui-widget-content grid">  
 
-                                <f:facet name="header">  
-                                    #{promotions.memberEmail}
+                                <f:facet name="Title">  
+                                    #{promotions.promotionTitle}
                                 </f:facet>  
 
-                                <h:outputText value="Transaction Amount:" />  
-                                <h:outputText id="amount" value="#{promotions.mtAmount}" style="width:400px;"   />  
+                                <h:outputText value="Category:" />  
+                                <h:outputText id="category" value="#{promotions.promotionCategory}" style="width:400px;"   />  
 
-                                <h:outputText value="Transaction Date:" />  
-                                <h:outputText id="hp" value="#{promotions.mtDate}"  style="width:400px;"  >  
-                                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                                <h:outputText value="Remark:" />  
+                                <h:outputText id="remark" value="#{promotions.promotionRemarks}"  style="width:400px;"  >  
                                 </h:outputText>
 
-                                <h:outputText value="Department:" />  
-                                <h:outputText value="#{promotions.mtDepartment}"  style="width:400px;"/>
-
-
-                                <h:outputText value="Promotion Codes:" />  
-                                <h:outputText value="#{promotions.mtPromotion}"  style="width:400px;"/>
-
-                                <h:outputText value="Payment Mode:" />  
-                                <h:outputText rendered="#{promotions.mtMode==true}" value="Cash/Card Payment" style="width:400px;"/>
-                                <h:outputText rendered="#{promotions.mtMode==false}" value="Coin Payment" style="width:400px;"/>
-
-                                <h:outputText value="Payment Status:" />  
-                                <h:outputText rendered="#{promotions.paymentStatus==true}" value="Cash Payment" style="width:400px;"/>
-                                <h:outputText rendered="#{promotions.paymentStatus==false}" value="Credit Card Payment" style="width:400px;"/>
+                                <h:outputText value="Range:" />  
+                                <h:outputText rendered="#{promotions.promotionMemberExclusive ==true}" value="For Member Only" style="width:400px;" />
+                                <h:outputText rendered="#{promotions.promotionMemberExclusive==false}" value="For Every Customer" style="width:400px;" />
 
                             </h:panelGrid>  
                         </p:rowExpansion>           

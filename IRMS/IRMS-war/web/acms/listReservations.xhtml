@@ -12,15 +12,18 @@
                 <p:panel id="search" header="Search Result" style="height:495px;">
                     <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
                         <p:dataTable id="reservationList" value="#{reservationSearchResultManagedBean.getReservationList()}" var="reservations" paginator="true" rows="10">
-                            <p:column headerText ="Reservation ID:">
+                            <p:column headerText ="ID:">
                                 <h:outputText value="#{reservations.reservationId}"/> 
                             </p:column>
-                            <p:column headerText ="Reservation Email:">
-                                <h:outputText value="#{reservations.rcEmail}"/> 
-                            </p:column>
-                            <p:column headerText ="Guest Name:">
+                            <p:column id="emailColumn" filterBy="#{reservations.rcEmail}"   
+                                      headerText="Reservation Email" filterMatchMode="contains">  
+                                <h:outputText value="#{reservations.rcEmail}" />  
+                            </p:column>  
+
+                            <p:column id="nameColumn" filterBy="#{reservations.rcName}" headerText ="Guest Name:" filterMatchMode="contains">
                                 <h:outputText value="#{reservations.rcName}"/> 
                             </p:column>
+                            
                             <p:column headerText ="Check In Date:">
                                 <h:outputText value="#{reservations.rcCheckInDate}">
                                     <f:convertDateTime pattern="dd-MM-yyyy" />
@@ -28,7 +31,7 @@
                             </p:column>
                             <p:column headerText ="Check Out Date:">
                                 <h:outputText value="#{reservations.rcCheckOutDate}"> 
-                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    <f:convertDateTime pattern="dd-MM-yyyy" />
                                 </h:outputText>
                             </p:column>
                             <p:column style="width:100px">  
