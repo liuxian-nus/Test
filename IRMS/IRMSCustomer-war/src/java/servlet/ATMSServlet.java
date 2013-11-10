@@ -544,8 +544,6 @@ public class ATMSServlet extends HttpServlet {
                     mt.setMtMode(true);
                     mt.setPaymentStatus(true);
                     mt.setMemberEmail(email);
-                    String description = member.getMemberName() + ": Your purchase of attraction ticket at " + date + " with a total expense of: " + totalPrice;
-                    mt.setMtDescription(description);
                     mt=memberTransactionSessionBean.addMemberTransaction(mt);
                     System.out.println("member transaction added");
                     Set<MemberTransactionEntity> allMTs=member.getMemberTransactions();

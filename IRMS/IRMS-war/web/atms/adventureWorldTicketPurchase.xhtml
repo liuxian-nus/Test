@@ -7,7 +7,8 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-        <p:panel id="EPPurchase" header="Purchase Express Pass" style="height:495px;">
+        <p:tabView id="tabView"> 
+            <p:tab id="tab1" title="Ticket Purchase">
                 <h:form id="purchaseTicket">
                     <p:growl id="growl1" showDetail="true" sticky="true" /> 
                    
@@ -41,8 +42,41 @@
                         <br/>
                         <p:commandButton value ="Save" ajax ="true" actionListener = "#{ticketPurchaseManagedBean.purchaseTicket}" update="growl1" icon="ui-icon-check"/>
                         <p:commandButton value="Purchase more ticket" actionListener="#{ticketPurchaseManagedBean.oneMore}" />
-                </h:form>    
-            </p:panel>
+
+                </h:form>
+            </p:tab>
+            
+            <p:tab id="tab2" title="Express Pass Purchase">
+                <h:form id="purchaseEP">
+                    <p:growl id="growl2" showDetail="true" sticky="true" /> 
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Express Pass*:"/>
+                        <p:selectOneMenu value ="#{expressPassPurchaseManagedBean.epId}"  required ="true" requiredMessage="Express pass cannot be empty">
+                            <f:selectItem itemLabel="Select express name" itemValue="" /> 
+                            <f:selectItems value="#{expressPassPurchaseManagedBean.attrExpressPassSessionBean.allEPs}" var="allEPs" itemLabel="#{allEPs.attrEPName}" itemValue="#{allEPs.attrEPId}" />  
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Quantity*: "/>
+                        <h:inputText id="quantity2" required ="true" requiredMessage="Quantity cannot be empty" value="#{expressPassPurchaseManagedBean.quantity}"/>
+
+                        <h:outputText value="Member email (if applicable): "/>
+                        <h:inputText id="memberEmail2" value="#{expressPassPurchaseManagedBean.memberEmail}"/>
+
+                        <h:outputText value="Total fee: "/>
+                        <h:outputText id="fee2" value="#{expressPassPurchaseManagedBean.fee}" style="font-weight:bold"/>
+
+                    </h:panelGrid>
+                    <p:commandButton value ="Calculate fee" ajax ="true" actionListener="#{expressPassPurchaseManagedBean.checkFee}" update="fee2" onclick="growl"/>
+                    <p:commandButton value ="Check member" ajax ="true" actionListener="#{expressPassPurchaseManagedBean.checkMember}" onclick="growl"/>
+                    
+                    <br/>
+                    <p:commandButton value ="Save" ajax ="true" actionListener = "#{expressPassPurchaseManagedBean.purchaseEP}" update="growl2" icon="ui-icon-check"/>
+                    <p:commandButton value="Purchase more ticket" actionListener="#{expressPassPurchaseManagedBean.oneMore}" />
+                </h:form>
+
+            </p:tab>
+        </p:tabView>
+            
     </ui:define>
 
 </ui:composition>

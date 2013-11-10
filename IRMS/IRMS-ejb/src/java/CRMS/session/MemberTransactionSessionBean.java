@@ -87,9 +87,9 @@ public class MemberTransactionSessionBean {
         member.addMemberTransaction(mt);
         System.out.println("member transaction added");
     }
-    
-        public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,String mtDescription, boolean coinPay) {
-        System.out.println("memberTransactionSessionBean : addMemberTransaction");
+
+    public void addMemberTransaction(MemberEntity member, double amount, Date mtDate, String mtDepartment, String mtPromotion, String mtDescription, boolean coinPay) {
+        System.out.println("creating member transaction....");
         mt = new MemberTransactionEntity();
         mt.setMemberEmail(member.getMemberEmail());
         mt.setMtAmount(amount);
