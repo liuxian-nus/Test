@@ -8,14 +8,24 @@ import Exception.ExistException;
 import SMMS.entity.BillEntity;
 import SMMS.entity.OutletTransactionEntity;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
+import javax.ejb.Timeout;
+import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
+import javax.ejb.TimerService;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -27,6 +37,9 @@ public class MerchantBillSessionBean {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
+    @Resource
+    private SessionContext ctx;
+    private BillEntity bill = new BillEntity();
 
     public MerchantBillSessionBean() {
     }
@@ -36,7 +49,76 @@ public class MerchantBillSessionBean {
     public void persist(Object object) {
         em.persist(object);
     }
-    BillEntity bill = new BillEntity();
+
+    //onetime bill would be overdue  one minute will be set to overdue
+    public void createOverDueTimers(Date overdue) { 
+        System.out.println("in session bean create timers");
+        TimerService timerService = ctx.getTimerService(); 
+        
+        TimerConfig config = new TimerConfig("setOverdue", true);
+        Timer timer = (Timer) timerService.createSingleActionTimer(overdue, config);
+        System.out.println("in session bean test" + timer.getInfo().toString());
+    }
+    
+    //one time, bill would be set at that contract start date 4 minutes will be set to active
+    public void createActiveTimers(Date startDate) {
+        System.out.println("in session bean create timers");
+        TimerService timerService = ctx.getTimerService();           
+        TimerConfig config = new TimerConfig("setActive", true);  
+        Timer timer = (Timer) timerService.createSingleActionTimer(startDate, config);
+        System.out.println("in session bean test" + timer.getInfo().toString());
+    }
+    
+//    // generate
+//    public void createMonthlyBillTimers(Date startdate) {
+//        //method1
+//        DateTime as = new DateTime(startdate);
+//        DateTime plusone = as.plusMonths(1);
+//        System.out.println("in creating monthsly bills timers" + plusone);
+//        
+//        //method 2
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(startdate);
+//        cal.add(Calendar.MONTH, 1);
+//        startdate=cal.getTime();
+//        System.out.println("in setting due date" + startdate);
+//        
+//        System.out.println("in session bean create timers");
+//        TimerService timerService = ctx.getTimerService();             
+//        TimerConfig config = new TimerConfig("addBillItem", true);
+//        Timer timer = (Timer) timerService.createIntervalTimer(startdate, 1000*60*60*24*30, config);
+//        System.out.println("in session bean test" + timer.getInfo().toString());
+//    }
+//    
+     
+
+    @Timeout
+    public void handleTimeout(Timer timer) {
+        
+        System.out.println("in handle timeout test");
+        if (timer.getInfo().toString().equals("setOverdue")) {
+         System.out.println("in setting overdue time lah ahahah");
+        }
+        
+        if (timer.getInfo().toString().equals("setActive")) {
+         System.out.println("in setting active time ah lah ahahah");
+        }
+        
+        
+        
+//        }
+    }
+
+    public void cancelTimers() {
+        TimerService timerService = ctx.getTimerService();
+        Collection timers = timerService.getTimers();
+        for (Object obj : timers) {
+            Timer timer = (Timer) obj;
+            if (timer.getInfo().toString().equals(obj)) {
+                timer.cancel();
+            }
+        }
+    }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public BillEntity addBill(BillEntity bill) {
@@ -46,7 +128,7 @@ public class MerchantBillSessionBean {
 //        
 //        thisbill.getDueDate().setYear(bill.getDueDate().getYear() - 1990);
 //        thisbill.getDueDate().setMonth(bill.getDueDate().getMonth() - 1);
-        
+
         em.persist(bill);
         return bill;
     }
@@ -70,97 +152,94 @@ public class MerchantBillSessionBean {
         em.merge(bill);
         return bill;
     }
-    
-    
+
     public List<BillEntity> getBillByContract(Long contractId) {
         System.err.println("in get bill by contract session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-            if (m.getContract().getContractId()== contractId) {
+            if (m.getContract().getContractId() == contractId) {
                 TransactionList.add(m);
             }
         }
         System.err.println("in get bill by contract sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
-    
+
     public List<BillEntity> getBillByMerchant(String merchantId) {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-            if (m.getContract().getMerchant().getMerchantEmail()== merchantId) {
+            if (m.getContract().getMerchant().getMerchantEmail() == merchantId) {
                 TransactionList.add(m);
             }
         }
         System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
-    
+
     public List<BillEntity> getAvailableBills() {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-            if (m.getBillStatus()=="available") {
+            if (m.getBillStatus() == "available") {
                 TransactionList.add(m);
             }
         }
         System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
-    
-    public List<BillEntity> getUnpaidBills(){  
-            System.err.println("in get bill by merchant session bean");
+
+    public List<BillEntity> getUnpaidBills() {
+        System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-            if (m.getBillStatus()=="unpaid") {
+            if (m.getBillStatus() == "unpaid") {
                 TransactionList.add(m);
             }
         }
         System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
-    
+
     public List<BillEntity> getOverdueBills() {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-            if (m.getBillStatus()=="overdue") {
+            if (m.getBillStatus() == "overdue") {
                 TransactionList.add(m);
             }
         }
         System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
-    
+
     public List<BillEntity> getAllBills() {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-                TransactionList.add(m);
+            TransactionList.add(m);
         }
         System.err.println("in get bill by merchant sessionbean: Transaction List size=" + TransactionList.size());
         return TransactionList;
     }
-    
-     public BillEntity getBillById(Long billId) throws ExistException {
+
+    public BillEntity getBillById(Long billId) throws ExistException {
         bill = em.find(BillEntity.class, billId);
         if (bill == null) {
             throw new ExistException("Bill does not exist!");
         }
         return bill;
     }
-    
-    
 }

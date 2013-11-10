@@ -39,6 +39,7 @@ import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
 import FBMS.entity.RestaurantEntity;
+import SMMS.entity.BillEntity;
 import SMMS.entity.ContractEntity;
 import SMMS.entity.ContracteventEntity;
 import SMMS.entity.MerchantEntity;
@@ -46,11 +47,13 @@ import SMMS.entity.OutletEntity;
 import SMMS.entity.PushingcartEntity;
 import SMMS.session.ContractSessionBean;
 import SMMS.session.ContracteventSessionBean;
+import SMMS.session.MerchantBillSessionBean;
 import SMMS.session.MerchantSessionBean;
 import SMMS.session.OutletSessionBean;
 import SMMS.session.PushingcartSessionBean;
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.Calendar;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -67,6 +70,8 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class initializationManagedBean implements Serializable {
 
+    @EJB
+    private MerchantBillSessionBean merchantBillSessionBean;
     @EJB
     private RoomServiceSessionBean roomServiceSessionBean;
     @EJB
@@ -413,7 +418,7 @@ public class initializationManagedBean implements Serializable {
         reservation.setReservationGuestCount(6);
         reservation.setReservationStatus("guarantee");
         reservation.setRcMember(member);
-        
+
         Date cidate1 = new Date(2014, 12, 1);
         Date codate1 = new Date(2014, 12, 5);
 
@@ -1238,8 +1243,8 @@ public class initializationManagedBean implements Serializable {
         System.out.println("go to create Contract Page...");
 
         ContractEntity contract1 = new ContractEntity();
-        Date cidate = new Date(2013, 11, 1);
-        Date codate = new Date(2015, 11, 1);
+        Date cidate = new Date(2014, 12, 1);
+        Date codate = new Date(2016, 12, 1);
         try {
 
             System.out.println("Saving cart....");
@@ -1283,8 +1288,8 @@ public class initializationManagedBean implements Serializable {
 
 
         ContractEntity contract2 = new ContractEntity();
-        Date cidate1 = new Date(2013, 12, 1);
-        Date codate1 = new Date(2015, 12, 1);
+        Date cidate1 = new Date(2014, 7, 1);
+        Date codate1 = new Date(2017, 7, 1);
         try {
 
             System.out.println("Saving contract2....");
@@ -1318,6 +1323,20 @@ public class initializationManagedBean implements Serializable {
             outletb.setOutletStatus("unavailable");
             outletb.setOutletName("Resort Suvovior");
             outletSessionBean.updateOutlet(outletb);
+
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MINUTE, 1); // set overdue date = 1 minute
+            Date dueDate = cal.getTime();
+            System.out.println("in setting due date" + dueDate);
+
+            BillEntity bill = new BillEntity();
+            bill.setBillAmount(contract2.getLast().getEventDeposit());
+            bill.setBillStatus("unpaid");
+            bill.setBillType("deposit");
+            bill.setBillDate(currentDate);
+            bill.setContract(contract2);
+            bill.setDueDate(dueDate);
+            merchantBillSessionBean.addBill(bill);
 
             System.out.println("Contract2 saved.....");
         } catch (Exception e) {

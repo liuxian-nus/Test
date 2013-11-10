@@ -149,13 +149,15 @@ public class RoomSessionBean {
 
     public List<RoomEntity> getCheckInRooms(Long reservationId) throws ExistException {
         System.err.println("in getOccupiedrooms session bean");
-        Query q = em.createQuery("SELECT r FROM RoomEntity r");
+        Query q = em.createQuery("SELECT r FROM RoomEntity r where r.roomStatus='available'");
         ReservationEntity aiyou = reservationSessionBean.getReservationById(reservationId);
-        System.out.println("gett reservation" + aiyou.getReservationId());
+        System.out.println("gett reservation" + aiyou.getReservationId() + aiyou.getReservationRoomType());
+
         List roomList = new ArrayList<RoomEntity>();
         for (Object o : q.getResultList()) {
             RoomEntity r = (RoomEntity) o;
-            if ((r.getRoomHotel() == aiyou.getReservationHotelNo())&&(r.getRoomType()==aiyou.getReservationRoomType())) {
+            System.out.println("type" + r.getRoomType() + aiyou.getReservationRoomType() + " hotel" + r.getRoomHotel() + aiyou.getReservationHotelNo());
+            if ((r.getRoomHotel()==aiyou.getReservationHotelNo()) && (r.getRoomType().equalsIgnoreCase(aiyou.getReservationRoomType()))) {
                 roomList.add(r);
             }
         }

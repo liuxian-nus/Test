@@ -5,13 +5,16 @@
 package SMMS.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -28,12 +31,14 @@ public class BillEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date billDate; // current date
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dueDate;   
+    private Date dueDate;
     private double billAmount;
     private String billType; //commission, month rate,early terminate,deposit
     private String billStatus; // unpaid, paid, overdue,available(to send out)
     @ManyToOne
     private ContractEntity contract = new ContractEntity();
+    @OneToMany(mappedBy = "bill", cascade = (CascadeType.MERGE))
+    private List<BillItemEntity> billItem = new ArrayList<BillItemEntity>();
 
     public ContractEntity getContract() {
         return contract;
@@ -50,7 +55,6 @@ public class BillEntity implements Serializable {
     public void setBillStatus(String billStatus) {
         this.billStatus = billStatus;
     }
-
 
     public Long getBillId() {
         return billId;
@@ -91,13 +95,26 @@ public class BillEntity implements Serializable {
     public void setId(Long billId) {
         this.billId = billId;
     }
-    
+
     public Date getDueDate() {
         return dueDate;
     }
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public List<BillItemEntity> getBillItem() {
+        return billItem;
+    }
+
+    public void setBillItem(List<BillItemEntity> billItem) {
+        this.billItem = billItem;
+    }
+
+    public void addBillItem(BillItemEntity billItem) {
+        this.billItem.add(billItem);
+        System.out.println("adding deltails to bill already" + billItem.getId());
     }
 
     @Override
