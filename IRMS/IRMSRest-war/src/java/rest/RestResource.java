@@ -12,6 +12,7 @@ import CRMS.entity.PromotionEntity;
 import CRMS.session.FeedbackSessionBean;
 import CRMS.session.MemberMessageSessionBean;
 import CRMS.session.MemberSessionBean;
+import CRMS.session.MemberTransactionSessionBean;
 import CRMS.session.PromotionSessionBean;
 import Exception.ExistException;
 import java.text.ParseException;
@@ -53,6 +54,8 @@ public class RestResource {
     PromotionSessionBean promotionSessionBean;
     @EJB
     FeedbackSessionBean feedbackSessionBean;
+    @EJB
+    MemberTransactionSessionBean transactionSessionBean;
     @Context
     private UriInfo context;
 
@@ -158,10 +161,10 @@ public class RestResource {
     @Path("member/transactions")
     @Produces(MediaType.APPLICATION_JSON)
     public List<MemberTransactionEntity> getMemberTransaction(@QueryParam("email") String email) {
-        if (memberSessionBean == null) {
+        if (transactionSessionBean == null) {
             System.err.println("memberSessionBean is null");
         }
-        List<MemberTransactionEntity> mtlist = memberSessionBean.getAllTransactions(email);
+        List<MemberTransactionEntity> mtlist = transactionSessionBean.getTransactionsByMemberEmail(email);
         if (mtlist != null) {
             return mtlist;
         } else {

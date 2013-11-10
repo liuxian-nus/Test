@@ -8,6 +8,7 @@ import CEMS.entity.VenueFunctionEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.session.MemberSessionBean;
+import CRMS.session.MemberTransactionSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -35,6 +37,8 @@ public class MemberManagedBean {
 
     @EJB
     private MemberSessionBean memberSessionBean;
+    @EJB
+    private MemberTransactionSessionBean transactionSessionBean;
     private MemberEntity member;
     private String searchEmail;
     private int birthMonth;
@@ -80,20 +84,22 @@ public class MemberManagedBean {
         return memberSessionBean.getAllMembers();
     }
 
-    public List<MemberTransactionEntity> getAllTransactions(ActionEvent event) throws ExistException, IOException {
+    //wrong method implementation:  javax.el.MethodNotFoundException
+    public List<MemberTransactionEntity> getTransactionsByMemberEmail(ActionEvent event) throws ExistException, IOException {
         System.err.println("in getting member transactions: member managed bean");
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+
+        System.out.println("member is: " + member.getMemberEmail());
         try {
-            List<MemberTransactionEntity> transactions = memberSessionBean.getAllTransactions(member.getMemberEmail());
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("member", member);
+            List<MemberTransactionEntity> transactions = transactionSessionBean.getTransactionsByMemberEmail(member.getMemberEmail());
             System.out.println("we are after setting parameter");
-            request.getSession().setAttribute("memberEmail", member.getMemberEmail());
-            System.out.println("we are after setting reservationId session attribute");
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("transactions", transactions);
+            request.getSession().setAttribute("member", member);
             FacesContext.getCurrentInstance().getExternalContext().redirect("listMemberTransactions.xhtml");
             return transactions;
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            System.out.println("error occured when getting transactions");
             return null;
         }
     }
@@ -304,6 +310,14 @@ public class MemberManagedBean {
 
     public void setGenderOptions(SelectItem[] genderOptions) {
         this.genderOptions = genderOptions;
+    }
+
+    public MemberTransactionSessionBean getTransactionSessionBean() {
+        return transactionSessionBean;
+    }
+
+    public void setTransactionSessionBean(MemberTransactionSessionBean transactionSessionBean) {
+        this.transactionSessionBean = transactionSessionBean;
     }
 
     public void onRowToggle(ToggleEvent event) {

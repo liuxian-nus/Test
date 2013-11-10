@@ -298,16 +298,6 @@ public class MemberSessionBean {
         em.merge(member);
     }
 
-    public List<MemberTransactionEntity> getAllTransactions(String memberEmail) {
-//        member = em.find(MemberEntity.class, memberEmail);
-        Query q = em.createQuery("SELECT mt FROM MemberTransactionEntity mt where mt.memberEmail = '" + memberEmail + "'");
-        List memberTransactionList = new ArrayList<MemberTransactionEntity>();
-        for (Object o : q.getResultList()) {
-            MemberTransactionEntity mt = (MemberTransactionEntity) o;
-            memberTransactionList.add(mt);
-        }
-        return memberTransactionList;
-    }
 
     public List<MemberEntity> getAllMembers() {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
@@ -330,11 +320,13 @@ public class MemberSessionBean {
             member = itr.next();
             nationality = member.getNationality();
             System.err.println("nationality: " + nationality);
-            if(!(nationalityList.contains(nationality))) nationalityList.add(nationality);
+            if (!(nationalityList.contains(nationality))) {
+                nationalityList.add(nationality);
+            }
         }
         return nationalityList;
     }
-    
+
     public void updateMemberTicketPurchase(MemberEntity member, TicketPurchaseEntity tp) {
         System.out.println("updateMemberTicketPurchase");
         List<TicketPurchaseEntity> tps = member.getTicketPurchases();

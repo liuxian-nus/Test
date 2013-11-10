@@ -42,13 +42,12 @@
                 </p:column>
 
                 <p:column>
-                    <p:commandButton icon="ui-icon ui-icon-flag" title="Transactions" value ="Transactions" action="#{memberManagedBean.getAllTransactions}">
-                        <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.member}" />  
+                    <p:commandButton icon="ui-icon ui-icon-flag" title="Transactions" value ="Transactions" ajax="true" action="#{transactionManagedBean.getAllTransactions}">
                     </p:commandButton>
-                
                 </p:column>
+                
                 <p:rowExpansion>  
-                    <h:panelGrid id="display" columns="2" cellpadding="4" style="width:100px;"  
+                    <h:panelGrid id="display" columns="2" cellpadding="4" style="width:200px;"  
                                  styleClass=" ui-widget-content grid">  
 
                         <f:facet name="header">  
@@ -56,13 +55,13 @@
                         </f:facet>  
 
                         <h:outputText value="Name:" />  
-                        <h:outputText id="name" value="#{memberList.memberName}" style="width:100px;"   />  
+                        <h:outputText id="name" value="#{memberList.memberName}" style="width:200px;"   />  
 
                         <h:outputText value="Phone Number:" />  
-                        <h:outputText id="hp" value="#{memberList.memberHP}"  style="width:100px;"  />  
+                        <h:outputText id="hp" value="#{memberList.memberHP}"  style="width:200px;"  />  
 
                         <h:outputText value="Marital Status:" />  
-                        <h:outputText value="#{memberList.maritalStatus}" style="width:100px;"  />  
+                        <h:outputText value="#{memberList.maritalStatus}" style="width:200px;"  />  
 
                         <h:outputText value="Date of Birth:" />  
                         <h:outputText value="#{memberList.memberDob}">  
@@ -70,16 +69,16 @@
                         </h:outputText>
 
                         <h:outputText value="Points:" />  
-                        <h:outputText value="#{memberList.point}" style="width:100px;"  />  
+                        <h:outputText value="#{memberList.point}" style="width:200px;"  />  
 
                         <h:outputText value="Coins:" />  
-                        <h:outputText value="#{memberList.coin}" style="width:100px;"  />  
+                        <h:outputText value="#{memberList.coin}" style="width:200px;"  />  
 
                         <h:outputText value="VIP Status:" />  
-                        <h:outputText value="#{memberList.isVIP}" style="width:100px;"  />  
+                        <h:outputText value="#{memberList.isVIP}" style="width:200px;"  />  
 
                         <h:outputText value="Subscription:" />  
-                        <h:outputText value="#{memberList.isSubscriber}" style="width:100px;"  />  
+                        <h:outputText value="#{memberList.isSubscriber}" style="width:200px;"  />  
 
                     </h:panelGrid>  
                 </p:rowExpansion>           

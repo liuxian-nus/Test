@@ -8,6 +8,7 @@ import ATMS.entity.TicketPurchaseEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import Exception.ExistException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ import javax.ejb.TransactionAttributeType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,21 +29,37 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class MemberTransactionSessionBean {
 
-    @PersistenceContext(unitName="IRMS-ejbPU")
+    @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     MemberEntity member = new MemberEntity();
     MemberTransactionEntity mt;
 
     public MemberTransactionSessionBean() {
     }
-    
+
+    public List<MemberTransactionEntity> getAllTransactions() {
+        Query q = em.createQuery("SELECT mt FROM MemberTransactionEntity mt");
+        return q.getResultList();
+    }
+
+    public List<MemberTransactionEntity> getTransactionsByMemberEmail(String memberEmail) {
+//        member = em.find(MemberEntity.class, memberEmail);
+        Query q = em.createQuery("SELECT mt FROM MemberTransactionEntity mt where mt.memberEmail = '" + memberEmail + "'");
+        List memberTransactionList = new ArrayList<MemberTransactionEntity>();
+        for (Object o : q.getResultList()) {
+            MemberTransactionEntity mt = (MemberTransactionEntity) o;
+            memberTransactionList.add(mt);
+        }
+        return memberTransactionList;
+    }
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public MemberTransactionEntity addMemberTransaction(MemberTransactionEntity mt){
+    public MemberTransactionEntity addMemberTransaction(MemberTransactionEntity mt) {
         em.persist(mt);
         return mt;
     }
 
-    public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,boolean coinPay, String mtDescription) {
+    public void addMemberTransaction(MemberEntity member, double amount, Date mtDate, String mtDepartment, String mtPromotion, boolean coinPay, String mtDescription) {
         System.out.println("creating member transaction....");
         mt = new MemberTransactionEntity();
         mt.setMemberEmail(member.getMemberEmail());
@@ -53,7 +71,7 @@ public class MemberTransactionSessionBean {
         mt.setPaymentStatus(true);//later add in paid or not paid
         mt.setMtDescription(mtDescription);
         em.persist(mt);
-         if (!coinPay) {
+        if (!coinPay) {
             addPoint(member, amount);
             addCoin(member, amount);
             updateVIP(member.getPoint());
@@ -69,8 +87,8 @@ public class MemberTransactionSessionBean {
         member.addMemberTransaction(mt);
         System.out.println("member transaction added");
     }
-    
-        public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,String mtDescription, boolean coinPay) {
+
+    public void addMemberTransaction(MemberEntity member, double amount, Date mtDate, String mtDepartment, String mtPromotion, String mtDescription, boolean coinPay) {
         System.out.println("creating member transaction....");
         mt = new MemberTransactionEntity();
         mt.setMemberEmail(member.getMemberEmail());
@@ -82,7 +100,7 @@ public class MemberTransactionSessionBean {
         mt.setMtMode(true); //later add in cash or card
         mt.setPaymentStatus(true);//later add in paid or not paid
         em.persist(mt);
-         if (!coinPay) {
+        if (!coinPay) {
             addPoint(member, amount);
             addCoin(member, amount);
             updateVIP(member.getPoint());
@@ -98,7 +116,7 @@ public class MemberTransactionSessionBean {
         member.addMemberTransaction(mt);
         System.out.println("member transaction added");
     }
-    
+
     public double addMemberTransaction(String memberEmail, MemberTransactionEntity mt, boolean coinPay) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {
@@ -107,8 +125,8 @@ public class MemberTransactionSessionBean {
         // mt.create(mtDate, mtAmount, mtDepartment, mtMode);
         em.persist(mt);
         System.out.println("mt persist successful");
-        System.out.println("mt email"+mt.getMemberEmail());
-        
+        System.out.println("mt email" + mt.getMemberEmail());
+
         Set temp = member.getMemberTransactions();
         System.out.println("The transaction record of " + memberEmail + "has been retrieved successfully!");
         if (temp.add(mt)) {
@@ -130,50 +148,52 @@ public class MemberTransactionSessionBean {
         }
     }
 
-    public void addPoint(MemberEntity member, double mtAmount){
-        if(member!=null){
-        double point = member.getPoint();
-        point = point + mtAmount * 0.01;
-        member.setPoint(point);
-        em.merge(member);
-        em.flush();
-        System.out.println("Member : " + member.getMemberName() + " account has been credited by" + point + "points");
-        System.out.println("point has been updated to "+member.getPoint());
+    public void addPoint(MemberEntity member, double mtAmount) {
+        if (member != null) {
+            double point = member.getPoint();
+            point = point + mtAmount * 0.01;
+            member.setPoint(point);
+            em.merge(member);
+            em.flush();
+            System.out.println("Member : " + member.getMemberName() + " account has been credited by" + point + "points");
+            System.out.println("point has been updated to " + member.getPoint());
+        } else {
+            return;
         }
-        else return;
     }
 
     public void addCoin(MemberEntity member, double mtAmount) {
-        if(member!=null){
-        double coin = member.getCoin();
-        coin = coin + mtAmount * 0.01;
-        member.setCoin(coin);
-        em.merge(member);
-        em.flush();
-        System.out.println("coin has been updated to "+member.getCoin());
+        if (member != null) {
+            double coin = member.getCoin();
+            coin = coin + mtAmount * 0.01;
+            member.setCoin(coin);
+            em.merge(member);
+            em.flush();
+            System.out.println("coin has been updated to " + member.getCoin());
+        } else {
+            return;
         }
-        else return;
     }
-    
-    public void payByCoin(MemberEntity member, double mtAmount){
-        double coin=member.getCoin();
-        coin-=mtAmount;
+
+    public void payByCoin(MemberEntity member, double mtAmount) {
+        double coin = member.getCoin();
+        coin -= mtAmount;
         member.setCoin(coin);
         em.merge(member);
         em.flush();
-        System.out.println("member coin has been deducted to "+member.getCoin());
+        System.out.println("member coin has been deducted to " + member.getCoin());
     }
-    
-    public boolean checkCoinAmount(MemberEntity member, double mtAmount){
-        double coin=member.getCoin();
-        System.out.println("coins: "+coin);
-        if(coin>=mtAmount){
+
+    public boolean checkCoinAmount(MemberEntity member, double mtAmount) {
+        double coin = member.getCoin();
+        System.out.println("coins: " + coin);
+        if (coin >= mtAmount) {
             System.out.println("enough coin");
             return true;
+        } else {
+            return false;
         }
-        else return false;
     }
-    
 
     private void updateVIP(double point) {
         if (point >= 500) {
@@ -184,25 +204,20 @@ public class MemberTransactionSessionBean {
             System.out.println("MTSessionBean: Member does not meet the requirement for VIP upgrade!");
         }
     }
-    
-    public void updateVIP(MemberEntity member){
-        if(member.isVIP()) {
+
+    public void updateVIP(MemberEntity member) {
+        if (member.isVIP()) {
             System.out.println("member is VIP already");
             return;
-        }
-        else{
+        } else {
             if (member.getPoint() >= 500) {
                 member.setIsVIP(true);
                 em.merge(member);
                 em.flush();
                 System.out.println("Member has been upgraded to VIP!");
-            } else
+            } else {
                 System.out.println("Member does not meet the requirement for VIP upgrade!");
+            }
         }
     }
-    
-    
 }
-// Add business logic below. (Right-click in editor and choose
-// "Insert Code > Add Business Method")
-

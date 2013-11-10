@@ -363,6 +363,12 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/crms/listAllMembers.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Member Transactions");
+                item.setUrl("/crms/listMemberTransactions.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
 
                 item = new MenuItem();
                 item.setValue("Promotions");
