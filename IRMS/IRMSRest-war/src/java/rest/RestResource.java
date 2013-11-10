@@ -144,7 +144,7 @@ public class RestResource {
 
     //updatePassword: haven't implemented
     @PUT
-    @Path("member/password/")
+    @Path("member/password")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public void updatePassword(@QueryParam("email") String email, @QueryParam("password") String password) {
@@ -258,7 +258,7 @@ public class RestResource {
     }
 
     //MessageDetailViewController
-    @PUT//????
+    @PUT
     @Path("member/deleteMessages/{messageId}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void deleteMemberMessage(@PathParam("messageId") String id) throws ExistException {
@@ -290,7 +290,7 @@ public class RestResource {
     @PUT
     @Path("member/feedback/{email}")
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean sendNewFeedback(@PathParam("email") String email,
+    public void sendNewFeedback(@PathParam("email") String email,
             @FormParam("feedbackTitle") String feedbackTitle,
             @FormParam("feedbackDate") String feedbackSentDate,
             @FormParam("feedbackContent") String feedbackContent,
@@ -301,7 +301,7 @@ public class RestResource {
         }
         System.out.println("from user: " + email);
         feedbackSessionBean.createFeedback(email, feedbackTitle, feedbackSentDate, feedbackContent, feedbackDepartment, rating);
-        return true;
+        return;
     }
     
     @GET

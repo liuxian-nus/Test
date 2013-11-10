@@ -13,6 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -22,21 +25,30 @@ import javax.xml.bind.annotation.XmlType;
  */
 @Entity
 @XmlRootElement
-@XmlType(name="feedbackEntity")
-
+@XmlType(name = "feedbackEntity")
+@XmlAccessorType(XmlAccessType.NONE)
 public class FeedbackEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @XmlElement
     private Long feedbackId;
+    @XmlElement
     private String feedbackContent;
     @ManyToOne(cascade = {CascadeType.MERGE})
     private MemberEntity feedbackOwner;
+    @XmlElement
     private String feedbackOwnerEmail;
+    @XmlElement
     private String feedbackStatus; //New, In Progress, Handled
+    @XmlElement
     private String feedbackTitle;
+    @XmlElement
     private String feedbackDepartment;
+    @XmlElement
     private Integer rating;
+    @XmlElement
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date feedbackSentDate;
 
@@ -47,6 +59,7 @@ public class FeedbackEntity implements Serializable {
     public void setFeedbackSentDate(Date feedbackSentDate) {
         this.feedbackSentDate = feedbackSentDate;
     }
+
     public Integer getRating() {
         return rating;
     }
@@ -55,7 +68,6 @@ public class FeedbackEntity implements Serializable {
         this.rating = rating;
     }
 
-    
     public Long getFeedbackId() {
         return feedbackId;
     }
@@ -111,7 +123,6 @@ public class FeedbackEntity implements Serializable {
     public void setFeedbackOwnerEmail(String feedbackOwnerEmail) {
         this.feedbackOwnerEmail = feedbackOwnerEmail;
     }
-    
 
     @Override
     public int hashCode() {
@@ -137,5 +148,4 @@ public class FeedbackEntity implements Serializable {
     public String toString() {
         return "CRMS.entity.FeedbackEntity[ feedbackId=" + feedbackId + " ]";
     }
-    
 }

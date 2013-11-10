@@ -79,6 +79,9 @@ public class FeedbackSessionBean {
         if (feedbackSentDate != null) {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(feedbackSentDate);
             feedback.setFeedbackSentDate(date);
+        }else {
+            Date date = new Date();
+            feedback.setFeedbackSentDate(date);
         }
         em.persist(feedback);
     }
