@@ -33,7 +33,7 @@
                         </p:column>  
 
                         <p:column id="genderColumn" filterBy="#{memberList.gender}" headerText="Gender" 
-                                  filterOptions="#{memberManagedBean.genderOptions}" filterMatchMode="equals">  
+                                  filterOptions="#{memberManagedBean.genderOptions}" filterMatchMode="exact">  
                             <h:outputText value="#{memberList.gender}" />  
                         </p:column>
 
