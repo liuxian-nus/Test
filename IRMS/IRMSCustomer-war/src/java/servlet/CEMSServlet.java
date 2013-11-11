@@ -117,7 +117,6 @@ public class CEMSServlet extends HttpServlet {
                 System.out.println("*****eventVenueSearch*****");
                 System.out.println("CEMSSevlet: Current page is eventVenueSearch!");
                 data = searchVenue(request);
-
                 System.out.println(data.isEmpty());
                 request.setAttribute("data", data);
                 request.getRequestDispatcher("/eventVenueSearch.jsp").forward(request, response);
