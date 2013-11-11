@@ -31,13 +31,8 @@
                             </p:column>
 
                             <p:column id="modeColumn" filterBy="#{transactions.mtMode}" headerText="Payment Mode: " filterOptions="#{transactionManagedBean.option1}" filterMatchMode="contains">
-                                <h:outputText rendered="#{transactions.mtMode==true}" value="Cash/Card Payment"/>
-                                <h:outputText rendered="#{transactions.mtMode==false}" value="Coin Payment"/>
-                            </p:column>
-
-                            <p:column id="statusColumn" filterBy="#{transactions.paymentStatus}" headerText="Payment Status: " filterOptions="#{transactionManagedBean.option2}" filterMatchMode="contains">
-                                <h:outputText rendered="#{transactions.paymentStatus==true}" value="Cash Payment"/>
-                                <h:outputText rendered="#{transactions.paymentStatus==false}" value="Credit Card Payment"/>
+                                <h:outputText rendered="#{transactions.mtMode==false}" value="Cash/Card Payment"/>
+                                <h:outputText rendered="#{transactions.mtMode==true}" value="Coin Payment"/>
                             </p:column>
 
                             <p:rowExpansion>  
