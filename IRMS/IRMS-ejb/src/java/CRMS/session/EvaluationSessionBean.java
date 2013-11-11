@@ -263,6 +263,36 @@ public class EvaluationSessionBean {
     {
         List<MemberEntity> tiered = new ArrayList();
         
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List <MemberEntity> allMembers = q.getResultList(); 
+        Iterator <MemberEntity> itr = allMembers.iterator();
+        //get a description statistics
+        DescriptiveStatistics stats = new DescriptiveStatistics();
+        
+        while(itr.hasNext())
+        {
+            MemberEntity current = itr.next();
+            double currentCustLifeValue = calculateCustLifeValue(current.getMemberEmail());
+            stats.addValue(currentCustLifeValue);
+        }
+        
+        double tieredValue = stats.getPercentile(80);
+        
+        Query q2 = em.createQuery("SELECT m FROM MemberEntity m");
+        List <MemberEntity> allMembers2 = q2.getResultList(); 
+        Iterator <MemberEntity> itr2 = allMembers2.iterator();
+        List<MemberEntity> resultList = new ArrayList();
+        
+        while(itr2.hasNext())
+        {
+            MemberEntity current = itr.next();
+            double currentCustLifeValue = calculateCustLifeValue(current.getMemberEmail());
+            if(currentCustLifeValue>=tieredValue)
+                resultList.add(current);
+        }
+        
+        tiered = resultList;
+        
         return tiered;
     }
     public void persist(Object object) {
