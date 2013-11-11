@@ -416,7 +416,7 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setLabel("Evaluation");
 
                 item = new MenuItem();
-                item.setValue("Manage Contract");
+                item.setValue("View size of wallet");
                 item.setUrl("/crms/sizeOfWallet.xhtml");
                 item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
