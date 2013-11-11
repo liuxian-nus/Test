@@ -94,7 +94,15 @@ public class FeedbackSessionBean {
         System.out.println("feedback updated");
         return;
     }
-
+    
+    public void updateFeedbackStatus(FeedbackEntity feedback, String status) {
+        System.out.println("Feedback session bean: update status");
+        feedback.setFeedbackStatus(status);
+        em.merge(feedback);
+        em.flush();
+        System.out.println("feedback status updated");
+    }
+    
     public List<FeedbackEntity> getAllFeedbacks() {
         Query q = em.createQuery("SELECT f from FeedbackEntity f");
         return q.getResultList();

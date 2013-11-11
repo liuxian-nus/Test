@@ -363,7 +363,7 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/crms/listAllMembers.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Member Transactions");
                 item.setUrl("/crms/listMemberTransactions.xhtml");
@@ -375,13 +375,18 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/crms/listPromotions.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-                
+
+                item = new MenuItem();
+                item.setValue("Feedbacks");
+                item.setUrl("/crms/feedbackManagement.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+
                 item = new MenuItem();
                 item.setValue("Coupon Types");
                 item.setUrl("/crms/listCouponTypes.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);
-
 
                 model.addSubmenu(submenu);
             }
@@ -515,7 +520,7 @@ public class Menu2ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
 
-                
+
 
                 submenu = new Submenu();
                 submenu.setLabel("Show billing");
