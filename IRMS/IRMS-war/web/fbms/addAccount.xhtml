@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    
+    <ui:define name="content">
+         <h:form id="AddMerchant">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+
+            <p:panel id="Home" header="Add New Account" style="height:440px;">
+                <h:panelGrid columns="3" >
+                    <h:outputText value="Account Name*:"/>
+                    <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{fBAccountManagedBean.name}"/>                                   
+                    <h:outputText value=""/>
+
+                    <h:outputText value="Account Initial Amount*:"/>
+                    <h:inputText id ="employeeID" title="Please enter the initial amount" value="#{fBAccountManagedBean.account.accountAmount}"/>
+                    <h:outputText value=""/>
+
+                    <p:commandButton  value="Save" ajax="true" actionListener="#{fBAccountManagedBean.addAccount}" update ="growl"/>
+
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
