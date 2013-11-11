@@ -20,7 +20,11 @@ import ATMS.entity.AttrTicketEntity;
 import ATMS.session.TicketSessionBean;
 import CEMS.entity.EventEntity;
 import CEMS.session.EventSessionBean;
+import CRMS.entity.CouponEntity;
+import CRMS.entity.CouponTypeEntity;
 import CRMS.entity.MemberEntity;
+import CRMS.session.CouponSessionBean;
+import CRMS.session.CouponTypeSessionBean;
 import CRMS.session.MemberSessionBean;
 import ERMS.entity.EmployeeEntity;
 import ERMS.entity.FunctionalityEntity;
@@ -69,7 +73,10 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @RequestScoped
 public class initializationManagedBean implements Serializable {
-
+    @EJB
+    private CouponTypeSessionBean couponTypeSessionBean;
+    @EJB
+    private CouponSessionBean couponSessionBean;
     @EJB
     private MerchantBillSessionBean merchantBillSessionBean;
     @EJB
@@ -116,6 +123,8 @@ public class initializationManagedBean implements Serializable {
     private ShowContractSessionBean showContractSessionBean;
     @EJB
     private EventSessionBean eventSessionBean;
+    
+    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -138,6 +147,8 @@ public class initializationManagedBean implements Serializable {
     private ContracteventEntity event;
     private EventEntity eventEntity;
     private Date currentDate = new Date();
+    private CouponEntity coupon;
+    private CouponTypeEntity ct;
 //    private MemberEntity member;
 
     @PostConstruct
@@ -827,6 +838,55 @@ public class initializationManagedBean implements Serializable {
         }
         System.err.println("Insert Bowen VIP into database");
         addMessage("VIP member Created!");
+    }
+    
+    public void createCouponType(){
+        System.err.println("go to create coupon type page...");
+        ct=new CouponTypeEntity();
+        ct.setCouponName("90% discount for attraction/show");
+        ct.setCouponTypeRemarks("coupon generated when hotel reservation fee exceeded SGD$1000");
+        Date startDate=new Date(113,10,1);
+        Date endDate=new Date(115,10,1);
+        ct.setCpStartDate(startDate);
+        ct.setCpEndDate(endDate);
+        ct.setDiscount(0.9);
+        
+        try {
+            System.out.println("Creating new coupon type....");
+            couponTypeSessionBean.addCouponType(ct);   
+            System.out.println("Coupon type created....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding coupon type", ""));
+            return;
+        }
+        System.err.println("Insert new coupon type into database");
+        addMessage("Coupon Type Created!");
+        
+    }
+    
+    public void createCoupon() {
+        System.err.println("go to create coupon page...");
+        coupon = new CouponEntity();
+        ct=couponTypeSessionBean.getAllCouponTypes().get(0);
+        System.out.println("ct discount "+ct.getDiscount());
+        Date issueDate=new Date(113,11,1);
+        coupon.setCouponIssueDate(issueDate);
+        member=memberSessionBean.getMemberByEmail("leijq369@gmail.com");
+        coupon.setCouponOwner(member);
+        coupon.setCouponType(ct);
+        coupon.setStatus("New");
+        coupon.setCouponOwner(member);
+        
+        try {
+            System.out.println("Creating new coupon....");
+            couponSessionBean.addCoupon(coupon);
+            System.out.println("Coupon created....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding coupon", ""));
+            return;
+        }
+        System.err.println("Insert new coupon into database");
+        addMessage("Coupon Created!");
     }
 
     public void createRoom() {
@@ -1723,6 +1783,8 @@ public class initializationManagedBean implements Serializable {
         createContract();
         createESMSAdmin();
         createHotelEmployees();
+        createCouponType();
+        createCoupon();
 
         addMessage("Initialization succeed!");
     }
