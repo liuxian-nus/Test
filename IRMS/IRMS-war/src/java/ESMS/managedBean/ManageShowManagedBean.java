@@ -11,6 +11,7 @@ import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
+import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -71,6 +72,13 @@ public class ManageShowManagedBean {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
+    public void setShowStatus(ActionEvent event) throws IOException {
+        FacesMessage msg = new FacesMessage("Status Edited", null);
+        showSessionBean.updateShow(selectedShow);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("manageShow.xhtml");
+    }
+
     public void onCancel(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Schedule Edit Cancelled", null);
 
@@ -83,6 +91,10 @@ public class ManageShowManagedBean {
 
     public List<ShowEntity> getShows() throws ExistException {
         return showSessionBean.getAllShows();
+    }
+    
+    public List<ShowEntity> getAvailableShows() throws ExistException {
+        return showSessionBean.getAvailableShows();
     }
 
     public void deleteShow(ActionEvent event) {
