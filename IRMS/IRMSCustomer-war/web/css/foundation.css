@@ -2445,7 +2445,7 @@ label.error {
       background-color: #c0cecd; }
   .section-container.tabs > section > .content, .section-container.tabs > .section > .content {
     padding: 0.9375em;
-    background-color: #d6e5e4;
+    background-color: white;
     border: solid 1px #c0cecd; }
     .section-container.tabs > section > .content > *:last-child, .section-container.tabs > .section > .content > *:last-child {
       margin-bottom: 0; }
@@ -2714,7 +2714,7 @@ label.error {
         padding: 0.9375em;
         color: #333333;
         font-size: 0.875em;
-        background: none; }
+        background: #579c98; }
       .section-container.horizontal-nav > section > .title:hover, .section-container.horizontal-nav > .section > .title:hover {
         background-color: #e2e2e2; }
     .section-container.horizontal-nav > section > .content, .section-container.horizontal-nav > .section > .content {
@@ -2776,7 +2776,7 @@ label.error {
       background-color: #579c98; }
   .no-js .section-container > section > .content, .no-js .section-container > .section > .content {
     padding: 0.9375em;
-    background-color: white;
+    background-color: #579c98;
     border: solid 1px #c0cecd; }
     .no-js .section-container > section > .content > *:last-child, .no-js .section-container > .section > .content > *:last-child {
       margin-bottom: 0; }
@@ -2941,7 +2941,7 @@ label.error {
     background: #090909;
     color: white; }
   .top-bar-section ul li.active > a {
-    background: #090909;
+    background: #579c98;
     color: white; }
   .top-bar-section .has-form {
     padding: 15px; }
