@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
@@ -31,7 +32,9 @@ public class EvaluationSessionBean {
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     MemberTransactionEntity mte;
-    
+    @EJB
+    MemberSessionBean memberSessionBean;
+    MemberEntity member;
 
     public double calculateSizeOfWallet(String memberEmail)
 
@@ -63,6 +66,8 @@ public class EvaluationSessionBean {
             }
         }
         sizeOfWallet = memberTotal;
+        member.setSizeOfWallet(sizeOfWallet);
+        memberSessionBean.updateMember(member);
         return sizeOfWallet;
     }
     

@@ -89,6 +89,7 @@ public class MemberEntity implements Serializable {
     @XmlTransient
     @OneToMany(cascade = {CascadeType.MERGE}, mappedBy = "feedbackOwner")
     private List<FeedbackEntity> feedbacks = new ArrayList<FeedbackEntity>();
+    private double sizeOfWallet;
 
     public Set<PromotionEntity> getPromotions() {
         return Promotions;
@@ -320,6 +321,14 @@ public class MemberEntity implements Serializable {
 
     public void setCoupons(List<CouponEntity> coupons) {
         this.coupons = coupons;
+    }
+
+    public double getSizeOfWallet() {
+        return sizeOfWallet;
+    }
+
+    public void setSizeOfWallet(double sizeOfWallet) {
+        this.sizeOfWallet = sizeOfWallet;
     }
 
     @Override
