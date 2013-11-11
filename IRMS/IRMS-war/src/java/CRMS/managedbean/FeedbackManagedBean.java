@@ -23,6 +23,7 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -39,6 +40,7 @@ public class FeedbackManagedBean implements Serializable {
     private SelectItem[] ratingOption;
     private SelectItem[] departmentOption;
     private CartesianChartModel categoryModel;
+    private PieChartModel pieModel;
 
     public FeedbackManagedBean() {
     }
@@ -65,12 +67,24 @@ public class FeedbackManagedBean implements Serializable {
         }
     }
 
+    private void createPieModel() {
+        pieModel = new PieChartModel();
+
+        pieModel.set("hotel", feedbackSessionBean.countFeedbackPercentageByDepartment("hotel"));
+        pieModel.set("shopping Mall", feedbackSessionBean.countFeedbackPercentageByDepartment("shopping mall"));
+        pieModel.set("entertainment show", feedbackSessionBean.countFeedbackPercentageByDepartment("entertainment show"));
+        pieModel.set("food and beverage", feedbackSessionBean.countFeedbackPercentageByDepartment("food and beverage"));
+        pieModel.set("attraction", feedbackSessionBean.countFeedbackPercentageByDepartment("attraction"));
+        pieModel.set("convention center", feedbackSessionBean.countFeedbackPercentageByDepartment("convention center"));
+    }
+
     @PostConstruct
     public void init() throws ExistException {
         feedbackList = feedbackSessionBean.getAllFeedbacks();
         ratingOption = this.createRatingOption();
         departmentOption = this.createDepartmentOption();
         createCategoryModel();
+        createPieModel();
 
     }
 
@@ -155,6 +169,14 @@ public class FeedbackManagedBean implements Serializable {
 
     public void setCategoryModel(CartesianChartModel categoryModel) {
         this.categoryModel = categoryModel;
+    }
+
+    public PieChartModel getPieModel() {
+        return pieModel;
+    }
+
+    public void setPieModel(PieChartModel pieModel) {
+        this.pieModel = pieModel;
     }
 
     public void onRowToggle(ToggleEvent event) {
