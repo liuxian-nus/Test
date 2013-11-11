@@ -487,6 +487,17 @@ public class Menu2ManagedBean implements Serializable {
                 System.out.println("ESMSAdmin menu bar");
 
                 submenu = new Submenu();
+                submenu.setLabel("Request Management");
+
+                item = new MenuItem();
+                item.setValue("View Show Request");
+                item.setUrl("/esms/viewShowRequest.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
+
+                submenu = new Submenu();
                 submenu.setLabel("Contract Management");
 
                 item = new MenuItem();
@@ -520,31 +531,12 @@ public class Menu2ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
 
-
-
                 submenu = new Submenu();
                 submenu.setLabel("Show billing");
 
                 item = new MenuItem();
                 item.setValue("View bill");
                 item.setUrl("/esms/showBilling.xhtml");
-                item.setIcon("ui-icon ui-icon-script");
-                submenu.getChildren().add(item);
-
-                model.addSubmenu(submenu);
-
-                submenu = new Submenu();
-                submenu.setLabel("Request Management");
-
-                item = new MenuItem();
-                item.setValue("View Request");
-                item.setUrl("/esms/viewShowRequest.xhtml");
-                item.setIcon("ui-icon ui-icon-script");
-                submenu.getChildren().add(item);
-
-                item = new MenuItem();
-                item.setValue("Manage Request");
-                item.setUrl("/esms/manageShowRequest.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
 
