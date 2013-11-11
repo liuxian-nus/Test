@@ -25,8 +25,8 @@
                                     <h:outputText value="#{promotions.promotionTitle}"/>
                                 </p:column>
 
-                                <p:column id="codeColumn" filterBy="#{promotions.promotionCode}" headerText="Promotion Code: " filterMatchMode="contains">
-                                    <h:outputText value="#{promotions.promotionCode}"/>
+                                <p:column id="departmentColumn" filterBy="#{promotions.promotionDepartment}" headerText="Department: " filterMatchMode="contains">
+                                    <h:outputText value="#{promotions.promotionDepartment}"/>
                                 </p:column>
 
 
@@ -42,6 +42,10 @@
                                     </h:outputText>
                                 </p:column>
 
+                                <p:column id="discountColumn" filterBy="#{promotions.discount}" headerText="Department: " filterMatchMode="contains">
+                                    <h:outputText value="#{promotions.discount}"/>
+                                </p:column>
+
                                 <p:rowExpansion>  
                                     <h:panelGrid id="display" columns="2" cellpadding="4" style="width:400px;"  
                                                  styleClass=" ui-widget-content grid">  
@@ -49,12 +53,15 @@
                                         <f:facet name="Title">  
                                             #{promotions.promotionTitle}
                                         </f:facet>  
+                                        <h:outputText value="Department:" />  
+                                        <h:outputText id="description" value="#{promotions.promotionDepartment}"  style="width:400px;"  >  
+                                        </h:outputText>
 
-                                        <h:outputText value="Category:" />  
-                                        <h:outputText id="category" value="#{promotions.promotionCategory}" style="width:400px;"   />  
+                                        <h:outputText value="Code:" />  
+                                        <h:outputText id="code" value="#{promotions.promotionCode}" style="width:400px;"   />  
 
-                                        <h:outputText value="Remark:" />  
-                                        <h:outputText id="remark" value="#{promotions.promotionRemarks}"  style="width:400px;"  >  
+                                        <h:outputText value="Description:" />  
+                                        <h:outputText id="description" value="#{promotions.promotionDescription}"  style="width:400px;"  >  
                                         </h:outputText>
 
                                         <h:outputText value="Range:" />  
@@ -76,21 +83,28 @@
                         <h:outputText value="Promotion Title*:"/>
                         <h:inputText required ="true" requiredMessage="Title cannot be empty" value="#{promotionManagedBean.newPromotion.promotionTitle}"/>                                   
                         <h:outputText value=""/>
+                        <h:outputText value="Promotion Code*:"/>
+                        <h:inputText required ="true" requiredMessage="Promotion Code cannot be empty" value="#{promotionManagedBean.newPromotion.promotionCode}"/>                                   
+                        <h:outputText value=""/>
+                        <h:outputText value="Discount Rate*:"/>
+                        <h:inputText required ="true" requiredMessage="Descount rate cannot be empty" value="#{promotionManagedBean.newPromotion.discount}"/>                                   
+                        <h:outputText value=""/>
                         <h:outputText value="Start Date*:"/>
                         <p:calendar pattern="yyyy-MM-dd" mindate="#{addShowManagedBean.currentDate}" yearRange="0" showButtonPanel="true" navigator="true" id="customCal1" value="#{promotionManagedBean.newPromotion.promotionStartDate}" /> 
                         <h:outputText value=""/>
                         <h:outputText value="End Date*:"/>
                         <p:calendar pattern="yyyy-MM-dd" yearRange="0" mindate="#{addShowManagedBean.currentDate}" showButtonPanel="true" navigator="true" id="customCal2" value="#{promotionManagedBean.newPromotion.promotionEndDate}" /> 
                         <h:outputText value=""/>
-                        <h:outputText value="Category*:"/>
-                        <h:selectOneRadio value ="#{promotionManagedBean.newPromotion.promotionCategory}" required ="true" requiredMessage="You have to choose a category">
-                            <f:selectItem itemLabel="first" itemValue="first" />  
-                            <f:selectItem itemLabel="second" itemValue="second" />  
-                            <f:selectItem itemLabel="third" itemValue="third" />  
+                        <h:outputText value="Department*:"/>
+                        <h:selectOneRadio value ="#{promotionManagedBean.newPromotion.promotionDepartment}" required ="true" requiredMessage="You have to choose a department">
+                            <f:selectItem itemLabel="hotel" itemValue="hotel" />  
+                            <f:selectItem itemLabel="attraction" itemValue="attraction" />  
+                            <f:selectItem itemLabel="show" itemValue="show" />
+                            <f:selectItem itemLabel="shopping mall" itemValue="shopping mall" />  
                         </h:selectOneRadio> 
                         <h:outputText value=""/>
-                        <h:outputText value="Remark:"/>
-                        <h:inputText value="#{promotionManagedBean.newPromotion.promotionRemarks}"/>                                   
+                        <h:outputText value="Description"/>
+                        <h:inputText value="#{promotionManagedBean.newPromotion.promotionDescription}"/>                                   
                         <h:outputText value=""/>
 
                         <p:fieldset legend="Set Promotion Target" toggleable="true" toggleSpeed="500" collapsed="true"> 

@@ -36,11 +36,13 @@ public class PromotionEntity implements Serializable {
     private Date promotionStartDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date promotionEndDate;
-    private String promotionRemarks;
+    private String promotionDescription;
     private String promotionCode;
-    private String promotionCategory;
+    private String promotionDepartment;
     private String promotionTitle;
     private boolean promotionMemberExclusive;
+    private double discount;
+    private String imagePath;
     @ManyToMany(cascade = {CascadeType.ALL})
     private List<MemberEntity> mcMemberTargets;
 
@@ -62,6 +64,14 @@ public class PromotionEntity implements Serializable {
     System.out.println("MarketingCampaignEntity: a new marketing campaign has been added!");
     }
      */
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+    
     public boolean isPromotionMemberExclusive() {
         return promotionMemberExclusive;
     }
@@ -95,13 +105,14 @@ public class PromotionEntity implements Serializable {
         this.promotionEndDate = promotionEndDate;
     }
 
-    public String getPromotionRemarks() {
-        return promotionRemarks;
+    public String getPromotionDescription() {
+        return promotionDescription;
     }
 
-    public void setPromotionRemarks(String promotionRemarks) {
-        this.promotionRemarks = promotionRemarks;
+    public void setPromotionDescription(String promotionDescription) {
+        this.promotionDescription = promotionDescription;
     }
+
 
     public String getPromotionCode() {
         return promotionCode;
@@ -111,13 +122,14 @@ public class PromotionEntity implements Serializable {
         this.promotionCode = promotionCode;
     }
 
-    public String getPromotionCategory() {
-        return promotionCategory;
+    public String getPromotionDepartment() {
+        return promotionDepartment;
     }
 
-    public void setPromotionCategory(String promotionCategory) {
-        this.promotionCategory = promotionCategory;
+    public void setPromotionDepartment(String promotionDepartment) {
+        this.promotionDepartment = promotionDepartment;
     }
+
 
     public String getPromotionTitle() {
         return promotionTitle;
@@ -125,6 +137,14 @@ public class PromotionEntity implements Serializable {
 
     public void setPromotionTitle(String promotionTitle) {
         this.promotionTitle = promotionTitle;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
     
     
