@@ -12,7 +12,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Restaurant Search</title>
-
+        <script type='text/javascript' src="/IRMSCustomer-war/js/jquery.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
         <script type="text/javascript" src="/IRMSCustomer-war/js/jquery-latest.js"></script> 
         <script type="text/javascript" src="/IRMSCustomer-war/js/jquery.tablesorter.js"></script>
         <link rel="stylesheet" href="/IRMSCustomer-war/css/style.css" type="text/css" media="screen" /> 
