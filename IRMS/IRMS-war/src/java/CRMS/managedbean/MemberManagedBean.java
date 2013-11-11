@@ -84,6 +84,14 @@ public class MemberManagedBean {
         return memberSessionBean.getAllMembers();
     }
 
+    public void checkTransaction(ActionEvent event) throws IOException {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        request.getSession().setAttribute("memberE", member);
+        System.err.println("Put Member:" + member.getMemberEmail());
+//        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("memberT", member);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("listTransactionResult.xhtml");
+    }
+
     //wrong method implementation:  javax.el.MethodNotFoundException
     public List<MemberTransactionEntity> getTransactionsByMemberEmail(ActionEvent event) throws ExistException, IOException {
         System.err.println("in getting member transactions: member managed bean");

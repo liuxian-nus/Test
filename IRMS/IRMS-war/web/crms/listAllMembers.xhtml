@@ -43,7 +43,9 @@
                         </p:column>
 
                         <p:column>
-                            <p:commandButton icon="ui-icon ui-icon-flag" title="Transactions" value ="Transactions" ajax="true" action="/crms/listMemberTransactions.xhtml">
+                            <p:commandButton action="#{memberManagedBean.checkTransaction(event)}" icon="ui-icon ui-icon-flag" 
+                                             title="Transactions" value ="Transactions">
+                                <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.member}" />
                             </p:commandButton>
                         </p:column>
 
