@@ -17,13 +17,14 @@ import sun.misc.BASE64Encoder;
  */
 @Stateless
 @LocalBean
-public class EPasswordHashSessionBean {
+public class EPasswordHashSessionBean implements EPasswordHashSessionBeanRemote {
 
       CRMS.session.CPasswordHashSessionBean instance;
 
     private void EPasswordHashSessionBean() {
     }
 
+    @Override
     public String hashPassword(String pwd) {
         MessageDigest md = null;
         try {
@@ -40,6 +41,7 @@ public class EPasswordHashSessionBean {
         return hash;  
     }
 
+    @Override
     public CRMS.session.CPasswordHashSessionBean getInstance()  
     {
         if (instance == null) {
