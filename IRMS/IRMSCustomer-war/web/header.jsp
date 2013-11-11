@@ -27,7 +27,8 @@
                 </li>
                 <li><a href="entertainment" >Entertainment</a>
                   <ul>
-                        <li><a href="entertainmentVenue">Entertainment Venue</a></li>
+                        <li><a href="entertainment">shows</a></li>
+                         <li><a href="entertainmentRegister">Organize your show</a></li>
                     </ul>
                 </li>
                 <li><a href="attraction">Attraction</a>
@@ -43,6 +44,7 @@
                     <ul>
                          <li><a href="event">Our Venues</a></li>
                         <li><a href="eventList">Events Happening</a></li>
+                         <li><a href="eventService">Events Services</a></li>
                     </ul>
                 </li>
                 <li><a href="member">Member</a>
