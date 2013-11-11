@@ -58,7 +58,7 @@
                             <h:outputText value="#{roomSearchResultManagedBean.thisRoom.reservation.reservationGuestCount}" style="font-weight:bold" /> 
                             <h:outputText value=" " /> 
 
-                            <p:commandButton  oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Check Out" title="Check Out">  
+                            <p:commandButton  oncomplete="confirmation.show()" ajax="true" update="growl"  icon="ui-icon ui-icon-check" value ="Check Out" title="Check Out">  
                             </p:commandButton>
                             <p:commandButton  oncomplete="checkService.show()" ajax="true"  icon="ui-icon ui-icon-search" value ="Check Service" title="Room Service Detail">  
                             </p:commandButton>

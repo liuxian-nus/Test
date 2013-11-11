@@ -25,7 +25,12 @@ public class EventServiceSessionBean {
     }
     
     public List<EventServiceEntity> getAllEventServices() throws NoResultException  {
-        Query q = em.createQuery("SELECT m FROM EventServiceEntity m");
+        Query q = em.createQuery("SELECT es FROM EventServiceEntity es");
+        return q.getResultList();
+    }
+    
+    public List<EventServiceEntity> getEventServiceByCategory(String category) throws NoResultException {
+        Query q = em.createQuery("SELECT es FROM EventServiceEntity es WHERE es.serviceCategory = '" + category + "'");
         return q.getResultList();
     }
 

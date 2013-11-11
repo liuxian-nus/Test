@@ -219,6 +219,26 @@ public class RoomManagedBean implements Serializable {
 
         FacesContext.getCurrentInstance().getExternalContext().redirect("listAllRooms.xhtml");
     }
+    
+     public void updateHousekeeping() throws IOException {
+
+        System.err.println("we are in update housekeeping");
+
+        try {
+            System.err.println("room ID" + thisRoom.getRoomId());
+            if (thisRoom.getReservation() != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The room is not checked out!", ""));
+            } else {
+                rm.updateHousekeeping(thisRoom.getRoomId());
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "room finished housekeeping, now you can use this room for check in", ""));
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when update room status after housekeeping", ""));
+            return;
+        }
+
+        FacesContext.getCurrentInstance().getExternalContext().redirect("listAllRooms.xhtml");
+    }
 
     public String getCreditCardNo() {
         return creditCardNo;

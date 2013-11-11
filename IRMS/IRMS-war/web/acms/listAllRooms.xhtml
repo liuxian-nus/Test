@@ -104,10 +104,13 @@
                                 <p:column style="width:100px">  
                                     <p:commandButton rendered="#{rooms.roomStatus == 'available'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Check In" title="Check In">  
                                         <f:setPropertyActionListener target="#{roomManagedBean.thisRoom}" value="#{rooms}"/>  
+                                    </p:commandButton> 
+                                    <p:commandButton rendered="#{rooms.roomStatus == 'checkedOut'}" oncomplete="housekeeping.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Housekeeping" title="Housekeeping">  
+                                        <f:setPropertyActionListener target="#{roomManagedBean.thisRoom}" value="#{rooms}"/>  
                                     </p:commandButton>  
-                                    <h:outputText rendered="#{rooms.roomStatus == 'occupied'}" value="Occupied" >  
-                                    </h:outputText>  
                                     <h:outputText rendered="#{rooms.roomStatus == 'reserved'}" value="Reserved" >  
+                                    </h:outputText> 
+                                    <h:outputText rendered="#{rooms.roomStatus =='occupied'}" value="Occupied" >  
                                     </h:outputText> 
                                 </p:column>  
                             </p:dataTable>
@@ -126,10 +129,18 @@
                             <h:outputText value=""/>
 
                             <br/><br/>
-                            <p:commandButton value="Yes" onclick="growl" update ="rooms2" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
+                            <p:commandButton value="Yes" onclick="growl;" update ="rooms2" action="#{roomManagedBean.checkIn}" oncomplete="confirmation.hide()">  
                             </p:commandButton>
                             <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
-                        </p:dialog>  
+                        </p:dialog> 
+                        
+                         <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Housekeeping" widgetVar="housekeeping"> 
+                          Is the room clean and ready for check in?
+                            <br/><br/>
+                            <p:commandButton value="Yes" onclick="growl;" update ="rooms2" action="#{roomManagedBean.updateHousekeeping}" oncomplete="housekeeping.hide()">  
+                            </p:commandButton>
+                            <p:commandButton value="Cancel" onclick="housekeeping.hide()" type="button"/>  
+                        </p:dialog>
                     </p:panel>
                     <!--    </h:form>
                         <h:form> -->
