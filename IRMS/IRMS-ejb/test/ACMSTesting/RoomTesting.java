@@ -5,9 +5,12 @@
 package ACMSTesting;
 
 import ACMS.entity.RoomEntity;
+import ACMS.entity.RoomServiceEntity;
 import ACMS.session.RoomServiceSessionBeanRemote;
 import ACMS.session.RoomSessionBeanRemote;
 import Exception.ExistException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -63,14 +66,77 @@ public class RoomTesting {
     }
     
     @Test
-    public void testGetAvailableRooms()
+    public void testGetAvailableRooms() throws ExistException
     {
         System.out.println("testGetAvailableRooms");
         
+        List<RoomEntity> test = RoomSessionBean.getAvailableRooms();
+        assertNotNull(test);
+        assertSame(test.getClass(),ArrayList.class);
+    }
+    
+    @Test
+    public void testGetAllRooms() throws ExistException
+    {
+        System.out.println("testGetAllRooms");
+        
+        List<RoomEntity> test = RoomSessionBean.getAllRooms();
+        assertNotNull(test);
+        assertSame(test.getClass(),ArrayList.class);
+    }
+    
+    @Test
+    public void testGetOccupiedRooms() throws ExistException
+    {
+        System.out.println("testGetOccupiedRooms");
+        
+        List<RoomEntity> test = RoomSessionBean.getOccupiedRooms();
+        assertNotNull(test);
+        assertSame(test.getClass(),ArrayList.class);
+    }
+    
+    @Test
+    public void testGetCheckInRooms() throws ExistException
+    {
+        System.out.println("testGetCheckInRooms");
+        
+        Long reservationId = Long.parseLong("7");//to be modified
+        List<RoomEntity> test = RoomSessionBean.getCheckInRooms(reservationId);
+        assertNotNull(test);
+        assertSame(test.getClass(),ArrayList.class);
         
     }
     
+    @Test
+    public void testAddRoomService() throws ExistException
+    {
+        System.out.println("testAddRoomService");
+        
+        int roomId = 1105;
+        String roomServiceName = "Thai Pineapple Rice";
+        int quantity = 2;
+        
+        RoomServiceEntity test = RoomSessionBean.addRoomService(roomId, roomServiceName, quantity);
+        assertNotNull(test);
+        assertSame(test.getClass(),RoomServiceEntity.class);
+        
+    }
 
+    @Test
+    public void testClearServiceCharge() throws ExistException
+    {
+       System.out.println("testClearServiceCharge"); 
+       
+       int roomId = 1105;
+       double test = RoomSessionBean.clearServiceCharge(roomId);
+       assertNotNull(test);
+    }
+    
+    @Test
+    public void testCalculateRoomFee()
+    {
+       System.out.println("testCalculateRoomFee");
+    }
     private RoomSessionBeanRemote lookupRoomSessionBean() {
         try {
             Context c = new InitialContext();
