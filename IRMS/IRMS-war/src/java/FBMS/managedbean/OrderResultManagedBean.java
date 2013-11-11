@@ -10,6 +10,9 @@ import FBMS.session.BillingSessionBean;
 import FBMS.session.FBEmailSessionBean;
 import FBMS.session.InventorySessionBean;
 import FBMS.session.OrderSessionBean;
+import com.lowagie.text.DocumentException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -121,7 +124,7 @@ public class OrderResultManagedBean {
 //        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisOrder", thisOrder);
     }
 
-    public void deliverGoods(ActionEvent event) {
+    public void deliverGoods(ActionEvent event) throws IOException, FileNotFoundException, DocumentException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         System.err.println("hahaha teest");
@@ -130,11 +133,11 @@ public class OrderResultManagedBean {
 //        thisOrder.setStatus("Delivered");
         inventorySessionBean.issueGoods(thisOrder.getOrderId());
         System.out.println("NO2: After confirming" + thisOrder.getStatus());
-//        fBEmailSessionBean.sendIssueGoods(thisOrder.getEmail(), thisOrder);
+       fBEmailSessionBean.sendIssueGoods(thisOrder.getEmail(), thisOrder);
 //        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisOrder", thisOrder);
     }
 
-    public void sendInvoice(ActionEvent event) { //receivepayment for account2
+    public void sendInvoice(ActionEvent event) throws IOException, FileNotFoundException, DocumentException { //receivepayment for account2
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         System.err.println("hahaha teest");
@@ -147,11 +150,11 @@ public class OrderResultManagedBean {
         System.out.println("whats the price now? and account" + amount + account);
         billingSessionBean.receivePayment(amount, account);
         System.out.println("NO2: After confirming" + thisOrder.getStatus());
-        //   fBEmailSessionBean.sendInvoice(thisOrder.getEmail(), thisOrder);
+        fBEmailSessionBean.sendInvoice(thisOrder.getEmail(), thisOrder);
 //        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisOrder", thisOrder);
     }
 
-    public void sendReceipt(ActionEvent event) {//receive for aacount1, postpayment for account1
+    public void sendReceipt(ActionEvent event) throws IOException, FileNotFoundException, DocumentException {//receive for aacount1, postpayment for account1
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         System.err.println("hahaha teest");
@@ -167,6 +170,6 @@ public class OrderResultManagedBean {
         billingSessionBean.receivePayment(amount, cash);
         billingSessionBean.postPayment(amount, receivable);
         System.out.println("NO2: After confirming" + thisOrder.getStatus());
-        //   fBEmailSessionBean.sendReceipt(thisOrder.getEmail(), thisOrder);
+        fBEmailSessionBean.sendReceipt(thisOrder.getEmail(), thisOrder.getInvoice().getReceipt());
     }
 }
