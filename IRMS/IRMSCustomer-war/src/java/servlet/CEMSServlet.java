@@ -5,7 +5,9 @@
 package servlet;
 
 import CEMS.entity.EventEntity;
+import CEMS.entity.EventServiceEntity;
 import CEMS.entity.VenueEntity;
+import CEMS.session.EventServiceSessionBean;
 import CEMS.session.EventSessionBean;
 import CEMS.session.VenueSessionBean;
 import java.io.IOException;
@@ -33,15 +35,20 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "CEMSServlet", urlPatterns = {"/CEMSServlet", "/CEMSServlet/*"})
 public class CEMSServlet extends HttpServlet {
     @EJB
+    private EventServiceSessionBean eventServiceSessionBean;
+    @EJB
     private VenueSessionBean venueSessionBean;
 
     @EJB
     private EventSessionBean eventSessionBean;
+    
  
     private List<VenueEntity> data;
     private VenueEntity data1;
     private EventEntity data2;
-    
+    private List<EventServiceEntity> AVList= null;
+    private List<EventServiceEntity> FLList= null;
+    private List<EventServiceEntity> PEList= null;
     //private String keyword=null;
 
     /**
@@ -89,10 +96,20 @@ public class CEMSServlet extends HttpServlet {
                 System.out.println("***eventResource***");
 
                 request.getRequestDispatcher("/eventResource.jsp").forward(request, response);
+            }else if ("eventService".equals(page)) {
+                
+                System.out.println("***eventService***");
+                eventServiceSessionBean.getEventServiceByCategory("Food and Beverage Services");
+                AVList = eventServiceSessionBean.getEventServiceByCategory("Audio and Video Requirements");
+                 request.setAttribute("AVList",AVList);
+                FLList = eventServiceSessionBean.getEventServiceByCategory("Floral and Landscaping Services");
+                 request.setAttribute("FLList",FLList);
+                PEList = eventServiceSessionBean.getEventServiceByCategory("Personnel Services");
+                request.setAttribute("PEList",PEList);
+                request.getRequestDispatcher("/eventService.jsp").forward(request, response);
             }else if ("eventRegisterResult".equalsIgnoreCase(page)) {
                 System.out.println("*****eventRegisterResult*****");
                 data2 = registerEvent(request);
-
                 System.out.println(data2.getEventName() + " has been registered!");
                 request.setAttribute("data", data2);
                 request.getRequestDispatcher("/eventRegisterResult.jsp").forward(request, response);
