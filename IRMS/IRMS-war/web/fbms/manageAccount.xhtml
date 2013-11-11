@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <h:form id="formSearchById">
+            <p:growl id="growl" showDetail="true" sticky="true" />   
+            <p:fieldset legend="Accounts Receivable" toggleable="true" toggleSpeed="500" collapsed="true">  
+                <p:panel id="contracts" header="Accounts Receivable" style="height:500px;">
+                    <div style="margin-top:20px;margin-bottom:20px;">
+
+                        <p:dataTable id="contract" value="#{fBAccountManagedBean.receivables}" var="raccount" 
+                                     paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true"
+                                     >
+
+                          
+
+                            <p:column headerText="Account ID" style="width:30px;">
+                                <h:outputText value="#{raccount.id}"/>
+                            </p:column>
+                            <p:column headerText="Name" style="width:50px;">
+                                <h:outputText value="#{raccount.accountName}"/>
+                            </p:column>
+                            <p:column headerText="Amount" style="width:50px;">
+                                <h:outputText value="#{raccount.accountAmount}"/>
+                            </p:column>
+
+                        </p:dataTable>  
+                    </div>
+                </p:panel>
+
+
+            </p:fieldset>
+        </h:form>
+        <br/>
+        
+        <h:form id="cash">
+            <p:growl id="growl" showDetail="true" sticky="true" />   
+            <p:fieldset legend=" Cash" toggleable="true" toggleSpeed="500" collapsed="true">  
+                <p:panel id="contracts" header="Cash" style="height:500px;">
+                    <div style="margin-top:20px;margin-bottom:20px;">
+
+                        <p:dataTable id="contract" value="#{fBAccountManagedBean.cah}" var="caccount" 
+                                     paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true"
+                                     >
+
+                          
+
+                            <p:column headerText="Account ID" style="width:30px;">
+                                <h:outputText value="#{caccount.id}"/>
+                            </p:column>
+                            <p:column headerText="Name" style="width:50px;">
+                                <h:outputText value="#{caccount.accountName}"/>
+                            </p:column>
+                            <p:column headerText="Amount" style="width:50px;">
+                                <h:outputText value="#{caccount.accountAmount}"/>
+                            </p:column>
+
+                        </p:dataTable>  
+                    </div>
+                </p:panel>
+
+
+            </p:fieldset>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
