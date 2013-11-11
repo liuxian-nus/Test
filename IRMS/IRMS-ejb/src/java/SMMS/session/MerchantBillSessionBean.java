@@ -35,7 +35,7 @@ import org.joda.time.DateTime;
  */
 @Stateless
 @LocalBean
-public class MerchantBillSessionBean {
+public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
     @EJB
     private ContractSessionBean contractSessionBean;
@@ -51,11 +51,13 @@ public class MerchantBillSessionBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
 
     //onetime bill would be overdue  one minute will be set to overdue
+    @Override
     public void createOverDueTimers(Date overdue) {
         System.out.println("in session bean create timers");
         TimerService timerService = ctx.getTimerService();
@@ -66,6 +68,7 @@ public class MerchantBillSessionBean {
     }
 
     //one time, bill would be set at that contract start date 4 minutes will be set to active
+    @Override
     public void createActiveTimers(Date startDate) {
         System.out.println("in session bean create timers");
         TimerService timerService = ctx.getTimerService();
@@ -96,6 +99,7 @@ public class MerchantBillSessionBean {
 //    }
 //    
     @Timeout
+    @Override
     public void handleTimeout(Timer timer) throws ExistException {
 
         System.out.println("in handle timeout test");
@@ -123,6 +127,7 @@ public class MerchantBillSessionBean {
 //        }
     }
 
+    @Override
     public void cancelTimers() {
         TimerService timerService = ctx.getTimerService();
         Collection timers = timerService.getTimers();
@@ -135,6 +140,7 @@ public class MerchantBillSessionBean {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public BillEntity addBill(BillEntity bill) {
 //        BillEntity thisbill = bill;
 //        thisbill.getBillDate().setYear(bill.getBillDate().getYear() - 1990);
@@ -148,6 +154,7 @@ public class MerchantBillSessionBean {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public void removeBill(BillEntity bill) throws ExistException {
         if (bill == null) {
             throw new ExistException("bill doesn't exist!");
@@ -159,6 +166,7 @@ public class MerchantBillSessionBean {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public BillEntity updateBill(BillEntity bill) throws ExistException {
         if (bill.getBillStatus() == "paid") {
             throw new ExistException("bill cannot be updated because it has been paid!");
@@ -167,6 +175,7 @@ public class MerchantBillSessionBean {
         return bill;
     }
 
+    @Override
     public List<BillEntity> getBillByContract(Long contractId) {
         System.err.println("in get bill by contract session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
@@ -181,6 +190,7 @@ public class MerchantBillSessionBean {
         return TransactionList;
     }
 
+    @Override
     public List<BillEntity> getBillByMerchant(String merchantId) {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
@@ -195,6 +205,7 @@ public class MerchantBillSessionBean {
         return TransactionList;
     }
 
+    @Override
     public List<BillEntity> getAvailableBills() {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
@@ -209,6 +220,7 @@ public class MerchantBillSessionBean {
         return TransactionList;
     }
 
+    @Override
     public List<BillEntity> getUnpaidBills() {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
@@ -223,6 +235,7 @@ public class MerchantBillSessionBean {
         return TransactionList;
     }
 
+    @Override
     public List<BillEntity> getOverdueBills() {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
@@ -237,13 +250,14 @@ public class MerchantBillSessionBean {
         return TransactionList;
     }
 
+    @Override
     public List<BillEntity> getUnpaidBillsByMerchant(String merchantId) {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-            if (m.getContract().getMerchant().getMerchantEmail() == merchantId) {
+            if (m.getContract().getMerchant().getMerchantEmail() == null ? merchantId == null : m.getContract().getMerchant().getMerchantEmail().equals(merchantId)) {
                 if (m.getBillStatus().equals("unpaid") || m.getBillStatus().equals("overdue")) {
                     TransactionList.add(m);
                 }
@@ -253,13 +267,14 @@ public class MerchantBillSessionBean {
         return TransactionList;
     }
 
+    @Override
     public List<BillEntity> getPaidBillsByMerchant(String merchantId) {
        System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-            if (m.getContract().getMerchant().getMerchantEmail() == merchantId) {
+            if (m.getContract().getMerchant().getMerchantEmail() == null ? merchantId == null : m.getContract().getMerchant().getMerchantEmail().equals(merchantId)) {
                 if (m.getBillStatus().equals("paid")) {
                     TransactionList.add(m);
                 }
@@ -269,6 +284,7 @@ public class MerchantBillSessionBean {
         return TransactionList;
     }
 
+    @Override
     public List<BillEntity> getAllBills() {
         System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
@@ -281,6 +297,7 @@ public class MerchantBillSessionBean {
         return TransactionList;
     }
 
+    @Override
     public BillEntity getBillById(Long billId) throws ExistException {
         bill = em.find(BillEntity.class, billId);
         if (bill == null) {
@@ -289,18 +306,22 @@ public class MerchantBillSessionBean {
         return bill;
     }
 
+    @Override
     public BillEntity getBill() {
         return bill;
     }
 
+    @Override
     public void setBill(BillEntity bill) {
         this.bill = bill;
     }
 
+    @Override
     public ContractEntity getContract() {
         return contract;
     }
 
+    @Override
     public void setContract(ContractEntity contract) {
         this.contract = contract;
     }
