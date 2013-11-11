@@ -4,6 +4,7 @@ import ERMS.entity.EmployeeEntity;
 import Exception.ExistException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.Remove;
 import javax.persistence.EntityManager;
@@ -15,7 +16,8 @@ import javax.persistence.Query;
  * @author Diana Wang
  */
 @Stateless
-public class EmployeeSessionBean {
+@LocalBean
+public class EmployeeSessionBean implements EmployeeSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -27,12 +29,14 @@ public class EmployeeSessionBean {
         //   Query q2 = em.createQuery("INSERT INTO employeeentity(EMPLOYEEID,ANSWER,EMPLOYEEDEPARTMENT,EMPLOYEEDOB,EMPLOYEEGENDER,EMPLOYEENAME,EMPLOYEEPASSWORD,EMPLOYEESCHEDULE,ISFIRSTTIMELOGIN,SECURITYQUESTION)VALUES (201001, 'John','Hotel',01/01/1990,'Male','Tester','0000','1',false,'Who is your best friend?')");
     }
 
+    @Override
     public EmployeeEntity addEmployee(EmployeeEntity employee) {
         //employee.create(employeeId, employeePassword, employeeDepartment, employeePosition, employeeSchedule);
         em.persist(employee);
         return employee;
     }
 
+    @Override
     public boolean removeEmployee(String employeeId) throws ExistException {
         employee = em.find(EmployeeEntity.class, employeeId);
         System.err.println("remove employee: " + employee.getEmployeeId());
@@ -43,6 +47,7 @@ public class EmployeeSessionBean {
         return true;
     }
 
+    @Override
     public boolean login(String employeeId, String employeePassword) {
 
         employee = em.find(EmployeeEntity.class, employeeId);
@@ -62,6 +67,7 @@ public class EmployeeSessionBean {
     }
     //泥煤的不要再报错了！再来！
 
+    @Override
     public EmployeeEntity getEmployeeById(String employeeId) throws ExistException {
         employee = em.find(EmployeeEntity.class, employeeId);
         if (employee == null) {
@@ -70,6 +76,7 @@ public class EmployeeSessionBean {
         return employee;
     }
 
+    @Override
     public List<EmployeeEntity> getAllEmployees() throws ExistException {
         Query q = em.createQuery("SELECT m FROM EmployeeEntity m");
         List employeeList = new ArrayList<EmployeeEntity>();
@@ -83,6 +90,7 @@ public class EmployeeSessionBean {
         return employeeList;
     }
     
+    @Override
      public List<EmployeeEntity> getHotelEmployees() throws ExistException {
         Query q = em.createQuery("SELECT m FROM EmployeeEntity m where m.employeeDepartment='Hotel'");
         List employeeList = new ArrayList<EmployeeEntity>();
@@ -96,6 +104,7 @@ public class EmployeeSessionBean {
         return employeeList;
     }
 
+    @Override
     public List<EmployeeEntity> getCEMSEvent() throws ExistException {
         Query q = em.createQuery("SELECT m FROM EmployeeEntity m");
         List employeeList = new ArrayList<EmployeeEntity>();
@@ -115,6 +124,7 @@ public class EmployeeSessionBean {
         return employeeList;
     }
 
+    @Override
     public List<EmployeeEntity> getEmployeeByName(String employeeName) throws ExistException {
         Query query = em.createQuery("SELECT r FROM EmployeeEntity r WHERE r.employeeName ='" + employeeName + "'");
         System.err.println("getEmployeeByName: " + employeeName);
@@ -127,6 +137,7 @@ public class EmployeeSessionBean {
         return employee;
     }
 
+    @Override
     public boolean updateEmployee(EmployeeEntity employee) {
         em.merge(employee);
         System.out.println("EmployeeSessionBean: employee " + employee.getEmployeeId() + " is successfully updated");
@@ -134,6 +145,7 @@ public class EmployeeSessionBean {
     }
 
     @Remove
+    @Override
     public void remove() {
         System.out.println("EmployeeSessionBean: remove()");
     }
