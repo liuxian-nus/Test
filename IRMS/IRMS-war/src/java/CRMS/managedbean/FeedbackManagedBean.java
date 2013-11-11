@@ -9,6 +9,7 @@ import CRMS.entity.MemberEntity;
 import CRMS.session.FeedbackSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -20,6 +21,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.ChartSeries;
 
 /**
  *
@@ -27,7 +30,7 @@ import org.primefaces.event.ToggleEvent;
  */
 @ManagedBean
 @ViewScoped
-public class FeedbackManagedBean {
+public class FeedbackManagedBean implements Serializable {
 
     @EJB
     private FeedbackSessionBean feedbackSessionBean;
@@ -35,8 +38,31 @@ public class FeedbackManagedBean {
     private List<FeedbackEntity> feedbackList;
     private SelectItem[] ratingOption;
     private SelectItem[] departmentOption;
+    private CartesianChartModel categoryModel;
 
     public FeedbackManagedBean() {
+    }
+
+    private void createCategoryModel() {
+        try {
+            System.out.println("creating bar chart....");
+            categoryModel = new CartesianChartModel();
+
+            ChartSeries feedbackChart = new ChartSeries();
+            feedbackChart.setLabel("Department");
+
+            feedbackChart.set("hotel", feedbackSessionBean.calculateAverageRatingByDepartment("hotel"));
+            feedbackChart.set("entertainment show", feedbackSessionBean.calculateAverageRatingByDepartment("entertainment show"));
+            feedbackChart.set("food and beverage", feedbackSessionBean.calculateAverageRatingByDepartment("food and beverage"));
+            feedbackChart.set("convention center", feedbackSessionBean.calculateAverageRatingByDepartment("convention center"));
+            feedbackChart.set("attraction", feedbackSessionBean.calculateAverageRatingByDepartment("attraction"));
+            feedbackChart.set("shopping mall", feedbackSessionBean.calculateAverageRatingByDepartment("shopping mall"));
+
+            categoryModel.addSeries(feedbackChart);
+        } catch (Exception e) {
+            System.err.println("error when creating bar chart");
+            e.printStackTrace();
+        }
     }
 
     @PostConstruct
@@ -44,6 +70,8 @@ public class FeedbackManagedBean {
         feedbackList = feedbackSessionBean.getAllFeedbacks();
         ratingOption = this.createRatingOption();
         departmentOption = this.createDepartmentOption();
+        createCategoryModel();
+
     }
 
     public void updateFeedbackStatus(ActionEvent event) throws IOException {
@@ -72,8 +100,8 @@ public class FeedbackManagedBean {
         SelectItem[] options = new SelectItem[6];
         System.out.println("Creating feedback department options");
         options[0] = new SelectItem("", "Select");
-        options[1] = new SelectItem("hotel", "hotel");               
-        options[2] = new SelectItem("food&beverage", "food&beverage");                       
+        options[1] = new SelectItem("hotel", "hotel");
+        options[2] = new SelectItem("food&beverage", "food&beverage");
         options[3] = new SelectItem("entertainment & show", "entertainment & show");
         options[4] = new SelectItem("attraction", "attraction");
         options[5] = new SelectItem("shopping mall", "shopping mall");
@@ -97,6 +125,7 @@ public class FeedbackManagedBean {
     }
 
     public List<FeedbackEntity> getFeedbackList() {
+        System.out.println("get feedbackList from managed bean");
         return feedbackList;
     }
 
@@ -119,7 +148,15 @@ public class FeedbackManagedBean {
     public void setDepartmentOption(SelectItem[] departmentOption) {
         this.departmentOption = departmentOption;
     }
-    
+
+    public CartesianChartModel getCategoryModel() {
+        return categoryModel;
+    }
+
+    public void setCategoryModel(CartesianChartModel categoryModel) {
+        this.categoryModel = categoryModel;
+    }
+
     public void onRowToggle(ToggleEvent event) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Row State " + event.getVisibility(),
@@ -127,5 +164,4 @@ public class FeedbackManagedBean {
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
 }

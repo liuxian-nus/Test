@@ -79,7 +79,7 @@ public class FeedbackSessionBean {
         if (feedbackSentDate != null) {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(feedbackSentDate);
             feedback.setFeedbackSentDate(date);
-        }else {
+        } else {
             Date date = new Date();
             feedback.setFeedbackSentDate(date);
         }
@@ -94,7 +94,7 @@ public class FeedbackSessionBean {
         System.out.println("feedback updated");
         return;
     }
-    
+
     public void updateFeedbackStatus(FeedbackEntity feedback, String status) {
         System.out.println("Feedback session bean: update status");
         feedback.setFeedbackStatus(status);
@@ -102,9 +102,10 @@ public class FeedbackSessionBean {
         em.flush();
         System.out.println("feedback status updated");
     }
-    
+
     public List<FeedbackEntity> getAllFeedbacks() {
         Query q = em.createQuery("SELECT f from FeedbackEntity f");
+        System.out.println("initialize get all feedbacks");
         return q.getResultList();
     }
 
@@ -122,6 +123,40 @@ public class FeedbackSessionBean {
     public List<FeedbackEntity> getFeedbackByEmail(String email) {
         Query q = em.createQuery("SELECT f from FeedbackEntity f WHERE f.feedbackOwnerEmail = '" + email + "'");
         return q.getResultList();
+    }
+
+    public double calculateAverageRatingByDepartment(String department) {
+        Query q = em.createQuery("SELECT f from FeedbackEntity f WHERE f.feedbackDepartment = '" + department + "'");
+        int count = 0;
+        int total = 0;
+        double rating;
+        for (Object o : q.getResultList()) {
+            count++;
+            FeedbackEntity thisFeedback = (FeedbackEntity) o;
+            total += thisFeedback.getRating();
+        }
+        if (count == 0) {
+            rating = 0;
+        } else {
+            rating = total / count;
+        }
+        return rating;
+    }
+
+    public double countFeedbackPercentageByDepartment(String department) {
+        Query q1 = em.createQuery("SELECT f from FeedbackEntity f WHERE f.feedbackDepartment = '" + department + "'");
+        Query q2 = em.createQuery("SELECT f from FeedbackEntity f");
+
+        int count = q1.getResultList().size();
+        int total = q2.getResultList().size();
+
+        double percentage;
+        if (count == 0) {
+            percentage = 0;
+        } else {
+            percentage = total / count;
+        }
+        return percentage;
     }
 
     /* shouldn't implement this method
