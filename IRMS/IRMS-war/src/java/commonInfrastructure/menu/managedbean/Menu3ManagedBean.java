@@ -97,6 +97,44 @@ public class Menu3ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
             }
+            
+            if (userType.contains("ACMSManager")) {
+                System.out.println("manager menu bar");
+                submenu = new Submenu();
+                submenu.setLabel("Hotel Management");
+
+                item = new MenuItem();
+                item.setValue("Overbooking Management");
+                item.setUrl("/acms/overbookingManagement.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Price Management");
+                item.setUrl("/acms/listAllRoomPrices.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("Room Management");
+                item.setUrl("/acms/RoomManagement.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("Reservation Management");
+                item.setUrl("/acms/listReservations.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
+                item.setValue("log book");
+                item.setUrl("/acms/logBook.xhtml");
+                item.setIcon("ui-icon ui-icon-comment");
+                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
+            }
 
             if (userType.contains("CEMSEvent")) {
                 System.out.println("CEMSEvent menu bar");

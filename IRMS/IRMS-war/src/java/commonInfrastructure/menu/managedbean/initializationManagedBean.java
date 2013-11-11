@@ -377,10 +377,10 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
-        employee.setEmployeeId("B1100"); //business assumption: 1100 + 2100 + 3100: room service
+        employee.setEmployeeId("B2000"); //business assumption: 1100 + 2100 + 3100: room service
         employee.setEmployeeDepartment("hotel");
         employee.setEmployeeName("ACMSRoomService");
-        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B1100"));
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B2000"));
         System.out.println("finished hashing");
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
@@ -391,7 +391,55 @@ public class initializationManagedBean implements Serializable {
             employeeSessionBean.addEmployee(employee);
             System.err.println("ACMSRoomService saved.....");
         } catch (Exception e) {
-            System.out.println("Error occurs when creating hotel front desk user");
+            System.out.println("Error occurs when creating hotel room service");
+            return;
+        }
+        System.out.println("Insert System User into database");
+
+    }
+
+    public void createACMSManager() {
+        System.err.println("go to create ACMS user");
+
+        functionality = new FunctionalityEntity();
+        functionality.setFuncName("overbookingManagement");
+        functionality.setFuncDescription("overbooking management");
+        functionalitySessionBean.addFunctionality(functionality);
+
+        FunctionalityEntity functionality2 = new FunctionalityEntity();
+        functionality2.setFuncName("RoomManagement");
+        functionality2.setFuncDescription("overbooking management");
+        functionalitySessionBean.addFunctionality(functionality2);
+
+        FunctionalityEntity functionality3 = new FunctionalityEntity();
+        functionality3.setFuncName("listAllRoomPrices");
+        functionality3.setFuncDescription("overbooking management");
+        functionalitySessionBean.addFunctionality(functionality3);
+
+        role = new RoleEntity();
+        role.setRoleId(23);
+        role.setRoleName("ACMSManager");
+        role.addFunctionality(functionality);
+        role.addFunctionality(functionality2);
+        role.addFunctionality(functionality3);
+        System.out.println("Create role :" + role.getRoleName());
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("B3000"); //business assumption: 1100 + 2100 + 3100: room service
+        employee.setEmployeeDepartment("hotel");
+        employee.setEmployeeName("ACMSManager");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B3000"));
+        System.out.println("finished hashing");
+        employee.addRole(role);
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving ACMSManager....");
+            employeeSessionBean.addEmployee(employee);
+            System.err.println("ACMSManager saved.....");
+        } catch (Exception e) {
+            System.out.println("Error occurs when creating hotel manager");
             return;
         }
         System.out.println("Insert System User into database");
@@ -1400,7 +1448,7 @@ public class initializationManagedBean implements Serializable {
 
         addMessage("ESMS Admin Created!");
     }
-    
+
     public void createESMSFront() {
         System.out.println("go to create ESMSFront");
 
