@@ -9,6 +9,7 @@ import Exception.ExistException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,7 +20,8 @@ import javax.persistence.Query;
  * @author liuxian
  */
 @Stateless
-public class ReservationSessionBean {
+@LocalBean
+public class ReservationSessionBean implements ReservationSessionBeanRemote {
 
     @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
@@ -31,6 +33,7 @@ public class ReservationSessionBean {
     public ReservationSessionBean() {
     }
 
+    @Override
     public List<ReservationEntity> getAllReservations() {
         Query q = em.createQuery("SELECT re FROM ReservationEntity re");
         List reservationList = new ArrayList<ReservationEntity>();
@@ -42,6 +45,7 @@ public class ReservationSessionBean {
         return reservationList;
     }
     
+    @Override
     public List<ReservationEntity> getTodayReservations() {
         Query q = em.createQuery("SELECT re FROM ReservationEntity re");
         List reservationList = new ArrayList<ReservationEntity>();
@@ -56,6 +60,7 @@ public class ReservationSessionBean {
         return reservationList;
     }
 
+    @Override
     public List<ReservationEntity> getBeforeReservations() {
         Query q = em.createQuery("SELECT re FROM ReservationEntity re");
         List reservationList = new ArrayList<ReservationEntity>();
@@ -67,12 +72,14 @@ public class ReservationSessionBean {
         System.out.println("session bean return a full list of all reservations");
         return reservationList;
     }
+    @Override
     public ReservationEntity getReservationById(Long reservationId) throws ExistException {
         reservation = em.find(ReservationEntity.class, reservationId);
 //        if(reservation == null)throw new ExistException("Reservation does not exist!");
         return reservation;
     }
 
+    @Override
     public List<ReservationEntity> getReservationByName(String rcName) {
         Query query = em.createQuery("SELECT r FROM ReservationEntity r WHERE r.rcName ='" + rcName + "'");
         System.err.println("getReservationByName: " + rcName);
@@ -82,6 +89,7 @@ public class ReservationSessionBean {
         return reservations;
     }
 
+    @Override
     public List<ReservationEntity> getReservationByEmail(String rcEmail) {
         Query query = em.createQuery("SELECT r FROM ReservationEntity r WHERE r.rcEmail ='" + rcEmail + "'");
         System.err.println("getReservationByEmail: " + rcEmail);
@@ -91,6 +99,7 @@ public class ReservationSessionBean {
         return reservations;
     }
 
+    @Override
     public List<ReservationEntity> getReservationByDate(Date today) {
         Query query = em.createQuery("SELECT r FROM ReservationEntity r WHERE r.rcCheckInDate ='" + today + "'");
         System.err.println("getReservationByDate: " + today);
@@ -100,6 +109,7 @@ public class ReservationSessionBean {
         return reservations;
     }
 
+    @Override
     public void addReservation(ReservationEntity newReservation) {
         /*
          * Date rcCheckInDate = null;
@@ -126,19 +136,23 @@ public class ReservationSessionBean {
         em.persist(thisReservation);
     }
 
+    @Override
     public void cancelReservation(Long reservationId) {
         reservation = em.find(ReservationEntity.class, reservationId);
         reservation.setReservationStatus("cancelled");
     }
 
+    @Override
     public ReservationEntity getReservationById(String searchId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @Override
     public Date getCurrentDate() {
         return currentDate;
     }
 
+    @Override
     public void setCurrentDate(Date currentDate) {
         this.currentDate = currentDate;
     }
