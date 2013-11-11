@@ -27,6 +27,12 @@
                     <p:column headerText="Member Size Of Wallet">
                         <h:outputText value="#{size.sizeOfWallet}"/>
                     </p:column>
+                    
+                    <p:column headerText="Share Of Wallet" style="width:150px;">
+                        <p:commandButton icon="ui-icon ui-icon-flag" value="Share of wallet" action="#{evaluationManagedBean.memberShareOfWallet(event)}">
+                            <f:setPropertyActionListener value="#{size}" target="#{evaluationManagedBean.selectedMember}" />
+                        </p:commandButton>
+                    </p:column>
 
                 </p:dataTable>
 

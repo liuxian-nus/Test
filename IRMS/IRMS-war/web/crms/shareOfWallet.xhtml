@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <f:view beforePhase="#{evaluationManagedBean.createShareOfWallet}">
+            <p:pieChart id="custom" value="#{evaluationManagedBean.pieModel}" legendPosition="e" fill="false" showDataLabels="true"  
+                        title="Custom Options" style="width:400px;height:300px" sliceMargin="5" diameter="150"/>  
+        </f:view>
+    </ui:define>
+
+</ui:composition>

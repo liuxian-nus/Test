@@ -8,12 +8,17 @@ import CRMS.entity.MemberEntity;
 import CRMS.session.EvaluationSessionBean;
 import CRMS.session.MemberSessionBean;
 import Exception.ExistException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.PhaseEvent;
+import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -22,12 +27,14 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class EvaluationManagedBean {
-    
+
     @EJB
     MemberSessionBean memberSessionBean;
     @EJB
     EvaluationSessionBean evaluationSessionBean;
     private MemberEntity member;
+    private MemberEntity selectedMember;
+    private PieChartModel pieModel;
 
     /**
      * Creates a new instance of EvaluationManagedBean
@@ -46,6 +53,25 @@ public class EvaluationManagedBean {
         }
         memberList = tempList;
         return memberList;
+    }
+
+    public void memberShareOfWallet(ActionEvent event) throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("memberS", selectedMember);
+        System.err.println("1. "+selectedMember.getMemberEmail());
+        FacesContext.getCurrentInstance().getExternalContext().redirect("shareOfWallet.xhtml");
+    }
+    
+     public void createShareOfWallet(PhaseEvent event) {
+        member = (MemberEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("memberS");
+        System.err.println("2. "+member.getMemberEmail());
+        pieModel = new PieChartModel();
+
+        pieModel.set("hotel", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"hotel"));
+        pieModel.set("shopping Mall", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"shopping mall"));
+        pieModel.set("entertainment show", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"entertainment show"));
+        pieModel.set("food and beverage", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"food and beverage"));
+        pieModel.set("attraction", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"attraction"));
+        pieModel.set("convention center", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"convention center"));
     }
 
     public MemberSessionBean getMemberSessionBean() {
@@ -70,5 +96,21 @@ public class EvaluationManagedBean {
 
     public void setMember(MemberEntity member) {
         this.member = member;
+    }
+
+    public PieChartModel getPieModel() {
+        return pieModel;
+    }
+
+    public void setPieModel(PieChartModel pieModel) {
+        this.pieModel = pieModel;
+    }
+
+    public MemberEntity getSelectedMember() {
+        return selectedMember;
+    }
+
+    public void setSelectedMember(MemberEntity selectedMember) {
+        this.selectedMember = selectedMember;
     }
 }
