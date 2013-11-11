@@ -41,14 +41,12 @@
                                   filterOptions="#{memberManagedBean.nationalityOptions}" filterMatchMode="contains">  
                             <h:outputText value="#{memberList.nationality}" />  
                         </p:column>
-
                         <p:column>
                             <p:commandButton action="#{memberManagedBean.checkTransaction(event)}" icon="ui-icon ui-icon-flag" 
                                              title="Transactions" value ="Transactions">
                                 <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.member}" />
                             </p:commandButton>
                         </p:column>
-
                         <p:rowExpansion>  
                             <h:panelGrid id="display" columns="2" cellpadding="4" style="width:200px;"  
                                          styleClass=" ui-widget-content grid">  
