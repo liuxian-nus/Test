@@ -282,7 +282,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
           return true;
     }
     
-    public boolean sendReceipt(String toEmailAddress,ReceiptEntity re) throws IOException
+    public boolean sendReceipt(String toEmailAddress,ReceiptEntity re) throws IOException, FileNotFoundException, DocumentException
     {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
