@@ -193,7 +193,7 @@ public class ShowTicketingManagedBean {
                 memberTransaction.setMtAmount(selectedShowTicket.getShowTicketPrice() * showTicketQuota);
                 System.err.println("Transaction Amt: " + selectedShowTicket.getShowTicketPrice() * showTicketQuota);
                 memberTransaction.setMtMode(false);
-                memberTransaction.setPaymentStatus(true);
+                memberTransaction.setPaymentStatus(false);
                 memberTransactionSessionBean.addMemberTransaction(memberTransaction);
             }
 
