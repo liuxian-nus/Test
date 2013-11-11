@@ -39,7 +39,9 @@
 
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <div class="large-3 columns">    
+        <div class="row">
+         <div class="large-3 columns">    
+             <div class="row">
                 <form id="search-form" action="searchAvailable" method="POST">
                     <fieldset>
                         <legend>Search for hotels</legend>
@@ -166,6 +168,30 @@
                 </fieldset>
 
             </form>
+             </div>    
+             <div class="row">
+               <form id="search-form" action="hotelModify" method="POST">
+                        <fieldset>
+                            <legend>Manage my booking</legend>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label><strong>Please enter the reservation Id </strong></label>
+                                    <input id="input-name" type="text" placeholder="reservation id" name="reservationId">
+
+                                </div> 
+                            </div>  
+                        <br>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <input type="submit" class="small button" value="View my booking">
+
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                 
+             </div>
         </div>
         <div class="large-9 columns"> 
             <div class="row">
@@ -254,7 +280,7 @@
                 </div>
             </div>
         </div>
-
+        </div>
     <jsp:include page="footer.jsp"></jsp:include>
     <script>
                 document.write('<script src=' +

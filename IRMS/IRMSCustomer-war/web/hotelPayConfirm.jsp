@@ -27,9 +27,10 @@
 
                         <h6><strong>Here is your reservation details:</strong></h6>
                         <br>
-                        
+
                         <h6><strong>Reservation number : </strong>${data.reservationId}</h6>
-                      <c:if test="${data.reservationHotelNo == 1}">
+                    <br>
+                    <c:if test="${data.reservationHotelNo == 1}">
                         <h6>Reservation for <strong class="right-align,inline"> Orchard Hotel</strong></h6>
                     </c:if>
                     <c:if test="${data.reservationHotelNo == 2}">
@@ -38,11 +39,13 @@
                     <c:if test="${data.reservationHotelNo == 3}">
                         <h6>Hotel Reservation for <strong class="right-align,inline"> BeachView Hotel</strong></h6>
                     </c:if>
-                    <h6>Room Type: <strong class="right-align,inline"> ${data.reservationRoomType} </strong></h6>
+                    <h6><strong class="right-align,inline"> Room Type:  ${data.reservationRoomType} </strong></h6>
                     <br>
-                    <h6><strong>Check-in Date : </strong>${data.rcCheckInDate}</h6>
+                    <h6><strong>Check-in Date : </strong><fmt:formatDate type="date" pattern="MMM dd yyyy" 
+                                    value="${data.rcCheckInDate}" /></h6>
                     <br>
-                    <h6><strong>Check-out Date : </strong>${data.rcCheckOutDate}</h6>
+                    <h6><strong>Check-out Date : </strong><fmt:formatDate type="date" pattern="MMM dd yyyy" 
+                                    value="${data.rcCheckOutDate}" /></h6>
                     <br>
                     <h6><strong>Number of people : </strong>${data.reservationGuestCount}</h6>
                     <br>
@@ -54,8 +57,9 @@
                     <br>
                     <h6><strong>Reservation mobile : </strong>${data.rcHP}</h6>
                     <br>
-                  
+
                 </div>
+             
             </div>
         </div>
         <jsp:include page="footer.jsp"></jsp:include>
