@@ -411,6 +411,17 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
+                
+                submenu = new Submenu();
+                submenu.setLabel("Evaluation");
+
+                item = new MenuItem();
+                item.setValue("Manage Contract");
+                item.setUrl("/crms/sizeOfWallet.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
+                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
             }
 
             if (userType.contains("SMMSAdmin")) {
