@@ -24,7 +24,7 @@ import javax.persistence.Temporal;
  * @author Diana Wang
  */
 @Entity
-public final class OrderEntity implements Serializable {
+public class OrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +38,7 @@ public final class OrderEntity implements Serializable {
     @OneToOne (cascade = {CascadeType.DETACH})
     private MenuEntity menu;
     private String status="Not Confirmed";
-    @ManyToOne (cascade = {CascadeType.ALL})
+    @ManyToOne (cascade = {CascadeType.MERGE})
     private MemberEntity member;
     @OneToOne (cascade = {CascadeType.ALL})
     private InvoiceEntity invoice;

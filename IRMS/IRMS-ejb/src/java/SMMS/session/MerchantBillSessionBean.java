@@ -168,9 +168,7 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public BillEntity updateBill(BillEntity bill) throws ExistException {
-        if (bill.getBillStatus() == "paid") {
-            throw new ExistException("bill cannot be updated because it has been paid!");
-        }
+       
         em.merge(bill);
         return bill;
     }

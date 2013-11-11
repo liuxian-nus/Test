@@ -22,17 +22,17 @@
                             <p:rowToggler />  
                         </p:column> 
 
-                        <p:column headerText="Contract ID" style="width:50px;">
+                        <p:column headerText="Contract ID" style="width:30px;">
                             <h:outputText value="#{contract.contractId}"/>
                         </p:column>
-                        <p:column headerText="Merchant" style="width:100px;">
+                        <p:column headerText="Merchant" style="width:50px;">
                             <h:outputText value="#{contract.merchant.merchantName}"/>
                         </p:column>
-                        <p:column headerText="Outlet" style="width:100px;">
+                        <p:column headerText="Outlet" style="width:50px;">
                             <h:outputText value="#{contract.outlet.id}"/>
                         </p:column>
 
-                        <p:column headerText="Status" style="width:100px;">
+                        <p:column headerText="Status" style="width:50px;">
                             <h:outputText value="#{contract.last.eventStatus}"/>
                         </p:column>
 
@@ -79,27 +79,27 @@
                             <!-- update when new or rejected-->
                             <p:commandButton  oncomplete="upadte.show()" ajax="true" 
                                               rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
-                                              icon="ui-icon ui-icon-check" value ="Update" title="Update">  
+                                              icon="ui-icon ui-icon-tag"  title="Update">  
                             </p:commandButton>  
 
                             <!-- send out for request when new-->
                             <p:commandButton   oncomplete="confirmSend.show()" ajax="true" 
                                               rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='earlyTermination')}" 
-                                              icon="ui-icon ui-icon-search"  title="Send for approval">  
+                                              icon="ui-icon ui-icon-mail-closed"  title="Send for approval">  
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton> 
 
                             <!-- delete when new or rejected-->
                             <p:commandButton   oncomplete="confirmaDelete.show()" ajax="true" 
                                               rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
-                                              icon="ui-icon ui-icon-close" title="Delete">  
+                                              icon="ui-icon ui-icon-circle-close" title="Delete">  
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton> 
 
                             <!-- withdraw when being requested-->
                             <p:commandButton  oncomplete="confirmaWithdraw.show()" ajax="true"  
                                               rendered="#{(contract.last.eventStatus=='newRequest')||(contract.last.eventStatus=='renewRequest')||(contract.last.eventStatus=='earlyTerminationRequest')}" 
-                                              icon="ui-icon ui-icon-close"  title="Withdraw">   
+                                              icon="ui-icon ui-icon-scissors"  title="Withdraw">   
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton> 
                         </p:column>  

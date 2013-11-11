@@ -29,7 +29,7 @@ public class MenuEntity implements Serializable {
     private Long menuId;
     @OneToMany(cascade = {CascadeType.MERGE})
     private Set<CourseEntity> courses;
-    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "menu")
+    @OneToOne(cascade = {CascadeType.MERGE}, mappedBy = "menu")
     private OrderEntity order;
     private Integer NumberOrder;
     private String type;

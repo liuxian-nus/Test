@@ -15,7 +15,7 @@
                     <p:panel id="contracts" header="Requested Order" style="height:500px;">
                         <div style="margin-top:20px;margin-bottom:20px;">
 
-                            <p:dataTable id="contract" value="#{addGroupCateringManagedBean.requested}" var="rorder" 
+                            <p:dataTable id="contract" value="#{addGroupCateringManagedBean.requestedOrders}" var="rorder" 
                                          paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
 
                                 <p:column style="width:2%">  
@@ -84,8 +84,17 @@
                                         <f:setPropertyActionListener target="#{orderResultManagedBean.thisOrder}" value="#{rorder}" />
                                     </p:commandButton>  
                                 </p:column>  
+
+                                <p:column style="width:100px">  
+                                    <p:commandButton actionListener="#{orderResultManagedBean.viewMenu}" ajax="true" icon="ui-icon ui-icon-contact" value ="Menu" title="View Menu Details"> 
+                                        <f:setPropertyActionListener target="#{orderResultManagedBean.thisOrder}" value="#{rorder}" />
+                                    </p:commandButton>  
+                                </p:column>  
+
+
                             </p:dataTable> 
 
+                            <!--confirm order-->
                             <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmla"> 
                                 <br/>
                                 Are you sure to confirm this order?
@@ -95,6 +104,8 @@
                                     <p:commandButton value="Not yet" onclick="confirmla.hide()" type="button"/>  
                                 </h:panelGrid>
                             </p:dialog> 
+
+
                         </div>
                     </p:panel>
                 </h:form>
@@ -108,7 +119,7 @@
                     <p:panel id="contracts" header="Confirmed Order" style="height:500px;">
                         <div style="margin-top:20px;margin-bottom:20px;">
 
-                            <p:dataTable id="contract" value="#{addGroupCateringManagedBean.confirmed}" var="corder" 
+                            <p:dataTable id="contract" value="#{addGroupCateringManagedBean.confirmedOrders}" var="corder" 
                                          paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
 
                                 <p:column style="width:2%">  
@@ -169,11 +180,290 @@
                                         </p:panelGrid>
                                     </p:panel>
                                 </p:rowExpansion>
-                            </p:dataTable>  
+
+                                <p:column style="width:100px">  
+                                    <p:commandButton  oncomplete="issue.show()" ajax="true" icon="ui-icon ui-icon-mail-closed" value ="Deliver" title="Issue Deliver Goods"> 
+                                        <f:setPropertyActionListener target="#{orderResultManagedBean.thisOrder}" value="#{corder}" />
+                                    </p:commandButton>  
+                                </p:column>  
+
+                            </p:dataTable> 
+
+                            <!--Issue goods-->           
+                            <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="issue"> 
+                                <br/>
+                                Are you sure to Deliver?
+                                <br/><br/>
+                                <h:panelGrid columns="2" id="issuela">
+                                    <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{orderResultManagedBean.deliverGoods}" oncomplete="issue.hide()"/>
+                                    <p:commandButton value="Not yet" onclick="issue.hide()" type="button"/>  
+                                </h:panelGrid>
+                            </p:dialog> 
+
                         </div>
                     </p:panel>
                 </h:form>
             </p:tab>  
+
+
+            <p:tab title="Issued Group Catering Order">  
+                <h:form id="formIssue">
+                    <p:growl id="message" showDetail="true" /> 
+                    <p:panel id="contracts" header="Issued Order" style="height:500px;">
+                        <div style="margin-top:20px;margin-bottom:20px;">
+
+                            <p:dataTable id="contract" value="#{addGroupCateringManagedBean.delivedOrders}" var="iorder" 
+                                         paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                                <p:column style="width:2%">  
+                                    <p:rowToggler />  
+                                </p:column> 
+
+                                <p:column headerText="ID" style="width:50px;">
+                                    <h:outputText value="#{iorder.orderId}"/>
+                                </p:column>
+                                <p:column headerText="Date" style="width:100px;">
+                                    <h:outputText value="#{iorder.orderDateTime}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Time" style="width:100px;">
+                                    <h:outputText value="#{iorder.hour}">
+                                        <f:convertDateTime pattern="HH:MM" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Title" style="width:50px;">
+                                    <h:outputText value="#{iorder.title}"/>
+                                </p:column>
+                                <p:column headerText="Name" style="width:100px;">
+                                    <h:outputText value="#{iorder.name}"/>
+                                </p:column>
+                                <p:rowExpansion>
+                                    <p:panel id="eventDetail" header="Group Order Details">
+                                        <p:panelGrid id="grid" columns="4">
+
+                                            <h:outputText value="Menu ID: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{iorder.menu.menuId}" />
+
+                                            <h:outputText value="Menu Type: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{iorder.menu.type}" />                                       
+
+                                            <h:outputText value="Number of People: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{iorder.menu.numberOrder}" />                                         
+
+                                            <h:outputText value="Email: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{iorder.email}" />
+
+                                            <h:outputText value="Member Email: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{iorder.member.memberEmail}" />
+
+                                            <h:outputText value="HP: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{iorder.mobile}" />
+
+                                            <h:outputText value="Notes: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{iorder.notes}"/>
+
+                                        </p:panelGrid>
+                                    </p:panel>
+                                </p:rowExpansion>
+
+                                <p:column style="width:100px">  
+                                    <p:commandButton  oncomplete="invoice.show()" ajax="true" icon="ui-icon ui-icon-document" value ="Invoice" title="Create Invoice"> 
+                                        <f:setPropertyActionListener target="#{orderResultManagedBean.thisOrder}" value="#{iorder}" />
+                                    </p:commandButton>  
+                                </p:column>  
+                            </p:dataTable> 
+
+                            <!--Issue Invoice-->           
+                            <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="invoice"> 
+                                <br/>
+                                Are you sure to send invoice?
+                                <br/><br/>
+                                <h:panelGrid columns="2" id="invoicela">
+                                    <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{orderResultManagedBean.sendInvoice}" oncomplete="invoice.hide()"/>
+                                    <p:commandButton value="Not yet" onclick="invoice.hide()" type="button"/>  
+                                </h:panelGrid>
+                            </p:dialog> 
+
+                        </div>
+                    </p:panel>
+                </h:form>
+            </p:tab>  
+
+
+
+            <p:tab title="Invoiced Group Catering Order">  
+                <h:form id="formInvoice">
+                    <p:growl id="message" showDetail="true" /> 
+                    <p:panel id="contracts" header="Invoiced Order" style="height:500px;">
+                        <div style="margin-top:20px;margin-bottom:20px;">
+
+                            <p:dataTable id="contract" value="#{addGroupCateringManagedBean.invoicedOrders}" var="inorder" 
+                                         paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                                <p:column style="width:2%">  
+                                    <p:rowToggler />  
+                                </p:column> 
+
+                                <p:column headerText="ID" style="width:50px;">
+                                    <h:outputText value="#{inorder.orderId}"/>
+                                </p:column>
+                                <p:column headerText="Date" style="width:100px;">
+                                    <h:outputText value="#{inorder.orderDateTime}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Time" style="width:100px;">
+                                    <h:outputText value="#{inorder.hour}">
+                                        <f:convertDateTime pattern="HH:MM" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Title" style="width:50px;">
+                                    <h:outputText value="#{inorder.title}"/>
+                                </p:column>
+                                <p:column headerText="Name" style="width:100px;">
+                                    <h:outputText value="#{inorder.name}"/>
+                                </p:column>
+                                <p:rowExpansion>
+                                    <p:panel id="eventDetail" header="Group Order Details">
+                                        <p:panelGrid id="grid" columns="4">
+
+                                            <h:outputText value="Menu ID: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{inorder.menu.menuId}" />
+
+                                            <h:outputText value="Menu Type: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{inorder.menu.type}" />                                       
+
+                                            <h:outputText value="Number of People: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{inorder.menu.numberOrder}" />                                         
+
+                                            <h:outputText value="Email: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{inorder.email}" />
+
+                                            <h:outputText value="Member Email: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{inorder.member.memberEmail}" />
+
+                                            <h:outputText value="HP: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{inorder.mobile}" />
+
+                                            <h:outputText value="Notes: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{inorder.notes}"/>
+
+                                        </p:panelGrid>
+                                    </p:panel>
+                                </p:rowExpansion>
+
+                                <p:column style="width:100px">  
+                                    <p:commandButton  oncomplete="receipt.show()" ajax="true" icon="ui-icon ui-icon-document" value ="Receipt" title="Create Receipt"> 
+                                        <f:setPropertyActionListener target="#{orderResultManagedBean.thisOrder}" value="#{inorder}" />
+                                    </p:commandButton>  
+                                </p:column>  
+                            </p:dataTable> 
+
+                            <!--Issue Receipt-->           
+                            <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="receipt"> 
+                                <br/>
+                                Are you sure to send receipt?
+                                <br/><br/>
+                                <h:panelGrid columns="2" id="receiptla">
+                                    <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{orderResultManagedBean.sendReceipt}" oncomplete="receipt.hide()"/>
+                                    <p:commandButton value="Not yet" onclick="receipt.hide()" type="button"/>  
+                                </h:panelGrid>
+                            </p:dialog> 
+                        </div>
+                    </p:panel>
+                </h:form>
+            </p:tab>  
+
+            <p:tab title="Closed Group Catering Order">  
+                <h:form id="formClosed">
+                    <p:growl id="message" showDetail="true" /> 
+                    <p:panel id="contracts" header="Closed Order" style="height:500px;">
+                        <div style="margin-top:20px;margin-bottom:20px;">
+
+                            <p:dataTable id="contract" value="#{addGroupCateringManagedBean.receiptOrders}" var="rcorder" 
+                                         paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
+
+                                <p:column style="width:2%">  
+                                    <p:rowToggler />  
+                                </p:column> 
+
+                                <p:column headerText="ID" style="width:50px;">
+                                    <h:outputText value="#{rcorder.orderId}"/>
+                                </p:column>
+                                <p:column headerText="Date" style="width:100px;">
+                                    <h:outputText value="#{rcorder.orderDateTime}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Time" style="width:100px;">
+                                    <h:outputText value="#{rcorder.hour}">
+                                        <f:convertDateTime pattern="HH:MM" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Title" style="width:50px;">
+                                    <h:outputText value="#{rcorder.title}"/>
+                                </p:column>
+                                <p:column headerText="Name" style="width:100px;">
+                                    <h:outputText value="#{rcorder.name}"/>
+                                </p:column>
+                                <p:rowExpansion>
+                                    <p:panel id="eventDetail" header="Group Order Details">
+                                        <p:panelGrid id="grid" columns="4">
+
+                                            <h:outputText value="Menu ID: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rcorder.menu.menuId}" />
+
+                                            <h:outputText value="Menu Type: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rcorder.menu.type}" />                                       
+
+                                            <h:outputText value="Number of People: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rcorder.menu.numberOrder}" />                                         
+
+                                            <h:outputText value="Email: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rcorder.email}" />
+
+                                            <h:outputText value="Member Email: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rcorder.member.memberEmail}" />
+
+                                            <h:outputText value="HP: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rcorder.mobile}" />
+
+                                            <h:outputText value="Notes: " />
+                                            <h:outputText styleClass="outputLabel"
+                                                          value="#{rcorder.notes}"/>
+
+                                        </p:panelGrid>
+                                    </p:panel>
+                                </p:rowExpansion>
+
+                            </p:dataTable> 
+
+                        </div>
+                    </p:panel>
+                </h:form>
+            </p:tab>  
+
 
         </p:accordionPanel>  
     </ui:define>

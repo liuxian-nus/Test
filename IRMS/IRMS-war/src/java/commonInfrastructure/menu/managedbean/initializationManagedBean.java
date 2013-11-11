@@ -1357,6 +1357,7 @@ public class initializationManagedBean implements Serializable {
             bill.setContract(contract2);
             bill.setDueDate(dueDate);
             merchantBillSessionBean.addBill(bill);
+            System.err.println("in creating bill!!!!!!!!!!!!!!!!!!!!!!!!!!!!madan buyaobaocuole!" + bill.getBillId());
             merchantBillSessionBean.createOverDueTimers(dueDate);
 
             System.out.println("Contract2 saved.....");

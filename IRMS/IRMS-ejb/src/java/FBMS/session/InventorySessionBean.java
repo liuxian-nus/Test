@@ -67,6 +67,7 @@ public class InventorySessionBean implements InventorySessionBeanRemote {
         if (oe != null) {
             MenuEntity menu = oe.getMenu();
             Set<CourseEntity> courses = menu.getCourses();
+            System.err.println("courese size is" + courses.size());
             System.out.println("InventorySessionBean:issueGoods: Both Menu and courses have been found! MenuId: "
                     + menu.getMenuId());
             int courseNumber = courses.size();
@@ -86,7 +87,7 @@ public class InventorySessionBean implements InventorySessionBeanRemote {
             System.out.println("InventorySessionBean: issueGoods: The order associated cost has been assigned " + orderCost);
 
 
-            oe.setStatus("goods issued");
+            oe.setStatus("Delivered");
             em.merge(oe);
             return oe;
         } else {

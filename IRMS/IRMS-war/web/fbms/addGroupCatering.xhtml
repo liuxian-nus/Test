@@ -24,7 +24,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText value="1.Noolde/Rice: " />
-                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId1}" required ="true" >
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId1}"  >
                                 <f:selectItem itemLabel="Select noodle/rice" itemValue="" />  
                                 <f:selectItem itemLabel="Thai Pineapple Rice" itemValue="100001" /> 
                                 <f:selectItem itemLabel="Yong Chow Fried Rice" itemValue="100002" />
@@ -33,7 +33,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText value="2.Bean Curd/Vegetable: *" />
-                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId2}" required ="true" >
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId2}" >
                                 <f:selectItem itemLabel="Select bean curd/vegetable" itemValue="" />  
                                 <f:selectItem itemLabel="Mushroom Broccoli" itemValue="100005" /> 
                                 <f:selectItem itemLabel="Mixed Cabbage" itemValue="100006" />
@@ -42,7 +42,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText value="3.Fish(White Dory): *" />
-                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId3}" required ="true" >
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId3}"  >
                                 <f:selectItem itemLabel="Select fish" itemValue="" />  
                                 <f:selectItem itemLabel="Sweet and Sour Fish" itemValue="100009" /> 
                                 <f:selectItem itemLabel="Sze Chuan Fish" itemValue="100010" />
@@ -51,7 +51,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText value="4.Chicken: *" />
-                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId4}" required ="true" >
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId4}"  >
                                 <f:selectItem itemLabel="Select chicken" itemValue="" />  
                                 <f:selectItem itemLabel="Curry Chicken" itemValue="100013" /> 
                                 <f:selectItem itemLabel="Honey Chicken" itemValue="100014" />
@@ -60,7 +60,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText value="5.Prawn(S40-45)) *" />
-                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId5}"  required ="true" >
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId5}"  >
                                 <f:selectItem itemLabel="Select prawn" itemValue="" />  
                                 <f:selectItem itemLabel="Tempura Prawn" itemValue="100017" /> 
                                 <f:selectItem itemLabel="Sze Chuan Prawn" itemValue="100018" />
@@ -69,7 +69,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText value="6.Deep Fried: *" />
-                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId6}" required ="true">
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId6}" >
                                 <f:selectItem itemLabel="Select deep fried" itemValue="" />  
                                 <f:selectItem itemLabel="Sotong Ball" itemValue="100021" /> 
                                 <f:selectItem itemLabel="Fish Ball" itemValue="100022" />
@@ -78,7 +78,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText value="7.Dessert: *" />
-                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId7}" required ="true" >
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId7}"  >
                                 <f:selectItem itemLabel="Select dessert" itemValue="" />  
                                 <f:selectItem itemLabel="Almond Jelly W Longan" itemValue="100025" /> 
                                 <f:selectItem itemLabel="Sago Honeydew" itemValue="100026" />
@@ -87,7 +87,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText value="8.Drinks: *" />
-                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId8}" required ="true" >
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId8}"  >
                                 <f:selectItem itemLabel="Select drinks" itemValue="" />  
                                 <f:selectItem itemLabel="Fruit Punch" itemValue="100029" /> 
                                 <f:selectItem itemLabel="Lime" itemValue="100030" />
@@ -96,7 +96,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText value="9.Others: *" />
-                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId9}" required ="true" >
+                            <h:selectOneMenu value ="#{addGroupCateringManagedBean.dishId9}" >
                                 <f:selectItem itemLabel="Select Others" itemValue="" />  
                                 <f:selectItem itemLabel="Mini Custard Puff" itemValue="100033" /> 
                                 <f:selectItem itemLabel="Mini Chocolate Puff" itemValue="100034" />
@@ -105,7 +105,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText id="op1" rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value="10.Prawn: *" />
-                            <h:selectOneMenu id="sm1" rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value ="#{addGroupCateringManagedBean.dishId10}" required ="true" >
+                            <h:selectOneMenu id="sm1" rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value ="#{addGroupCateringManagedBean.dishId10}" >
                                 <f:selectItem itemLabel="Select prawns" itemValue="" />  
                                 <f:selectItem itemLabel="Butter Prawn" itemValue="100037" /> 
                                 <f:selectItem itemLabel="Cereal Prawn" itemValue="100038" />
@@ -114,7 +114,7 @@
                             </h:selectOneMenu> 
 
                             <h:outputText id="op2" rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value="11. Baby full month combo *" />
-                            <h:selectOneMenu id="sm2" rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value ="#{addGroupCateringManagedBean.dishId11}"  required ="true" >
+                            <h:selectOneMenu id="sm2" rendered="#{addGroupCateringManagedBean.menu.type=='Premium'}" value ="#{addGroupCateringManagedBean.dishId11}"   >
                                 <f:selectItem itemLabel="Select combp" itemValue="" />  
                                 <f:selectItem itemLabel="Blissful Red Eggs" itemValue="100047" /> 
                                 <f:selectItem itemLabel="Ang Ku Kueh" itemValue="100048" />
@@ -180,7 +180,8 @@
                             <p:message for="email" />
 
                             <h:outputText value="Member Email: " />
-                            <p:inputText id="emaila" value="#{addGroupCateringManagedBean.memberId}"/>
+                            <p:autoComplete id="memberEmail" value="#{addGroupCateringManagedBean.memberId}"   
+                                            completeMethod="#{addGroupCateringManagedBean.completeMembers()}" />
                             <h:outputText value=""/>
 
                             <h:outputText value="Phone number: *" />
@@ -230,7 +231,7 @@
                             <h:outputText value="Member Email: " />
                             <h:outputText styleClass="outputLabel"
                                           value="#{addGroupCateringManagedBean.memberId}" />
-
+                         
                             <h:outputText value="HP: " />
                             <h:outputText styleClass="outputLabel"
                                           value="#{addGroupCateringManagedBean.order.mobile}" />

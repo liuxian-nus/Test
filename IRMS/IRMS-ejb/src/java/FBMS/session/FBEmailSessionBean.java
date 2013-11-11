@@ -52,29 +52,29 @@ import javax.mail.internet.MimeMultipart;
  */
 @Stateless
 @LocalBean
-public class FBEmailSessionBean implements FBEmailSessionBeanRemote,Serializable {
+public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializable {
 
     String emailServerName = "smtp.gmail.com";
-  
-    public FBEmailSessionBean(){}
-    
+
+    public FBEmailSessionBean() {
+    }
+
     @Override
-    public boolean sendConfirmation (String toEmailAddress,IndReservationEntity ire)
-    {
+    public boolean sendConfirmation(String toEmailAddress, IndReservationEntity ire) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
-        
+
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication("is3102.it09", "weloveTWK");
             }
         });
-        
+
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
@@ -83,46 +83,46 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote,Serializable
                     InternetAddress.parse(toEmailAddress));
             message.setSubject("COREL ISLAND RESORT: Your confirmation for restaurant");
             String text = "Greeting from Coral Island Resort!"
-                    + "\nHere is confirmation number:"+ ire.getIndReservationId()+
-                    "\nPlease use this confirmation number for later modification on our website \n\n"
-                    +"Title: "+ire.getTitle()+"\nName: "+ire.getName()
-                    +"\nNumber of people: "+ire.getNumberPeople()
-                    +"\nRestaurant Name: "+ire.getRestaurant().getRestName()
-                    +"\nDate & Time: "+ire.getIndReservationDateTime()
-                    +"\nMobile Number: "+ire.getMobile()
-                    +"\nNotes: "+ire.getNotes()
+                    + "\nHere is confirmation number:" + ire.getIndReservationId()
+                    + "\nPlease use this confirmation number for later modification on our website \n\n"
+                    + "Title: " + ire.getTitle() + "\nName: " + ire.getName()
+                    + "\nNumber of people: " + ire.getNumberPeople()
+                    + "\nRestaurant Name: " + ire.getRestaurant().getRestName()
+                    + "\nDate & Time: " + ire.getIndReservationDateTime()
+                    + "\nMobile Number: " + ire.getMobile()
+                    + "\nNotes: " + ire.getNotes()
                     + "\n\n\nBest Regards,\nThe Coral Island Management Team";
-           // message.setText(text); No use already
-            
-            String INPUTFILE = createBill(toEmailAddress,ire);
-            
+            // message.setText(text); No use already
+
+            String INPUTFILE = createBill(toEmailAddress, ire);
+
             //Below attach the bill within the email
-                MimeBodyPart messageBodyPart;
-                MimeBodyPart textBodyPart;
+            MimeBodyPart messageBodyPart;
+            MimeBodyPart textBodyPart;
 
-                Multipart multipart = new MimeMultipart();
+            Multipart multipart = new MimeMultipart();
 
-                messageBodyPart = new MimeBodyPart();
-                String file;
-                    file = INPUTFILE;
-                String fileName = "CorelResort:Table Reservation";
-               // DataSource source = new FileDataSource(file);
-               // messageBodyPart.setDataHandler(new DataHandler(source));
-                messageBodyPart.setFileName(fileName);
-                messageBodyPart.attachFile(file);
-                
-                textBodyPart = new MimeBodyPart();
-                textBodyPart.setText(text);
-                
-                multipart.addBodyPart(messageBodyPart);
-                multipart.addBodyPart(textBodyPart);
-                
+            messageBodyPart = new MimeBodyPart();
+            String file;
+            file = INPUTFILE;
+            String fileName = "CorelResort:Table Reservation";
+            // DataSource source = new FileDataSource(file);
+            // messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(fileName);
+            messageBodyPart.attachFile(file);
 
-                ((MimeMessage)message).setContent(multipart);
+            textBodyPart = new MimeBodyPart();
+            textBodyPart.setText(text);
 
-        System.out.println("Sending");
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(textBodyPart);
 
-        Transport.send(message);
+
+            ((MimeMessage) message).setContent(multipart);
+
+            System.out.println("Sending");
+
+            Transport.send(message);
 
             System.out.println("EmailSessionBean: the email has been done!");
         } catch (MessagingException e) {
@@ -134,26 +134,69 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote,Serializable
         } catch (IOException ex) {
             Logger.getLogger(FBEmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
         return true;
     }
 
-    @Override
-     public boolean sendConfirmation (String toEmailAddress,OrderEntity oe){
-         Properties props = new Properties();
+    public boolean sendIssueGoods(String toEmailAddress, OrderEntity order) {
+        Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
-        
+
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication("is3102.it09", "weloveTWK");
             }
         });
-        
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            //message.setRecipients(new InternetAddress(""));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmailAddress));
+            message.setSubject("COREL ISLAND RESORT: Your order has been delivered");
+            String text = "Greeting from Coral Island Resort!"
+                    + "\nYour order has been delivered"
+                    + "\nOrder ID: " + order.getOrderId()
+                    + "\nMenu Type: " + order.getMenu().getType()
+                    + "\nPlease check your order, and once you have any enquiries, please feel free to contact us! \n\n"
+                    + "\n\n\nBest Regards,\nThe Coral Island Management Team";
+            // message.setText(text); No use already
+
+            System.out.println("Sending");
+
+            Transport.send(message);
+
+            System.out.println("EmailSessionBean: the email has been done!");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean sendConfirmation(String toEmailAddress, OrderEntity oe) {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
@@ -162,46 +205,45 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote,Serializable
                     InternetAddress.parse(toEmailAddress));
             message.setSubject("COREL ISLAND RESORT: Your confirmation for catering order");
             String text = "Greeting from Coral Island Resort!"
-                    + "\nHere is confirmation number:"+ oe.getOrderId()
-                    +
-                    "\nPlease use this confirmation number for later modification on our website \n\n"
-                    +"Title: "+oe.getTitle()+"\nName: "+oe.getName()
-                    +"\nNumber of people: "+oe.getMenu().getNumberOrder()
-                    +"\nDate & Time: "+oe.getOrderDateTime()
-                    +"\nMobile Number: "+oe.getMobile()
-                    +"\nNotes: "+oe.getNotes()
+                    + "\nHere is confirmation number:" + oe.getOrderId()
+                    + "\nPlease use this confirmation number for later modification on our website \n\n"
+                    + "Title: " + oe.getTitle() + "\nName: " + oe.getName()
+                    + "\nNumber of people: " + oe.getMenu().getNumberOrder()
+                    + "\nDate & Time: " + oe.getOrderDateTime()
+                    + "\nMobile Number: " + oe.getMobile()
+                    + "\nNotes: " + oe.getNotes()
                     + "\n\n\nBest Regards,\nThe Coral Island Management Team";
             //message.setText(text);
-               
-             String INPUTFILE = createBill(toEmailAddress,oe);
-            
+
+            String INPUTFILE = createBill(toEmailAddress, oe);
+
             //Below attach the bill within the email
-                MimeBodyPart messageBodyPart;
-                MimeBodyPart textBodyPart;
+            MimeBodyPart messageBodyPart;
+            MimeBodyPart textBodyPart;
 
-                Multipart multipart = new MimeMultipart();
+            Multipart multipart = new MimeMultipart();
 
-                messageBodyPart = new MimeBodyPart();
-                String file;
-                    file = INPUTFILE;
-                String fileName = "CorelResort:Table Reservation";
-               // DataSource source = new FileDataSource(file);
-               // messageBodyPart.setDataHandler(new DataHandler(source));
-                messageBodyPart.setFileName(fileName);
-                messageBodyPart.attachFile(file);
-                
-                textBodyPart = new MimeBodyPart();
-                textBodyPart.setText(text);
-                
-                multipart.addBodyPart(messageBodyPart);
-                multipart.addBodyPart(textBodyPart);
-                
+            messageBodyPart = new MimeBodyPart();
+            String file;
+            file = INPUTFILE;
+            String fileName = "CorelResort:Table Reservation";
+            // DataSource source = new FileDataSource(file);
+            // messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(fileName);
+            messageBodyPart.attachFile(file);
 
-                ((MimeMessage)message).setContent(multipart);
+            textBodyPart = new MimeBodyPart();
+            textBodyPart.setText(text);
 
-        System.out.println("Sending");
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(textBodyPart);
 
-            
+
+            ((MimeMessage) message).setContent(multipart);
+
+            System.out.println("Sending");
+
+
             Transport.send(message);
 
             System.out.println("EmailSessionBean: the email has been done!");
@@ -212,93 +254,92 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote,Serializable
             Logger.getLogger(FBEmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
             Logger.getLogger(FBEmailSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
-        return true;
-     }
-    
-     public String createBill(String toEmailAddress,IndReservationEntity ire) throws FileNotFoundException, DocumentException
-     {
+        }
 
-        
-            //Below generate a PDF file
-            Document document;
-            document = new Document(PageSize.A4,50,50,50,50);
-            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Table_Reservation"+ire.getRestaurant().getRestName()
-                    +ire.getId()+".pdf";
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
-            // document = addMetaData(document);
-            document.open();
-            //Below draft the contents
-           
-            document = addContent(document);
-            document = addTable(document,ire);
-            
-               /* Anchor anchorTarget = new Anchor ("Your Reservation Details");
-                anchorTarget.setName("BackToTop");
-                Paragraph paragraph1 = new Paragraph();
-                paragraph1.setSpacingBefore(50);*/
-                document.add(new Paragraph("Here is your reservation details, please use your reservation Id to make modifications.",
-                        FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,new CMYKColor(0, 255, 0, 0))));
-           
-            
-            document.close();
-            return OUTPUTFILE;
-     }
+        return true;
+    }
+
+    public String createBill(String toEmailAddress, IndReservationEntity ire) throws FileNotFoundException, DocumentException {
+
+
+        //Below generate a PDF file
+        Document document;
+        document = new Document(PageSize.A4, 50, 50, 50, 50);
+        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Table_Reservation" + ire.getRestaurant().getRestName()
+                + ire.getId() + ".pdf";
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+        // document = addMetaData(document);
+        document.open();
+        //Below draft the contents
+
+        document = addContent(document);
+        document = addTable(document, ire);
+
+        /* Anchor anchorTarget = new Anchor ("Your Reservation Details");
+         anchorTarget.setName("BackToTop");
+         Paragraph paragraph1 = new Paragraph();
+         paragraph1.setSpacingBefore(50);*/
+        document.add(new Paragraph("Here is your reservation details, please use your reservation Id to make modifications.",
+                FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD, new CMYKColor(0, 255, 0, 0))));
+
+
+        document.close();
+        return OUTPUTFILE;
+    }
 
     private Document addMetaData(Document document) {
-      document.addAuthor("Corel Resort");
-      document.addCreator("Corel Resort");
-      return document;
+        document.addAuthor("Corel Resort");
+        document.addCreator("Corel Resort");
+        return document;
     }
 
     private Document addContent(Document document) throws DocumentException {
         //Below specify different types of font
         Font catFont = new Font(Font.TIMES_ROMAN, 18,
-      Font.BOLD);
+                Font.BOLD);
         Font redFont = new Font(Font.TIMES_ROMAN, 12,
-      Font.NORMAL,Color.RED);
+                Font.NORMAL, Color.RED);
         Font subFont = new Font(Font.TIMES_ROMAN, 16,
-      Font.BOLD);
+                Font.BOLD);
         Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
-      Font.BOLDITALIC);
+                Font.BOLDITALIC);
 
         //Below specify contents
-         Paragraph preface = new Paragraph();
-         addEmptyLine(preface, 1);
-         preface.add(new Paragraph("Your restaurant/table booking summary", catFont));
-         addEmptyLine(preface, 1);
-         
-         document.add(preface);
+        Paragraph preface = new Paragraph();
+        addEmptyLine(preface, 1);
+        preface.add(new Paragraph("Your restaurant/table booking summary", catFont));
+        addEmptyLine(preface, 1);
+
+        document.add(preface);
         //document.newPage();  
-         return document;
+        return document;
     }
 
     //Add a empty line
     private Paragraph addEmptyLine(Paragraph paragraph, int number) {
-       for (int k = 0; k < number; k++) {
-      paragraph.add(new Paragraph(" "));
-    }
-       return paragraph;
+        for (int k = 0; k < number; k++) {
+            paragraph.add(new Paragraph(" "));
+        }
+        return paragraph;
     }
 
-    private Document addTable(Document document,IndReservationEntity ire) throws DocumentException {
+    private Document addTable(Document document, IndReservationEntity ire) throws DocumentException {
         PdfPTable table = new PdfPTable(2);
         table.setSpacingAfter(30);
         table.setSpacingBefore(30);
-        table.setWidths(new int []{1,3});
-        
+        table.setWidths(new int[]{1, 3});
+
         //Add table header
         PdfPCell c1 = new PdfPCell(new Phrase("Reservation Info"));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
-        
+
         c1 = new PdfPCell(new Phrase("Details & Remarks"));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
-        
+
         table.setHeaderRows(1);
-        
+
         //Add table content
         table.addCell("Reservation Number");
         table.addCell(ire.getIndReservationId().toString());
@@ -309,7 +350,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote,Serializable
         table.addCell("Number of people");
         table.addCell(ire.getNumberPeople().toString());
         table.addCell("Title & Name");
-        table.addCell(ire.getTitle()+" "+ire.getName());
+        table.addCell(ire.getTitle() + " " + ire.getName());
         table.addCell("Email");
         table.addCell(ire.getEmail());
         table.addCell("Contact");
@@ -318,61 +359,61 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote,Serializable
         table.addCell(ire.getNotes());
         table.addCell("Status");
         table.addCell(ire.getStatus());
-        
+
         document.add(table);
-        
+
         return document;
     }
 
     private String createBill(String toEmailAddress, OrderEntity oe) throws DocumentException, FileNotFoundException {
         //Below generate a PDF file
-            Document document;
-            document = new Document(PageSize.A4,50,50,50,50);
-            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Catering_Reservation"+oe.getName()
-                    +oe.getOrderId()+".pdf";
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
-            // document = addMetaData(document);
-            document.open();
-            //Below draft the contents
-           
-            document = addContent(document);
-            document = addTable(document,oe);
-            
-               /* Anchor anchorTarget = new Anchor ("Your Reservation Details");
-                anchorTarget.setName("BackToTop");
-                Paragraph paragraph1 = new Paragraph();
-                paragraph1.setSpacingBefore(50);*/
-                document.add(new Paragraph("Here is your reservation details, please use your reservation Id to make modifications.",
-                        FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,new CMYKColor(0, 255, 0, 0))));
-           
-            
-            document.close();
-            return OUTPUTFILE;
+        Document document;
+        document = new Document(PageSize.A4, 50, 50, 50, 50);
+        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Catering_Reservation" + oe.getName()
+                + oe.getOrderId() + ".pdf";
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+        // document = addMetaData(document);
+        document.open();
+        //Below draft the contents
+
+        document = addContent(document);
+        document = addTable(document, oe);
+
+        /* Anchor anchorTarget = new Anchor ("Your Reservation Details");
+         anchorTarget.setName("BackToTop");
+         Paragraph paragraph1 = new Paragraph();
+         paragraph1.setSpacingBefore(50);*/
+        document.add(new Paragraph("Here is your reservation details, please use your reservation Id to make modifications.",
+                FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD, new CMYKColor(0, 255, 0, 0))));
+
+
+        document.close();
+        return OUTPUTFILE;
     }
 
     private Document addTable(Document document, OrderEntity oe) throws DocumentException {
-         PdfPTable table = new PdfPTable(2);
+        PdfPTable table = new PdfPTable(2);
         table.setSpacingAfter(30);
         table.setSpacingBefore(30);
-        table.setWidths(new int []{1,3});
-        
+        table.setWidths(new int[]{1, 3});
+
         //Add table header
         PdfPCell c1 = new PdfPCell(new Phrase("Reservation Info"));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
-        
+
         c1 = new PdfPCell(new Phrase("Details & Remarks"));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
-        
+
         table.setHeaderRows(1);
-        
+
         //Add table contents
-        
+
         table.addCell("Order Id");
         table.addCell(oe.getOrderId().toString());
         table.addCell("Contact's Name");
-        table.addCell(oe.getTitle()+" "+oe.getName());
+        table.addCell(oe.getTitle() + " " + oe.getName());
         table.addCell("Email");
         table.addCell(oe.getEmail());
         table.addCell("Mobile");
@@ -381,22 +422,20 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote,Serializable
         table.addCell(oe.getOrderDateTime().toString());
         table.addCell("Number of People");
         table.addCell(oe.getMenu().getNumberOrder().toString());
-        
+
         table.addCell("Menu");
         table.addCell("");
-        Set <CourseEntity> courses = oe.getMenu().getCourses();
+        Set<CourseEntity> courses = oe.getMenu().getCourses();
         //check if courses is null
-        if(!courses.isEmpty())
-        {
+        if (!courses.isEmpty()) {
             Iterator<CourseEntity> itr = courses.iterator();
-            while(itr.hasNext())
-            {
+            while (itr.hasNext()) {
                 table.addCell("");
                 table.addCell(itr.next().getDish().getDishName());
             }
         }
-        
-        
+
+
         document.add(table);
         return document;
     }

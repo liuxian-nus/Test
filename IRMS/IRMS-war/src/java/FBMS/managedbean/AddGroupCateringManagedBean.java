@@ -14,7 +14,9 @@ import FBMS.entity.MenuEntity;
 import FBMS.entity.OrderEntity;
 import FBMS.session.InventorySessionBean;
 import FBMS.session.OrderSessionBean;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -229,7 +231,7 @@ public class AddGroupCateringManagedBean {
     public void addOrder(ActionEvent event) throws ExistException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-
+        Set<CourseEntity> courses = new HashSet<CourseEntity>();
         System.out.println("in adding order");
         //addMenu();
 
@@ -247,58 +249,69 @@ public class AddGroupCateringManagedBean {
         System.err.println("NO4: here after getting dish by Id" + dish1.getDishId());
         course1.setDish(dish1); //set dish to course
         orderSessionBean.setCourse(course1); // persist course
-        System.err.println("NO5: here after setting course" + course1.getCourseId());
+        courses.add(course1);
+        System.err.println("NO5: here after setting course" + course1.getCourseId() + "  and size is  " + courses.size());
 
         dish2 = inventorySessionBean.getDishById(dishId2); //get existing dish
         course2.setDish(dish2); //set dish to course
         orderSessionBean.setCourse(course2);
+        courses.add(course2);
 
         dish3 = inventorySessionBean.getDishById(dishId3); //get existing dish
         course3.setDish(dish3); //set dish to course
         orderSessionBean.setCourse(course3);
+        courses.add(course3);
 
         dish4 = inventorySessionBean.getDishById(dishId4); //get existing dish
         course4.setDish(dish4); //set dish to course
         orderSessionBean.setCourse(course4);
+        courses.add(course4);
 
         dish5 = inventorySessionBean.getDishById(dishId5); //get existing dish
         course5.setDish(dish5); //set dish to course
         orderSessionBean.setCourse(course5);
+        courses.add(course5);
 
         dish6 = inventorySessionBean.getDishById(dishId6); //get existing dish
         course6.setDish(dish6); //set dish to course
         orderSessionBean.setCourse(course6);
+        courses.add(course6);
 
         System.err.println("NO6:here in setting dish 7" + dishId7);
         dish7 = inventorySessionBean.getDishById(dishId7); //get existing dish
         System.err.println("NO7: here after getting dish by Id" + dish7.getDishId());
         course7.setDish(dish7); //set dish to course
         orderSessionBean.setCourse(course7);
+        courses.add(course7);
         System.err.println("NO5: here after setting course" + course7.getCourseId());
 
         dish8 = inventorySessionBean.getDishById(dishId8); //get existing dish
         course8.setDish(dish8); //set dish to course
         orderSessionBean.setCourse(course8);
+        courses.add(course8);
 
         dish9 = inventorySessionBean.getDishById(dishId9); //get existing dish
         course9.setDish(dish9); //set dish to course
         orderSessionBean.setCourse(course9);
+        courses.add(course9);
 
         System.out.println("NO6: saving COURSES" + course6.getCourseId());
         System.out.println("NO7: saving COURSES" + course2.getCourseId());
         System.out.println("NO8: saving COURSES" + course4.getCourseId());
         System.out.println("NO9: saving COURSES" + course9.getCourseId());
 
-        System.out.println("NO10: after setting 9 courses" + menu.getType());
+        System.err.println("NO10: after setting 9 courses and now the list zie is !!!!!!!!!!!!!!!!!!!!!" + menu.getType() + courses.size());
 
         if (menu.getType() == "Premium") {
             dish10 = inventorySessionBean.getDishById(dishId10); //get existing dish
             course10.setDish(dish10); //set dish to course
             orderSessionBean.setCourse(course10);
+            courses.add(course10);
 
             dish11 = inventorySessionBean.getDishById(dishId11); //get existing dish
             course11.setDish(dish11); //set dish to course
             orderSessionBean.setCourse(course11);
+            courses.add(course11);
         }
 
 
@@ -313,12 +326,12 @@ public class AddGroupCateringManagedBean {
         orderSessionBean.addCourseToMenu(menu.getMenuId(), course7.getCourseId());
         orderSessionBean.addCourseToMenu(menu.getMenuId(), course8.getCourseId());
         orderSessionBean.addCourseToMenu(menu.getMenuId(), course9.getCourseId());
-        
+
         if (menu.getType() == "Premium") {
             orderSessionBean.addCourseToMenu(menu.getMenuId(), course10.getCourseId());
             orderSessionBean.addCourseToMenu(menu.getMenuId(), course11.getCourseId());
         }
-        
+
         System.out.println("after adding courese to menu" + menu.getCourses().size());
         request.getSession().setAttribute("menuId", menu.getMenuId());
         System.out.println("after creating menu:" + menu.getMenuId() + "order:" + order.getOrderId());
@@ -327,9 +340,8 @@ public class AddGroupCateringManagedBean {
             System.out.println("we are in save new order in managedbean");
             order.setMenu(menu); // setting menu
             //setting member
-            System.out.println("in adding member"+memberId);
-            if (memberSessionBean.getMemberByEmail(memberId)!=null)
-            {   
+            System.out.println("in adding member" + memberId);
+            if (memberId!=null) {
                 System.out.println(memberSessionBean.getMemberByEmail(memberId).getMemberName());
                 order.setMember(memberSessionBean.getMemberByEmail(memberId));
                 System.out.println("we are in setting member" + order.getMember().getMemberEmail());
@@ -339,8 +351,11 @@ public class AddGroupCateringManagedBean {
             System.out.println("we are after setting order in managedbean" + order.getOrderId());
 
             menu.setOrder(order);
+            menu.setCourses(courses);
             orderSessionBean.updateMenu(menu);
             System.out.println("we are after setting order in managedbean" + menu.getMenuId());
+            System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!go to die la menu course sieze" + order.getMenu().getCourses().size());
+            order.setSalePrice(inventorySessionBean.assignCost(order.getOrderId()));
 
             request.getSession().setAttribute("orderId", order.getOrderId());
             FacesContext.getCurrentInstance().getExternalContext().redirect("manageGroupCatering.xhtml");
@@ -351,6 +366,19 @@ public class AddGroupCateringManagedBean {
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New order saved.", ""));
         order = new OrderEntity();
+    }
+
+    public List<String> completeMembers() throws ExistException {
+        System.out.println("NO4: we are in ALL contracts bean BEFORE");
+        List<String> results = new ArrayList<String>();
+
+        List<MemberEntity> merchantList = memberSessionBean.getAllMembers();
+        for (Object o : merchantList) {
+            MemberEntity rve = (MemberEntity) o;
+            results.add((rve.getMemberEmail().toString()));
+        }
+        System.out.println("NO5: we are in complete bean AFTER");
+        return results;
     }
 
     public void viewOrder(ActionEvent event) {
@@ -370,6 +398,26 @@ public class AddGroupCateringManagedBean {
         }
     }
 
+    public List<OrderEntity> getRequestedOrders() {
+        return orderSessionBean.getRequestedOrders();
+    }
+
+    public List<OrderEntity> getConfirmedOrders() {
+        return orderSessionBean.getConfirmedOrders();
+    }
+
+    public List<OrderEntity> getDelivedOrders() {
+        return orderSessionBean.getDeliveredOrders();
+    }
+
+    public List<OrderEntity> getInvoicedOrders() {
+        return orderSessionBean.getInvoicedOrders();
+    }
+
+    public List<OrderEntity> getReceiptOrders() {
+        return orderSessionBean.getReceiptedOrders();
+    }
+
     public OrderEntity getSelectOrder() {
         return selectOrder;
     }
@@ -378,14 +426,13 @@ public class AddGroupCateringManagedBean {
         this.selectOrder = selectOrder;
     }
 
-    public List<OrderEntity> getRequested() {
-        return orderSessionBean.getRequestedOrders();
-    }
-
-    public List<OrderEntity> getConfirmed() {
-        return orderSessionBean.getConfirmedOrders();
-    }
-
+//    public List<OrderEntity> getRequested() {
+//        return orderSessionBean.getRequestedOrders();
+//    }
+//
+//    public List<OrderEntity> getConfirmed() {
+//        return orderSessionBean.getConfirmedOrders();
+//    }
     public boolean isMenuChange() {
         return menuChange;
     }

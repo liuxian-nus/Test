@@ -27,7 +27,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class OrderSessionBean implements OrderSessionBeanRemote  {
+public class OrderSessionBean implements OrderSessionBeanRemote {
 
     public OrderSessionBean() {
     }
@@ -147,7 +147,7 @@ public class OrderSessionBean implements OrderSessionBeanRemote  {
     }
 
     @Override
-        public OrderEntity viewOrder(Long orderId) {
+    public OrderEntity viewOrder(Long orderId) {
         OrderEntity this_order = em.find(OrderEntity.class, orderId);
         System.out.println("OrderSessionBean: the order has been found!");
         return this_order;
@@ -223,6 +223,20 @@ public class OrderSessionBean implements OrderSessionBeanRemote  {
 
     }
 
+    public List<CourseEntity> convertMenuCourses(Set<CourseEntity> courses) {
+        Iterator<CourseEntity> itr = courses.iterator();
+        CourseEntity course;
+        List<CourseEntity> listcourse = new ArrayList<CourseEntity>();
+
+        while (itr.hasNext()) {
+            course = itr.next();
+            listcourse.add(course);
+            System.out.println("now the size of list is" + listcourse.size());
+        }
+        System.out.println("now the size of list is" + listcourse.size());
+        return listcourse;
+    }
+
     // E.3.1.1 & E.3.1.2 update sales order 'in process','confirmed','pending','suspended','terminated','goods issued','completed'
     @Override
     public OrderEntity updateOrderStatus(String status, Long orderId) {
@@ -243,7 +257,6 @@ public class OrderSessionBean implements OrderSessionBeanRemote  {
         em.persist(object);
     }
 
-
     @Override
     public CourseEntity addCourseToMenu(Long menuId, Long courseId) throws ExistException {
         thisMenu = em.find(MenuEntity.class, menuId);
@@ -263,7 +276,7 @@ public class OrderSessionBean implements OrderSessionBeanRemote  {
         List orderList = new ArrayList<OrderEntity>();
         for (Object o : q.getResultList()) {
             OrderEntity m = (OrderEntity) o;
-            if (m.getStatus() == "Requested") {
+            if ("Requested".equals(m.getStatus())) {
                 orderList.add(m);
             }
         }
@@ -272,11 +285,47 @@ public class OrderSessionBean implements OrderSessionBeanRemote  {
 
     @Override
     public List<OrderEntity> getConfirmedOrders() {
-         Query q = em.createQuery("SELECT m FROM OrderEntity m");
+        Query q = em.createQuery("SELECT m FROM OrderEntity m");
         List orderList = new ArrayList<OrderEntity>();
         for (Object o : q.getResultList()) {
             OrderEntity m = (OrderEntity) o;
-            if (m.getStatus() == "Confirmed") {
+            if ("Confirmed".equals(m.getStatus())) {
+                orderList.add(m);
+            }
+        }
+        return orderList;
+    }
+
+    public List<OrderEntity> getDeliveredOrders() {
+        Query q = em.createQuery("SELECT m FROM OrderEntity m");
+        List orderList = new ArrayList<OrderEntity>();
+        for (Object o : q.getResultList()) {
+            OrderEntity m = (OrderEntity) o;
+            if ("Delivered".equals(m.getStatus())) {
+                orderList.add(m);
+            }
+        }
+        return orderList;
+    }
+
+    public List<OrderEntity> getInvoicedOrders() {
+        Query q = em.createQuery("SELECT m FROM OrderEntity m");
+        List orderList = new ArrayList<OrderEntity>();
+        for (Object o : q.getResultList()) {
+            OrderEntity m = (OrderEntity) o;
+            if ("Invoiced".equals(m.getStatus())) {
+                orderList.add(m);
+            }
+        }
+        return orderList;
+    }
+
+    public List<OrderEntity> getReceiptedOrders() {
+        Query q = em.createQuery("SELECT m FROM OrderEntity m");
+        List orderList = new ArrayList<OrderEntity>();
+        for (Object o : q.getResultList()) {
+            OrderEntity m = (OrderEntity) o;
+            if ("ReceiptSent".equals(m.getStatus())) {
                 orderList.add(m);
             }
         }

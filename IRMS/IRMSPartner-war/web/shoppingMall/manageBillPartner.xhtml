@@ -21,7 +21,9 @@
                                 <h:outputText value="#{aBill.billId}"/>
                             </p:column>
                             <p:column headerText="Issue Date" style="width:100px;">
-                                <h:outputText value="#{aBill.billDate}"/>
+                                <h:outputText value="#{aBill.billDate}">
+                                    <f:convertDateTime pattern="yyyy-mm-dd"/>
+                                </h:outputText>
                             </p:column>
                             <p:column headerText="Amount" style="width:100px;">
                                 <h:outputText value="#{aBill.billAmount}"/>
@@ -72,33 +74,41 @@
                                 <p:rowToggler />  
                             </p:column> 
 
-                            <p:column headerText="Bill ID" style="width:50px;">
+                            <p:column headerText="Bill ID" style="width:30px;">
                                 <h:outputText value="#{uBill.billId}"/>
                             </p:column>
-                            <p:column headerText="Issue Date" style="width:100px;">
-                                <h:outputText value="#{uBill.billDate}"/>
+                            <p:column headerText="Issue Date" style="width:50px;">
+                                <h:outputText value="#{uBill.billDate}">
+                                <f:convertDateTime pattern="yyyy-mm-dd"/>
+                                </h:outputText>
                             </p:column>
-                            <p:column headerText="Amount" style="width:100px;">
+                            <p:column headerText="Amount" style="width:50px;">
                                 <h:outputText value="#{uBill.billAmount}"/>
                             </p:column>
-                            <p:column headerText="Merchant" style="width:100px;">
+                            <p:column headerText="Merchant" style="width:50px;">
                                 <h:outputText value="#{uBill.contract.merchant.merchantName}"/>
                             </p:column>
-                            <p:column headerText="Contract" style="width:100px;">
+                            <p:column headerText="Contract" style="width:50px;">
                                 <h:outputText value="#{uBill.contract.contractId}"/>
                             </p:column>
-                            <p:column headerText="Type" style="width:100px;">
+                            <p:column headerText="Type" style="width:50px;">
                                 <h:outputText value="#{uBill.billType}"/>
                             </p:column>
 
-                            
+                            <p:column style="width:100px">  
+                                <p:commandButton   actionListener="#{billPartnerManagedBean.viewBill}" ajax="true" value="View Details"
+                                                   icon="ui-icon ui-icon-Tag"  title="Send Bill to Merchant">  
+                                    <f:setPropertyActionListener target="#{billPartnerManagedBean.bill}" value="#{uBill}" /> 
+                                </p:commandButton> 
+                            </p:column>  
                         </p:dataTable>
+
                     </div>
                 </p:panel>
             </p:fieldset>
         </h:form>
         <br/>
-        
-        
+
+
     </ui:define>
 </ui:composition>
