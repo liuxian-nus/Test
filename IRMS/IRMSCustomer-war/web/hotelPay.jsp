@@ -26,25 +26,76 @@
         <jsp:include page="header.jsp"></jsp:include>
 
             <script type="text/javascript">
-   
+                
+                //process order
                 function paypal(){
-                    alert("jj");
-                    $.get("https://api-3t.sandbox.paypal.com/nvp", {
-                        USER: "xinyusoc-facilitator_api1.gmail.com",
-                        PWD: "1383997852",
-                        SIGNATURE: "AFcWxV21C7fd0v3bYYYRCpSSRl31A4L4WLmbdOQyA2Nn26.xecMb47ed",
-                        METHOD: "SetExpressCheckout",
-                        VERSION: "78",
-                        PAYMENTREQUEST_0_PAYMENTACTION: "SALE",
-                        PAYMENTREQUEST_0_AMT: "10",
-                        PAYMENTREQUEST_0_CURRENCYCODE: "SGD",
-                        cancelUrl: "home",
-                        returnUrl: "home",
-                    })
-                            .done(function(data) {
-                        alert("Data Loaded:" + data.TOKEN);
-                    });
-                  return false; 
+                    $.ajax({
+                        url: "https://api-3t.sandbox.paypal.com/nvp",
+                        data:{
+                            "USER": "xinyusoc-facilitator_api1.gmail.com",
+                            "PWD": "1383997852",
+                            "SIGNATURE": "AFcWxV21C7fd0v3bYYYRCpSSRl31A4L4WLmbdOQyA2Nn26.xecMb47ed",
+                            "METHOD": "SetExpressCheckout",
+                            "VERSION": "93",
+                            "PAYMENTREQUEST_0_PAYMENTACTION": "SALE",
+                            "PAYMENTREQUEST_0_AMT": "10.00",
+                            "PAYMENTREQUEST_0_CURRENCYCODE": "USD",
+                            "cancelUrl": "http://is3102.cloudapp.net", //cancel order
+                            "returnUrl": "http://is3102.cloudapp.net/IRMSCustomer-war/irmsServlet/hotelPay" //confirm order
+                        },
+                        dataType: "text",
+                        crossDomain: true,
+                        success: function (data) {
+                            var token = data.match(/TOKEN=(.*?)&/)[1];
+                            //store order with token
+                            window.location.replace("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token="+token);
+                        }
+                      });
+                }
+                
+                
+                
+                
+                
+                
+                function getParameterByName( name,href )
+                {
+                  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+                  var regexS = "[\\?&]"+name+"=([^&#]*)";
+                  var regex = new RegExp( regexS );
+                  var results = regex.exec( href );
+                  if( results == null )
+                    return "";
+                  else
+                    return decodeURIComponent(results[1].replace(/\+/g, " "));
+                }
+                
+                function confirm_order(){
+                    var path = window.location.href;
+                    var token = getParameterByName("token",path);
+                    var payer = getParameterByName("PayerID",path);
+                    console.log()
+                    console.log(token);
+                    console.log(payer);
+                    $.ajax({
+                        url: "https://api-3t.sandbox.paypal.com/nvp",
+                        data:{
+                            "USER": "xinyusoc-facilitator_api1.gmail.com",
+                            "PWD": "1383997852",
+                            "SIGNATURE": "AFcWxV21C7fd0v3bYYYRCpSSRl31A4L4WLmbdOQyA2Nn26.xecMb47ed",
+                            "METHOD": "DoExpressCheckoutPayment",
+                            "VERSION": "93",
+                            "TOKEN": token,
+                            "PAYERID": payer,
+                            "PAYMENTREQUEST_0_PAYMENTACTION": "SALE",
+                            "PAYMENTREQUEST_0_AMT": "10.00",
+                            "PAYMENTREQUEST_0_CURRENCYCODE": "USD"
+                        },
+                        dataType: "text",
+                        crossDomain: true,
+                        success: function (data) {
+                        }
+                      });
                 }
             </script> 
             <div class="row">
