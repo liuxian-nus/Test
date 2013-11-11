@@ -6,6 +6,7 @@ package CRMS.session;
 
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.entity.RFMModelEntity;
+import Exception.ExistException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -108,7 +109,7 @@ public class EvaluationSessionBean {
         return completed;
     }
     
-    public Integer calculateRFMValue(String memberEmail, int ModelNumber)
+    public Integer calculateRFMValue(String memberEmail, int ModelNumber) throws ExistException
     {
         Integer RFMValue = 0;
         double f=0.00;//frequency
@@ -192,6 +193,12 @@ public class EvaluationSessionBean {
     }
     
     
+    
+    public double calculateCustLifeValue(String memberEmail)
+    {
+        double custLifeValue = 0.00;
+        return custLifeValue;
+    }
     public void persist(Object object) {
         em.persist(object);
     }
@@ -199,10 +206,12 @@ public class EvaluationSessionBean {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    private RFMModelEntity getRFMModel(int ModelNumber) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public RFMModelEntity getRFMModel(int ModelNumber) throws ExistException {
+       RFMModelEntity current = em.find(RFMModelEntity.class,ModelNumber );
+       if(current!=null)
+           return current;
+       else throw new ExistException();
     }
-    
-    
+      
 
 }
