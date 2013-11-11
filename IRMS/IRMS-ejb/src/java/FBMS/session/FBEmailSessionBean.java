@@ -209,6 +209,77 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
         return true;
     }
 
+    public boolean sendInvoice(String toEmailAddress, OrderEntity order) throws IOException, FileNotFoundException, DocumentException
+    {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+        
+         try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            //message.setRecipients(new InternetAddress(""));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmailAddress));
+            message.setSubject("COREL ISLAND RESORT: Your order invoice has been issued!");
+            String text = "Greeting from Coral Island Resort!"
+                    + "\nYour order invoice has been issued"
+                    + "\nOrder ID: " + order.getOrderId()
+                    + "\nMenu Type: " + order.getMenu().getType()
+                    + "\nPlease check your order, and once you have any enquiries, please feel free to contact us! \n\n"
+                    + "\n\n\nBest Regards,\nThe Coral Island Management Team";
+            // message.setText(text); No use already
+
+
+
+            String INPUTFILE = createInvoicePDF(toEmailAddress,order);
+            
+            //Below attach the bill within the email
+            MimeBodyPart messageBodyPart;
+            MimeBodyPart textBodyPart;
+
+            Multipart multipart = new MimeMultipart();
+
+            messageBodyPart = new MimeBodyPart();
+            String file;
+            file = INPUTFILE;
+            String fileName = "CorelResort:Catering Invoice";
+            
+            messageBodyPart.setFileName(fileName);
+            messageBodyPart.attachFile(file);
+
+            textBodyPart = new MimeBodyPart();
+            textBodyPart.setText(text);
+
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(textBodyPart);
+
+
+            ((MimeMessage) message).setContent(multipart);
+            
+            Transport.send(message);
+            
+            System.out.println("Sending");
+
+            System.out.println("EmailSessionBean: the email has been done!");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+            
+            
+       
+    }
+          return true;
+    }
     @Override
     public boolean sendConfirmation(String toEmailAddress, OrderEntity oe) {
         Properties props = new Properties();
@@ -547,6 +618,95 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
         document.add(table);
         
         document.add(new Paragraph("Here is your delivery details, please use your reservation Id for any queries.",
+                FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD, new CMYKColor(0, 255, 0, 0))));
+
+
+        document.close();
+        return OUTPUTFILE;
+    }
+
+    private String createInvoicePDF(String toEmailAddress, OrderEntity order) throws FileNotFoundException, DocumentException {
+        Document document;
+        document = new Document(PageSize.A4, 50, 50, 50, 50);
+        
+        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Catering_Invoice" + order.getName()
+                + order.getId() + ".pdf";
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+        
+        document.open();
+        
+        //Below specify different types of font
+        Font catFont = new Font(Font.TIMES_ROMAN, 18,
+                Font.BOLD);
+        Font redFont = new Font(Font.TIMES_ROMAN, 12,
+                Font.NORMAL, Color.RED);
+        Font subFont = new Font(Font.TIMES_ROMAN, 16,
+                Font.BOLD);
+        Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
+                Font.BOLDITALIC);
+        
+        //Below specify contents
+        Paragraph preface = new Paragraph();
+        addEmptyLine(preface, 1);
+        preface.add(new Paragraph("Your catering order invoice has been issued!", catFont));
+        addEmptyLine(preface, 1);
+
+        document.add(preface);
+        
+        //Below add a table
+        PdfPTable table = new PdfPTable(2);
+        table.setSpacingAfter(30);
+        table.setSpacingBefore(30);
+        table.setWidths(new int[]{1, 3});
+        
+        //Add table header
+        PdfPCell c1 = new PdfPCell(new Phrase("Reservation Info"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Details & Remarks"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        table.setHeaderRows(1);
+        
+         //Add table contents
+
+        table.addCell("Order Id");
+        table.addCell(order.getOrderId().toString());
+        table.addCell("Invoice Id");
+        table.addCell(order.getInvoice().getId().toString());
+        table.addCell("Contact's Name");
+        table.addCell(order.getTitle() + " " + order.getName());
+        table.addCell("Email");
+        table.addCell(order.getEmail());
+        table.addCell("Mobile");
+        table.addCell(order.getMobile());
+        table.addCell("Order Date&Time");
+        table.addCell(order.getOrderDateTime().toString());
+        table.addCell("Number of People");
+        table.addCell(order.getMenu().getNumberOrder().toString());
+        table.addCell("Invoice Issued Date");
+        table.addCell(order.getInvoice().getInvoiceDate().toString());
+        
+
+        table.addCell("Menu");
+        table.addCell("");
+        Set<CourseEntity> courses = order.getMenu().getCourses();
+        //check if courses is null
+        if (!courses.isEmpty()) {
+            Iterator<CourseEntity> itr = courses.iterator();
+            while (itr.hasNext()) {
+                table.addCell("");
+                table.addCell(itr.next().getDish().getDishName());
+            }
+        }
+        table.addCell("Total Cost");
+        table.addCell(order.getSalePrice().toString());
+        
+        document.add(table);
+        
+        document.add(new Paragraph("Here is your invoice details, please use your reservation Id for any queries.",
                 FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD, new CMYKColor(0, 255, 0, 0))));
 
 
