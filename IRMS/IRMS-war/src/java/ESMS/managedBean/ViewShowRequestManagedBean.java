@@ -7,6 +7,7 @@ package ESMS.managedBean;
 import CEMS.entity.EventEntity;
 import CEMS.session.EventSessionBean;
 import Exception.ExistException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -47,10 +48,11 @@ public class ViewShowRequestManagedBean {
     }
 
     static {
-        eventStatus = new String[3];
+        eventStatus = new String[2];
         eventStatus[0] = "Pending";
-        eventStatus[1] = "Researved";
-        eventStatus[2] = "Confirmed";
+        eventStatus[1] = "Cancel";
+        //eventStatus[2] = "Researved";
+
     }
 
     public List<EventEntity> getRequests() throws ExistException {
@@ -81,6 +83,12 @@ public class ViewShowRequestManagedBean {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Status Changed", "Previously: " + oldValue + ", Now:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
+    }
+
+    public void setRequestStatus(ActionEvent event) throws IOException {
+        selectedEvent.setStatus("Cancel");
+        eventSessionBean.updateEvent(selectedEvent);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("viewShowRequest.xhtml");
     }
 
     //Getters and Setters
