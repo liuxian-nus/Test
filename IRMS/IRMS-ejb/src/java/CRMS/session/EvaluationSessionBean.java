@@ -4,6 +4,7 @@
  */
 package CRMS.session;
 
+import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.entity.RFMModelEntity;
 import Exception.ExistException;
@@ -221,6 +222,49 @@ public class EvaluationSessionBean {
         }
         return custLifeValue;
     }
+    
+    public List<MemberEntity> getTieredBasedOnRFM() throws ExistException
+    {
+        List<MemberEntity> tiered = new ArrayList();
+        
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List <MemberEntity> allMembers = q.getResultList(); 
+        Iterator <MemberEntity> itr = allMembers.iterator();
+        //get a description statistics
+        DescriptiveStatistics stats = new DescriptiveStatistics();
+        
+        while(itr.hasNext())
+        {
+            MemberEntity current = itr.next();
+            int currentRFMValue = calculateRFMValue(current.getMemberEmail(),1);
+            stats.addValue(currentRFMValue);
+        }
+        
+        int tieredValue = (int)stats.getPercentile(80);
+        
+        Query q2 = em.createQuery("SELECT m FROM MemberEntity m");
+        List <MemberEntity> allMembers2 = q2.getResultList(); 
+        Iterator <MemberEntity> itr2 = allMembers2.iterator();
+        List<MemberEntity> resultList = new ArrayList();
+        
+        while(itr2.hasNext())
+        {
+            MemberEntity current = itr.next();
+            int currentRFMValue = calculateRFMValue(current.getMemberEmail(),1);
+            if (currentRFMValue>=tieredValue)
+                resultList.add(current);
+        }
+        tiered = resultList;
+        
+        return tiered;
+    }
+    
+    public List<MemberEntity> getTieredBasedOnCustLifeValue()
+    {
+        List<MemberEntity> tiered = new ArrayList();
+        
+        return tiered;
+    }
     public void persist(Object object) {
         em.persist(object);
     }
@@ -234,6 +278,7 @@ public class EvaluationSessionBean {
            return current;
        else throw new ExistException();
     }
-      
+    
+    
 
 }
