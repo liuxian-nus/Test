@@ -14,6 +14,7 @@ import Exception.RoomException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -28,7 +29,8 @@ import org.joda.time.DateMidnight;
  * @author liuxian
  */
 @Stateless
-public class RoomSessionBean {
+@LocalBean
+public class RoomSessionBean implements RoomSessionBeanRemote {
 
     @EJB
     private ReservationSessionBean reservationSessionBean;
@@ -66,6 +68,7 @@ public class RoomSessionBean {
      return room;
      }
      */
+    @Override
     public RoomEntity getRoomById(int id) throws ExistException {
         System.err.println("in get room by id sessionbean");
         RoomEntity thisRoom = em.find(RoomEntity.class, id);
@@ -75,6 +78,7 @@ public class RoomSessionBean {
         return thisRoom;
     }
 
+    @Override
     public List<RoomEntity> getAvailableRooms() throws ExistException {
         //get all rooms
         System.err.println("in getallrooms sessionbean");
@@ -115,6 +119,7 @@ public class RoomSessionBean {
 
     //list of all rooms -- for floor plan
     //information displayed: availability, roomSchedule,roomName, roomType, roomService, accumulated charge
+    @Override
     public List<RoomEntity> getAllRooms() throws ExistException {
         System.err.println("in getAllrooms session bean");
         Query q = em.createQuery("SELECT r FROM RoomEntity r");
@@ -130,6 +135,7 @@ public class RoomSessionBean {
         return roomList;
     }
 
+    @Override
     public List<RoomEntity> getOccupiedRooms() throws ExistException {
         System.err.println("in getOccupiedrooms session bean");
         Query q = em.createQuery("SELECT r FROM RoomEntity r");
@@ -147,6 +153,7 @@ public class RoomSessionBean {
         return roomList;
     }
 
+    @Override
     public List<RoomEntity> getCheckInRooms(Long reservationId) throws ExistException {
         System.err.println("in getOccupiedrooms session bean");
         Query q = em.createQuery("SELECT r FROM RoomEntity r where r.roomStatus='available'");
@@ -170,6 +177,7 @@ public class RoomSessionBean {
 
     //add new charged service
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public RoomServiceEntity addRoomService(int roomId, String roomServiceName, int quantity) throws ExistException {
         room = em.find(RoomEntity.class, roomId);
         roomService = em.find(RoomServiceEntity.class, roomServiceName);
@@ -190,6 +198,7 @@ public class RoomSessionBean {
     }
 
     //clear all room service charge
+    @Override
     public double clearServiceCharge(int roomId) throws ExistException {
         room = em.find(RoomEntity.class, roomId);
         if (room == null) {
@@ -202,6 +211,7 @@ public class RoomSessionBean {
     }
 
     //member check-in
+    @Override
     public void checkIn(int roomId, Long reservationId, String guestName) throws RoomException, ExistException {
         ReservationEntity reservation = new ReservationEntity();
         reservation = em.find(ReservationEntity.class, reservationId);
@@ -236,6 +246,7 @@ public class RoomSessionBean {
     }
 
     //individual member checkout
+    @Override
     public void checkOut(int roomId) throws RoomException, ExistException {
         room = em.find(RoomEntity.class, roomId);
         if (room.getRoomServiceCharge() != 0) {
@@ -258,6 +269,7 @@ public class RoomSessionBean {
         System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " is successfully checked out");
     }
 
+    @Override
     public void updateHousekeeping(int roomId) {
         room = em.find(RoomEntity.class, roomId);
         room.setRoomStatus("available");
@@ -273,6 +285,7 @@ public class RoomSessionBean {
      }
      System.out.println("RoomSessionBean-->Room " + room.getRoomId() + " bill is successfully send");
      }*/
+    @Override
     public double calculateRoomFee(RoomEntity room) {
         //       double temp1 = room.getCheckInDate().get(Calendar.DAY_OF_YEAR);
         //       double temp2 = room.getCheckOutDate().get(Calendar.DAY_OF_YEAR);
@@ -284,6 +297,7 @@ public class RoomSessionBean {
         return roomCharge;
     }
 
+    @Override
     public void addMembership(int roomId, MemberEntity thisMember) {
         room = em.find(RoomEntity.class, roomId);
         room.setRoomMember(thisMember);
@@ -291,6 +305,7 @@ public class RoomSessionBean {
         System.out.println("RoomSessionBean --> welcome: " + thisMember.getMemberName());
     }
 
+    @Override
     public void createTestRoom(int roomHotel, int roomLevel, int roomNo, String roomType, String roomStatus) {
         try {
             System.out.println("come to create test room session bean");
@@ -323,50 +338,62 @@ public class RoomSessionBean {
         System.out.println("Insert room into database");
     }
 
+    @Override
     public MemberTransactionSessionBean getMtSessionBean() {
         return mtSessionBean;
     }
 
+    @Override
     public void setMtSessionBean(MemberTransactionSessionBean mtSessionBean) {
         this.mtSessionBean = mtSessionBean;
     }
 
+    @Override
     public RoomEntity getRoom() {
         return room;
     }
 
+    @Override
     public void setRoom(RoomEntity room) {
         this.room = room;
     }
 
+    @Override
     public RoomServiceEntity getRoomService() {
         return roomService;
     }
 
+    @Override
     public void setRoomService(RoomServiceEntity roomService) {
         this.roomService = roomService;
     }
 
+    @Override
     public ReservationEntity getReservation() {
         return reservation;
     }
 
+    @Override
     public void setReservation(ReservationEntity reservation) {
         this.reservation = reservation;
     }
 
+    @Override
     public RoomPriceEntity getPrice() {
         return price;
     }
 
+    @Override
     public void setPrice(RoomPriceEntity price) {
         this.price = price;
     }
 
+    @Override
     public MemberTransactionEntity getMemberTransaction() {
         return memberTransaction;
     }
 
+    @Override
     public void setMemberTransaction(MemberTransactionEntity memberTransaction) {
         this.memberTransaction = memberTransaction;
     }

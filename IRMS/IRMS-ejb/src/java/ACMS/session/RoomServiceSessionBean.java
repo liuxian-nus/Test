@@ -8,6 +8,7 @@ import ACMS.entity.RoomServiceEntity;
 import Exception.ExistException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +19,8 @@ import javax.persistence.Query;
  * @author liudazhi
  */
 @Stateless
-public class RoomServiceSessionBean {
+@LocalBean
+public class RoomServiceSessionBean implements RoomServiceSessionBeanRemote {
 
     @PersistenceContext(unitName="IRMS-ejbPU")
     private EntityManager em;
@@ -30,10 +32,12 @@ public class RoomServiceSessionBean {
         
     }
     
+    @Override
     public void addRoomService(RoomServiceEntity newRoomService){
         em.persist(newRoomService);
     }
     
+    @Override
     public boolean removeRoomService(String roomServiceName) throws ExistException{
         rmService = em.find(RoomServiceEntity.class, roomServiceName);
         if(rmService == null) throw new ExistException("This room service doesn't exist");
@@ -41,6 +45,7 @@ public class RoomServiceSessionBean {
         return true;
     }
     
+    @Override
     public boolean updateRoomService(String roomServiceName,String category, double roomServicePrice) throws ExistException {
         rmService = em.find(RoomServiceEntity.class, roomServiceName);
         if(rmService == null) throw new ExistException("This room service doesn't exist");
@@ -50,12 +55,14 @@ public class RoomServiceSessionBean {
         return true;
     }
     
+    @Override
     public RoomServiceEntity getServiceByName(String roomServiceName) throws ExistException{
         rmService = em.find(RoomServiceEntity.class, roomServiceName);
         if(rmService == null) throw new ExistException("This room service doesn't exist");
         return rmService;
     }
 
+    @Override
     public List<RoomServiceEntity> getAllRoomServices() throws ExistException {
        System.err.println("in get all room services session bean");
        Query q = em.createQuery("SELECT rs FROM RoomServiceEntity rs");
