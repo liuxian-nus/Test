@@ -4,11 +4,14 @@
  */
 package servlet;
 
+import CEMS.entity.EventEntity;
+import CEMS.session.EventSessionBean;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.session.ShowSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,12 +33,16 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ESMSServlet", urlPatterns = {"/ESMSServlet", "/ESMSServlet/*"})
 public class ESMSServlet extends HttpServlet {
+    @EJB
+    private EventSessionBean eventSessionBean;
 
     @EJB
     private ShowSessionBean showSessionBean;
+    
     private List<ShowEntity> shows;
     private List<ShowScheduleEntity> showSchedule;
     private Long showId;
+    private EventEntity ee;
 
     /**
      * Processes requests for both HTTP
@@ -74,7 +81,7 @@ public class ESMSServlet extends HttpServlet {
                     request.setAttribute("shows", shows);
                     request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
                 } else if ("entertainmentSchedule".equals(page)) {
-         
+
                     System.out.println("***entertainmentSchedule***");
                     showId = Long.parseLong(request.getParameter("showId"));
                     session.setAttribute("thisShow", showSessionBean.getShowById(showId));
@@ -82,7 +89,7 @@ public class ESMSServlet extends HttpServlet {
                     System.out.println(showSchedule.isEmpty());
                     request.setAttribute("showSchedules", showSchedule);
                     request.getRequestDispatcher("/entertainmentSchedule.jsp").forward(request, response);
-                }  else if ("entertainmentVenue".equals(page)) {
+                } else if ("entertainmentVenue".equals(page)) {
                     System.out.println("***entertainmentVenue***");
 
                     request.getRequestDispatcher("/entertainmentVenue.jsp").forward(request, response);
@@ -90,8 +97,33 @@ public class ESMSServlet extends HttpServlet {
                     System.out.println("***entertainmentPay***");
 
                     request.getRequestDispatcher("/entertainmentPay.jsp").forward(request, response);
-                } 
-                else {
+                } else if ("entertainmentRegisterResult".equals(page)) {
+                    System.out.println("***entertainmentRegisterResult***");
+                     System.out.println("***entertainmentRegister***");
+                    ee = new EventEntity();
+          
+                    String eventName = request.getParameter("eventName");
+                    ee.setEventName(eventName);
+                    String name = request.getParameter("name");
+                    ee.setName(name);
+                    String eventType="show";
+                    ee.setEventType(eventType);
+                    String email = request.getParameter("e-mail");
+                    ee.setEmail(email);
+                    String phoneNumber = request.getParameter("contact");
+                    ee.setEventContact(phoneNumber);
+                    String description=request.getParameter("description");
+                    ee.setDescription(description);
+                    String Status="pending";
+                    ee.setStatus(Status);
+                    eventSessionBean.addEvent(ee);
+                    request.getRequestDispatcher("/entertainmentRegisterResult.jsp").forward(request, response);
+                }else if ("entertainmentRegister".equals(page)) {
+          
+                    
+                  
+                    request.getRequestDispatcher("/entertainmentRegister.jsp").forward(request, response);
+                } else {
                     System.out.println("other page");
                 }
             } catch (Exception e) {
