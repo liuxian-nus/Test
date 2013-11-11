@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+
+        <h:form>  
+            <p:dataTable id="dataTable" var="feedbackList" value="#{feedbackManagedBean.feedbackList}" widgetVar="feedbacksTable" >  
+
+                <p:column style="width:2%">  
+                    <p:rowToggler />  
+                </p:column> 
+                <p:column id="titleColumn" filterBy="#{feedbackList.feedbackTitle}"   
+                          headerText="Feedback Title" filterMatchMode="contains">  
+                    <h:outputText value="#{feedbackList.feedbackTitle}" />  
+                </p:column>  
+
+                <p:column id="emailColumn" filterBy="#{feedbackList.feedbackOwnerEmail}"   
+                          headerText="From Owner Email" filterMatchMode="contains">  
+                    <h:outputText value="#{feedbackList.feedbackOwnerEmail}" />  
+                </p:column>  
+
+                <p:column id="dateColumn" filterBy="#{feedbackList.feedbackSentDate}"   
+                          headerText="Date" filterMatchMode="contains">  
+                    <h:outputText value="#{feedbackList.feedbackSentDate}" > 
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </h:outputText>
+                </p:column>  
+
+                <p:column id="departmentColumn" filterBy="#{feedbackList.feedbackDepartment}" headerText="Feedback Department" 
+                          filterOptions="#{feedbackManagedBean.departmentOption}" filterMatchMode="contains">  
+                    <h:outputText value="#{feedbackList.feedbackDepartment}" />  
+                </p:column>
+
+                <p:column id="ratingColumn" filterBy="#{feedbackList.rating}" headerText="Rating"  
+                          filterOptions="#{feedbackManagedBean.ratingOption}" filterMatchMode="contains">  
+                    <h:outputText value="#{feedbackList.rating}" />  
+                </p:column>
+
+                <p:column>
+                    <p:commandButton icon="ui-icon ui-icon-flag" title="Transactions" value ="Transactions" ajax="true" action="/crms/listMemberTransactions.xhtml">
+                    </p:commandButton>
+                </p:column>
+
+                <p:column style="width:5%;">
+                    <f:facet name="header">Status</f:facet>
+                    <p:commandButton rendered="#{!(feedback.feedbackStatus.equals("handled"))}" oncomplete="resolved.show()" ajax="true"  icon="ui-icon ui-icon-flag" title="resolved" value="Resolved">
+                        <f:setPropertyActionListener value="#{feedbackList}" target="#{feedbackManagedBean.thisFeedback}" />  
+                    </p:commandButton>
+                    <h:outputText value="Handled" rendered="#{feedback.feedbackStatus.equals("handled")}"/>
+                </p:column>
+
+                <p:rowExpansion>  
+                    <h:panelGrid id="display" columns="2" cellpadding="4" style="width:200px;"  
+                                 styleClass=" ui-widget-content grid">  
+
+                        <f:facet name="From Customer">  
+                            #{feedbackList.feedbackOwnerEmail}
+                        </f:facet>  
+
+                        <h:outputText value="Title:" />  
+                        <h:outputText id="name" value="#{feedbackList.feedbackTitle}" style="width:200px;"   />  
+
+                        <h:outputText value="Content:" />  
+                        <h:outputText id="hp" value="#{feedbackList.feedbackContent}"  style="width:200px;"  />  
+                    </h:panelGrid>  
+                </p:rowExpansion>           
+            </p:dataTable> 
+            
+            <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Mark as Resolved" widgetVar="resolved">  
+                Update feedback status
+                <h:selectOneRadio value ="#{feedbackManagedBean.thisFeedback.feedbackStatus}">
+                    <f:selectItem itemLabel="New" itemValue="New" />  
+                    <f:selectItem itemLabel="In Progress" itemValue="In Progress" />  
+                    <f:selectItem itemLabel="Handled" itemValue="Handled" />  
+                </h:selectOneRadio> 
+                <br/>
+                <br/>
+                <br/>
+                <p:commandButton value="Save" update="feedbackList" actionListener="#{feedbackManagedBean.updateFeedbackStatus}" oncomplete="resolved.hide()" onclick="msgs;">  
+                </p:commandButton>
+                <p:commandButton value='Cancel' onclick="resolved.hide();" type='button'/>
+            </p:dialog>
+        </h:form> 
+
+    </ui:define>
+</ui:composition>
