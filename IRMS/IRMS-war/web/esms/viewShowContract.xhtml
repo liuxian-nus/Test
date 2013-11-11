@@ -8,7 +8,7 @@
 
     <ui:define name="content">
         <h:form id="form">
-            <p:panel id="showContract" header="View Show Contract" style="height:495px;">
+            <p:panel id="showContract" header="View Show Contract" >
                 <p:growl id="msgs" showDetail="true" />
                 <p:dataTable id="showContracts" value="#{viewShowContractManagedBean.getShowContracts()}" 
                              var="contractList" paginator="true" rows="10" draggableColumns="true" 
@@ -28,6 +28,10 @@
 
                     <p:column headerText="Address" style="width:130px;">
                         <h:outputText value="#{contractList.showMerchantAddress}"/> 
+                    </p:column>
+                    
+                    <p:column headerText="Deposit Paid" style="width:30px;">
+                        <h:outputText value="#{contractList.showDeposit}"/>
                     </p:column>
 
                     <p:column headerText="Commission" style="width:30px;">

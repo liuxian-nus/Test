@@ -17,27 +17,55 @@
                                  var="showList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
                                  resizableColumns="true">
 
-                        <p:column headerText="Show Name" style="width:50px;">
+                        <p:column style="width:2%">  
+                            <p:rowToggler />  
+                        </p:column>  
+
+                        <p:rowExpansion>  
+                            <p:dataTable var="showContact" value="#{showList.showContract}">  
+                                <p:column headerText="Show Merchant Name" style="width:70px;">
+                                    <h:outputText value="#{showList.showContract.showMerchantName}"/>
+                                </p:column>
+
+                                <p:column headerText="Show Merchant Contact" style="width:100px;">
+                                    <h:outputText value="#{showList.showContract.showMerchantContact}"/>
+                                </p:column>
+
+                                <p:column headerText="Contract email" style="width:100px;">
+                                    <h:outputText value="#{showList.showContract.showMerchantEmail}"/>
+                                </p:column>
+
+                                <p:column headerText="Contract deposit" style="width:100px;">
+                                    <h:outputText value="#{showList.showContract.showDeposit}"/>
+                                </p:column>
+
+                                <p:column headerText="Ticket Commission" style="width:100px;">
+                                    <h:outputText value="#{showList.showContract.showTicketCommission}"/>
+                                </p:column>
+                            </p:dataTable>  
+                        </p:rowExpansion> 
+
+                        <p:column headerText="Show Name">
                             <h:outputText value="#{showList.showName}"/>
                         </p:column>
 
-                        <p:column headerText="Description" style="width:300px;">
+                        <p:column headerText="Description" style="width:400px">
                             <h:outputText value="#{showList.showDescription}"/>
                         </p:column>
 
-                        <p:column headerText="Type" style="width:50px;">
+                        <p:column headerText="Duration(mins)" style="width:95px">
+                            <h:outputText value="#{showList.showDuration}"/>
+                        </p:column>
+
+                        <p:column headerText="Language" style="width:70px">
+                            <h:outputText value="#{showList.showLanguage}"/>
+                        </p:column>
+
+                        <p:column headerText="Type" style="width:55px">
                             <h:outputText value="#{showList.showType}"/>
                         </p:column>
 
-                        <p:column headerText="Contract name" style="width:70px;">
-                            <h:outputText value="#{showList.showContract.showMerchantName}"/>
-                        </p:column>
-
-                        <p:column headerText="Contract email" style="width:100px;">
-                            <h:outputText value="#{showList.showContract.showMerchantEmail}"/>
-                        </p:column>
-
-                        <p:column style="width:145px">  
+                        <p:column style="width:195px">  
                             <h:panelGrid columns="4" styleClass="actions" cellpadding="3">  
 
                                 <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-script" title="Edit Show Info">  
@@ -55,8 +83,13 @@
                                 <p:commandButton update=":form:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
                                     <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
                                 </p:commandButton>  
+                                <p:commandButton update="shows" title="Launched" icon="ui-icon ui-icon-close">
+                                    
+                                </p:commandButton>
                             </h:panelGrid>  
-                        </p:column>  
+                        </p:column> 
+                        
+                        
 
                     </p:dataTable>  
 
@@ -64,19 +97,33 @@
                               showEffect="fade" hideEffect="explode" width="500">  
 
                         <h:panelGrid id="display"  columns="2" cellpadding="4" style="margin:0 auto;">  
-                            <h:outputText value="Show Name" />  
+                            <h:outputText value="Show Name:" />  
                             <h:panelGroup>  
                                 <h:outputText value="#{manageShowManagedBean.selectedShow.showName}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/>  
                                 <p:inputText id="showName" required="true" requiredMessage="Show Name cannot be empty" value="#{manageShowManagedBean.selectedShow.showName}" rendered="#{manageShowManagedBean.editMode}"  label="Show Name"/>  
                                 <p:message for="showName"/>
                             </h:panelGroup>  
 
-                            <h:outputText value="Show Description" />  
+                            <h:outputText value="Show Description:" />  
                             <h:panelGroup>  
                                 <h:outputText value="#{manageShowManagedBean.selectedShow.showDescription}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/>  
                                 <p:inputTextarea id="showDescription" required="true" requiredMessage="Show Description cannot be empty" value="#{manageShowManagedBean.selectedShow.showDescription}" rendered="#{manageShowManagedBean.editMode}"  label="Show Description"/>  
                                 <p:message for="showDescription"/>
                             </h:panelGroup>
+
+                            <h:outputText value="Show Duration(mins):" />  
+                            <h:panelGroup>  
+                                <h:outputText value="#{manageShowManagedBean.selectedShow.showDuration}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/>  
+                                <p:inputText id="showDuration" required="true" requiredMessage="Show Duration cannot be empty" value="#{manageShowManagedBean.selectedShow.showDuration}" rendered="#{manageShowManagedBean.editMode}"  label="Show Duration"/>  
+                                <p:message for="showDuration"/>
+                            </h:panelGroup>  
+
+                            <h:outputText value="Show Language:" />  
+                            <h:panelGroup>  
+                                <h:outputText value="#{manageShowManagedBean.selectedShow.showLanguage}" style="font-weight:bold" rendered="#{!manageShowManagedBean.editMode}"/>  
+                                <p:inputText id="showLanguage" required="true" requiredMessage="Show Language cannot be empty" value="#{manageShowManagedBean.selectedShow.showLanguage}" rendered="#{manageShowManagedBean.editMode}"  label="Show Language"/>  
+                                <p:message for="showLanguage"/>
+                            </h:panelGroup> 
 
                             <f:facet name="footer">  
                                 <p:outputPanel rendered="#{manageShowManagedBean.editMode}" layout="block" style="text-align:right">  
@@ -132,10 +179,10 @@
 
                     <p:dialog header="Edit Ticket" widgetVar="ticket" resizable="false" id="ticket"  
                               showEffect="fade" hideEffect="explode" width="1000">
-                        
+
                         <p:dataTable id="showScheduleTicket" value="#{manageShowManagedBean.selectedShow.showSchedules}" 
                                      var="showSchedules" paginator="true" rows="6" editable="true">
-                            
+
                             <p:column style="width:2%">  
                                 <p:rowToggler />  
                             </p:column>  

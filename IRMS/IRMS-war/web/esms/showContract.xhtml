@@ -26,6 +26,12 @@
                     <h:outputText value="Merchant Address" />
                     <h:inputText required="true" requiredMessage="Merchant address cannot be empty" value="#{showContractManagedBean.showContract.showMerchantAddress}" style="margin-bottom:10px;"/>
                     <h:outputText value=""/><br/>
+                    
+                    <h:outputText value="Deposit Paid: " />
+                    <h:inputText required="true" requiredMessage="Deposit paid cannot be empty" value="#{showContractManagedBean.showContract.showDeposit}" >
+                        <f:convertNumber type="number"/>
+                    </h:inputText> 
+                    <h:outputText value=""/><br/>
 
                     <h:outputText value="Venue rental rate (per day): " />
                     <h:inputText required="true" requiredMessage="Venue rental rate cannot be empty" value="#{showContractManagedBean.showContract.showVenueRate}" >
