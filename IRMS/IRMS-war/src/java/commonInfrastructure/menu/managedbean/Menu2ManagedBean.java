@@ -277,14 +277,14 @@ public class Menu2ManagedBean implements Serializable {
                 item.setUrl("/fbms/addAccount.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Manage F&B Accounts");
                 item.setUrl("/fbms/manageAccount.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
-                
-                
+
+
 
 
 
@@ -411,14 +411,20 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Evaluation");
 
                 item = new MenuItem();
                 item.setValue("View size of wallet");
                 item.setUrl("/crms/sizeOfWallet.xhtml");
-                item.setIcon("ui-icon ui-icon-plus");
+                item.setIcon("ui-icon ui-icon-folder-open");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("RFM Value");
+                item.setUrl("/crms/rfmValue.xhtml");
+                item.setIcon("ui-icon ui-icon-gear");
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
