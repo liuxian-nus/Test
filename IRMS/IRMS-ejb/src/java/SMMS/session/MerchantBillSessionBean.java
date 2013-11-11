@@ -107,8 +107,11 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
             System.err.println("in setting overdue time lah ahahah");
             System.err.println("in setting overdue time lah ahahah");
             System.err.println("in setting overdue time lah ahahah");
-            System.err.println("in setting overdue time lah ahahah");
-            System.err.println("in setting overdue time lah ahahah");
+            System.err.println("in setting overdue time lah ahahah!!!!!!!!!!!!!!");
+            System.err.println("in setting overdue time lah ahahah" + bill.getBillId());
+            bill.setBillStatus("overdue");
+            updateBill(bill);
+            System.err.println("after setting product lalala" + bill.getBillStatus());
         }
 
         if (timer.getInfo().toString().equals("setActive")) {

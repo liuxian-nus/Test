@@ -84,15 +84,15 @@
 
                             <!-- send out for request when new-->
                             <p:commandButton   oncomplete="confirmSend.show()" ajax="true" 
-                                              rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='earlyTermination')}" 
-                                              icon="ui-icon ui-icon-mail-closed"  title="Send for approval">  
+                                               rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='earlyTermination')}" 
+                                               icon="ui-icon ui-icon-mail-closed"  title="Send for approval">  
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton> 
 
                             <!-- delete when new or rejected-->
                             <p:commandButton   oncomplete="confirmaDelete.show()" ajax="true" 
-                                              rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
-                                              icon="ui-icon ui-icon-circle-close" title="Delete">  
+                                               rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
+                                               icon="ui-icon ui-icon-circle-close" title="Delete">  
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton> 
 
@@ -102,6 +102,23 @@
                                               icon="ui-icon ui-icon-scissors"  title="Withdraw">   
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton> 
+
+                            <!-- send for renew when being requested-->
+                            <p:commandButton  ajax="true"   oncomplete="renew.show()"
+                                              rendered="#{(contract.last.eventStatus=='newActive')||(contract.last.eventStatus=='renewActive')}" 
+                                              icon="ui-icon ui-icon-refresh"  title="Send request for contract renew">   
+                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
+                            </p:commandButton> 
+
+
+                            <!-- send for early termination when being requested-->
+                            <p:commandButton  oncomplete="early.show()" ajax="true"  actionListener="#{operatorRequstContractManagedBean.renew}"
+                                              rendered="#{(contract.last.eventStatus=='newActive')||(contract.last.eventStatus=='renewActive')}" 
+                                              icon="ui-icon ui-icon-scissors"  title="Early terminate the contract">   
+                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
+                            </p:commandButton> 
+
+
                         </p:column>  
 
                     </p:dataTable>  
@@ -135,6 +152,44 @@
                             <p:commandButton value="Not yet" onclick="confirmaWithdraw.hide()" type="button"/>  
                         </h:panelGrid>
                     </p:dialog>  
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="early"> 
+                        <br/>
+                        Are you sure to send for early termination?
+                        <br/><br/>
+                        <h:panelGrid columns="2" id="early">
+                            <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.requestEarlyTermination}" oncomplete="early.hide()"/>
+                            <p:commandButton value="Not yet" onclick="early.hide()" type="button"/>  
+                        </h:panelGrid>
+                    </p:dialog> 
+
+
+                    <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="renew"> 
+                        <h:panelGrid columns="3" cellpadding="10" id="renew">                         
+
+                            <h:outputText value="Commission Rate:"/>
+                            <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventCommissionRate}"/>
+                            <h:outputText value=""/>
+
+                            <h:outputText value="Monthly Rate:"/>
+                            <p:inputText  title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventMonthRate}"/>
+                            <h:outputText value=""/>
+
+                            <h:outputText value="Early Termination charge:"/>
+                            <p:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventEarlyCharge}"/>
+                            <h:outputText value=""/>
+
+                            <h:outputText value="Starting Date:"/>
+                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventStartDate}" /> 
+                            <h:outputText value=""/>
+
+                            <h:outputText value="Ending Date:"/>
+                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventEndDate}" /> 
+                            <h:outputText value=""/>
+
+                            <p:commandButton onclick="renew.hide()" update="contract" value="Add" ajax="true" actionListener="#{operatorRequstContractManagedBean.renew}" />
+                        </h:panelGrid> 
+                    </p:dialog> 
 
                 </div>
             </p:panel>

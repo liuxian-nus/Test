@@ -81,23 +81,40 @@ public class ManagerApproveContractManagedBean implements Serializable {
     public void approveNew(ActionEvent event) {
         System.out.println("in getting new approve the contract is" + contract.getContractId());
         cevent = contract.getLast();
-        if (cevent.getEventStatus().contains("new")) {
+        if ("newRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("newApproved");
         }
-        if (cevent.getEventStatus().contains("renew")) {
+        if ("renewRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("renewApproved");
         }
-        if (cevent.getEventStatus().contains("earlyTermination")) {
+        if ("earlyTerminationRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("earlyTerminationApproved");
         }
         contracteventSessionBean.updateContractEvent(cevent);
         System.out.println("after setting new request" + contract.getLast().getEventStatus());
         emailSessionBean.emailApprovalAction("a0077969@nus.edu.sg", contract);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
-        addDepositBill(contract);
-        emailSessionBean.emailMerchantBill(contract.getMerchant().getMerchantEmail(), bill);
 
-    }
+        if ("newApproved".equals(cevent.getEventStatus())) {
+            System.err.println("in new");
+            addDepositBill(contract);
+            merchantBillSessionBean.createActiveTimers(contract.getLast().getEventStartDate());
+            emailSessionBean.emailMerchantBill(contract.getMerchant().getMerchantEmail(), bill);
+        }
+
+        if ("renewApproved".equals(cevent.getEventStatus())) {
+            
+            System.err.println("in new approved");
+            
+
+        }
+
+        if ("earlyTerminationApproved".equals(cevent.getEventStatus())) {
+            //addFinalBill(contract);
+            merchantBillSessionBean.createActiveTimers(contract.getLast().getEventStartDate());
+            emailSessionBean.emailMerchantBill(contract.getMerchant().getMerchantEmail(), bill);
+        }
+   }
 
     public void rejectNew(ActionEvent event) {
         System.out.println("NO1: in getting new REJECT" + contract.getContractId());
@@ -106,13 +123,13 @@ public class ManagerApproveContractManagedBean implements Serializable {
         contract = (ContractEntity) event.getComponent().getAttributes().get("managerViewSelect");
         System.out.println("NO2: in getting new approve" + contract.getContractId());
         cevent = contract.getLast();
-        if (cevent.getEventStatus().contains("new")) {
+        if ("newRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("newRejected");
         }
-        if (cevent.getEventStatus().contains("renew")) {
+        if ("renewRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("renewRejected");
         }
-        if (cevent.getEventStatus().contains("earlyTermination")) {
+        if ("earlyTerminationRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("earlyTerminationRejected");
         }
         contracteventSessionBean.updateContractEvent(cevent);
@@ -125,13 +142,13 @@ public class ManagerApproveContractManagedBean implements Serializable {
     public void pendingNew(ActionEvent event) {
         System.out.println("in getting new approve" + contract.getContractId());
         cevent = contract.getLast();
-        if (cevent.getEventStatus().contains("new")) {
+        if ("newRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("newPending");
         }
-        if (cevent.getEventStatus().contains("renew")) {
+        if ("renewRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("renewPending");
         }
-        if (cevent.getEventStatus().contains("earlyTermination")) {
+        if ("earlyTerminationRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("earlyTerminationPending");
         }
         contracteventSessionBean.updateContractEvent(cevent);
@@ -143,7 +160,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
 
     public void addDepositBill(ContractEntity contract) {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 14);
+        cal.add(Calendar.MINUTE, 2);  //here expire after 2 minutes
         Date dueDate = cal.getTime();
         System.out.println("in setting due date" + dueDate);
 
@@ -154,6 +171,10 @@ public class ManagerApproveContractManagedBean implements Serializable {
         bill.setContract(contract);
         bill.setDueDate(dueDate);
         merchantBillSessionBean.addBill(bill);
+        merchantBillSessionBean.setBill(bill);
+        System.err.println("before creating timer" + dueDate);
+        merchantBillSessionBean.createOverDueTimers(dueDate);
+
     }
 
     public ContractEntity getSelected() {

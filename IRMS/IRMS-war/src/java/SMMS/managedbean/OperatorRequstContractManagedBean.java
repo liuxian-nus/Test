@@ -47,13 +47,13 @@ public class OperatorRequstContractManagedBean {
     public void requestNew(ActionEvent event) {
         System.out.println("in getting new request" + contract.getContractId());
         cevent = contract.getLast();
-        if (cevent.getEventStatus().contains("new")) {
+        if ("new".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("newRequest");
         }
-        if (cevent.getEventStatus().contains("renew")) {
+        if ("renew".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("renewRequest");
         }
-        if (cevent.getEventStatus().contains("earlyTermination")) {
+        if ("earlyTermination".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("earlyTerminationRequest");
         }
         contracteventSessionBean.updateContractEvent(cevent);
@@ -66,13 +66,13 @@ public class OperatorRequstContractManagedBean {
     public void withdraw(ActionEvent event) {
         System.out.println("in withdraw request" + contract.getContractId());
         cevent = contract.getLast();
-        if (cevent.getEventStatus().contains("new")) {
+        if ("newRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("new");
         }
-        if (cevent.getEventStatus().contains("renew")) {
+        if ("renewRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("renew");
         }
-        if (cevent.getEventStatus().contains("earlyTermination")) {
+        if ("earlyTerminationRequest".equals(cevent.getEventStatus())) {
             cevent.setEventStatus("earlyTermination");
         }
         contracteventSessionBean.updateContractEvent(cevent);
@@ -81,6 +81,7 @@ public class OperatorRequstContractManagedBean {
 
     }
 
+    //SO FAR NO USE
     public void requestRenew(ActionEvent event) {
         System.out.println("in getting renew request" + contract.getContractId());
         cevent = contract.getLast();
@@ -102,6 +103,24 @@ public class OperatorRequstContractManagedBean {
         emailSessionBean.emailRequest("cookiewxy@hotmail.com", contract);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
 
+    }
+
+    public void renew(ActionEvent event) throws ExistException {
+        System.out.println("in generating contract renew" + contract.getContractId());
+       try{
+        cevent.setEventStatus("renew");
+        cevent.setEventContract(contract);
+        contracteventSessionBean.addContractevent(cevent);
+        System.out.println("after creating new contract event" + cevent.getContracteventId());
+       
+
+        contractSessionBean.addContractevent(contract.getContractId(), cevent.getContracteventId());// adding new event to contract, merge contract entity
+        System.out.println("after adding contract event" + cevent.getContracteventId());
+       }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when renewing new contract", ""));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Contract has been changed to renewed.", ""));
     }
 
     public void terminate(ActionEvent event) {

@@ -708,6 +708,11 @@ public class initializationManagedBean implements Serializable {
         functionality12.setFuncDescription("add outlet");
         functionalitySessionBean.addFunctionality(functionality12);
         
+          FunctionalityEntity functionality13 = new FunctionalityEntity();
+        functionality13.setFuncName("addRenewContract");
+        functionality13.setFuncDescription("add renew");
+        functionalitySessionBean.addFunctionality(functionality13);
+        
         role = new RoleEntity();
         role.setRoleId(41);
         role.setRoleName("SMMSOps");
@@ -1354,8 +1359,20 @@ public class initializationManagedBean implements Serializable {
         System.out.println("go to create Contract Page...");
         
         ContractEntity contract1 = new ContractEntity();
-        Date cidate = new Date(2014, 12, 1);
-        Date codate = new Date(2016, 12, 1);
+//        Date cidate = new Date(2014, 12, 1);
+//        Date codate = new Date(2016, 12, 1);
+        
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MINUTE, 6);   //start after 6 minutes of initialization
+        Date cidate = cal.getTime();
+        System.err.println("in setting due date" + cidate);
+        
+        Calendar cal2 = Calendar.getInstance();
+        cal2.add(Calendar.MINUTE, 28);
+        Date codate = cal2.getTime();
+        System.err.println("in setting due date" + codate);
+        
+        
         try {
             
             System.out.println("Saving cart....");
@@ -1400,14 +1417,14 @@ public class initializationManagedBean implements Serializable {
         
         ContractEntity contract2 = new ContractEntity();
         
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, 3);
-        Date cidate1 = cal.getTime();
+        Calendar cal3 = Calendar.getInstance();
+        cal3.add(Calendar.MINUTE, 3);
+        Date cidate1 = cal3.getTime();
         System.err.println("in setting due date" + cidate1);
         
-        Calendar cal2 = Calendar.getInstance();
-        cal2.add(Calendar.MINUTE, 4);
-        Date codate1 = cal2.getTime();
+        Calendar cal4 = Calendar.getInstance();
+        cal4.add(Calendar.MINUTE, 4);
+        Date codate1 = cal4.getTime();
         System.err.println("in setting due date" + codate1);
 
 
@@ -1433,7 +1450,7 @@ public class initializationManagedBean implements Serializable {
             event2.setEventDeposit(55000.00);
             event2.setEventMonthRate(11000.00);
             event2.setEventCommissionRate(0.22);
-            event2.setEventStatus("newApproved");
+            event2.setEventStatus("newActive");
             event2.setEventTime(currentDate);
             event2.setEventContract(contract2);
             contracteventSessionBean.addContractevent(event2);
@@ -1453,9 +1470,9 @@ public class initializationManagedBean implements Serializable {
             outletb.setOutletName("Resort Suvovior");
             outletSessionBean.updateOutlet(outletb);
             
-            Calendar cal3 = Calendar.getInstance();
-            cal3.add(Calendar.MINUTE, 2); // set overdue date = 1 minute
-            Date dueDate = cal3.getTime();
+            Calendar cal5 = Calendar.getInstance();
+            cal5.add(Calendar.MINUTE, 2); // set overdue date = 1 minute
+            Date dueDate = cal5.getTime();
             System.err.println("in setting due date" + dueDate);
             System.err.println("current calendar time is" + cal.getTime());
             System.err.println("current time is" + currentDate);
