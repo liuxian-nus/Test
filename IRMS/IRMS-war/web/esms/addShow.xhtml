@@ -14,12 +14,26 @@
                 <h:form id="addShow">
                     <p:growl id="message" showDetail="true" sticky="true" />
                     <h:panelGrid id="grid" columns="2">
-                        <h:outputText value="Show Name" />
+                        <h:outputText value="Show Name: " />
                         <h:inputText required="true" requiredMessage="Show name cannot be empty" value="#{addShowManagedBean.show.showName}" style="margin-bottom:10px;"/>
                         <h:outputText value=""/><br/>
 
-                        <h:outputText value="Show Description" />
+                        <h:outputText value="Show Description; " />
                         <h:inputText required="true" requiredMessage="Show Description cannot be empty" value="#{addShowManagedBean.show.showDescription}" style="margin-bottom:10px;"/>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Actual Show Duration: " />
+                        <h:inputText required="true" requiredMessage="Show Duration cannot be empty" value="#{addShowManagedBean.show.showDuration}" style="margin-bottom:10px;"/>
+                        <h:outputText value="(mins)"/><br/>
+
+                        <h:outputText value="Show Language: " />
+                        <p:selectOneMenu required="true" requiredMessage="Show Language cannot be empty" value="#{addShowManagedBean.show.showLanguage}" style="margin-bottom:10px;" effect="fold" editable="true">  
+                            <f:selectItem itemLabel="Select Language" itemValue="" />  
+                            <f:selectItem itemLabel="English" itemValue="English" />  
+                            <f:selectItem itemLabel="Chinese" itemValue="Chinese" /> 
+                            <f:selectItem itemLabel="Japanese" itemValue="Japanese" /> 
+                            <f:selectItem itemLabel="French" itemValue="French" /> 
+                        </p:selectOneMenu>  
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Show Type" />
@@ -58,9 +72,9 @@
                         <p:calendar value="#{addShowManagedBean.showSchedule.startDateTime}" pattern="MM/dd/yyyy HH:mm" mindate="#{addShowManagedBean.currentDate}"/> 
                         <h:outputText value=""/><br/>
 
-                        <h:outputText value="Show duration (hours): "/>
+                        <h:outputText value="Expected Show duration: "/>
                         <p:calendar value="#{addShowManagedBean.showSchedule.duration}" pattern="HH:mm" timeOnly="true" /> 
-                        <h:outputText value=""/><br/>
+                        <h:outputText value="(hours)"/><br/>
 
                         <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShowSchedule}" update="msg"/>
                     </h:panelGrid>
@@ -76,7 +90,7 @@
                             <f:selectItem itemLabel="Select Show" itemValue=""/>
                             <f:selectItems value="#{addShowManagedBean.showSessionBean.allShows}" var="allShow" itemLabel="#{allShow.showName}" itemValue="#{allShow.showId}" />  
                             <p:ajax update="schedules" listener="#{addShowManagedBean.handleShowChanges}" />
-                       </p:selectOneMenu>
+                        </p:selectOneMenu>
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Show Schedule: "/>
@@ -87,7 +101,15 @@
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Ticket Type: "/>
-                        <h:inputText required="true" requiredMessage="Ticket type cannot be empty" value="#{addShowManagedBean.showTicket.showTicketType}" style="margin-bottom:10px;"/> 
+                        <p:selectOneMenu required="true" requiredMessage="Ticket type cannot be empty" value="#{addShowManagedBean.showTicket.showTicketType}" style="margin-bottom:10px;">  
+                            <f:selectItem itemLabel="Select ticket type" itemValue=""/>
+                            <f:selectItem itemLabel="Left Front" itemValue="Left Front"/>
+                            <f:selectItem itemLabel="Right Front" itemValue="Right Front"/>
+                            <f:selectItem itemLabel="Premium" itemValue="Premium"/>
+                            <f:selectItem itemLabel="Left Behind" itemValue="Left Behind"/>
+                            <f:selectItem itemLabel="Right Behind" itemValue="Right Behind"/>
+                            <f:selectItem itemLabel="Centre" itemValue="Centre"/>
+                        </p:selectOneMenu>
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Ticket Price: "/>
@@ -96,17 +118,17 @@
                         </h:inputText> 
                         <h:outputText value=""/><br/>
 
-                        <h:outputText value="Ticket Quantity: "/>
+                        <h:outputText value="Ticket Quota: "/>
                         <h:inputText label="Ticket Quantity" required="true" requiredMessage="Ticket quantity cannot be empty" value="#{addShowManagedBean.showTicket.showTicketQuantity}" style="margin-bottom:10px;"> 
                             <f:convertNumber integerOnly="true" type="number" />
                         </h:inputText> 
-                        <h:outputText value=""/><br/>
+                        <h:outputText value="(Total ticket amount)"/><br/>
 
-                        <h:outputText value="Ticket Quota: "/>
+                        <h:outputText value="Ticket Quantity: "/>
                         <h:inputText label="Ticket Quota" required="true" requiredMessage="Ticket quota cannot be empty" value="#{addShowManagedBean.showTicket.showTicketQuota}" style="margin-bottom:10px;"> 
                             <f:convertNumber integerOnly="true" type="number" />
                         </h:inputText> 
-                        <h:outputText value=""/><br/>
+                        <h:outputText value="(Ticket available for sale)"/><br/>
 
                         <p:commandButton value="Save" ajax="true" actionListener="#{addShowManagedBean.saveNewShowTicket}" update="ticketMsg"/>
 

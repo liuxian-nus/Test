@@ -38,6 +38,8 @@ public class ShowEntity implements Serializable {
     private String imagePath;
     private boolean showStatus;
     private boolean showPaymentStatus;
+    private String showLanguage;
+    private int showDuration;   //actually show length
     @OneToMany(targetEntity = ShowScheduleEntity.class, cascade = {CascadeType.MERGE})
     private List<ShowScheduleEntity> showSchedules = new ArrayList<ShowScheduleEntity>();
     @OneToOne(cascade = {CascadeType.MERGE})
@@ -135,5 +137,21 @@ public class ShowEntity implements Serializable {
 
     public void setShowPaymentStatus(boolean showPaymentStatus) {
         this.showPaymentStatus = showPaymentStatus;
+    }
+
+    public String getShowLanguage() {
+        return showLanguage;
+    }
+
+    public void setShowLanguage(String showLanguage) {
+        this.showLanguage = showLanguage;
+    }
+
+    public int getShowDuration() {
+        return showDuration;
+    }
+
+    public void setShowDuration(int showDuration) {
+        this.showDuration = showDuration;
     }
 }
