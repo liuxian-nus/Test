@@ -18,11 +18,12 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class ContracteventSessionBean {
+public class ContracteventSessionBean implements ContracteventSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
 
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
@@ -31,6 +32,7 @@ public class ContracteventSessionBean {
     ContracteventEntity newevent = new ContracteventEntity();
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public ContracteventEntity addContractevent(ContracteventEntity contractevent) {
         System.out.println("ContractEvent Session bean: add contractevent called");
 //        ContracteventEntity thisevent = contractevent;
@@ -47,6 +49,7 @@ public class ContracteventSessionBean {
         return contractevent;
     }
 
+    @Override
     public boolean updateContractEvent(ContracteventEntity cevent) {
 
 //        ContracteventEntity thisevent = cevent;
