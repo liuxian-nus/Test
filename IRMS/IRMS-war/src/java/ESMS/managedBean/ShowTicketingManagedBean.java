@@ -4,6 +4,8 @@
  */
 package ESMS.managedBean;
 
+import CRMS.entity.MemberTransactionEntity;
+import CRMS.session.MemberTransactionSessionBean;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
@@ -15,6 +17,7 @@ import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -43,6 +46,8 @@ public class ShowTicketingManagedBean {
     ShowTicketSessionBean showTicketSessionBean;
     @EJB
     ShowTicketSaleSessionBean showTicketSaleSessionBean;
+    @EJB
+    MemberTransactionSessionBean memberTransactionSessionBean;
     private ShowEntity selectedShow;
     private ShowScheduleEntity selectedShowSchedule;
     private ShowTicketEntity selectedShowTicket;
@@ -56,13 +61,16 @@ public class ShowTicketingManagedBean {
     private Long showTicketId;
     private boolean mode;
     private int showTicketQuota;// number of tickets bought
-
+    private boolean isMember;
+    private MemberTransactionEntity memberTransaction;
+    
     //Constructor
     public ShowTicketingManagedBean() {
         selectedShow = new ShowEntity();
         selectedShowSchedule = new ShowScheduleEntity();
         selectedShowTicket = new ShowTicketEntity();
         selectedShowTicketSale = new ShowTicketSaleEntity();
+        memberTransaction = new MemberTransactionEntity();
     }
 
     //Methods
@@ -97,7 +105,7 @@ public class ShowTicketingManagedBean {
                 System.out.println("we are after setting parameter");
                 request.getSession().setAttribute("showName", searchName);
                 System.out.println("we are after setting reservationId session attribute");
-                FacesContext.getCurrentInstance().getExternalContext().redirect("listShows.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("showTicketingResult.xhtml");
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
@@ -148,7 +156,7 @@ public class ShowTicketingManagedBean {
         if (showTicketQuota > selectedShowTicket.getShowTicketQuota()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Not enough tickets.", ""));
         } else {
-
+            
             System.out.println("selectedShow: " + selectedShow.getShowName());
 
             selectedShowTicketSale.setShow(selectedShow);
@@ -159,9 +167,21 @@ public class ShowTicketingManagedBean {
 
             showTicketSessionBean.updateQuantity(showTicketId, showTicketQuota);
             showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
+            
+            if (memberTransaction.getMemberEmail()!=null){
+                Date dt = new Date();
+                System.err.println("Date today: "+dt);
+                memberTransaction.setMtDate(dt);
+                memberTransaction.setMtDepartment("Entertainment Show");
+                memberTransaction.setMtAmount(selectedShowTicket.getShowTicketPrice()*showTicketQuota);
+                System.err.println("Transaction Amt: "+selectedShowTicket.getShowTicketPrice()*showTicketQuota);
+                memberTransaction.setMtMode(false);
+                memberTransaction.setPaymentStatus(true);
+                memberTransactionSessionBean.addMemberTransaction(memberTransaction);
+            }
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful.", ""));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("showTicketing.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("showTicketingBuy.xhtml");
 
         }
     }
@@ -305,5 +325,21 @@ public class ShowTicketingManagedBean {
 
     public void setSelectedShowTicketSale(ShowTicketSaleEntity selectedShowTicketSale) {
         this.selectedShowTicketSale = selectedShowTicketSale;
+    }
+
+    public boolean isIsMember() {
+        return isMember;
+    }
+
+    public void setIsMember(boolean isMember) {
+        this.isMember = isMember;
+    }
+
+    public MemberTransactionEntity getMemberTransaction() {
+        return memberTransaction;
+    }
+
+    public void setMemberTransaction(MemberTransactionEntity memberTransaction) {
+        this.memberTransaction = memberTransaction;
     }
 }

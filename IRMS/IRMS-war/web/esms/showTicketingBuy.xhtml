@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:tabView style="width: 1000px;">
+            <p:tab id="tab3" title="Buy Ticket">
+                <h:form id="tab3form">
+                    <p:growl id="tab3msg"/>
+                    <h:panelGrid id="grid" columns="2">
+                        <h:outputText value="Show Name: "/>
+                        <p:selectOneMenu value="#{showTicketingManagedBean.showId}">  
+                            <f:selectItem itemLabel="Select Show" itemValue=""/>
+                            <f:selectItems value="#{showTicketingManagedBean.showSessionBean.availableShows}" var="allShow" itemLabel="#{allShow.showName}" itemValue="#{allShow.showId}" />  
+                            <p:ajax update="schedules" listener="#{showTicketingManagedBean.handleShowChanges}" />
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Show Schedule: "/>
+                        <p:selectOneMenu id="schedules" value="#{showTicketingManagedBean.showScheduleId}">  
+                            <f:selectItem itemLabel="Select Show Schedule" itemValue=""/>
+                            <f:selectItems value="#{showTicketingManagedBean.showSchedules}" var="allShowSchedule" itemLabel="#{allShowSchedule.startDateTime}" itemValue="#{allShowSchedule.showScheduleId}" /> 
+                            <p:ajax update="tickets" listener="#{showTicketingManagedBean.handleShowScheduleChanges}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Show Ticket: "/>
+                        <p:selectOneMenu id="tickets" value="#{showTicketingManagedBean.showTicketId}">  
+                            <f:selectItem itemLabel="Select Show Ticket" itemValue=""/>
+                            <f:selectItems value="#{showTicketingManagedBean.showTickets}" var="allShowTicket" itemLabel="#{allShowTicket.showTicketType}:#{allShowTicket.showTicketPrice}(per ticket): #{allShowTicket.showTicketQuota} left" itemValue="#{allShowTicket.showTicketId}" />            
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Show Ticket Quantity: "/>
+                        <p:inputText value="#{showTicketingManagedBean.showTicketQuota}"/>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Member: "/>
+                        <p:selectOneRadio id="options" value="#{showTicketingManagedBean.isMember}" onchange="this.form.submit()">  
+                            <f:selectItem itemLabel="Member" itemValue='true' />  
+                        </p:selectOneRadio> 
+                        <h:outputText value=""/><br/>
+                        
+                        <h:outputText value="Member Email: " rendered="#{showTicketingManagedBean.isMember}"/>
+                        <p:inputText value="#{showTicketingManagedBean.memberTransaction.memberEmail}" rendered="#{showTicketingManagedBean.isMember}"/>
+                        <h:outputText value=""/><br/>
+                        
+
+                        <p:commandButton value="Buy ticket" ajax="true" actionListener="#{showTicketingManagedBean.buyTicket}" update="tab3msg"/>
+
+                    </h:panelGrid>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+    </ui:define>
+
+</ui:composition>

@@ -97,7 +97,7 @@ public class Menu3ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
             }
-            
+
             if (userType.contains("ACMSManager")) {
                 System.out.println("manager menu bar");
                 submenu = new Submenu();
@@ -108,7 +108,7 @@ public class Menu3ManagedBean implements Serializable {
                 item.setUrl("/acms/overbookingManagement.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Price Management");
                 item.setUrl("/acms/listAllRoomPrices.xhtml");
@@ -120,13 +120,13 @@ public class Menu3ManagedBean implements Serializable {
                 item.setUrl("/acms/RoomManagement.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("Reservation Management");
                 item.setUrl("/acms/listReservations.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
-                
+
                 item = new MenuItem();
                 item.setValue("log book");
                 item.setUrl("/acms/logBook.xhtml");
@@ -177,19 +177,35 @@ public class Menu3ManagedBean implements Serializable {
 
                 model.addSubmenu(submenu);
             }
-            
+
             if (userType.contains("ESMSFront")) {
+                submenu = new Submenu();
+                submenu.setLabel("List Show");
                 
+                item = new MenuItem();
+                item.setValue("Search show");
+                item.setUrl("/esms/showTicketing.xhtml");
+                item.setIcon("ui-icon ui-icon-contact");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("List show");
+                item.setUrl("/esms/showTicketingList.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
+                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
                 submenu = new Submenu();
                 submenu.setLabel("Show Ticketing");
 
                 item = new MenuItem();
                 item.setValue("Ticketing");
-                item.setUrl("/esms/showTicketing.xhtml");
-                item.setIcon("ui-icon ui-icon-contact");
+                item.setUrl("/esms/showTicketingBuy.xhtml");
+                item.setIcon("ui-icon ui-icon-heart");
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
+
             }
 
         }

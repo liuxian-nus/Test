@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <f:view>
+            <h:form id="form">
+                <p:growl id="growl" showDetail="true"/>
+                <p:dataTable id="showList" var="showList" value="#{listShowsManagedBean.showList}" paginator="true" rows="10">
+                    <p:ajax event="rowToggle" listener="#{listShowsManagedBean.onRowToggle}" update=":form:growl" />
+                    <f:facet name="header">
+                        Search Result
+                    </f:facet>
+                    <p:column style="width:2%">  
+                        <p:rowToggler id="schedule"/>
+                    </p:column> 
+                    <p:column>
+                        <f:facet name ="header">
+                            Show Name 
+                        </f:facet>
+                        <h:outputText value="#{showList.showName}"/> 
+                    </p:column>
+                    <p:column>
+                        <f:facet name ="header">
+                            Show Description 
+                        </f:facet>
+                        <h:outputText value="#{showList.showDescription}"/> 
+                    </p:column>
+                    <p:rowExpansion>
+                        <p:dataTable id="showSchedules" value="#{showList.showSchedules}" var="showScheduleList" rows="6" >
+                            <p:column headerText="Show date and time ">
+                                <h:outputText value="#{showScheduleList.startDateTime}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Show duration ">
+                                <h:outputText value="#{showScheduleList.duration}">
+                                    <f:convertDateTime pattern="HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+                        </p:dataTable>
+                    </p:rowExpansion> 
+                </p:dataTable>
+            </h:form>
+        </f:view>
+    </ui:define>
+
+</ui:composition>

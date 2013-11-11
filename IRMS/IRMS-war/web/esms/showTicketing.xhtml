@@ -21,41 +21,6 @@
                                       actionListener="#{showTicketingManagedBean.searchByName}" update ="tab1msg"/>
                 </h:form>
             </p:tab>
-            <p:tab id="tab3" title="Buy Ticket">
-                <h:form id="tab3form">
-                    <p:growl id="tab3msg"/>
-                    <h:panelGrid id="grid" columns="2">
-                        <h:outputText value="Show Name: "/>
-                        <p:selectOneMenu value="#{showTicketingManagedBean.showId}">  
-                            <f:selectItem itemLabel="Select Show" itemValue=""/>
-                            <f:selectItems value="#{showTicketingManagedBean.showSessionBean.allShows}" var="allShow" itemLabel="#{allShow.showName}" itemValue="#{allShow.showId}" />  
-                            <p:ajax update="schedules" listener="#{showTicketingManagedBean.handleShowChanges}" />
-                        </p:selectOneMenu>
-                        <h:outputText value=""/><br/>
-
-                        <h:outputText value="Show Schedule: "/>
-                        <p:selectOneMenu id="schedules" value="#{showTicketingManagedBean.showScheduleId}">  
-                            <f:selectItem itemLabel="Select Show Schedule" itemValue=""/>
-                            <f:selectItems value="#{showTicketingManagedBean.showSchedules}" var="allShowSchedule" itemLabel="#{allShowSchedule.startDateTime}" itemValue="#{allShowSchedule.showScheduleId}" /> 
-                            <p:ajax update="tickets" listener="#{showTicketingManagedBean.handleShowScheduleChanges}"/>
-                        </p:selectOneMenu>
-                        <h:outputText value=""/><br/>
-                        
-                        <h:outputText value="Show Ticket: "/>
-                        <p:selectOneMenu id="tickets" value="#{showTicketingManagedBean.showTicketId}">  
-                            <f:selectItem itemLabel="Select Show Ticket" itemValue=""/>
-                            <f:selectItems value="#{showTicketingManagedBean.showTickets}" var="allShowTicket" itemLabel="#{allShowTicket.showTicketType}: #{allShowTicket.showTicketQuota} left" itemValue="#{allShowTicket.showTicketId}" />            
-                        </p:selectOneMenu>
-                        <h:outputText value=""/><br/>
-                        
-                        <h:outputText value="Show Ticket Quantity: "/>
-                        <p:inputText value="#{showTicketingManagedBean.showTicketQuota}"/>
-                        
-                        <p:commandButton value="Buy and Print ticket" ajax="true" actionListener="#{showTicketingManagedBean.buyTicket}" update="tab3msg"/>
-                        
-                    </h:panelGrid>
-                </h:form>
-            </p:tab>
         </p:tabView>
     </ui:define>
 
