@@ -5,6 +5,7 @@
 package CRMS.session;
 
 import CRMS.entity.MemberTransactionEntity;
+import CRMS.entity.RFMModelEntity;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,10 +27,11 @@ public class EvaluationSessionBean {
     MemberTransactionEntity mte;
     
 
-    public double calculateSizeOfWallet(String memberEmail,String mtDepartment)
+    public double calculateSizeOfWallet(String memberEmail)
 
     {
-        double sizeOfWallet = 0.00;
+        System.out.println("calculateSizeOfWallet");
+        double sizeOfWallet;
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List <MemberTransactionEntity> allTrans = q.getResultList();
         Iterator <MemberTransactionEntity> itr = allTrans.iterator();
@@ -39,7 +41,7 @@ public class EvaluationSessionBean {
         while(itr.hasNext())
         {
             MemberTransactionEntity current = itr.next();
-            if(current.getMemberEmail().equalsIgnoreCase(memberEmail)&& current.getMtDepartment().equalsIgnoreCase(mtDepartment))
+            if(current.getMemberEmail().equalsIgnoreCase(memberEmail))
              resultList.add(current);
         }
         
@@ -57,6 +59,70 @@ public class EvaluationSessionBean {
         sizeOfWallet = memberTotal;
         return sizeOfWallet;
     }
+    
+    public double calculateShareOfWallet(String memberEmail,String mtDepartment)
+    {
+       double shareOfWallet=0.00;
+       System.out.println("calculateShareOfWallet");
+        
+        Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
+        List <MemberTransactionEntity> allTrans = q.getResultList(); 
+        Iterator <MemberTransactionEntity> itr = allTrans.iterator();
+        List <MemberTransactionEntity> resultList = new ArrayList();
+        Double memberTotal = 0.00;
+        Double dpmtMemberTotal = 0.00;
+        
+        while(itr.hasNext())
+        {
+           MemberTransactionEntity current = itr.next();
+           if(current.getMemberEmail().equals(memberEmail))
+           {
+               memberTotal+=current.getMtAmount();
+               if(current.getMtDepartment().equalsIgnoreCase(mtDepartment))
+               {
+                   dpmtMemberTotal+=current.getMtAmount();
+               }
+           }
+        }
+        if(memberTotal!=0)
+        shareOfWallet = dpmtMemberTotal/memberTotal;
+       return shareOfWallet;
+    }
+    
+    //Model number currently is 1 since only one model is available
+    public boolean setRFMParameter(Double Recency, Double Frequency, Double Monetary,int ModelNumber)
+    {
+        boolean completed = false;
+        RFMModelEntity current = em.find(RFMModelEntity.class,ModelNumber );
+        if(current!=null)
+        {
+            current.setFrequency(Frequency);
+            current.setMonetary(Monetary);
+            current.setRecency(Recency);
+            System.out.println("set completed!");
+            completed = true;
+        }
+        return completed;
+    }
+    
+    public Integer calculateRFMValue(String memberEmail)
+    {
+        Integer RFMValue = 0;
+        System.out.println("calculateRFMValue");
+        
+        Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
+        List <MemberTransactionEntity> allTrans = q.getResultList(); 
+        Iterator <MemberTransactionEntity> itr = allTrans.iterator();
+        
+        while(itr.hasNext())
+        {
+            MemberTransactionEntity current = itr.next();
+            
+        }
+        return RFMValue;
+    }
+    
+    
     public void persist(Object object) {
         em.persist(object);
     }
