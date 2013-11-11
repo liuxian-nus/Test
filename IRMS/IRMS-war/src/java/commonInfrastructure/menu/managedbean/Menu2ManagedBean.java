@@ -267,6 +267,20 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
+
+                submenu = new Submenu();
+                submenu.setLabel("Manage Accounts");
+                submenu.setIcon("ui-icon ui-icon-suitcase");
+
+                item = new MenuItem();
+                item.setValue("Manage F&B Accounts");
+                item.setUrl("/fbms/manageAccount.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
+                submenu.getChildren().add(item);
+
+
+
+                model.addSubmenu(submenu);
             }
 
             if (userType.contains("ATMSAdmin")) {

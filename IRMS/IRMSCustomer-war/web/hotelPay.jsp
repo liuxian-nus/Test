@@ -43,9 +43,10 @@
                             "cancelUrl": "http://is3102.cloudapp.net", //cancel order
                             "returnUrl": "http://is3102.cloudapp.net/IRMSCustomer-war/irmsServlet/hotelPay" //confirm order
                         },
-                        dataType: "text",
+                        dataType: "jsonp",
                         crossDomain: true,
                         success: function (data) {
+                            console.log(data);
                             var token = data.match(/TOKEN=(.*?)&/)[1];
                             //store order with token
                             window.location.replace("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token="+token);
@@ -260,9 +261,10 @@
 
                             <div class="row">
                                 <div class="large-12 columns">
-                                    <input type="submit" class="small button" class="center-align" onclick="return paypal();" value="Pay & Book Now!">
+                                    <input type="submit" class="small button" class="center-align" onclick="paypal()" value="Pay & Book Now!">
                                 </div>
                             </div>
+                             <div class="button" onclick="paypal()">Register</div>
                         </fieldset>
                     </form>                     
                 </div>
