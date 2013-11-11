@@ -1,11 +1,48 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../Template/generalTemplate.xhtml">
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
 
 
     <ui:define name="content">
-        content
+        <h:form id="formListCoupons">
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:panel id="listCoupons" header="List Coupons" style="height:440px;">
+                <p:dataTable id="coupons" value="#{couponManagedBean.couponSessionBean.allCoupons}" 
+                                     var="couponList" paginator="true" rows="5" draggableColumns="true" scrollable="true" 
+                                     resizableColumns="true">
+                    <p:column headerText="Coupon ID" style="width:20px;">
+                        <h:outputText value="#{couponList.couponId}"/>
+                    </p:column>
+                    <p:column headerText="Coupon Name" style="width:120px;">
+                        <h:outputText value="#{couponList.couponType.couponName}"/>
+                    </p:column>
+                    <p:column headerText="Coupon Owner" style="width:60px;">
+                        <h:outputText value="#{couponList.couponOwner.memberName}"/>
+                    </p:column>
+                    <p:column headerText="Coupon Issed Date" style="width:60px;">
+                        <h:outputText value="#{couponList.couponIssueDate}">
+                            <f:convertDateTime pattern="yyyy-MM-dd"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Coupon Used Date" style="width:60px;">
+                        <h:outputText value="#{couponList.couponUsedDate}">
+                            <f:convertDateTime pattern="yyyy-MM-dd"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Coupon Used Department" style="width:60px;">
+                        <h:outputText value="#{couponList.department}"/>
+                    </p:column>
+                    <p:column headerText="Coupon Status" style="width:60px;">
+                        <h:outputText value="#{couponList.status}"/>
+                    </p:column>  
+                </p:dataTable>
+                
+            </p:panel>
+        </h:form>
     </ui:define>
 
 </ui:composition>
