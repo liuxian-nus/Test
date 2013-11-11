@@ -81,11 +81,10 @@ public class OrderResultManagedBean {
 //        request.getSession().setAttribute("roomId", thisRoom.getRoomId());
 
     }
-    
-    public void viewMenu(ActionEvent event)
-    {
+
+    public void viewMenu(ActionEvent event) {
         System.out.println("in viewing menu" + thisOrder.getOrderId());
-         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
 //            selected = (ContractEntity) event.getComponent().getAttributes().get("selectedContract");
@@ -135,7 +134,7 @@ public class OrderResultManagedBean {
 //        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisOrder", thisOrder);
     }
 
-    public void sendInvoice(ActionEvent event) {
+    public void sendInvoice(ActionEvent event) { //receivepayment for account2
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         System.err.println("hahaha teest");
@@ -143,12 +142,16 @@ public class OrderResultManagedBean {
         System.out.println("No1: in sending invoice" + thisOrder.getOrderId());
         thisOrder.setStatus("Invoiced");
         billingSessionBean.createInvoice(thisOrder.getOrderId(), currentDate);
+        double amount = thisOrder.getSalePrice();
+        int account = billingSessionBean.viewAccount(2).getId();
+        System.out.println("whats the price now? and account" + amount + account);
+        billingSessionBean.receivePayment(amount, account);
         System.out.println("NO2: After confirming" + thisOrder.getStatus());
         //   fBEmailSessionBean.sendInvoice(thisOrder.getEmail(), thisOrder);
 //        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisOrder", thisOrder);
     }
 
-    public void sendReceipt(ActionEvent event) {
+    public void sendReceipt(ActionEvent event) {//receive for aacount1, postpayment for account1
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         System.err.println("hahaha teest");
@@ -157,6 +160,12 @@ public class OrderResultManagedBean {
         billingSessionBean.createReceipt(thisOrder.getInvoice().getInvoiceId(), currentDate);
         thisOrder.setStatus("ReceiptSent");
         orderSessionBean.updateOrder(thisOrder);
+        double amount = thisOrder.getSalePrice();
+        int receivable = billingSessionBean.viewAccount(2).getId();
+        int cash = billingSessionBean.viewAccount(1).getId();
+        System.out.println("whats the price now? and account" + amount + receivable + cash);
+        billingSessionBean.receivePayment(amount, cash);
+        billingSessionBean.postPayment(amount, receivable);
         System.out.println("NO2: After confirming" + thisOrder.getStatus());
         //   fBEmailSessionBean.sendReceipt(thisOrder.getEmail(), thisOrder);
     }

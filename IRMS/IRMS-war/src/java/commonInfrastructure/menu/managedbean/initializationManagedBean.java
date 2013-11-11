@@ -42,7 +42,9 @@ import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
+import FBMS.entity.AccountEntity;
 import FBMS.entity.RestaurantEntity;
+import FBMS.session.BillingSessionBean;
 import SMMS.entity.BillEntity;
 import SMMS.entity.ContractEntity;
 import SMMS.entity.ContracteventEntity;
@@ -73,6 +75,9 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @RequestScoped
 public class initializationManagedBean implements Serializable {
+
+    @EJB
+    private BillingSessionBean billingSessionBean;
     @EJB
     private CouponTypeSessionBean couponTypeSessionBean;
     @EJB
@@ -123,8 +128,6 @@ public class initializationManagedBean implements Serializable {
     private ShowContractSessionBean showContractSessionBean;
     @EJB
     private EventSessionBean eventSessionBean;
-    
-    
     private EmployeeEntity employee;
     private RoleEntity role;
     private ReservationEntity reservation;
@@ -155,43 +158,43 @@ public class initializationManagedBean implements Serializable {
     public void init() {
         FacesContext.getCurrentInstance().getExternalContext().getSession(true);
     }
-
+    
     public EmployeeEntity getEmployee() {
         return employee;
     }
-
+    
     public void setEmployee(EmployeeEntity employee) {
         this.employee = employee;
     }
-
+    
     public RoleEntity getRole() {
         return role;
     }
-
+    
     public void setRole(RoleEntity role) {
         this.role = role;
     }
-
+    
     public void addMessage(String summary) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-
+    
     public void createSuperAdmin() {
         System.out.println("go to create super admin");
-
+        
         functionality = new FunctionalityEntity();
         functionality.setFuncName("addRole");
         functionality.setFuncDescription("access right to addRole page");
         functionalitySessionBean.addFunctionality(functionality);
-
-
+        
+        
         role = new RoleEntity();
         role.setRoleId(10);
         role.setRoleName("SuperAdmin");
         role.addFunctionality(functionality);
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("A0000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("SuperAdmin");
@@ -201,10 +204,10 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving Super Admin....");
-
+            
             employeeSessionBean.addEmployee(employee);
             System.out.println("Super Admin saved.....");
         } catch (Exception e) {
@@ -212,18 +215,18 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.out.println("Insert Employee into database");
-
+        
         addMessage("Super Admin Created!");
     }
-
+    
     public void createCEMSEvent() {
         System.out.println("go to create CEMSEvent manager");
-
+        
         role = new RoleEntity();
         role.setRoleId(31);
         role.setRoleName("CEMSEvent");
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("C1000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("CEMSEvent");
@@ -231,10 +234,10 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving CEMSEvent manager....");
-
+            
             employeeSessionBean.addEmployee(employee);
             System.out.println("CEMSEvent manager saved.....");
         } catch (Exception e) {
@@ -242,10 +245,10 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.out.println("Insert Employee into database");
-
+        
         addMessage("CEMSEvent manager Created!");
     }
-
+    
     public void createACMSAdmin() {
         System.out.println("go to create ACMS user");
 
@@ -270,7 +273,7 @@ public class initializationManagedBean implements Serializable {
          functionality4.setFuncDescription("oversee all reservations");
          functionalitySessionBean.addFunctionality(functionality4);
          */
-
+        
         role = new RoleEntity();
         role.setRoleId(20);
         role.setRoleName("ACMSAdmin"); //manager instead
@@ -279,7 +282,7 @@ public class initializationManagedBean implements Serializable {
          role.addFunctionality(functionality3);
          role.addFunctionality(functionality4);*/
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("B0000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("ACMSAdmin");
@@ -288,7 +291,7 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving ACMSAdmin....");
             employeeSessionBean.addEmployee(employee);
@@ -300,41 +303,41 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("ACMSAdmin Created!");
     }
-
+    
     public void createACMSFrontDesk() {
         System.err.println("go to create ACMS user");
-
+        
         functionality = new FunctionalityEntity();
         functionality.setFuncName("checkIncheckOut");
         functionality.setFuncDescription("front desk: perform check in, check out, and make/cancel reservation");
         functionalitySessionBean.addFunctionality(functionality);
-
+        
         FunctionalityEntity functionality2 = new FunctionalityEntity();
         functionality2.setFuncName("listAllRooms");
         functionality2.setFuncDescription("check in");
         functionalitySessionBean.addFunctionality(functionality2);
-
+        
         FunctionalityEntity functionality3 = new FunctionalityEntity();
         functionality3.setFuncName("listReservations");
         functionality3.setFuncDescription("manage reservations");
         functionalitySessionBean.addFunctionality(functionality3);
-
+        
         FunctionalityEntity functionality4 = new FunctionalityEntity();
         functionality4.setFuncName("RoomSearchResult");
         functionality4.setFuncDescription("check room details for check out");
         functionalitySessionBean.addFunctionality(functionality4);
-
+        
         FunctionalityEntity functionality5 = new FunctionalityEntity();
         functionality5.setFuncName("ReservationSearchResult");
         functionality5.setFuncDescription("reservation detail for check in");
         functionalitySessionBean.addFunctionality(functionality5);
-
+        
         FunctionalityEntity functionality6 = new FunctionalityEntity();
         functionality6.setFuncName("logBook");
         functionality6.setFuncDescription("employee shift log book");
         functionalitySessionBean.addFunctionality(functionality6);
-
-
+        
+        
         role = new RoleEntity();
         role.setRoleId(21);
         role.setRoleName("ACMSFrontDesk");
@@ -345,7 +348,7 @@ public class initializationManagedBean implements Serializable {
         role.addFunctionality(functionality5);
         role.addFunctionality(functionality6);
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("B1000"); //business assumption: maximum employee number 9999
         employee.setEmployeeDepartment("hotel");
@@ -355,7 +358,7 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving ACMSFrontDesk....");
             employeeSessionBean.addEmployee(employee);
@@ -366,10 +369,10 @@ public class initializationManagedBean implements Serializable {
         }
         System.err.println("Insert System User into database");
     }
-
+    
     public void createACMSRoomService() {
         System.err.println("go to create ACMS user");
-
+        
         functionality = new FunctionalityEntity();
         functionality.setFuncName("RoomService");
         functionality.setFuncDescription("list and manage room service");
@@ -386,7 +389,7 @@ public class initializationManagedBean implements Serializable {
         role.addFunctionality(functionality);
 //       role.addFunctionality(functionality3);
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("B2000"); //business assumption: 1100 + 2100 + 3100: room service
         employee.setEmployeeDepartment("hotel");
@@ -396,7 +399,7 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving ACMSRoomService....");
             employeeSessionBean.addEmployee(employee);
@@ -406,27 +409,27 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.out.println("Insert System User into database");
-
+        
     }
-
+    
     public void createACMSManager() {
         System.err.println("go to create ACMS user");
-
+        
         functionality = new FunctionalityEntity();
         functionality.setFuncName("overbookingManagement");
         functionality.setFuncDescription("overbooking management");
         functionalitySessionBean.addFunctionality(functionality);
-
+        
         FunctionalityEntity functionality2 = new FunctionalityEntity();
         functionality2.setFuncName("RoomManagement");
         functionality2.setFuncDescription("overbooking management");
         functionalitySessionBean.addFunctionality(functionality2);
-
+        
         FunctionalityEntity functionality3 = new FunctionalityEntity();
         functionality3.setFuncName("listAllRoomPrices");
         functionality3.setFuncDescription("overbooking management");
         functionalitySessionBean.addFunctionality(functionality3);
-
+        
         role = new RoleEntity();
         role.setRoleId(23);
         role.setRoleName("ACMSManager");
@@ -434,7 +437,7 @@ public class initializationManagedBean implements Serializable {
         role.addFunctionality(functionality2);
         role.addFunctionality(functionality3);
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("B3000"); //business assumption: 1100 + 2100 + 3100: room service
         employee.setEmployeeDepartment("hotel");
@@ -444,7 +447,7 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving ACMSManager....");
             employeeSessionBean.addEmployee(employee);
@@ -454,14 +457,14 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.out.println("Insert System User into database");
-
+        
     }
-
+    
     public void createReservation() {
         System.out.println("go to create hotel reservation page...");
         Date cidate = new Date(2014, 10, 1);
         Date codate = new Date(2014, 10, 6);
-
+        
         reservation = new ReservationEntity();
         reservation.setRcName("Diana");
         System.out.println("create reservation: welcome " + reservation.getRcName());
@@ -477,10 +480,10 @@ public class initializationManagedBean implements Serializable {
         reservation.setReservationGuestCount(6);
         reservation.setReservationStatus("guarantee");
         reservation.setRcMember(member);
-
+        
         Date cidate1 = new Date(2014, 12, 1);
         Date codate1 = new Date(2014, 12, 5);
-
+        
         ReservationEntity reservation2 = new ReservationEntity();
         reservation2.setRcName("Cookie");
         System.out.println("create reservation: welcome " + reservation2.getRcName());
@@ -496,11 +499,11 @@ public class initializationManagedBean implements Serializable {
         reservation2.setReservationGuestCount(4);
         reservation2.setReservationStatus("guarantee");
         reservation2.setRcMember(member);
-
-
+        
+        
         try {
             System.out.println("Saving hotel reservation....");
-
+            
             reservationSessionBean.addReservation(reservation);
             reservationSessionBean.addReservation(reservation2);
             System.out.println("Hotel Reservation saved.....");
@@ -509,18 +512,18 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.out.println("Insert Reservation into database");
-
+        
         addMessage("Reservation Created!");
     }
-
+    
     public void createCEMSAdmin() {
         System.out.println("go to create CEMS admin");
-
+        
         role = new RoleEntity();
         role.setRoleId(30);
         role.setRoleName("CEMSAdmin");
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("C0000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("CEMSAdmin");
@@ -529,7 +532,7 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving CEMSAdmin....");
             employeeSessionBean.addEmployee(employee);
@@ -541,15 +544,15 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("CEMSAdmin Created!");
     }
-
+    
     public void createFBMSAdmin() {
         System.out.println("go to create FBMS page");
-
+        
         role = new RoleEntity();
         role.setRoleId(50);
         role.setRoleName("FBMSAdmin");
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("E0000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("FBMSAdmin");
@@ -558,7 +561,7 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving FBMSAdmin....");
             employeeSessionBean.addEmployee(employee);
@@ -570,15 +573,15 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("FBMSAdmin Created!");
     }
-
+    
     public void createATMSAdmin() {
         System.out.println("go to create ATMS page");
-
+        
         role = new RoleEntity();
         role.setRoleId(60);
         role.setRoleName("ATMSAdmin");
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("F0000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("ATMSAdmin");
@@ -587,7 +590,7 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving ATMSAdmin....");
             employeeSessionBean.addEmployee(employee);
@@ -599,27 +602,27 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert ATMSAdmin into database");
         addMessage("ATMSAdmin Created!");
     }
-
+    
     public void createSMMSAdmin() {
         System.out.println("go to create SMMS page");
         functionality = new FunctionalityEntity();
         functionality.setFuncName("managerManageContract");
         functionality.setFuncDescription("manager approve contract");
         functionalitySessionBean.addFunctionality(functionality);
-
+        
         FunctionalityEntity functionality2 = new FunctionalityEntity();
         functionality2.setFuncName("managerViewContract");
         functionality2.setFuncDescription("manager View Contract");
         functionalitySessionBean.addFunctionality(functionality2);
-
-
+        
+        
         role = new RoleEntity();
         role.setRoleId(40);
         role.setRoleName("SMMSAdmin");
         role.addFunctionality(functionality);
         role.addFunctionality(functionality2);
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("D0000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("SMMSAdmin");
@@ -629,7 +632,7 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving SMMSAdmin....");
             employeeSessionBean.addEmployee(employee);
@@ -641,70 +644,70 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("SMMSAdmin Created!");
     }
-
+    
     public void createSMMSOps() {
         System.out.println("go to create SMMS page");
-
+        
         functionality = new FunctionalityEntity();
         functionality.setFuncName("addContract");
         functionality.setFuncDescription("add contract");
         functionalitySessionBean.addFunctionality(functionality);
-
+        
         FunctionalityEntity functionality2 = new FunctionalityEntity();
         functionality2.setFuncName("addMerchant");
         functionality2.setFuncDescription("add  Merchant");
         functionalitySessionBean.addFunctionality(functionality2);
-
+        
         FunctionalityEntity functionality3 = new FunctionalityEntity();
         functionality3.setFuncName("addPushingcart");
         functionality3.setFuncDescription("add pushing cart");
         functionalitySessionBean.addFunctionality(functionality3);
-
+        
         FunctionalityEntity functionality4 = new FunctionalityEntity();
         functionality4.setFuncName("operatorManageContract");
         functionality4.setFuncDescription("manager View Contract");
         functionalitySessionBean.addFunctionality(functionality4);
-
+        
         FunctionalityEntity functionality5 = new FunctionalityEntity();
         functionality5.setFuncName("outletManagement");
         functionality5.setFuncDescription("manager approve contract");
         functionalitySessionBean.addFunctionality(functionality5);
-
+        
         FunctionalityEntity functionality6 = new FunctionalityEntity();
         functionality6.setFuncName("paymentManagement");
         functionality6.setFuncDescription("manager View Contract");
         functionalitySessionBean.addFunctionality(functionality6);
-
+        
         FunctionalityEntity functionality7 = new FunctionalityEntity();
         functionality7.setFuncName("pushingcartManagement");
         functionality7.setFuncDescription("manager approve contract");
         functionalitySessionBean.addFunctionality(functionality7);
-
+        
         FunctionalityEntity functionality8 = new FunctionalityEntity();
         functionality8.setFuncName("OperatorViewContract");
         functionality8.setFuncDescription("manager View Contract");
         functionalitySessionBean.addFunctionality(functionality8);
-
+        
         FunctionalityEntity functionality9 = new FunctionalityEntity();
         functionality9.setFuncName("manageMerchants");
         functionality9.setFuncDescription("manage merchants");
         functionalitySessionBean.addFunctionality(functionality9);
-
+        
         FunctionalityEntity functionality10 = new FunctionalityEntity();
         functionality10.setFuncName("viewMerchant");
         functionality10.setFuncDescription("view merchant");
         functionalitySessionBean.addFunctionality(functionality10);
-
+        
         FunctionalityEntity functionality11 = new FunctionalityEntity();
         functionality11.setFuncName("operatorViewTransaction");
         functionality11.setFuncDescription("view Transaction");
         functionalitySessionBean.addFunctionality(functionality11);
-
+        
         FunctionalityEntity functionality12 = new FunctionalityEntity();
         functionality12.setFuncName("addOutlet");
         functionality12.setFuncDescription("add outlet");
         functionalitySessionBean.addFunctionality(functionality12);
-
+        
         role = new RoleEntity();
         role.setRoleId(41);
         role.setRoleName("SMMSOps");
@@ -720,9 +723,9 @@ public class initializationManagedBean implements Serializable {
         role.addFunctionality(functionality10);
         role.addFunctionality(functionality11);
         role.addFunctionality(functionality12);
-
+        
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("D0100"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("SMMSOps");
@@ -732,7 +735,7 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving SMMSOps....");
             employeeSessionBean.addEmployee(employee);
@@ -744,15 +747,15 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("SMMSOps Created!");
     }
-
+    
     public void createCRMSAdmin() {
         System.out.println("go to create CRMS page");
-
+        
         role = new RoleEntity();
         role.setRoleId(80);
         role.setRoleName("CRMSAdmin");
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("H0000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("CRMSAdmin");
@@ -761,7 +764,7 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving CRMSAdmin....");
             employeeSessionBean.addEmployee(employee);
@@ -773,11 +776,11 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("CRMSAdmin Created!");
     }
-
+    
     public void createMember() {
         System.err.println("go to create member page...");
         Date qqdate = new Date(91, 02, 11);
-
+        
         member = new MemberEntity();
         member.setMemberEmail("xinqi_wang@yahoo.com");
         member.setMemberPassword("ABCabc123");
@@ -793,7 +796,7 @@ public class initializationManagedBean implements Serializable {
         member.setSecurityQuestion("What is your mother's original surname?");
         member.setAnswer("Wang");
         member.setPreferences("to be set");
-
+        
         try {
             System.out.println("Creating new member....");
             memberSessionBean.addMember(member);
@@ -805,11 +808,11 @@ public class initializationManagedBean implements Serializable {
         System.err.println("Insert Dayanqi member into database");
         addMessage("Member Created!");
     }
-
+    
     public void createVIP() {
         System.err.println("go to create VIP page...");
         Date bowendate = new Date(90, 11, 9);
-
+        
         member2 = new MemberEntity();
         member2.setMemberEmail("leijq369@gmail.com");
         member2.setMemberPassword(ePasswordHashSessionBean.hashPassword("ABCabc123"));
@@ -827,7 +830,7 @@ public class initializationManagedBean implements Serializable {
         member2.setPreferences("to be set");
         member2.setPoint(10000);
         member2.setCoin(200);
-
+        
         try {
             System.out.println("Creating new member....");
             memberSessionBean.addMember(member2);
@@ -840,20 +843,20 @@ public class initializationManagedBean implements Serializable {
         addMessage("VIP member Created!");
     }
     
-    public void createCouponType(){
+    public void createCouponType() {
         System.err.println("go to create coupon type page...");
-        ct=new CouponTypeEntity();
+        ct = new CouponTypeEntity();
         ct.setCouponName("90% discount for attraction/show");
         ct.setCouponTypeRemarks("coupon generated when hotel reservation fee exceeded SGD$1000");
-        Date startDate=new Date(113,10,1);
-        Date endDate=new Date(115,10,1);
+        Date startDate = new Date(113, 10, 1);
+        Date endDate = new Date(115, 10, 1);
         ct.setCpStartDate(startDate);
         ct.setCpEndDate(endDate);
         ct.setDiscount(0.9);
         
         try {
             System.out.println("Creating new coupon type....");
-            couponTypeSessionBean.addCouponType(ct);   
+            couponTypeSessionBean.addCouponType(ct);            
             System.out.println("Coupon type created....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding coupon type", ""));
@@ -867,11 +870,11 @@ public class initializationManagedBean implements Serializable {
     public void createCoupon() {
         System.err.println("go to create coupon page...");
         coupon = new CouponEntity();
-        ct=couponTypeSessionBean.getAllCouponTypes().get(0);
-        System.out.println("ct discount "+ct.getDiscount());
-        Date issueDate=new Date(113,11,1);
+        ct = couponTypeSessionBean.getAllCouponTypes().get(0);
+        System.out.println("ct discount " + ct.getDiscount());
+        Date issueDate = new Date(113, 11, 1);
         coupon.setCouponIssueDate(issueDate);
-        member=memberSessionBean.getMemberByEmail("leijq369@gmail.com");
+        member = memberSessionBean.getMemberByEmail("leijq369@gmail.com");
         coupon.setCouponOwner(member);
         coupon.setCouponType(ct);
         coupon.setStatus("New");
@@ -888,7 +891,7 @@ public class initializationManagedBean implements Serializable {
         System.err.println("Insert new coupon into database");
         addMessage("Coupon Created!");
     }
-
+    
     public void createRoom() {
         try {
             System.err.println("Insert room started.....");
@@ -947,12 +950,12 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert room into database");
         addMessage("Room Created!");
     }
-
+    
     public void createFunctionalities() {
         functionality = new FunctionalityEntity();
         functionality.setFuncName("addFunctionality");
         functionality.setFuncDescription("access right to addFunctionality page");
-
+        
         try {
             System.out.println("Creating new functionality....");
             functionalitySessionBean.addFunctionality(functionality);
@@ -964,7 +967,7 @@ public class initializationManagedBean implements Serializable {
         System.err.println("Insert systemMsg functionality into database");
         addMessage("Functionality Created!");
     }
-
+    
     public void createOverbooking() {
         overbookingQuota = new OverbookingQuotaEntity();
         overbookingQuota.setOverbookingId(1);
@@ -972,7 +975,7 @@ public class initializationManagedBean implements Serializable {
         overbookingQuota.setQuota(0);
         overbookingQuota.setCompensation1(105);
         overbookingQuota.setCompensation2(485.3);
-
+        
         try {
             System.err.println("Initiating the overbooking entity...");
             overbookingSessionBean.initOverbooking(overbookingQuota);
@@ -983,15 +986,15 @@ public class initializationManagedBean implements Serializable {
         }
         System.err.println("Initiating overbooking entity into database");
     }
-
+    
     public void createRmService() {
         roomService = new RoomServiceEntity();
         System.out.println("Creating room service 1....");
-
+        
         roomService.setRoomServiceName("Laundry");
         roomService.setRoomServicePrice(0);
         roomService.setCategory("free service");
-
+        
         try {
             System.out.println(roomService.getRoomServiceName());
             System.out.println(roomService.getRoomServicePrice());
@@ -1001,14 +1004,14 @@ public class initializationManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
             return;
         }
-
+        
         roomService = new RoomServiceEntity();
         System.out.println("Creating room service 2....");
-
+        
         roomService.setRoomServiceName("Housekeeping");
         roomService.setRoomServicePrice(0);
         roomService.setCategory("free service");
-
+        
         try {
             System.out.println(roomService.getRoomServiceName());
             System.out.println(roomService.getRoomServicePrice());
@@ -1018,14 +1021,14 @@ public class initializationManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
             return;
         }
-
+        
         roomService = new RoomServiceEntity();
         System.out.println("Creating room service 3....");
-
+        
         roomService.setRoomServiceName("TV Channel Subscription 1");
         roomService.setRoomServicePrice(19.9);
         roomService.setCategory("charged service");
-
+        
         try {
             System.out.println(roomService.getRoomServiceName());
             System.out.println(roomService.getRoomServicePrice());
@@ -1035,14 +1038,14 @@ public class initializationManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
             return;
         }
-
+        
         roomService = new RoomServiceEntity();
         System.out.println("Creating room service 4....");
-
+        
         roomService.setRoomServiceName("TV Channel Subscription 2");
         roomService.setRoomServicePrice(49.9);
         roomService.setCategory("charged service");
-
+        
         try {
             System.out.println(roomService.getRoomServiceName());
             System.out.println(roomService.getRoomServicePrice());
@@ -1052,14 +1055,14 @@ public class initializationManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room service", ""));
             return;
         }
-
+        
         roomService = new RoomServiceEntity();
         System.out.println("Creating room service 5....");
-
+        
         roomService.setRoomServiceName("Custard Puff");
         roomService.setRoomServicePrice(5.4);
         roomService.setCategory("food");
-
+        
         try {
             System.out.println(roomService.getRoomServiceName());
             System.out.println(roomService.getRoomServicePrice());
@@ -1071,11 +1074,11 @@ public class initializationManagedBean implements Serializable {
         }
         roomService = new RoomServiceEntity();
         System.out.println("Creating room service 6....");
-
+        
         roomService.setRoomServiceName("Chocolate Puff");
         roomService.setRoomServicePrice(5.4);
         roomService.setCategory("food");
-
+        
         try {
             System.out.println(roomService.getRoomServiceName());
             System.out.println(roomService.getRoomServicePrice());
@@ -1087,11 +1090,11 @@ public class initializationManagedBean implements Serializable {
         }
         roomService = new RoomServiceEntity();
         System.out.println("Creating room service 7....");
-
+        
         roomService.setRoomServiceName("Thai Pineapple Rice");
         roomService.setRoomServicePrice(10);
         roomService.setCategory("food");
-
+        
         try {
             System.out.println(roomService.getRoomServiceName());
             System.out.println(roomService.getRoomServicePrice());
@@ -1224,8 +1227,8 @@ public class initializationManagedBean implements Serializable {
         merchant.setAnswer("Gu");
         merchant.setIsFirstTimeLogin(false);
         merchant.setPartnerType("shoppingMall");
-
-
+        
+        
         MerchantEntity merchant2 = new MerchantEntity();
         merchant2.setMerchantEmail("lionetdd@gmail.com");
         merchant2.setMerchantName("liuyudi");
@@ -1236,7 +1239,7 @@ public class initializationManagedBean implements Serializable {
         merchant2.setAnswer("Gu");
         merchant2.setIsFirstTimeLogin(false);
         merchant2.setPartnerType("shoppingMall");
-
+        
         MerchantEntity merchant3 = new MerchantEntity();
         merchant3.setMerchantEmail("chrislx.nus@gmail.com");
         merchant3.setMerchantName("liuxian");
@@ -1247,10 +1250,10 @@ public class initializationManagedBean implements Serializable {
         merchant3.setAnswer("Gu");
         merchant3.setIsFirstTimeLogin(false);
         merchant3.setPartnerType("shoppingMall");
-
+        
         try {
             System.out.println("Saving merchant....");
-
+            
             merchantSessionBean.addMerchant(merchant);
             merchantSessionBean.addMerchant(merchant2);
             merchantSessionBean.addMerchant(merchant3);
@@ -1260,111 +1263,111 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.out.println("Insert merchant into database");
-
+        
         addMessage("Merchant Created!");
     }
-
+    
     public void createOutlet() {
         System.out.println("go to create outlet page...");
-
+        
         OutletEntity outlet = new OutletEntity();
         outlet.setOutletLevel(2);
         outlet.setOutletNo(17);
         outlet.setOutletId(2, 17);
         outlet.setOutletArea(17.85);
-
+        
         OutletEntity outlet2 = new OutletEntity();
         outlet2.setOutletLevel(2);
         outlet2.setOutletNo(10);
         outlet2.setOutletId(2, 10);
         outlet2.setOutletArea(14.07);
-
+        
         OutletEntity outlet3 = new OutletEntity();
         outlet3.setOutletLevel(3);
         outlet3.setOutletNo(11);
         outlet3.setOutletId(3, 11);
         outlet3.setOutletArea(21.33);
-
+        
         OutletEntity outlet4 = new OutletEntity();
         outlet3.setOutletLevel(4);
         outlet3.setOutletNo(12);
         outlet3.setOutletId(4, 12);
         outlet3.setOutletArea(19.23);
-
+        
         try {
             System.out.println("Saving outlets....");
-
+            
             outletSessionBean.addOutlet(outlet);
             outletSessionBean.addOutlet(outlet2);
             outletSessionBean.addOutlet(outlet3);
             outletSessionBean.addOutlet(outlet4);
-
+            
             System.out.println("Outlets saved.....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding merchant", ""));
             return;
         }
         System.out.println("Insert outlet into database");
-
+        
         addMessage("Outlets! Created!");
     }
-
+    
     public void createPushingcart() {
         System.out.println("go to create pushingcart page...");
-
+        
         PushingcartEntity pushingcart = new PushingcartEntity();
         pushingcart.setPushingcartType("basket");
         pushingcart.setPushingcartLevel(1);
         pushingcart.setPushingcartArea("east");
         pushingcart.setPushingcartInventory(30);
-
+        
         PushingcartEntity pushingcart2 = new PushingcartEntity();
         pushingcart2.setPushingcartType("trolley");
         pushingcart2.setPushingcartLevel(1);
         pushingcart2.setPushingcartArea("west");
         pushingcart2.setPushingcartInventory(28);
-
+        
         PushingcartEntity pushingcart3 = new PushingcartEntity();
         pushingcart3.setPushingcartType("basket");
         pushingcart3.setPushingcartLevel(2);
         pushingcart3.setPushingcartArea("west");
         pushingcart3.setPushingcartInventory(50);
-
-
+        
+        
         try {
             System.out.println("Saving cart....");
             pushingcartSessionBean.addPushingcart(pushingcart);
             pushingcartSessionBean.addPushingcart(pushingcart2);
             pushingcartSessionBean.addPushingcart(pushingcart3);
-
+            
             System.out.println("Cart saved.....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding merchant", ""));
             return;
         }
         System.out.println("Insert cart into database");
-
+        
         addMessage("Carts! Created!");
     }
-
+    
     public void createContract() {
         System.out.println("go to create Contract Page...");
-
+        
         ContractEntity contract1 = new ContractEntity();
         Date cidate = new Date(2014, 12, 1);
         Date codate = new Date(2016, 12, 1);
         try {
-
+            
             System.out.println("Saving cart....");
-
+            
             MerchantEntity merchanta = merchantSessionBean.getMerchantById("cookiewxy@hotmail.com");
             OutletEntity outleta = outletSessionBean.getOutletById(217);
             contract1.setMerchant(merchanta);
             contract1.setOutlet(outleta);
             contractSessionBean.addContract(contract1);
             System.out.println("Contract saved....." + contract1.getContractId());
-
-
+            
+            
             ContracteventEntity event1 = new ContracteventEntity();
             event1.setEventStartDate(cidate);
             event1.setEventEndDate(codate);
@@ -1376,32 +1379,32 @@ public class initializationManagedBean implements Serializable {
             event1.setEventContract(contract1);
             contracteventSessionBean.addContractevent(event1);
             System.out.println("Contract saved....." + event1.getContracteventId());
-
-
+            
+            
             contractSessionBean.addContractevent(contract1.getContractId(), event1.getContracteventId());
             merchantSessionBean.addContractInMerchant(contract1.getContractId(), merchanta.getMerchantEmail());
-
+            
             outleta.setContract(contract1);
             outleta.setOutletType("Cafes");
             outleta.setOutletName("Starbucks");
             outleta.setOutletStatus("unavailable");
             outletSessionBean.updateOutlet(outleta);
-
+            
             System.out.println("Contract1 saved.....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding contract1", ""));
             return;
         }
-
-
-
+        
+        
+        
         ContractEntity contract2 = new ContractEntity();
-
+        
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MINUTE, 3);
         Date cidate1 = cal.getTime();
         System.err.println("in setting due date" + cidate1);
-
+        
         Calendar cal2 = Calendar.getInstance();
         cal2.add(Calendar.MINUTE, 4);
         Date codate1 = cal2.getTime();
@@ -1413,17 +1416,17 @@ public class initializationManagedBean implements Serializable {
 //        Date cidate1 = new Date(2014, 7, 1);
 //        Date codate1 = new Date(2017, 7, 1);
         try {
-
+            
             System.out.println("Saving contract2....");
-
+            
             MerchantEntity merchantb = merchantSessionBean.getMerchantById("lionetdd@gmail.com");
             OutletEntity outletb = outletSessionBean.getOutletById(412);
             contract2.setMerchant(merchantb);
             contract2.setOutlet(outletb);
             contractSessionBean.addContract(contract2);
             System.out.println("Contract2 saved....." + contract2.getContractId());
-
-
+            
+            
             ContracteventEntity event2 = new ContracteventEntity();
             event2.setEventStartDate(cidate1);
             event2.setEventEndDate(codate1);
@@ -1439,24 +1442,24 @@ public class initializationManagedBean implements Serializable {
             merchantBillSessionBean.setContract(contract2);
             merchantBillSessionBean.createActiveTimers(cidate1);
             System.out.println("Contract2 saved updated....." + event2.getContracteventId());
-
-
+            
+            
             contractSessionBean.addContractevent(contract2.getContractId(), event2.getContracteventId());
             merchantSessionBean.addContractInMerchant(contract2.getContractId(), merchantb.getMerchantEmail());
-
+            
             outletb.setContract(contract2);
             outletb.setOutletType("Lifestyle and Gifts");
             outletb.setOutletStatus("unavailable");
             outletb.setOutletName("Resort Suvovior");
             outletSessionBean.updateOutlet(outletb);
-
+            
             Calendar cal3 = Calendar.getInstance();
             cal3.add(Calendar.MINUTE, 2); // set overdue date = 1 minute
             Date dueDate = cal3.getTime();
             System.err.println("in setting due date" + dueDate);
             System.err.println("current calendar time is" + cal.getTime());
             System.err.println("current time is" + currentDate);
-
+            
             BillEntity bill = new BillEntity();
             bill.setBillAmount(contract2.getLast().getEventDeposit());
             bill.setBillStatus("unpaid");
@@ -1467,25 +1470,25 @@ public class initializationManagedBean implements Serializable {
             merchantBillSessionBean.addBill(bill);
             System.err.println("in creating bill!!!!!!!!!!!!!!!!!!!!!!!!!!!!madan buyaobaocuole!" + bill.getBillId());
             merchantBillSessionBean.createOverDueTimers(dueDate);
-
+            
             System.out.println("Contract2 saved.....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding contract2", ""));
             return;
         }
-
+        
         System.out.println("Insert cart into database");
         addMessage("Contract2! Created!");
     }
-
+    
     public void createESMSAdmin() {
         System.out.println("go to create ESMSAdmin");
-
+        
         role = new RoleEntity();
         role.setRoleId(70);
         role.setRoleName("ESMSAdmin");
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("G0000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("ESMSAdmin");
@@ -1494,10 +1497,10 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving ESMS Admin....");
-
+            
             employeeSessionBean.addEmployee(employee);
             System.out.println("ESMS Admin saved.....");
         } catch (Exception e) {
@@ -1505,18 +1508,18 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.out.println("Insert Employee into database");
-
+        
         addMessage("ESMS Admin Created!");
     }
-
+    
     public void createESMSFront() {
         System.out.println("go to create ESMSFront");
-
+        
         role = new RoleEntity();
         role.setRoleId(71);
         role.setRoleName("ESMSFront");
         System.out.println("Create role :" + role.getRoleName());
-
+        
         employee = new EmployeeEntity();
         employee.setEmployeeId("G1000"); //business assumption: maximum employee number 9999
         employee.setEmployeeName("ESMSFront");
@@ -1525,10 +1528,10 @@ public class initializationManagedBean implements Serializable {
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         try {
             System.out.println("Saving ESMS Front....");
-
+            
             employeeSessionBean.addEmployee(employee);
             System.out.println("ESMS Front saved.....");
         } catch (Exception e) {
@@ -1536,14 +1539,14 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.out.println("Insert employee into database");
-
+        
         addMessage("ESMS Front Created!");
     }
-
+    
     public void createLogBook() throws ExistException {
         System.out.println("go to create log book");
         Date today = new Date(13, 11, 8);
-
+        
         log = new LogBookEntity();
         EmployeeEntity thisEmployee = employeeSessionBean.getEmployeeById("B0000");
         log.setLogShift(1);
@@ -1561,11 +1564,11 @@ public class initializationManagedBean implements Serializable {
             return;
         }
         System.out.println("Insert Log into database");
-
+        
         addMessage("New Log Saved!");
-
+        
     }
-
+    
     public void createShow() {
         Date ssDate1 = new Date(114, 2, 2, 12, 0, 0);
         Date ssDate2 = new Time(2, 0, 0);
@@ -1575,7 +1578,7 @@ public class initializationManagedBean implements Serializable {
         showTicket = new ShowTicketEntity();
         showSchedule = new ShowScheduleEntity();
         showContract = new ShowContractEntity();
-
+        
         show.setShowName("Harry Potter");
         show.setShowDescription("Harry Potter and the Philosopher's Stone");
         show.setShowType("External");
@@ -1587,19 +1590,19 @@ public class initializationManagedBean implements Serializable {
         showContract.setShowVenueDuration(3);
         showContract.setShowVenueRate(1300.00);
         showContractSessionBean.addShowContract(showContract);
-
+        
         showTicket.setShowTicketPrice(35.00);
         showTicket.setShowTicketQuantity(100);
         showTicket.setShowTicketType("Premium");
         showTicket.setShowTicketQuota(100);
         showTicketSessionBean.addShowTicket(showTicket);
-
+        
         showSchedule.setDuration(ssDate2);
         showSchedule.setStartDateTime(ssDate1);
 //        showSchedule.setStartTime(ssDate3);
         showSchedule.addShowTicket(showTicket);
         showScheduleSessionBean.addShowSchedule(showSchedule);
-
+        
         show.addShowSchedule(showSchedule);
         show.setShowContract(showContract);
         try {
@@ -1612,7 +1615,7 @@ public class initializationManagedBean implements Serializable {
         }
         addMessage("Show Created!");
     }
-
+    
     public void createHotelEmployees() {
         System.out.println("go to create hotel employee user");
 
@@ -1640,13 +1643,13 @@ public class initializationManagedBean implements Serializable {
          role.addFunctionality(functionality2);
          role.addFunctionality(functionality3);
          role.addFunctionality(functionality4);*/
-
-
+        
+        
         role = new RoleEntity();
         role.setRoleId(21);
         role.setRoleName("ACMSOps1"); //manager instead  
         System.out.println("Create role :" + role.getRoleName());
-
+        
         RoleEntity role1 = new RoleEntity();
         role1.setRoleId(22);
         role1.setRoleName("ACMSOps2"); //manager instead  
@@ -1668,7 +1671,7 @@ public class initializationManagedBean implements Serializable {
         employee.setEmployeeDepartment("Hotel");
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         EmployeeEntity employee1 = new EmployeeEntity();
         employee1.setEmployeeId("B0200"); //business assumption: maximum employee number 9999
         employee1.setEmployeeName("ACMSOps2");
@@ -1678,7 +1681,7 @@ public class initializationManagedBean implements Serializable {
         employee1.setEmployeeDepartment("Hotel");
         employee1.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee1.getEmployeeId() + "," + employee1.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         EmployeeEntity employee2 = new EmployeeEntity();
         employee2.setEmployeeId("B0300"); //business assumption: maximum employee number 9999
         employee2.setEmployeeName("ACMSOps3");
@@ -1688,7 +1691,7 @@ public class initializationManagedBean implements Serializable {
         employee2.setIsFirstTimeLogin(false);
         employee2.setEmployeeDepartment("Hotel");
         System.out.println("Create employee :" + employee2.getEmployeeId() + "," + employee2.getEmployeeName() + "," + employee.getEmployeePassword());
-
+        
         EmployeeEntity employee3 = new EmployeeEntity();
         employee3.setEmployeeId("B0400"); //business assumption: maximum employee number 9999
         employee3.setEmployeeName("ACMSOps4");
@@ -1698,9 +1701,9 @@ public class initializationManagedBean implements Serializable {
         employee3.setEmployeeDepartment("Hotel");
         employee3.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee3.getEmployeeId() + "," + employee3.getEmployeeName() + "," + employee.getEmployeePassword());
-
-
-
+        
+        
+        
         try {
             System.out.println("Saving ACMSAdmin....");
             employeeSessionBean.addEmployee(employee);
@@ -1715,7 +1718,7 @@ public class initializationManagedBean implements Serializable {
         System.out.println("Insert Employee into database");
         addMessage("Hotel staffs Created!");
     }
-
+    
     public void createShowContract() {
         showContract = new ShowContractEntity();
         showContract.setShowMerchantName("Zheng Bowen");
@@ -1735,7 +1738,7 @@ public class initializationManagedBean implements Serializable {
         }
         addMessage("Show Contract Created!");
     }
-
+    
     public void createEvent() {
         eventEntity = new EventEntity();
         eventEntity.setEventName("Liu Xian");
@@ -1752,7 +1755,30 @@ public class initializationManagedBean implements Serializable {
         addMessage("Event Created!");
     }
     //Add new test cases below!!!!!!!!!
-
+    
+    public void createAccount() {
+        
+        AccountEntity account = new AccountEntity();
+        account.setAccountName("Cash");
+        account.setId(1);
+        account.setAccountAmount(0.00);
+        billingSessionBean.addAccount(account);
+        
+        AccountEntity account2 = new AccountEntity();
+        account2.setAccountName("Receivable");
+        account2.setId(2);
+        account2.setAccountAmount(0.00);
+        billingSessionBean.addAccount(account2);
+        
+        try {
+//            eventSessionBean.addEvent(eventEntity);
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding account", ""));
+            return;
+        }
+        addMessage("Accounts Created!");
+    }
+    
     public void initialize() throws ExistException {
         createESMSFront();
         createCEMSEvent();
@@ -1785,7 +1811,8 @@ public class initializationManagedBean implements Serializable {
         createHotelEmployees();
         createCouponType();
         createCoupon();
-
+        createAccount();
+        
         addMessage("Initialization succeed!");
     }
 }

@@ -9,11 +9,11 @@
 
         <h:form id="formSearchById">
             <p:growl id="growl" showDetail="true" sticky="true" />   
-            <p:fieldset legend="Accounts Receivable" toggleable="true" toggleSpeed="500" collapsed="true">  
-                <p:panel id="contracts" header="Accounts Receivable" style="height:500px;">
+          
+            <p:panel id="contracts" header="All Accounts" style="height:500px;">
                     <div style="margin-top:20px;margin-bottom:20px;">
 
-                        <p:dataTable id="contract" value="#{fBAccountManagedBean.receivables}" var="raccount" 
+                        <p:dataTable id="contract" value="#{fBAccountManagedBean.allAccounts}" var="raccount" 
                                      paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true"
                                      >
 
@@ -34,8 +34,10 @@
                 </p:panel>
 
 
-            </p:fieldset>
+         
         </h:form>
+       
+        <!--
         <br/>
         
         <h:form id="cash">
@@ -66,7 +68,7 @@
 
 
             </p:fieldset>
-        </h:form>
+        </h:form>-->
 
     </ui:define>
 

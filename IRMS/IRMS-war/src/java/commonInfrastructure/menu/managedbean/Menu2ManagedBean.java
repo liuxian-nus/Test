@@ -273,10 +273,18 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setIcon("ui-icon ui-icon-suitcase");
 
                 item = new MenuItem();
+                item.setValue("Add Accounts");
+                item.setUrl("/fbms/addAccount.xhtml");
+                item.setIcon("ui-icon ui-icon-pencil");
+                submenu.getChildren().add(item);
+                
+                item = new MenuItem();
                 item.setValue("Manage F&B Accounts");
                 item.setUrl("/fbms/manageAccount.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
+                
+                
 
 
 

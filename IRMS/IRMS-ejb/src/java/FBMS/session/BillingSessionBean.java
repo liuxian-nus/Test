@@ -84,7 +84,7 @@ public class BillingSessionBean {
         }
     }
 
-    public Double postPayment(double amount, Long accountId) //make payment
+    public Double postPayment(double amount, int accountId) //make payment
     {
         ae = em.find(AccountEntity.class, accountId);
         if (ae != null) {
@@ -101,7 +101,7 @@ public class BillingSessionBean {
         }
     }
 
-    public Double receivePayment(double amount, Long accountId) //receive payment
+    public Double receivePayment(double amount, int accountId) //receive payment
     {
         ae = em.find(AccountEntity.class, accountId);
         if (ae != null) {
@@ -128,8 +128,15 @@ public class BillingSessionBean {
         return true;
 
     }
+    
+    public boolean addAccount(AccountEntity account)
+    {
+        em.persist(account);
+        System.out.println("BillingSessionBean:createAccount: the account has been created! " + account.getId());
+        return true;
+    }
 
-    public AccountEntity viewAccount(Long accountId) {
+    public AccountEntity viewAccount(int accountId) {
         ae = em.find(AccountEntity.class, accountId);
         if (ae != null) {
             System.out.println("BillingSessionBean:viewAccount: the account has been found! "
