@@ -235,6 +235,10 @@ public class IRMSFilter implements Filter {
             if (path.contains("esms")) {
                 return true;
             }
+        } else if (userType.contains("ESMSFront")) {
+            if (path.contains("esms/showTicketing")) {
+                return true;
+            }
         } else if (userType.contains("SMMSOps")) {
             if (path.contains("smms/operator")) {
                 return true;
