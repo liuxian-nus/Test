@@ -70,7 +70,7 @@
                     
                        <ul class="button-group">                    
                                   <li><a href="eventRegister" class="button">Request for proposal</a></li>
-                                  <li><a href="eventManage" class="button">Manage your event &nbsp&nbsp   </a></li>
+                                  <li><a href="eventVenueList" class="button">Browse all venues &nbsp&nbsp&nbsp&nbsp   </a></li>
                             </ul>
            
                    <!-- <input h class="button" value="Request for proposal">
@@ -83,28 +83,28 @@
             <div clas="row">              
                 <div class="large-4 columns">
                     <div class="panel">
-                        <h5><strong>Royal China</strong></h5>
+                        <h5><strong>Seminars and Meetings</strong></h5>
                         <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_01.png">
-                            <img src="/IRMSCustomer-war/images/gallery/food_01.png">
+                            <img src="/IRMSCustomer-war/images/event/Seminar.jpg" style="width:400px;height:150px">
                         </a>
                         <!-- <p>We provide every guest with an enriched ultimate dining experience to enjoy authentic Chinese cuisine</p>-->
                     </div>
                 </div>
                 <div class="large-4 columns">
                     <div class="panel">
-                        <h5><strong>The Reuben’s</strong></h5>
+                        <h5><strong>Banquets and Weddings</strong></h5>
 
                         <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_02.png">
-                            <img src="/IRMSCustomer-war/images/gallery/food_02.png">
+                            <img src="/IRMSCustomer-war/images/event/banquet.jpg" style="width:400px;height:150px">
                         </a>
                         <!--<p>Come and get yourself indulged in the fabulous and sumptuous variety of French cuisine featured by a vibrant combination of contemporary culinary technique with innovative twist</p>-->
                     </div>
                 </div>
                 <div class="large-4 columns">
                     <div class="panel">
-                        <h5><strong>The Rocky Road</strong></h5>
+                        <h5><strong>Conventions and Exhibitions</strong></h5>
                         <a class="th radius" href="/IRMSCustomer-war/images/gallery/food_03.png">
-                            <img src="/IRMSCustomer-war/images/gallery/food_03.png">
+                            <img src="/IRMSCustomer-war/images/event/convention.jpg" style="width:400px;height:150px">
                         </a>
                     </div>
                 </div>
