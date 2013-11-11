@@ -7,6 +7,8 @@ package CRMS.session;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.entity.RFMModelEntity;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -14,6 +16,7 @@ import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
  *
@@ -105,20 +108,86 @@ public class EvaluationSessionBean {
         return completed;
     }
     
-    public Integer calculateRFMValue(String memberEmail)
+    public Integer calculateRFMValue(String memberEmail, int ModelNumber)
     {
         Integer RFMValue = 0;
+        double f=0.00;//frequency
+        double r = 0.00;//recency
+        double m = 0.00;//monetary
+        RFMModelEntity model = getRFMModel(ModelNumber);
         System.out.println("calculateRFMValue");
         
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List <MemberTransactionEntity> allTrans = q.getResultList(); 
         Iterator <MemberTransactionEntity> itr = allTrans.iterator();
+        double memberMoneyTotal = 0.00;
+        double moneyTotal = 0.00;
+        Integer memberVisitTotal =0;
+        Integer visitTotal = 0;
+//        boolean memberFrequent = false;
+        Date memberLastVisitDate = new Date(1900,0,1);
+        Date currentTransDate;
+        
+        //get a description statistics
+        DescriptiveStatistics stats = new DescriptiveStatistics();
         
         while(itr.hasNext())
         {
             MemberTransactionEntity current = itr.next();
+            moneyTotal+= current.getMtAmount();
+            visitTotal+= 1;
             
+            //add values to a stats
+            stats.addValue(current.getMtAmount());
+            
+            if(current.getMemberEmail().equalsIgnoreCase(memberEmail))
+            {
+                memberMoneyTotal += current.getMtAmount();
+                memberVisitTotal += 1;
+                currentTransDate = current.getMtDate();
+                if(currentTransDate.after(memberLastVisitDate))
+                    memberLastVisitDate = currentTransDate;
+            }        
         }
+        
+        //calculate m
+        double memberAverageMoney = memberMoneyTotal/memberVisitTotal;
+        
+        if(memberAverageMoney>=stats.getPercentile(80)) m=5;
+        if(memberAverageMoney>=stats.getPercentile(60) && memberAverageMoney<stats.getPercentile(80)) m=4;
+        if(memberAverageMoney>=stats.getPercentile(40) && memberAverageMoney<stats.getPercentile(60)) m=3;
+        if(memberAverageMoney>=stats.getPercentile(20) && memberAverageMoney<stats.getPercentile(40)) m=2;
+        if(memberAverageMoney<stats.getPercentile(20)) m=1;
+        
+        //calculate f
+        if((memberVisitTotal/visitTotal)>=0.1) f=5;
+        if((memberVisitTotal/visitTotal)>=0.05 && (memberVisitTotal/visitTotal)<0.1 ) f=4;
+        if((memberVisitTotal/visitTotal)>=0.01 && (memberVisitTotal/visitTotal)<0.05) f=3;
+        if((memberVisitTotal/visitTotal)>=0.005 && (memberVisitTotal/visitTotal)<0.01) f=2;
+        if((memberVisitTotal/visitTotal)<0.005) f=1;
+        
+        //calculate r
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 10 days
+        Date dateR5 = currentDate.getTime();
+        currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 20 days
+        Date dateR4 = currentDate.getTime();
+        currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 30 days
+        Date dateR3 = currentDate.getTime();
+        currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 40 days
+        Date dateR2 = currentDate.getTime();
+        currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 50 days
+        Date dateR1 = currentDate.getTime();
+        
+        if(memberLastVisitDate.after(dateR5)) r=5;
+        if(memberLastVisitDate.after(dateR4)&&(memberLastVisitDate.before(dateR5)||memberLastVisitDate.equals(dateR5))) r=4;
+        if(memberLastVisitDate.after(dateR3)&&(memberLastVisitDate.before(dateR4)||memberLastVisitDate.equals(dateR4))) r=3;
+        if(memberLastVisitDate.after(dateR2)&&(memberLastVisitDate.before(dateR3)||memberLastVisitDate.equals(dateR3))) r=2;
+        if((memberLastVisitDate.before(dateR2)||memberLastVisitDate.equals(dateR2))) r=1;
+        
+        double RFMValueAbsolute = model.getFrequency()*f + model.getMonetary()*m +model.getRecency()*r;
+        double fullRFMValueAbsolute = model.getFrequency()*5+model.getMonetary()*5+model.getRecency()*5;
+        RFMValue = (int)(RFMValueAbsolute/fullRFMValueAbsolute)*5;
         return RFMValue;
     }
     
@@ -129,6 +198,10 @@ public class EvaluationSessionBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    private RFMModelEntity getRFMModel(int ModelNumber) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 
