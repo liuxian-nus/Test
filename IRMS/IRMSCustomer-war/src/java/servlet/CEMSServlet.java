@@ -7,6 +7,7 @@ package servlet;
 import CEMS.entity.EventEntity;
 import CEMS.entity.VenueEntity;
 import CEMS.session.EventSessionBean;
+import CEMS.session.VenueSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -31,9 +32,12 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "CEMSServlet", urlPatterns = {"/CEMSServlet", "/CEMSServlet/*"})
 public class CEMSServlet extends HttpServlet {
+    @EJB
+    private VenueSessionBean venueSessionBean;
 
     @EJB
     private EventSessionBean eventSessionBean;
+ 
     private List<VenueEntity> data;
     private VenueEntity data1;
     private EventEntity data2;
@@ -97,6 +101,13 @@ public class CEMSServlet extends HttpServlet {
                 System.out.println("CEMSSevlet: Current page is eventVenueSearch!");
                 data = searchVenue(request);
 
+                System.out.println(data.isEmpty());
+                request.setAttribute("data", data);
+                request.getRequestDispatcher("/eventVenueSearch.jsp").forward(request, response);
+            } else if ("eventVenueList".equalsIgnoreCase(page)) {
+                System.out.println("*****eventVenueList*****");
+                System.out.println("CEMSSevlet: Current page is eventVenue List!");
+                data = venueSessionBean.getAllVenues();
                 System.out.println(data.isEmpty());
                 request.setAttribute("data", data);
                 request.getRequestDispatcher("/eventVenueSearch.jsp").forward(request, response);
