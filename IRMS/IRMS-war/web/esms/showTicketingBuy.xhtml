@@ -44,11 +44,11 @@
                             <f:selectItem itemLabel="Member" itemValue='true' />  
                         </p:selectOneRadio> 
                         <h:outputText value=""/><br/>
-                        
+
                         <h:outputText value="Member Email: " rendered="#{showTicketingManagedBean.isMember}"/>
-                        <p:inputText value="#{showTicketingManagedBean.memberTransaction.memberEmail}" rendered="#{showTicketingManagedBean.isMember}"/>
+                        <p:autoComplete id="name" value="#{showTicketingManagedBean.memberTransaction.memberEmail}" rendered="#{showTicketingManagedBean.isMember}" completeMethod="#{showTicketingManagedBean.completeMember}" />
                         <h:outputText value=""/><br/>
-                        
+
 
                         <p:commandButton value="Buy ticket" ajax="true" actionListener="#{showTicketingManagedBean.buyTicket}" update="tab3msg"/>
 

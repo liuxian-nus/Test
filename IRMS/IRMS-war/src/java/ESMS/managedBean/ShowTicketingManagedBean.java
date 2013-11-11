@@ -4,8 +4,11 @@
  */
 package ESMS.managedBean;
 
+import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
+import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
+import ERMS.entity.EmployeeEntity;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
@@ -25,10 +28,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.PhaseEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.primefaces.event.ToggleEvent;
 
 /**
  *
@@ -48,6 +49,8 @@ public class ShowTicketingManagedBean {
     ShowTicketSaleSessionBean showTicketSaleSessionBean;
     @EJB
     MemberTransactionSessionBean memberTransactionSessionBean;
+    @EJB
+    MemberSessionBean memberSessionBean;
     private ShowEntity selectedShow;
     private ShowScheduleEntity selectedShowSchedule;
     private ShowTicketEntity selectedShowTicket;
@@ -63,7 +66,7 @@ public class ShowTicketingManagedBean {
     private int showTicketQuota;// number of tickets bought
     private boolean isMember;
     private MemberTransactionEntity memberTransaction;
-    
+
     //Constructor
     public ShowTicketingManagedBean() {
         selectedShow = new ShowEntity();
@@ -83,6 +86,20 @@ public class ShowTicketingManagedBean {
             ShowEntity se = (ShowEntity) o;
             if ((se.getShowName()).toString().startsWith(query)) {
                 results.add((se.getShowName()).toString());
+            }
+        }
+        return results;
+    }
+
+    public List<String> completeMember(String query) throws ExistException { 
+        List<String> results = new ArrayList<String>();
+
+        List<MemberEntity> memberList = memberSessionBean.getAllMembers();
+
+        for (Object o : memberList) {
+            MemberEntity emp = (MemberEntity) o;
+            if (emp.getMemberEmail().startsWith(query)) {
+                results.add(emp.getMemberEmail());
             }
         }
         return results;
@@ -156,7 +173,7 @@ public class ShowTicketingManagedBean {
         if (showTicketQuota > selectedShowTicket.getShowTicketQuota()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Not enough tickets.", ""));
         } else {
-            
+
             System.out.println("selectedShow: " + selectedShow.getShowName());
 
             selectedShowTicketSale.setShow(selectedShow);
@@ -167,14 +184,14 @@ public class ShowTicketingManagedBean {
 
             showTicketSessionBean.updateQuantity(showTicketId, showTicketQuota);
             showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
-            
-            if (memberTransaction.getMemberEmail()!=null){
+
+            if (memberTransaction.getMemberEmail() != null) {
                 Date dt = new Date();
-                System.err.println("Date today: "+dt);
+                System.err.println("Date today: " + dt);
                 memberTransaction.setMtDate(dt);
                 memberTransaction.setMtDepartment("Entertainment Show");
-                memberTransaction.setMtAmount(selectedShowTicket.getShowTicketPrice()*showTicketQuota);
-                System.err.println("Transaction Amt: "+selectedShowTicket.getShowTicketPrice()*showTicketQuota);
+                memberTransaction.setMtAmount(selectedShowTicket.getShowTicketPrice() * showTicketQuota);
+                System.err.println("Transaction Amt: " + selectedShowTicket.getShowTicketPrice() * showTicketQuota);
                 memberTransaction.setMtMode(false);
                 memberTransaction.setPaymentStatus(true);
                 memberTransactionSessionBean.addMemberTransaction(memberTransaction);
