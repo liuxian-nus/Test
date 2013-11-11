@@ -197,6 +197,28 @@ public class EvaluationSessionBean {
     public double calculateCustLifeValue(String memberEmail)
     {
         double custLifeValue = 0.00;
+        double discountRate = 0.05;
+        double currentTransValue;
+        double currentRealTransValue;
+        Date today = new Date();
+        int compoundedYear = 0;
+        System.out.println("calculateCustLifeValue");
+        
+        Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
+        List <MemberTransactionEntity> allTrans = q.getResultList(); 
+        Iterator <MemberTransactionEntity> itr = allTrans.iterator();
+        
+        while(itr.hasNext())
+        {
+           MemberTransactionEntity current = itr.next();
+           if(current.getMemberEmail().equalsIgnoreCase(memberEmail))
+           {
+               currentTransValue = current.getMtAmount();
+               compoundedYear = today.getYear()-current.getMtDate().getYear();//pay attention to "minus 1900"
+               currentRealTransValue=currentTransValue * Math.pow(1+discountRate, compoundedYear);
+               custLifeValue+=currentRealTransValue;
+           }
+        }
         return custLifeValue;
     }
     public void persist(Object object) {
