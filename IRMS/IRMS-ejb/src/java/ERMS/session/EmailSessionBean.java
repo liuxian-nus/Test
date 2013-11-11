@@ -35,6 +35,7 @@ import java.net.URL;
 import java.util.Iterator; 
 import java.util.Properties; 
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless; 
 import javax.mail.Message; 
 import javax.mail.MessagingException; 
@@ -52,7 +53,8 @@ import javax.mail.internet.MimeMultipart;
  * @author Ser3na 
  */
 @Stateless
-public class EmailSessionBean { 
+@LocalBean
+public class EmailSessionBean implements EmailSessionBeanRemote { 
     @EJB
     private GenerateBarcodeSessionBean generateBarcodeSessionBean;
   
@@ -62,6 +64,7 @@ public class EmailSessionBean {
     public EmailSessionBean() { 
     } 
   
+    @Override
     public void emailInitialPassward(String toEmailAdress, String initialPassword) { 
         Properties props = new Properties(); 
         props.put("mail.smtp.host", "smtp.gmail.com"); 
@@ -97,6 +100,7 @@ public class EmailSessionBean {
         } 
     } 
       
+    @Override
     public void emailGeneratedPassword(String toEmailAdress, String initialPassword) { 
         Properties props = new Properties(); 
         props.put("mail.smtp.host", "smtp.gmail.com"); 
@@ -133,6 +137,7 @@ public class EmailSessionBean {
     } 
       
       
+    @Override
     public void emailCorporateBill(String toEmailAdress, RoomEntity room) throws IOException, FileNotFoundException, DocumentException { 
         Properties props = new Properties(); 
         props.put("mail.smtp.host", "smtp.gmail.com"); 
@@ -201,6 +206,7 @@ public class EmailSessionBean {
         } 
     } 
       
+    @Override
     public void emailReservationConfirmation(String toEmailAdress, ReservationEntity newReservation) throws IOException, FileNotFoundException, DocumentException { 
         Properties props = new Properties(); 
         props.put("mail.smtp.host", "smtp.gmail.com"); 
@@ -272,6 +278,7 @@ public class EmailSessionBean {
         } 
     } 
       
+    @Override
     public void emailRequest(String toEmailAdress, ContractEntity contract) { 
         Properties props = new Properties(); 
         props.put("mail.smtp.host", "smtp.gmail.com"); 
@@ -308,6 +315,7 @@ public class EmailSessionBean {
         } 
     } 
       
+    @Override
      public void emailApprovalAction(String toEmailAdress, ContractEntity contract) { 
         Properties props = new Properties(); 
         props.put("mail.smtp.host", "smtp.gmail.com"); 
@@ -345,6 +353,7 @@ public class EmailSessionBean {
         } 
     } 
       
+    @Override
     public void emailAttractionTicketSingle(String toEmailAdress,TicketPurchaseEntity tpe) throws IOException, FileNotFoundException, DocumentException 
     { 
         Properties props = new Properties(); 
@@ -412,6 +421,7 @@ public class EmailSessionBean {
           
           
     } 
+    @Override
     public void emailAttractionTicketExpress(String toEmailAdress,ExpressPassPurchaseEntity eppe) throws IOException, FileNotFoundException, DocumentException
     {
        Properties props = new Properties(); 
@@ -478,6 +488,7 @@ public class EmailSessionBean {
     }
     
     
+    @Override
     public void emailMerchantBill(String toEmailAdress, BillEntity bill) { 
         Properties props = new Properties(); 
         props.put("mail.smtp.host", "smtp.gmail.com"); 
@@ -517,6 +528,7 @@ public class EmailSessionBean {
     } 
     
     
+    @Override
     public void emailAttractionTicketCombo(String toEmailAdress,AttrComboEntity combo) throws IOException, FileNotFoundException, DocumentException 
     { 
         Properties props = new Properties(); 
