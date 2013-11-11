@@ -48,7 +48,7 @@ public class ShowBillingSessionBean implements ShowBillingSessionBeanRemote {
 
         while (itr.hasNext()) {
             show = itr.next();
-            if (show.getShowType().equals("External") && show.isShowPaymentStatus() == true && show.isShowStatus() == true) {
+            if ((show.getShowType().equalsIgnoreCase("External")) && (show.isShowPaymentStatus() == false) && (show.isShowStatus() == true)) {// 
                 if (show != null) {
                     showList.add(show);
                     System.err.println("ShowsReadyForBill: " + show.getShowName());

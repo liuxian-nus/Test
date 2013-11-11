@@ -18,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -53,6 +54,7 @@ public class ShowBillingManagedBean {
 
     //Method
     public void showBill(ActionEvent event) {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         selectedShow = showSessionBean.getShowById(showId);
         System.err.println(selectedShow.getShowName());
         showTicketSales = showBillingSessionBean.getAllSelectedShowTicketSales(showId);
@@ -64,10 +66,17 @@ public class ShowBillingManagedBean {
         ticketCommission = ticketRevenue * selectedShow.getShowContract().getShowTicketCommission();
         rentalFee = selectedShow.getShowContract().getShowVenueDuration() * selectedShow.getShowContract().getShowVenueRate();
         bill = ticketCommission + selectedShow.getShowContract().getShowDeposit() - rentalFee;
+        request.getSession().setAttribute("billedShow", selectedShow);
     }
-    
-     public void oneMore(ActionEvent event) throws IOException {
+
+    public void oneMore(ActionEvent event) throws IOException {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        selectedShow = (ShowEntity) request.getSession().getAttribute("billedShow");
+        selectedShow.setShowPaymentStatus(true);
+        System.err.println("Status: " + selectedShow.isShowPaymentStatus());
+        showSessionBean.updateShow(selectedShow);
         FacesContext.getCurrentInstance().getExternalContext().redirect("showBilling.xhtml");
+        
     }
 
     // Getters and Setters
