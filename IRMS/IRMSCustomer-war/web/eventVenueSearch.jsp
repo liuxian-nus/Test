@@ -16,7 +16,7 @@
         </head>
         <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <h4>Venue Search Result</h4>
+     
 
         <table>
                 
