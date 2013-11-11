@@ -1,10 +1,68 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../Template/generalTemplate.xhtml">
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-        content
+        <h:form id="form">
+            <p:panel id="show" header="List Shows Available" style="height:495px;">
+                <p:growl id="msgs" showDetail="true" /> 
+                <p:dataTable id="shows" value="#{manageShowManagedBean.availableShows}" 
+                             var="showList" paginator="true" rows="8" resizableColumns="true"  widgetVar="carsTable" 
+                             emptyMessage="No shows found with given criteria">
+
+                    <f:facet name="header">  
+                        <p:outputPanel>  
+                            <h:outputText value="Search all fields:" />  
+                            <p:inputText id="globalFilter" onkeyup="carsTable.filter()" style="width:150px" />  
+                        </p:outputPanel>  
+                    </f:facet>  
+                    
+                    <p:column style="width:2%">  
+                        <p:rowToggler />  
+                    </p:column>  
+
+                    <p:rowExpansion>  
+                        <p:dataTable id="showSchedules" var="showSchedules" value="#{showList.showSchedules}"> 
+                            <p:column headerText="Show Start Date and Time" id="startDateTimeColumn" filterBy="#{showSchedules.startDateTime}" filterMatchMode="contains">
+                                <h:outputText value="#{showSchedules.startDateTime}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Show Duration" id="durationColumn" filterBy="#{showSchedules.duration}" filterMatchMode="contains">
+                                <h:outputText value="#{showSchedules.duration}">
+                                    <f:convertDateTime pattern="HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+                        </p:dataTable>  
+                    </p:rowExpansion> 
+
+                    <p:column headerText="Show Name" id="showNameColumn" filterBy="#{showList.showName}" filterMatchMode="contains">
+                        <h:outputText value="#{showList.showName}"/>
+                    </p:column>
+
+                    <p:column headerText="Description" style="width:400px" id="showDescriptionColumn" filterBy="#{showList.showDescription}" filterMatchMode="contains">
+                        <h:outputText value="#{showList.showDescription}"/>
+                    </p:column>
+
+                    <p:column headerText="Actual Show Duration(mins)" style="width:95px" id="showDurationColumn" filterBy="#{showList.showDuration}" filterMatchMode="contains">
+                        <h:outputText value="#{showList.showDuration}"/>
+                    </p:column>
+
+                    <p:column headerText="Language" style="width:70px" id="showLanguageColumn" filterBy="#{showList.showLanguage}" filterMatchMode="contains">
+                        <h:outputText value="#{showList.showLanguage}"/>
+                    </p:column>
+
+                    <p:column headerText="Type" style="width:55px" id="showTypeColumn" filterBy="#{showList.showType}" filterMatchMode="contains">
+                        <h:outputText value="#{showList.showType}"/>
+                    </p:column>
+                </p:dataTable>  
+            </p:panel>
+        </h:form>  
     </ui:define>
 
 </ui:composition>

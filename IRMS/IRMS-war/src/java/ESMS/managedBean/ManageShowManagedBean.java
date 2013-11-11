@@ -42,6 +42,7 @@ public class ManageShowManagedBean {
     private boolean editSchedule;
     private boolean editTicket;
     private Long id;
+    private ShowEntity filteredShows;
 
     public Long getId() {
         return id;
@@ -193,5 +194,13 @@ public class ManageShowManagedBean {
 
     public void setEditTicket(boolean editTicket) {
         this.editTicket = editTicket;
+    }
+
+    public ShowEntity getFilteredShows() {
+        return filteredShows;
+    }
+
+    public void setFilteredShows(ShowEntity filteredShows) {
+        this.filteredShows = filteredShows;
     }
 }
