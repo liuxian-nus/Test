@@ -7,64 +7,122 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-        <h:form id="form"> 
-            <p:panel id="promotions" header="Promotions" style="height:495px;">
-                <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
-                    <p:dataTable id="promtions" value="#{promotionManagedBean.promotions}" var="promotions" paginator="true" rows="10">
-                        <p:column style="width:2%">  
-                            <p:rowToggler />  
-                        </p:column> 
+        <p:tabView id="tabView">  
+            <p:tab id="tab1" title="Promotion List">  
+                <h:form id="form"> 
+                    <p:panel id="promotions" header="Promotions" style="height:495px;">
+                        <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
+                            <p:dataTable id="promtions" value="#{promotionManagedBean.promotions}" var="promotions" paginator="true" rows="10">
+                                <p:column style="width:2%">  
+                                    <p:rowToggler />  
+                                </p:column> 
 
-                        <p:column id="idColumn" filterBy="#{promotions.promotionId}" headerText="ID" filterMatchMode="contains">  
-                            <h:outputText value="#{promotions.promotionId}"/>
-                        </p:column>
+                                <p:column id="idColumn" filterBy="#{promotions.promotionId}" headerText="ID" filterMatchMode="contains">  
+                                    <h:outputText value="#{promotions.promotionId}"/>
+                                </p:column>
 
-                        <p:column id="titleColumn" filterBy="#{promotions.promotionTitle}" headerText="Promotion Title: " filterMatchMode="contains">
-                            <h:outputText value="#{promotions.promotionTitle}"/>
-                        </p:column>
+                                <p:column id="titleColumn" filterBy="#{promotions.promotionTitle}" headerText="Promotion Title: " filterMatchMode="contains">
+                                    <h:outputText value="#{promotions.promotionTitle}"/>
+                                </p:column>
 
-                        <p:column id="codeColumn" filterBy="#{promotions.promotionCode}" headerText="Promotion Code: " filterMatchMode="contains">
-                            <h:outputText value="#{promotions.promotionCode}"/>
-                        </p:column>
+                                <p:column id="codeColumn" filterBy="#{promotions.promotionCode}" headerText="Promotion Code: " filterMatchMode="contains">
+                                    <h:outputText value="#{promotions.promotionCode}"/>
+                                </p:column>
 
 
-                        <p:column id="startDateColumn" filterBy="#{promotions.promotionStartDate}" headerText="Start Date: " filterMatchMode="contains">
-                            <h:outputText value="#{promotions.promotionStartDate}">
-                                <f:convertDateTime pattern="dd-MM-yyyy" />
-                            </h:outputText>
-                        </p:column>
+                                <p:column id="startDateColumn" filterBy="#{promotions.promotionStartDate}" headerText="Start Date: " filterMatchMode="contains">
+                                    <h:outputText value="#{promotions.promotionStartDate}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </p:column>
 
-                        <p:column id="endDateColumn" filterBy="#{promotions.promotionEndDate}" headerText="End Date: " filterMatchMode="contains">
-                            <h:outputText value="#{promotions.promotionEndDate}">
-                                <f:convertDateTime pattern="dd-MM-yyyy" />
-                            </h:outputText>
-                        </p:column>
+                                <p:column id="endDateColumn" filterBy="#{promotions.promotionEndDate}" headerText="End Date: " filterMatchMode="contains">
+                                    <h:outputText value="#{promotions.promotionEndDate}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </p:column>
 
-                        <p:rowExpansion>  
-                            <h:panelGrid id="display" columns="2" cellpadding="4" style="width:400px;"  
-                                         styleClass=" ui-widget-content grid">  
+                                <p:rowExpansion>  
+                                    <h:panelGrid id="display" columns="2" cellpadding="4" style="width:400px;"  
+                                                 styleClass=" ui-widget-content grid">  
 
-                                <f:facet name="Title">  
-                                    #{promotions.promotionTitle}
-                                </f:facet>  
+                                        <f:facet name="Title">  
+                                            #{promotions.promotionTitle}
+                                        </f:facet>  
 
-                                <h:outputText value="Category:" />  
-                                <h:outputText id="category" value="#{promotions.promotionCategory}" style="width:400px;"   />  
+                                        <h:outputText value="Category:" />  
+                                        <h:outputText id="category" value="#{promotions.promotionCategory}" style="width:400px;"   />  
 
-                                <h:outputText value="Remark:" />  
-                                <h:outputText id="remark" value="#{promotions.promotionRemarks}"  style="width:400px;"  >  
-                                </h:outputText>
+                                        <h:outputText value="Remark:" />  
+                                        <h:outputText id="remark" value="#{promotions.promotionRemarks}"  style="width:400px;"  >  
+                                        </h:outputText>
 
-                                <h:outputText value="Range:" />  
-                                <h:outputText rendered="#{promotions.promotionMemberExclusive ==true}" value="For Member Only" style="width:400px;" />
-                                <h:outputText rendered="#{promotions.promotionMemberExclusive==false}" value="For Every Customer" style="width:400px;" />
+                                        <h:outputText value="Range:" />  
+                                        <h:outputText rendered="#{promotions.promotionMemberExclusive ==true}" value="For Member Only" style="width:400px;" />
+                                        <h:outputText rendered="#{promotions.promotionMemberExclusive==false}" value="For Every Customer" style="width:400px;" />
 
-                            </h:panelGrid>  
-                        </p:rowExpansion>           
-                    </p:dataTable>
-                </div>
-            </p:panel>
+                                    </h:panelGrid>  
+                                </p:rowExpansion>           
+                            </p:dataTable>
+                        </div>
+                    </p:panel>
 
-        </h:form> 
+                </h:form> 
+            </p:tab>  
+            <p:tab id="tab2" title="Add New Promotions">  
+                <h:form id="addPromotion">
+                    <p:growl id="growl" showDetail="true" sticky="true" />                    
+                    <h:panelGrid columns="3" cellpadding="10">  
+                        <h:outputText value="Promotion Title*:"/>
+                        <h:inputText required ="true" requiredMessage="Title cannot be empty" value="#{promotionManagedBean.newPromotion.promotionTitle}"/>                                   
+                        <h:outputText value=""/>
+                        <h:outputText value="Start Date*:"/>
+                        <p:calendar pattern="yyyy-MM-dd" mindate="#{addShowManagedBean.currentDate}" yearRange="0" showButtonPanel="true" navigator="true" id="customCal1" value="#{promotionManagedBean.newPromotion.promotionStartDate}" /> 
+                        <h:outputText value=""/>
+                        <h:outputText value="End Date*:"/>
+                        <p:calendar pattern="yyyy-MM-dd" yearRange="0" mindate="#{addShowManagedBean.currentDate}" showButtonPanel="true" navigator="true" id="customCal2" value="#{promotionManagedBean.newPromotion.promotionEndDate}" /> 
+                        <h:outputText value=""/>
+                        <h:outputText value="Category*:"/>
+                        <h:selectOneRadio value ="#{promotionManagedBean.newPromotion.promotionCategory}" required ="true" requiredMessage="You have to choose a category">
+                            <f:selectItem itemLabel="first" itemValue="first" />  
+                            <f:selectItem itemLabel="second" itemValue="second" />  
+                            <f:selectItem itemLabel="third" itemValue="third" />  
+                        </h:selectOneRadio> 
+                        <h:outputText value=""/>
+                        <h:outputText value="Remark:"/>
+                        <h:inputText value="#{promotionManagedBean.newPromotion.promotionRemarks}"/>                                   
+                        <h:outputText value=""/>
+
+                        <p:fieldset legend="Set Promotion Target" toggleable="true" toggleSpeed="500" collapsed="true"> 
+                            <h:panelGrid columns="1" cellpadding="10">  
+                                <p:commandButton  value="Target to all customers" ajax="true" actionListener="#{promotionManagedBean.setNotMemberExclusive}" update ="growl"/>
+                                <p:commandButton  value="Target to all members" ajax="true" actionListener="#{promotionManagedBean.setMemberExclusive}" update ="growl"/>
+                                <p:commandButton  value="Target to all VIPs" ajax="true" actionListener="#{promotionManagedBean.setVIPExclusive}" update ="growl"/>
+                                <!--panel Grid: target member -->
+                            </h:panelGrid> 
+                        </p:fieldset>
+                        <p:spacer width="10"/>
+                        <h:outputText value=""/>
+
+                        <h:outputText value=""/>
+
+                        <h:outputText value=""/>
+
+                        <p:commandButton  value="Add Promotion" ajax="true" oncomplete="confirmation.show()" icon="ui-icon ui-icon-check" />
+
+                        <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">
+                            <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                                <h:outputText value="Confirm add new promotion?"/>
+                                <h:outputText value=""/>
+                                <p:commandButton value="Yes" update="growl" actionListener="#{promotionManagedBean.saveNewPromotion}" oncomplete="confirmation.hide()">  
+                                </p:commandButton>
+                                <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                            </h:panelGrid>
+                        </p:dialog>  
+
+                    </h:panelGrid> 
+                </h:form>
+            </p:tab>
+        </p:tabView>
     </ui:define>
 </ui:composition>

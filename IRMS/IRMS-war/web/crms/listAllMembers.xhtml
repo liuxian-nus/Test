@@ -7,83 +7,91 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:define name="content">
-        <h:form>  
-
-            <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.memberList}" widgetVar="membersTable"   
-                         emptyMessage="No members found with given criteria" filteredValue="#{memberManagedBean.filteredMember}">  
-
-                <f:facet name="header">  
-                    <p:outputPanel>  
-                        <h:outputText value="Search all fields:" />  
-                        <p:inputText id="globalFilter" onkeyup="membersTable.filter();" style="width:150px" />  
-                    </p:outputPanel>  
-                </f:facet>  
-                <p:column style="width:2%">  
-                    <p:rowToggler />  
-                </p:column> 
-                <p:column id="idColumn" filterBy="#{memberList.memberEmail}"   
-                          headerText="Member Email" filterMatchMode="contains">  
-                    <h:outputText value="#{memberList.memberEmail}" />  
-                </p:column>  
-
-                <p:column id="nameColumn" filterBy="#{memberList.memberName}"   
-                          headerText="Member Name" filterMatchMode="contains">  
-                    <h:outputText value="#{memberList.memberName}" />  
-                </p:column>  
-
-                <p:column id="genderColumn" filterBy="#{memberList.gender}" headerText="Gender" 
-                          filterOptions="#{memberManagedBean.genderOptions}" filterMatchMode="equals">  
-                    <h:outputText value="#{memberList.gender}" />  
-                </p:column>
-
-                <p:column id="nationalityColumn" filterBy="#{memberList.nationality}" headerText="Nationality"  
-                          filterOptions="#{memberManagedBean.nationalityOptions}" filterMatchMode="contains">  
-                    <h:outputText value="#{memberList.nationality}" />  
-                </p:column>
-
-                <p:column>
-                    <p:commandButton icon="ui-icon ui-icon-flag" title="Transactions" value ="Transactions" ajax="true" action="/crms/listMemberTransactions.xhtml">
-                    </p:commandButton>
-                </p:column>
-                
-                <p:rowExpansion>  
-                    <h:panelGrid id="display" columns="2" cellpadding="4" style="width:200px;"  
-                                 styleClass=" ui-widget-content grid">  
+        <p:tabView id="tabView">  
+            <p:tab id="tab1" title="Member List">  
+                <h:form>  
+                    <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.memberList}" widgetVar="membersTable"   
+                                 emptyMessage="No members found with given criteria" filteredValue="#{memberManagedBean.filteredMember}">  
 
                         <f:facet name="header">  
-                            #{memberList.memberEmail}
+                            <p:outputPanel>  
+                                <h:outputText value="Search all fields:" />  
+                                <p:inputText id="globalFilter" onkeyup="membersTable.filter();" style="width:150px" />  
+                            </p:outputPanel>  
                         </f:facet>  
+                        <p:column style="width:2%">  
+                            <p:rowToggler />  
+                        </p:column> 
+                        <p:column id="idColumn" filterBy="#{memberList.memberEmail}"   
+                                  headerText="Member Email" filterMatchMode="contains">  
+                            <h:outputText value="#{memberList.memberEmail}" />  
+                        </p:column>  
 
-                        <h:outputText value="Name:" />  
-                        <h:outputText id="name" value="#{memberList.memberName}" style="width:200px;"   />  
+                        <p:column id="nameColumn" filterBy="#{memberList.memberName}"   
+                                  headerText="Member Name" filterMatchMode="contains">  
+                            <h:outputText value="#{memberList.memberName}" />  
+                        </p:column>  
 
-                        <h:outputText value="Phone Number:" />  
-                        <h:outputText id="hp" value="#{memberList.memberHP}"  style="width:200px;"  />  
+                        <p:column id="genderColumn" filterBy="#{memberList.gender}" headerText="Gender" 
+                                  filterOptions="#{memberManagedBean.genderOptions}" filterMatchMode="equals">  
+                            <h:outputText value="#{memberList.gender}" />  
+                        </p:column>
 
-                        <h:outputText value="Marital Status:" />  
-                        <h:outputText value="#{memberList.maritalStatus}" style="width:200px;"  />  
+                        <p:column id="nationalityColumn" filterBy="#{memberList.nationality}" headerText="Nationality"  
+                                  filterOptions="#{memberManagedBean.nationalityOptions}" filterMatchMode="contains">  
+                            <h:outputText value="#{memberList.nationality}" />  
+                        </p:column>
 
-                        <h:outputText value="Date of Birth:" />  
-                        <h:outputText value="#{memberList.memberDob}">  
-                            <f:convertDateTime pattern="dd-MM-yyyy" />
-                        </h:outputText>
+                        <p:column>
+                            <p:commandButton icon="ui-icon ui-icon-flag" title="Transactions" value ="Transactions" ajax="true" action="/crms/listMemberTransactions.xhtml">
+                            </p:commandButton>
+                        </p:column>
 
-                        <h:outputText value="Points:" />  
-                        <h:outputText value="#{memberList.point}" style="width:200px;"  />  
+                        <p:rowExpansion>  
+                            <h:panelGrid id="display" columns="2" cellpadding="4" style="width:200px;"  
+                                         styleClass=" ui-widget-content grid">  
 
-                        <h:outputText value="Coins:" />  
-                        <h:outputText value="#{memberList.coin}" style="width:200px;"  />  
+                                <f:facet name="header">  
+                                    #{memberList.memberEmail}
+                                </f:facet>  
 
-                        <h:outputText value="VIP Status:" />  
-                        <h:outputText value="#{memberList.isVIP}" style="width:200px;"  />  
+                                <h:outputText value="Name:" />  
+                                <h:outputText id="name" value="#{memberList.memberName}" style="width:200px;"   />  
 
-                        <h:outputText value="Subscription:" />  
-                        <h:outputText value="#{memberList.isSubscriber}" style="width:200px;"  />  
+                                <h:outputText value="Phone Number:" />  
+                                <h:outputText id="hp" value="#{memberList.memberHP}"  style="width:200px;"  />  
 
-                    </h:panelGrid>  
-                </p:rowExpansion>           
-            </p:dataTable>  
+                                <h:outputText value="Marital Status:" />  
+                                <h:outputText value="#{memberList.maritalStatus}" style="width:200px;"  />  
 
-        </h:form>  
+                                <h:outputText value="Date of Birth:" />  
+                                <h:outputText value="#{memberList.memberDob}">  
+                                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Points:" />  
+                                <h:outputText value="#{memberList.point}" style="width:200px;"  />  
+
+                                <h:outputText value="Coins:" />  
+                                <h:outputText value="#{memberList.coin}" style="width:200px;"  />  
+
+                                <h:outputText value="VIP Status:" />  
+                                <h:outputText value="#{memberList.isVIP}" style="width:200px;"  />  
+
+                                <h:outputText value="Subscription:" />  
+                                <h:outputText value="#{memberList.isSubscriber}" style="width:200px;"  />  
+
+                            </h:panelGrid>  
+                        </p:rowExpansion>           
+                    </p:dataTable>  
+
+                </h:form> 
+            </p:tab>  
+            <p:tab id="tab2" title="Member Biometric Analysis">  
+            </p:tab> 
+
+            <p:tab id="tab3" title="Tiered Member Identification">  
+            </p:tab> 
+        </p:tabView>
     </ui:define>
 </ui:composition>

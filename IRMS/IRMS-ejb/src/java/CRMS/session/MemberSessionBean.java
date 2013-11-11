@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
@@ -181,6 +182,11 @@ public class MemberSessionBean {
         return memberList;
     }
 
+    public List<MemberEntity> getVIPs() {
+        Query q = em.createQuery("SELECT m FROM MemberEntity m WHERE m.isVIP =" + true);
+        return q.getResultList();
+    }
+
     //cancel membership: member is not removed, it is inactivated
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeMember(String memberEmail) throws ExistException {
@@ -297,7 +303,6 @@ public class MemberSessionBean {
         member.setIsVIP(true);
         em.merge(member);
     }
-
 
     public List<MemberEntity> getAllMembers() {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");

@@ -6,6 +6,7 @@ package CRMS.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -41,7 +42,7 @@ public class PromotionEntity implements Serializable {
     private String promotionTitle;
     private boolean promotionMemberExclusive;
     @ManyToMany(cascade = {CascadeType.ALL})
-    private Set<MemberEntity> mcMemberTargets;
+    private List<MemberEntity> mcMemberTargets;
 
     /*  public void create(Date startDate, Date endDate, String remarks, Set<MemberEntity> memberTargets) {
     this.setMcEndDate(endDate);
@@ -127,11 +128,11 @@ public class PromotionEntity implements Serializable {
     }
     
     
-    public Set<MemberEntity> getMcMemberTargets() {
+    public List<MemberEntity> getMcMemberTargets() {
         return mcMemberTargets;
     }
 
-    public void setMcMemberTargets(Set<MemberEntity> mcMemberTargets) {
+    public void setMcMemberTargets(List<MemberEntity> mcMemberTargets) {
         this.mcMemberTargets = mcMemberTargets;
     }
 
