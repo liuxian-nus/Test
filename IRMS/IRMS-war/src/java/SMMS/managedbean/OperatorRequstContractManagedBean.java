@@ -17,6 +17,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -42,6 +44,44 @@ public class OperatorRequstContractManagedBean {
     public OperatorRequstContractManagedBean() {
         contract = new ContractEntity();
         cevent = new ContracteventEntity();
+    }
+
+    public void updateContract(ActionEvent event) {
+        System.out.println("in updating contract renew" + contract.getContractId());
+        try {
+            contractSessionBean.updateContract(contract);
+            System.out.println("now the status is" + contract.getLast().getEventCommissionRate());
+//            cevent = contract.getLast();            
+//            cevent.setEventContract(contract);
+//            contracteventSessionBean.addContractevent(cevent);
+//            System.out.println("after creating new contract event" + cevent.getContracteventId());
+//
+            FacesContext.getCurrentInstance().getExternalContext().redirect("operatorManageContract.xhtml");
+//            contractSessionBean.addContractevent(contract.getContractId(), cevent.getContracteventId());// adding new event to contract, merge contract entity
+//            System.out.println("after adding contract event" + cevent.getContracteventId());
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when updating new contract", ""));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Contract has been updated.", ""));
+
+    }
+
+    public void viewContract(ActionEvent event) {
+        System.out.println("No1:in displaying bean " + contract.getContractId());
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+
+
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
+//            System.out.println("we are after setting parameter");
+//            request.getSession().setAttribute("contractId", contract.getContractId());
+            System.out.println("we are after setting contractId session attribute");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("addRenewContract.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing contract", ""));
+        }
     }
 
     public void requestNew(ActionEvent event) {
@@ -107,16 +147,16 @@ public class OperatorRequstContractManagedBean {
 
     public void renew(ActionEvent event) throws ExistException {
         System.out.println("in generating contract renew" + contract.getContractId());
-       try{
-        cevent.setEventStatus("renew");
-        cevent.setEventContract(contract);
-        contracteventSessionBean.addContractevent(cevent);
-        System.out.println("after creating new contract event" + cevent.getContracteventId());
-       
+        try {
+            cevent.setEventStatus("renew");
+            cevent.setEventContract(contract);
+            contracteventSessionBean.addContractevent(cevent);
+            System.out.println("after creating new contract event" + cevent.getContracteventId());
 
-        contractSessionBean.addContractevent(contract.getContractId(), cevent.getContracteventId());// adding new event to contract, merge contract entity
-        System.out.println("after adding contract event" + cevent.getContracteventId());
-       }catch (Exception e) {
+
+            contractSessionBean.addContractevent(contract.getContractId(), cevent.getContracteventId());// adding new event to contract, merge contract entity
+            System.out.println("after adding contract event" + cevent.getContracteventId());
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when renewing new contract", ""));
             return;
         }

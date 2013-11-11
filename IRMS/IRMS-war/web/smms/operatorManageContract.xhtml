@@ -76,10 +76,12 @@
                                  </p:commandButton>
                              </p:column> -->  
                         <p:column style="width:10%">  
+
                             <!-- update when new or rejected-->
-                            <p:commandButton  oncomplete="upadte.show()" ajax="true" 
+                            <p:commandButton   ajax="true" actionListener="#{operatorRequstContractManagedBean.viewContract}"
                                               rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
-                                              icon="ui-icon ui-icon-tag"  title="Update">  
+                                              icon="ui-icon ui-icon-tag"  title="Update contract">  
+                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton>  
 
                             <!-- send out for request when new-->
@@ -190,6 +192,7 @@
                             <p:commandButton onclick="renew.hide()" update="contract" value="Add" ajax="true" actionListener="#{operatorRequstContractManagedBean.renew}" />
                         </h:panelGrid> 
                     </p:dialog> 
+
 
                 </div>
             </p:panel>

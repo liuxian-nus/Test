@@ -728,6 +728,7 @@ public class initializationManagedBean implements Serializable {
         role.addFunctionality(functionality10);
         role.addFunctionality(functionality11);
         role.addFunctionality(functionality12);
+        role.addFunctionality(functionality13);
         
         System.out.println("Create role :" + role.getRoleName());
         
