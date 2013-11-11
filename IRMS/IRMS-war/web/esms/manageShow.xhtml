@@ -13,7 +13,7 @@
             <p:panel id="show" header="Show Management" style="height:495px;">
                 <div style="margin-top:20px;">
                     <p:growl id="msgs" showDetail="true" /> 
-                    <p:dataTable id="shows" value="#{manageShowManagedBean.getShows()}" 
+                    <p:dataTable id="shows" value="#{manageShowManagedBean.shows}" 
                                  var="showList" paginator="true" rows="6" draggableColumns="true" scrollable="true" 
                                  resizableColumns="true">
 
@@ -65,31 +65,39 @@
                             <h:outputText value="#{showList.showType}"/>
                         </p:column>
 
-                        <p:column style="width:195px">  
+                        <p:column headerText="Launch">
+                            <h:panelGrid styleClass="actions">  
+                                <p:commandButton update="shows" title="Launched" icon="ui-icon ui-icon-video" action="#{manageShowManagedBean.setShowStatus(event)}"
+                                                 rendered="#{!showList.showStatus}">
+                                    <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" /> 
+                                    <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.selectedShow.showStatus}" />  
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </p:column>
+
+                        <p:column style="width:200px">  
                             <h:panelGrid columns="4" styleClass="actions" cellpadding="3">  
 
-                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-script" title="Edit Show Info">  
+                                <p:commandButton update=":form:display" oncomplete="carDialog.show()" icon="ui-icon ui-icon-script" title="Edit Show Info"
+                                                 rendered="#{!showList.showStatus}">  
                                     <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
                                     <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.editMode}" />  
                                 </p:commandButton>  
-                                <p:commandButton update=":form:showSchedules" oncomplete="schedule.show()" icon="ui-icon ui-icon-calendar" title="Schedule">  
+                                <p:commandButton update=":form:showSchedules" oncomplete="schedule.show()" icon="ui-icon ui-icon-calendar" title="Schedule"
+                                                 rendered="#{!showList.showStatus}">  
                                     <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
                                     <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.editMode}" />  
                                 </p:commandButton> 
-                                <p:commandButton  update=":form:showScheduleTicket" oncomplete="ticket.show()" icon="ui-icon ui-icon-pencil" title="Ticket">  
+                                <p:commandButton  update=":form:showScheduleTicket" oncomplete="ticket.show()" icon="ui-icon ui-icon-pencil" title="Ticket"
+                                                  rendered="#{!showList.showStatus}">  
                                     <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
                                     <f:setPropertyActionListener value="#{true}" target="#{manageShowManagedBean.editMode}" />  
                                 </p:commandButton>
                                 <p:commandButton update=":form:display" oncomplete="confirmation.show()" icon="ui-icon ui-icon-close" title="Delete">  
                                     <f:setPropertyActionListener value="#{showList}" target="#{manageShowManagedBean.selectedShow}" />  
-                                </p:commandButton>  
-                                <p:commandButton update="shows" title="Launched" icon="ui-icon ui-icon-close">
-                                    
-                                </p:commandButton>
+                                </p:commandButton> 
                             </h:panelGrid>  
                         </p:column> 
-                        
-                        
 
                     </p:dataTable>  
 

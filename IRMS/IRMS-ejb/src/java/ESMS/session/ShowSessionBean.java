@@ -8,6 +8,7 @@ import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -29,8 +30,25 @@ public class ShowSessionBean implements ShowSessionBeanRemote {
     private ShowEntity show;
     private ShowScheduleEntity showSchedule;
     private List<ShowEntity> shows;
+    private List<ShowEntity> temp;
 
     public ShowSessionBean() {
+    }
+    
+    public List<ShowEntity> getAvailableShows() {
+        Query q = em.createQuery("SELECT m FROM ShowEntity m");
+        shows = new ArrayList<ShowEntity>();
+        temp = new ArrayList<ShowEntity>();
+        temp = q.getResultList();
+
+        Iterator<ShowEntity> itr = temp.iterator();
+        while (itr.hasNext()) {
+            show = itr.next();
+            if (show.isShowStatus()==false) {
+                shows.add(show);
+            }
+        }
+        return shows;
     }
 
     @Override
@@ -122,4 +140,5 @@ public class ShowSessionBean implements ShowSessionBeanRemote {
         
         return shows;
     }
+
 }
