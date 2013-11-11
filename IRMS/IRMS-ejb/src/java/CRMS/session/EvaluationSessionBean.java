@@ -6,6 +6,7 @@ package CRMS.session;
 
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
+import CRMS.entity.PromotionEntity;
 import CRMS.entity.RFMModelEntity;
 import Exception.ExistException;
 import java.util.ArrayList;
@@ -294,6 +295,117 @@ public class EvaluationSessionBean {
         tiered = resultList;
         
         return tiered;
+    }
+    
+    public List<MemberEntity> getTieredBasedOnSizeOfWallet()
+    {
+        List<MemberEntity> tiered = new ArrayList();
+        
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List <MemberEntity> allMembers = q.getResultList(); 
+        Iterator <MemberEntity> itr = allMembers.iterator();
+        //get a description statistics
+        DescriptiveStatistics stats = new DescriptiveStatistics();
+        
+        while(itr.hasNext())
+        {
+           MemberEntity current = itr.next();
+           double currentSizeOfWallet = this.calculateSizeOfWallet(current.getMemberEmail());
+           stats.addValue(currentSizeOfWallet);
+        }
+        
+        double tieredValue = stats.getPercentile(80);
+        
+        Query q2 = em.createQuery("SELECT m FROM MemberEntity m");
+        List <MemberEntity> allMembers2 = q2.getResultList(); 
+        Iterator <MemberEntity> itr2 = allMembers2.iterator();
+        List<MemberEntity> resultList = new ArrayList();
+        
+        while(itr2.hasNext())
+        {
+           MemberEntity current = itr.next();
+           double currentSizeOfWallet = this.calculateSizeOfWallet(current.getMemberEmail());
+           if(currentSizeOfWallet>=tieredValue)
+           {
+               resultList.add(current);
+           }
+        }
+        
+        tiered = resultList;
+        
+        return tiered;
+    }
+    
+    //Identify the most valuable customer to each department
+    public List<MemberEntity> getTieredBasedOnShareOfWallet(String mtDepartment)
+    {
+        List<MemberEntity> tiered = new ArrayList();
+        
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List <MemberEntity> allMembers = q.getResultList(); 
+        Iterator <MemberEntity> itr = allMembers.iterator();
+        //get a description statistics
+        DescriptiveStatistics stats = new DescriptiveStatistics();
+        
+        while(itr.hasNext())
+        {
+            MemberEntity current = itr.next();
+            double currentShareOfWallet = this.calculateShareOfWallet(current.getMemberEmail(), mtDepartment);
+            stats.addValue(currentShareOfWallet);
+        }
+        
+        double tieredValue = stats.getPercentile(80);
+        
+        Query q2 = em.createQuery("SELECT m FROM MemberEntity m");
+        List <MemberEntity> allMembers2 = q2.getResultList(); 
+        Iterator <MemberEntity> itr2 = allMembers2.iterator();
+        List<MemberEntity> resultList = new ArrayList();
+        
+        while(itr2.hasNext())
+        {
+            MemberEntity current = itr.next();
+            double currentShareOfWallet = this.calculateShareOfWallet(current.getMemberEmail(), mtDepartment);
+            if(currentShareOfWallet>=tieredValue)
+                resultList.add(current);
+        }
+        
+        tiered = resultList;
+        
+        return tiered;
+    }
+    
+    //Below evaluate the response rate of a promotion
+    public double evaluatePromotion(Long promotionId) throws ExistException
+    {
+        double responseRate = 0.00;
+        PromotionEntity thisP = em.find(PromotionEntity.class, promotionId);
+        if(thisP==null)
+            throw new ExistException();
+        
+        Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
+        List <MemberTransactionEntity> allMemberTrans = q.getResultList(); 
+        Iterator <MemberTransactionEntity> itr = allMemberTrans.iterator();
+        List <MemberTransactionEntity> respondedSales = new ArrayList();
+        List <MemberEntity> respondedTargets = new ArrayList();
+        
+        while(itr.hasNext())
+        {
+            MemberTransactionEntity current = itr.next();
+            if(current.getMtPromotion().equalsIgnoreCase(thisP.getPromotionCode()))
+            {
+                respondedSales.add(current);
+                MemberEntity currentMember = em.find(MemberEntity.class,current.getMemberEmail());
+                if(!respondedTargets.contains(currentMember))
+                    respondedTargets.add(currentMember);
+            }
+        }
+        
+        int expectedSize = thisP.getMcMemberTargets().size();
+        
+//        responseRate = respondedSales.size()/expectedSize;
+        responseRate = respondedTargets.size()/expectedSize;
+        
+        return responseRate;
     }
     public void persist(Object object) {
         em.persist(object);
