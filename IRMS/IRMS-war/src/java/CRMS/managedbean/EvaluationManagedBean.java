@@ -66,12 +66,12 @@ public class EvaluationManagedBean {
         System.err.println("2. "+member.getMemberEmail());
         pieModel = new PieChartModel();
 
-        pieModel.set("hotel", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"hotel"));
-        pieModel.set("shopping Mall", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"shopping mall"));
-        pieModel.set("entertainment show", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"entertainment show"));
-        pieModel.set("food and beverage", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"food and beverage"));
-        pieModel.set("attraction", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"attraction"));
-        pieModel.set("convention center", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"convention center"));
+        pieModel.set("Hotel", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"hotel"));
+        pieModel.set("Shopping Mall", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"shopping mall"));
+        pieModel.set("Entertainment Show", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"entertainment show"));
+        pieModel.set("Food and Beverage", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"food and beverage"));
+        pieModel.set("Attraction", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"attraction"));
+        pieModel.set("Convention Center", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(),"convention center"));
     }
 
     public MemberSessionBean getMemberSessionBean() {
