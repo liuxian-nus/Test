@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <h:form id="formAdd">
+            <p:growl id="growl" showDetail="true" sticky="true" />                    
+            <h:panelGrid columns="3" cellpadding="10">                         
+
+                <h:outputText value="Commission Rate:"/>
+                <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventCommissionRate}"/>
+                <h:outputText value=""/>
+
+                <h:outputText value="Monthly Rate:"/>
+                <p:inputText  title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventMonthRate}"/>
+                <h:outputText value=""/>
+
+                <h:outputText value="Early Termination charge:"/>
+                <p:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventEarlyCharge}"/>
+                <h:outputText value=""/>
+
+                <h:outputText value="Starting Date:"/>
+                <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventStartDate}" /> 
+                <h:outputText value=""/>
+
+                <h:outputText value="Ending Date:"/>
+                <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventEndDate}" /> 
+                <h:outputText value=""/>
+
+                <p:commandButton  value="Add" ajax="true" actionListener="#{operatorRequstContractManagedBean.renew}" update ="growl"/>
+            </h:panelGrid> 
+        </h:form>
+    </ui:define>
+
+</ui:composition>
