@@ -35,6 +35,7 @@ public class ACMSServlet extends HttpServlet {
     ReservationEntity data = new ReservationEntity();
     boolean isAvailable = false;
     int SessionTime;
+    String reservationId;
 
     @Override
     public void init() {
@@ -95,12 +96,24 @@ public class ACMSServlet extends HttpServlet {
                  
                 request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
             } else if ("hotelPayConfirm".equals(page)) {
+             
                 data.setRcCreditCardNo(request.getParameter("cardNo"));
                // reservationSessionBean.addReservation(data);
                 System.out.println("***hotel payment confirmation***");
 
                 request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
-            } else {
+            } else if ("hotelModify".equals(page)) {
+                reservationId=request.getParameter("reservationId");
+                System.out.println(reservationId);
+                data=reservationSessionBean.getReservationById(reservationId);
+                System.out.println("***hotel modify***");
+                request.getRequestDispatcher("/hotelModify.jsp").forward(request, response);
+            } else if ("hotelCancel".equals(page)) {
+               
+                System.out.println("***hotel cancel***");
+
+                request.getRequestDispatcher("/hotelCancel.jsp").forward(request, response);
+            }else {
                 System.out.println("other page");
             }
         } catch (Exception e) {
