@@ -86,7 +86,12 @@ public class ESMSServlet extends HttpServlet {
                     System.out.println("***entertainmentVenue***");
 
                     request.getRequestDispatcher("/entertainmentVenue.jsp").forward(request, response);
-                } else {
+                } else if ("entertainmentPay".equals(page)) {
+                    System.out.println("***entertainmentPay***");
+
+                    request.getRequestDispatcher("/entertainmentPay.jsp").forward(request, response);
+                } 
+                else {
                     System.out.println("other page");
                 }
             } catch (Exception e) {
