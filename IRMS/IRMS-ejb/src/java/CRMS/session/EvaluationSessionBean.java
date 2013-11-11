@@ -29,6 +29,7 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 @Stateless
 @LocalBean
 public class EvaluationSessionBean {
+
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     MemberTransactionEntity mte;
@@ -36,77 +37,70 @@ public class EvaluationSessionBean {
     MemberSessionBean memberSessionBean;
     MemberEntity member;
 
-    public double calculateSizeOfWallet(String memberEmail)
-
-    {
+    public double calculateSizeOfWallet(String memberEmail) {
         System.out.println("calculateSizeOfWallet");
         double sizeOfWallet;
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
-        List <MemberTransactionEntity> allTrans = q.getResultList();
-        Iterator <MemberTransactionEntity> itr = allTrans.iterator();
-        List <MemberTransactionEntity> resultList = new ArrayList();
+        List<MemberTransactionEntity> allTrans = q.getResultList();
+        Iterator<MemberTransactionEntity> itr = allTrans.iterator();
+        List<MemberTransactionEntity> resultList = new ArrayList();
 
-        
-        while(itr.hasNext())
-        {
+
+        while (itr.hasNext()) {
             MemberTransactionEntity current = itr.next();
-            if(current.getMemberEmail().equalsIgnoreCase(memberEmail))
-             resultList.add(current);
+            if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
+                resultList.add(current);
+            }
         }
-        
-        Iterator <MemberTransactionEntity> itr2 = resultList.iterator();
+
+        Iterator<MemberTransactionEntity> itr2 = resultList.iterator();
         Double memberTotal = 0.00;
-        
-        if(!resultList.isEmpty())
-        {
-            while(itr2.hasNext())
-            {
+
+        if (!resultList.isEmpty()) {
+            while (itr2.hasNext()) {
                 MemberTransactionEntity current2 = itr2.next();
-                memberTotal+=current2.getMtAmount();
+                memberTotal += current2.getMtAmount();
             }
         }
         sizeOfWallet = memberTotal;
-        member.setSizeOfWallet(sizeOfWallet);
-        memberSessionBean.updateMember(member);
+        if (member != null && sizeOfWallet!=0.0) {
+            member.setSizeOfWallet(sizeOfWallet);
+            memberSessionBean.updateMember(member);
+        }
         return sizeOfWallet;
     }
-    
-    public double calculateShareOfWallet(String memberEmail,String mtDepartment)
-    {
-       double shareOfWallet=0.00;
-       System.out.println("calculateShareOfWallet");
-        
+
+    public double calculateShareOfWallet(String memberEmail, String mtDepartment) {
+        double shareOfWallet = 0.00;
+        System.out.println("calculateShareOfWallet");
+
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
-        List <MemberTransactionEntity> allTrans = q.getResultList(); 
-        Iterator <MemberTransactionEntity> itr = allTrans.iterator();
-        List <MemberTransactionEntity> resultList = new ArrayList();
+        List<MemberTransactionEntity> allTrans = q.getResultList();
+        Iterator<MemberTransactionEntity> itr = allTrans.iterator();
+        List<MemberTransactionEntity> resultList = new ArrayList();
         Double memberTotal = 0.00;
         Double dpmtMemberTotal = 0.00;
-        
-        while(itr.hasNext())
-        {
-           MemberTransactionEntity current = itr.next();
-           if(current.getMemberEmail().equals(memberEmail))
-           {
-               memberTotal+=current.getMtAmount();
-               if(current.getMtDepartment().equalsIgnoreCase(mtDepartment))
-               {
-                   dpmtMemberTotal+=current.getMtAmount();
-               }
-           }
+
+        while (itr.hasNext()) {
+            MemberTransactionEntity current = itr.next();
+            if (current.getMemberEmail().equals(memberEmail)) {
+                memberTotal += current.getMtAmount();
+                if (current.getMtDepartment().equalsIgnoreCase(mtDepartment)) {
+                    dpmtMemberTotal += current.getMtAmount();
+                }
+            }
         }
-        if(memberTotal!=0)
-        shareOfWallet = dpmtMemberTotal/memberTotal;
-       return shareOfWallet;
+        if (memberTotal != 0) {
+            shareOfWallet = dpmtMemberTotal / memberTotal;
+        }
+        return shareOfWallet;
     }
-    
+
     //Model number currently is 1 since only one model is available
-    public boolean setRFMParameter(Double Recency, Double Frequency, Double Monetary,int ModelNumber)
-    {
+    public boolean setRFMParameter(Double Recency, Double Frequency, Double Monetary, int ModelNumber) {
         boolean completed = false;
-        RFMModelEntity current = em.find(RFMModelEntity.class,ModelNumber );
-        if(current!=null)
-        {
+        RFMModelEntity current = em.find(RFMModelEntity.class, ModelNumber);
+        if (current != null) {
             current.setFrequency(Frequency);
             current.setMonetary(Monetary);
             current.setRecency(Recency);
@@ -115,65 +109,83 @@ public class EvaluationSessionBean {
         }
         return completed;
     }
-    
-    public Integer calculateRFMValue(String memberEmail, int ModelNumber) throws ExistException
-    {
+
+    public Integer calculateRFMValue(String memberEmail, int ModelNumber) throws ExistException {
         Integer RFMValue = 0;
-        double f=0.00;//frequency
+        double f = 0.00;//frequency
         double r = 0.00;//recency
         double m = 0.00;//monetary
         RFMModelEntity model = getRFMModel(ModelNumber);
         System.out.println("calculateRFMValue");
-        
+
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
-        List <MemberTransactionEntity> allTrans = q.getResultList(); 
-        Iterator <MemberTransactionEntity> itr = allTrans.iterator();
+        List<MemberTransactionEntity> allTrans = q.getResultList();
+        Iterator<MemberTransactionEntity> itr = allTrans.iterator();
         double memberMoneyTotal = 0.00;
         double moneyTotal = 0.00;
-        Integer memberVisitTotal =0;
+        Integer memberVisitTotal = 0;
         Integer visitTotal = 0;
 //        boolean memberFrequent = false;
-        Date memberLastVisitDate = new Date(1900,0,1);
+        Date memberLastVisitDate = new Date(1900, 0, 1);
         Date currentTransDate;
-        
+
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
-        
-        while(itr.hasNext())
-        {
+
+        while (itr.hasNext()) {
             MemberTransactionEntity current = itr.next();
-            moneyTotal+= current.getMtAmount();
-            visitTotal+= 1;
-            
+            moneyTotal += current.getMtAmount();
+            visitTotal += 1;
+
             //add values to a stats
             stats.addValue(current.getMtAmount());
-            
-            if(current.getMemberEmail().equalsIgnoreCase(memberEmail))
-            {
+
+            if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
                 memberMoneyTotal += current.getMtAmount();
                 memberVisitTotal += 1;
                 currentTransDate = current.getMtDate();
-                if(currentTransDate.after(memberLastVisitDate))
+                if (currentTransDate.after(memberLastVisitDate)) {
                     memberLastVisitDate = currentTransDate;
-            }        
+                }
+            }
         }
-        
+
         //calculate m
-        double memberAverageMoney = memberMoneyTotal/memberVisitTotal;
-        
-        if(memberAverageMoney>=stats.getPercentile(80)) m=5;
-        if(memberAverageMoney>=stats.getPercentile(60) && memberAverageMoney<stats.getPercentile(80)) m=4;
-        if(memberAverageMoney>=stats.getPercentile(40) && memberAverageMoney<stats.getPercentile(60)) m=3;
-        if(memberAverageMoney>=stats.getPercentile(20) && memberAverageMoney<stats.getPercentile(40)) m=2;
-        if(memberAverageMoney<stats.getPercentile(20)) m=1;
-        
+        double memberAverageMoney = memberMoneyTotal / memberVisitTotal;
+
+        if (memberAverageMoney >= stats.getPercentile(80)) {
+            m = 5;
+        }
+        if (memberAverageMoney >= stats.getPercentile(60) && memberAverageMoney < stats.getPercentile(80)) {
+            m = 4;
+        }
+        if (memberAverageMoney >= stats.getPercentile(40) && memberAverageMoney < stats.getPercentile(60)) {
+            m = 3;
+        }
+        if (memberAverageMoney >= stats.getPercentile(20) && memberAverageMoney < stats.getPercentile(40)) {
+            m = 2;
+        }
+        if (memberAverageMoney < stats.getPercentile(20)) {
+            m = 1;
+        }
+
         //calculate f
-        if((memberVisitTotal/visitTotal)>=0.1) f=5;
-        if((memberVisitTotal/visitTotal)>=0.05 && (memberVisitTotal/visitTotal)<0.1 ) f=4;
-        if((memberVisitTotal/visitTotal)>=0.01 && (memberVisitTotal/visitTotal)<0.05) f=3;
-        if((memberVisitTotal/visitTotal)>=0.005 && (memberVisitTotal/visitTotal)<0.01) f=2;
-        if((memberVisitTotal/visitTotal)<0.005) f=1;
-        
+        if ((memberVisitTotal / visitTotal) >= 0.1) {
+            f = 5;
+        }
+        if ((memberVisitTotal / visitTotal) >= 0.05 && (memberVisitTotal / visitTotal) < 0.1) {
+            f = 4;
+        }
+        if ((memberVisitTotal / visitTotal) >= 0.01 && (memberVisitTotal / visitTotal) < 0.05) {
+            f = 3;
+        }
+        if ((memberVisitTotal / visitTotal) >= 0.005 && (memberVisitTotal / visitTotal) < 0.01) {
+            f = 2;
+        }
+        if ((memberVisitTotal / visitTotal) < 0.005) {
+            f = 1;
+        }
+
         //calculate r
         Calendar currentDate = Calendar.getInstance();
         currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 10 days
@@ -186,23 +198,30 @@ public class EvaluationSessionBean {
         Date dateR2 = currentDate.getTime();
         currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 50 days
         Date dateR1 = currentDate.getTime();
-        
-        if(memberLastVisitDate.after(dateR5)) r=5;
-        if(memberLastVisitDate.after(dateR4)&&(memberLastVisitDate.before(dateR5)||memberLastVisitDate.equals(dateR5))) r=4;
-        if(memberLastVisitDate.after(dateR3)&&(memberLastVisitDate.before(dateR4)||memberLastVisitDate.equals(dateR4))) r=3;
-        if(memberLastVisitDate.after(dateR2)&&(memberLastVisitDate.before(dateR3)||memberLastVisitDate.equals(dateR3))) r=2;
-        if((memberLastVisitDate.before(dateR2)||memberLastVisitDate.equals(dateR2))) r=1;
-        
-        double RFMValueAbsolute = model.getFrequency()*f + model.getMonetary()*m +model.getRecency()*r;
-        double fullRFMValueAbsolute = model.getFrequency()*5+model.getMonetary()*5+model.getRecency()*5;
-        RFMValue = (int)(RFMValueAbsolute/fullRFMValueAbsolute)*5;
+
+        if (memberLastVisitDate.after(dateR5)) {
+            r = 5;
+        }
+        if (memberLastVisitDate.after(dateR4) && (memberLastVisitDate.before(dateR5) || memberLastVisitDate.equals(dateR5))) {
+            r = 4;
+        }
+        if (memberLastVisitDate.after(dateR3) && (memberLastVisitDate.before(dateR4) || memberLastVisitDate.equals(dateR4))) {
+            r = 3;
+        }
+        if (memberLastVisitDate.after(dateR2) && (memberLastVisitDate.before(dateR3) || memberLastVisitDate.equals(dateR3))) {
+            r = 2;
+        }
+        if ((memberLastVisitDate.before(dateR2) || memberLastVisitDate.equals(dateR2))) {
+            r = 1;
+        }
+
+        double RFMValueAbsolute = model.getFrequency() * f + model.getMonetary() * m + model.getRecency() * r;
+        double fullRFMValueAbsolute = model.getFrequency() * 5 + model.getMonetary() * 5 + model.getRecency() * 5;
+        RFMValue = (int) (RFMValueAbsolute / fullRFMValueAbsolute) * 5;
         return RFMValue;
     }
-    
-    
-    
-    public double calculateCustLifeValue(String memberEmail)
-    {
+
+    public double calculateCustLifeValue(String memberEmail) {
         double custLifeValue = 0.00;
         double discountRate = 0.05;
         double currentTransValue;
@@ -210,222 +229,208 @@ public class EvaluationSessionBean {
         Date today = new Date();
         int compoundedYear = 0;
         System.out.println("calculateCustLifeValue");
-        
+
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
-        List <MemberTransactionEntity> allTrans = q.getResultList(); 
-        Iterator <MemberTransactionEntity> itr = allTrans.iterator();
-        
-        while(itr.hasNext())
-        {
-           MemberTransactionEntity current = itr.next();
-           if(current.getMemberEmail().equalsIgnoreCase(memberEmail))
-           {
-               currentTransValue = current.getMtAmount();
-               compoundedYear = today.getYear()-current.getMtDate().getYear();//pay attention to "minus 1900"
-               currentRealTransValue=currentTransValue * Math.pow(1+discountRate, compoundedYear);
-               custLifeValue+=currentRealTransValue;
-           }
+        List<MemberTransactionEntity> allTrans = q.getResultList();
+        Iterator<MemberTransactionEntity> itr = allTrans.iterator();
+
+        while (itr.hasNext()) {
+            MemberTransactionEntity current = itr.next();
+            if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
+                currentTransValue = current.getMtAmount();
+                compoundedYear = today.getYear() - current.getMtDate().getYear();//pay attention to "minus 1900"
+                currentRealTransValue = currentTransValue * Math.pow(1 + discountRate, compoundedYear);
+                custLifeValue += currentRealTransValue;
+            }
         }
         return custLifeValue;
     }
-    
-    public List<MemberEntity> getTieredBasedOnRFM() throws ExistException
-    {
+
+    public List<MemberEntity> getTieredBasedOnRFM() throws ExistException {
         List<MemberEntity> tiered = new ArrayList();
-        
+
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
-        List <MemberEntity> allMembers = q.getResultList(); 
-        Iterator <MemberEntity> itr = allMembers.iterator();
+        List<MemberEntity> allMembers = q.getResultList();
+        Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
-        
-        while(itr.hasNext())
-        {
+
+        while (itr.hasNext()) {
             MemberEntity current = itr.next();
-            int currentRFMValue = calculateRFMValue(current.getMemberEmail(),1);
+            int currentRFMValue = calculateRFMValue(current.getMemberEmail(), 1);
             stats.addValue(currentRFMValue);
         }
-        
-        int tieredValue = (int)stats.getPercentile(80);
-        
+
+        int tieredValue = (int) stats.getPercentile(80);
+
         Query q2 = em.createQuery("SELECT m FROM MemberEntity m");
-        List <MemberEntity> allMembers2 = q2.getResultList(); 
-        Iterator <MemberEntity> itr2 = allMembers2.iterator();
+        List<MemberEntity> allMembers2 = q2.getResultList();
+        Iterator<MemberEntity> itr2 = allMembers2.iterator();
         List<MemberEntity> resultList = new ArrayList();
-        
-        while(itr2.hasNext())
-        {
+
+        while (itr2.hasNext()) {
             MemberEntity current = itr.next();
-            int currentRFMValue = calculateRFMValue(current.getMemberEmail(),1);
-            if (currentRFMValue>=tieredValue)
+            int currentRFMValue = calculateRFMValue(current.getMemberEmail(), 1);
+            if (currentRFMValue >= tieredValue) {
                 resultList.add(current);
+            }
         }
         tiered = resultList;
-        
+
         return tiered;
     }
-    
-    public List<MemberEntity> getTieredBasedOnCustLifeValue()
-    {
+
+    public List<MemberEntity> getTieredBasedOnCustLifeValue() {
         List<MemberEntity> tiered = new ArrayList();
-        
+
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
-        List <MemberEntity> allMembers = q.getResultList(); 
-        Iterator <MemberEntity> itr = allMembers.iterator();
+        List<MemberEntity> allMembers = q.getResultList();
+        Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
-        
-        while(itr.hasNext())
-        {
+
+        while (itr.hasNext()) {
             MemberEntity current = itr.next();
             double currentCustLifeValue = calculateCustLifeValue(current.getMemberEmail());
             stats.addValue(currentCustLifeValue);
         }
-        
+
         double tieredValue = stats.getPercentile(80);
-        
+
         Query q2 = em.createQuery("SELECT m FROM MemberEntity m");
-        List <MemberEntity> allMembers2 = q2.getResultList(); 
-        Iterator <MemberEntity> itr2 = allMembers2.iterator();
+        List<MemberEntity> allMembers2 = q2.getResultList();
+        Iterator<MemberEntity> itr2 = allMembers2.iterator();
         List<MemberEntity> resultList = new ArrayList();
-        
-        while(itr2.hasNext())
-        {
+
+        while (itr2.hasNext()) {
             MemberEntity current = itr.next();
             double currentCustLifeValue = calculateCustLifeValue(current.getMemberEmail());
-            if(currentCustLifeValue>=tieredValue)
+            if (currentCustLifeValue >= tieredValue) {
                 resultList.add(current);
+            }
         }
-        
+
         tiered = resultList;
-        
+
         return tiered;
     }
-    
-    public List<MemberEntity> getTieredBasedOnSizeOfWallet()
-    {
+
+    public List<MemberEntity> getTieredBasedOnSizeOfWallet() {
         List<MemberEntity> tiered = new ArrayList();
-        
+
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
-        List <MemberEntity> allMembers = q.getResultList(); 
-        Iterator <MemberEntity> itr = allMembers.iterator();
+        List<MemberEntity> allMembers = q.getResultList();
+        Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
-        
-        while(itr.hasNext())
-        {
-           MemberEntity current = itr.next();
-           double currentSizeOfWallet = this.calculateSizeOfWallet(current.getMemberEmail());
-           stats.addValue(currentSizeOfWallet);
+
+        while (itr.hasNext()) {
+            MemberEntity current = itr.next();
+            double currentSizeOfWallet = this.calculateSizeOfWallet(current.getMemberEmail());
+            stats.addValue(currentSizeOfWallet);
         }
-        
+
         double tieredValue = stats.getPercentile(80);
-        
+
         Query q2 = em.createQuery("SELECT m FROM MemberEntity m");
-        List <MemberEntity> allMembers2 = q2.getResultList(); 
-        Iterator <MemberEntity> itr2 = allMembers2.iterator();
+        List<MemberEntity> allMembers2 = q2.getResultList();
+        Iterator<MemberEntity> itr2 = allMembers2.iterator();
         List<MemberEntity> resultList = new ArrayList();
-        
-        while(itr2.hasNext())
-        {
-           MemberEntity current = itr.next();
-           double currentSizeOfWallet = this.calculateSizeOfWallet(current.getMemberEmail());
-           if(currentSizeOfWallet>=tieredValue)
-           {
-               resultList.add(current);
-           }
+
+        while (itr2.hasNext()) {
+            MemberEntity current = itr.next();
+            double currentSizeOfWallet = this.calculateSizeOfWallet(current.getMemberEmail());
+            if (currentSizeOfWallet >= tieredValue) {
+                resultList.add(current);
+            }
         }
-        
+
         tiered = resultList;
-        
+
         return tiered;
     }
-    
+
     //Identify the most valuable customer to each department
-    public List<MemberEntity> getTieredBasedOnShareOfWallet(String mtDepartment)
-    {
+    public List<MemberEntity> getTieredBasedOnShareOfWallet(String mtDepartment) {
         List<MemberEntity> tiered = new ArrayList();
-        
+
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
-        List <MemberEntity> allMembers = q.getResultList(); 
-        Iterator <MemberEntity> itr = allMembers.iterator();
+        List<MemberEntity> allMembers = q.getResultList();
+        Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
-        
-        while(itr.hasNext())
-        {
+
+        while (itr.hasNext()) {
             MemberEntity current = itr.next();
             double currentShareOfWallet = this.calculateShareOfWallet(current.getMemberEmail(), mtDepartment);
             stats.addValue(currentShareOfWallet);
         }
-        
+
         double tieredValue = stats.getPercentile(80);
-        
+
         Query q2 = em.createQuery("SELECT m FROM MemberEntity m");
-        List <MemberEntity> allMembers2 = q2.getResultList(); 
-        Iterator <MemberEntity> itr2 = allMembers2.iterator();
+        List<MemberEntity> allMembers2 = q2.getResultList();
+        Iterator<MemberEntity> itr2 = allMembers2.iterator();
         List<MemberEntity> resultList = new ArrayList();
-        
-        while(itr2.hasNext())
-        {
+
+        while (itr2.hasNext()) {
             MemberEntity current = itr.next();
             double currentShareOfWallet = this.calculateShareOfWallet(current.getMemberEmail(), mtDepartment);
-            if(currentShareOfWallet>=tieredValue)
+            if (currentShareOfWallet >= tieredValue) {
                 resultList.add(current);
-        }
-        
-        tiered = resultList;
-        
-        return tiered;
-    }
-    
-    //Below evaluate the response rate of a promotion
-    public double evaluatePromotion(Long promotionId) throws ExistException
-    {
-        double responseRate = 0.00;
-        PromotionEntity thisP = em.find(PromotionEntity.class, promotionId);
-        if(thisP==null)
-            throw new ExistException();
-        
-        Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
-        List <MemberTransactionEntity> allMemberTrans = q.getResultList(); 
-        Iterator <MemberTransactionEntity> itr = allMemberTrans.iterator();
-        List <MemberTransactionEntity> respondedSales = new ArrayList();
-        List <MemberEntity> respondedTargets = new ArrayList();
-        
-        while(itr.hasNext())
-        {
-            MemberTransactionEntity current = itr.next();
-            if(current.getMtPromotion().equalsIgnoreCase(thisP.getPromotionCode()))
-            {
-                respondedSales.add(current);
-                MemberEntity currentMember = em.find(MemberEntity.class,current.getMemberEmail());
-                if(!respondedTargets.contains(currentMember))
-                    respondedTargets.add(currentMember);
             }
         }
-        
+
+        tiered = resultList;
+
+        return tiered;
+    }
+
+    //Below evaluate the response rate of a promotion
+    public double evaluatePromotion(Long promotionId) throws ExistException {
+        double responseRate = 0.00;
+        PromotionEntity thisP = em.find(PromotionEntity.class, promotionId);
+        if (thisP == null) {
+            throw new ExistException();
+        }
+
+        Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
+        List<MemberTransactionEntity> allMemberTrans = q.getResultList();
+        Iterator<MemberTransactionEntity> itr = allMemberTrans.iterator();
+        List<MemberTransactionEntity> respondedSales = new ArrayList();
+        List<MemberEntity> respondedTargets = new ArrayList();
+
+        while (itr.hasNext()) {
+            MemberTransactionEntity current = itr.next();
+            if (current.getMtPromotion().equalsIgnoreCase(thisP.getPromotionCode())) {
+                respondedSales.add(current);
+                MemberEntity currentMember = em.find(MemberEntity.class, current.getMemberEmail());
+                if (!respondedTargets.contains(currentMember)) {
+                    respondedTargets.add(currentMember);
+                }
+            }
+        }
+
         int expectedSize = thisP.getMcMemberTargets().size();
-        
+
 //        responseRate = respondedSales.size()/expectedSize;
-        responseRate = respondedTargets.size()/expectedSize;
-        
+        responseRate = respondedTargets.size() / expectedSize;
+
         return responseRate;
     }
+
     public void persist(Object object) {
         em.persist(object);
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
     public RFMModelEntity getRFMModel(int ModelNumber) throws ExistException {
-       RFMModelEntity current = em.find(RFMModelEntity.class,ModelNumber );
-       if(current!=null)
-           return current;
-       else throw new ExistException();
+        RFMModelEntity current = em.find(RFMModelEntity.class, ModelNumber);
+        if (current != null) {
+            return current;
+        } else {
+            throw new ExistException();
+        }
     }
-    
-    
-
 }
