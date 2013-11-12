@@ -4,6 +4,8 @@
  */
 package CRMS.session;
 
+import CRMS.entity.CouponEntity;
+import CRMS.entity.CouponTypeEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.entity.PromotionEntity;
@@ -30,6 +32,8 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 @Stateless
 @LocalBean
 public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
+    @EJB
+    private CouponSessionBean couponSessionBean;
 
     @EJB
     MemberSessionBean memberSessionBean;
@@ -581,5 +585,33 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         } else {
             return true;
         }
+    }
+    
+    public double evaluateCoupon(CouponTypeEntity cte)
+    {
+        double responseRate = 0.00;
+        
+        List <CouponEntity> allCoupons = couponSessionBean.getAllCouponsWithCouponType(cte);
+        //test if coupon entity list is empty/null
+        if(allCoupons.isEmpty())
+            return responseRate;
+        
+        
+        Iterator<CouponEntity> itr = allCoupons.iterator();
+        List <CouponEntity> usedCoupons = new ArrayList();
+        while(itr.hasNext())
+        {
+            CouponEntity current = itr.next();
+            if(couponSessionBean.couponIsUsed(current))
+                usedCoupons.add(current);
+        }
+        
+        int allSize = allCoupons.size();
+        int usedSize = usedCoupons.size();
+        if(usedSize!=0)
+            responseRate = (1.00*usedSize)/allSize;
+        
+        
+        return responseRate;
     }
 }
