@@ -71,22 +71,28 @@ public class promotionManagedBean {
     public void saveNewPromotion(ActionEvent event) throws IOException, ExistException {
         System.err.println("targetGroup: " + targetGroup);
         System.err.println("Saving New promotion...");
-        if(targetGroup.equalsIgnoreCase("customers")){
+        if (targetGroup.equalsIgnoreCase("customers")) {
             setNotMemberExclusive();
-        }if(targetGroup.equalsIgnoreCase("members")){
+        }
+        if (targetGroup.equalsIgnoreCase("members")) {
             setMemberExclusive();
-        }if(targetGroup.equalsIgnoreCase("VIPs")){
+        }
+        if (targetGroup.equalsIgnoreCase("VIPs")) {
             setVIPExclusive();
-        }if(targetGroup.equalsIgnoreCase("RFM")){
+        }
+        if (targetGroup.equalsIgnoreCase("RFM")) {
             setRFMExclusive();
-        }if(targetGroup.equalsIgnoreCase("lifeValue")){
+        }
+        if (targetGroup.equalsIgnoreCase("lifeValue")) {
             setLifeValueExclusive();
-        }if(targetGroup.equalsIgnoreCase("sizeOW")){
+        }
+        if (targetGroup.equalsIgnoreCase("sizeOW")) {
             setSizeOWExclusive();
         }
         try {
             promotionSessionBean.createPromotion(newPromotion);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New promotion saved.", ""));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("listPromotions.xhtml");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new promotion", ""));
             e.printStackTrace();
@@ -104,7 +110,7 @@ public class promotionManagedBean {
         }
         return participateMembers;
     }
-    
+
     public void onRowToggle(ToggleEvent event) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Row State " + event.getVisibility(),
@@ -146,7 +152,7 @@ public class promotionManagedBean {
             return;
         }
     }
-    
+
     public void setRFMExclusive() throws IOException, ExistException {
         try {
             this.isMemberExclusive = true;
@@ -158,7 +164,7 @@ public class promotionManagedBean {
             return;
         }
     }
-    
+
     public void setLifeValueExclusive() throws IOException, ExistException {
         try {
             this.isMemberExclusive = true;
@@ -170,8 +176,8 @@ public class promotionManagedBean {
             return;
         }
     }
-    
-     public void setSizeOWExclusive() throws IOException, ExistException {
+
+    public void setSizeOWExclusive() throws IOException, ExistException {
         try {
             this.isMemberExclusive = true;
             newPromotion.setMcMemberTargets(evaluationSessionBean.getTieredBasedOnSizeOfWallet());
@@ -214,8 +220,8 @@ public class promotionManagedBean {
     public void setTargetGroup(String targetGroup) {
         this.targetGroup = targetGroup;
     }
-    
-        public PromotionSessionBean getPromotionSessionBean() {
+
+    public PromotionSessionBean getPromotionSessionBean() {
         return promotionSessionBean;
     }
 
@@ -270,7 +276,7 @@ public class promotionManagedBean {
     public void setMember(MemberEntity member) {
         this.member = member;
     }
-    
+
     public boolean isMemberExclusive() {
         return isMemberExclusive;
     }
