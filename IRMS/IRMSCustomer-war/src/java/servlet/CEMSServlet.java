@@ -49,7 +49,7 @@ public class CEMSServlet extends HttpServlet {
     private List<EventServiceEntity> AVList= null;
     private List<EventServiceEntity> FLList= null;
     private List<EventServiceEntity> PEList= null;
-	private EventEntity viewedEvent;
+    private EventEntity viewedEvent;
     //private String keyword=null;
 
     /**
