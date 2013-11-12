@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:tabView id="tabView">  
+
+            <p:tab id="tab1" title="Tiered Based On RFM Value">   
+                <h:form id="form1">
+                    <p:dataTable id="dataTable1" var="rfmMembers" value="#{tieredManagedBean.allRFMMembers}">  
+
+                        <f:facet name="header">  
+                            RFM Value Tiered Customers
+                        </f:facet>  
+
+                        <p:column sortBy="#{rfmMembers.memberName}" headerText="Member Name">  
+                            <h:outputText value="#{rfmMembers.memberName}" />  
+                        </p:column> 
+
+                        <p:column sortBy="#{rfmMembers.memberEmail}" headerText="Member Email">  
+                            <h:outputText value="#{rfmMembers.memberEmail}" />  
+                        </p:column> 
+
+                        <p:column sortBy="#{rfmMembers.memberDob}" headerText="Member Birthday">  
+                            <h:outputText value="#{rfmMembers.memberDob}">
+                                <f:convertDateTime pattern="dd-MM-yyyy"/>
+                            </h:outputText>  
+                        </p:column> 
+
+                        <p:column sortBy="#{rfmMembers.point}" headerText="Points">  
+                            <h:outputText value="#{rfmMembers.point}" />  
+                        </p:column>
+
+                        <p:column sortBy="#{rfmMembers.coin}" headerText="Coins">  
+                            <h:outputText value="#{rfmMembers.coin}" />  
+                        </p:column>
+                    </p:dataTable>  
+                </h:form>
+            </p:tab>  
+
+            <p:tab id="tab2" title="Tiered Based On Customer Life Value">  
+                <h:form id="form2">
+                    <p:dataTable id="dataTable2" var="rfmMembers" value="#{tieredManagedBean.allLifeValueMembers}">  
+
+                        <f:facet name="header">  
+                            Customer Life Value Tiered Customers
+                        </f:facet>  
+
+                        <p:column sortBy="#{rfmMembers.memberName}" headerText="Member Name">  
+                            <h:outputText value="#{rfmMembers.memberName}" />  
+                        </p:column> 
+
+                        <p:column sortBy="#{rfmMembers.memberEmail}" headerText="Member Email">  
+                            <h:outputText value="#{rfmMembers.memberEmail}" />  
+                        </p:column> 
+
+                        <p:column sortBy="#{rfmMembers.memberDob}" headerText="Member Birthday">  
+                            <h:outputText value="#{rfmMembers.memberDob}">
+                                <f:convertDateTime pattern="dd-MM-yyyy"/>
+                            </h:outputText>  
+                        </p:column> 
+
+                        <p:column sortBy="#{rfmMembers.point}" headerText="Points">  
+                            <h:outputText value="#{rfmMembers.point}" />  
+                        </p:column>
+
+                        <p:column sortBy="#{rfmMembers.coin}" headerText="Coins">  
+                            <h:outputText value="#{rfmMembers.coin}" />  
+                        </p:column>
+                    </p:dataTable>  
+                </h:form>
+            </p:tab>  
+
+            <p:tab id="tab3" title="Tiered Based On Size Of Wallet">  
+                <h:form id="form3">
+                    <p:dataTable id="dataTable3" var="rfmMembers" value="#{tieredManagedBean.allSizeOfWalletMembers}">  
+
+                        <f:facet name="header">  
+                            Size Of Wallet Tiered Customers
+                        </f:facet>  
+
+                        <p:column sortBy="#{rfmMembers.memberName}" headerText="Member Name">  
+                            <h:outputText value="#{rfmMembers.memberName}" />  
+                        </p:column> 
+
+                        <p:column sortBy="#{rfmMembers.memberEmail}" headerText="Member Email">  
+                            <h:outputText value="#{rfmMembers.memberEmail}" />  
+                        </p:column> 
+
+                        <p:column sortBy="#{rfmMembers.memberDob}" headerText="Member Birthday">  
+                            <h:outputText value="#{rfmMembers.memberDob}">
+                                <f:convertDateTime pattern="dd-MM-yyyy"/>
+                            </h:outputText>  
+                        </p:column> 
+
+                        <p:column sortBy="#{rfmMembers.point}" headerText="Points">  
+                            <h:outputText value="#{rfmMembers.point}" />  
+                        </p:column>
+
+                        <p:column sortBy="#{rfmMembers.coin}" headerText="Coins">  
+                            <h:outputText value="#{rfmMembers.coin}" />  
+                        </p:column>
+                    </p:dataTable>  
+                </h:form>
+            </p:tab>  
+
+        </p:tabView>  
+    </ui:define>
+
+</ui:composition>
