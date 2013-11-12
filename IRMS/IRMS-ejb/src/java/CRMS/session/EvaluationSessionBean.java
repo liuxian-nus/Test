@@ -101,7 +101,7 @@ public class EvaluationSessionBean {
         return shareOfWallet;
     }
 
-    //3. RFMMedel
+    //3. RFMMedel Done!
     public RFMModelEntity addRFMModel(RFMModelEntity rfmModel) {
         em.persist(rfmModel);
         return rfmModel;
@@ -124,7 +124,6 @@ public class EvaluationSessionBean {
         }
         return completed;
     }
-
     public Integer calculateRFMValue(String memberEmail, int ModelNumber) throws ExistException {
         Integer RFMValue = 0;
         double f = 0.00;//frequency
@@ -238,6 +237,7 @@ public class EvaluationSessionBean {
         return RFMValue;
     }
 
+    //到这里啦！
     public double calculateCustLifeValue(String memberEmail) {
         double custLifeValue = 0.00;
         double discountRate = 0.05;
