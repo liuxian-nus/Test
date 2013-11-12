@@ -9,11 +9,13 @@ import FBMS.entity.IndReservationEntity;
 import FBMS.entity.OrderEntity;
 import FBMS.entity.ReceiptEntity;
 import com.lowagie.text.Anchor;
+import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
@@ -26,6 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -436,7 +439,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
     
     
 
-    public String createBill(String toEmailAddress, IndReservationEntity ire) throws FileNotFoundException, DocumentException {
+    public String createBill(String toEmailAddress, IndReservationEntity ire) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
 
 
         //Below generate a PDF file
@@ -470,7 +473,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
         return document;
     }
 
-    private Document addContent(Document document) throws DocumentException {
+    private Document addContent(Document document) throws DocumentException, BadElementException, MalformedURLException, IOException {
         //Below specify different types of font
         Font catFont = new Font(Font.TIMES_ROMAN, 18,
                 Font.BOLD);
@@ -480,6 +483,11 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
                 Font.BOLD);
         Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
                 Font.BOLDITALIC);
+        
+        //Below specify contents 
+        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        Image image = Image.getInstance(imagePath);
+        document.add(image);
 
         //Below specify contents
         Paragraph preface = new Paragraph();
@@ -542,7 +550,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
         return document;
     }
 
-    private String createBill(String toEmailAddress, OrderEntity oe) throws DocumentException, FileNotFoundException {
+    private String createBill(String toEmailAddress, OrderEntity oe) throws DocumentException, FileNotFoundException, BadElementException, MalformedURLException, IOException {
         //Below generate a PDF file
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
@@ -617,7 +625,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
         return document;
     }
 
-    private String createIssueGoodsPDF(String toEmailAddress, OrderEntity order) throws FileNotFoundException, DocumentException {
+    private String createIssueGoodsPDF(String toEmailAddress, OrderEntity order) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
         
@@ -636,6 +644,11 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
                 Font.BOLD);
         Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
                 Font.BOLDITALIC);
+        
+        //Below specify contents 
+        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        Image image = Image.getInstance(imagePath);
+        document.add(image);
         
         //Below specify contents
         Paragraph preface = new Paragraph();
@@ -701,7 +714,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
         return OUTPUTFILE;
     }
 
-    private String createInvoicePDF(String toEmailAddress, OrderEntity order) throws FileNotFoundException, DocumentException {
+    private String createInvoicePDF(String toEmailAddress, OrderEntity order) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
         
@@ -720,6 +733,12 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
                 Font.BOLD);
         Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
                 Font.BOLDITALIC);
+        
+        
+        //Below specify contents 
+        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        Image image = Image.getInstance(imagePath);
+        document.add(image);
         
         //Below specify contents
         Paragraph preface = new Paragraph();
@@ -790,7 +809,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
         return OUTPUTFILE;
     }
 
-    private String createReceiptPDF(String toEmailAddress, ReceiptEntity re) throws FileNotFoundException, DocumentException {
+    private String createReceiptPDF(String toEmailAddress, ReceiptEntity re) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
         
@@ -809,6 +828,13 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
                 Font.BOLD);
         Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
                 Font.BOLDITALIC);
+        
+        
+        //Below specify contents 
+        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        Image image = Image.getInstance(imagePath);
+        document.add(image);
+        
         
          //Below specify contents
         Paragraph preface = new Paragraph();

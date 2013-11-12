@@ -35,6 +35,16 @@ public class ShowTicketSaleEntity implements Serializable {
     private boolean showTicketStatus;
     private int showTicketQuantity;
     private double showTicketPrice;
+    private String memberEmail;
+
+    public String getMemberEmail() {
+        return memberEmail;
+    }
+
+    public void setMemberEmail(String memberEmail) {
+        this.memberEmail = memberEmail;
+    }
+    
     
     public Long getShowTicketSaleId() {
         return showTicketSaleId;

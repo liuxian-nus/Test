@@ -14,6 +14,7 @@ import CRMS.session.FeedbackSessionBean;
 import CRMS.session.GenerateBarcodeSessionBean;
 import CRMS.session.MemberMessageSessionBean;
 import ESMS.entity.ShowEntity;
+import ESMS.entity.ShowTicketSaleEntity;
 import SMMS.entity.BillEntity;
 import SMMS.entity.ContractEntity;
 import com.lowagie.text.BadElementException;
@@ -81,6 +82,79 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     public EmailSessionBean() {
     }
 
+    public void generateShowTicket(ShowTicketSaleEntity sts) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException
+    {
+       System.out.println("generateShowTicket"); 
+       
+       //Below generate a PDF file 
+        Document document;
+        document = new Document(PageSize.A4, 50, 50, 50, 50);
+        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\ShowTicketSale_"
+                + sts.getShow().getShowName() + " " + sts.getShowTicketSaleId() + ".pdf";
+
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+        document.open();
+        
+         //Below specify the font type 
+        Font catFont = new Font(Font.TIMES_ROMAN, 18,
+                Font.BOLD);
+        Font redFont = new Font(Font.TIMES_ROMAN, 12,
+                Font.NORMAL, Color.RED);
+        Font subFont = new Font(Font.TIMES_ROMAN, 16,
+                Font.BOLD);
+        Font tableFont;
+        tableFont = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.DARK_GRAY);
+        Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
+                Font.BOLDITALIC);
+
+        //Below specify contents 
+        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        Image image = Image.getInstance(imagePath);
+        document.add(image);
+
+        Paragraph preface = new Paragraph();
+        addEmptyLine(preface, 1);
+        preface.add(new Paragraph("Your e-ticket is displayed as below: ", catFont));
+        addEmptyLine(preface, 1);
+
+        document.add(preface);
+        
+        //Below add a table 
+        PdfPTable table = new PdfPTable(2);
+        table.setSpacingAfter(30);
+        table.setSpacingBefore(30);
+        table.setWidths(new int[]{1, 3});
+
+        //Add table header 
+        PdfPCell c1 = new PdfPCell(new Phrase("Ticketing Info"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Details & Remarks"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        table.setHeaderRows(1);
+
+        //below add table contents
+        table.addCell("Show Name");
+        table.addCell(sts.getShow().getShowName());
+        table.addCell("Show Start DateTime");
+        table.addCell(sts.getShowStartDateTime().toString());
+        table.addCell("Show Ticket Type");
+        table.addCell(sts.getShowTicketType());
+        table.addCell("Show Ticket Quantity");
+        table.addCell(Integer.toString(sts.getShowTicketQuantity()));
+        table.addCell("Show Language");
+        table.addCell(sts.getShow().getShowLanguage());
+        table.addCell("Show Duration");
+        table.addCell(Integer.toString(sts.getShow().getShowDuration()));
+        
+        document.add(table);
+        document.close();
+        
+        
+    }
     @Override
     public void sendBirthdayCongrats(MemberEntity member) {
         System.out.println("sendBirthdayCongrats");
