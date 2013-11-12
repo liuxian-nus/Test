@@ -28,9 +28,18 @@ public class PaypalTransactionEntity implements Serializable {
     private String ptDepartment;//6 AAUs
     private boolean ptMode; //either payment by cash or by card, false is cash, true is card
     private boolean paymentStatus;//paid or not
+    private String token;
 
     public Date getPtDate() {
         return ptDate;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public void setPtDate(Date ptDate) {
