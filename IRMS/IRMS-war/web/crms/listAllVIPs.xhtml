@@ -7,7 +7,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-          <p:tabView id="tabView">  
+        <p:tabView id="tabView">  
             <p:tab id="tab1" title="VIP List">  
                 <h:form>  
                     <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.vips}" widgetVar="membersTable"   
@@ -84,10 +84,10 @@
 
                 </h:form> 
             </p:tab>
-              
-              
-              <!--here is the Super VIP Table-->
-              <p:tab id="tab2" title="Super VIP List">  
+
+
+            <!--here is the Super VIP Table-->
+            <p:tab id="tab2" title="Super VIP List">  
                 <h:form>  
                     <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.supervips}" widgetVar="membersTable"   
                                  emptyMessage="No Super VIPs found with given criteria" filteredValue="#{memberManagedBean.filteredMember}">  
@@ -106,9 +106,14 @@
                             <h:outputText value="#{memberList.memberEmail}" />  
                         </p:column>  
 
-                        <p:column id="nameColumn" filterBy="#{memberList.memberName}"   
+                        <p:column id="employeeColumn" filterBy="#{memberList.memberName}"   
                                   headerText="VIP Name" filterMatchMode="contains">  
                             <h:outputText value="#{memberList.memberName}" />  
+                        </p:column>  
+                        
+                        <p:column id="nameColumn" filterBy="#{memberList.contactEmployee}"   
+                                  headerText="Contract Employee" filterMatchMode="contains">  
+                            <h:outputText value="#{memberList.contactEmployee}" />  
                         </p:column>  
 
                         <p:column id="genderColumn" filterBy="#{memberList.gender}" headerText="Gender" 
@@ -122,10 +127,16 @@
                         </p:column>
                         <p:column>
                             <p:commandButton action="#{memberManagedBean.checkTransaction(event)}" icon="ui-icon ui-icon-flag" 
-                                             title="Transactions" value ="Transactions">
+                                             title="View Detailed Transactions" >
+                                <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.member}" />
+                            </p:commandButton>
+
+                            <p:commandButton  icon="ui-icon ui-icon-person" 
+                                              title="Assign Personal Employee" oncomplete="assign.show()">
                                 <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.member}" />
                             </p:commandButton>
                         </p:column>
+
                         <p:rowExpansion>  
                             <h:panelGrid id="display" columns="2" cellpadding="4" style="width:200px;"  
                                          styleClass=" ui-widget-content grid">  
@@ -147,6 +158,9 @@
                                 <h:outputText value="#{memberList.memberDob}">  
                                     <f:convertDateTime pattern="dd-MM-yyyy" />
                                 </h:outputText>
+                                
+                                <h:outputText value="Contact Employee:" />  
+                                <h:outputText value="#{memberList.contactEmployee}" style="width:200px;"  />  
 
                                 <h:outputText value="Points:" />  
                                 <h:outputText value="#{memberList.point}" style="width:200px;"  />  
@@ -159,15 +173,33 @@
 
                             </h:panelGrid>  
                         </p:rowExpansion>           
-                    </p:dataTable>  
+                    </p:dataTable> 
+
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="assign"> 
+
+                        <br/>
+                        <h:outputText value="Please assign the employee: "/>
+                        <br/>
+                        <br/><br/>
+                        <p:selectOneMenu value="#{memberManagedBean.employeeId}">  
+                            <f:selectItem itemLabel="Select Employee" itemValue=""/>
+                            <f:selectItems value="#{memberManagedBean.CRMEmployees}" var="allEmployee" itemLabel="#{allEmployee.employeeName}" itemValue="#{allEmployee.employeeName}" />  
+                        </p:selectOneMenu>
+                        <br/>
+                        <br/><br/>
+                        <p:commandButton value="Yes" update="dataTable" onclick ="growl" actionListener="#{memberManagedBean.assignEmployee}" oncomplete="assign.hide()"/>
+                        <p:commandButton value="Cancel" onclick="assign.hide()" type="button"/>  
+
+                    </p:dialog> 
 
                 </h:form> 
             </p:tab>
-              
-              
-              
-          </p:tabView>
-        
+
+
+
+        </p:tabView>
+
     </ui:define>
 
 </ui:composition>

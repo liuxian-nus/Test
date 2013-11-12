@@ -10,7 +10,9 @@ import CRMS.entity.PromotionEntity;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
 import CRMS.session.VIPSessionBean;
+import ERMS.entity.EmployeeEntity;
 import ERMS.session.EmailSessionBean;
+import ERMS.session.EmployeeSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,6 +42,8 @@ import org.primefaces.model.chart.PieChartModel;
 public class MemberManagedBean {
 
     @EJB
+    private EmployeeSessionBean employeeSessionBean;
+    @EJB
     private VIPSessionBean vIPSessionBean;
     @EJB
     private MemberSessionBean memberSessionBean;
@@ -66,6 +70,7 @@ public class MemberManagedBean {
     private PieChartModel pieModel;
     private List<MemberEntity> vips;
     private List<MemberEntity> supervips;
+    private String employeeId;
 
     /**
      * Creates a new instance of SearchMemberManagedBean
@@ -111,6 +116,10 @@ public class MemberManagedBean {
         return memberSessionBean.getAllMembers();
     }
 
+    public List<EmployeeEntity> getCRMEmployees() throws ExistException {
+        return employeeSessionBean.getCRMEmployees();
+    }
+
     public void checkTransaction(ActionEvent event) throws IOException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         request.getSession().setAttribute("memberE", member);
@@ -137,6 +146,21 @@ public class MemberManagedBean {
             System.out.println("error occured when getting transactions");
             return null;
         }
+    }
+
+    public void assignEmployee(ActionEvent event) {
+        System.out.println("inside assign employee function, now the employee ID is " + employeeId + "member is " + member.getMemberEmail());
+
+        try {
+            member.setContactEmployee(employeeId);
+            memberSessionBean.updateMember(member);
+            System.out.println("after setting member");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Employee has been assigned", ""));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when assigning employee", ""));
+        }
+
     }
 
     public void searchByEmail() throws IOException, ExistException {
@@ -510,6 +534,14 @@ public class MemberManagedBean {
 
     public void setSupervips(List<MemberEntity> supervips) {
         this.supervips = supervips;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     public void onRowToggle(ToggleEvent event) {
