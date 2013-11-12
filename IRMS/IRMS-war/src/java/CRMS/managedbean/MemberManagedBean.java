@@ -9,6 +9,7 @@ import CRMS.entity.MemberTransactionEntity;
 import CRMS.entity.PromotionEntity;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
+import CRMS.session.VIPSessionBean;
 import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
@@ -39,6 +40,8 @@ import org.primefaces.model.chart.PieChartModel;
 public class MemberManagedBean {
 
     @EJB
+    private VIPSessionBean vIPSessionBean;
+    @EJB
     private MemberSessionBean memberSessionBean;
     @EJB
     private MemberTransactionSessionBean transactionSessionBean;
@@ -61,6 +64,8 @@ public class MemberManagedBean {
     private CartesianChartModel categoryModelNationality;
     private CartesianChartModel categoryModelAge;
     private PieChartModel pieModel;
+    private List<MemberEntity> vips;
+    private List<MemberEntity> supervips;
 
     /**
      * Creates a new instance of SearchMemberManagedBean
@@ -76,6 +81,8 @@ public class MemberManagedBean {
         nationalityList = memberSessionBean.getAllNationalities();
         nationalityOptions = createNationalityOptions(nationalityList);
         genderOptions = createGenderOptions();
+        vips = vIPSessionBean.getVIPs();
+        supervips = vIPSessionBean.getSuperVIPs();
         try {
             createCategoryModelAge();
             createCategoryModelMaritalStatus();
@@ -487,6 +494,22 @@ public class MemberManagedBean {
 
     public void setMemberSelect(List<MemberEntity> memberSelect) {
         this.memberSelect = memberSelect;
+    }
+
+    public List<MemberEntity> getVips() {
+        return vips;
+    }
+
+    public void setVips(List<MemberEntity> vips) {
+        this.vips = vips;
+    }
+
+    public List<MemberEntity> getSupervips() {
+        return supervips;
+    }
+
+    public void setSupervips(List<MemberEntity> supervips) {
+        this.supervips = supervips;
     }
 
     public void onRowToggle(ToggleEvent event) {
