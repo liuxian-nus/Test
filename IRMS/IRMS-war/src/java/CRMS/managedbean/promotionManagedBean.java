@@ -67,7 +67,7 @@ public class promotionManagedBean {
     public void saveNewPromotion(ActionEvent event) throws IOException {
         System.err.println("Saving New promotion...");
         try {
-            promotionSessionBean.addPromotion(newPromotion);
+            promotionSessionBean.createPromotion(newPromotion);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New promotion saved.", ""));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding new promotion", ""));

@@ -74,12 +74,12 @@ public class PromotionSessionBean {
         return returnList;
     }
 
-    public String endPromotion(Date endDate) {
-        Timer timer = new Timer();
-        timer.schedule(new EndTask(), endDate);
-        timer.cancel();
-        return "The promotion has been ended by endMarketingCampaign";
-    }
+//    public String endPromotion(Date endDate) {
+//        Timer timer = new Timer();
+//        timer.schedule(new EndTask(), endDate);
+//        timer.cancel();
+//        return "The promotion has been ended by endMarketingCampaign";
+//    }
 
     public List<PromotionEntity> getPromotionByMemberEmail(String email) throws ExistException {
         System.out.println("promotion session bean: get promotion by email: " + email);
@@ -103,7 +103,17 @@ public class PromotionSessionBean {
         PromotionEntity current = em.find(PromotionEntity.class, promotionId);
         return current;
     }
+    
+    public void deletePromotion(PromotionEntity thisPromotion) {
+        thisPromotion.setPromotionStatus("deleted");
+        em.merge(thisPromotion);
+    }
 
+    public void updatePromotion(PromotionEntity thisPromotion) {
+        em.merge(thisPromotion);
+    }
+    
+    
     class EndTask extends TimerTask {
 
         public void run() {
@@ -139,11 +149,11 @@ public class PromotionSessionBean {
         return memberList;
         }
 
-    public void addPromotion(PromotionEntity promotion) {
+    public void createPromotion(PromotionEntity promotion) {
         // mc.create(startDate, endDate, remarks, memberTargets);
         System.out.println("MarketingCampaignSessionBean: reference Id is " + promotion.getPromotionId());
         em.persist(promotion);
-        endPromotion(promotion.getPromotionEndDate());
+//        endPromotion(promotion.getPromotionEndDate());
         System.out.println("MarketingCampaignSessionBean: Marketing campaign has been ended " + promotion.getPromotionId());
     }
 
