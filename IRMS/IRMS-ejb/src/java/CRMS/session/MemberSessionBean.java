@@ -321,6 +321,20 @@ public class MemberSessionBean {
         member.setIsVIP(true);
         em.merge(member);
     }
+    
+//    public void coinPayment(MemberEntity member, double amount) throws ExistException {
+//        if(member.getCoin()<amount) {
+//            throw new ExistException ("Member doesn't have enough coin for payment");
+//        }
+//        member.setCoin(member.getCoin()-amount);
+//        System.out.println("Member now has deducted coin  and the updated coin value is: " + member.getCoin());
+//        em.merge(member);
+//    }
+//    
+//    public boolean checkAffordable(MemberEntity member, double amount) {
+//        if(member.getCoin()>amount) return true;
+//        else return false;
+//    }
 
     public List<MemberEntity> getAllMembers() {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");

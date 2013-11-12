@@ -164,7 +164,7 @@ public class RoomSessionBean implements RoomSessionBeanRemote {
         for (Object o : q.getResultList()) {
             RoomEntity r = (RoomEntity) o;
             System.out.println("type" + r.getRoomType() + aiyou.getReservationRoomType() + " hotel" + r.getRoomHotel() + aiyou.getReservationHotelNo());
-            if ((r.getRoomHotel()==aiyou.getReservationHotelNo()) && (r.getRoomType().equalsIgnoreCase(aiyou.getReservationRoomType()))) {
+            if ((r.getRoomHotel() == aiyou.getReservationHotelNo()) && (r.getRoomType().equalsIgnoreCase(aiyou.getReservationRoomType()))) {
                 roomList.add(r);
             }
         }
@@ -204,7 +204,8 @@ public class RoomSessionBean implements RoomSessionBeanRemote {
         if (room == null) {
             throw new ExistException("RoomSessionBean-->ExistException-->Invalid room Id!");
         }
-//        mtSessionBean.addMemberTransaction(room.getRoomMember(), room.getRoomServiceCharge(), room.getCheckOutDate(), "Hotel", null, false);
+        String description = "Hotel Stay from " + room.getCheckInDate() + " to " + room.getCheckOutDate() + " with a total service charge: " + room.getRoomServiceCharge();
+        mtSessionBean.addMemberTransaction(room.getRoomMember(), room.getRoomServiceCharge(), room.getCheckOutDate(), "Hotel", null, description, false);
         room.setRoomServiceCharge(0);
         room.setRoomServiceExe(null);
         return room.getRoomServiceCharge();
@@ -254,8 +255,8 @@ public class RoomSessionBean implements RoomSessionBeanRemote {
         }
         bill = this.calculateRoomFee(room);
         System.out.println("accounts receivable: " + bill);
-        String description = "Hotel Reservation from " + room.getCheckInDate() + " to " + room.getCheckOutDate() + " with a total room fee: " + bill;
-        mtSessionBean.addMemberTransaction(room.getRoomMember(), bill, room.getCheckOutDate(), "Hotel", null, description, false);
+//        String description = "Hotel Stay from " + room.getCheckInDate() + " to " + room.getCheckOutDate() + " with a total room fee: " + bill;
+//        mtSessionBean.addMemberTransaction(room.getRoomMember(), bill, room.getCheckOutDate(), "Hotel", null, description, false);
         System.out.println("room check out: member transaction captured!");
         room.setCheckInDate(null);
         room.setCheckOutDate(null);

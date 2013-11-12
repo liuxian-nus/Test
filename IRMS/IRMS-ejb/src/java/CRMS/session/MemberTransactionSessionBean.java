@@ -108,7 +108,7 @@ public class MemberTransactionSessionBean {
         } else {
 //            double tempCoin = member.getCoin();
 //            member.setCoin(0); //why set coin to 0??
-            payByCoin(member, amount);
+//            payByCoin(member, amount);
             System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
         }
         System.out.println("member transaction successfully added");
@@ -196,7 +196,7 @@ public class MemberTransactionSessionBean {
     }
 
     private void updateVIP(double point) {
-        if (point >= 500) {
+        if (point >= 10000) {
             member.setIsVIP(true);
             em.merge(member);
             System.out.println("MTSessionBean: Member has been upgraded to VIP!");
