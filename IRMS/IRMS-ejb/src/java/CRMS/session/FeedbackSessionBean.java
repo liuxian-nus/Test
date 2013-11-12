@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -24,7 +25,8 @@ import javax.persistence.Query;
  * @author Jieqiong
  */
 @Stateless
-public class FeedbackSessionBean {
+@LocalBean
+public class FeedbackSessionBean implements FeedbackSessionBeanRemote {
 
     @EJB
     private MemberSessionBean memberSessionBean;
@@ -37,6 +39,7 @@ public class FeedbackSessionBean {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public void createFeedback(FeedbackEntity feedback) {
         System.out.println("FeedbackSessionBean: createFeedback");
         em.persist(feedback);
@@ -45,6 +48,7 @@ public class FeedbackSessionBean {
 
     //for jsp page
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public void createFeedback(String content, String title, String email, String department, Date feedbackSentDate, int rating) {
         System.out.println("FeedbackSessionBean: createFeedback");
         System.out.println(feedback);
@@ -65,6 +69,7 @@ public class FeedbackSessionBean {
         System.out.println("feedback created!");
     }
 
+    @Override
     public void createFeedback(String email, String feedbackTitle, String feedbackSentDate, String feedbackContent, String feedbackDepartment, String ratingString) throws ParseException {
         feedback.setFeedbackContent(feedbackContent);
         feedback.setFeedbackOwnerEmail(email);
@@ -86,6 +91,7 @@ public class FeedbackSessionBean {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public void updateFeedback(FeedbackEntity feedback) {
         System.out.println("FeedbackSessionBean: updateFeedback");
         em.merge(feedback);
@@ -94,6 +100,7 @@ public class FeedbackSessionBean {
         return;
     }
 
+    @Override
     public void updateFeedbackStatus(FeedbackEntity feedback, String status) {
         System.out.println("Feedback session bean: update status");
         feedback.setFeedbackStatus(status);
@@ -102,12 +109,14 @@ public class FeedbackSessionBean {
         System.out.println("feedback status updated");
     }
 
+    @Override
     public List<FeedbackEntity> getAllFeedbacks() {
         Query q = em.createQuery("SELECT f from FeedbackEntity f");
         System.out.println("initialize get all feedbacks");
         return q.getResultList();
     }
 
+    @Override
     public FeedbackEntity getFeedbackById(Long feedbackId) throws ExistException {
         System.out.println("FeedbackSessionBean: getFeedbackById");
         feedback = em.find(FeedbackEntity.class, feedbackId);
@@ -119,11 +128,13 @@ public class FeedbackSessionBean {
         }
     }
 
+    @Override
     public List<FeedbackEntity> getFeedbackByEmail(String email) {
         Query q = em.createQuery("SELECT f from FeedbackEntity f WHERE f.feedbackOwnerEmail = '" + email + "'");
         return q.getResultList();
     }
 
+    @Override
     public double calculateAverageRatingByDepartment(String department) {
         Query q = em.createQuery("SELECT f from FeedbackEntity f WHERE f.feedbackDepartment = '" + department + "'");
         int count = 0;
@@ -147,6 +158,7 @@ public class FeedbackSessionBean {
         return rating;
     }
 
+    @Override
     public double countFeedbackByDepartment(String department) {
         Query q1 = em.createQuery("SELECT f from FeedbackEntity f WHERE f.feedbackDepartment = '" + department + "'");
         int count = q1.getResultList().size();
@@ -165,6 +177,7 @@ public class FeedbackSessionBean {
      System.out.println("the feedback has been removed.");
      return;
      }*/
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
