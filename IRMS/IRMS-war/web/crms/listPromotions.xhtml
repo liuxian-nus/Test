@@ -58,9 +58,11 @@
                         <p:commandButton  value="Add Promotion" ajax="true" oncomplete="confirmation.show()" icon="ui-icon ui-icon-check" />
 
                         <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation">
+                            <h:outputText value=""/><br/>
+                            <h:outputText value="Confirm add new promotion?"/>
+                            <h:outputText value=""/><br/>
+                            <h:outputText value=""/><br/>
                             <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
-                                <h:outputText value="Confirm add new promotion?"/>
-                                <h:outputText value=""/>
                                 <p:commandButton value="Yes" update="growl" actionListener="#{promotionManagedBean.saveNewPromotion}" oncomplete="confirmation.hide()">  
                                 </p:commandButton>
                                 <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
@@ -70,7 +72,7 @@
                     </h:panelGrid> 
                 </h:form>
             </p:tab>
-            
+
             <p:tab id="tab1" title="Promotion List">  
                 <h:form id="form"> 
                     <p:dataTable id="promtions" value="#{promotionManagedBean.promotions}" var="promotions" paginator="true" rows="10">
