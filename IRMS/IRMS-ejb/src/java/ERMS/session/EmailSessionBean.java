@@ -8,6 +8,8 @@ import ATMS.entity.AttrExpressPassEntity;
 import ATMS.entity.AttrTicketEntity; 
 import ATMS.entity.ExpressPassPurchaseEntity;
 import ATMS.entity.TicketPurchaseEntity; 
+import CRMS.entity.MemberEntity;
+import CRMS.entity.PromotionEntity;
 import CRMS.session.GenerateBarcodeSessionBean;
 import SMMS.entity.BillEntity;
 import SMMS.entity.ContractEntity; 
@@ -32,7 +34,9 @@ import java.io.FileOutputStream;
 import java.io.IOException; 
 import java.net.MalformedURLException; 
 import java.net.URL; 
+import java.util.ArrayList;
 import java.util.Iterator; 
+import java.util.List;
 import java.util.Properties; 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -47,6 +51,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart; 
 import javax.mail.internet.MimeMessage; 
 import javax.mail.internet.MimeMultipart; 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
   
 /** 
  * 
@@ -59,11 +66,86 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     private GenerateBarcodeSessionBean generateBarcodeSessionBean;
   
     String emailServerName = "smtp.gmail.com"; 
+    @PersistenceContext(unitName = "IRMS-ejbPU")
+    private EntityManager em;
     
   
     public EmailSessionBean() { 
     } 
   
+    public void sendPromotionToSubs(PromotionEntity promotion)
+    {
+        Properties props = new Properties(); 
+        props.put("mail.smtp.host", "smtp.gmail.com"); 
+        props.put("mail.smtp.socketFactory.port", "465"); 
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); 
+        props.put("mail.smtp.auth", "true"); 
+        props.put("mail.smtp.port", "465"); 
+        
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() { 
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() { 
+                return new PasswordAuthentication("is3102.it09", "weloveTWK"); 
+            } 
+        }); 
+        
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List<MemberEntity> list = q.getResultList();
+        Iterator <MemberEntity> itr = list.iterator();
+        List<MemberEntity> subscribers = new ArrayList();
+        
+        while(itr.hasNext())
+        {
+            MemberEntity current = itr.next();
+            if(current.isSubscriber())
+                subscribers.add(current);
+        }
+        
+        Iterator <MemberEntity> itr2 = subscribers.iterator();
+        while(itr2.hasNext())
+        {
+            MemberEntity current = itr.next();
+            
+            System.out.println("Send email to a member: start");
+            String memExclu;
+             if(promotion.isPromotionMemberExclusive())
+                 memExclu = "Yes";
+             else memExclu = "No";
+            
+            try { 
+          
+            Message message = new MimeMessage(session); 
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com")); 
+            message.setRecipients(Message.RecipientType.TO, 
+                    InternetAddress.parse(current.getMemberEmail())); 
+            message.setSubject("Member Exclusive Promotion: Corel Island Resort  Welcomes you!"); 
+            message.setText("Greeting from Coral Island Resort!"
+                    + "\nWe have new promotions available now!"
+                    + " Please look at the promotion details below: "
+                    + "\n\n\nHere is the promotion details:"  
+                    + "\nPromotion Code: "+promotion.getPromotionCode()
+                    + "\nPromotion Title: "+promotion.getPromotionTitle()
+                    + "\nPromotion Description: "+promotion.getPromotionDescription()
+                    + "\nPromotion Start Date: "+promotion.getPromotionStartDate()
+                    + "\nPromotion End Date: "+promotion.getPromotionEndDate()
+                    + "\nPromotion Exclusive For Member?"+memExclu
+                    + "\nPromotion Discount (If Available)"+promotion.getDiscount()
+                    + "\n\n For any queries, please contact our customer service managers @(0065)9272-8768. Thank you for your support!"
+                    
+                    ); 
+                      
+  
+            Transport.send(message); 
+  
+            System.out.println("Done"); 
+  
+        } catch (MessagingException e) { 
+            throw new RuntimeException(e); 
+        } 
+            
+        }
+                
+    }
     @Override
     public void emailInitialPassward(String toEmailAdress, String initialPassword) { 
         Properties props = new Properties(); 
@@ -1018,5 +1100,9 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         document.close();
             
             return OUTPUTFILE;
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
     }
 } 
