@@ -62,7 +62,7 @@ public class ACMSServlet extends HttpServlet {
     String message = "";
     private String USER_AGENT;
     Double roomPrice;
-
+    Double totalPrice;
     @Override
     public void init() {
         System.out.println("ACMSERVLET: init()");
@@ -99,14 +99,18 @@ public class ACMSServlet extends HttpServlet {
                 SessionTime = (int) session.getMaxInactiveInterval();
                 System.out.println("Timeleft" + SessionTime);
                 request.setAttribute("SessionTime", SessionTime);
-                  String roomType = data.getReservationRoomType();
-                System.out.println("RoomType:" + roomType);
-                roomPrice = roomPriceSessionBean.getPriceValueByType(roomType);
-                session.setAttribute("roomPrice", roomPrice);
+
                 if (isAvailable) {
+                    String roomType = data.getReservationRoomType();
+                    System.out.println("RoomType:" + roomType);
+                    roomPrice = roomPriceSessionBean.getPriceValueByType(roomType);
+                    int roomCount=data.getReservationRoomCount();
+                    totalPrice=roomPrice*roomCount;
+                    session.setAttribute("roomPrice", roomPrice);
+                    session.setAttribute("totalPrice",totalPrice);
                     request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
                 } else {
-                    message="Sorry,the room is not available on your selected type";
+                    message = "Sorry,the room is not available on your selected type";
                     request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
                 }
             } else if ("hotelBook".equals(page)) {
@@ -115,15 +119,12 @@ public class ACMSServlet extends HttpServlet {
                 System.out.println("Timeleft" + SessionTime);
                 request.setAttribute("SessionTime", SessionTime);
                 data = (ReservationEntity) session.getAttribute("data");
-              
-
                 request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
             } else if ("hotelPay".equals(page)) {
                 System.out.println("***hotel payment***");
                 data = (ReservationEntity) session.getAttribute("data");
                 data = continueRead1(request);
                 data = continueRead2(request);
-
                 SessionTime = (int) session.getMaxInactiveInterval();
                 System.out.println("Time left" + SessionTime);
                 request.setAttribute("SessionTime", SessionTime);
@@ -160,7 +161,11 @@ public class ACMSServlet extends HttpServlet {
                 System.out.println(cardNo);
                 sendGet();
                 try {
-                    reservationSessionBean.addReservation(data);
+                    System.out.println(totalPrice);
+                    MemberEntity thisMember= (MemberEntity)session.getAttribute("member");
+                  
+                    data.setRcMember(thisMember);
+                    reservationSessionBean.addReservation(data, totalPrice);
                 } catch (Exception e) {
                     System.err.println("error occured when adding reservation in servlet");
                     e.printStackTrace();
