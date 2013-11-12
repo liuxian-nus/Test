@@ -132,6 +132,26 @@
                 </h:form>
             </p:tab>   
 
+            <p:tab id="tab4" title="Calculate Customer Life Value">  
+                <h:form id="lifeValueform">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Member Email: "/>
+                        <p:autoComplete id="email" value="#{evaluationManagedBean.memberEmail}" required="true" requiredMessage="Email Cannot be empty"  
+                                        completeMethod="#{evaluationManagedBean.completeMember}" />
+                        <h:outputText value=""/><br/>
+
+                        <p:commandButton value="Calculate" ajax="true" actionListener="#{evaluationManagedBean.calculateLife(event)}" update=":tabView:lifeValueform:lifeValue">
+                            <f:setPropertyActionListener value="#{true}" target="#{evaluationManagedBean.calculateLifeStatus}" />
+                        </p:commandButton><br/>
+                        <p:spacer width="20"/>
+
+                        <h:panelGroup id="lifeValue">
+                            <h:outputText value="Customer Life Value: " rendered="#{evaluationManagedBean.calculateLifeStatus}"/>
+                            <h:outputText value="#{evaluationManagedBean.custLifeValue}" rendered="#{evaluationManagedBean.calculateLifeStatus}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:form>
+            </p:tab>   
         </p:tabView>  
     </ui:define>
 

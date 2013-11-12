@@ -48,6 +48,8 @@ public class EvaluationManagedBean implements Serializable {
     private String memberEmail;
     private boolean calculateStatus;
     private Integer RFMValue;
+    private double custLifeValue;
+    private boolean calculateLifeStatus;
     private List<MemberEntity> memberList = new ArrayList<MemberEntity>();
     private List<RFMModelEntity> RFMModelList = new ArrayList<RFMModelEntity>();
 
@@ -64,6 +66,11 @@ public class EvaluationManagedBean implements Serializable {
     @PostConstruct
     public void init (){
         RFMModelList = evaluationSessionBean.getAllRFMs();
+    }
+    
+    public void calculateLife(ActionEvent event) throws IOException, ExistException {
+        System.err.println(memberEmail);
+        custLifeValue = evaluationSessionBean.calculateCustLifeValue(memberEmail);
     }
             
     public List<MemberEntity> getMemberSizeOfWallet() throws ExistException {
@@ -260,5 +267,29 @@ public class EvaluationManagedBean implements Serializable {
 
     public void setMemberList(List<MemberEntity> memberList) {
         this.memberList = memberList;
+    }
+
+    public double getCustLifeValue() {
+        return custLifeValue;
+    }
+
+    public void setCustLifeValue(double custLifeValue) {
+        this.custLifeValue = custLifeValue;
+    }
+
+    public boolean isCalculateLifeStatus() {
+        return calculateLifeStatus;
+    }
+
+    public void setCalculateLifeStatus(boolean calculateLifeStatus) {
+        this.calculateLifeStatus = calculateLifeStatus;
+    }
+
+    public List<RFMModelEntity> getRFMModelList() {
+        return RFMModelList;
+    }
+
+    public void setRFMModelList(List<RFMModelEntity> RFMModelList) {
+        this.RFMModelList = RFMModelList;
     }
 }
