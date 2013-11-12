@@ -97,12 +97,18 @@ public class ACMSServlet extends HttpServlet {
                  SessionTime=(int)session.getMaxInactiveInterval();
                  System.out.println("Timeleft"+SessionTime);
                  request.setAttribute("SessionTime",SessionTime);
+                 data=(ReservationEntity)session.getAttribute("data");
                 
                 request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
             } else if ("hotelPay".equals(page)) {
                 System.out.println("***hotel payment***");
+                data=(ReservationEntity)session.getAttribute("data");
                 data = continueRead1(request);
                 data = continueRead2(request);
+//                System.out.println("room count: "+data.getReservationRoomCount());
+//                session.setAttribute("data",data);
+//                double price=reservationSessionBean.calculateTotalPrice(data);
+//                session.setAttribute("price",price);
                 
                 SessionTime=(int)session.getMaxInactiveInterval();
                  System.out.println("Time left"+SessionTime);
@@ -112,6 +118,7 @@ public class ACMSServlet extends HttpServlet {
             } else if ("hotelPayConfirm".equals(page)) {
                 System.out.println("***hotel payment confirmation***");
                 System.out.println("adding reservation to database....");
+                data=(ReservationEntity)session.getAttribute("data");
                 data.setRcCreditCardNo(request.getParameter("cardNo"));
                 try {
                 reservationSessionBean.addReservation(data);          

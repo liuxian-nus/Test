@@ -142,6 +142,17 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         reservation = em.find(ReservationEntity.class, reservationId);
         reservation.setReservationStatus("cancelled");
     }
+    
+    public double calculateTotalPrice(ReservationEntity reservation){
+        System.out.println("calculateTotalPrice");
+        System.out.println("room type: "+reservation.getReservationRoomType());
+        RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, reservation.getReservationRoomType());
+        System.out.println("thisPrice: "+thisPrice.getPrice());
+        System.out.println("room count: "+reservation.getReservationRoomCount());
+        double totalPrice=thisPrice.getPrice() * reservation.getReservationRoomCount() * 5;
+        System.out.println("totalPrice: "+totalPrice);
+        return totalPrice;
+    }
 
     @Override
     public ReservationEntity getReservationById(String searchId) {
