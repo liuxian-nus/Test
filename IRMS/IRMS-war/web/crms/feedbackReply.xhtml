@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content"> 
+        <f:view beforePhase="#{feedbackManagedBean.feedbackReplyInit}">
+            <h:form id="form">
+                <p:growl id="statusMessage"/>
+                <p:panel id="msg" header="Reply Feedback" style="height:495px;">
+                    <div style="margin-left:40px;margin-top:40px;">
+                        <div style="margin-bottom: 15px;">
+
+                            <h:outputText value="To: "/>
+                            <h:outputText value="#{feedbackManagedBean.thisFeedback.feedbackOwnerEmail}"/>
+                            <p:spacer style="margin-top:10px"/>
+                        </div>
+
+                        <p:editor id="editor" value="#{feedbackManagedBean.feedbackReply}" width="600" widgetVar="editor"/> 
+
+                        <h:panelGrid columns="2" style="margin-top:10px">  
+                            <p:commandButton id="submitButton" value="Submit" icon="ui-icon-disk" action="#{feedbackManagedBean.sendFeedbackReply(event)}"/> 
+                            <p:commandButton id="clearButton" type="button" value="Clear" onclick="PF('editor').clear()"  
+                                             icon="ui-icon-close" />  
+                        </h:panelGrid>  
+
+                    </div>
+                </p:panel>
+            </h:form>
+        </f:view>
+    </ui:define>
+
+</ui:composition>

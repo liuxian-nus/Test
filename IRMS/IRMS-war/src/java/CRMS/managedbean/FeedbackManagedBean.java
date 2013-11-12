@@ -7,6 +7,7 @@ package CRMS.managedbean;
 import CRMS.entity.FeedbackEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.session.FeedbackSessionBean;
+import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -20,6 +21,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.PhaseEvent;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
@@ -35,12 +38,16 @@ public class FeedbackManagedBean implements Serializable {
 
     @EJB
     private FeedbackSessionBean feedbackSessionBean;
+    @EJB
+    EmailSessionBean emailSessionBean;
     private FeedbackEntity thisFeedback;
     private List<FeedbackEntity> feedbackList;
     private SelectItem[] ratingOption;
     private SelectItem[] departmentOption;
     private CartesianChartModel categoryModel;
     private PieChartModel pieModel;
+    private String feedbackReply;
+    private String receiverEmail;
 
     public FeedbackManagedBean() {
     }
@@ -96,6 +103,25 @@ public class FeedbackManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when updating status", ""));
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Now this feedback has changed its status", ""));
+    }
+
+    public void replyFeedback(ActionEvent event) throws IOException {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        System.err.println("feedback: " + thisFeedback.getFeedbackOwnerEmail());
+        request.getSession().setAttribute("feedback", thisFeedback);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("feedbackReply.xhtml");
+    }
+
+    public void feedbackReplyInit(PhaseEvent event) {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        thisFeedback = (FeedbackEntity) request.getSession().getAttribute("feedback");
+    }
+    
+    public void sendFeedbackReply(ActionEvent event) throws IOException{
+        System.err.println("thisFeedback: "+thisFeedback.getFeedbackOwnerEmail());
+        System.err.println("feedbackReply: "+feedbackReply);
+        emailSessionBean.createFeedbackReply(thisFeedback, feedbackReply);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("feedbackManagement.xhtml");
     }
 
     private SelectItem[] createRatingOption() {
@@ -185,5 +211,21 @@ public class FeedbackManagedBean implements Serializable {
                 "Model:" + ((FeedbackEntity) event.getData()).getFeedbackOwnerEmail());
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public String getFeedbackReply() {
+        return feedbackReply;
+    }
+
+    public void setFeedbackReply(String feedbackReply) {
+        this.feedbackReply = feedbackReply;
+    }
+
+    public String getReceiverEmail() {
+        return receiverEmail;
+    }
+
+    public void setReceiverEmail(String receiverEmail) {
+        this.receiverEmail = receiverEmail;
     }
 }

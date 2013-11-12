@@ -41,10 +41,9 @@
                             <h:outputText value="#{feedbacks.rating}" />  
                         </p:column>
 
-                        <p:column style="width:5%;">
-                            <f:facet name="header">Status</f:facet>
-                            <p:commandButton oncomplete="resolved.show()" ajax="true"  icon="ui-icon ui-icon-flag" title="resolved" value="Update" >
-                                <f:setPropertyActionListener value="#{feedbacks}" target="#{feedbackManagedBean.thisFeedback}" />  
+                        <p:column headerText="Reply" style="width:5%;">
+                            <p:commandButton icon="ui-icon ui-icon-comment" value="Reply" action="#{feedbackManagedBean.replyFeedback(event)}">
+                                <f:setPropertyActionListener value="#{feedbacks}" target="#{feedbackManagedBean.thisFeedback}" />
                             </p:commandButton>
                         </p:column>
 
@@ -64,20 +63,6 @@
                             </h:panelGrid>  
                         </p:rowExpansion>           
                     </p:dataTable> 
-
-                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Mark as Resolved" widgetVar="resolved">  
-                        Update feedback status
-                        <h:selectOneRadio value ="#{feedbackManagedBean.thisFeedback.feedbackStatus}">
-                            <f:selectItem itemLabel="New" itemValue="New" />  
-                            <f:selectItem itemLabel="In Progress" itemValue="In Progress" />  
-                            <f:selectItem itemLabel="Handled" itemValue="Handled" />  
-                        </h:selectOneRadio> 
-                        <br/>
-                        <br/>
-                        <p:commandButton value="Save" actionListener="#{feedbackManagedBean.updateFeedbackStatus}" oncomplete="resolved.hide()" >  
-                        </p:commandButton>
-                        <p:commandButton value='Cancel' onclick="resolved.hide();" type='button'/>
-                    </p:dialog>
                 </h:form> 
             </p:tab>
 
