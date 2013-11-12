@@ -91,6 +91,7 @@ public class MemberEntity implements Serializable {
     private List<FeedbackEntity> feedbacks = new ArrayList<FeedbackEntity>();
     private double sizeOfWallet;
     private boolean birthdayEmail = false;
+    private String contactEmployee;
 
     public Set<PromotionEntity> getPromotions() {
         return Promotions;
@@ -340,6 +341,14 @@ public class MemberEntity implements Serializable {
         this.birthdayEmail = birthdayEmail;
     }    
 
+    public String getContactEmployee() {
+        return contactEmployee;
+    }
+
+    public void setContactEmployee(String contactEmployee) {
+        this.contactEmployee = contactEmployee;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
