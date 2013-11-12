@@ -123,6 +123,20 @@ public class OrderResultManagedBean {
         fBEmailSessionBean.sendConfirmation(thisOrder.getEmail(), thisOrder);
 //        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisOrder", thisOrder);
     }
+    
+    
+     public void cancelMenu(ActionEvent event) {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        System.err.println("hahaha teest in cancelling menu");
+//        thisOrder = (OrderEntity) event.getComponent().getAttributes().get("viewOrder");
+        System.out.println("No1: in confirming order" + thisOrder.getOrderId());
+        thisOrder.setStatus("Canceled");
+        orderSessionBean.updateOrder(thisOrder);
+        System.out.println("NO2: After canceling" + thisOrder.getStatus());
+//        fBEmailSessionBean.sendCancel(thisOrder.getEmail(), thisOrder);
+//        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisOrder", thisOrder);
+    }
 
     public void deliverGoods(ActionEvent event) throws IOException, FileNotFoundException, DocumentException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
