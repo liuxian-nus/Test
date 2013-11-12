@@ -126,6 +126,16 @@ public class OperatorRequstContractManagedBean {
 
     }
 
+    public void cancelContract(ActionEvent event) {
+        System.out.println("in canceling contract" + contract.getContractId());
+        cevent = contract.getLast();
+        cevent.setEventStatus("canceled");
+        contracteventSessionBean.updateContractEvent(cevent);
+        System.out.println("after setting new request" + contract.getLast().getEventStatus());
+//        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisContract", contract);
+
+    }
+
     //SO FAR NO USE
     public void requestRenew(ActionEvent event) {
         System.out.println("in getting renew request" + contract.getContractId());
