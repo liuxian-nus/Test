@@ -8,7 +8,9 @@ import Exception.ExistException;
 import SMMS.entity.BillEntity;
 import SMMS.entity.BillItemEntity;
 import SMMS.entity.ContractEntity;
+import SMMS.entity.ContracteventEntity;
 import SMMS.session.ContractSessionBean;
+import SMMS.session.ContracteventSessionBean;
 import SMMS.session.MerchantBillSessionBean;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,8 @@ import javax.servlet.http.HttpServletResponse;
 public class BillPartnerManagedBean {
 
     @EJB
+    private ContracteventSessionBean contracteventSessionBean;
+    @EJB
     private ContractSessionBean contractSessionBean;
     @EJB
     private MerchantBillSessionBean merchantBillSessionBean;
@@ -39,6 +43,7 @@ public class BillPartnerManagedBean {
     private List<BillEntity> overdueBills;
     private BillEntity bill;
     private List<BillItemEntity> bills;
+    private ContracteventEntity cevent;
 
     /**
      * Creates a new instance of BillPartnerManagedBean
@@ -48,6 +53,7 @@ public class BillPartnerManagedBean {
         unpaidBills = new ArrayList<BillEntity>();
         overdueBills = new ArrayList<BillEntity>();
         bills = new ArrayList<BillItemEntity>();
+        cevent = new ContracteventEntity();
     }
 
 //    @PostConstruct
@@ -74,21 +80,20 @@ public class BillPartnerManagedBean {
         merchantBillSessionBean.updateBill(bill);
         System.out.println("after updating bills" + bill.getBillStatus());
         if ("newApproved".equals(bill.getContract().getStatus())) {
-            bill.getContract().setStatus("newActive");
-            contractSessionBean.updateContract(bill.getContract());
+            cevent = bill.getContract().getLast();
+            cevent.setEventStatus("newActive");
         }
+
         if ("renewApproved".equals(bill.getContract().getStatus())) {
-            bill.getContract().setStatus("renewActive");
-            contractSessionBean.updateContract(bill.getContract());
-            System.err.println("here in renew what is the status now???" + bill.getContract().getStatus());
+            cevent = bill.getContract().getLast();
+            cevent.setEventStatus("renewActive");
         }
 
         if ("earlyTerminationApproved".equals(bill.getContract().getStatus())) {
-            bill.getContract().setStatus("earlyTerminated");
-            contractSessionBean.updateContract(bill.getContract());
-            System.err.println("here in renew what is the status now???" + bill.getContract().getStatus());
-
+            cevent = bill.getContract().getLast();
+            cevent.setEventStatus("earlyTerminated");
         }
+        contracteventSessionBean.updateContractEvent(cevent);
 
     }
 
@@ -149,5 +154,13 @@ public class BillPartnerManagedBean {
 
     public void setBill(BillEntity bill) {
         this.bill = bill;
+    }
+
+    public ContracteventEntity getEvent() {
+        return cevent;
+    }
+
+    public void setEvent(ContracteventEntity event) {
+        this.cevent = event;
     }
 }
