@@ -7,14 +7,13 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-       
         <h:form id="form" prependId="false"> 
             <p:growl id="growl" showDetail="true" sticky="true" /> 
             <p:panel id="panel" header="Members' size of wallet (SOW)">
 
                 <p:dataTable id="size" value="#{evaluationManagedBean.memberSizeOfWallet}" var="size"
                              paginator="true" rows="10" draggableColumns="true" scrollable="true" 
-                             resizableColumns="true" >
+                             resizableColumns="true">
 
                     <p:column headerText="Member Email ">
                         <h:outputText value="#{size.memberEmail}"/>
@@ -27,7 +26,7 @@
                     <p:column headerText="Member Size Of Wallet">
                         <h:outputText value="#{size.sizeOfWallet}"/>
                     </p:column>
-                    
+
                     <p:column headerText="Share Of Wallet" style="width:150px;">
                         <p:commandButton icon="ui-icon ui-icon-flag" value="Share of wallet" action="#{evaluationManagedBean.memberShareOfWallet(event)}">
                             <f:setPropertyActionListener value="#{size}" target="#{evaluationManagedBean.selectedMember}" />
