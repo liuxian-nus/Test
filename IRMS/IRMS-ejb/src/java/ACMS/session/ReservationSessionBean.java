@@ -176,6 +176,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
     public void cancelReservation(Long reservationId) {
         reservation = em.find(ReservationEntity.class, reservationId);
         reservation.setReservationStatus("cancelled");
+        em.merge(reservation);
     }
 
     public double calculateTotalPrice(ReservationEntity reservation) {
