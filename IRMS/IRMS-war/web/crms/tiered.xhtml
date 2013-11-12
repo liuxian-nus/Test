@@ -108,6 +108,197 @@
                 </h:form>
             </p:tab>  
 
+            <p:tab id="tab4" title="Tiered Based On Share Of Wallet">  
+                <h:form id="form4">
+                    <p:fieldset collapsed="true" legend="Hotel" toggleable="true" toggleSpeed="500"> 
+                        <p:dataTable id="dataTable4" var="rfmMembers" value="#{tieredManagedBean.allShareOfWalletMembers1}">  
+
+                            <f:facet name="header">  
+                                Share Of Wallet - Hotel
+                            </f:facet>  
+
+                            <p:column sortBy="#{rfmMembers.memberName}" headerText="Member Name">  
+                                <h:outputText value="#{rfmMembers.memberName}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberEmail}" headerText="Member Email">  
+                                <h:outputText value="#{rfmMembers.memberEmail}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberDob}" headerText="Member Birthday">  
+                                <h:outputText value="#{rfmMembers.memberDob}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                </h:outputText>  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.point}" headerText="Points">  
+                                <h:outputText value="#{rfmMembers.point}" />  
+                            </p:column>
+
+                            <p:column sortBy="#{rfmMembers.coin}" headerText="Coins">  
+                                <h:outputText value="#{rfmMembers.coin}" />  
+                            </p:column>
+                        </p:dataTable> 
+                    </p:fieldset>
+
+                    <p:fieldset collapsed="true" legend="Entertainment Show" toggleable="true" toggleSpeed="500"> 
+                        <p:dataTable id="dataTable5" var="rfmMembers" value="#{tieredManagedBean.allShareOfWalletMembers2}">  
+
+                            <f:facet name="header">  
+                                Share Of Wallet - Entertainment Show
+                            </f:facet>  
+
+                            <p:column sortBy="#{rfmMembers.memberName}" headerText="Member Name">  
+                                <h:outputText value="#{rfmMembers.memberName}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberEmail}" headerText="Member Email">  
+                                <h:outputText value="#{rfmMembers.memberEmail}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberDob}" headerText="Member Birthday">  
+                                <h:outputText value="#{rfmMembers.memberDob}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                </h:outputText>  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.point}" headerText="Points">  
+                                <h:outputText value="#{rfmMembers.point}" />  
+                            </p:column>
+
+                            <p:column sortBy="#{rfmMembers.coin}" headerText="Coins">  
+                                <h:outputText value="#{rfmMembers.coin}" />  
+                            </p:column>
+                        </p:dataTable> 
+                    </p:fieldset>
+                    
+                    <p:fieldset collapsed="true" legend="Food and Beverage" toggleable="true" toggleSpeed="500"> 
+                        <p:dataTable id="dataTable6" var="rfmMembers" value="#{tieredManagedBean.allShareOfWalletMembers3}">  
+
+                            <f:facet name="header">  
+                                Share Of Wallet - Food and Beverage
+                            </f:facet>  
+
+                            <p:column sortBy="#{rfmMembers.memberName}" headerText="Member Name">  
+                                <h:outputText value="#{rfmMembers.memberName}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberEmail}" headerText="Member Email">  
+                                <h:outputText value="#{rfmMembers.memberEmail}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberDob}" headerText="Member Birthday">  
+                                <h:outputText value="#{rfmMembers.memberDob}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                </h:outputText>  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.point}" headerText="Points">  
+                                <h:outputText value="#{rfmMembers.point}" />  
+                            </p:column>
+
+                            <p:column sortBy="#{rfmMembers.coin}" headerText="Coins">  
+                                <h:outputText value="#{rfmMembers.coin}" />  
+                            </p:column>
+                        </p:dataTable> 
+                    </p:fieldset>
+                    
+                    <p:fieldset collapsed="true" legend="Convention Center" toggleable="true" toggleSpeed="500"> 
+                        <p:dataTable id="dataTable7" var="rfmMembers" value="#{tieredManagedBean.allShareOfWalletMembers4}">  
+
+                            <f:facet name="header">  
+                                Share Of Wallet - Convention Centre
+                            </f:facet>  
+
+                            <p:column sortBy="#{rfmMembers.memberName}" headerText="Member Name">  
+                                <h:outputText value="#{rfmMembers.memberName}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberEmail}" headerText="Member Email">  
+                                <h:outputText value="#{rfmMembers.memberEmail}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberDob}" headerText="Member Birthday">  
+                                <h:outputText value="#{rfmMembers.memberDob}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                </h:outputText>  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.point}" headerText="Points">  
+                                <h:outputText value="#{rfmMembers.point}" />  
+                            </p:column>
+
+                            <p:column sortBy="#{rfmMembers.coin}" headerText="Coins">  
+                                <h:outputText value="#{rfmMembers.coin}" />  
+                            </p:column>
+                        </p:dataTable> 
+                    </p:fieldset>
+                    
+                    <p:fieldset collapsed="true" legend="Attraction" toggleable="true" toggleSpeed="500"> 
+                        <p:dataTable id="dataTable8" var="rfmMembers" value="#{tieredManagedBean.allShareOfWalletMembers5}">  
+
+                            <f:facet name="header">  
+                                Share Of Wallet - Attraction
+                            </f:facet>  
+
+                            <p:column sortBy="#{rfmMembers.memberName}" headerText="Member Name">  
+                                <h:outputText value="#{rfmMembers.memberName}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberEmail}" headerText="Member Email">  
+                                <h:outputText value="#{rfmMembers.memberEmail}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberDob}" headerText="Member Birthday">  
+                                <h:outputText value="#{rfmMembers.memberDob}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                </h:outputText>  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.point}" headerText="Points">  
+                                <h:outputText value="#{rfmMembers.point}" />  
+                            </p:column>
+
+                            <p:column sortBy="#{rfmMembers.coin}" headerText="Coins">  
+                                <h:outputText value="#{rfmMembers.coin}" />  
+                            </p:column>
+                        </p:dataTable> 
+                    </p:fieldset>
+                    
+                    <p:fieldset collapsed="true" legend="Shopping Mall" toggleable="true" toggleSpeed="500"> 
+                        <p:dataTable id="dataTable9" var="rfmMembers" value="#{tieredManagedBean.allShareOfWalletMembers6}">  
+
+                            <f:facet name="header">  
+                                Share Of Wallet - Shopping Mall
+                            </f:facet>  
+
+                            <p:column sortBy="#{rfmMembers.memberName}" headerText="Member Name">  
+                                <h:outputText value="#{rfmMembers.memberName}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberEmail}" headerText="Member Email">  
+                                <h:outputText value="#{rfmMembers.memberEmail}" />  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.memberDob}" headerText="Member Birthday">  
+                                <h:outputText value="#{rfmMembers.memberDob}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                </h:outputText>  
+                            </p:column> 
+
+                            <p:column sortBy="#{rfmMembers.point}" headerText="Points">  
+                                <h:outputText value="#{rfmMembers.point}" />  
+                            </p:column>
+
+                            <p:column sortBy="#{rfmMembers.coin}" headerText="Coins">  
+                                <h:outputText value="#{rfmMembers.coin}" />  
+                            </p:column>
+                        </p:dataTable> 
+                    </p:fieldset>
+                    
+                </h:form>
+            </p:tab>  
+
         </p:tabView>  
     </ui:define>
 
