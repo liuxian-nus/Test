@@ -110,12 +110,14 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         return rfmModel;
     }
     //买一送一，不新建session bean了
+
     @Override
     public List<RFMModelEntity> getAllRFMs() throws NoResultException {
         Query q = em.createQuery("SELECT m FROM RFMModelEntity m");
         return q.getResultList();
     }
     //Model number currently is 1 since only one model is available
+
     @Override
     public boolean setRFMParameter(Double Recency, Double Frequency, Double Monetary, int ModelNumber) {
         boolean completed = false;
@@ -129,6 +131,7 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         }
         return completed;
     }
+
     @Override
     public Integer calculateRFMValue(String memberEmail, int ModelNumber) throws ExistException {
         Integer RFMValue = 0;
@@ -137,8 +140,8 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         double m = 0.00;//monetary
         RFMModelEntity model = getRFMModel(ModelNumber);
         System.out.println("calculateRFMValue");
-        
-        System.err.println("calculateRFMValue: "+memberEmail+ModelNumber);
+
+        System.err.println("calculateRFMValue: " + memberEmail + ModelNumber);
 
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allTrans = q.getResultList();
@@ -158,25 +161,25 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
             MemberTransactionEntity current = itr.next();
             moneyTotal += current.getMtAmount();
             visitTotal += 1;
-            
+
             //below test the value
-                System.out.println("the money total for all members is "+moneyTotal);
-                System.out.println("the visit total for all members is "+visitTotal);
-            
+            System.out.println("the money total for all members is " + moneyTotal);
+            System.out.println("the visit total for all members is " + visitTotal);
+
             //add values to a stats
             stats.addValue(current.getMtAmount());
             //below test the value
-                System.out.println("Stats value is "+stats.getSum());
+            System.out.println("Stats value is " + stats.getSum());
 
             if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
                 memberMoneyTotal += current.getMtAmount();
                 memberVisitTotal += 1;
                 currentTransDate = current.getMtDate();
-                
-                System.out.println("memberMoneyTotal"+memberMoneyTotal);
-                System.out.println("memberVisitTotal"+memberVisitTotal);
-                System.out.println("currentTransDate"+currentTransDate);
-                
+
+                System.out.println("memberMoneyTotal" + memberMoneyTotal);
+                System.out.println("memberVisitTotal" + memberVisitTotal);
+                System.out.println("currentTransDate" + currentTransDate);
+
                 if (currentTransDate.after(memberLastVisitDate)) {
                     memberLastVisitDate = currentTransDate;
                     System.out.println("lastVisitDate Changed");
@@ -186,10 +189,11 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         //calculate m
         double memberAverageMoney = 0.00;
-        if(memberVisitTotal!=0)
-        memberAverageMoney = memberMoneyTotal / memberVisitTotal;
-            //test
-            System.out.println("memberAverageMoney: "+memberAverageMoney);
+        if (memberVisitTotal != 0) {
+            memberAverageMoney = memberMoneyTotal / memberVisitTotal;
+        }
+        //test
+        System.out.println("memberAverageMoney: " + memberAverageMoney);
 
         if (memberAverageMoney >= stats.getPercentile(80)) {
             m = 5;
@@ -207,12 +211,12 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
             m = 1;
         }
         //test
-        System.out.println("m: "+m);
+        System.out.println("m: " + m);
 
         //calculate f
-        
-        double fValue = ((memberVisitTotal)*1.0)/visitTotal;
-        
+
+        double fValue = ((memberVisitTotal) * 1.0) / visitTotal;
+
         if (fValue >= 0.1) {
             f = 5;
         }
@@ -225,12 +229,12 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         if (fValue >= 0.005 && fValue < 0.01) {
             f = 2;
         }
-        if (fValue< 0.005) {
+        if (fValue < 0.005) {
             f = 1;
         }
-        
+
         //test
-        System.out.println("f: "+f);
+        System.out.println("f: " + f);
 
         //calculate r
         Calendar currentDate = Calendar.getInstance();
@@ -260,25 +264,25 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         if ((memberLastVisitDate.before(dateR2) || memberLastVisitDate.equals(dateR2))) {
             r = 1;
         }
-        
+
         //test
-        System.out.println("r: "+r);
+        System.out.println("r: " + r);
 
         double RFMValueAbsolute = model.getFrequency() * f + model.getMonetary() * m + model.getRecency() * r;
-        
+
         //test
-        System.out.println("RFMValueAbsolute"+RFMValueAbsolute);
-        
+        System.out.println("RFMValueAbsolute" + RFMValueAbsolute);
+
         double fullRFMValueAbsolute = model.getFrequency() * 5 + model.getMonetary() * 5 + model.getRecency() * 5;
-        
+
         //test
-        System.out.println("fullRFMValueAbsolute"+fullRFMValueAbsolute);
-        
+        System.out.println("fullRFMValueAbsolute" + fullRFMValueAbsolute);
+
         RFMValue = (int) ((RFMValueAbsolute / fullRFMValueAbsolute) * 5);
-        
+
         //test
-        System.out.println("RFMValue"+RFMValue);
-        
+        System.out.println("RFMValue" + RFMValue);
+
         return RFMValue;
     }
 
@@ -483,7 +487,9 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
 //        responseRate = respondedSales.size()/expectedSize;
         responseRate = respondedTargets.size() / expectedSize;
-
+        if (responseRate != 0.0) {
+            thisP.setResponseRate(responseRate);
+        }
         return responseRate;
     }
 
@@ -503,7 +509,7 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
             throw new ExistException();
         }
     }
-    
+
     @Override
     public boolean findRFMModel(int ModelNumber) throws ExistException {
         RFMModelEntity current = em.find(RFMModelEntity.class, ModelNumber);

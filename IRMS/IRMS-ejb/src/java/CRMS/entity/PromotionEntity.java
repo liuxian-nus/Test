@@ -43,6 +43,7 @@ public class PromotionEntity implements Serializable {
     private boolean promotionMemberExclusive;
     private double discount;
     private String imagePath;
+    private double responseRate;
     @ManyToMany(cascade = {CascadeType.ALL})
     private List<MemberEntity> mcMemberTargets;
 
@@ -154,6 +155,14 @@ public class PromotionEntity implements Serializable {
 
     public void setMcMemberTargets(List<MemberEntity> mcMemberTargets) {
         this.mcMemberTargets = mcMemberTargets;
+    }
+
+    public double getResponseRate() {
+        return responseRate;
+    }
+
+    public void setResponseRate(double responseRate) {
+        this.responseRate = responseRate;
     }
 
     

@@ -5,9 +5,12 @@
 package CRMS.managedbean;
 
 import CRMS.entity.MemberEntity;
+import CRMS.entity.PromotionEntity;
 import CRMS.session.EvaluationSessionBean;
+import CRMS.session.PromotionSessionBean;
 import Exception.ExistException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -24,6 +27,8 @@ public class TieredManagedBean {
 
     @EJB
     EvaluationSessionBean evaluationSessionBean;
+    @EJB
+    PromotionSessionBean promotionSessionBean;
     List<MemberEntity> rfmMembers;
     List<MemberEntity> lifeValueMembers;
     List<MemberEntity> sizeOfWalletMembers;
@@ -33,6 +38,7 @@ public class TieredManagedBean {
     List<MemberEntity> shareOfWalletMember4;
     List<MemberEntity> shareOfWalletMember5;
     List<MemberEntity> shareOfWalletMember6;
+    List<PromotionEntity> promotions;
 
     /**
      * Creates a new instance of TieredManagedBean
@@ -47,6 +53,7 @@ public class TieredManagedBean {
         shareOfWalletMember4 = new ArrayList<MemberEntity>();
         shareOfWalletMember5 = new ArrayList<MemberEntity>();
         shareOfWalletMember6 = new ArrayList<MemberEntity>();
+        promotions = new ArrayList<PromotionEntity>();
     }
 
     @PostConstruct
@@ -60,6 +67,19 @@ public class TieredManagedBean {
         shareOfWalletMember4 = evaluationSessionBean.getTieredBasedOnShareOfWallet("convention center");
         shareOfWalletMember5 = evaluationSessionBean.getTieredBasedOnShareOfWallet("attraction");
         shareOfWalletMember6 = evaluationSessionBean.getTieredBasedOnShareOfWallet("shopping mall");
+        promotions = generatePromotionList();
+    }
+
+    public List<PromotionEntity> generatePromotionList() throws ExistException {
+        List<PromotionEntity> temp = promotionSessionBean.getAllPromotions();
+        PromotionEntity promotion;
+        Iterator<PromotionEntity> itr = temp.iterator();
+        while (itr.hasNext()) {
+            promotion = itr.next();
+            evaluationSessionBean.evaluatePromotion(promotion.getPromotionId());
+        }
+        promotions = promotionSessionBean.getAllPromotions();
+        return promotions;
     }
 
     public List<MemberEntity> getAllRFMMembers() {
@@ -73,27 +93,27 @@ public class TieredManagedBean {
     public List<MemberEntity> getAllSizeOfWalletMembers() {
         return sizeOfWalletMembers;
     }
-    
+
     public List<MemberEntity> getAllShareOfWalletMembers1() {
         return shareOfWalletMember1;
     }
-    
+
     public List<MemberEntity> getAllShareOfWalletMembers2() {
         return shareOfWalletMember2;
     }
-    
+
     public List<MemberEntity> getAllShareOfWalletMembers3() {
         return shareOfWalletMember3;
     }
-    
+
     public List<MemberEntity> getAllShareOfWalletMembers4() {
         return shareOfWalletMember4;
     }
-    
+
     public List<MemberEntity> getAllShareOfWalletMembers5() {
         return shareOfWalletMember5;
     }
-    
+
     public List<MemberEntity> getAllShareOfWalletMembers6() {
         return shareOfWalletMember6;
     }
