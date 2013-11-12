@@ -80,13 +80,19 @@
 
 
                                 <p:column style="width:100px">  
-                                    <p:commandButton  oncomplete="confirmla.show()" ajax="true" icon="ui-icon ui-icon-check" value ="Confirm" title="Confirm"> 
+                                    <p:commandButton  oncomplete="confirmla.show()" ajax="true" icon="ui-icon ui-icon-check" title="Confirm this Catering"> 
                                         <f:setPropertyActionListener target="#{orderResultManagedBean.thisOrder}" value="#{rorder}" />
                                     </p:commandButton>  
                                 </p:column>  
 
                                 <p:column style="width:100px">  
-                                    <p:commandButton actionListener="#{orderResultManagedBean.viewMenu}" ajax="true" icon="ui-icon ui-icon-contact" value ="Menu" title="View Menu Details"> 
+                                    <p:commandButton actionListener="#{orderResultManagedBean.viewMenu}" ajax="true" icon="ui-icon ui-icon-contact"  title="View Menu Details"> 
+                                        <f:setPropertyActionListener target="#{orderResultManagedBean.thisOrder}" value="#{rorder}" />
+                                    </p:commandButton>  
+                                </p:column>  
+                                
+                                <p:column style="width:100px">  
+                                    <p:commandButton actionListener="#{orderResultManagedBean.cancelMenu}" ajax="true" icon="ui-icon ui-icon-contact"  title="Cancel Group Catering"> 
                                         <f:setPropertyActionListener target="#{orderResultManagedBean.thisOrder}" value="#{rorder}" />
                                     </p:commandButton>  
                                 </p:column>  
