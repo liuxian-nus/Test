@@ -6,6 +6,7 @@ package servlet;
 
 import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
+import ACMS.session.RoomPriceSessionBean;
 import CRMS.entity.CouponEntity;
 import CRMS.entity.CouponTypeEntity;
 import CRMS.entity.MemberEntity;
@@ -42,6 +43,8 @@ import javax.servlet.http.HttpSession;
 public class ACMSServlet extends HttpServlet {
 
     @EJB
+    private RoomPriceSessionBean roomPriceSessionBean;
+    @EJB
     private MemberSessionBean memberSessionBean;
     @EJB
     private CouponTypeSessionBean couponTypeSessionBean;
@@ -58,6 +61,7 @@ public class ACMSServlet extends HttpServlet {
     CouponEntity coupon;
     String message = "";
     private String USER_AGENT;
+    Double roomPrice;
 
     @Override
     public void init() {
@@ -95,9 +99,14 @@ public class ACMSServlet extends HttpServlet {
                 SessionTime = (int) session.getMaxInactiveInterval();
                 System.out.println("Timeleft" + SessionTime);
                 request.setAttribute("SessionTime", SessionTime);
+                  String roomType = data.getReservationRoomType();
+                System.out.println("RoomType:" + roomType);
+                roomPrice = roomPriceSessionBean.getPriceValueByType(roomType);
+                session.setAttribute("roomPrice", roomPrice);
                 if (isAvailable) {
                     request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
                 } else {
+                    message="Sorry,the room is not available on your selected type";
                     request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
                 }
             } else if ("hotelBook".equals(page)) {
@@ -106,6 +115,7 @@ public class ACMSServlet extends HttpServlet {
                 System.out.println("Timeleft" + SessionTime);
                 request.setAttribute("SessionTime", SessionTime);
                 data = (ReservationEntity) session.getAttribute("data");
+              
 
                 request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
             } else if ("hotelPay".equals(page)) {
@@ -143,7 +153,7 @@ public class ACMSServlet extends HttpServlet {
                 System.out.println("adding reservation to database....");
                 data = (ReservationEntity) session.getAttribute("data");
                 data.setRcCreditCardNo(request.getParameter("cardNo"));
-                
+
                 String payment = request.getParameter("payment");
                 System.out.println(payment);
                 String cardNo = request.getParameter("cardNo");
@@ -291,16 +301,16 @@ public class ACMSServlet extends HttpServlet {
     private void sendGet() throws Exception {
 
         String url = "https://api-3t.sandbox.paypal.com/nvp?";
-        url+="USER=xinyusoc-facilitator_api1.gmail.com&";
-        url+="PWD=1383997852&";
-        url+="SIGNATURE=AFcWxV21C7fd0v3bYYYRCpSSRl31A4L4WLmbdOQyA2Nn26.xecMb47ed&";
-        url+="METHOD=SetExpressCheckout&";
-        url+="VERSION=93&";
-        url+="PAYMENTREQUEST_0_PAYMENTACTION=SALE";
-        url+="PAYMENTREQUEST_0_AMT=10.00";
-        url+="PAYMENTREQUEST_0_CURRENCYCODE=USD";
-        url+="cancelUrl=http://is3102.cloudapp.net"; //cancel order
-        url+="returnUrl=http://is3102.cloudapp.net/IRMSCustomer-war/irmsServlet/hotelPay";
+        url += "USER=xinyusoc-facilitator_api1.gmail.com&";
+        url += "PWD=1383997852&";
+        url += "SIGNATURE=AFcWxV21C7fd0v3bYYYRCpSSRl31A4L4WLmbdOQyA2Nn26.xecMb47ed&";
+        url += "METHOD=SetExpressCheckout&";
+        url += "VERSION=93&";
+        url += "PAYMENTREQUEST_0_PAYMENTACTION=SALE";
+        url += "PAYMENTREQUEST_0_AMT=10.00";
+        url += "PAYMENTREQUEST_0_CURRENCYCODE=USD";
+        url += "cancelUrl=http://is3102.cloudapp.net"; //cancel order
+        url += "returnUrl=http://is3102.cloudapp.net/IRMSCustomer-war/irmsServlet/hotelPay";
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
