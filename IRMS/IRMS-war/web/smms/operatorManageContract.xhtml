@@ -83,6 +83,14 @@
                                               icon="ui-icon ui-icon-tag"  title="Update contract">  
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton>  
+                            
+                            
+                            <!-- cancel contract when rejected or new-->
+                            <p:commandButton   ajax="true" oncomplete="cancel.show()"
+                                              rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
+                                              icon="ui-icon ui-icon-tag"  title="Cancel the contract">  
+                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
+                            </p:commandButton>  
 
                             <!-- send out for request when new-->
                             <p:commandButton   oncomplete="confirmSend.show()" ajax="true" 
@@ -164,6 +172,16 @@
                             <p:commandButton value="Not yet" onclick="early.hide()" type="button"/>  
                         </h:panelGrid>
                     </p:dialog> 
+                    
+                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="cancel"> 
+                        <br/>
+                        Are you sure to cancel this contract?
+                        <br/><br/>
+                        <h:panelGrid columns="2" id="withdraw">
+                            <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.cancelContract}" oncomplete="cancel.hide()"/>
+                            <p:commandButton value="Not yet" onclick="cancel.hide()" type="button"/>  
+                        </h:panelGrid>
+                    </p:dialog>  
 
 
                     <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="renew"> 
