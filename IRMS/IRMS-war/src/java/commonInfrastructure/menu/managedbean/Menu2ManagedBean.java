@@ -284,10 +284,6 @@ public class Menu2ManagedBean implements Serializable {
                 item.setIcon("ui-icon ui-icon-pencil");
                 submenu.getChildren().add(item);
 
-
-
-
-
                 model.addSubmenu(submenu);
             }
 
@@ -375,15 +371,9 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setIcon("ui-icon ui-icon-contact");
 
                 item = new MenuItem();
-                item.setValue("VIP Management");
-                item.setUrl("/crms/listAllVIPs.xhtml");
-                item.setIcon("ui-icon ui-icon-search");
-                submenu.getChildren().add(item);
-
-                item = new MenuItem();
-                item.setValue("All Members");
+                item.setValue("Members Management");
                 item.setUrl("/crms/listAllMembers.xhtml");
-                item.setIcon("ui-icon ui-icon-search");
+                item.setIcon("ui-icon ui-icon-person");
                 submenu.getChildren().add(item);
 
                 item = new MenuItem();
@@ -393,21 +383,15 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 item = new MenuItem();
-                item.setValue("Promotions");
-                item.setUrl("/crms/listPromotions.xhtml");
-                item.setIcon("ui-icon ui-icon-search");
+                item.setValue("VIP Management");
+                item.setUrl("/crms/listAllVIPs.xhtml");
+                item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
 
                 item = new MenuItem();
                 item.setValue("Feedbacks");
                 item.setUrl("/crms/feedbackManagement.xhtml");
-                item.setIcon("ui-icon ui-icon-search");
-                submenu.getChildren().add(item);
-
-                item = new MenuItem();
-                item.setValue("Coupon Types");
-                item.setUrl("/crms/listCouponTypes.xhtml");
-                item.setIcon("ui-icon ui-icon-search");
+                item.setIcon("ui-icon ui-icon-mail-open");
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
@@ -437,6 +421,29 @@ public class Menu2ManagedBean implements Serializable {
                 item.setValue("Promotion Evaluation");
                 item.setUrl("/crms/evaluatePromotion.xhtml");
                 item.setIcon("ui-icon ui-icon-lightbulb");
+                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
+
+                submenu = new Submenu();
+                submenu.setLabel("Marketing");
+
+                item = new MenuItem();
+                item.setValue("Promotions");
+                item.setUrl("/crms/listPromotions.xhtml");
+                item.setIcon("ui-icon ui-icon-tag");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("Bundle Packages");
+                item.setUrl("/crms/bundlePackage.xhtml");
+                item.setIcon("ui-icon ui-icon-flag");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("Coupon Types");
+                item.setUrl("/crms/listCouponTypes.xhtml");
+                item.setIcon("ui-icon ui-icon-document");
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
