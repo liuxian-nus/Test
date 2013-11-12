@@ -6,11 +6,14 @@ package CRMS.managedbean;
 
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
+import CRMS.entity.PromotionEntity;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
+import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -39,6 +42,8 @@ public class MemberManagedBean {
     private MemberSessionBean memberSessionBean;
     @EJB
     private MemberTransactionSessionBean transactionSessionBean;
+    @EJB
+    private EmailSessionBean emailSessionBean;
     private MemberEntity member;
     private String searchEmail;
     private int birthMonth;
@@ -47,6 +52,7 @@ public class MemberManagedBean {
     private String nationality;
     private String maritalStatus;
     private List<MemberEntity> memberList;
+    private List<MemberEntity> memberSelect;
     private List<String> nationalityList;
     private List<MemberEntity> filteredMember;
     private SelectItem[] nationalityOptions;
@@ -65,6 +71,8 @@ public class MemberManagedBean {
     @PostConstruct
     public void init() throws ExistException {
         memberList = memberSessionBean.getAllMembers();
+        Date today = new Date();
+        memberSelect = memberSessionBean.getMemberByBirthMonth(today.getMonth());
         nationalityList = memberSessionBean.getAllNationalities();
         nationalityOptions = createNationalityOptions(nationalityList);
         genderOptions = createGenderOptions();
@@ -254,6 +262,18 @@ public class MemberManagedBean {
             System.err.println("error when creating bar chart");
             e.printStackTrace();
         }
+    }
+
+    public void sendBirthdayPromotion(ActionEvent event) throws IOException {
+        try {
+            System.out.println("in sending birthday promotion" + member.getMemberName());
+//            PromotionEntity promotion = em.find(PromotionEntity.class, 3102);
+//            emailSessionBean.sendBirthdayCongrats(member, promotion);
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when sending birthday promotion", ""));
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "A birthday promotion has sent to the member ", ""));
+        memberSessionBean.updateBirthdayEmail(member);
     }
 
     private void createCategoryModelNationality() {
@@ -460,6 +480,14 @@ public class MemberManagedBean {
 
     public void setCategoryModelMaritalStatus(CartesianChartModel categoryModelMaritalStatus) {
         this.categoryModelMaritalStatus = categoryModelMaritalStatus;
+    }
+
+    public List<MemberEntity> getMemberSelect() {
+        return memberSelect;
+    }
+
+    public void setMemberSelect(List<MemberEntity> memberSelect) {
+        this.memberSelect = memberSelect;
     }
 
     public void onRowToggle(ToggleEvent event) {

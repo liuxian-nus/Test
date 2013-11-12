@@ -298,6 +298,11 @@ public class MemberSessionBean {
         System.out.println("MemberSessionBean: member " + member.getMemberEmail() + " is successfully updated");
         return true;
     }
+    
+    public void updateBirthdayEmail(MemberEntity member) {
+        member.setBirthdayEmail(true);
+        em.merge(member);
+    }
 
     //member subscribe/unsubscribe from email list
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

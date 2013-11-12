@@ -90,6 +90,7 @@ public class MemberEntity implements Serializable {
     @OneToMany(cascade = {CascadeType.MERGE}, mappedBy = "feedbackOwner")
     private List<FeedbackEntity> feedbacks = new ArrayList<FeedbackEntity>();
     private double sizeOfWallet;
+    private boolean birthdayEmail = false;
 
     public Set<PromotionEntity> getPromotions() {
         return Promotions;
@@ -330,6 +331,14 @@ public class MemberEntity implements Serializable {
     public void setSizeOfWallet(double sizeOfWallet) {
         this.sizeOfWallet = sizeOfWallet;
     }
+
+    public boolean isBirthdayEmail() {
+        return birthdayEmail;
+    }
+
+    public void setBirthdayEmail(boolean birthdayEmail) {
+        this.birthdayEmail = birthdayEmail;
+    }    
 
     @Override
     public int hashCode() {

@@ -196,7 +196,9 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
 
     @Override
     public ReservationEntity getReservationById(String searchId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Long id = Long.valueOf(searchId);
+        ReservationEntity thisReservation = em.find(ReservationEntity.class, id);
+        return thisReservation;
     }
 
     @Override

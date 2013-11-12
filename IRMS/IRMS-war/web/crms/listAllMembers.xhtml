@@ -94,6 +94,55 @@
                 <p:pieChart id="sample" value="#{memberManagedBean.pieModel}" showDataLabels="true"  title="Gender Pie Chart" style="width:400px;height:300px" />  
             </p:tab> 
 
+            <p:tab id="tab3" title="Member Birthday Special"> 
+                <h:form>  
+                    <p:panel id="search" header="Search Result" style="height:495px;">
+                        <div style="margin-left:50px;margin-right:50px;margin-top:30px;">
+                            <p:growl id="msgs" showDetail="true" /> 
+                            <p:dataTable id="birthdayList" var="memberList" value="#{memberManagedBean.memberSelect}" widgetVar="membersTable" >  
+
+                                <p:column id="idColumn" filterBy="#{memberList.memberEmail}"   
+                                          headerText="Member Email" filterMatchMode="contains">  
+                                    <h:outputText value="#{memberList.memberEmail}" />  
+                                </p:column>  
+
+                                <p:column id="nameColumn" filterBy="#{memberList.memberName}"   
+                                          headerText="Member Name" filterMatchMode="contains">  
+                                    <h:outputText value="#{memberList.memberName}" />  
+                                </p:column>  
+
+                                <p:column id="genderColumn" filterBy="#{memberList.gender}" headerText="Gender" 
+                                          filterOptions="#{memberManagedBean.genderOptions}" filterMatchMode="exact">  
+                                    <h:outputText value="#{memberList.gender}" />  
+                                </p:column>
+
+                                <p:column id="dobColumn" headerText="Date of Birth" >  
+                                    <h:outputText value="#{memberList.memberDob}" >
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton rendered="#{!memberList.birthdayEmail}" oncomplete="resolved.show()" ajax="true"  icon="ui-icon ui-icon-flag" title="Send Birthday Promotion" value ="Send Birthday Promotion" >
+                                        <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.member}" />  
+                                    </p:commandButton>                           
+                                    <h:outputText value="Sent" rendered="#{memberList.birthdayEmail}"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </div>
+                    </p:panel>
+
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Send Birthday Promotion and Greeting" widgetVar="resolved">  
+                        Do you want to send a birthday greeting email with special promotion?
+                        <br/>
+                        <br/>
+                        <br/>
+                        <p:commandButton value="resolved" update="birthdayList" actionListener="#{memberManagedBean.sendBirthdayPromotion}" oncomplete="resolved.hide()" onclick="msgs;">  
+                        </p:commandButton>
+                        <p:commandButton value='Cancel' onclick="resolved.hide();" type='button'/>
+                    </p:dialog>
+                </h:form> 
+            </p:tab> 
         </p:tabView>
     </ui:define>
 </ui:composition>
