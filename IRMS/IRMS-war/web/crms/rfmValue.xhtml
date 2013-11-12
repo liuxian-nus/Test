@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:tabView id="tabView">  
+
+
+            <p:tab id="tab1" title="Add RFM Model">
+                <h:form id="form1">
+                    <p:growl id="msg" showDetail="true" sticky="true"/>
+                    <h:panelGrid columns="2"> 
+                        <h:outputText value="Model Number: " />
+                        <h:inputText required="true" requiredMessage="Model number cannot be empty" value="#{evaluationManagedBean.selectedRfmModel.id}" style="margin-bottom:10px;">
+                            <f:convertNumber integerOnly="true" type="number" />
+                        </h:inputText>
+                        <h:outputText value=""/><br/> 
+
+                        <h:outputText value="Recency: " />
+                        <h:inputText required="true" requiredMessage="Recency cannot be empty" value="#{evaluationManagedBean.selectedRfmModel.recency}" style="margin-bottom:10px;">
+                            <f:convertNumber type="number" />
+                        </h:inputText>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Frequency: " />
+                        <h:inputText required="true" requiredMessage="Frequency cannot be empty" value="#{evaluationManagedBean.selectedRfmModel.frequency}" style="margin-bottom:10px;">
+                            <f:convertNumber type="number" />
+                        </h:inputText>
+                        <h:outputText value=""/><br/> 
+
+                        <h:outputText value="Monetary: " />
+                        <h:inputText required="true" requiredMessage="Monetary cannot be empty" value="#{evaluationManagedBean.selectedRfmModel.monetary}" style="margin-bottom:10px;">
+                            <f:convertNumber type="number" />
+                        </h:inputText>
+                        <h:outputText value=""/><br/> 
+                        <p:commandButton value="Save" ajax="true" actionListener="#{evaluationManagedBean.addRFMParameter}" update="msg"/>
+
+                    </h:panelGrid> 
+                </h:form>
+            </p:tab>
+
+            <p:tab id="tab2" title="Set RFM Parameter">  
+                <h:form id="form2">
+                    <p:growl id="msg2" showDetail="true" sticky="true"/>
+                    <h:panelGrid columns="2"> 
+                        <h:outputText value="Recency: " />
+                        <h:inputText required="true" requiredMessage="Recency cannot be empty" value="#{evaluationManagedBean.recency}" style="margin-bottom:10px;">
+                            <f:convertNumber type="number" />
+                        </h:inputText>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Frequency: " />
+                        <h:inputText required="true" requiredMessage="Frequency cannot be empty" value="#{evaluationManagedBean.frequency}" style="margin-bottom:10px;">
+                            <f:convertNumber type="number" />
+                        </h:inputText>
+                        <h:outputText value=""/><br/> 
+
+                        <h:outputText value="Monetary: " />
+                        <h:inputText required="true" requiredMessage="Monetary cannot be empty" value="#{evaluationManagedBean.monetary}" style="margin-bottom:10px;">
+                            <f:convertNumber type="number" />
+                        </h:inputText>
+                        <h:outputText value=""/><br/> 
+
+                        <h:outputText value="Model Number: " />
+                        <h:inputText required="true" requiredMessage="Model number cannot be empty" value="#{evaluationManagedBean.modelNumber}" style="margin-bottom:10px;">
+                            <f:convertNumber integerOnly="true" type="number" />
+                        </h:inputText>
+                        <h:outputText value=""/><br/> 
+
+                        <p:commandButton value="Save" ajax="true" actionListener="#{evaluationManagedBean.saveRFMParameter}" update="msg2"/>
+
+                    </h:panelGrid>  
+                </h:form>
+            </p:tab>  
+
+            <p:tab id="tab3" title="Calculate RFM Value">  
+                <h:form id="rfmValue">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Member Email: "/>
+                        <p:autoComplete id="email" value="#{evaluationManagedBean.memberEmail}" required="true" requiredMessage="Email Cannot be Null"  
+                                        completeMethod="#{memberManagedBean.complete}" />
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Model Number: "/>
+                        <h:inputText required="true" requiredMessage="Model number cannot be empty" value="#{evaluationManagedBean.modelNumber}" style="margin-bottom:10px;">
+                            <f:convertNumber integerOnly="true" type="number" />
+                        </h:inputText>
+                        <h:outputText value=""/><br/>
+
+                        <p:commandButton value="Search" ajax="true" actionListener="#{evaluationManagedBean.calculateRFM}">
+                            <f:setPropertyActionListener value="#{true}" target="#{evaluationManagedBean.calculateStatus}" />
+                        </p:commandButton>
+
+                        <h:outputText value="RFM Value: " rendered="#{evaluationManagedBean.calculateStatus}"/>
+                        <h:outputText value="#{evaluationManagedBean.RFMValue}" rendered="#{evaluationManagedBean.calculateStatus}"/>
+                    </h:panelGrid>
+                </h:form>
+            </p:tab>   
+
+        </p:tabView>  
+    </ui:define>
+
+</ui:composition>
