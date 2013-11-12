@@ -124,9 +124,7 @@ public class ATMSServlet extends HttpServlet {
             
             if ("attraction".equals(page)) {
                 System.out.println("***attraction page***");
-                System.out.println("generating barcode");
-               generateBarcodeSessionBean.generate("1234567");
-               System.out.println("barcode generated");
+
                 
 
                 request.getRequestDispatcher("/attraction.jsp").forward(request, response);
@@ -508,7 +506,7 @@ public class ATMSServlet extends HttpServlet {
                 request.getRequestDispatcher("/attrTicketBookingPayment.jsp").forward(request, response);
             }else if("attrTicketBookingConfirmation".equals(page)){
                 System.out.println("***attrTicketBookingConfirmation page***");
-                
+                Date today=new Date();
                 String email=request.getParameter("email");
                 System.out.println("email: "+email);
                 tp=(TicketPurchaseEntity)session.getAttribute("tp");
@@ -583,12 +581,13 @@ public class ATMSServlet extends HttpServlet {
                     Date date=(Date)session.getAttribute("date");
                     mt.setMtDate(date);
                     mt.setMtAmount(totalPrice);
-                    mt.setMtDepartment("Attraction");
+                    mt.setMtDepartment("attraction");
                     mt.setMtMode(true);
                     mt.setPaymentStatus(true);
                     mt.setMemberEmail(email);
                     String description = member.getMemberName() + ": Your purchase of attraction ticket at " + date + " with a total expense of: " + totalPrice;
                     mt.setMtDescription(description);
+                    mt.setMtDate(today);
                     mt=memberTransactionSessionBean.addMemberTransaction(mt);
                     System.out.println("member transaction added");
                     Set<MemberTransactionEntity> allMTs=member.getMemberTransactions();
@@ -602,7 +601,7 @@ public class ATMSServlet extends HttpServlet {
                 ticketPurchaseSessionBean.updateTicketPurchase(tp); 
                 System.out.println("tp status updated");
                 if(coupon!=null){
-                    coupon.setDepartment("Attraction");
+                    coupon.setDepartment("attraction");
                     coupon.setStatus("Used");
                     couponSessionBean.updateCoupon(coupon);
                     System.out.println("coupon updated");
@@ -625,6 +624,11 @@ public class ATMSServlet extends HttpServlet {
                 
                 emailSessionBean.emailAttractionTicketSingle(email, tp);
                 System.out.println("email sent");
+                if(hasEPPurchase){
+                    System.out.println("start send email for eppurchase");
+                    emailSessionBean.emailAttractionTicketExpress(email,eppurchase);
+                    System.out.println("email sent for eppurchase");
+                }
                            
                 request.getRequestDispatcher("/attrTicketBookingConfirmation.jsp").forward(request, response);
             }else {

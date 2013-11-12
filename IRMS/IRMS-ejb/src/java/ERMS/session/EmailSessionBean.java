@@ -677,6 +677,11 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                     + "\nPlease refer to the attachment for your e-ticket: print the pdf file and bring it on the show date"
                     + "\nThank you for your support!"
                     + "\n\n\n For any queries, please call (+65)9272-8760";
+            
+            String textForMobile = "Thank you for booking ticket for Coral Island Resort Attraction services!"
+                    + "\nYour ticket purchase ID is " + tpe.getTpId()
+                    + "\nTicket is purchased for " + dateString
+                    + "\nThe fee of tickets you have purchased is " + tpe.getAttrTicketFee();
 
 
             String INPUTFILE = createTicket(tpe);
@@ -707,7 +712,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             System.out.println("Sending");
             Transport.send(message);
             Date today = new Date();
-            memberMessageSessionBean.createNewMessage(toEmailAddress, "Your Attraction Ticket Purchase", text, "bookingSummary", today);
+            memberMessageSessionBean.createNewMessage(toEmailAddress, "Your Attraction Ticket Purchase", textForMobile, "bookingSummary", today);
             System.out.println("Done");
 
         } catch (MessagingException e) {
@@ -738,15 +743,22 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAddress));
-            message.setSubject("Your ticket from Coral Island Resort: Attraction " + eppe.getEppId());
-            String text = "Thank you for booking ticket for Coral Island Resort Attraction services!"
+            String attrName = eppe.getAttrEPs().get(0).getAttr().getAttrName();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String dateString = sdf.format(eppe.getEpBookDate());
+            message.setSubject("Your express pass from Coral Island Resort: " +attrName+" "+ eppe.getEppId());
+            String text = "Thank you for booking express pass for Coral Island Resort Attraction services!"
                     + "\nYour Ticket ID is " + eppe.getEppId()
-                    + "\nTicket purchase date is " + eppe.getEpBookDate()
+                    + "\nTicket purchase date is " + dateString
                     + "\nThe fee of tickets you have purchased is " + eppe.getEpFee()
                     + "\nPlease refer to the attachment for your e-ticket: print the pdf file and bring it on the show date"
                     + "\nThank you for your support!"
                     + "\n\n\n For any queries, please call (+65)9272-8760";
-
+            
+            String textForMobile="Thank you for booking express pass for Coral Island Resort Attraction services!"
+                    + "\nYour Ticket ID is " + eppe.getEppId()
+                    + "\nTicket purchase date is " + dateString
+                    + "\nThe fee of tickets you have purchased is " + eppe.getEpFee();
 
             String INPUTFILE = createTicketExpress(eppe);
 
@@ -775,7 +787,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             System.out.println("Sending");
             Transport.send(message);
             Date today = new Date();
-            memberMessageSessionBean.createNewMessage(toEmailAddress, "Your Attraction Ticket Purchase", text, "bookingSummary", today);
+            memberMessageSessionBean.createNewMessage(toEmailAddress, "Your Attraction Ticket Purchase", textForMobile, "bookingSummary", today);
             System.out.println("Done");
 
         } catch (MessagingException e) {
@@ -1076,7 +1088,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         return OUTPUTFILE;
     }
 
-    private String createTicket(TicketPurchaseEntity tpe) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+    public String createTicket(TicketPurchaseEntity tpe) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
 
         //Below generate a PDF file 
         Document document;
@@ -1243,11 +1255,11 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
     }
 
-    private String createTicketExpress(ExpressPassPurchaseEntity eppe) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+    public String createTicketExpress(ExpressPassPurchaseEntity eppe) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\ExpressTicketReservation "
+        String OUTPUTFILE = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf "
                 + eppe.getEppId() + ".pdf";
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
@@ -1266,9 +1278,12 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 Font.BOLDITALIC);
 
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        String imagePath = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String dateString = sdf.format(eppe.getEpBookDate());
 
         Paragraph preface = new Paragraph();
         addEmptyLine(preface, 1);
@@ -1320,11 +1335,20 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             }
 
             table.addCell("Date");
-            table.addCell(eppe.getEpBookDate().toString());
+            table.addCell(dateString);
             table.addCell("Price");
             table.addCell(Double.toString(eppe.getEpFee()));
         }
         document.add(table);
+        
+        Long eppId = eppe.getEppId();
+        String eppIdString = generateBarcodeSessionBean.makeToSevenDigit(String.valueOf(eppId));
+        System.out.println("eppIdString: " + eppIdString);
+        String ticketPath = "C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + eppIdString + ".jpg";
+        System.out.println("ticketPath: " + ticketPath);
+
+        Image barcode = Image.getInstance(ticketPath);
+        document.add(barcode);
         document.close();
 
         return OUTPUTFILE;

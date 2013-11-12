@@ -14,8 +14,10 @@ import CRMS.entity.CouponEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.session.CouponSessionBean;
+import CRMS.session.GenerateBarcodeSessionBean;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
+import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,6 +40,10 @@ import javax.faces.event.ActionEvent;
 @ViewScoped
 public class expressPassPurchaseManagedBean {
     @EJB
+    private GenerateBarcodeSessionBean generateBarcodeSessionBean;
+    @EJB
+    private EmailSessionBean emailSessionBean;
+    @EJB
     private CouponSessionBean couponSessionBean;
     @EJB
     private MemberTransactionSessionBean memberTransactionSessionBean;
@@ -49,6 +55,7 @@ public class expressPassPurchaseManagedBean {
     private AttractionSessionBean attractionSessionBean;
     @EJB
     private MemberSessionBean memberSessionBean;
+    
     
     
     private ExpressPassPurchaseEntity epp=new ExpressPassPurchaseEntity();
@@ -148,7 +155,11 @@ public class expressPassPurchaseManagedBean {
                 memberSessionBean.updateMember(member);
                 System.out.println("member updated");
             }
-        }catch (Exception e){
+            generateBarcodeSessionBean.generate(String.valueOf(epp.getEppId()));
+            String inputfile=emailSessionBean.createTicketExpress(epp);
+            System.out.println("ticket purchase success!");
+        }
+        catch (Exception e){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when purchase express pass", ""));
             return;
         }
@@ -235,6 +246,9 @@ public class expressPassPurchaseManagedBean {
                     System.out.println("member updated");
                 }    
             }
+            generateBarcodeSessionBean.generate(String.valueOf(epp.getEppId()));
+            String inputfile=emailSessionBean.createTicketExpress(epp);
+            System.out.println("ticket purchase success!");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when purchase ticket", ""));
             return;

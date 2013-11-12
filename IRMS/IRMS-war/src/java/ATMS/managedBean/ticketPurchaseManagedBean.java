@@ -15,8 +15,10 @@ import CRMS.entity.CouponEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.session.CouponSessionBean;
+import CRMS.session.GenerateBarcodeSessionBean;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
+import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,6 +43,10 @@ import javax.faces.event.ActionEvent;
 @ViewScoped
 public class ticketPurchaseManagedBean {
     @EJB
+    private GenerateBarcodeSessionBean generateBarcodeSessionBean;
+    @EJB
+    private EmailSessionBean emailSessionBean;
+    @EJB
     private CouponSessionBean couponSessionBean;
     @EJB
     private MemberTransactionSessionBean memberTransactionSessionBean;
@@ -52,6 +58,8 @@ public class ticketPurchaseManagedBean {
     private TicketSessionBean ticketSessionBean;
     @EJB
     private TicketPurchaseSessionBean ticketPurchaseSessionBean;
+    
+    
     
     private TicketPurchaseEntity tp = new TicketPurchaseEntity();
     private Long attrTicketId;
@@ -165,6 +173,9 @@ public class ticketPurchaseManagedBean {
             else{
                     System.out.println("member email is not entered");
                 }
+            
+            generateBarcodeSessionBean.generate(String.valueOf(tp.getTpId()));
+            String inputfile=emailSessionBean.createTicket(tp);
             System.out.println("ticket purchase success!");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when purchase ticket", ""));
@@ -259,6 +270,9 @@ public class ticketPurchaseManagedBean {
                     System.out.println("member updated");
                 }    
             }
+            generateBarcodeSessionBean.generate(String.valueOf(tp.getTpId()));
+            String inputfile=emailSessionBean.createTicket(tp);
+            System.out.println("ticket purchase success!");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when purchase ticket", ""));
             return;
