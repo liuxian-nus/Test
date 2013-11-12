@@ -3,10 +3,18 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="./../Template/generalTemplate.xhtml"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:define name="content">
         <f:view beforePhase="#{evaluationManagedBean.createShareOfWallet}">
+            <h:outputText value="Share of Wallet (SOW): " style="30px" />
+            <br />                    
+            <br />
+            - Proportion of category value accounted for by a department within its base of customers <br />
+            - Important measure of customer’s relative spending 
+            <br />
+            <br />
             <p:pieChart id="custom" value="#{evaluationManagedBean.pieModel}" legendPosition="e" fill="false" showDataLabels="true"  
                         title="Share of Wallet" style="width:400px;height:300px" sliceMargin="5" diameter="150"/>  
         </f:view>

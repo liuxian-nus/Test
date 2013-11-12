@@ -9,8 +9,15 @@
     <ui:define name="content">
         <h:form id="form" prependId="false"> 
             <p:growl id="growl" showDetail="true" sticky="true" /> 
-            <p:panel id="panel" header="Members' size of wallet (SOW)">
 
+            <p:panel id="panel" header="Members' size of wallet (SOW)">
+                <h:outputText value="Size of Wallet (SOW): " style="30px" />
+                <br />                    
+                <br />
+                <h:outputText value="- Amount of customer’s total spending in the resort " style="30px" /><br />
+                <h:outputText value="- Critical measure for customer-centric organization : larger wallet sizes indicate more revenues and profits " style="30px" />
+                <br />
+                <br />
                 <p:dataTable id="size" value="#{evaluationManagedBean.memberSizeOfWallet}" var="size"
                              paginator="true" rows="10" draggableColumns="true" scrollable="true" 
                              resizableColumns="true">

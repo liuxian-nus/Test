@@ -8,11 +8,18 @@
 
     <ui:define name="content">
         <p:tabView id="tabView">  
-
-
             <p:tab id="tab1" title="Add RFM Model">
                 <h:form id="form1">
                     <p:growl id="msg" showDetail="true" sticky="true"/>
+                    <h:outputText value="RFM Model: " style="30px" />
+                    <br />                    
+                    <br />
+                    - Recency : How long it has been since a customer last placed an order with the company?<br />
+                    - Frequency : How often a customer orders from the company in a certain defined period?<br />
+                    - Monetary Value : Amount that a customer spends on an average transaction<br />
+                    - Evaluate RFM value to target high-value customers : the larger the value, the more valuable the customer<br />
+                    <br />
+                    <br />
                     <h:panelGrid columns="2"> 
                         <h:outputText value="Model Number: " />
                         <h:inputText required="true" requiredMessage="Model number cannot be empty" value="#{evaluationManagedBean.selectedRfmModel.id}" style="margin-bottom:10px;">
@@ -134,6 +141,13 @@
 
             <p:tab id="tab4" title="Calculate Customer Life Value">  
                 <h:form id="lifeValueform">
+                    <h:outputText value="Customer Life Value (CLV): " style="30px" />
+                    <br />                    
+                    <br />
+                    - Value of a customer determined based on total contribution toward profits by a customer in the past  <br />
+                    - Transaction is adjusted for Time Value of Money based on a risk free rate of US 10 year government bond yield  <br />
+                    <br />
+                    <br />
                     <h:panelGrid columns="2">
                         <h:outputText value="Member Email: "/>
                         <p:autoComplete id="email" value="#{evaluationManagedBean.memberEmail}" required="true" requiredMessage="Email Cannot be empty"  
