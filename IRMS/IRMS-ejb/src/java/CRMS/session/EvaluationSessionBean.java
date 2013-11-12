@@ -371,7 +371,7 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         List<MemberEntity> resultList = new ArrayList();
 
         while (itr2.hasNext()) {
-            MemberEntity current = itr.next();
+            MemberEntity current = itr2.next();
             double currentSizeOfWallet = this.calculateSizeOfWallet(current.getMemberEmail());
             if (currentSizeOfWallet >= tieredValue) {
                 resultList.add(current);
@@ -408,7 +408,7 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         List<MemberEntity> resultList = new ArrayList();
 
         while (itr2.hasNext()) {
-            MemberEntity current = itr.next();
+            MemberEntity current = itr2.next();
             double currentShareOfWallet = this.calculateShareOfWallet(current.getMemberEmail(), mtDepartment);
             if (currentShareOfWallet >= tieredValue) {
                 resultList.add(current);
