@@ -6,6 +6,7 @@ package SMMS.session;
 
 import Exception.ExistException;
 import SMMS.entity.BillEntity;
+import SMMS.entity.BillItemEntity;
 import SMMS.entity.ContractEntity;
 import SMMS.entity.OutletTransactionEntity;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
     private SessionContext ctx;
     private BillEntity bill = new BillEntity();
     private ContractEntity contract;
+    private BillItemEntity item;
 
     public MerchantBillSessionBean() {
     }
@@ -157,6 +159,12 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public BillItemEntity addBillItem(BillItemEntity item) {
+        em.persist(item);
+        return item;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public void removeBill(BillEntity bill) throws ExistException {
         if (bill == null) {
@@ -171,9 +179,15 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public BillEntity updateBill(BillEntity bill) throws ExistException {
-       
+
         em.merge(bill);
         return bill;
+    }
+    
+    
+    public BillItemEntity updateBillItem(BillItemEntity item){
+        em.merge(item);
+        return item;
     }
 
     @Override
@@ -270,7 +284,7 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
     @Override
     public List<BillEntity> getPaidBillsByMerchant(String merchantId) {
-       System.err.println("in get bill by merchant session bean");
+        System.err.println("in get bill by merchant session bean");
         Query q = em.createQuery("SELECT m FROM BillEntity m");
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
@@ -298,6 +312,18 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
         return TransactionList;
     }
 
+     public BillItemEntity addBillItemToBill(Long billId, Long itemId) throws ExistException {
+        bill = em.find(BillEntity.class, billId);
+        item = em.find(BillItemEntity.class, itemId);
+        if (item == null) {
+            throw new ExistException("ContractSessionBean-->ExistException-->Invalid bill item!");
+        }
+        bill.addBillItem(item);
+        em.merge(bill);
+        System.out.println("BillSessionBean--> " + bill.getBillId() + " new include new service " + bill.getBillItem().size());
+        return item;
+    }
+     
     @Override
     public BillEntity getBillById(Long billId) throws ExistException {
         bill = em.find(BillEntity.class, billId);
@@ -305,6 +331,14 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
             throw new ExistException("Bill does not exist!");
         }
         return bill;
+    }
+
+    public BillItemEntity getItem() {
+        return item;
+    }
+
+    public void setItem(BillItemEntity item) {
+        this.item = item;
     }
 
     @Override

@@ -5,6 +5,7 @@
 package SMMS.managedbean;
 
 import SMMS.entity.BillEntity;
+import SMMS.entity.BillItemEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +23,15 @@ public class BillResultManagedBean {
 
     private BillEntity bill;
     private List<BillEntity> bills;
+    private List<BillItemEntity> selectedBills;
+
+    public List<BillItemEntity> getSelectedBills() {
+        return selectedBills;
+    }
+
+    public void setSelectedBills(List<BillItemEntity> selectedBills) {
+        this.selectedBills = selectedBills;
+    }
 
     /**
      * Creates a new instance of BillResultManagedBean
@@ -29,9 +39,8 @@ public class BillResultManagedBean {
     public BillResultManagedBean() {
         bill = new BillEntity();
         bills = new ArrayList<BillEntity>();
+        selectedBills = new ArrayList<BillItemEntity>();
     }
-
-    
 
     public void initViewSelect(PhaseEvent event) {
 
@@ -46,6 +55,13 @@ public class BillResultManagedBean {
 //     
     }
 
+    public void initViewSelect3(PhaseEvent event) {
+
+        selectedBills = (List<BillItemEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("thisBills");
+        System.out.println("in init bean" + selectedBills.size());
+        //        request.getSession().setAttribute("roomId", thisRoom.getRoomId());
+    }
+
     public BillEntity getBill() {
         return bill;
     }
@@ -53,7 +69,7 @@ public class BillResultManagedBean {
     public void setBill(BillEntity bill) {
         this.bill = bill;
     }
-    
+
     public List<BillEntity> getBills() {
         return bills;
     }

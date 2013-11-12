@@ -49,6 +49,7 @@ public class CEMSServlet extends HttpServlet {
     private List<EventServiceEntity> AVList= null;
     private List<EventServiceEntity> FLList= null;
     private List<EventServiceEntity> PEList= null;
+	private EventEntity viewedEvent;
     //private String keyword=null;
 
     /**
@@ -144,14 +145,19 @@ public class CEMSServlet extends HttpServlet {
 
             } else if ("eventList".equals(page)) {
                 System.out.println("***eventList***");
+				//List<EventEntity> events = eventSessionBean.getConfirmedEvents();
                 List<EventEntity> events = eventSessionBean.listEvents();
                 request.setAttribute("eventList", events);
                 request.getRequestDispatcher("/eventList.jsp").forward(request, response);
-            }else if ("eventInfo".equals(page)) {
-          
+            }else if (page.contains("eventInfo")) {
+				System.out.println(page.substring(10));
+				long eventId = Integer.valueOf(page.substring(10));
+				System.out.println(eventId);
+				viewedEvent = eventSessionBean.getReservation(eventId);
+				request.setAttribute("viewedEvent", viewedEvent);
                 request.getRequestDispatcher("/eventInfo.jsp").forward(request, response);
-            } else {
-                System.out.println("other page");
+            }else {
+                System.out.println("other page:" + page);
             }
         } catch (Exception e) {
             System.out.println(e);

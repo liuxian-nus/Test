@@ -46,6 +46,7 @@ public class ContracteventSessionBean implements ContracteventSessionBeanRemote 
 //        thisevent.getEventTime().setMonth(contractevent.getEventTime().getMonth() - 1);
 
         em.persist(contractevent);
+        em.flush();
         return contractevent;
     }
 

@@ -8,6 +8,7 @@ import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
 import FBMS.session.BillingSessionBean;
 import SMMS.entity.BillEntity;
+import SMMS.entity.BillItemEntity;
 import SMMS.entity.ContractEntity;
 import SMMS.session.ContractSessionBean;
 import SMMS.session.MerchantBillSessionBean;
@@ -140,6 +141,24 @@ public class OperatorBillManagedBean {
         System.out.println("email sent");
 
     }
+    
+    public void viewBill(ActionEvent event) {
+        System.out.println("No1:in displaying bean " + bill.getBillId());
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+            List<BillItemEntity> items = new ArrayList<BillItemEntity>();
+            items = bill.getBillItem();
+            System.out.println(" getting bilss" + items.size());
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisBills", items);
+            System.out.println("we are after setting parameter");
+            request.getSession().setAttribute("thisBills", items);
+            System.out.println("we are after setting contractId session attribute");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("viewBillDetail.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when viewing bill detial", ""));
+        }
+    }
 
     public void searchById(ActionEvent event) {
         System.out.println("No1:in searching bill by Id bean " + searchId);
@@ -200,6 +219,20 @@ public class OperatorBillManagedBean {
         for (Object o : merchantList) {
             ContractEntity rve = (ContractEntity) o;
             results.add((rve.getContractId()).toString());
+        }
+        System.out.println("NO5: we are in complete bean AFTER");
+        return results;
+    }
+    
+    
+    public List<String> completeBillsId() throws ExistException {
+        System.out.println("NO4: we are in ALL contracts bean BEFORE");
+        List<String> results = new ArrayList<String>();
+
+        List<BillEntity> merchantList = merchantBillSessionBean.getAllBills();
+        for (Object o : merchantList) {
+            BillEntity rve = (BillEntity) o;
+            results.add((rve.getBillId()).toString());
         }
         System.out.println("NO5: we are in complete bean AFTER");
         return results;

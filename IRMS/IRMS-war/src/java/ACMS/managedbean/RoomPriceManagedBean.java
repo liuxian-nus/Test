@@ -27,6 +27,30 @@ public class RoomPriceManagedBean {
     private RoomPriceSessionBean roomPriceSessionBean;
     private List<RoomPriceEntity> roomPriceList;
     private RoomPriceEntity thisRoomPrice;
+
+    public List<RoomPriceEntity> getRoomPriceList() {
+        return roomPriceList;
+    }
+
+    public void setRoomPriceList(List<RoomPriceEntity> roomPriceList) {
+        this.roomPriceList = roomPriceList;
+    }
+
+    public RoomPriceEntity getThisRoomPrice() {
+        return thisRoomPrice;
+    }
+
+    public void setThisRoomPrice(RoomPriceEntity thisRoomPrice) {
+        this.thisRoomPrice = thisRoomPrice;
+    }
+
+    public double getNewPrice() {
+        return newPrice;
+    }
+
+    public void setNewPrice(double newPrice) {
+        this.newPrice = newPrice;
+    }
     private double newPrice;
 
     /**

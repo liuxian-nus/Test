@@ -4,8 +4,10 @@
  */
 package SMMS.managedbean;
 
+import SMMS.entity.BillItemEntity;
 import SMMS.entity.ContractEntity;
 import SMMS.session.ContractSessionBean;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -27,6 +29,7 @@ public class ContractResultManagedBean {
     private ContractSessionBean contractSessionBean;
     private ContractEntity selectedContract;
     private ContractEntity managerSelect;
+    
 
 //    
 //    @PostConstruct
@@ -36,11 +39,10 @@ public class ContractResultManagedBean {
 //        System.err.println("after initing managerSelect" + managerSelect.getContractId());
 //        selectedContract = (ContractEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("thisContract");
 //    }
-
     public ContractResultManagedBean() {
         selectedContract = new ContractEntity();
     }
-    
+
     public ContractEntity getManagerSelect() {
         return managerSelect;
     }
@@ -64,7 +66,7 @@ public class ContractResultManagedBean {
         System.err.println("here oh lalal!!!!!!!!!!!!");
         selectedContract = (ContractEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("thisContract");
         System.out.println("In init view select event size" + selectedContract.getContractEvent().size() + "select contract ID" + selectedContract.getContractId());
-//        request.getSession().setAttribute("roomId", thisRoom.getRoomId());
+        request.getSession().setAttribute("contractId", selectedContract);
     }
 
     public void initViewSelect2(PhaseEvent event) {
@@ -75,6 +77,8 @@ public class ContractResultManagedBean {
         System.out.println("In init view select event size" + managerSelect.getContractEvent().size() + "select contract ID" + managerSelect.getContractId());
 //        request.getSession().setAttribute("roomId", thisRoom.getRoomId());
     }
+    
+     
     /**
      * Creates a new instance of ContractResultManagedBean
      */

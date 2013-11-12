@@ -40,6 +40,11 @@
                                                    icon="ui-icon ui-icon-check"  title="Send Bill to Merchant">  
                                     <f:setPropertyActionListener target="#{billPartnerManagedBean.bill}" value="#{aBill}" /> 
                                 </p:commandButton> 
+
+                                <p:commandButton   actionListener="#{billPartnerManagedBean.viewBill}" ajax="true" value="View"
+                                                   icon="ui-icon ui-icon-Tag"  title="Send Bill to Merchant">  
+                                    <f:setPropertyActionListener target="#{billPartnerManagedBean.bill}" value="#{aBill}" /> 
+                                </p:commandButton> 
                             </p:column>  
                         </p:dataTable>  
 
@@ -79,7 +84,7 @@
                             </p:column>
                             <p:column headerText="Issue Date" style="width:50px;">
                                 <h:outputText value="#{uBill.billDate}">
-                                <f:convertDateTime pattern="yyyy-mm-dd"/>
+                                    <f:convertDateTime pattern="yyyy-mm-dd"/>
                                 </h:outputText>
                             </p:column>
                             <p:column headerText="Amount" style="width:50px;">

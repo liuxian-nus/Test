@@ -46,6 +46,7 @@ public class ContractSessionBean implements ContractSessionBeanRemote {
     @Override
     public ContractEntity addContract(ContractEntity contract) {
         em.persist(contract);
+        em.flush();
         System.err.println("No3: In contractsessionbean adding contract: ");
         return contract;
     }

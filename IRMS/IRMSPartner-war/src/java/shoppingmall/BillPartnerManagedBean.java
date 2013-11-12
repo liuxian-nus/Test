@@ -8,6 +8,7 @@ import Exception.ExistException;
 import SMMS.entity.BillEntity;
 import SMMS.entity.BillItemEntity;
 import SMMS.entity.ContractEntity;
+import SMMS.session.ContractSessionBean;
 import SMMS.session.MerchantBillSessionBean;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean
 @ViewScoped
 public class BillPartnerManagedBean {
+    @EJB
+    private ContractSessionBean contractSessionBean;
 
     @EJB
     private MerchantBillSessionBean merchantBillSessionBean;
@@ -70,6 +73,22 @@ public class BillPartnerManagedBean {
         bill.setBillStatus("paid");
         merchantBillSessionBean.updateBill(bill);
         System.out.println("after updating bills" + bill.getBillStatus());
+        if ("newApproved".equals(bill.getContract().getStatus()))
+        {
+            bill.getContract().setStatus("newActive");
+            contractSessionBean.updateContract(bill.getContract());
+        }
+        if ("renewApproved".equals(bill.getContract().getStatus()))
+        {
+            bill.getContract().setStatus("renewActive");
+            contractSessionBean.updateContract(bill.getContract());
+        }
+        
+        if ("earlyTerminationApproved".equals(bill.getContract().getStatus()))
+        {
+            bill.getContract().setStatus("earlyTerminated");
+            contractSessionBean.updateContract(bill.getContract());
+        }
 
     }
 

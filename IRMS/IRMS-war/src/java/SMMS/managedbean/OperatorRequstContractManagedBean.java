@@ -47,8 +47,13 @@ public class OperatorRequstContractManagedBean {
     }
 
     public void updateContract(ActionEvent event) {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+
         System.out.println("in updating contract renew" + contract.getContractId());
         try {
+            contract = (ContractEntity) request.getSession().getAttribute("contractId");
+            System.out.println("in updating contract renew" + contract.getContractId());
             contractSessionBean.updateContract(contract);
             System.out.println("now the status is" + contract.getLast().getEventCommissionRate());
 //            cevent = contract.getLast();            

@@ -41,7 +41,7 @@
                         var item = {"title": "${item.eventName}",
                         "start": moment(startdate).format("YYYY-MM-DD"),
                         "end": moment(enddate).format("YYYY-MM-DD"),
-                        "url": "restaurant"
+                        "url": "eventInfo/${item.eventId}"
                         
                 };
                         eventList.push(item);            

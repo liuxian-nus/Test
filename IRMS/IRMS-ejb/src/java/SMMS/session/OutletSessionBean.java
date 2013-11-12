@@ -43,7 +43,7 @@ public class OutletSessionBean implements OutletSessionBeanRemote {
         System.out.println("OutletSessionBean: outlet " + outlet.getOutletName() + " is successfully updated");
         return true;
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public OutletEntity addOutlet(OutletEntity outlet) {
@@ -51,7 +51,7 @@ public class OutletSessionBean implements OutletSessionBeanRemote {
         System.out.println("OutletSessionBean: outlet " + outlet.getOutletId() + " is successfully added");
         return outlet;
     }
-    
+
     @Override
     public OutletTransactionEntity addOutletTransaction(Long otransactionId, String outletId) throws ExistException {
         otransaction = em.find(OutletTransactionEntity.class, otransactionId);
@@ -73,7 +73,6 @@ public class OutletSessionBean implements OutletSessionBeanRemote {
 //        }
 //        em.remove(outlet);
 //    }
-
     @Override
     public List<OutletEntity> getAllOutlets() {
         Query q = em.createQuery("SELECT m FROM OutletEntity m");
@@ -99,10 +98,9 @@ public class OutletSessionBean implements OutletSessionBeanRemote {
         System.err.println("in get available outlets sessionbean: outlet list size=" + OutletList.size());
         return OutletList;
     }
-    
-    
+
     @Override
-     public List<OutletEntity> getUnavailableOutlets() {
+    public List<OutletEntity> getUnavailableOutlets() {
         System.err.println("in getAvailableoutlet session bean");
         Query q = em.createQuery("SELECT m FROM OutletEntity m");
         List OutletList = new ArrayList<OutletEntity>();
@@ -115,7 +113,7 @@ public class OutletSessionBean implements OutletSessionBeanRemote {
         System.err.println("in get available outlets sessionbean: outlet list size=" + OutletList.size());
         return OutletList;
     }
-    
+
     @Override
     public OutletEntity getOutletById(int id) throws ExistException {
         System.err.println("in get outlet by id sessionbean");
@@ -125,22 +123,22 @@ public class OutletSessionBean implements OutletSessionBeanRemote {
 //        }
         return thisOutlet;
     }
-    
+
     @Override
-     public List<OutletEntity> getOutletsByType(String type) {
+    public List<OutletEntity> getOutletsByType(String type) {
         System.err.println("in get outlet by merchant session bean");
         Query q = em.createQuery("SELECT m FROM OutletEntity m where m.outletStatus='unavailable'");
         List OutletList = new ArrayList<OutletEntity>();
         for (Object o : q.getResultList()) {
             OutletEntity m = (OutletEntity) o;
-            if (m.getOutletType()==type) {
+            if (m.getOutletType() == type) {
                 OutletList.add(m);
             }
         }
         System.err.println("in get outlets by merchant sessionbean: outlet list size=" + OutletList.size());
         return OutletList;
     }
-    
+
     @Override
     public List<OutletEntity> getOutletsByMerchant(String merchantEmail) {
         System.err.println("in get outlet by merchant session bean");
@@ -148,14 +146,16 @@ public class OutletSessionBean implements OutletSessionBeanRemote {
         List OutletList = new ArrayList<OutletEntity>();
         for (Object o : q.getResultList()) {
             OutletEntity m = (OutletEntity) o;
-            if (m.getContract().getMerchant().getMerchantEmail()== merchantEmail) {
+            System.out.println("current outlet is" + m.getOutletId() + "current merchant email is" + m.getContract().getMerchant().getMerchantEmail());
+            if (m.getContract().getMerchant().getMerchantEmail().equals(merchantEmail)) {
+
                 OutletList.add(m);
             }
         }
         System.err.println("in get outlets by merchant sessionbean: outlet list size=" + OutletList.size());
         return OutletList;
     }
-    
+
     @Override
     public List<OutletTransactionEntity> getTransactions(int outletId) {
         System.err.println("in get transactions session bean");
@@ -163,7 +163,7 @@ public class OutletSessionBean implements OutletSessionBeanRemote {
         List OutletList = new ArrayList<OutletEntity>();
         for (Object o : q.getResultList()) {
             OutletTransactionEntity m = (OutletTransactionEntity) o;
-            if (m.getTransactionOutlet().getOutletId()==outletId) {
+            if (m.getTransactionOutlet().getOutletId() == outletId) {
                 OutletList.add(m);
             }
         }
