@@ -7,6 +7,7 @@ package CRMS.managedbean;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.entity.PromotionEntity;
+import CRMS.session.EvaluationSessionBean;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.PromotionSessionBean;
 import CRMS.session.VIPSessionBean;
@@ -40,6 +41,8 @@ public class promotionManagedBean {
     private MemberSessionBean memberSessionBean;
     @EJB
     private VIPSessionBean vipSessionBean;
+    @EJB
+    private EvaluationSessionBean evaluationSessionBean;
     private List<PromotionEntity> promotions = new ArrayList<PromotionEntity>();
     private List<PromotionEntity> exclusivePromotions = new ArrayList<PromotionEntity>();
     private PromotionEntity newPromotion;
@@ -47,6 +50,7 @@ public class promotionManagedBean {
     private List<MemberEntity> participateMembers = new ArrayList<MemberEntity>();
     private MemberEntity member;
     private boolean isMemberExclusive;
+    private String targetGroup;
 
     public promotionManagedBean() {
         newPromotion = new PromotionEntity();
@@ -64,8 +68,22 @@ public class promotionManagedBean {
         System.err.println("select transaction with this member: " + member.getMemberName());
     }
 
-    public void saveNewPromotion(ActionEvent event) throws IOException {
+    public void saveNewPromotion(ActionEvent event) throws IOException, ExistException {
+        System.err.println("targetGroup: " + targetGroup);
         System.err.println("Saving New promotion...");
+        if(targetGroup.equalsIgnoreCase("customers")){
+            setNotMemberExclusive();
+        }if(targetGroup.equalsIgnoreCase("members")){
+            setMemberExclusive();
+        }if(targetGroup.equalsIgnoreCase("VIPs")){
+            setVIPExclusive();
+        }if(targetGroup.equalsIgnoreCase("RFM")){
+            setRFMExclusive();
+        }if(targetGroup.equalsIgnoreCase("lifeValue")){
+            setLifeValueExclusive();
+        }if(targetGroup.equalsIgnoreCase("sizeOW")){
+            setSizeOWExclusive();
+        }
         try {
             promotionSessionBean.createPromotion(newPromotion);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New promotion saved.", ""));
@@ -86,8 +104,118 @@ public class promotionManagedBean {
         }
         return participateMembers;
     }
+    
+    public void onRowToggle(ToggleEvent event) {
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Row State " + event.getVisibility(),
+                "Model:" + ((PromotionEntity) event.getData()).getPromotionTitle());
 
-    public PromotionSessionBean getPromotionSessionBean() {
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void setMemberExclusive() throws IOException, ExistException {
+        try {
+            this.isMemberExclusive = true;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion set to target to all members.", ""));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
+        }
+    }
+
+    public void setNotMemberExclusive() throws IOException, ExistException {
+        try {
+            this.isMemberExclusive = false;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion set to target to all customers.", ""));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
+        }
+    }
+
+    public void setVIPExclusive() throws IOException, ExistException {
+        try {
+            this.isMemberExclusive = true;
+            newPromotion.setMcMemberTargets(vipSessionBean.getVIPs());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion is set to target to VIP only.", ""));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs setting target customer", ""));
+            return;
+        }
+    }
+    
+    public void setRFMExclusive() throws IOException, ExistException {
+        try {
+            this.isMemberExclusive = true;
+            newPromotion.setMcMemberTargets(evaluationSessionBean.getTieredBasedOnRFM());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion is set to target to RFM only.", ""));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs setting target customer", ""));
+            return;
+        }
+    }
+    
+    public void setLifeValueExclusive() throws IOException, ExistException {
+        try {
+            this.isMemberExclusive = true;
+            newPromotion.setMcMemberTargets(evaluationSessionBean.getTieredBasedOnCustLifeValue());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion is set to target to life value only.", ""));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs setting target customer", ""));
+            return;
+        }
+    }
+    
+     public void setSizeOWExclusive() throws IOException, ExistException {
+        try {
+            this.isMemberExclusive = true;
+            newPromotion.setMcMemberTargets(evaluationSessionBean.getTieredBasedOnSizeOfWallet());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion is set to target to size of wallet only.", ""));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs setting target customer", ""));
+            return;
+        }
+    }
+
+    public MemberSessionBean getMemberSessionBean() {
+        return memberSessionBean;
+    }
+
+    public void setMemberSessionBean(MemberSessionBean memberSessionBean) {
+        this.memberSessionBean = memberSessionBean;
+    }
+
+    public VIPSessionBean getVipSessionBean() {
+        return vipSessionBean;
+    }
+
+    public void setVipSessionBean(VIPSessionBean vipSessionBean) {
+        this.vipSessionBean = vipSessionBean;
+    }
+
+    public boolean isIsMemberExclusive() {
+        return isMemberExclusive;
+    }
+
+    public void setIsMemberExclusive(boolean isMemberExclusive) {
+        this.isMemberExclusive = isMemberExclusive;
+    }
+
+    public String getTargetGroup() {
+        return targetGroup;
+    }
+
+    public void setTargetGroup(String targetGroup) {
+        this.targetGroup = targetGroup;
+    }
+    
+        public PromotionSessionBean getPromotionSessionBean() {
         return promotionSessionBean;
     }
 
@@ -142,56 +270,8 @@ public class promotionManagedBean {
     public void setMember(MemberEntity member) {
         this.member = member;
     }
-
-    public void onRowToggle(ToggleEvent event) {
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Row State " + event.getVisibility(),
-                "Model:" + ((PromotionEntity) event.getData()).getPromotionTitle());
-
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-
+    
     public boolean isMemberExclusive() {
         return isMemberExclusive;
-    }
-
-    public void setMemberExclusive(ActionEvent event) throws IOException, ExistException {
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        try {
-            this.isMemberExclusive = true;
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion set to target to all members.", ""));
-
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
-            return;
-        }
-    }
-
-    public void setNotMemberExclusive(ActionEvent event) throws IOException, ExistException {
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        try {
-            this.isMemberExclusive = false;
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion set to target to all customers.", ""));
-
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
-            return;
-        }
-    }
-
-    public void setVIPExclusive(ActionEvent event) throws IOException, ExistException {
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        try {
-            this.isMemberExclusive = true;
-            newPromotion.setMcMemberTargets(vipSessionBean.getVIPs());
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion is set to target to VIP only.", ""));
-
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs setting target customer", ""));
-            return;
-        }
     }
 }

@@ -46,36 +46,36 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         double sizeOfWallet;
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allTrans = q.getResultList();
-        if(!allTrans.isEmpty()){
-        Iterator<MemberTransactionEntity> itr = allTrans.iterator();
-        List<MemberTransactionEntity> resultList = new ArrayList();
-        
-        while (itr.hasNext()) {
-            MemberTransactionEntity current = itr.next();
-            if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
-                resultList.add(current);
-            }
-        }
+        if (!allTrans.isEmpty()) {
+            Iterator<MemberTransactionEntity> itr = allTrans.iterator();
+            List<MemberTransactionEntity> resultList = new ArrayList();
 
-        Iterator<MemberTransactionEntity> itr2 = resultList.iterator();
-        Double memberTotal = 0.00;
-
-        if (!resultList.isEmpty()) {
-            while (itr2.hasNext()) {
-                MemberTransactionEntity current2 = itr2.next();
-                memberTotal += current2.getMtAmount();
+            while (itr.hasNext()) {
+                MemberTransactionEntity current = itr.next();
+                if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
+                    resultList.add(current);
+                }
             }
-        }
-        sizeOfWallet = memberTotal;
-        if (sizeOfWallet != 0.0) {
-            member = em.find(MemberEntity.class, memberEmail);
-            member.setSizeOfWallet(sizeOfWallet);
-            memberSessionBean.updateMember(member);
-        }
-        return sizeOfWallet;
-    }
-        else
+
+            Iterator<MemberTransactionEntity> itr2 = resultList.iterator();
+            Double memberTotal = 0.00;
+
+            if (!resultList.isEmpty()) {
+                while (itr2.hasNext()) {
+                    MemberTransactionEntity current2 = itr2.next();
+                    memberTotal += current2.getMtAmount();
+                }
+            }
+            sizeOfWallet = memberTotal;
+            if (sizeOfWallet != 0.0) {
+                member = em.find(MemberEntity.class, memberEmail);
+                member.setSizeOfWallet(sizeOfWallet);
+                memberSessionBean.updateMember(member);
+            }
+            return sizeOfWallet;
+        } else {
             return 0.00;
+        }
     }
 
     //2. JSF Done!
@@ -86,29 +86,28 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allTrans = q.getResultList();
-        if(!allTrans.isEmpty())
-        {
-        Iterator<MemberTransactionEntity> itr = allTrans.iterator();
-        List<MemberTransactionEntity> resultList = new ArrayList();
-        Double memberTotal = 0.00;
-        Double dpmtMemberTotal = 0.00;
+        if (!allTrans.isEmpty()) {
+            Iterator<MemberTransactionEntity> itr = allTrans.iterator();
+            List<MemberTransactionEntity> resultList = new ArrayList();
+            Double memberTotal = 0.00;
+            Double dpmtMemberTotal = 0.00;
 
-        while (itr.hasNext()) {
-            MemberTransactionEntity current = itr.next();
-            if (current.getMemberEmail().equals(memberEmail)) {
-                memberTotal += current.getMtAmount();
-                if (current.getMtDepartment().equalsIgnoreCase(mtDepartment)) {
-                    dpmtMemberTotal += current.getMtAmount();
+            while (itr.hasNext()) {
+                MemberTransactionEntity current = itr.next();
+                if (current.getMemberEmail().equals(memberEmail)) {
+                    memberTotal += current.getMtAmount();
+                    if (current.getMtDepartment().equalsIgnoreCase(mtDepartment)) {
+                        dpmtMemberTotal += current.getMtAmount();
+                    }
                 }
             }
-        }
-        if (memberTotal != 0) {
-            shareOfWallet = dpmtMemberTotal / memberTotal;
-        }
-        return shareOfWallet;
-    }
-        else
+            if (memberTotal != 0) {
+                shareOfWallet = dpmtMemberTotal / memberTotal;
+            }
+            return shareOfWallet;
+        } else {
             return 0.00;
+        }
     }
 
     //3. RFMMedel Done!
@@ -149,160 +148,160 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         RFMModelEntity model = getRFMModel(ModelNumber);
         System.out.println("calculateRFMValue");
         //test if model data exists
-        if(model!=null){
+        if (model != null) {
 
-        System.err.println("calculateRFMValue: " + memberEmail + ModelNumber);
+            System.err.println("calculateRFMValue: " + memberEmail + ModelNumber);
 
-        Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
-        List<MemberTransactionEntity> allTrans = q.getResultList();
-        
-        //test if data has been inserted
-        if(allTrans.isEmpty())
-            return 0;
-        Iterator<MemberTransactionEntity> itr = allTrans.iterator();
-        double memberMoneyTotal = 0.00;
-        double moneyTotal = 0.00;
-        Integer memberVisitTotal = 0;
-        Integer visitTotal = 0;
+            Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
+            List<MemberTransactionEntity> allTrans = q.getResultList();
+
+            //test if data has been inserted
+            if (allTrans.isEmpty()) {
+                return 0;
+            }
+            Iterator<MemberTransactionEntity> itr = allTrans.iterator();
+            double memberMoneyTotal = 0.00;
+            double moneyTotal = 0.00;
+            Integer memberVisitTotal = 0;
+            Integer visitTotal = 0;
 //        boolean memberFrequent = false;
-        Date memberLastVisitDate = new Date(1900, 1, 1);
-        Date currentTransDate;
+            Date memberLastVisitDate = new Date(1900, 1, 1);
+            Date currentTransDate;
 
-        //get a description statistics
-        DescriptiveStatistics stats = new DescriptiveStatistics();
+            //get a description statistics
+            DescriptiveStatistics stats = new DescriptiveStatistics();
 
-        while (itr.hasNext()) {
-            MemberTransactionEntity current = itr.next();
-            moneyTotal += current.getMtAmount();
-            visitTotal += 1;
+            while (itr.hasNext()) {
+                MemberTransactionEntity current = itr.next();
+                moneyTotal += current.getMtAmount();
+                visitTotal += 1;
 
-            //below test the value
-            System.out.println("the money total for all members is " + moneyTotal);
-            System.out.println("the visit total for all members is " + visitTotal);
+                //below test the value
+                System.out.println("the money total for all members is " + moneyTotal);
+                System.out.println("the visit total for all members is " + visitTotal);
 
-            //add values to a stats
-            stats.addValue(current.getMtAmount());
-            //below test the value
-            System.out.println("Stats value is " + stats.getSum());
+                //add values to a stats
+                stats.addValue(current.getMtAmount());
+                //below test the value
+                System.out.println("Stats value is " + stats.getSum());
 
-            if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
-                memberMoneyTotal += current.getMtAmount();
-                memberVisitTotal += 1;
-                currentTransDate = current.getMtDate();
+                if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
+                    memberMoneyTotal += current.getMtAmount();
+                    memberVisitTotal += 1;
+                    currentTransDate = current.getMtDate();
 
-                System.out.println("memberMoneyTotal" + memberMoneyTotal);
-                System.out.println("memberVisitTotal" + memberVisitTotal);
-                System.out.println("currentTransDate" + currentTransDate);
+                    System.out.println("memberMoneyTotal" + memberMoneyTotal);
+                    System.out.println("memberVisitTotal" + memberVisitTotal);
+                    System.out.println("currentTransDate" + currentTransDate);
 
-                if (currentTransDate.after(memberLastVisitDate)) {
-                    memberLastVisitDate = currentTransDate;
-                    System.out.println("lastVisitDate Changed");
+                    if (currentTransDate.after(memberLastVisitDate)) {
+                        memberLastVisitDate = currentTransDate;
+                        System.out.println("lastVisitDate Changed");
+                    }
                 }
             }
-        }
 
-        //calculate m
-        double memberAverageMoney = 0.00;
-        if (memberVisitTotal != 0) {
-            memberAverageMoney = memberMoneyTotal / memberVisitTotal;
-        }
-        //test
-        System.out.println("memberAverageMoney: " + memberAverageMoney);
+            //calculate m
+            double memberAverageMoney = 0.00;
+            if (memberVisitTotal != 0) {
+                memberAverageMoney = memberMoneyTotal / memberVisitTotal;
+            }
+            //test
+            System.out.println("memberAverageMoney: " + memberAverageMoney);
 
-        if (memberAverageMoney >= stats.getPercentile(80)) {
-            m = 5;
-        }
-        if (memberAverageMoney >= stats.getPercentile(60) && memberAverageMoney < stats.getPercentile(80)) {
-            m = 4;
-        }
-        if (memberAverageMoney >= stats.getPercentile(40) && memberAverageMoney < stats.getPercentile(60)) {
-            m = 3;
-        }
-        if (memberAverageMoney >= stats.getPercentile(20) && memberAverageMoney < stats.getPercentile(40)) {
-            m = 2;
-        }
-        if (memberAverageMoney < stats.getPercentile(20)) {
-            m = 1;
-        }
-        //test
-        System.out.println("m: " + m);
+            if (memberAverageMoney >= stats.getPercentile(80)) {
+                m = 5;
+            }
+            if (memberAverageMoney >= stats.getPercentile(60) && memberAverageMoney < stats.getPercentile(80)) {
+                m = 4;
+            }
+            if (memberAverageMoney >= stats.getPercentile(40) && memberAverageMoney < stats.getPercentile(60)) {
+                m = 3;
+            }
+            if (memberAverageMoney >= stats.getPercentile(20) && memberAverageMoney < stats.getPercentile(40)) {
+                m = 2;
+            }
+            if (memberAverageMoney < stats.getPercentile(20)) {
+                m = 1;
+            }
+            //test
+            System.out.println("m: " + m);
 
-        //calculate f
+            //calculate f
 
-        double fValue = ((memberVisitTotal) * 1.0) / visitTotal;
+            double fValue = ((memberVisitTotal) * 1.0) / visitTotal;
 
-        if (fValue >= 0.1) {
-            f = 5;
-        }
-        if (fValue >= 0.05 && fValue < 0.1) {
-            f = 4;
-        }
-        if (fValue >= 0.01 && fValue < 0.05) {
-            f = 3;
-        }
-        if (fValue >= 0.005 && fValue < 0.01) {
-            f = 2;
-        }
-        if (fValue < 0.005) {
-            f = 1;
-        }
+            if (fValue >= 0.1) {
+                f = 5;
+            }
+            if (fValue >= 0.05 && fValue < 0.1) {
+                f = 4;
+            }
+            if (fValue >= 0.01 && fValue < 0.05) {
+                f = 3;
+            }
+            if (fValue >= 0.005 && fValue < 0.01) {
+                f = 2;
+            }
+            if (fValue < 0.005) {
+                f = 1;
+            }
 
-        //test
-        System.out.println("f: " + f);
+            //test
+            System.out.println("f: " + f);
 
-        //calculate r
-        Calendar currentDate = Calendar.getInstance();
-        currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 10 days
-        Date dateR5 = currentDate.getTime();
-        currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 20 days
-        Date dateR4 = currentDate.getTime();
-        currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 30 days
-        Date dateR3 = currentDate.getTime();
-        currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 40 days
-        Date dateR2 = currentDate.getTime();
-        currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 50 days
-        Date dateR1 = currentDate.getTime();
+            //calculate r
+            Calendar currentDate = Calendar.getInstance();
+            currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 10 days
+            Date dateR5 = currentDate.getTime();
+            currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 20 days
+            Date dateR4 = currentDate.getTime();
+            currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 30 days
+            Date dateR3 = currentDate.getTime();
+            currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 40 days
+            Date dateR2 = currentDate.getTime();
+            currentDate.add(Calendar.DAY_OF_YEAR, -10);//within 50 days
+            Date dateR1 = currentDate.getTime();
 
-        if (memberLastVisitDate.after(dateR5)) {
-            r = 5;
-        }
-        if (memberLastVisitDate.after(dateR4) && (memberLastVisitDate.before(dateR5) || memberLastVisitDate.equals(dateR5))) {
-            r = 4;
-        }
-        if (memberLastVisitDate.after(dateR3) && (memberLastVisitDate.before(dateR4) || memberLastVisitDate.equals(dateR4))) {
-            r = 3;
-        }
-        if (memberLastVisitDate.after(dateR2) && (memberLastVisitDate.before(dateR3) || memberLastVisitDate.equals(dateR3))) {
-            r = 2;
-        }
-        if ((memberLastVisitDate.before(dateR2) || memberLastVisitDate.equals(dateR2))) {
-            r = 1;
-        }
+            if (memberLastVisitDate.after(dateR5)) {
+                r = 5;
+            }
+            if (memberLastVisitDate.after(dateR4) && (memberLastVisitDate.before(dateR5) || memberLastVisitDate.equals(dateR5))) {
+                r = 4;
+            }
+            if (memberLastVisitDate.after(dateR3) && (memberLastVisitDate.before(dateR4) || memberLastVisitDate.equals(dateR4))) {
+                r = 3;
+            }
+            if (memberLastVisitDate.after(dateR2) && (memberLastVisitDate.before(dateR3) || memberLastVisitDate.equals(dateR3))) {
+                r = 2;
+            }
+            if ((memberLastVisitDate.before(dateR2) || memberLastVisitDate.equals(dateR2))) {
+                r = 1;
+            }
 
-        //test
-        System.out.println("r: " + r);
+            //test
+            System.out.println("r: " + r);
 
-        double RFMValueAbsolute = model.getFrequency() * f + model.getMonetary() * m + model.getRecency() * r;
+            double RFMValueAbsolute = model.getFrequency() * f + model.getMonetary() * m + model.getRecency() * r;
 
-        //test
-        System.out.println("RFMValueAbsolute" + RFMValueAbsolute);
+            //test
+            System.out.println("RFMValueAbsolute" + RFMValueAbsolute);
 
-        double fullRFMValueAbsolute = model.getFrequency() * 5 + model.getMonetary() * 5 + model.getRecency() * 5;
+            double fullRFMValueAbsolute = model.getFrequency() * 5 + model.getMonetary() * 5 + model.getRecency() * 5;
 
-        //test
-        System.out.println("fullRFMValueAbsolute" + fullRFMValueAbsolute);
+            //test
+            System.out.println("fullRFMValueAbsolute" + fullRFMValueAbsolute);
 
-        RFMValue = (int) ((RFMValueAbsolute / fullRFMValueAbsolute) * 5);
+            RFMValue = (int) ((RFMValueAbsolute / fullRFMValueAbsolute) * 5);
 
-        //test
-        System.out.println("RFMValue" + RFMValue);
+            //test
+            System.out.println("RFMValue" + RFMValue);
 
-        return RFMValue;
-    }
-        else
+            return RFMValue;
+        } else {
             return 0;
+        }
     }
-    
 
     //到这里啦！
     @Override
@@ -317,11 +316,12 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allTrans = q.getResultList();
-        
+
         //test if list is empty
-        if(allTrans.isEmpty())
+        if (allTrans.isEmpty()) {
             return 0;
-        
+        }
+
         Iterator<MemberTransactionEntity> itr = allTrans.iterator();
 
         while (itr.hasNext()) {
@@ -342,11 +342,12 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List<MemberEntity> allMembers = q.getResultList();
-        
+
         //test if member data has been inserted
-        if(allMembers.isEmpty())
+        if (allMembers.isEmpty()) {
             return null;
-        
+        }
+
         Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
@@ -382,11 +383,12 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List<MemberEntity> allMembers = q.getResultList();
-        
+
         //test if member data has been added
-        if(allMembers.isEmpty())
+        if (allMembers.isEmpty()) {
             return null;
-        
+        }
+
         Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
@@ -424,10 +426,11 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
 
         List<MemberEntity> allMembers = q.getResultList();
-                
+
         //test if member data has been added
-        if(allMembers.isEmpty())
+        if (allMembers.isEmpty()) {
             return null;
+        }
         Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
@@ -465,11 +468,12 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List<MemberEntity> allMembers = q.getResultList();
-        
+
         //test if member data has been added
-        if(allMembers.isEmpty())
+        if (allMembers.isEmpty()) {
             return null;
-        
+        }
+
         Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
@@ -508,40 +512,44 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         if (thisP == null) {
             return 0.00;
         }
-        
+
         //Test
-        System.out.println("thisP " +thisP.getPromotionCode());
+        System.out.println("thisP " + thisP.getPromotionCode());
 
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allMemberTrans = q.getResultList();
-        
+
         //Test if membertransaction data has been added
-        if(allMemberTrans.isEmpty())
+        if (allMemberTrans.isEmpty()) {
             return 0.00;
-        
+        }
+
         Iterator<MemberTransactionEntity> itr = allMemberTrans.iterator();
         List<MemberTransactionEntity> respondedSales = new ArrayList();
         List<MemberEntity> respondedTargets = new ArrayList();
 
         while (itr.hasNext()) {
             MemberTransactionEntity current = itr.next();
-            if (current.getMtPromotion().equalsIgnoreCase(thisP.getPromotionCode())) {
-                respondedSales.add(current);
-                MemberEntity currentMember = em.find(MemberEntity.class, current.getMemberEmail());
-                if (!respondedTargets.contains(currentMember)) {
-                    respondedTargets.add(currentMember);
+            if (current.getMtPromotion() != null) {
+                if (current.getMtPromotion().equalsIgnoreCase(thisP.getPromotionCode())) {
+                    respondedSales.add(current);
+                    MemberEntity currentMember = em.find(MemberEntity.class, current.getMemberEmail());
+                    if (!respondedTargets.contains(currentMember)) {
+                        respondedTargets.add(currentMember);
+                    }
                 }
             }
         }
 
         int expectedSize = thisP.getMcMemberTargets().size();
-        
+
         //test
         System.out.println("expectedSize" + expectedSize);
 
 //        responseRate = respondedSales.size()/expectedSize;
-        if(expectedSize!=0)
-        responseRate = respondedTargets.size() / expectedSize;
+        if (expectedSize != 0) {
+            responseRate = respondedTargets.size() / expectedSize;
+        }
         if (responseRate != 0.0) {
             thisP.setResponseRate(responseRate);
         }
