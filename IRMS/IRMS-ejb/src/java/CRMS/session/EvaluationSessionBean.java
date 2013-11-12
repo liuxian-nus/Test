@@ -29,7 +29,7 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
  */
 @Stateless
 @LocalBean
-public class EvaluationSessionBean {
+public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
     @EJB
     MemberSessionBean memberSessionBean;
@@ -40,6 +40,7 @@ public class EvaluationSessionBean {
     RFMModelEntity rfmModel;
 
     //1. JSF Done!
+    @Override
     public double calculateSizeOfWallet(String memberEmail) {
         System.out.println("calculateSizeOfWallet");
         double sizeOfWallet;
@@ -75,6 +76,7 @@ public class EvaluationSessionBean {
     }
 
     //2. JSF Done!
+    @Override
     public double calculateShareOfWallet(String memberEmail, String mtDepartment) {
         double shareOfWallet = 0.00;
         System.out.println("calculateShareOfWallet");
@@ -102,16 +104,19 @@ public class EvaluationSessionBean {
     }
 
     //3. RFMMedel Done!
+    @Override
     public RFMModelEntity addRFMModel(RFMModelEntity rfmModel) {
         em.persist(rfmModel);
         return rfmModel;
     }
     //买一送一，不新建session bean了
+    @Override
     public List<RFMModelEntity> getAllRFMs() throws NoResultException {
         Query q = em.createQuery("SELECT m FROM RFMModelEntity m");
         return q.getResultList();
     }
     //Model number currently is 1 since only one model is available
+    @Override
     public boolean setRFMParameter(Double Recency, Double Frequency, Double Monetary, int ModelNumber) {
         boolean completed = false;
         RFMModelEntity current = em.find(RFMModelEntity.class, ModelNumber);
@@ -124,6 +129,7 @@ public class EvaluationSessionBean {
         }
         return completed;
     }
+    @Override
     public Integer calculateRFMValue(String memberEmail, int ModelNumber) throws ExistException {
         Integer RFMValue = 0;
         double f = 0.00;//frequency
@@ -244,6 +250,7 @@ public class EvaluationSessionBean {
     }
 
     //到这里啦！
+    @Override
     public double calculateCustLifeValue(String memberEmail) {
         double custLifeValue = 0.00;
         double discountRate = 0.05;
@@ -269,6 +276,7 @@ public class EvaluationSessionBean {
         return custLifeValue;
     }
 
+    @Override
     public List<MemberEntity> getTieredBasedOnRFM() throws ExistException {
         List<MemberEntity> tiered = new ArrayList();
 
@@ -303,6 +311,7 @@ public class EvaluationSessionBean {
         return tiered;
     }
 
+    @Override
     public List<MemberEntity> getTieredBasedOnCustLifeValue() {
         List<MemberEntity> tiered = new ArrayList();
 
@@ -338,6 +347,7 @@ public class EvaluationSessionBean {
         return tiered;
     }
 
+    @Override
     public List<MemberEntity> getTieredBasedOnSizeOfWallet() {
         List<MemberEntity> tiered = new ArrayList();
 
@@ -374,6 +384,7 @@ public class EvaluationSessionBean {
     }
 
     //Identify the most valuable customer to each department
+    @Override
     public List<MemberEntity> getTieredBasedOnShareOfWallet(String mtDepartment) {
         List<MemberEntity> tiered = new ArrayList();
 
@@ -410,6 +421,7 @@ public class EvaluationSessionBean {
     }
 
     //Below evaluate the response rate of a promotion
+    @Override
     public double evaluatePromotion(Long promotionId) throws ExistException {
         double responseRate = 0.00;
         PromotionEntity thisP = em.find(PromotionEntity.class, promotionId);
@@ -442,12 +454,14 @@ public class EvaluationSessionBean {
         return responseRate;
     }
 
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    @Override
     public RFMModelEntity getRFMModel(int ModelNumber) throws ExistException {
         RFMModelEntity current = em.find(RFMModelEntity.class, ModelNumber);
         if (current != null) {
@@ -457,6 +471,7 @@ public class EvaluationSessionBean {
         }
     }
     
+    @Override
     public boolean findRFMModel(int ModelNumber) throws ExistException {
         RFMModelEntity current = em.find(RFMModelEntity.class, ModelNumber);
         if (current == null) {
