@@ -489,6 +489,15 @@
                                 
                                 <p></p>
                                 <div class="row">
+                                    <div class="large-3 large columns">
+                                        <label for="right-label" class="left-align,inline"><strong>Coupon Code</strong></label>
+                                    </div>
+                                    <div class="large-3 large columns">
+                                        <input type="text" value="0" placeholder="Coupon Code" name="couponId">
+                                    </div>
+                                    <div class="large-6 large columns"><p>${message}</p></div>
+                                </div>
+                                <div class="row">
                                     <div class="large-3 columns">
                                         <label for="customDropdown"><strong>Date</strong></label>
                                     </div>
@@ -955,6 +964,16 @@
                                     </select>
                                 </div>
                             </div>
+                                <p></p>
+                                <div class="row">
+                                    <div class="large-3 large columns">
+                                        <label for="right-label" class="left-align,inline"><strong>Coupon Code</strong></label>
+                                    </div>
+                                    <div class="large-3 large columns">
+                                        <input type="text" placeholder="Coupon Code" name="couponId">
+                                    </div>
+                                    <div class="large-6 large columns"></div>
+                                </div>
                              
                              
                              <input type="hidden" name="attrId" value="IT"/>
@@ -1179,6 +1198,13 @@
                              <input type="hidden" name="epq1" value="0"/>
                              <input type="hidden" name="epq2" value="0"/>
                              <input type="hidden" name="epq3" value="0"/>
+                             <input type="hidden" name="epq4" value="0"/>
+                             <input type="hidden" name="epq5" value="0"/>
+                             <input type="hidden" name="epq6" value="0"/>
+                             <input type="hidden" name="epq7" value="0"/>
+                             <input type="hidden" name="epq8" value="0"/>
+                             <input type="hidden" name="epq9" value="0"/>
+      
                              <div class="row">
                                  <input type="submit" class="small button" value="Submit">
                              </div>

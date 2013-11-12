@@ -37,6 +37,7 @@ public class TicketPurchaseEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     Date attrTicketBookDate =new Date();
     private String attrTPStatus;
+    private String attrTicketPurchaseRemarks;
 
     public TicketPurchaseEntity() {
     }
@@ -97,5 +98,15 @@ public class TicketPurchaseEntity implements Serializable {
     public void setAttrTPStatus(String attrTPStatus) {
         this.attrTPStatus = attrTPStatus;
     }
+
+    public String getAttrTicketPurchaseRemarks() {
+        return attrTicketPurchaseRemarks;
+    }
+
+    public void setAttrTicketPurchaseRemarks(String attrTicketPurchaseRemarks) {
+        this.attrTicketPurchaseRemarks = attrTicketPurchaseRemarks;
+    }
+    
+    
       
 }

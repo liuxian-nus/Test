@@ -4,6 +4,7 @@
     Author     : Jieqiong
 --%>
 
+<%@page import="CRMS.entity.CouponEntity"%>
 <%@page import="ATMS.entity.AttrExpressPassEntity"%>
 <%@page import="ATMS.entity.ExpressPassPurchaseEntity"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -53,6 +54,14 @@
         }
         session.setAttribute("eppurchase", eppurchase);
     }
+    CouponEntity coupon=(CouponEntity)session.getAttribute("coupon");
+    String couponInfo="";
+    if(coupon==null){
+        couponInfo="You have not used any coupon";
+    }
+    else{
+        couponInfo="You have used coupon "+coupon.getCouponId()+" to get a "+coupon.getCouponType().getDiscount()+" discount.";
+    }
 %>
 <html>
     <head>
@@ -71,6 +80,9 @@
             <h5>Express pass: </h5>
             <h6><%=epInfo%></h6>
             <h6>Fee: <%=eppurchase.getEpFee()%></h6>
+            </br>
+            <h5>Coupon: </h5>
+            <h6><%=couponInfo%></h6>
             </br>
             <h6>Date: <%=dateString%></h6>
             <h6>Total Fee: <%=tp.getAttrTicketFee()+eppurchase.getEpFee()%></h6>

@@ -101,13 +101,14 @@ public class TicketPurchaseSessionBean {
         System.out.println("status updated!");
     }
     
-    public void updatePurchase(Long tpId, List<AttrTicketEntity> tkts, List<Integer> quantities, Date date, double fee, String status){
+    public void updatePurchase(Long tpId, List<AttrTicketEntity> tkts, List<Integer> quantities, Date date, double fee, String status, String remarks){
         tp=em.find(TicketPurchaseEntity.class, tpId);
         tp.setAttrTickets(tkts);
         tp.setAttrTicketQuantities(quantities);
         tp.setAttrTicketBookDate(date);
         tp.setAttrTicketFee(fee);
         tp.setAttrTPStatus(status);
+        tp.setAttrTicketPurchaseRemarks(remarks);
         System.out.println("quantity size: "+quantities.size());
         em.merge(tp);
         em.flush();

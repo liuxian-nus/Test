@@ -119,7 +119,7 @@ public class CouponSessionBean {
    public CouponEntity getCouponById(Long id) throws ExistException{
        System.out.println("CouponSessionBean : getCouponById");
        coupon=em.find(CouponEntity.class, id);
-       if(coupon==null) throw new ExistException("coupon doesn't exist");
+       if(coupon==null) return null;
        else return coupon;
    }
    

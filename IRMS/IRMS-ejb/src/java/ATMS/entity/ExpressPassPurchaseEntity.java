@@ -37,6 +37,7 @@ public class ExpressPassPurchaseEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     Date epBookDate =new Date();
     private String eppStatus;
+    private String eppRemarks;
 
     public Long getEppId() {
         return eppId;
@@ -92,6 +93,14 @@ public class ExpressPassPurchaseEntity implements Serializable {
 
     public void setEppStatus(String eppStatus) {
         this.eppStatus = eppStatus;
+    }
+
+    public String getEppRemarks() {
+        return eppRemarks;
+    }
+
+    public void setEppRemarks(String eppRemarks) {
+        this.eppRemarks = eppRemarks;
     }
   
     

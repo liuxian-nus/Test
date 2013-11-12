@@ -14,8 +14,10 @@ import ATMS.session.AttractionSessionBean;
 import ATMS.session.ExpressPassPurchaseSessionBean;
 import ATMS.session.TicketPurchaseSessionBean;
 import ATMS.session.TicketSessionBean;
+import CRMS.entity.CouponEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
+import CRMS.session.CouponSessionBean;
 import CRMS.session.GenerateBarcodeSessionBean;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
@@ -44,6 +46,8 @@ import javax.servlet.http.HttpSession;
 //@WebServlet(name = "ATMSServlet", urlPatterns = {"/ATMSServlet"})
 @WebServlet(urlPatterns = {"/ATMSServlet", "/ATMSServlet/*"})
 public class ATMSServlet extends HttpServlet {
+    @EJB
+    private CouponSessionBean couponSessionBean;
     @EJB
     private MemberTransactionSessionBean memberTransactionSessionBean;
     @EJB
@@ -77,6 +81,7 @@ public class ATMSServlet extends HttpServlet {
     AttrExpressPassEntity ep;
     MemberTransactionEntity mt;
     String message="";
+    CouponEntity coupon;
     
 
     /**
@@ -215,6 +220,34 @@ public class ATMSServlet extends HttpServlet {
                 session.setAttribute("attr", attr);
                 System.out.println("session set");
                 
+                Long couponId=Long.parseLong(request.getParameter("couponId"));
+                System.out.println("couponId:"+couponId);
+                if(couponId!=0){
+                    System.out.println("start to use coupon");
+                    coupon=couponSessionBean.getCouponById(couponId); 
+                    if(coupon==null){
+                        message="Coupon code is not correct.";  
+                        request.setAttribute("message", message);
+                        request.getRequestDispatcher("/attrTicketBooking.jsp").forward(request, response); 
+                    }
+                    else if(coupon.getStatus().equals("Used")){
+                        message="The coupon has been used. One coupon can only be used once";  
+                        request.setAttribute("message", message);
+                        request.getRequestDispatcher("/attrTicketBooking.jsp").forward(request, response); 
+                    }
+                    else if(coupon.getStatus().equals("Expired")){
+                        message="The coupon has expired";  
+                        request.setAttribute("message", message);
+                        request.getRequestDispatcher("/attrTicketBooking.jsp").forward(request, response); 
+                    }  
+                }
+                session.setAttribute("coupon",coupon);
+                System.out.println("coupon session set");
+                
+                String tpRemarks="";
+                String eppurchaseRemarks="";
+            
+                
          /*       boolean ticketAvailable;
                 ticketAvailable=checkTicketAvailability(quantity1, quantity2,date, attr);*/
                                
@@ -345,7 +378,13 @@ public class ATMSServlet extends HttpServlet {
                 
                 System.out.println("tkts size: "+tkts.size());
                 System.out.println("quantities size: "+quantities.size());
-                ticketPurchaseSessionBean.updatePurchase(tpId, tkts, quantities, date, fee,"In Progress");
+                
+                if(coupon!=null){
+                    fee*=coupon.getCouponType().getDiscount();
+                    System.out.println("fee deducted to "+fee);
+                    tpRemarks+="purchase with coupon "+coupon.getCouponId()+"\n";
+                }
+                ticketPurchaseSessionBean.updatePurchase(tpId, tkts, quantities, date, fee,"In Progress",tpRemarks);
                 
                 System.out.println("ticket purchase in progress!");
                 
@@ -449,6 +488,11 @@ public class ATMSServlet extends HttpServlet {
                     eppurchase.setEpBookDate(date);
                     eppurchase.setEpQuantities(epquantities);
                     eppurchase.setEppStatus("In Progress");
+                    if(coupon!=null){
+                        epFee*= coupon.getCouponType().getDiscount();
+                        System.out.println("epfee deducted to " + epFee);
+                        eppurchaseRemarks+="purchase with coupon "+coupon.getCouponId()+"\n";
+                    }
                     eppurchase.setEpFee(epFee);
                     System.out.println("eppurchase configured");
                     
@@ -474,6 +518,8 @@ public class ATMSServlet extends HttpServlet {
                 System.out.println("tpStatus:"+tp.getAttrTPStatus());
                 attr=(AttractionEntity)session.getAttribute("attr");
                 System.out.println("attr: "+attr.getAttrName());
+                coupon=(CouponEntity)session.getAttribute("coupon");
+                System.out.println("get coupon");
                 Boolean coinPay=false;
                 Boolean enoughCoin=false;
                 Boolean hasEPPurchase=false;
@@ -558,6 +604,12 @@ public class ATMSServlet extends HttpServlet {
                 tp.setAttrTPStatus("Purchased");
                 ticketPurchaseSessionBean.updateTicketPurchase(tp); 
                 System.out.println("tp status updated");
+                if(coupon!=null){
+                    coupon.setDepartment("Attraction");
+                    coupon.setStatus("Used");
+                    couponSessionBean.updateCoupon(coupon);
+                    System.out.println("coupon updated");
+                }
                 if(hasEPPurchase){
                     eppurchase.setEppStatus("Purchased");
                     expressPassPurchaseSessionBean.updateEPPurchase(eppurchase);
