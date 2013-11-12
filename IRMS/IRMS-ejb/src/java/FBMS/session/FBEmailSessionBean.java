@@ -384,7 +384,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
                     + "\nPlease use this confirmation number for later modification on our website \n\n"
                     + "Title: " + oe.getTitle() + "\nName: " + oe.getName()
                     + "\nNumber of people: " + oe.getMenu().getNumberOrder()
-                    + "\nDate & Time: " + oe.getOrderDateTime().getYear()+"/"+oe.getOrderDateTime().getMonth()+"/"+oe.getOrderDateTime().getDate()+" "+oe.getHour().getHours()+":"+oe.getHour().getMinutes()
+                    + "\nDate & Time: " + (oe.getOrderDateTime().getYear()-100)+"/"+(oe.getOrderDateTime().getMonth()+1)+"/"+oe.getOrderDateTime().getDate()+" "+oe.getHour().getHours()+":"+oe.getHour().getMinutes()
                     + "\nMobile Number: " + oe.getMobile()
                     + "\nNotes: " + oe.getNotes()
                     + "\n\n\nBest Regards,\nThe Coral Island Management Team";
