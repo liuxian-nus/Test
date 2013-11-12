@@ -33,6 +33,10 @@
 
                             <h:outputText value="Total fee: "/>
                             <h:outputText id="fee1" value="#{ticketPurchaseManagedBean.fee}" style="font-weight:bold"/>
+                            
+                            <h:outputText value="Coupon code (if applicable): "/>
+                            <h:inputText id="couponCode" value="#{ticketPurchaseManagedBean.couponCode}"/>
+               
 
 
 
@@ -41,6 +45,7 @@
                         <p:commandButton value ="Check quota" ajax ="true" actionListener="#{ticketPurchaseManagedBean.checkQuota}" update="restQuota1" onclick="growl"/>
                         <p:commandButton value ="Calculate fee" ajax ="true" actionListener="#{ticketPurchaseManagedBean.checkFee}" update="fee1" onclick="growl"/>
                         <p:commandButton value ="Check member" ajax ="true" actionListener="#{ticketPurchaseManagedBean.checkMember}" onclick="growl"/>
+                        <p:commandButton value ="Check coupon code" ajax ="true" actionListener="#{ticketPurchaseManagedBean.checkCouponCode}" onclick="growl"/>
    
                         <br/>
                         <p:commandButton value ="Purchase Directly" ajax ="true" actionListener = "#{ticketPurchaseManagedBean.purchaseTicket}" update="growl1" icon="ui-icon-check"/>

@@ -11,8 +11,10 @@ import ATMS.entity.TicketPurchaseEntity;
 import ATMS.session.AttractionSessionBean;
 import ATMS.session.TicketPurchaseSessionBean;
 import ATMS.session.TicketSessionBean;
+import CRMS.entity.CouponEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
+import CRMS.session.CouponSessionBean;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
 import Exception.ExistException;
@@ -38,7 +40,8 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @ViewScoped
 public class ticketPurchaseManagedBean {
-
+    @EJB
+    private CouponSessionBean couponSessionBean;
     @EJB
     private MemberTransactionSessionBean memberTransactionSessionBean;
     @EJB
@@ -49,6 +52,7 @@ public class ticketPurchaseManagedBean {
     private TicketSessionBean ticketSessionBean;
     @EJB
     private TicketPurchaseSessionBean ticketPurchaseSessionBean;
+    
     private TicketPurchaseEntity tp = new TicketPurchaseEntity();
     private Long attrTicketId;
     private AttrTicketEntity attrTicket;
@@ -60,6 +64,9 @@ public class ticketPurchaseManagedBean {
     private MemberEntity member;
     private String tpIdString;
     private String message="Please enter ticket purchase ID";
+    private Long couponCode;
+    private CouponEntity coupon;
+    private boolean couponCodeValid=false;
 
     @PostConstruct
     public void init() {
@@ -84,6 +91,8 @@ public class ticketPurchaseManagedBean {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No enough ticket", ""));
                 return;
             }
+            Date today=new Date();
+            System.out.println("today: "+today);
             System.out.println("ticket available");
             List<Integer> qty = new ArrayList<Integer>();
             System.out.println("qty instantiated");
@@ -102,6 +111,21 @@ public class ticketPurchaseManagedBean {
             System.out.println("ticket: " + tp.getAttrTickets().get(0).getAttrTicketName());
             System.out.println("ticket successfully added");
             System.out.println("fee: " + fee);
+            System.out.println("start to work on coupon");
+            if (coupon != null) {
+                System.out.println("coupon code entered");
+                if (couponCodeValid) {
+                    System.out.println("valid coupon code");
+                    System.out.println("coupon: " + coupon.getStatus());
+                    fee *= coupon.getCouponType().getDiscount();
+                    System.out.println("fee after using coupon: " + fee);
+                    coupon.setStatus("Used");
+                    coupon.setDepartment("attraction");
+                    coupon.setCouponUsedDate(today);
+                    couponSessionBean.updateCoupon(coupon);
+                    System.out.println("coupon updated");
+                }
+            }
             tp.setAttrTicketFee(fee);
             System.out.println("fee set!");
             tp.setAttrTPStatus("purchased");
@@ -111,29 +135,36 @@ public class ticketPurchaseManagedBean {
             decreaseRestQuota(attrTicket, quantity);
             System.out.println("available quota decreased");
             //member=memberSessionBean.getMemberByEmail(memberEmail);
-            System.out.println("member: " + member.getMemberName());
-            if (member != null) {
-                System.out.println("member exist");
-                addMemberTicketPurchase();
-                mt = new MemberTransactionEntity();
-                memberTransactionSessionBean.addPoint(member, fee);
-                memberTransactionSessionBean.addCoin(member, fee);
-                memberTransactionSessionBean.updateVIP(member);
-                mt.setMtAmount(fee);
-                mt.setMtDepartment("Attraction");
-                mt.setMtMode(true);
-                mt.setPaymentStatus(true);
-                mt.setMemberEmail(memberEmail);
-                String description = member.getMemberName() + ": Your purchase of attraction ticket at this date with a total expense of: " + fee;
-                mt.setMtDescription(description);
-                mt = memberTransactionSessionBean.addMemberTransaction(mt);
-                System.out.println("member transaction added");
-                Set<MemberTransactionEntity> allMTs = member.getMemberTransactions();
-                allMTs.add(mt);
-                member.setMemberTransactions(allMTs);
-                memberSessionBean.updateMember(member);
-                System.out.println("member updated");
+            if(member!=null){
+                System.out.println("member: " + member.getMemberName());
+                System.out.println("get member");
+                if (member != null) {
+                    System.out.println("member exist");
+                    addMemberTicketPurchase();
+                    mt = new MemberTransactionEntity();
+                    memberTransactionSessionBean.addPoint(member, fee);
+                    memberTransactionSessionBean.addCoin(member, fee);
+                    memberTransactionSessionBean.updateVIP(member);
+                    mt.setMtAmount(fee);
+                    mt.setMtDepartment("attraction");
+                    mt.setMtMode(true);
+                    mt.setPaymentStatus(true);
+                    mt.setMemberEmail(memberEmail);
+                    String description = member.getMemberName() + ": Your purchase of attraction ticket at this date with a total expense of: " + fee;
+                    mt.setMtDescription(description);
+                    mt = memberTransactionSessionBean.addMemberTransaction(mt);
+                    System.out.println("member transaction added");
+                    Set<MemberTransactionEntity> allMTs = member.getMemberTransactions();
+                    allMTs.add(mt);
+                    member.setMemberTransactions(allMTs);
+                    memberSessionBean.updateMember(member);
+                    System.out.println("member updated");
+                }
             }
+            else{
+                    System.out.println("member email is not entered");
+                }
+            System.out.println("ticket purchase success!");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when purchase ticket", ""));
             return;
@@ -164,6 +195,8 @@ public class ticketPurchaseManagedBean {
                     return;
                 }
                 else{
+                    Date today=new Date();
+                    System.out.println("today: "+today);
                     List<Integer> qty = new ArrayList<Integer>();
                     System.out.println("qty instantiated");
                     qty = tp.getAttrTicketQuantities();
@@ -181,6 +214,21 @@ public class ticketPurchaseManagedBean {
                     System.out.println("ticket: " + tp.getAttrTickets().get(0).getAttrTicketName());
                     System.out.println("ticket successfully added");
                     System.out.println("fee: " + fee);
+                    System.out.println("start to work on coupon");
+                    if (coupon != null) {
+                        System.out.println("coupon code entered");
+                        if (couponCodeValid) {
+                            System.out.println("valid coupon code");
+                            System.out.println("coupon: " + coupon.getStatus());
+                            fee *= coupon.getCouponType().getDiscount();
+                            System.out.println("fee after using coupon: " + fee);
+                            coupon.setStatus("Used");
+                            coupon.setDepartment("attraction");
+                            coupon.setCouponUsedDate(today);
+                            couponSessionBean.updateCoupon(coupon);
+                            System.out.println("coupon updated");
+                        }
+                    }
                     tp.setAttrTicketFee(fee);
                     System.out.println("fee set!");
                     tp.setAttrTPStatus("purchased");
@@ -194,7 +242,7 @@ public class ticketPurchaseManagedBean {
                     System.out.println("pay by coin successful");
                     mt = new MemberTransactionEntity();
                     mt.setMtAmount(fee);
-                    mt.setMtDepartment("Attraction");
+                    mt.setMtDepartment("attraction");
                     mt.setMtMode(true);
                     mt.setPaymentStatus(true);
                     mt.setMemberEmail(memberEmail);
@@ -348,6 +396,35 @@ public class ticketPurchaseManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ticket is not valid", ""));
         }
     }
+    
+    public void checkCouponCode(ActionEvent event) throws ExistException{
+        System.out.println("check coupon code..");
+        if(couponCode!=null){
+            System.out.println("couponCode entered");
+            coupon=couponSessionBean.getCouponById(couponCode);
+            if(coupon==null){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Coupon code is not valid", ""));
+            }
+            else{
+                String couponStatus=coupon.getStatus();
+                if(couponStatus.equals("New")){
+                    couponCodeValid=true;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Coupon code is good to use", ""));
+                }
+                else if(couponStatus.equals("Used")){
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Coupon code has been used", ""));
+                }
+                else{
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Coupon code has expired", ""));
+                }
+            }
+            
+        }
+        else{
+            System.out.println("coupon code not entered");
+            coupon=null;
+        }
+    }
 
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("adventureWorldTicketPurchase.xhtml");
@@ -481,7 +558,22 @@ public class ticketPurchaseManagedBean {
     public void setMessage(String message) {
         this.message = message;
     }
-    
-    
+
+    public CouponSessionBean getCouponSessionBean() {
+        return couponSessionBean;
+    }
+
+    public void setCouponSessionBean(CouponSessionBean couponSessionBean) {
+        this.couponSessionBean = couponSessionBean;
+    }
+
+    public Long getCouponCode() {
+        return couponCode;
+    }
+
+    public void setCouponCode(Long couponCode) {
+        this.couponCode = couponCode;
+    }
+      
 
 }
