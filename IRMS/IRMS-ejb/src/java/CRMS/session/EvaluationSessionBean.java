@@ -465,6 +465,9 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         if (thisP == null) {
             throw new ExistException();
         }
+        
+        //Test
+        System.out.println("thisP " +thisP.getPromotionCode());
 
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allMemberTrans = q.getResultList();
@@ -484,8 +487,12 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         }
 
         int expectedSize = thisP.getMcMemberTargets().size();
+        
+        //test
+        System.out.println("expectedSize" + expectedSize);
 
 //        responseRate = respondedSales.size()/expectedSize;
+        if(expectedSize!=0)
         responseRate = respondedTargets.size() / expectedSize;
         if (responseRate != 0.0) {
             thisP.setResponseRate(responseRate);

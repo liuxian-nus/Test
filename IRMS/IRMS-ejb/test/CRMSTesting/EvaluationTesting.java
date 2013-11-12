@@ -63,6 +63,16 @@ public class EvaluationTesting {
         System.out.println("testCalculateRFMValue: "+RFMValue);
         assertNotNull(RFMValue);
     }
+    
+    @Test
+    public void testEvaluatePromotion() throws ExistException
+    {
+        System.out.println("testEvaluatePromotion");
+        
+        Long promotionId = Long.parseLong("4");
+        double respondedRate = EvaluationSessionBean.evaluatePromotion(promotionId);
+        System.out.println("respondedRate: "+respondedRate);
+    }
 
     private EvaluationSessionBeanRemote lookupEvaluationSessionBean() {
        try {
