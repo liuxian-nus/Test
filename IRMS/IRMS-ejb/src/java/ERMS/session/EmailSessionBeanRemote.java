@@ -9,6 +9,8 @@ import ACMS.entity.RoomEntity;
 import ATMS.entity.AttrComboEntity;
 import ATMS.entity.ExpressPassPurchaseEntity;
 import ATMS.entity.TicketPurchaseEntity;
+import CRMS.entity.MemberEntity;
+import CRMS.entity.PromotionEntity;
 import SMMS.entity.BillEntity;
 import SMMS.entity.ContractEntity;
 import com.lowagie.text.DocumentException;
@@ -22,7 +24,13 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface EmailSessionBeanRemote {
-
+    
+    public void sendBirthdayCongrats(MemberEntity member,PromotionEntity promotion);
+    
+    public void sendPromotionToTargets(PromotionEntity promotion);
+    
+    public void sendPromotionToSubs(PromotionEntity promotion);
+    
     void emailApprovalAction(String toEmailAdress, ContractEntity contract);
 
     void emailAttractionTicketCombo(String toEmailAdress, AttrComboEntity combo) throws IOException, FileNotFoundException, DocumentException;

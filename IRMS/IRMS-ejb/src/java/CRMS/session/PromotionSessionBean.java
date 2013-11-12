@@ -80,6 +80,12 @@ public class PromotionSessionBean {
         }
         return promotions;
     }
+    
+    public PromotionEntity getPromotionById(Long promotionId)
+    {
+        PromotionEntity current = em.find(PromotionEntity.class, promotionId);
+        return current;
+    }
 
     class EndTask extends TimerTask {
 

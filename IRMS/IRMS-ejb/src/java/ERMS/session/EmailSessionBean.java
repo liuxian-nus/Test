@@ -73,7 +73,9 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     public EmailSessionBean() { 
     } 
     
-    //there is a promotion exclusively for birthday? guess so~~~
+
+
+    @Override
     public void sendBirthdayCongrats(MemberEntity member,PromotionEntity promotion)
     {
         System.out.println("sendBirthdayCongrats");
@@ -128,6 +130,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     
     
     //Do not forget to add member targets to promotionentity after evalution everytime, or the list will be null
+    @Override
     public void sendPromotionToTargets(PromotionEntity promotion)
     {
         Properties props = new Properties(); 
@@ -192,6 +195,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     }
   
     //This is the promotion only to subscribers
+    @Override
     public void sendPromotionToSubs(PromotionEntity promotion)
     {
         Properties props = new Properties(); 
