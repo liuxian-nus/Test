@@ -13,6 +13,15 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+        <!--Progress Widget-->
+            <div class="row">
+                <ul class="button-group round even-4">
+                    <li><a href="#" class="button small secondary"><strong>Choose your ticket ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>View ticket information ></strong></a></li>
+                    <li><a href="#" class="button small" disabled><strong>Make payment ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>Confirm your payment ></strong></a></li>
+                </ul>
+            </div>
         <h4>Payment</h4>
         <form action="attrTicketBookingConfirmation" method="POST">
             <div class="row">

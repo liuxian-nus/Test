@@ -32,8 +32,24 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+        <!--Progress Widget-->
+            <div class="row">
+                <ul class="button-group round even-4">
+                    <li><a href="#" class="button small secondary"><strong>Choose your ticket ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>View ticket information ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>Make payment ></strong></a></li>
+                    <li><a href="#" class="button small" disabled><strong>Confirm your payment ></strong></a></li>
+                </ul>
+            </div>
         <h1>Ticket Booking Confirmation</h1>
-        <h6><%=couponInfo%></h6>                            
+        <div class="panel">
+            <h6>You have successfully purchased the ticket.</h6>
+            <h6>The ticket information has been sent to your email.</h6>
+            <h6>Thanks for purchasing ticket at <%=attr.getAttrName()%> in Coral Island Resort.</h6>
+            <br>
+            <h6><%=couponInfo%></h6>    
+        </div>
+                                
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

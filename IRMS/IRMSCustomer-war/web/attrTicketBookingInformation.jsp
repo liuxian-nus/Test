@@ -70,6 +70,15 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+        <!--Progress Widget-->
+            <div class="row">
+                <ul class="button-group round even-4">
+                    <li><a href="#" class="button small secondary"><strong>Choose your ticket ></strong></a></li>
+                    <li><a href="#" class="button small" disabled><strong>View ticket information ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>Make payment ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>Confirm your payment ></strong></a></li>
+                </ul>
+            </div>
         <div class="panel">
             <h4>Here's your booking information:</h4>
             </br>

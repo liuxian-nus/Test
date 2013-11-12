@@ -20,7 +20,11 @@
 <html>
     <head>
         <jsp:include page="base.jsp"></jsp:include>
-        <<script>
+          <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" media="screen" />
+          
+            <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+        <script>
                         $(document).ready(function() {
                 $("#datepicker1").datepicker({
                  minDate:0,
@@ -34,6 +38,15 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+        <!--Progress Widget-->
+            <div class="row">
+                <ul class="button-group round even-4">
+                    <li><a href="#" class="button small" disabled><strong>Choose your ticket ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>View ticket information ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>Make payment ></strong></a></li>
+                    <li><a href="#" class="button small secondary"><strong>Confirm your payment ></strong></a></li>
+                </ul>
+            </div>
         <h3>Welcome ${member.memberName}!</h3>
         <h4>Ticket Booking</h4>
         
