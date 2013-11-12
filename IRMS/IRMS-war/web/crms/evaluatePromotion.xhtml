@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:dataTable id="dataTable1" var="rfmMembers" value="#{tieredManagedBean.allPromotions}">  
+
+                <f:facet name="header">  
+                    Promotions Response Rate
+                </f:facet>  
+
+                <p:column sortBy="#{rfmMembers.promotionId}" headerText="Promotion ID">  
+                    <h:outputText value="#{rfmMembers.promotionId}" />  
+                </p:column> 
+
+                <p:column sortBy="#{rfmMembers.promotionTitle}" headerText="Title">  
+                    <h:outputText value="#{rfmMembers.promotionTitle}" />  
+                </p:column> 
+
+                <p:column sortBy="#{rfmMembers.promotionDepartment}" headerText="Department">  
+                    <h:outputText value="#{rfmMembers.promotionDepartment}" />  
+                </p:column> 
+
+                <p:column sortBy="#{rfmMembers.promotionDescription}" headerText="Description">  
+                    <h:outputText value="#{rfmMembers.promotionDescription}"/>
+                </p:column>
+
+                <p:column sortBy="#{rfmMembers.responseRate}" headerText="Response Rate">  
+                    <h:outputText value="#{rfmMembers.responseRate}"/>
+                </p:column>  
+            </p:dataTable>  
+        </h:form>
+    </ui:define>
+
+</ui:composition>

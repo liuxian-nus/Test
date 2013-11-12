@@ -69,6 +69,10 @@ public class TieredManagedBean {
         shareOfWalletMember6 = evaluationSessionBean.getTieredBasedOnShareOfWallet("shopping mall");
         promotions = generatePromotionList();
     }
+    
+    public List<PromotionEntity> getAllPromotions(){
+        return promotions;
+    }
 
     public List<PromotionEntity> generatePromotionList() throws ExistException {
         List<PromotionEntity> temp = promotionSessionBean.getAllPromotions();
