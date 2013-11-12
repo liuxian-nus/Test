@@ -198,19 +198,16 @@ public class ATMSServlet extends HttpServlet {
                 Integer quantity7=Integer.parseInt(request.getParameter("quantity7"));
                 Integer quantity8=Integer.parseInt(request.getParameter("quantity8"));
                 Integer quantity9=Integer.parseInt(request.getParameter("quantity9"));
-//                Integer quantity10=Integer.parseInt(request.getParameter("quantity10"));
-//                Integer quantity13=Integer.parseInt(request.getParameter("quantity13"));
-//                Integer quantity16=Integer.parseInt(request.getParameter("quantity16"));
                              
-                Integer day=Integer.parseInt(request.getParameter("dateDay"));
-                Integer month=Integer.parseInt(request.getParameter("dateMonth"));
-                Integer year=Integer.parseInt(request.getParameter("dateYear"));
-                Date date;
-                date = new Date(year - 1900, month - 1, day);
-//                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-//                String dateString=request.getParameter("date");
-//                date=sdf.parse(dateString);
-//                System.out.println("date: "+date);
+//                Integer day=Integer.parseInt(request.getParameter("dateDay"));
+//                Integer month=Integer.parseInt(request.getParameter("dateMonth"));
+//                Integer year=Integer.parseInt(request.getParameter("dateYear"));
+//                Date date;
+//                date = new Date(year - 1900, month - 1, day);
+                SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+                String dateString=request.getParameter("date");
+                Date date=sdf.parse(dateString);
+                System.out.println("date: "+date);
                 session.setAttribute("date",date);
                 System.out.println("new date session set");
                 
@@ -626,8 +623,8 @@ public class ATMSServlet extends HttpServlet {
                
             
                 
-//                emailSessionBean.emailAttractionTicketSingle(email, tp);
-//                System.out.println("email sent");
+                emailSessionBean.emailAttractionTicketSingle(email, tp);
+                System.out.println("email sent");
                            
                 request.getRequestDispatcher("/attrTicketBookingConfirmation.jsp").forward(request, response);
             }else {
