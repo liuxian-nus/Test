@@ -56,7 +56,8 @@ public class RoomPriceSessionBean implements RoomPriceSessionBeanRemote {
     }
 
     public double getPriceValueByType(String roomType) {
-        thisRoomPrice = em.find(RoomPriceEntity.class, roomType);
+        String roomTypeL = roomType.toLowerCase();
+        thisRoomPrice = em.find(RoomPriceEntity.class, roomTypeL);
         return thisRoomPrice.getPrice();
     }
 
