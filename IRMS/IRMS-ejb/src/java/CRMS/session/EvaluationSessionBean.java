@@ -142,7 +142,7 @@ public class EvaluationSessionBean {
         Integer memberVisitTotal = 0;
         Integer visitTotal = 0;
 //        boolean memberFrequent = false;
-        Date memberLastVisitDate = new Date(1900, 0, 1);
+        Date memberLastVisitDate = new Date(1900, 1, 1);
         Date currentTransDate;
 
         //get a description statistics
@@ -152,9 +152,15 @@ public class EvaluationSessionBean {
             MemberTransactionEntity current = itr.next();
             moneyTotal += current.getMtAmount();
             visitTotal += 1;
-
+            
+            //below test the value
+                System.out.println("the money total for all members is "+moneyTotal);
+                System.out.println("the visit total for all members is "+visitTotal);
+            
             //add values to a stats
             stats.addValue(current.getMtAmount());
+            //below test the value
+                System.out.println(stats.getSum());
 
             if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
                 memberMoneyTotal += current.getMtAmount();
@@ -286,7 +292,7 @@ public class EvaluationSessionBean {
         List<MemberEntity> resultList = new ArrayList();
 
         while (itr2.hasNext()) {
-            MemberEntity current = itr.next();
+            MemberEntity current = itr2.next();
             int currentRFMValue = calculateRFMValue(current.getMemberEmail(), 1);
             if (currentRFMValue >= tieredValue) {
                 resultList.add(current);
