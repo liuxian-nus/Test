@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <ui:define name="content">
+        <h:form id="formAddCouponTypes">
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+        <p:fieldset legend="Add Coupon Type" toggleable="true" toggleSpeed="500" collapsed="true">
+            <h:panelGrid columns="2" cellpadding="10" id="addCouponType">
+                <h:outputText value="Coupon Type Name*: "/>
+                <h:inputText id="ctName" required ="true" requiredMessage="Coupon name cannot be empty" value="#{addCouponTypesManagedBean.ct.couponName}"/>
+                <h:outputText value="Start Date*: "/>
+                <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="ctStartDate" value="#{addCouponTypesManagedBean.ct.cpStartDate}" /> 
+                <h:outputText value="End Date*: "/>
+                <p:calendar pattern="yyyy-MM-dd" yearRange="0" showButtonPanel="true" navigator="true" id="ctEndDate" value="#{addCouponTypesManagedBean.ct.cpEndDate}" /> 
+                <h:outputText value="Coupon Type Remarks: "/>
+                <h:inputText id="ctRemarks" value="#{addCouponTypesManagedBean.ct.couponTypeRemarks}"/>
+                <h:outputText value="Coupon Type Discount*: "/>
+                <h:inputText id="ctDiscount" required ="true" requiredMessage="Coupon type discount cannot be empty" value="#{addCouponTypesManagedBean.ct.discount}"/>           
+            </h:panelGrid>
+            <p:commandButton value ="Save" ajax ="true" actionListener = "#{addCouponTypesManagedBean.saveNewCouponType}" update="growl" icon="ui-icon-check"/>    
+        </p:fieldset>
+            </h:form>
+    </ui:define>
+
+</ui:composition>
