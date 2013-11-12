@@ -166,20 +166,30 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
             //add values to a stats
             stats.addValue(current.getMtAmount());
             //below test the value
-                System.out.println(stats.getSum());
+                System.out.println("Stats value is "+stats.getSum());
 
             if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
                 memberMoneyTotal += current.getMtAmount();
                 memberVisitTotal += 1;
                 currentTransDate = current.getMtDate();
+                
+                System.out.println("memberMoneyTotal"+memberMoneyTotal);
+                System.out.println("memberVisitTotal"+memberVisitTotal);
+                System.out.println("currentTransDate"+currentTransDate);
+                
                 if (currentTransDate.after(memberLastVisitDate)) {
                     memberLastVisitDate = currentTransDate;
+                    System.out.println("lastVisitDate Changed");
                 }
             }
         }
 
         //calculate m
-        double memberAverageMoney = memberMoneyTotal / memberVisitTotal;
+        double memberAverageMoney = 0.00;
+        if(memberVisitTotal!=0)
+        memberAverageMoney = memberMoneyTotal / memberVisitTotal;
+            //test
+            System.out.println("memberAverageMoney: "+memberAverageMoney);
 
         if (memberAverageMoney >= stats.getPercentile(80)) {
             m = 5;
@@ -196,23 +206,31 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         if (memberAverageMoney < stats.getPercentile(20)) {
             m = 1;
         }
+        //test
+        System.out.println("m: "+m);
 
         //calculate f
-        if ((memberVisitTotal / visitTotal) >= 0.1) {
+        
+        double fValue = ((memberVisitTotal)*1.0)/visitTotal;
+        
+        if (fValue >= 0.1) {
             f = 5;
         }
-        if ((memberVisitTotal / visitTotal) >= 0.05 && (memberVisitTotal / visitTotal) < 0.1) {
+        if (fValue >= 0.05 && fValue < 0.1) {
             f = 4;
         }
-        if ((memberVisitTotal / visitTotal) >= 0.01 && (memberVisitTotal / visitTotal) < 0.05) {
+        if (fValue >= 0.01 && fValue < 0.05) {
             f = 3;
         }
-        if ((memberVisitTotal / visitTotal) >= 0.005 && (memberVisitTotal / visitTotal) < 0.01) {
+        if (fValue >= 0.005 && fValue < 0.01) {
             f = 2;
         }
-        if ((memberVisitTotal / visitTotal) < 0.005) {
+        if (fValue< 0.005) {
             f = 1;
         }
+        
+        //test
+        System.out.println("f: "+f);
 
         //calculate r
         Calendar currentDate = Calendar.getInstance();
@@ -242,10 +260,25 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         if ((memberLastVisitDate.before(dateR2) || memberLastVisitDate.equals(dateR2))) {
             r = 1;
         }
+        
+        //test
+        System.out.println("r: "+r);
 
         double RFMValueAbsolute = model.getFrequency() * f + model.getMonetary() * m + model.getRecency() * r;
+        
+        //test
+        System.out.println("RFMValueAbsolute"+RFMValueAbsolute);
+        
         double fullRFMValueAbsolute = model.getFrequency() * 5 + model.getMonetary() * 5 + model.getRecency() * 5;
-        RFMValue = (int) (RFMValueAbsolute / fullRFMValueAbsolute) * 5;
+        
+        //test
+        System.out.println("fullRFMValueAbsolute"+fullRFMValueAbsolute);
+        
+        RFMValue = (int) ((RFMValueAbsolute / fullRFMValueAbsolute) * 5);
+        
+        //test
+        System.out.println("RFMValue"+RFMValue);
+        
         return RFMValue;
     }
 
