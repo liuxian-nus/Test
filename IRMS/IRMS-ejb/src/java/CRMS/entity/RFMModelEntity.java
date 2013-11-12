@@ -6,8 +6,6 @@ package CRMS.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -18,7 +16,6 @@ import javax.persistence.Id;
 public class RFMModelEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private double Recency;
     private double Frequency;
@@ -48,7 +45,6 @@ public class RFMModelEntity implements Serializable {
         this.Monetary = Monetary;
     }
 
-    
     public int getId() {
         return id;
     }

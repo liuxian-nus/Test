@@ -5,6 +5,7 @@
 package CRMS.managedbean;
 
 import CRMS.entity.MemberEntity;
+import CRMS.entity.RFMModelEntity;
 import CRMS.session.EvaluationSessionBean;
 import CRMS.session.MemberSessionBean;
 import Exception.ExistException;
@@ -36,6 +37,7 @@ public class EvaluationManagedBean {
     EvaluationSessionBean evaluationSessionBean;
     private MemberEntity member;
     private MemberEntity selectedMember;
+    private RFMModelEntity selectedRfmModel;
     private PieChartModel pieModel;
     private Double recency;
     private Double frequency;
@@ -49,8 +51,10 @@ public class EvaluationManagedBean {
     /**
      * Creates a new instance of EvaluationManagedBean
      */
-    public EvaluationManagedBean() throws ExistException {
+    public EvaluationManagedBean() {
         member = new MemberEntity();
+        selectedMember = new MemberEntity();
+        selectedRfmModel = new RFMModelEntity();
     }
 
     public List<MemberEntity> getMemberSizeOfWallet() throws ExistException {
@@ -82,6 +86,17 @@ public class EvaluationManagedBean {
         pieModel.set("Food and Beverage", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(), "food and beverage"));
         pieModel.set("Attraction", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(), "attraction"));
         pieModel.set("Convention Center", evaluationSessionBean.calculateShareOfWallet(member.getMemberEmail(), "convention center"));
+    }
+
+    public void addRFMParameter(ActionEvent event) throws IOException, ExistException {
+        if (evaluationSessionBean.findRFMModel(selectedRfmModel.getId())) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Model already exists", ""));
+        } else {
+            evaluationSessionBean.addRFMModel(selectedRfmModel);
+            System.err.println("2. addRFMValue:" + selectedRfmModel.getId());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New RFM Parameters saved.", ""));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("rfmValue.xhtml");
+        }
     }
 
     public void saveRFMParameter(ActionEvent event) throws IOException, ExistException {
@@ -188,5 +203,21 @@ public class EvaluationManagedBean {
 
     public void setRFMValue(Integer RFMValue) {
         this.RFMValue = RFMValue;
+    }
+
+    public RFMModelEntity getSelectedRfmModel() {
+        return selectedRfmModel;
+    }
+
+    public void setSelectedRfmModel(RFMModelEntity selectedRfmModel) {
+        this.selectedRfmModel = selectedRfmModel;
+    }
+
+    public List<MemberEntity> getMemberList() {
+        return memberList;
+    }
+
+    public void setMemberList(List<MemberEntity> memberList) {
+        this.memberList = memberList;
     }
 }

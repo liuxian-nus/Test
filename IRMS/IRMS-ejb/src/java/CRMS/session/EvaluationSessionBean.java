@@ -18,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
@@ -30,13 +31,15 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 @LocalBean
 public class EvaluationSessionBean {
 
+    @EJB
+    MemberSessionBean memberSessionBean;
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     MemberTransactionEntity mte;
-    @EJB
-    MemberSessionBean memberSessionBean;
     MemberEntity member;
+    RFMModelEntity rfmModel;
 
+    //1. JSF Done!
     public double calculateSizeOfWallet(String memberEmail) {
         System.out.println("calculateSizeOfWallet");
         double sizeOfWallet;
@@ -63,7 +66,7 @@ public class EvaluationSessionBean {
             }
         }
         sizeOfWallet = memberTotal;
-        if (sizeOfWallet!=0.0) {
+        if (sizeOfWallet != 0.0) {
             member = em.find(MemberEntity.class, memberEmail);
             member.setSizeOfWallet(sizeOfWallet);
             memberSessionBean.updateMember(member);
@@ -71,6 +74,7 @@ public class EvaluationSessionBean {
         return sizeOfWallet;
     }
 
+    //2. JSF Done!
     public double calculateShareOfWallet(String memberEmail, String mtDepartment) {
         double shareOfWallet = 0.00;
         System.out.println("calculateShareOfWallet");
@@ -97,6 +101,16 @@ public class EvaluationSessionBean {
         return shareOfWallet;
     }
 
+    //3. RFMMedel
+    public RFMModelEntity addRFMModel(RFMModelEntity rfmModel) {
+        em.persist(rfmModel);
+        return rfmModel;
+    }
+    //买一送一，不新建session bean了
+    public List<RFMModelEntity> getAllRFMs() throws NoResultException {
+        Query q = em.createQuery("SELECT m FROM RFMModelEntity m");
+        return q.getResultList();
+    }
     //Model number currently is 1 since only one model is available
     public boolean setRFMParameter(Double Recency, Double Frequency, Double Monetary, int ModelNumber) {
         boolean completed = false;
@@ -432,6 +446,15 @@ public class EvaluationSessionBean {
             return current;
         } else {
             throw new ExistException();
+        }
+    }
+    
+    public boolean findRFMModel(int ModelNumber) throws ExistException {
+        RFMModelEntity current = em.find(RFMModelEntity.class, ModelNumber);
+        if (current == null) {
+            return false;
+        } else {
+            return true;
         }
     }
 }
