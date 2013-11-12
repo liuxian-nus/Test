@@ -44,6 +44,7 @@ public class FeedbackManagedBean implements Serializable {
     private List<FeedbackEntity> feedbackList;
     private SelectItem[] ratingOption;
     private SelectItem[] departmentOption;
+    private SelectItem[] statusOption;
     private CartesianChartModel categoryModel;
     private PieChartModel pieModel;
     private String feedbackReply;
@@ -90,6 +91,7 @@ public class FeedbackManagedBean implements Serializable {
         feedbackList = feedbackSessionBean.getAllFeedbacks();
         ratingOption = this.createRatingOption();
         departmentOption = this.createDepartmentOption();
+        statusOption = this.createStatusOption();
         createCategoryModel();
         createPieModel();
 
@@ -145,6 +147,15 @@ public class FeedbackManagedBean implements Serializable {
         options[3] = new SelectItem("entertainment & show", "entertainment & show");
         options[4] = new SelectItem("attraction", "attraction");
         options[5] = new SelectItem("shopping mall", "shopping mall");
+        return options;
+    }
+    
+    private SelectItem[] createStatusOption() {
+        SelectItem[] options = new SelectItem[3];
+        System.out.println("Creating status options");
+        options[0] = new SelectItem("", "Select");
+        options[1] = new SelectItem(1, "new");
+        options[2] = new SelectItem(2, "handled");
         return options;
     }
 
@@ -227,5 +238,21 @@ public class FeedbackManagedBean implements Serializable {
 
     public void setReceiverEmail(String receiverEmail) {
         this.receiverEmail = receiverEmail;
+    }
+
+    public EmailSessionBean getEmailSessionBean() {
+        return emailSessionBean;
+    }
+
+    public void setEmailSessionBean(EmailSessionBean emailSessionBean) {
+        this.emailSessionBean = emailSessionBean;
+    }
+
+    public SelectItem[] getStatusOption() {
+        return statusOption;
+    }
+
+    public void setStatusOption(SelectItem[] statusOption) {
+        this.statusOption = statusOption;
     }
 }

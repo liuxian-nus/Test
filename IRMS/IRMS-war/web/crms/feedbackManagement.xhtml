@@ -40,6 +40,11 @@
                                   filterOptions="#{feedbackManagedBean.ratingOption}" filterMatchMode="contains">  
                             <h:outputText value="#{feedbacks.rating}" />  
                         </p:column>
+                        
+                        <p:column id="statusColumn" filterBy="#{feedbacks.feedbackStatus}" headerText="Status"  
+                                  filterOptions="#{feedbackManagedBean.statusOption}" filterMatchMode="contains">  
+                            <h:outputText value="#{feedbacks.feedbackStatus}" />  
+                        </p:column>
 
                         <p:column headerText="Reply" style="width:5%;">
                             <p:commandButton icon="ui-icon ui-icon-comment" value="Reply" action="#{feedbackManagedBean.replyFeedback(event)}">
