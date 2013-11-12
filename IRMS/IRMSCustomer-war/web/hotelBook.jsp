@@ -473,27 +473,27 @@
                         <legend style="color:#4d4d4d">Booking Summary</legend>
                         <p>${message}</p>
                         <div class="row">
-                            <div class="large-5 columns">
+                            <div class="large-7 columns">
                                 <label for="right-label" class="left-align,inline"><h6>Rate: </h6></label>
                             </div>
-                            <div class="large-7 columns">
+                            <div class="large-5 columns">
                                 <label for="right-label" class="right-align,inline"><strong>${roomPrice}</strong></label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="large-10 columns">
+                            <div class="large-7 columns">
                                 <label for="right-label" class="left-align,inline"><h6>Number of nights:</h6></label>
                             </div>
-                            <div class="large-2 columns">
+                            <div class="large-5 columns">
                                 <label for="right-label" class="right-align,inline"><strong>${data.reservationRoomCount}</strong></label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="large-5 columns">
+                            <div class="large-7 columns">
                                 <label for="right-label" class="left-align,inline"><h6>Total:</h6></label>
                             </div>
-                            <div class="large-7 columns">
-                                <label for="right-label" class="right-align,inline"><strong></strong></label>
+                            <div class="large-5 columns">
+                                <label for="right-label" class="right-align,inline"><strong>${totalPrice}</strong></label>
                             </div>
                         </div>
 
