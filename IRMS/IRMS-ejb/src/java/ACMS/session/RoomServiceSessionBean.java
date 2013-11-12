@@ -16,9 +16,9 @@ import javax.persistence.Query;
 
 /**
  *
- * @author liudazhi
+ * @author liudazhi aiyaya
  */
-@Stateless
+@Stateless //cannot caome alla 
 @LocalBean
 public class RoomServiceSessionBean implements RoomServiceSessionBeanRemote {
 
