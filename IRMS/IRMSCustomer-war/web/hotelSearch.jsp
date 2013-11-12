@@ -45,7 +45,7 @@
                 <form id="search-form" action="searchAvailable" method="POST">
                     <fieldset>
                         <legend>Search for hotels</legend>
-
+                        
                         <div class="row">
                             <div class="large-12 columns">
                                 <label for="hotel"><strong>Where to live</strong></label>
@@ -164,6 +164,9 @@
                                 
 
                         </div>
+                            <div class="row">
+                            ${message}
+                            </div>
                     </div>
                 </fieldset>
 
