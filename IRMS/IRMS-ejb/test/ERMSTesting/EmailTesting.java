@@ -6,6 +6,9 @@ package ERMSTesting;
 
 import ACMS.entity.RoomEntity;
 import ACMS.session.RoomSessionBeanRemote;
+import CRMS.entity.PromotionEntity;
+import CRMS.session.MemberSessionBean;
+import CRMS.session.PromotionSessionBean;
 import ERMS.session.EPasswordHashSessionBeanRemote;
 import ERMS.session.EmailSessionBeanRemote;
 import Exception.ExistException;
@@ -29,9 +32,12 @@ import static org.junit.Assert.*;
  * @author Diana Wang
  */
 public class EmailTesting {
+    MemberSessionBean memberSessionBean = lookupMemberSessionBeanBean();
+    PromotionSessionBean promotionSessionBean = lookupPromotionSessionBeanBean();
     
     EmailSessionBeanRemote EmailSessionBean = lookupEmailSessionBean();
     RoomSessionBeanRemote RoomSessionBean = lookupRoomSessionBean();
+    
     public EmailTesting() {
     }
     
@@ -89,7 +95,24 @@ public class EmailTesting {
         EmailSessionBean.emailCorporateBill(toEmailAdress, room);
     }
     
+    @Test
+    public void testSendPromotionToSubs()
+    {
+        System.out.println("testSendPromotionToSubs");
+        PromotionEntity promotion = promotionSessionBean.getPromotionById(Long.parseLong("1"));
+        
+        EmailSessionBean.sendPromotionToSubs(promotion);
+        
+        System.out.println("testSendPromotionToSubs: completed!");
+    }
     
+    public void testSendBirthdayCongrats()
+    {
+        System.out.println("testSendBirthdayCongrats");
+        
+        PromotionEntity promotion = promotionSessionBean.getPromotionById(Long.parseLong("1"));
+        MemberEntity member = MemberSessionBean
+    }
     
     private EmailSessionBeanRemote lookupEmailSessionBean() {
         try {
@@ -105,6 +128,26 @@ public class EmailTesting {
         try {
             Context c = new InitialContext();
             return (RoomSessionBeanRemote) c.lookup("java:global/IRMS/IRMS-ejb/RoomSessionBean!ACMS.session.RoomSessionBeanRemote");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private PromotionSessionBean lookupPromotionSessionBeanBean() {
+        try {
+            Context c = new InitialContext();
+            return (PromotionSessionBean) c.lookup("java:global/IRMS/IRMS-ejb/PromotionSessionBean!CRMS.session.PromotionSessionBean");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private MemberSessionBean lookupMemberSessionBeanBean() {
+        try {
+            Context c = new InitialContext();
+            return (MemberSessionBean) c.lookup("java:global/IRMS/IRMS-ejb/MemberSessionBean!CRMS.session.MemberSessionBean");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
