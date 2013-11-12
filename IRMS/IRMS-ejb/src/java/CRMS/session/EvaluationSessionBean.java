@@ -63,7 +63,8 @@ public class EvaluationSessionBean {
             }
         }
         sizeOfWallet = memberTotal;
-        if (member != null && sizeOfWallet!=0.0) {
+        if (sizeOfWallet!=0.0) {
+            member = em.find(MemberEntity.class, memberEmail);
             member.setSizeOfWallet(sizeOfWallet);
             memberSessionBean.updateMember(member);
         }
