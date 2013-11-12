@@ -125,6 +125,30 @@ public class TicketPurchaseSessionBean {
         return em.find(TicketPurchaseEntity.class, id);
     }
     
+    public boolean checkTicketValidity(String tpIdString){
+        System.out.println("ticketPurchaseSessionBean : checkTicketValidity");
+        System.out.println("idString: "+tpIdString);
+        Long id=dropDummyZero(tpIdString);
+        tp=em.find(TicketPurchaseEntity.class, id);
+        if(tp==null){
+            System.out.println("ticket doesn't exist");
+            return false;
+        }
+        else if(!(tp.getAttrTPStatus().equals("Purchased")))
+            return false;
+        else{
+            System.out.println("valid ticket purchase");
+            return true;
+        }
+    }
+    
+    public Long dropDummyZero(String tpIdString){
+        System.out.println("ticketPurchaseSessionBean : dropDummyZero");
+        Long tpId=Long.valueOf(tpIdString);
+        System.out.println("tpId: "+tpId);
+        return tpId;    
+    }
+    
     /*public int getTicketsSold(AttractionEntity attr, Date date){
         List<TicketPurchaseEntity> allTPs=getAllTicketPurchases();
         List<TicketPurchaseEntity> selected=new ArrayList<TicketPurchaseEntity>();

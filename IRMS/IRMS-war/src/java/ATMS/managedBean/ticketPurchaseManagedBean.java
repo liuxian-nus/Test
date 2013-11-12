@@ -58,6 +58,8 @@ public class ticketPurchaseManagedBean {
     private String memberEmail;
     private MemberTransactionEntity mt;
     private MemberEntity member;
+    private String tpIdString;
+    private String message="Please enter ticket purchase ID";
 
     @PostConstruct
     public void init() {
@@ -333,6 +335,19 @@ public class ticketPurchaseManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Please enter member email", ""));
         }
     }
+    
+    public void checkTicket(ActionEvent event){
+        System.out.println("check ticket..");
+        boolean isValidTicket=ticketPurchaseSessionBean.checkTicketValidity(tpIdString);
+        if(isValidTicket){
+            message="Ticket is valid";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ticket is valid", ""));
+        }
+        else{
+            message="Ticket is not valid";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ticket is not valid", ""));
+        }
+    }
 
     public void oneMore(ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("adventureWorldTicketPurchase.xhtml");
@@ -417,4 +432,56 @@ public class ticketPurchaseManagedBean {
     public void setMemberEmail(String memberEmail) {
         this.memberEmail = memberEmail;
     }
+
+    public MemberTransactionSessionBean getMemberTransactionSessionBean() {
+        return memberTransactionSessionBean;
+    }
+
+    public void setMemberTransactionSessionBean(MemberTransactionSessionBean memberTransactionSessionBean) {
+        this.memberTransactionSessionBean = memberTransactionSessionBean;
+    }
+
+    public MemberSessionBean getMemberSessionBean() {
+        return memberSessionBean;
+    }
+
+    public void setMemberSessionBean(MemberSessionBean memberSessionBean) {
+        this.memberSessionBean = memberSessionBean;
+    }
+
+    public MemberTransactionEntity getMt() {
+        return mt;
+    }
+
+    public void setMt(MemberTransactionEntity mt) {
+        this.mt = mt;
+    }
+
+    public MemberEntity getMember() {
+        return member;
+    }
+
+    public void setMember(MemberEntity member) {
+        this.member = member;
+    }
+
+    public String getTpIdString() {
+        return tpIdString;
+    }
+
+    public void setTpIdString(String tpIdString) {
+        this.tpIdString = tpIdString;
+    }
+
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
+    
+
 }
