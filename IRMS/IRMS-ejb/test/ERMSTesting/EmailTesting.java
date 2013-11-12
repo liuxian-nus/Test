@@ -111,7 +111,7 @@ public class EmailTesting {
         System.out.println("testSendBirthdayCongrats");
         
         PromotionEntity promotion = promotionSessionBean.getPromotionById(Long.parseLong("1"));
-        MemberEntity member = MemberSessionBean
+//        MemberEntity member = MemberSessionBean
     }
     
     private EmailSessionBeanRemote lookupEmailSessionBean() {

@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
@@ -377,12 +378,13 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAddress));
             message.setSubject("COREL ISLAND RESORT: Your confirmation for catering order");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             String text = "Greeting from Coral Island Resort!"
                     + "\nHere is confirmation number:" + oe.getOrderId()
                     + "\nPlease use this confirmation number for later modification on our website \n\n"
                     + "Title: " + oe.getTitle() + "\nName: " + oe.getName()
                     + "\nNumber of people: " + oe.getMenu().getNumberOrder()
-                    + "\nDate & Time: " + oe.getOrderDateTime()
+                    + "\nDate & Time: " + oe.getOrderDateTime().getYear()+"/"+oe.getOrderDateTime().getMonth()+"/"+oe.getOrderDateTime().getDate()+" "+oe.getHour().getHours()+":"+oe.getHour().getMinutes()
                     + "\nMobile Number: " + oe.getMobile()
                     + "\nNotes: " + oe.getNotes()
                     + "\n\n\nBest Regards,\nThe Coral Island Management Team";
@@ -760,8 +762,8 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
         table.addCell(order.getOrderDateTime().toString());
         table.addCell("Number of People");
         table.addCell(order.getMenu().getNumberOrder().toString());
-        table.addCell("Invoice Issued Date");
-        table.addCell(order.getInvoice().getInvoiceDate().toString());
+//        table.addCell("Invoice Issued Date");
+//        table.addCell(order.getInvoice().getInvoiceDate().toString());
         
 
         table.addCell("Menu");
