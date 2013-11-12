@@ -47,11 +47,13 @@ public class BillingSessionBean {
             ie.setInvoiceValue(amount);
             System.out.println("BillingSessioBean: createInvoice: Invoice value has been determined to be " + ie.getInvoiceValue());
 
-
-            oe.setInvoice(ie);
             em.persist(ie);
+            em.flush();
+            oe.setInvoice(ie);
+
             oe.setStatus("Invoiced");
             em.merge(oe);
+            em.flush();
             System.out.println("BillingSessioBean: createInvoice: Invoice has been generated " + ie.getInvoiceId());
             return ie;
         } else {
@@ -69,11 +71,11 @@ public class BillingSessionBean {
             re.setInvoice(ie);
 
             System.out.println("BillingSessioBean: createReceipt: The receipt has been set " + re.getId());
-
+            em.persist(re);
             ie.setReceipt(re);
             System.out.println("BillingSessioBean: createReceipt: The invoice has been set " + ie.getInvoiceId());
 
-            em.persist(re);
+
             em.merge(ie);
             System.out.println("BillingSessioBean: createReceipt: The receipt and invoice has been updated! " + re.getId() + ie.getInvoiceId());
 
@@ -128,9 +130,8 @@ public class BillingSessionBean {
         return true;
 
     }
-    
-    public boolean addAccount(AccountEntity account)
-    {
+
+    public boolean addAccount(AccountEntity account) {
         em.persist(account);
         System.out.println("BillingSessionBean:createAccount: the account has been created! " + account.getId());
         return true;

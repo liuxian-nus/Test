@@ -748,8 +748,8 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
 
         table.addCell("Order Id");
         table.addCell(order.getOrderId().toString());
-        table.addCell("Invoice Id");
-        table.addCell(order.getInvoice().getId().toString());
+//        table.addCell("Invoice Id");
+//        table.addCell(order.getInvoice().getId().toString());
         table.addCell("Contact's Name");
         table.addCell(order.getTitle() + " " + order.getName());
         table.addCell("Email");
