@@ -34,7 +34,9 @@ import java.io.FileOutputStream;
 import java.io.IOException; 
 import java.net.MalformedURLException; 
 import java.net.URL; 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator; 
 import java.util.List;
 import java.util.Properties; 
@@ -580,10 +582,15 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             message.setFrom(new InternetAddress("is3102.it09@gmail.com")); 
             message.setRecipients(Message.RecipientType.TO, 
                     InternetAddress.parse(toEmailAdress)); 
-            message.setSubject("Your ticket from Coral Island Resort: Attraction "+tpe.getTpId()); 
+            String attrName=tpe.getAttrTickets().get(0).getAttr().getAttrName();
+            SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+            String dateString=sdf.format(tpe.getAttrTicketBookDate());
+            
+            message.setSubject("Your ticket from Coral Island Resort: "+attrName+" "+tpe.getTpId()); 
+            
             String text = "Thank you for booking ticket for Coral Island Resort Attraction services!"
-                    +"\nYour Ticket ID is "+tpe.getTpId() 
-                    +"\nTicket purchase date is "+tpe.getAttrTicketBookDate().toString() 
+                    +"\nYour ticket purchase ID is "+tpe.getTpId() 
+                    +"\nTicket is purchased for "+dateString
                     +"\nThe fee of tickets you have purchased is "+tpe.getAttrTicketFee() 
                     +"\nPlease refer to the attachment for your e-ticket: print the pdf file and bring it on the show date"
                     +"\nThank you for your support!"
@@ -993,12 +1000,19 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         //Below generate a PDF file 
         Document document; 
             document = new Document(PageSize.A4,50,50,50,50); 
-            String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\SingleTicketReservation "+ 
+            String OUTPUTFILE = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf "+ 
                     tpe.getTpId()+".pdf"; 
                       
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE)); 
             document.open(); 
-              
+            
+        String imagePath = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf\\coral_island_banner_customer.png";
+        Image image = Image.getInstance(imagePath);
+        document.add(image); 
+        
+        SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+        String dateString=sdf.format(tpe.getAttrTicketBookDate());
+         
         //Below specify the font type 
         Font catFont = new Font(Font.TIMES_ROMAN, 18, 
       Font.BOLD); 
@@ -1012,9 +1026,6 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
       Font.BOLDITALIC); 
           
         //Below specify contents 
-         String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png"; 
-         Image image = Image.getInstance(imagePath); 
-         document.add(image); 
            
          Paragraph preface = new Paragraph(); 
          addEmptyLine(preface, 1); 
@@ -1057,22 +1068,37 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 AttrTicketEntity currentTicket = itr.next(); 
                 Integer currentNumber = itr2.next(); 
                 table.addCell("No."+i+" Ticket Name & Type"); 
-                table.addCell(currentTicket.getAttrTicketName()+" "+currentTicket.getAttrTicketType()); 
+                table.addCell(currentTicket.getAttrTicketName()+","+currentTicket.getAttrTicketType()); 
                 table.addCell("Number of Tickets"); 
                 table.addCell(Integer.toString(currentNumber)); 
-                table.addCell("Ticket Date"); 
-                table.addCell(tpe.getAttrTicketBookDate().toString()); 
-                table.addCell("Ticket Price"); 
-                table.addCell(Double.toString(tpe.getAttrTicketFee())); 
+//                table.addCell("Ticket Date"); 
+//                //table.addCell(tpe.getAttrTicketBookDate().toString()); 
+//                table.addCell(dateString); 
+//                table.addCell("Ticket Price"); 
+//                table.addCell(Double.toString(tpe.getAttrTicketFee())); 
                 i++; 
                 System.out.println("EmailSessionBean: a ticket has been added!"+i); 
             }
+            
+            table.addCell("Ticket Date");
+            table.addCell(dateString);
+            table.addCell("Ticket Price");
+            table.addCell(Double.toString(tpe.getAttrTicketFee())); 
             
             
               
         } 
         document.add(table);
         
+        
+        Long tpId = tpe.getTpId();
+        String tpIdString = generateBarcodeSessionBean.makeToSevenDigit(String.valueOf(tpId));
+        System.out.println("tpIdString: " + tpIdString);
+        String ticketPath = "C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + tpIdString + ".jpg";
+        System.out.println("ticketPath: "+ticketPath);
+
+        Image barcode=Image.getInstance(ticketPath);
+        document.add(barcode);
         
         document.close();
           
