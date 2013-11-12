@@ -123,17 +123,18 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
          rcCheckOutDate.setDate(reservation.getRcCheckOutDate().getDate());
          room.setCheckOutDate(rcCheckOutDate);
          */
+        System.out.println("in reservation session bean: add reservation");
         ReservationEntity thisReservation = newReservation;
-        thisReservation.getRcCheckInDate().setYear(newReservation.getRcCheckInDate().getYear() - 1900);
-        thisReservation.getRcCheckInDate().setMonth(newReservation.getRcCheckInDate().getMonth() - 1);
-        thisReservation.getRcCheckOutDate().setYear(newReservation.getRcCheckOutDate().getYear() - 1900);
-        thisReservation.getRcCheckOutDate().setMonth(newReservation.getRcCheckOutDate().getMonth() - 1);
+//        thisReservation.getRcCheckInDate().setYear(newReservation.getRcCheckInDate().getYear() - 1900);
+//        thisReservation.getRcCheckInDate().setMonth(newReservation.getRcCheckInDate().getMonth() - 1);
+//        thisReservation.getRcCheckOutDate().setYear(newReservation.getRcCheckOutDate().getYear() - 1900);
+//        thisReservation.getRcCheckOutDate().setMonth(newReservation.getRcCheckOutDate().getMonth() - 1);
         RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, thisReservation.getReservationRoomType());
-//        Query query = em.createQuery("SELECT rp FROM RoomPriceEntity rp WHERE rp.hotelId ='" + newReservation.getReservationHotelNo() + "' AND rp.priceType ='" + newReservation.getReservationRoomType() + "'");
-//        RoomPriceEntity thisPrice = (RoomPriceEntity) query.getResultList().get(0);
+
         thisReservation.setReservationTotal(thisPrice.getPrice() * thisReservation.getReservationRoomCount() * 5);//5 should be days between
         thisReservation.setReservationStatus("guarantee"); //haven't implement yet
         em.persist(thisReservation);
+        System.err.println("successfully added reservation: " + newReservation.getReservationId());
     }
 
     @Override

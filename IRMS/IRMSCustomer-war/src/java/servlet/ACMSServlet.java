@@ -88,7 +88,7 @@ public class ACMSServlet extends HttpServlet {
             } else if ("hotelPay".equals(page)) {
                 System.out.println("***hotel payment***");
                 data = continueRead1(request);
- //               data = continueRead2(request);
+                data = continueRead2(request);
                 
                 SessionTime=(int)session.getMaxInactiveInterval();
                  System.out.println("Time left"+SessionTime);
@@ -96,11 +96,15 @@ public class ACMSServlet extends HttpServlet {
                  
                 request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
             } else if ("hotelPayConfirm".equals(page)) {
-             
+                System.out.println("adding reservation to database....");
                 data.setRcCreditCardNo(request.getParameter("cardNo"));
-               // reservationSessionBean.addReservation(data);
+                try {
+                reservationSessionBean.addReservation(data);
                 System.out.println("***hotel payment confirmation***");
-
+                }catch (Exception e) {
+                    System.err.println("error occured when adding reservation in servlet");
+                    e.printStackTrace();
+                }
                 request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
             } else if ("hotelModify".equals(page)) {
                 reservationId=request.getParameter("reservationId");
