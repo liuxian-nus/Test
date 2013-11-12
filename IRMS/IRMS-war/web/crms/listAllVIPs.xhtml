@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+          <p:tabView id="tabView">  
+            <p:tab id="tab1" title="VIP List">  
+                <h:form>  
+                    <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.vips}" widgetVar="membersTable"   
+                                 emptyMessage="No VIPs found with given criteria" filteredValue="#{memberManagedBean.filteredMember}">  
+
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Search all fields:" />  
+                                <p:inputText id="globalFilter" onkeyup="membersTable.filter();" style="width:150px" />  
+                            </p:outputPanel>  
+                        </f:facet>  
+                        <p:column style="width:2%">  
+                            <p:rowToggler />  
+                        </p:column> 
+                        <p:column id="idColumn" filterBy="#{memberList.memberEmail}"   
+                                  headerText="VIP Email" filterMatchMode="contains">  
+                            <h:outputText value="#{memberList.memberEmail}" />  
+                        </p:column>  
+
+                        <p:column id="nameColumn" filterBy="#{memberList.memberName}"   
+                                  headerText="VIP Name" filterMatchMode="contains">  
+                            <h:outputText value="#{memberList.memberName}" />  
+                        </p:column>  
+
+                        <p:column id="genderColumn" filterBy="#{memberList.gender}" headerText="Gender" 
+                                  filterOptions="#{memberManagedBean.genderOptions}" filterMatchMode="exact">  
+                            <h:outputText value="#{memberList.gender}" />  
+                        </p:column>
+
+                        <p:column id="nationalityColumn" filterBy="#{memberList.nationality}" headerText="Nationality"  
+                                  filterOptions="#{memberManagedBean.nationalityOptions}" filterMatchMode="contains">  
+                            <h:outputText value="#{memberList.nationality}" />  
+                        </p:column>
+                        <p:column>
+                            <p:commandButton action="#{memberManagedBean.checkTransaction(event)}" icon="ui-icon ui-icon-flag" 
+                                             title="Transactions" value ="Transactions">
+                                <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.member}" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:rowExpansion>  
+                            <h:panelGrid id="display" columns="2" cellpadding="4" style="width:200px;"  
+                                         styleClass=" ui-widget-content grid">  
+
+                                <f:facet name="header">  
+                                    #{memberList.memberEmail}
+                                </f:facet>  
+
+                                <h:outputText value="Name:" />  
+                                <h:outputText id="name" value="#{memberList.memberName}" style="width:200px;"   />  
+
+                                <h:outputText value="Phone Number:" />  
+                                <h:outputText id="hp" value="#{memberList.memberHP}"  style="width:200px;"  />  
+
+                                <h:outputText value="Marital Status:" />  
+                                <h:outputText value="#{memberList.maritalStatus}" style="width:200px;"  />  
+
+                                <h:outputText value="Date of Birth:" />  
+                                <h:outputText value="#{memberList.memberDob}">  
+                                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Points:" />  
+                                <h:outputText value="#{memberList.point}" style="width:200px;"  />  
+
+                                <h:outputText value="Coins:" />  
+                                <h:outputText value="#{memberList.coin}" style="width:200px;"  />  
+
+                                <h:outputText value="Subscription:" />  
+                                <h:outputText value="#{memberList.isSubscriber}" style="width:200px;"  />  
+
+                            </h:panelGrid>  
+                        </p:rowExpansion>           
+                    </p:dataTable>  
+
+                </h:form> 
+            </p:tab>
+              
+              
+              <!--here is the Super VIP Table-->
+              <p:tab id="tab2" title="Super VIP List">  
+                <h:form>  
+                    <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.supervips}" widgetVar="membersTable"   
+                                 emptyMessage="No Super VIPs found with given criteria" filteredValue="#{memberManagedBean.filteredMember}">  
+
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <h:outputText value="Search all fields:" />  
+                                <p:inputText id="globalFilter" onkeyup="membersTable.filter();" style="width:150px" />  
+                            </p:outputPanel>  
+                        </f:facet>  
+                        <p:column style="width:2%">  
+                            <p:rowToggler />  
+                        </p:column> 
+                        <p:column id="idColumn" filterBy="#{memberList.memberEmail}"   
+                                  headerText="VIP Email" filterMatchMode="contains">  
+                            <h:outputText value="#{memberList.memberEmail}" />  
+                        </p:column>  
+
+                        <p:column id="nameColumn" filterBy="#{memberList.memberName}"   
+                                  headerText="VIP Name" filterMatchMode="contains">  
+                            <h:outputText value="#{memberList.memberName}" />  
+                        </p:column>  
+
+                        <p:column id="genderColumn" filterBy="#{memberList.gender}" headerText="Gender" 
+                                  filterOptions="#{memberManagedBean.genderOptions}" filterMatchMode="exact">  
+                            <h:outputText value="#{memberList.gender}" />  
+                        </p:column>
+
+                        <p:column id="nationalityColumn" filterBy="#{memberList.nationality}" headerText="Nationality"  
+                                  filterOptions="#{memberManagedBean.nationalityOptions}" filterMatchMode="contains">  
+                            <h:outputText value="#{memberList.nationality}" />  
+                        </p:column>
+                        <p:column>
+                            <p:commandButton action="#{memberManagedBean.checkTransaction(event)}" icon="ui-icon ui-icon-flag" 
+                                             title="Transactions" value ="Transactions">
+                                <f:setPropertyActionListener value="#{memberList}" target="#{memberManagedBean.member}" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:rowExpansion>  
+                            <h:panelGrid id="display" columns="2" cellpadding="4" style="width:200px;"  
+                                         styleClass=" ui-widget-content grid">  
+
+                                <f:facet name="header">  
+                                    #{memberList.memberEmail}
+                                </f:facet>  
+
+                                <h:outputText value="Name:" />  
+                                <h:outputText id="name" value="#{memberList.memberName}" style="width:200px;"   />  
+
+                                <h:outputText value="Phone Number:" />  
+                                <h:outputText id="hp" value="#{memberList.memberHP}"  style="width:200px;"  />  
+
+                                <h:outputText value="Marital Status:" />  
+                                <h:outputText value="#{memberList.maritalStatus}" style="width:200px;"  />  
+
+                                <h:outputText value="Date of Birth:" />  
+                                <h:outputText value="#{memberList.memberDob}">  
+                                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="Points:" />  
+                                <h:outputText value="#{memberList.point}" style="width:200px;"  />  
+
+                                <h:outputText value="Coins:" />  
+                                <h:outputText value="#{memberList.coin}" style="width:200px;"  />  
+
+                                <h:outputText value="Subscription:" />  
+                                <h:outputText value="#{memberList.isSubscriber}" style="width:200px;"  />  
+
+                            </h:panelGrid>  
+                        </p:rowExpansion>           
+                    </p:dataTable>  
+
+                </h:form> 
+            </p:tab>
+              
+              
+              
+          </p:tabView>
+        
+    </ui:define>
+
+</ui:composition>
