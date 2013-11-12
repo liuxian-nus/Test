@@ -267,8 +267,7 @@ public class MemberManagedBean {
     public void sendBirthdayPromotion(ActionEvent event) throws IOException {
         try {
             System.out.println("in sending birthday promotion" + member.getMemberName());
-//            PromotionEntity promotion = em.find(PromotionEntity.class, 3102);
-//            emailSessionBean.sendBirthdayCongrats(member, promotion);
+            emailSessionBean.sendBirthdayCongrats(member);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when sending birthday promotion", ""));
         }

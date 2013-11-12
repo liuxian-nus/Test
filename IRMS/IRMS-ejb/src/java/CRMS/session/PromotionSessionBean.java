@@ -56,6 +56,23 @@ public class PromotionSessionBean {
         }
         return returnList;
     }
+    
+        public List<PromotionEntity> getNormalPromotions() {
+        Query q = em.createQuery("SELECT p FROM PromotionEntity p");
+
+        List<PromotionEntity> resultList = q.getResultList();
+        Iterator<PromotionEntity> itr = resultList.iterator();
+        List<PromotionEntity> returnList = new ArrayList();
+
+        while (itr.hasNext()) {
+            PromotionEntity current = itr.next();
+            if (!(current.isPromotionMemberExclusive())) {
+                returnList.add(current);
+                System.out.println("Promotion Entity has been added!");
+            }
+        }
+        return returnList;
+    }
 
     public String endPromotion(Date endDate) {
         Timer timer = new Timer();
@@ -74,7 +91,7 @@ public class PromotionSessionBean {
         List promotions = new ArrayList<PromotionEntity>();
         for (Object o : q.getResultList()) {
             PromotionEntity p = (PromotionEntity) o;
-            if (p.getMcMemberTargets().contains(thisMember)) {
+            if ((p.getMcMemberTargets().contains(thisMember))&&(p.getMcMemberTargets()==null)) {
                 promotions.add(p);
             }
         }

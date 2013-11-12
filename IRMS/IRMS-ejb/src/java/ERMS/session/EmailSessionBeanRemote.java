@@ -25,7 +25,7 @@ import javax.ejb.Remote;
 @Remote
 public interface EmailSessionBeanRemote {
     
-    public void sendBirthdayCongrats(MemberEntity member,PromotionEntity promotion);
+    public void sendBirthdayCongrats(MemberEntity member);
     
     public void sendPromotionToTargets(PromotionEntity promotion);
     

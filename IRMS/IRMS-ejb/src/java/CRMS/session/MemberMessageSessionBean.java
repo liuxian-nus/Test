@@ -8,6 +8,7 @@ import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberMessageEntity;
 import Exception.ExistException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -121,5 +122,27 @@ public class MemberMessageSessionBean {
         em.merge(thisMessage);
         System.out.println("this message is successfully updated to read");
         return true;
+    }
+
+    public void createNewMessage(MemberEntity member, String title, String content, String category, Date sentDate) {
+        MemberMessageEntity newMessage = new MemberMessageEntity();
+        newMessage.setMemberReceiver(member.getMemberEmail());
+        newMessage.setMessageTitle(title);
+        newMessage.setMessageContent(content);
+        newMessage.setMessageCategory(category);
+        newMessage.setMessageSentDate(sentDate);
+        newMessage.setMessageStatus("unread");
+        em.persist(newMessage);
+    }
+    
+    public void createNewMessage(String toEmailAddress, String title, String content, String category, Date sentDate) {
+        MemberMessageEntity newMessage = new MemberMessageEntity();
+        newMessage.setMemberReceiver(toEmailAddress);
+        newMessage.setMessageTitle(title);
+        newMessage.setMessageContent(content);
+        newMessage.setMessageCategory(category);
+        newMessage.setMessageSentDate(sentDate);
+        newMessage.setMessageStatus("unread");
+        em.persist(newMessage);
     }
 }
