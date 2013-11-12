@@ -14,7 +14,7 @@
             <p:panel id="contracts" header="Contracts Management" style="height:500px;">
                 <div style="margin-top:20px;margin-bottom:20px;">
 
-                    <p:dataTable id="contract" value="#{contractManagedBean.allContracts}" var="contract" 
+                    <p:dataTable id="contract" value="#{contractManagedBean.contracts}" var="contract" 
                                  paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true"
                                  >
 
@@ -78,19 +78,15 @@
                         <p:column style="width:10%">  
 
                             <!-- update when new or rejected-->
-                            <p:commandButton   ajax="true" actionListener="#{operatorRequstContractManagedBean.viewContract}"
-                                              rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
-                                              icon="ui-icon ui-icon-tag"  title="Update contract">  
+                            <p:commandButton   ajax="true" oncomplete="update.show()"
+                                               rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
+                                               icon="ui-icon ui-icon-tag"  title="Update contract">  
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
+                                <f:setPropertyActionListener value="#{true}" target="#{operatorRequstContractManagedBean.editMode}" />
                             </p:commandButton>  
-                            
-                            
-                            <!-- cancel contract when rejected or new-->
-                            <p:commandButton   ajax="true" oncomplete="cancel.show()"
-                                              rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
-                                              icon="ui-icon ui-icon-tag"  title="Cancel the contract">  
-                                <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
-                            </p:commandButton>  
+
+
+
 
                             <!-- send out for request when new-->
                             <p:commandButton   oncomplete="confirmSend.show()" ajax="true" 
@@ -102,7 +98,7 @@
                             <!-- delete when new or rejected-->
                             <p:commandButton   oncomplete="confirmaDelete.show()" ajax="true" 
                                                rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
-                                               icon="ui-icon ui-icon-circle-close" title="Delete">  
+                                               icon="ui-icon ui-icon-circle-close" title="Cancel this contract">  
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton> 
 
@@ -145,10 +141,10 @@
 
                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmaDelete"> 
                         <br/>
-                        Are you sure to delete this contract?
+                        Are you sure to cancel this contract?
                         <br/><br/>
                         <h:panelGrid columns="2" id="delete">
-                            <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.delete}" oncomplete="confirmaDelete.hide()"/>
+                            <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.cancelContract}" oncomplete="confirmaDelete.hide()"/>
                             <p:commandButton value="Not yet" onclick="confirmaDelete.hide()" type="button"/>  
                         </h:panelGrid>
                     </p:dialog>  
@@ -172,16 +168,8 @@
                             <p:commandButton value="Not yet" onclick="early.hide()" type="button"/>  
                         </h:panelGrid>
                     </p:dialog> 
-                    
-                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="cancel"> 
-                        <br/>
-                        Are you sure to cancel this contract?
-                        <br/><br/>
-                        <h:panelGrid columns="2" id="withdraw">
-                            <p:commandButton value="Yes" update="contract" onclick ="growl" actionListener="#{operatorRequstContractManagedBean.cancelContract}" oncomplete="cancel.hide()"/>
-                            <p:commandButton value="Not yet" onclick="cancel.hide()" type="button"/>  
-                        </h:panelGrid>
-                    </p:dialog>  
+
+
 
 
                     <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="renew"> 
@@ -207,7 +195,49 @@
                             <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventEndDate}" /> 
                             <h:outputText value=""/>
 
-                            <p:commandButton onclick="renew.hide()" update="contract" value="Add" ajax="true" actionListener="#{operatorRequstContractManagedBean.renew}" />
+                            <p:commandButton oncomplete="renew.hide()" update="contract" value="Add" ajax="true" actionListener="#{operatorRequstContractManagedBean.renew}" />
+                        </h:panelGrid> 
+                    </p:dialog> 
+
+
+                    <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="update"> 
+                        <h:panelGrid columns="2" cellpadding="10" id="update">                         
+                            <h:outputText value="Commission Rate:"/>
+                            <p:inplace rendered="#{operatorRequstContractManagedBean.editMode}" > 
+                                <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{operatorRequstContractManagedBean.contract.last.eventCommissionRate}"/>
+                            </p:inplace>
+                            <h:outputText value=""/>
+
+                            <h:outputText value="Monthly Rate:"/>
+                            <p:inplace rendered="#{operatorRequstContractManagedBean.editMode}">
+                                <p:inputText title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{operatorRequstContractManagedBean.contract.last.eventMonthRate}"/>
+                            </p:inplace>
+                            <h:outputText value=""/>
+
+                            <h:outputText value="Early Termination charge:"/>
+                            <p:inplace rendered="#{operatorRequstContractManagedBean.editMode}">
+                                <p:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{operatorRequstContractManagedBean.contract.last.eventEarlyCharge}"/>
+                            </p:inplace>
+                            <h:outputText value=""/>
+
+                            <h:outputText value="Starting Date:"/>
+                            <p:inplace id="selectableInplace" rendered="#{operatorRequstContractManagedBean.editMode}" label="contract start date" effectSpeed="fast" event="dblclick"> 
+                                <p:calendar pattern="yyyy-MM-dd" mindate="#{operatorRequstContractManagedBean.contract.last.eventEndDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.contract.last.eventStartDate}" /> 
+                            </p:inplace>
+                            <h:outputText value=""/>
+
+                            <h:outputText value="Ending Date:"/>
+                            <p:inplace rendered="#{operatorRequstContractManagedBean.editMode}" id="selectableInplace2" label="contract end date" effectSpeed="fast" event="dblclick"> 
+                                <p:calendar pattern="yyyy-MM-dd" mindate="#{operatorRequstContractManagedBean.contract.last.eventEndDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.contract.last.eventEndDate}" /> 
+                            </p:inplace>           
+                            <h:outputText value=""/>
+
+                            <p:commandButton rendered="#{operatorRequstContractManagedBean.editMode}" value="Update" ajax="true" actionListener="#{operatorRequstContractManagedBean.updateContract}" onclick="update.hide()" />
+
+
+                            <p:commandButton rendered="#{operatorRequstContractManagedBean.editMode}" value="Cancel" onclick="update.hide()" type="button"/>  
+
+
                         </h:panelGrid> 
                     </p:dialog> 
 

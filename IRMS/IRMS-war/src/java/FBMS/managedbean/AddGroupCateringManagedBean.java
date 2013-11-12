@@ -341,7 +341,7 @@ public class AddGroupCateringManagedBean {
             order.setMenu(menu); // setting menu
             //setting member
             System.out.println("in adding member" + memberId);
-            if (memberId!=null) {
+            if (memberId != null) {
                 System.out.println(memberSessionBean.getMemberByEmail(memberId).getMemberName());
                 order.setMember(memberSessionBean.getMemberByEmail(memberId));
                 System.out.println("we are in setting member" + order.getMember().getMemberEmail());
@@ -416,6 +416,10 @@ public class AddGroupCateringManagedBean {
 
     public List<OrderEntity> getReceiptOrders() {
         return orderSessionBean.getReceiptedOrders();
+    }
+
+    public List<OrderEntity> getCanceledOrders() {
+        return orderSessionBean.getCanceledOrders();
     }
 
     public OrderEntity getSelectOrder() {

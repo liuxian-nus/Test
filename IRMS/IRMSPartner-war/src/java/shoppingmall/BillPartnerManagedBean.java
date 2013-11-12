@@ -80,20 +80,30 @@ public class BillPartnerManagedBean {
         merchantBillSessionBean.updateBill(bill);
         System.out.println("after updating bills" + bill.getBillStatus());
         if ("newApproved".equals(bill.getContract().getStatus())) {
-            cevent = bill.getContract().getLast();
-            cevent.setEventStatus("newActive");
+
+            bill.getContract().getLast().setEventStatus("newActive");
+            System.out.println("whats the cevent id now" + bill.getBillId());
+//            cevent.setEventStatus("newActive");
+            contractSessionBean.updateContract(bill.getContract());
+            System.out.println("whats the cevent id now" + bill.getContract().getLast().getEventStatus());
         }
 
         if ("renewApproved".equals(bill.getContract().getStatus())) {
-            cevent = bill.getContract().getLast();
-            cevent.setEventStatus("renewActive");
+            bill.getContract().getLast().setEventStatus("renewActive");
+            System.out.println("whats the cevent id now" + bill.getBillId());
+//            cevent.setEventStatus("newActive");
+            contractSessionBean.updateContract(bill.getContract());
+            System.out.println("whats the cevent id now" + bill.getContract().getLast().getEventStatus());
         }
 
         if ("earlyTerminationApproved".equals(bill.getContract().getStatus())) {
-            cevent = bill.getContract().getLast();
-            cevent.setEventStatus("earlyTerminated");
+            bill.getContract().getLast().setEventStatus("earlyTerminated");
+            System.out.println("whats the cevent id now" + bill.getBillId());
+//            cevent.setEventStatus("newActive");
+            contractSessionBean.updateContract(bill.getContract());
+            System.out.println("whats the cevent id now" + bill.getContract().getLast().getEventStatus());
         }
-        contracteventSessionBean.updateContractEvent(cevent);
+//        contracteventSessionBean.updateContractEvent(cevent);
 
     }
 

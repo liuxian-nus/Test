@@ -331,4 +331,16 @@ public class OrderSessionBean implements OrderSessionBeanRemote {
         }
         return orderList;
     }
+    
+    public List<OrderEntity> getCanceledOrders() {
+        Query q = em.createQuery("SELECT m FROM OrderEntity m");
+        List orderList = new ArrayList<OrderEntity>();
+        for (Object o : q.getResultList()) {
+            OrderEntity m = (OrderEntity) o;
+            if ("Canceled".equals(m.getStatus())) {
+                orderList.add(m);
+            }
+        }
+        return orderList;
+    }
 }

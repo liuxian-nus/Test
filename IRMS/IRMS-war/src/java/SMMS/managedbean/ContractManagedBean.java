@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -66,6 +67,11 @@ public class ContractManagedBean implements Serializable {
         newevent = new ContracteventEntity();
         selected = new ContractEntity();
 
+    }
+
+    @PostConstruct
+    public void init() {
+        contracts = contractSessionBean.getAllContracts();
     }
 
     public String getOutletType() {

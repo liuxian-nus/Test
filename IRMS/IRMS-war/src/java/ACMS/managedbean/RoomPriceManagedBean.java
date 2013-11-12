@@ -40,6 +40,7 @@ public class RoomPriceManagedBean {
     }
 
     public RoomPriceManagedBean() {
+        thisRoomPrice = new RoomPriceEntity();
     }
 
     public List<RoomPriceEntity> getAllRoomPrices() throws ExistException, IOException {

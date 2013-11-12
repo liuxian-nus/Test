@@ -37,6 +37,7 @@ public class OperatorRequstContractManagedBean {
     private ContractEntity contract;
     private Long contractId;
     private ContracteventEntity cevent;
+    private boolean editMode = false;
 
     /**
      * Creates a new instance of OperatorRequstContractManagedBean
@@ -52,7 +53,7 @@ public class OperatorRequstContractManagedBean {
 
         System.out.println("in updating contract renew" + contract.getContractId());
         try {
-            contract = (ContractEntity) request.getSession().getAttribute("contractId");
+//            contract = (ContractEntity) request.getSession().getAttribute("contractId");
             System.out.println("in updating contract renew" + contract.getContractId());
             contractSessionBean.updateContract(contract);
             System.out.println("now the status is" + contract.getLast().getEventCommissionRate());
@@ -225,5 +226,16 @@ public class OperatorRequstContractManagedBean {
 
     public void setCevent(ContracteventEntity cevent) {
         this.cevent = cevent;
+    }
+
+    public boolean isEditMode() {
+        System.out.println("edit more is " + editMode);
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+        System.out.println("edit more is " + editMode);
+
     }
 }
