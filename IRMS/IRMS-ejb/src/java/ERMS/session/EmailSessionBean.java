@@ -13,6 +13,7 @@ import CRMS.entity.PromotionEntity;
 import CRMS.session.FeedbackSessionBean;
 import CRMS.session.GenerateBarcodeSessionBean;
 import CRMS.session.MemberMessageSessionBean;
+import ESMS.entity.ShowEntity;
 import SMMS.entity.BillEntity;
 import SMMS.entity.ContractEntity;
 import com.lowagie.text.BadElementException;
@@ -1286,6 +1287,39 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             feedbackSessionBean.updateFeedbackStatus(feedback, "handled");
             System.out.println("Done");
 
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public void sendShowInvitation(ShowEntity show, MemberEntity superVIP) {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(superVIP.getMemberEmail()));
+            message.setSubject("");
+            String textbody = "";
+            message.setText(textbody);
+
+            Transport.send(message);
+            Date today = new Date();
+            memberMessageSessionBean.createNewMessage(superVIP.getMemberEmail(), "Your Are invited to a ", textbody, "notification", today);
+            System.out.println("Done");
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }

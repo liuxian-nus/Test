@@ -349,13 +349,13 @@ public class RoomSessionBean implements RoomSessionBeanRemote {
         } else if ((data.getReservationHotelNo() == 1) && (data.getReservationRoomType().equals("Deluxe Suite"))) {
             count = 50;
         } else if ((data.getReservationHotelNo() == 1) && (data.getReservationRoomType().equals("Orchard Suite"))) {
-            count = 30;
+            count = 10;
         } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Deluxe"))) {
             count = 100;
         } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Deluxe Suite"))) {
             count = 60;
         } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Chairman Suite"))) {
-            count = 20;
+            count = 8;
         } else if ((data.getReservationHotelNo() == 3) && (data.getReservationRoomType().equals("Superior"))) {
             count = 60;
         } else if ((data.getReservationHotelNo() == 3) && (data.getReservationRoomType().equals("Deluxe"))) {
