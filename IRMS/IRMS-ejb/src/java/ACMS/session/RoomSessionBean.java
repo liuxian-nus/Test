@@ -12,6 +12,7 @@ import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
 import Exception.RoomException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -337,6 +338,55 @@ public class RoomSessionBean implements RoomSessionBeanRemote {
             return;
         }
         System.out.println("Insert room into database");
+    }
+    
+        private boolean checkAvailability(ReservationEntity data) {
+        List<ReservationEntity> reservationList = reservationSessionBean.getAllReservations();
+        int count = 0;
+        //set for total room number
+        if ((data.getReservationHotelNo() == 1) && (data.getReservationRoomType().equals("Deluxe"))) {
+            count = 80;
+        } else if ((data.getReservationHotelNo() == 1) && (data.getReservationRoomType().equals("Deluxe Suite"))) {
+            count = 50;
+        } else if ((data.getReservationHotelNo() == 1) && (data.getReservationRoomType().equals("Orchard Suite"))) {
+            count = 30;
+        } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Deluxe"))) {
+            count = 100;
+        } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Deluxe Suite"))) {
+            count = 60;
+        } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Chairman Suite"))) {
+            count = 20;
+        } else if ((data.getReservationHotelNo() == 3) && (data.getReservationRoomType().equals("Superior"))) {
+            count = 60;
+        } else if ((data.getReservationHotelNo() == 3) && (data.getReservationRoomType().equals("Deluxe"))) {
+            count = 60;
+        } else if ((data.getReservationHotelNo() == 3) && (data.getReservationRoomType().equals("Deluxe Suite"))) {
+            count = 50;
+        }
+        System.out.println("room information: " + data.getReservationHotelNo() + data.getReservationRoomType());
+        System.err.println("Total number of rooms is: " + count);
+        //while loop: deduct unavailable rooms
+        Iterator<ReservationEntity> itr = reservationList.iterator();
+        while (itr.hasNext()) {
+            ReservationEntity re = itr.next();
+            if ((re.getRcCheckOutDate().after(data.getRcCheckInDate())) && (re.getRcCheckInDate().before(data.getRcCheckOutDate()))) {
+                count--;
+            }
+        }
+        if (data.getReservationRoomCount() > count) {
+            return false;
+        } else {
+            return true;
+        }
+        /*
+         * check availability algorithm:
+         * notation: (re.getRcCheckInDate=)rIn, rOut, (data.getCheckInDate=)in, out
+         * unavailable condition 1: rIn<in and rOut>In
+         * unavailabel condition 2: in<rIn<out
+         * (hidden condition: rOut>rIn)
+         * therefore: [(rIn<in)&&(rOut>in)]||[(in<rIn<out)&&(rOut>in)]||[(in<rIn<out)&&(rOut<in)] (the 3rd part is an empty set)
+         * simplified result: rIn<out && rOut>in
+         */
     }
 
     @Override

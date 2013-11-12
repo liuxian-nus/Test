@@ -9,6 +9,7 @@ import CRMS.entity.MemberTransactionEntity;
 import CRMS.entity.PromotionEntity;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.PromotionSessionBean;
+import CRMS.session.VIPSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class promotionManagedBean {
     private PromotionSessionBean promotionSessionBean;
     @EJB
     private MemberSessionBean memberSessionBean;
+    @EJB
+    private VIPSessionBean vipSessionBean;
     private List<PromotionEntity> promotions = new ArrayList<PromotionEntity>();
     private List<PromotionEntity> exclusivePromotions = new ArrayList<PromotionEntity>();
     private PromotionEntity newPromotion;
@@ -183,7 +186,7 @@ public class promotionManagedBean {
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
             this.isMemberExclusive = true;
-            newPromotion.setMcMemberTargets(memberSessionBean.getVIPs());
+            newPromotion.setMcMemberTargets(vipSessionBean.getVIPs());
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion is set to target to VIP only.", ""));
 
         } catch (Exception e) {

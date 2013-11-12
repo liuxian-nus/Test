@@ -15,6 +15,7 @@ import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
@@ -51,6 +52,26 @@ public class VIPSessionBean {
         boolean upgraded = false;
         
         return upgraded;
+    }
+       
+    public List<MemberEntity> getVIPs() {
+        Query q = em.createQuery("SELECT m FROM MemberEntity m WHERE m.isVIP =" + true);
+        return q.getResultList();
+    }
+    
+    public void assignContactEmployee(MemberEntity member, String contactEmployeeId) {
+        member.setContactEmployee(contactEmployeeId);
+        em.merge(member);
+    }
+    
+    public List<MemberEntity> resetSuperVIPs() {
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        for (Object o : q.getResultList()) {
+            MemberEntity m = (MemberEntity) o;
+            m.setContactEmployee(null);
+            em.merge(m);
+        }
+        return this.getSuperVIPs();
     }
     
     //Percentile is preset to be 90%

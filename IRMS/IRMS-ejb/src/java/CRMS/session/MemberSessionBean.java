@@ -200,10 +200,6 @@ public class MemberSessionBean {
         return memberList;
     }
 
-    public List<MemberEntity> getVIPs() {
-        Query q = em.createQuery("SELECT m FROM MemberEntity m WHERE m.isVIP =" + true);
-        return q.getResultList();
-    }
 
     //cancel membership: member is not removed, it is inactivated
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
