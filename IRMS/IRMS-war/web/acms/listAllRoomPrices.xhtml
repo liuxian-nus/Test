@@ -20,7 +20,7 @@
                         <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>    
                     </p:contextMenu>   
 
-                    <p:dataTable id="rooms" value="#{roomPriceManagedBean.getAllRoomPrices()}" editable="true" 
+                    <p:dataTable id="rooms" value="#{roomPriceManagedBean.roomPriceList}" editable="true" 
                                  editMode="cell" widgetVar="priceTable" var="roomPrices" paginator="true" rows="6"
                                  rowKey="#{roomPrices.priceType}"
                                  selectionMode="single" selection="#{roomPriceManagedBean.thisRoomPrice}">
@@ -38,6 +38,8 @@
                                 <f:facet name="input"><p:inputText id="modelInput" value="#{roomPrices.price}" style="width:96%"/></f:facet>  
                             </p:cellEditor> 
                         </p:column>
+                        
+                        
 
                     </p:dataTable>
                 </div>
