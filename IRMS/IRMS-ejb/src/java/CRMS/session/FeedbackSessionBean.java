@@ -54,7 +54,7 @@ public class FeedbackSessionBean {
         feedback.setFeedbackOwnerEmail(email);
         feedback.setRating(rating);
         feedback.setFeedbackSentDate(feedbackSentDate);
-        feedback.setFeedbackStatus("New");
+        feedback.setFeedbackStatus("new");
         MemberEntity member = memberSessionBean.getMemberByEmail(email);
         if (member != null) {
             System.out.println("member found: " + member.getMemberName());
@@ -65,7 +65,6 @@ public class FeedbackSessionBean {
         System.out.println("feedback created!");
     }
 
-    //used for mobile app
     public void createFeedback(String email, String feedbackTitle, String feedbackSentDate, String feedbackContent, String feedbackDepartment, String ratingString) throws ParseException {
         feedback.setFeedbackContent(feedbackContent);
         feedback.setFeedbackOwnerEmail(email);

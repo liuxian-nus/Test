@@ -7,8 +7,10 @@ import ATMS.entity.AttrExpressPassEntity;
 import ATMS.entity.AttrTicketEntity;
 import ATMS.entity.ExpressPassPurchaseEntity;
 import ATMS.entity.TicketPurchaseEntity;
+import CRMS.entity.FeedbackEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.PromotionEntity;
+import CRMS.session.FeedbackSessionBean;
 import CRMS.session.GenerateBarcodeSessionBean;
 import CRMS.session.MemberMessageSessionBean;
 import SMMS.entity.BillEntity;
@@ -69,6 +71,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     private GenerateBarcodeSessionBean generateBarcodeSessionBean;
     @EJB
     private MemberMessageSessionBean memberMessageSessionBean;
+    @EJB
+    private FeedbackSessionBean feedbackSessionBean;
     String emailServerName = "smtp.gmail.com";
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
@@ -1251,7 +1255,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         return OUTPUTFILE;
     }
     
-    public void createFeedbackReply(String toEmailAddress, String content) {
+    public void createFeedbackReply(FeedbackEntity feedback, String content) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -1270,7 +1274,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(toEmailAddress));
+                    InternetAddress.parse(feedback.getFeedbackOwnerEmail()));
             message.setSubject("(no reply) Your Feedback Update");
             String textbody = content;
             message.setText(textbody);
@@ -1278,7 +1282,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
             Transport.send(message);
             Date today = new Date();
-            memberMessageSessionBean.createNewMessage(toEmailAddress, "(no reply) Your Feedback Update", textbody, "notification", today);
+            memberMessageSessionBean.createNewMessage(feedback.getFeedbackOwnerEmail(), "(no reply) Your Feedback Update", textbody, "notification", today);
+            feedbackSessionBean.updateFeedbackStatus(feedback, "handled");
             System.out.println("Done");
 
         } catch (MessagingException e) {

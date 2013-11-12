@@ -41,7 +41,7 @@ public class FeedbackEntity implements Serializable {
     @XmlElement
     private String feedbackOwnerEmail;
     @XmlElement
-    private String feedbackStatus; //New, In Progress, Handled
+    private String feedbackStatus; //new, handled
     @XmlElement
     private String feedbackTitle;
     @XmlElement
