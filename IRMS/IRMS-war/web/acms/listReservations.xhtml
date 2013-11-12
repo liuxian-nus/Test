@@ -35,9 +35,14 @@
                                 </h:outputText>
                             </p:column>
                             <p:column style="width:100px">  
-                                <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Select" title="Select">  
+                                <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="View" title="View this reservation">  
                                     <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                 </p:commandButton>
+                                
+                                 <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                    <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
+                                </p:commandButton>
+                                
                                 <h:outputText rendered="#{reservations.reservationStatus == 'checkedIn'}" value="Checked In" >  
                                 </h:outputText>  
                             </p:column>
@@ -45,8 +50,8 @@
                     </div>
 
                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
-                        <h:outputText value="Select This Reservation for check-in? "/>
-                        <p:commandButton value="Yes" onclick="growl;" update ="form" action="#{reservationManagedBean.getSelectReservation()}" oncomplete="confirmation.hide()">  
+                        <h:outputText value="Are you sure to cancel this reservation? "/>
+                        <p:commandButton value="Yes" onclick="growl;" update ="reservationList" actionListener="#{reservationManagedBean.cancelReservation}" oncomplete="confirmation.hide()">  
                         </p:commandButton>
                         <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
                     </p:dialog>  
