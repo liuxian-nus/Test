@@ -128,7 +128,7 @@ public class ticketPurchaseManagedBean {
             }
             tp.setAttrTicketFee(fee);
             System.out.println("fee set!");
-            tp.setAttrTPStatus("purchased");
+            tp.setAttrTPStatus("Purchased");
             System.out.println("purchase status set to purchased");
             ticketPurchaseSessionBean.addTicketPurchase(tp);
             System.out.println("ticket purchase successful");
@@ -152,6 +152,7 @@ public class ticketPurchaseManagedBean {
                     mt.setMemberEmail(memberEmail);
                     String description = member.getMemberName() + ": Your purchase of attraction ticket at this date with a total expense of: " + fee;
                     mt.setMtDescription(description);
+                    mt.setMtDate(today);
                     mt = memberTransactionSessionBean.addMemberTransaction(mt);
                     System.out.println("member transaction added");
                     Set<MemberTransactionEntity> allMTs = member.getMemberTransactions();
@@ -231,7 +232,7 @@ public class ticketPurchaseManagedBean {
                     }
                     tp.setAttrTicketFee(fee);
                     System.out.println("fee set!");
-                    tp.setAttrTPStatus("purchased");
+                    tp.setAttrTPStatus("Purchased");
                     System.out.println("purchase status set to purchased");
                     ticketPurchaseSessionBean.addTicketPurchase(tp);
                     System.out.println("ticket purchase successful");
@@ -248,6 +249,7 @@ public class ticketPurchaseManagedBean {
                     mt.setMemberEmail(memberEmail);
                     String description = member.getMemberName() + ": Your purchase of attraction ticket at this date with a total expense of: " + fee;
                     mt.setMtDescription(description);
+                    mt.setMtDate(today);
                     mt = memberTransactionSessionBean.addMemberTransaction(mt);
                     System.out.println("member transaction added");
                     Set<MemberTransactionEntity> allMTs = member.getMemberTransactions();
