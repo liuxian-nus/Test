@@ -335,7 +335,7 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         List<MemberEntity> resultList = new ArrayList();
 
         while (itr2.hasNext()) {
-            MemberEntity current = itr.next();
+            MemberEntity current = itr2.next();
             double currentCustLifeValue = calculateCustLifeValue(current.getMemberEmail());
             if (currentCustLifeValue >= tieredValue) {
                 resultList.add(current);
