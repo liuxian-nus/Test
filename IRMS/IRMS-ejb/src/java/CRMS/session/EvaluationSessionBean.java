@@ -132,6 +132,8 @@ public class EvaluationSessionBean {
         double m = 0.00;//monetary
         RFMModelEntity model = getRFMModel(ModelNumber);
         System.out.println("calculateRFMValue");
+        
+        System.err.println("calculateRFMValue: "+memberEmail+ModelNumber);
 
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allTrans = q.getResultList();

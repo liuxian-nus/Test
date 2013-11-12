@@ -109,21 +109,25 @@
                     <h:panelGrid columns="2">
                         <h:outputText value="Member Email: "/>
                         <p:autoComplete id="email" value="#{evaluationManagedBean.memberEmail}" required="true" requiredMessage="Email Cannot be Null"  
-                                        completeMethod="#{memberManagedBean.complete}" />
+                                        completeMethod="#{evaluationManagedBean.completeMember}" />
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Model Number: "/>
-                        <h:inputText required="true" requiredMessage="Model number cannot be empty" value="#{evaluationManagedBean.modelNumber}" style="margin-bottom:10px;">
-                            <f:convertNumber integerOnly="true" type="number" />
-                        </h:inputText>
+                        <p:selectOneMenu value="#{evaluationManagedBean.modelNumber}">  
+                            <f:selectItem itemLabel="Select RFM Model" itemValue=""/>
+                            <f:selectItems value="#{evaluationManagedBean.allRFMModels}" var="allRFMModel" itemLabel="#{allRFMModel.id}" itemValue="#{allRFMModel.id}" />  
+                        </p:selectOneMenu>
                         <h:outputText value=""/><br/>
 
-                        <p:commandButton value="Search" ajax="true" actionListener="#{evaluationManagedBean.calculateRFM}">
+                        <p:commandButton value="Calculate" ajax="true" actionListener="#{evaluationManagedBean.calculateRFM(event)}" update=":tabView:rfmValue:RFMValue">
                             <f:setPropertyActionListener value="#{true}" target="#{evaluationManagedBean.calculateStatus}" />
-                        </p:commandButton>
+                        </p:commandButton><br/>
+                        <p:spacer width="20"/>
 
-                        <h:outputText value="RFM Value: " rendered="#{evaluationManagedBean.calculateStatus}"/>
-                        <h:outputText value="#{evaluationManagedBean.RFMValue}" rendered="#{evaluationManagedBean.calculateStatus}"/>
+                        <h:panelGroup id="RFMValue">
+                            <h:outputText value="RFM Value: " rendered="#{evaluationManagedBean.calculateStatus}"/>
+                            <h:outputText value="#{evaluationManagedBean.RFMValue}" rendered="#{evaluationManagedBean.calculateStatus}"/>
+                        </h:panelGroup>
                     </h:panelGrid>
                 </h:form>
             </p:tab>   

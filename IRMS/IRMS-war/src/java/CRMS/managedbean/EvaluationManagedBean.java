@@ -121,7 +121,7 @@ public class EvaluationManagedBean implements Serializable {
     public void onEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("RFM Value Edited", null);
         selectedRfmModel = (RFMModelEntity) event.getObject();
-        System.err.println("yiyiyiyiiyiyiyiyiiyiyyi: " + selectedRfmModel.getFrequency());
+//        System.err.println("yiyiyiyiiyiyiyiyiiyiyyi: " + selectedRfmModel.getFrequency());
         evaluationSessionBean.setRFMParameter(selectedRfmModel.getRecency(), selectedRfmModel.getFrequency(), selectedRfmModel.getMonetary(), selectedRfmModel.getId());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
@@ -132,7 +132,22 @@ public class EvaluationManagedBean implements Serializable {
     }
 
     public void calculateRFM(ActionEvent event) throws IOException, ExistException {
+//        System.err.println("calculate rfm: "+memberEmail+modelNumber);
         RFMValue = evaluationSessionBean.calculateRFMValue(memberEmail, modelNumber);
+    }
+    
+    public List<String> completeMember(String query) throws ExistException {  
+        List<String> results = new ArrayList<String>();  
+        
+        memberList= memberSessionBean.getAllMembers();
+        
+        for (Object o:memberList) {  
+            MemberEntity emp = (MemberEntity)o;
+            if (emp.getMemberEmail().startsWith(query)){
+                results.add(emp.getMemberEmail());  
+            }
+        }  
+        return results;
     }
 
     public MemberSessionBean getMemberSessionBean() {
