@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Cookie
+ * @author Cookie///lalalalalalal
  */
 @Stateless
 @LocalBean
