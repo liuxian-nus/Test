@@ -14,6 +14,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.joda.time.DateMidnight;
+import org.joda.time.Days;
 
 /**
  *
@@ -131,7 +133,11 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
 //        thisReservation.getRcCheckOutDate().setMonth(newReservation.getRcCheckOutDate().getMonth() - 1);
         RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, thisReservation.getReservationRoomType());
 
-        thisReservation.setReservationTotal(thisPrice.getPrice() * thisReservation.getReservationRoomCount() * 5);//5 should be days between
+        DateMidnight start = new DateMidnight(thisReservation.getRcCheckInDate());
+        DateMidnight end = new DateMidnight(thisReservation.getRcCheckOutDate());
+        int days = Days.daysBetween(start, end).getDays();
+        
+        thisReservation.setReservationTotal(thisPrice.getPrice() * thisReservation.getReservationRoomCount() * days);//5 should be days between
         thisReservation.setReservationStatus("guarantee"); //haven't implement yet
         em.persist(thisReservation);
         System.err.println("successfully added reservation: " + newReservation.getReservationId());
@@ -149,7 +155,12 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, reservation.getReservationRoomType());
         System.out.println("thisPrice: "+thisPrice.getPrice());
         System.out.println("room count: "+reservation.getReservationRoomCount());
-        double totalPrice=thisPrice.getPrice() * reservation.getReservationRoomCount() * 5;
+        
+        DateMidnight start = new DateMidnight(reservation.getRcCheckInDate());
+        DateMidnight end = new DateMidnight(reservation.getRcCheckOutDate());
+        int days = Days.daysBetween(start, end).getDays();
+        
+        double totalPrice=thisPrice.getPrice() * reservation.getReservationRoomCount() * days;
         System.out.println("totalPrice: "+totalPrice);
         return totalPrice;
     }
