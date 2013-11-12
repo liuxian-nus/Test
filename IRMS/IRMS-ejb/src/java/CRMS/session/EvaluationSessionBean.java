@@ -46,10 +46,10 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         double sizeOfWallet;
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allTrans = q.getResultList();
+        if(!allTrans.isEmpty()){
         Iterator<MemberTransactionEntity> itr = allTrans.iterator();
         List<MemberTransactionEntity> resultList = new ArrayList();
-
-
+        
         while (itr.hasNext()) {
             MemberTransactionEntity current = itr.next();
             if (current.getMemberEmail().equalsIgnoreCase(memberEmail)) {
@@ -74,6 +74,9 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         }
         return sizeOfWallet;
     }
+        else
+            return 0.00;
+    }
 
     //2. JSF Done!
     @Override
@@ -83,6 +86,8 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allTrans = q.getResultList();
+        if(!allTrans.isEmpty())
+        {
         Iterator<MemberTransactionEntity> itr = allTrans.iterator();
         List<MemberTransactionEntity> resultList = new ArrayList();
         Double memberTotal = 0.00;
@@ -101,6 +106,9 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
             shareOfWallet = dpmtMemberTotal / memberTotal;
         }
         return shareOfWallet;
+    }
+        else
+            return 0.00;
     }
 
     //3. RFMMedel Done!
@@ -140,11 +148,17 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         double m = 0.00;//monetary
         RFMModelEntity model = getRFMModel(ModelNumber);
         System.out.println("calculateRFMValue");
+        //test if model data exists
+        if(model!=null){
 
         System.err.println("calculateRFMValue: " + memberEmail + ModelNumber);
 
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allTrans = q.getResultList();
+        
+        //test if data has been inserted
+        if(allTrans.isEmpty())
+            return 0;
         Iterator<MemberTransactionEntity> itr = allTrans.iterator();
         double memberMoneyTotal = 0.00;
         double moneyTotal = 0.00;
@@ -285,6 +299,10 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         return RFMValue;
     }
+        else
+            return 0;
+    }
+    
 
     //到这里啦！
     @Override
@@ -299,6 +317,11 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allTrans = q.getResultList();
+        
+        //test if list is empty
+        if(allTrans.isEmpty())
+            return 0;
+        
         Iterator<MemberTransactionEntity> itr = allTrans.iterator();
 
         while (itr.hasNext()) {
@@ -319,6 +342,11 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List<MemberEntity> allMembers = q.getResultList();
+        
+        //test if member data has been inserted
+        if(allMembers.isEmpty())
+            return null;
+        
         Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
@@ -354,6 +382,11 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List<MemberEntity> allMembers = q.getResultList();
+        
+        //test if member data has been added
+        if(allMembers.isEmpty())
+            return null;
+        
         Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
@@ -389,7 +422,12 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         List<MemberEntity> tiered = new ArrayList();
 
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
+
         List<MemberEntity> allMembers = q.getResultList();
+                
+        //test if member data has been added
+        if(allMembers.isEmpty())
+            return null;
         Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
@@ -427,6 +465,11 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List<MemberEntity> allMembers = q.getResultList();
+        
+        //test if member data has been added
+        if(allMembers.isEmpty())
+            return null;
+        
         Iterator<MemberEntity> itr = allMembers.iterator();
         //get a description statistics
         DescriptiveStatistics stats = new DescriptiveStatistics();
@@ -463,7 +506,7 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         double responseRate = 0.00;
         PromotionEntity thisP = em.find(PromotionEntity.class, promotionId);
         if (thisP == null) {
-            throw new ExistException();
+            return 0.00;
         }
         
         //Test
@@ -471,6 +514,11 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
 
         Query q = em.createQuery("SELECT m FROM MemberTransactionEntity m");
         List<MemberTransactionEntity> allMemberTrans = q.getResultList();
+        
+        //Test if membertransaction data has been added
+        if(allMemberTrans.isEmpty())
+            return 0.00;
+        
         Iterator<MemberTransactionEntity> itr = allMemberTrans.iterator();
         List<MemberTransactionEntity> respondedSales = new ArrayList();
         List<MemberEntity> respondedTargets = new ArrayList();
@@ -513,7 +561,7 @@ public class EvaluationSessionBean implements EvaluationSessionBeanRemote {
         if (current != null) {
             return current;
         } else {
-            throw new ExistException();
+            return null;
         }
     }
 
