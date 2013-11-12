@@ -224,7 +224,7 @@
                                     <option value="126">Macedonian</option>
                                     <option value="127">Malagasy</option>
                                     <option value="128">Malawian</option>
-                                    <option value="129">Malaysian</option>
+                                    <option value="Malaysian">Malaysian</option>
                                     <option value="130">Maldivan</option>
                                     <option value="131">Malian</option>
                                     <option value="132">Maltese</option>

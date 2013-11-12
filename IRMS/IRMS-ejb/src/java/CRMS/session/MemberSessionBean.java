@@ -55,18 +55,7 @@ public class MemberSessionBean {
             boolean isSubscriber, String question, String answer) {
 
         System.out.println("into MemberSessionBean: addMember");
-        /*    member = em.find(MemberEntity.class, memberEmail);
-         if(member!=null) {
-         System.out.println(member.getMemberEmail());
-         System.out.println("You have registered already. Please log in.");
-         return member;
-         }
-         if(!memberPassword.equals(memberPassword2)){
-         System.out.println("Two passwords are not the same. Please register again.");
-         return member;
-         }*/
 
-        //      System.out.println(memberEmail);
         member.setMemberEmail(memberEmail);
 
         //       System.out.println(memberName);
@@ -139,7 +128,19 @@ public class MemberSessionBean {
         List memberList = new ArrayList<MemberEntity>();
         for (Object o : q.getResultList()) {
             MemberEntity thisMember = (MemberEntity) o;
-            if (thisMember.getNationality().equals(nationality)) {
+            if (thisMember.getNationality().toLowerCase().equals(nationality.toLowerCase())) {
+                memberList.add(thisMember);
+            }
+        }
+        return memberList;
+    }
+
+    public List<MemberEntity> getMemberByGender(String gender) {
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List memberList = new ArrayList<MemberEntity>();
+        for (Object o : q.getResultList()) {
+            MemberEntity thisMember = (MemberEntity) o;
+            if (thisMember.getGender().toLowerCase().equals(gender.toLowerCase())) {
                 memberList.add(thisMember);
             }
         }
@@ -151,7 +152,8 @@ public class MemberSessionBean {
         List memberList = new ArrayList<MemberEntity>();
         for (Object o : q.getResultList()) {
             MemberEntity thisMember = (MemberEntity) o;
-            if (thisMember.getMaritalStatus().equals(maritalStatus)) {
+            if (thisMember.getMaritalStatus().toLowerCase().equals(maritalStatus.toLowerCase())) {
+                System.out.println("get by marital status --> one member found: " + thisMember.getMemberName());
                 memberList.add(thisMember);
             }
         }
@@ -180,6 +182,21 @@ public class MemberSessionBean {
                 memberList.add(thisMember);
             }
         }
+        return memberList;
+    }
+
+    public List<MemberEntity> getMemberByAge(int year) {
+        Query q = em.createQuery("SELECT m FROM MemberEntity m");
+        List memberList = new ArrayList<MemberEntity>();
+        for (Object o : q.getResultList()) {
+            MemberEntity thisMember = (MemberEntity) o;
+//           System.out.println("matching the year of birth for member: " + thisMember.getMemberDob().getYear() + " with the year " + year);
+            if (thisMember.getMemberDob().getYear() == year) {
+ //               System.out.println("get by age " + year +" --> one member found: " + thisMember.getMemberName());
+                memberList.add(thisMember);
+            }
+        }
+//        System.out.println("the memberlist size is: " + memberList.size());尼玛终于好使了
         return memberList;
     }
 

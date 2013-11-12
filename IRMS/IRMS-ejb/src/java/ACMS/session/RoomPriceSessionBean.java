@@ -23,6 +23,7 @@ public class RoomPriceSessionBean implements RoomPriceSessionBeanRemote {
 
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
+    private RoomPriceEntity thisRoomPrice;
 
     public RoomPriceSessionBean() {
     }
@@ -49,4 +50,21 @@ public class RoomPriceSessionBean implements RoomPriceSessionBeanRemote {
         return roomPriceList;
     }
 
+    public RoomPriceEntity getRoomPriceByType(String roomType) {
+        thisRoomPrice = em.find(RoomPriceEntity.class, roomType);
+        return thisRoomPrice;
+    }
+
+    public double getPriceValueByType(String roomType) {
+        thisRoomPrice = em.find(RoomPriceEntity.class, roomType);
+        return thisRoomPrice.getPrice();
+    }
+
+    public RoomPriceEntity getThisRoomPrice() {
+        return thisRoomPrice;
+    }
+
+    public void setThisRoomPrice(RoomPriceEntity thisRoomPrice) {
+        this.thisRoomPrice = thisRoomPrice;
+    }
 }

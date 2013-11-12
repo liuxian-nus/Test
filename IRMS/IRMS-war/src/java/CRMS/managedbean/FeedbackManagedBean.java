@@ -70,12 +70,12 @@ public class FeedbackManagedBean implements Serializable {
     private void createPieModel() {
         pieModel = new PieChartModel();
 
-        pieModel.set("hotel", feedbackSessionBean.countFeedbackPercentageByDepartment("hotel"));
-        pieModel.set("shopping Mall", feedbackSessionBean.countFeedbackPercentageByDepartment("shopping mall"));
-        pieModel.set("entertainment show", feedbackSessionBean.countFeedbackPercentageByDepartment("entertainment show"));
-        pieModel.set("food and beverage", feedbackSessionBean.countFeedbackPercentageByDepartment("food and beverage"));
-        pieModel.set("attraction", feedbackSessionBean.countFeedbackPercentageByDepartment("attraction"));
-        pieModel.set("convention center", feedbackSessionBean.countFeedbackPercentageByDepartment("convention center"));
+        pieModel.set("hotel", feedbackSessionBean.countFeedbackByDepartment("hotel"));
+        pieModel.set("shopping Mall", feedbackSessionBean.countFeedbackByDepartment("shopping mall"));
+        pieModel.set("entertainment show", feedbackSessionBean.countFeedbackByDepartment("entertainment show"));
+        pieModel.set("food and beverage", feedbackSessionBean.countFeedbackByDepartment("food and beverage"));
+        pieModel.set("attraction", feedbackSessionBean.countFeedbackByDepartment("attraction"));
+        pieModel.set("convention center", feedbackSessionBean.countFeedbackByDepartment("convention center"));
     }
 
     @PostConstruct

@@ -4,7 +4,6 @@
  */
 package CRMS.managedbean;
 
-import CEMS.entity.VenueFunctionEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
 import CRMS.session.MemberSessionBean;
@@ -17,15 +16,16 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
-import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -51,6 +51,10 @@ public class MemberManagedBean {
     private List<MemberEntity> filteredMember;
     private SelectItem[] nationalityOptions;
     private SelectItem[] genderOptions;
+    private CartesianChartModel categoryModelMaritalStatus;
+    private CartesianChartModel categoryModelNationality;
+    private CartesianChartModel categoryModelAge;
+    private PieChartModel pieModel;
 
     /**
      * Creates a new instance of SearchMemberManagedBean
@@ -64,6 +68,14 @@ public class MemberManagedBean {
         nationalityList = memberSessionBean.getAllNationalities();
         nationalityOptions = createNationalityOptions(nationalityList);
         genderOptions = createGenderOptions();
+        try {
+            createCategoryModelAge();
+            createCategoryModelMaritalStatus();
+            createCategoryModelNationality();
+            createPieModel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<String> complete(String query) {
@@ -136,19 +148,6 @@ public class MemberManagedBean {
             return;
         }
 
-//        try{
-//            setMember(memberSessionBean.getMemberByEmail(getSearchEmail()));
-//            System.out.println("after search by member email:" + member.getMemberEmail());
-//            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("Member", member);
-//            System.out.println("after setting parameter");
-//            //      request.getSession().setAttribute("memberEmail", getSearchEmail());
-//       //     System.out.println("after setting memberEmail session attribute");
-//            FacesContext.getCurrentInstance().getExternalContext().redirect("searchMemberResult.xhtml");
-//        } catch (Exception e){
-//            System.out.println("wrong email");
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "wrong Email address", ""));
-//            return;
-//        }
     }
 
     public void getMemberByBirthMonth(ActionEvent event) throws IOException, ExistException {
@@ -214,6 +213,109 @@ public class MemberManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching by nationality", ""));
             return;
         }
+    }
+
+    private SelectItem[] createNationalityOptions(List<String> nationalityList) {
+        SelectItem[] options = new SelectItem[nationalityList.size() + 1];
+
+        System.err.println("Creating filter options");
+        options[0] = new SelectItem("", "Select");
+        for (int i = 0; i < nationalityList.size(); i++) {
+            options[i + 1] = new SelectItem(nationalityList.get(i), nationalityList.get(i));
+        }
+        return options;
+    }
+
+    private SelectItem[] createGenderOptions() {
+        SelectItem[] options = new SelectItem[4];
+        System.out.println("Creating gender options");
+        options[0] = new SelectItem("", "Select");
+        options[1] = new SelectItem("Male", "Male");
+        options[2] = new SelectItem("Female", "Female");
+        options[3] = new SelectItem("Not Specified", "Not Specified");
+        return options;
+    }
+
+    private void createCategoryModelMaritalStatus() {
+        try {
+            System.out.println("creating marital status bar chart....");
+            categoryModelMaritalStatus = new CartesianChartModel();
+
+            ChartSeries maritalChart = new ChartSeries();
+            maritalChart.setLabel("MaritalStatus");
+
+            maritalChart.set("Single", memberSessionBean.getMemberByMaritalStatus("Single").size());
+            maritalChart.set("Married", memberSessionBean.getMemberByMaritalStatus("Married").size());
+            maritalChart.set("Divorced", memberSessionBean.getMemberByMaritalStatus("Divorced").size());
+            maritalChart.set("Widowed", memberSessionBean.getMemberByMaritalStatus("Widowed").size());
+
+            categoryModelMaritalStatus.addSeries(maritalChart);
+        } catch (Exception e) {
+            System.err.println("error when creating bar chart");
+            e.printStackTrace();
+        }
+    }
+
+    private void createCategoryModelNationality() {
+        try {
+            System.out.println("creating nationality bar chart....");
+            categoryModelNationality = new CartesianChartModel();
+
+            ChartSeries nationalityChart = new ChartSeries();
+            nationalityChart.setLabel("Nationality");
+            System.out.println("count nationality Singaporean: " + memberSessionBean.getMemberByNationality("Singaporean").size());
+            nationalityChart.set("Singaporean", memberSessionBean.getMemberByNationality("Singaporean").size());
+            System.out.println("count nationality Chinese: " + memberSessionBean.getMemberByNationality("Chinese").size());
+            nationalityChart.set("Chinese", memberSessionBean.getMemberByNationality("Chinese").size());
+            System.out.println("count nationality Malaysian: " + memberSessionBean.getMemberByNationality("Malaysian").size());
+            nationalityChart.set("Malaysian", memberSessionBean.getMemberByNationality("Malaysian").size());
+            nationalityChart.set("American", memberSessionBean.getMemberByNationality("American").size());
+
+            categoryModelNationality.addSeries(nationalityChart);
+        } catch (Exception e) {
+            System.err.println("error when creating bar chart");
+            e.printStackTrace();
+        }
+    }
+
+    private void createCategoryModelAge() {
+        try {
+            System.out.println("creating age bar chart....");
+            categoryModelAge = new CartesianChartModel();
+
+            ChartSeries ageChart = new ChartSeries();
+            ageChart.setLabel("Year of Birth");
+            System.out.println("looking for mapping year of birth");
+            ageChart.set("1970", memberSessionBean.getMemberByAge(70).size());
+            ageChart.set("1975", memberSessionBean.getMemberByAge(75).size());
+            ageChart.set("1980", memberSessionBean.getMemberByAge(80).size());
+            ageChart.set("1981", memberSessionBean.getMemberByAge(81).size());
+            ageChart.set("1982", memberSessionBean.getMemberByAge(82).size());
+            ageChart.set("1983", memberSessionBean.getMemberByAge(83).size());
+            ageChart.set("1984", memberSessionBean.getMemberByAge(84).size());
+            ageChart.set("1985", memberSessionBean.getMemberByAge(85).size());
+            ageChart.set("1986", memberSessionBean.getMemberByAge(86).size());
+            ageChart.set("1987", memberSessionBean.getMemberByAge(87).size());
+            ageChart.set("1988", memberSessionBean.getMemberByAge(88).size());
+            ageChart.set("1989", memberSessionBean.getMemberByAge(89).size());
+            ageChart.set("1990", memberSessionBean.getMemberByAge(90).size());
+            ageChart.set("1991", memberSessionBean.getMemberByAge(91).size());
+
+            categoryModelAge.addSeries(ageChart);
+        } catch (Exception e) {
+            System.err.println("error when creating bar chart");
+            e.printStackTrace();
+        }
+    }
+
+    private void createPieModel() {
+
+        System.out.println("creating gender pie chart...");
+        pieModel = new PieChartModel();
+
+        pieModel.set("male", memberSessionBean.getMemberByGender("male").size());
+        pieModel.set("female", memberSessionBean.getMemberByGender("female").size());
+
     }
 
     public MemberEntity getMember() {
@@ -328,33 +430,43 @@ public class MemberManagedBean {
         this.transactionSessionBean = transactionSessionBean;
     }
 
+    public CartesianChartModel getCategoryModelNationality() {
+        return categoryModelNationality;
+    }
+
+    public void setCategoryModelNationality(CartesianChartModel categoryModelNationality) {
+        this.categoryModelNationality = categoryModelNationality;
+    }
+
+    public CartesianChartModel getCategoryModelAge() {
+        return categoryModelAge;
+    }
+
+    public void setCategoryModelAge(CartesianChartModel categoryModelAge) {
+        this.categoryModelAge = categoryModelAge;
+    }
+
+    public PieChartModel getPieModel() {
+        return pieModel;
+    }
+
+    public void setPieModel(PieChartModel pieModel) {
+        this.pieModel = pieModel;
+    }
+
+    public CartesianChartModel getCategoryModelMaritalStatus() {
+        return categoryModelMaritalStatus;
+    }
+
+    public void setCategoryModelMaritalStatus(CartesianChartModel categoryModelMaritalStatus) {
+        this.categoryModelMaritalStatus = categoryModelMaritalStatus;
+    }
+
     public void onRowToggle(ToggleEvent event) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Row State " + event.getVisibility(),
                 "Model:" + ((MemberEntity) event.getData()).getMemberEmail());
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-
-    private SelectItem[] createNationalityOptions(List<String> nationalityList) {
-        SelectItem[] options = new SelectItem[nationalityList.size() + 1];
-
-        System.err.println("Creating filter options");
-        options[0] = new SelectItem("", "Select");
-        for (int i = 0; i < nationalityList.size(); i++) {
-            options[i + 1] = new SelectItem(nationalityList.get(i), nationalityList.get(i));
-        }
-        return options;
-    }
-
-    private SelectItem[] createGenderOptions() {
-        SelectItem[] options = new SelectItem[4];
-        System.out.println("Creating gender options");
-        options[0] = new SelectItem("", "Select");
-        options[1] = new SelectItem("Male", "Male");
-        options[2] = new SelectItem("Female", "Female");
-        options[3] = new SelectItem("Not Specified", "Not Specified");
-        return options;
-
     }
 }

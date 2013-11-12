@@ -88,10 +88,12 @@
                 </h:form> 
             </p:tab>  
             <p:tab id="tab2" title="Member Biometric Analysis">  
+                <p:barChart id="nationality" value="#{memberManagedBean.categoryModelNationality}" title="Nationality Distribution Bar Chart" min="0" max="5" style="height:300px"/>
+                <p:barChart id="age" value="#{memberManagedBean.categoryModelAge}" title="Age Distribution Bar Chart" min="0" max="5" style="height:300px"/>
+                <p:barChart id="maritalstatus" value="#{memberManagedBean.categoryModelMaritalStatus}" title="Marital Status Distribution Bar Chart" min="0" max="5" style="height:300px"/>
+                <p:pieChart id="sample" value="#{memberManagedBean.pieModel}" showDataLabels="true"  title="Gender Pie Chart" style="width:400px;height:300px" />  
             </p:tab> 
 
-            <p:tab id="tab3" title="Tiered Member Identification">  
-            </p:tab> 
         </p:tabView>
     </ui:define>
 </ui:composition>

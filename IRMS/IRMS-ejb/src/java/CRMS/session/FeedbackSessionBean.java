@@ -138,25 +138,21 @@ public class FeedbackSessionBean {
         if (count == 0) {
             rating = 0;
         } else {
-            rating = total / count;
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            double totald = 1.0 * total;
+            double countd = 1.0 * count;
+            rating = totald / countd;
         }
+ //       System.out.println(count + " feedbacks found from this department with a total rating of " + total);
+ //       System.out.println("Calculate average rating by department " + department + " result: " + rating);
         return rating;
     }
 
-    public double countFeedbackPercentageByDepartment(String department) {
+    public double countFeedbackByDepartment(String department) {
         Query q1 = em.createQuery("SELECT f from FeedbackEntity f WHERE f.feedbackDepartment = '" + department + "'");
-        Query q2 = em.createQuery("SELECT f from FeedbackEntity f");
-
         int count = q1.getResultList().size();
-        int total = q2.getResultList().size();
-
-        double percentage;
-        if (count == 0) {
-            percentage = 0;
-        } else {
-            percentage = total / count;
-        }
-        return percentage;
+        
+        return count;
     }
 
     /* shouldn't implement this method
