@@ -29,12 +29,12 @@
         <jsp:include page="header.jsp"></jsp:include>
 
             <script type="text/javascript">
-                
+
                 //process order
-                function paypal(){
+                function paypal() {
                     $.ajax({
                         url: "https://api-3t.sandbox.paypal.com/nvp",
-                        data:{
+                        data: {
                             "USER": "xinyusoc-facilitator_api1.gmail.com",
                             "PWD": "1383997852",
                             "SIGNATURE": "AFcWxV21C7fd0v3bYYYRCpSSRl31A4L4WLmbdOQyA2Nn26.xecMb47ed",
@@ -47,42 +47,42 @@
                             "returnUrl": "http://is3102.cloudapp.net/IRMSCustomer-war/irmsServlet/hotelPay" //confirm order
                         },
                         dataType: "text",
-                        success: function (data) {
+                        success: function(data) {
                             console.log(data);
                             var token = data.match(/TOKEN=(.*?)&/)[1];
                             //store order with token
-                            window.location.replace("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token="+token);
+                            window.location.replace("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=" + token);
                         }
-                      });
+                    });
                 }
-                
-                
-                
-                
-                
-                
-                function getParameterByName( name,href )
+
+
+
+
+
+
+                function getParameterByName(name, href)
                 {
-                  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-                  var regexS = "[\\?&]"+name+"=([^&#]*)";
-                  var regex = new RegExp( regexS );
-                  var results = regex.exec( href );
-                  if( results == null )
-                    return "";
-                  else
-                    return decodeURIComponent(results[1].replace(/\+/g, " "));
+                    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                    var regexS = "[\\?&]" + name + "=([^&#]*)";
+                    var regex = new RegExp(regexS);
+                    var results = regex.exec(href);
+                    if (results == null)
+                        return "";
+                    else
+                        return decodeURIComponent(results[1].replace(/\+/g, " "));
                 }
-                
-                function confirm_order(){
+
+                function confirm_order() {
                     var path = window.location.href;
-                    var token = getParameterByName("token",path);
-                    var payer = getParameterByName("PayerID",path);
+                    var token = getParameterByName("token", path);
+                    var payer = getParameterByName("PayerID", path);
                     console.log()
                     console.log(token);
                     console.log(payer);
                     $.ajax({
                         url: "https://api-3t.sandbox.paypal.com/nvp",
-                        data:{
+                        data: {
                             "USER": "xinyusoc-facilitator_api1.gmail.com",
                             "PWD": "1383997852",
                             "SIGNATURE": "AFcWxV21C7fd0v3bYYYRCpSSRl31A4L4WLmbdOQyA2Nn26.xecMb47ed",
@@ -96,9 +96,9 @@
                         },
                         dataType: "text",
                         crossDomain: true,
-                        success: function (data) {
+                        success: function(data) {
                         }
-                      });
+                    });
                 }
             </script> 
             <div class="row">
@@ -254,7 +254,7 @@
                             <br>
                             <div class="row">
                                 <div class="small-1 columns">
-                                    <input type="checkbox" name="subscribe" value="true" required>
+                                    <input type="checkbox" name="agree" value="true" id="agree">
                                 </div>
                                 <div class="small-11 columns"> 
                                     <strong><label><strong>I agree with the booking conditions and general terms by booking this room</label>
@@ -263,10 +263,10 @@
 
                             <div class="row">
                                 <div class="large-12 columns">
-                                    <input type="submit" class="small button" class="center-align" value="Pay & Book Now!">
+                                    <input type="submit" onclick="return validate()" class="small button" class="center-align" value="Pay & Book Now!">
                                 </div>
                             </div>
-                             <div class="button" onclick="paypal()">Register</div>
+                            <!--  <div class="button" onclick="paypal()">Register</div>-->
                         </fieldset>
                     </form>                     
                 </div>
@@ -282,11 +282,11 @@
                         <legend style="color:#4d4d4d">Booking Summary</legend>
                         <p>${message}</p>
                         <div class="row">
-                            <div class="large-5 columns">
+                            <div class="large-6 columns">
                                 <label for="right-label" class="left-align,inline"><h6>Rate: </h6></label>
                             </div>
-                            <div class="large-7 columns">
-                                <label for="right-label" class="right-align,inline"><strong></strong></label>
+                            <div class="large-6 columns">
+                                <label for="right-label" class="right-align,inline"><strong>${roomPrice}</strong></label>
                             </div>
                         </div>
                         <div class="row">
@@ -302,7 +302,7 @@
                                 <label for="right-label" class="left-align,inline"><h6>Total:</h6></label>
                             </div>
                             <div class="large-6 columns">
-                                <label for="right-label" class="right-align,inline"><strong></strong></label>
+                                <label for="right-label" class="right-align,inline"><strong>${totalPrice}</strong></label>
                             </div>
                         </div>
                         <div class="row">
@@ -347,7 +347,17 @@
 
         </div>
 
-
+        <script type="text/javascript">
+            function validate() {
+                if (document.getElementById('agree').checked) {
+                    return true;
+                   
+                } else {
+                    alert("Please agree with our terms and conditions before proceed with your booking.");
+                    return false;
+                }
+            }
+        </script>
 
         <jsp:include page="footer.jsp"></jsp:include>
         <script>
