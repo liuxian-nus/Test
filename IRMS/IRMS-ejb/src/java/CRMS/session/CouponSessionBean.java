@@ -32,7 +32,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class CouponSessionBean {
+public class CouponSessionBean implements CouponSessionBeanRemote {
     @EJB
     private CouponTypeSessionBean couponTypeSessionBean;
     @PersistenceContext(unitName = "IRMS-ejbPU")
@@ -48,6 +48,7 @@ public class CouponSessionBean {
         coupon=new CouponEntity();
     }
     
+    @Override
     public CouponEntity generateCoupon(Date date, MemberEntity member, CouponTypeEntity type){
         System.out.println("CouponSessionBean : generateCoupon");
         coupon=new CouponEntity();
@@ -60,6 +61,7 @@ public class CouponSessionBean {
         return coupon;
     }
     
+    @Override
     public void useCoupon(CouponEntity coupon, Date date,String department){
         System.out.println("CouponSessionBean : useCoupon");
         coupon.setDepartment(department);
@@ -69,6 +71,7 @@ public class CouponSessionBean {
         System.out.println("coupon has been used");
     }
     
+    @Override
     public boolean couponIsValid(CouponEntity coupon, Date date){
         System.out.println("CouponSessionBean : couponIsNotUsed");
         if((!couponIsUsed(coupon))&&(!couponIsExpired(coupon,date))){
@@ -79,6 +82,7 @@ public class CouponSessionBean {
         
     }
     
+    @Override
     public boolean couponIsUsed (CouponEntity coupon){
        System.out.println("CouponSessionBean : couponIsNotUsed");
        if(coupon.getStatus().equals("Used")){
@@ -88,6 +92,7 @@ public class CouponSessionBean {
        else return false;        
    }
     
+    @Override
     public boolean couponIsExpired (CouponEntity coupon, Date date){
        System.out.println("CouponSessionBean : couponIsExpired");
        if(coupon.getCouponType().getCpEndDate().before(date)){
@@ -100,6 +105,7 @@ public class CouponSessionBean {
                
    }
     
+    @Override
     public double getDiscountPrice(CouponEntity coupon, double price){
         System.out.println("CouponSessionBean : getDiscountPrice");
         CouponTypeEntity ct=coupon.getCouponType();
@@ -108,6 +114,7 @@ public class CouponSessionBean {
         return price*discount;
     }
     
+    @Override
     public List<CouponEntity> getAllCouponsWithCouponType(CouponTypeEntity ct){
         List<CouponEntity> selectedCoupons=new ArrayList<CouponEntity>();
         List<CouponEntity> coupons=getAllCoupons();
@@ -122,6 +129,7 @@ public class CouponSessionBean {
     }
      
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public void addCoupon(CouponEntity c){
         System.out.println("CouponSessionBean : addCoupon");
         em.persist(c);
@@ -129,6 +137,7 @@ public class CouponSessionBean {
     }
     
    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public void updateCoupon(CouponEntity c){
         System.out.println("CouponTypeSessionBean : updateCoupon");
         em.merge(c);
@@ -136,12 +145,14 @@ public class CouponSessionBean {
         return;
     }
    
+    @Override
    public List<CouponEntity> getAllCoupons(){
        System.out.println("CouponSessionBean : getAllCoupons");
        Query query = em.createQuery("SELECT c FROM CouponEntity c");
        return query.getResultList();
    }
    
+    @Override
    public CouponEntity getCouponById(Long id) throws ExistException{
        System.out.println("CouponSessionBean : getCouponById");
        coupon=em.find(CouponEntity.class, id);
@@ -149,6 +160,7 @@ public class CouponSessionBean {
        else return coupon;
    }
    
+    @Override
    public void removeCoupon(Long id) throws ExistException{
        System.out.println("CouponSessionBean : removeCoupon");
        coupon=em.find(CouponEntity.class, id);
@@ -158,16 +170,19 @@ public class CouponSessionBean {
        return;
    }
    
-    public void persist(Object object) {
-        em.persist(object);
-    }
-
-    public void persist1(Object object) {
-        em.persist(object);
-    }
-
-    public void persist2(Object object) {
-        em.persist(object);
-    }
+//    @Override
+//    public void persist(Object object) {
+//        em.persist(object);
+//    }
+//
+//    @Override
+//    public void persist1(Object object) {
+//        em.persist(object);
+//    }
+//
+//    @Override
+//    public void persist2(Object object) {
+//        em.persist(object);
+//    }
 
 }
