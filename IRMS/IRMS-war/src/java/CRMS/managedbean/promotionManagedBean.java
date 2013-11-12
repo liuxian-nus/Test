@@ -12,7 +12,10 @@ import CRMS.session.MemberSessionBean;
 import CRMS.session.PromotionSessionBean;
 import CRMS.session.VIPSessionBean;
 import Exception.ExistException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -25,6 +28,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.ToggleEvent;
 
 /**
@@ -187,6 +191,35 @@ public class promotionManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs setting target customer", ""));
             return;
         }
+    }
+
+    public void handleFileUpload(FileUploadEvent event) throws IOException {
+        System.err.println("Uploading Image...");
+        String[] fileNameParts = event.getFile().getFileName().split("\\.");
+        File result = new File("C:\\Users\\Ser3na\\Documents\\IS3102\\Test.git\\IRMS\\IRMS-war\\web\\images\\" + fileNameParts[0] + "." + fileNameParts[1]);
+
+        FileOutputStream out = new FileOutputStream(result);
+
+        int a;
+        int BUFFER_SIZE = 8192;
+        byte[] buffer = new byte[BUFFER_SIZE];
+
+        InputStream is = event.getFile().getInputstream();
+        String fileName = result.getName();
+        promotionSessionBean.uploadImage(promotionId, fileName);
+        System.err.println(fileName);
+        while (true) {
+            a = is.read(buffer);
+            if (a < 0) {
+                break;
+            }
+            out.write(buffer, 0, a);
+            out.flush();
+        }
+
+        out.close();
+        is.close();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Image has been uploaded", ""));
     }
 
     public MemberSessionBean getMemberSessionBean() {

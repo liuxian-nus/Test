@@ -57,6 +57,13 @@ public class PromotionSessionBean {
         return returnList;
     }
     
+    public void uploadImage(Long showId, String fileName) {
+        promotion = em.find(PromotionEntity.class, showId);
+        promotion.setImagePath(fileName);
+        em.persist(promotion);
+        em.flush();
+    }
+    
         public List<PromotionEntity> getNormalPromotions() {
         Query q = em.createQuery("SELECT p FROM PromotionEntity p");
 

@@ -73,6 +73,37 @@
                 </h:form>
             </p:tab>
 
+            <p:tab id="tab3" title="Upload Promotion Image">
+                <h:form id="promotionImage">
+                    <h:panelGrid id="upload" columns="2">
+
+                        <h:outputText value="Promotion Code: "/>
+                        <p:selectOneMenu value="#{promotionManagedBean.promotionId}">  
+                            <f:selectItem itemLabel="Select Promotion" itemValue=""/>
+                            <f:selectItems value="#{promotionManagedBean.promotions}" var="allShow" itemLabel="#{allShow.promotionId}: #{allShow.promotionCode}" itemValue="#{allShow.promotionId}" />  
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+                        <h:outputText value=""/>
+                        <p:commandButton update="promotionImage" value="Select Promotion" ajax="true" icon="ui-icon ui-icon-plus">  
+                            <f:attribute name="upload" value="#{promotionManagedBean.promotionId}" />
+                            <f:setPropertyActionListener value="#{true}" target="#{addShowManagedBean.uploadMode}" />
+                        </p:commandButton>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Upload Promotion Image: " rendered="#{addShowManagedBean.uploadMode}"/>
+                        <p:fileUpload fileUploadListener="#{promotionManagedBean.handleFileUpload}" id="uploader" 
+                                      mode="advanced" update="messages" label="Choose a file" multiple="false" 
+                                      sizeLimit="1048576" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                      invalidSizeMessage="The maximum file size allowed is 1 Megabyte !" 
+                                      invalidFileMessage="You are allowed to upload only images !" 
+                                      rendered="#{addShowManagedBean.uploadMode}"/>
+                        <p:growl id="messages" showDetail="true" sticky="true"/>
+
+                        <h:outputText value="(Files end with .gif/.jpeg/.png only.)" rendered="#{addShowManagedBean.uploadMode}"/>
+                    </h:panelGrid>
+                </h:form>
+            </p:tab>
+
             <p:tab id="tab1" title="Promotion List">  
                 <h:form id="form"> 
                     <p:dataTable id="promtions" value="#{promotionManagedBean.promotions}" var="promotions" paginator="true" rows="10">
@@ -136,6 +167,8 @@
                     </p:dataTable>
                 </h:form> 
             </p:tab>  
+
+
 
         </p:tabView>
     </ui:define>
