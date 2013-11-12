@@ -7,9 +7,7 @@
 <%@page import="CRMS.entity.CouponEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
-    CouponEntity coupon=(CouponEntity)session.getAttribute("coupon");
-%>
+
 <html>
     <head>
 
@@ -73,6 +71,7 @@
                 </div>
              
             </div>
+                    <a href="hotelCancel" div class="button">Confirm </a> </div>
         </div>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>

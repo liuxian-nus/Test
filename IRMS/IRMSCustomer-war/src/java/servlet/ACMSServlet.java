@@ -13,7 +13,11 @@ import CRMS.session.CouponSessionBean;
 import CRMS.session.CouponTypeSessionBean;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,6 +57,7 @@ public class ACMSServlet extends HttpServlet {
     String reservationId;
     CouponEntity coupon;
     String message = "";
+    private String USER_AGENT;
 
     @Override
     public void init() {
@@ -131,13 +136,19 @@ public class ACMSServlet extends HttpServlet {
 
                     request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
                 } else {
-                    request.getRequestDispatcher("/hotelPayDenied.jsp").forward(request,response);
+                    request.getRequestDispatcher("/hotelPayDenied.jsp").forward(request, response);
                 }
             } else if ("hotelPayConfirm".equals(page)) {
                 System.out.println("***hotel payment confirmation***");
                 System.out.println("adding reservation to database....");
                 data = (ReservationEntity) session.getAttribute("data");
                 data.setRcCreditCardNo(request.getParameter("cardNo"));
+                
+                String payment = request.getParameter("payment");
+                System.out.println(payment);
+                String cardNo = request.getParameter("cardNo");
+                System.out.println(cardNo);
+                sendGet();
                 try {
                     reservationSessionBean.addReservation(data);
                 } catch (Exception e) {
@@ -272,9 +283,51 @@ public class ACMSServlet extends HttpServlet {
         tempReservation.setReservationRoomCount(roomCount);
         tempReservation.setRcCheckInDate(inDate);
         tempReservation.setRcCheckOutDate(outDate);
-        
+
 
         return tempReservation; //now we have POJO data
+    }
+
+    private void sendGet() throws Exception {
+
+        String url = "https://api-3t.sandbox.paypal.com/nvp?";
+        url+="USER=xinyusoc-facilitator_api1.gmail.com&";
+        url+="PWD=1383997852&";
+        url+="SIGNATURE=AFcWxV21C7fd0v3bYYYRCpSSRl31A4L4WLmbdOQyA2Nn26.xecMb47ed&";
+        url+="METHOD=SetExpressCheckout&";
+        url+="VERSION=93&";
+        url+="PAYMENTREQUEST_0_PAYMENTACTION=SALE";
+        url+="PAYMENTREQUEST_0_AMT=10.00";
+        url+="PAYMENTREQUEST_0_CURRENCYCODE=USD";
+        url+="cancelUrl=http://is3102.cloudapp.net"; //cancel order
+        url+="returnUrl=http://is3102.cloudapp.net/IRMSCustomer-war/irmsServlet/hotelPay";
+
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        // optional default is GET
+        con.setRequestMethod("GET");
+
+        //add request header
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        //print result
+        System.err.println(response.toString());
+
     }
 
     private boolean checkAvailability(ReservationEntity data) {

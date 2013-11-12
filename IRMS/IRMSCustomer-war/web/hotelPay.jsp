@@ -12,10 +12,7 @@
 <%@ page import="java.io.*,java.util.*" %>
 <%@page import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
-<%
-    ReservationEntity reservation=(ReservationEntity)session.getAttribute("data");
-    double price=(Double)session.getAttribute("price");
-%>
+
 <html>
     <head>
         <jsp:include page="base.jsp"></jsp:include>
@@ -49,8 +46,7 @@
                             "cancelUrl": "http://is3102.cloudapp.net", //cancel order
                             "returnUrl": "http://is3102.cloudapp.net/IRMSCustomer-war/irmsServlet/hotelPay" //confirm order
                         },
-                        dataType: "jsonp",
-                        crossDomain: true,
+                        dataType: "text",
                         success: function (data) {
                             console.log(data);
                             var token = data.match(/TOKEN=(.*?)&/)[1];
@@ -267,7 +263,7 @@
 
                             <div class="row">
                                 <div class="large-12 columns">
-                                    <input type="submit" class="small button" class="center-align" onclick="paypal()" value="Pay & Book Now!">
+                                    <input type="submit" class="small button" class="center-align" value="Pay & Book Now!">
                                 </div>
                             </div>
                              <div class="button" onclick="paypal()">Register</div>
