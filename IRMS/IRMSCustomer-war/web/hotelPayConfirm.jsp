@@ -4,8 +4,12 @@
     Author     : lionetdd
 --%>
 
+<%@page import="CRMS.entity.CouponEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    CouponEntity coupon=(CouponEntity)session.getAttribute("coupon");
+%>
 <html>
     <head>
 
@@ -57,7 +61,15 @@
                     <br>
                     <h6><strong>Reservation mobile : </strong>${data.rcHP}</h6>
                     <br>
-
+                    <br>
+                    
+                    <c:if test="${coupon!=null}">
+                        <h6><Strong>Here's a coupon for you: <%=coupon.getCouponId()%></strong></h6>
+                        <h6>You can use it to purchase attraction or show ticket with <%=coupon.getCouponType().getDiscount()%> discount.</h6>
+                        <h6>The coupon will be valid until <%=coupon.getCouponType().getCpEndDate()%></h6>
+                        <h6>One coupon can only be used for one payment.</h6>
+                        <h6>Thank you for reserving hotel at CIR!</h6>
+                    </c:if>
                 </div>
              
             </div>

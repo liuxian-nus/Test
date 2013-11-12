@@ -36,7 +36,7 @@ public class CouponSessionBean {
         coupon=new CouponEntity();
     }
     
-    public void generateCoupon(Date date, MemberEntity member, CouponTypeEntity type){
+    public CouponEntity generateCoupon(Date date, MemberEntity member, CouponTypeEntity type){
         System.out.println("CouponSessionBean : generateCoupon");
         coupon=new CouponEntity();
         coupon.setCouponIssueDate(date);
@@ -45,6 +45,7 @@ public class CouponSessionBean {
         coupon.setStatus("New");
         em.persist(coupon);
         System.out.println("coupon has been generated");
+        return coupon;
     }
     
     public void useCoupon(CouponEntity coupon, Date date,String department){

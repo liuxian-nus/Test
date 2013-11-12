@@ -6,6 +6,12 @@ package servlet;
 
 import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
+import CRMS.entity.CouponEntity;
+import CRMS.entity.CouponTypeEntity;
+import CRMS.entity.MemberEntity;
+import CRMS.session.CouponSessionBean;
+import CRMS.session.CouponTypeSessionBean;
+import CRMS.session.MemberSessionBean;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -29,13 +35,21 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ACMSServlet", urlPatterns = {"/ACMSServlet", "/ACMSServlet/*"})
 public class ACMSServlet extends HttpServlet {
-
+    @EJB
+    private MemberSessionBean memberSessionBean;
+    @EJB
+    private CouponTypeSessionBean couponTypeSessionBean;
+    @EJB
+    private CouponSessionBean couponSessionBean;
     @EJB
     private ReservationSessionBean reservationSessionBean;
+    
     ReservationEntity data = new ReservationEntity();
     boolean isAvailable = false;
     int SessionTime;
     String reservationId;
+    CouponEntity coupon;
+    String message="";
 
     @Override
     public void init() {
@@ -96,15 +110,29 @@ public class ACMSServlet extends HttpServlet {
                  
                 request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
             } else if ("hotelPayConfirm".equals(page)) {
+                System.out.println("***hotel payment confirmation***");
                 System.out.println("adding reservation to database....");
                 data.setRcCreditCardNo(request.getParameter("cardNo"));
                 try {
-                reservationSessionBean.addReservation(data);
-                System.out.println("***hotel payment confirmation***");
+                reservationSessionBean.addReservation(data);          
                 }catch (Exception e) {
                     System.err.println("error occured when adding reservation in servlet");
                     e.printStackTrace();
                 }
+                
+                if(true){//add in conditions later
+                    System.out.println("start generate coupon");
+                    CouponTypeEntity ct=couponTypeSessionBean.getAllCouponTypes().get(0);
+                    Date today=new Date(113,10,12);//dummy, should be changed to the date of making reservation
+                    String email=data.getRcEmail();
+                    MemberEntity member=memberSessionBean.getMemberByEmail(email);
+                    System.out.println("member info: "+member.getMemberEmail());
+                    coupon=couponSessionBean.generateCoupon(today, member,ct); 
+                }
+                session.setAttribute("coupon",coupon);
+                
+                
+                
                 request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
             } else if ("hotelModify".equals(page)) {
                 reservationId=request.getParameter("reservationId");
