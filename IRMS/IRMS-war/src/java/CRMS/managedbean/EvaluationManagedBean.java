@@ -10,6 +10,7 @@ import CRMS.session.EvaluationSessionBean;
 import CRMS.session.MemberSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseEvent;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.chart.PieChartModel;
 
 /**
@@ -29,7 +31,7 @@ import org.primefaces.model.chart.PieChartModel;
  */
 @ManagedBean
 @ViewScoped
-public class EvaluationManagedBean {
+public class EvaluationManagedBean implements Serializable {
 
     @EJB
     MemberSessionBean memberSessionBean;
@@ -47,16 +49,23 @@ public class EvaluationManagedBean {
     private boolean calculateStatus;
     private Integer RFMValue;
     private List<MemberEntity> memberList = new ArrayList<MemberEntity>();
+    private List<RFMModelEntity> RFMModelList = new ArrayList<RFMModelEntity>();
 
     /**
      * Creates a new instance of EvaluationManagedBean
      */
-    public EvaluationManagedBean() {
+    public EvaluationManagedBean(){
         member = new MemberEntity();
         selectedMember = new MemberEntity();
         selectedRfmModel = new RFMModelEntity();
+        RFMModelList = new ArrayList<RFMModelEntity>();
     }
 
+    @PostConstruct
+    public void init (){
+        RFMModelList = evaluationSessionBean.getAllRFMs();
+    }
+            
     public List<MemberEntity> getMemberSizeOfWallet() throws ExistException {
         memberList = new ArrayList<MemberEntity>();
         List<MemberEntity> tempList = memberSessionBean.getAllMembers();
@@ -103,6 +112,23 @@ public class EvaluationManagedBean {
         evaluationSessionBean.setRFMParameter(recency, frequency, monetary, modelNumber);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New RFM Parameters saved.", ""));
         FacesContext.getCurrentInstance().getExternalContext().redirect("rfmValue.xhtml");
+    }
+
+    public List<RFMModelEntity> getAllRFMModels() throws ExistException {
+        return RFMModelList;
+    }
+
+    public void onEdit(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("RFM Value Edited", null);
+        selectedRfmModel = (RFMModelEntity) event.getObject();
+        System.err.println("yiyiyiyiiyiyiyiyiiyiyyi: " + selectedRfmModel.getFrequency());
+        evaluationSessionBean.setRFMParameter(selectedRfmModel.getRecency(), selectedRfmModel.getFrequency(), selectedRfmModel.getMonetary(), selectedRfmModel.getId());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", null);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void calculateRFM(ActionEvent event) throws IOException, ExistException {
