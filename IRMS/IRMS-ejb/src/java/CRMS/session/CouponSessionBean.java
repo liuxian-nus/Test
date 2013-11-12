@@ -8,10 +8,18 @@ import CRMS.entity.CouponEntity;
 import CRMS.entity.CouponTypeEntity;
 import CRMS.entity.MemberEntity;
 import Exception.ExistException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
+import javax.ejb.Timeout;
+import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
+import javax.ejb.TimerService;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -25,10 +33,14 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class CouponSessionBean {
+    @EJB
+    private CouponTypeSessionBean couponTypeSessionBean;
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
+  
 
     CouponEntity coupon;
+    
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     
@@ -96,6 +108,19 @@ public class CouponSessionBean {
         return price*discount;
     }
     
+    public List<CouponEntity> getAllCouponsWithCouponType(CouponTypeEntity ct){
+        List<CouponEntity> selectedCoupons=new ArrayList<CouponEntity>();
+        List<CouponEntity> coupons=getAllCoupons();
+        for(int i=0;i<coupons.size();i++){
+            coupon=coupons.get(i);
+            if(coupon.getCouponType().equals(ct)){
+                System.out.println("matched ct");
+                selectedCoupons.add(coupon);
+            }
+        }
+        return selectedCoupons;
+    }
+     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addCoupon(CouponEntity c){
         System.out.println("CouponSessionBean : addCoupon");
@@ -134,6 +159,14 @@ public class CouponSessionBean {
    }
    
     public void persist(Object object) {
+        em.persist(object);
+    }
+
+    public void persist1(Object object) {
+        em.persist(object);
+    }
+
+    public void persist2(Object object) {
         em.persist(object);
     }
 

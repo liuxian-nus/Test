@@ -43,7 +43,11 @@ public class addCouponTypesManagedBean {
         try{
             System.out.println("addCouponTypeManagedBean : saveNewCouponType"); 
             couponTypeSessionBean.addCouponType(ct);
-            System.out.println("new coupon type added");    
+            System.out.println("new coupon type added"); 
+            couponTypeSessionBean.setCouponType(ct);
+            System.out.println("coupon type set");
+            System.out.println("ct end date: "+ct.getCpEndDate());
+            couponTypeSessionBean.createExpireTimers(ct.getCpEndDate());          
         }catch (Exception e){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding a new coupon type", ""));
             return;
