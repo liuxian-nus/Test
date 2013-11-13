@@ -216,6 +216,8 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/ACMSServlet/hotelModify").forward(request, response);
             }else if ("hotelCancel".equals(page)) {
                 request.getRequestDispatcher("/ACMSServlet/hotelCancel").forward(request, response);
+            }else if ("hotelRedeem".equals(page)) {
+                request.getRequestDispatcher("/ACMSServlet/hotelRedeem").forward(request, response);
             }else if ("event".equals(page)) {
                 request.getRequestDispatcher("/CEMSServlet/event").forward(request, response);
             } else if ("eventVenueSearch".equals(page)) {
