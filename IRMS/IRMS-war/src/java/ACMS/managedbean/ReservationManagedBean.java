@@ -192,7 +192,7 @@ public class ReservationManagedBean implements Serializable {
         }
     }
 
-    public void viewReservation(ActionEvent event) throws IOException, ExistException {
+    public void viewReservation() throws IOException, ExistException {
 
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
