@@ -145,6 +145,7 @@ public class ESMSServlet extends HttpServlet {
                     Double ticTotal = 0.00;
                     List <ShowTicketEntity> list = thisShowSchedule.getShowTickets();
                     Iterator<ShowTicketEntity> itr = list.iterator();
+                    List <Integer> totalQuant = new ArrayList();
                     int i=1;
                     
                     while(itr.hasNext())
@@ -152,12 +153,16 @@ public class ESMSServlet extends HttpServlet {
                         ShowTicketEntity current = itr.next();
                         System.out.println("A ticket has been retrieved!"+i);
                         ticTotal+= current.getShowTicketPrice()*Integer.parseInt(request.getParameter("ticket"+i));
+                        totalQuant.add(Integer.parseInt(request.getParameter("ticket"+i)));
                         i++;
                     }
                     
                     System.out.println("The total price calculated is : "+ticTotal);
                     
                     request.setAttribute("ticTotal",ticTotal);
+                    request.setAttribute("totalQuant", totalQuant);
+                    request.setAttribute("showTickets", list);
+                    request.setAttribute(temp, i);
                     request.getRequestDispatcher("/entertainmentPay.jsp").forward(request, response);
                 } else if ("entertainmentRegisterResult".equals(page)) {
                     System.out.println("***entertainmentRegisterResult***");
