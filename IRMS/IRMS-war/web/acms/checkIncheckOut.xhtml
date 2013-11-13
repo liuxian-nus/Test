@@ -66,7 +66,7 @@
            tabView:formReserve:j_idt57: "Deluxe" 必须是介于 -2147483648 和 2147483647 之间的数值。示例: 9346-->
             <p:tab id="tab3" title="Make Reservation">  
                 <h:form id="formReserve">
-                    <p:growl id="growl" showDetail="true" sticky="true" />                    
+                    <p:growl id="growl2" showDetail="true" sticky="true" />                    
                     <h:panelGrid columns="3" cellpadding="10">  
                         <h:outputText value="Guest Name*:"/>
                         <h:inputText required ="true" requiredMessage="Name cannot be empty" value="#{reservationManagedBean.newReservation.rcName}"/>                                   
@@ -120,7 +120,7 @@
                             <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
                                 <h:outputText value="Confirm Reservation?"/>
                                 <h:outputText value=""/>
-                                <p:commandButton value="Yes" update="growl" actionListener="#{reservationManagedBean.addReservation}" oncomplete="confirmation.hide()">  
+                                <p:commandButton value="Yes" update="growl2" onclick="reservationList;" actionListener="#{reservationManagedBean.addReservation}" oncomplete="confirmation.hide()">  
                                 </p:commandButton>
                                 <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
                             </h:panelGrid>
@@ -172,7 +172,7 @@
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
-                                        <p:commandButton rendered="#{reservations.reservationStatus != 'Canceled'and reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'Canceled'and reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation4.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
@@ -182,11 +182,11 @@
                                 </p:dataTable>
 
 
-                                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation4"> 
                                     <h:outputText value="Are you sure to cancel this reservation? "/>
-                                    <p:commandButton value="Yes" onclick="growl;" update ="reservationList" actionListener="#{reservationManagedBean.cancelReservation}" oncomplete="confirmation.hide()">  
+                                    <p:commandButton value="Yes" onclick="growl;" update ="reservationList" actionListener="#{reservationManagedBean.cancelReservation}" oncomplete="confirmation4.hide()">  
                                     </p:commandButton>
-                                    <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                                    <p:commandButton value="Cancel" onclick="confirmation4.hide()" type="button" />  
                                 </p:dialog>  
 
                             </div>

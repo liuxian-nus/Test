@@ -91,7 +91,7 @@ public class ReservationManagedBean implements Serializable {
         try {
 //            selectReservation = (ReservationEntity) event.getComponent().getAttributes().get("cancelReservation");
             System.out.println("N02: in displaying bean " + selectReservation.getReservationId());
-            selectReservation.setReservationStatus("Canceled");
+            selectReservation.setReservationStatus("cancelled");
             reservationSessionBean.updateReservation(selectReservation);
 //            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
             System.out.println("we are after setting contractId session attribute");
@@ -268,7 +268,7 @@ public class ReservationManagedBean implements Serializable {
             reservationSessionBean.addReservation(newReservation);
             System.out.println("we are after add reservation in managedbean");
             selectReservation = reservationSessionBean.getReservationById(newReservation.getReservationId());
-            FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+//            FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
 
 
         } catch (Exception e) {
@@ -280,7 +280,7 @@ public class ReservationManagedBean implements Serializable {
 //            emailSessionBean.emailInitialPassward(employee.getPersonalEmail(), initialPwd); //send email
 //        emailSessionBean.emailReservationConfirmation(newReservation.getRcEmail(), newReservation);
         System.out.println("email already sent");
-        FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+//        FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
         newReservation = new ReservationEntity();
     }
 

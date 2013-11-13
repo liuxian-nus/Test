@@ -43,7 +43,7 @@
                                     <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                 </p:commandButton>
 
-                                <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                <p:commandButton rendered="#{(reservations.reservationStatus != 'checkedIn')and(reservations.reservationStatus != 'cancelled')}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
                                     <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                 </p:commandButton>
 
@@ -55,6 +55,7 @@
 
                     <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
                         <h:outputText value="Are you sure to cancel this reservation? "/>
+                        <h:outputText value=" "/>
                         <p:commandButton value="Yes" onclick="growl;" update ="reservationList" actionListener="#{reservationManagedBean.cancelReservation}" oncomplete="confirmation.hide()">  
                         </p:commandButton>
                         <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  

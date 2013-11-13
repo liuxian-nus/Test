@@ -64,7 +64,8 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
             ReservationEntity re = (ReservationEntity) o;
             System.out.println("current" + currentDate.getDate());
 //            System.out.println("checkinDate" + re.getRcCheckInDate().getDate());
-            if (re.getRcCheckInDate().getDate() == currentDate.getDate()) {
+            
+            if ((re.getRcCheckInDate()!=null)&&(re.getRcCheckInDate().getDate() == currentDate.getDate())) {
                 reservationList.add(re);
             }
         }
@@ -78,7 +79,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         List reservationList = new ArrayList<ReservationEntity>();
         for (Object o : q.getResultList()) {
             ReservationEntity re = (ReservationEntity) o;
-            if (re.getRcCheckOutDate().before(currentDate)) {
+            if ((re.getRcCheckOutDate()!=null)&&(re.getRcCheckOutDate().before(currentDate))) {
                 reservationList.add(re);
             }
         }
@@ -124,7 +125,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
     }
 
     public double calculateReservationTotal(ReservationEntity thisReservation) {
-        RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, thisReservation.getReservationRoomType());
+        RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, thisReservation.getReservationRoomType().toLowerCase());
 
         DateMidnight start = new DateMidnight(thisReservation.getRcCheckInDate());
         DateMidnight end = new DateMidnight(thisReservation.getRcCheckOutDate());
@@ -133,7 +134,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         return thisPrice.getPrice() * thisReservation.getReservationRoomCount() * days;
     }
 
-
+//for jsp reservation
     public void addReservation(ReservationEntity newReservation, double totalPrice) {
         Date today = new Date();
         System.out.println("in reservation session bean: add reservation");
@@ -174,9 +175,10 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
 //        int days = Days.daysBetween(start, end).getDays();
 
         thisReservation.setReservationTotal(this.calculateReservationTotal(thisReservation));//5 should be days between
-        thisReservation.setReservationStatus("guarantee"); //haven't implement yet
+        thisReservation.setReservationStatus("confirmed"); 
         em.persist(thisReservation);
         String description = "Hotel Reservation from " + thisReservation.getRcCheckInDate() + " to " + thisReservation.getRcCheckOutDate() + " with a total room fee: " + thisReservation.getReservationTotal();
+        if(newReservation.getRcMember()!=null)
         memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", null, description, false);
         System.err.println("successfully added reservation: " + newReservation.getReservationId());
     }
@@ -189,7 +191,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
 //        thisReservation.getRcCheckInDate().setMonth(newReservation.getRcCheckInDate().getMonth() - 1);
 //        thisReservation.getRcCheckOutDate().setYear(newReservation.getRcCheckOutDate().getYear() - 1900);
 //        thisReservation.getRcCheckOutDate().setMonth(newReservation.getRcCheckOutDate().getMonth() - 1);
-        RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, thisReservation.getReservationRoomType());
+        RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, thisReservation.getReservationRoomType().toLowerCase());
 
         DateMidnight start = new DateMidnight(thisReservation.getRcCheckInDate());
         DateMidnight end = new DateMidnight(thisReservation.getRcCheckOutDate());
@@ -213,7 +215,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
     public double calculateTotalPrice(ReservationEntity reservation) {
         System.out.println("calculateTotalPrice");
         System.out.println("room type: " + reservation.getReservationRoomType());
-        RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, reservation.getReservationRoomType());
+        RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, reservation.getReservationRoomType().toLowerCase());
         System.out.println("thisPrice: " + thisPrice.getPrice());
         System.out.println("room count: " + reservation.getReservationRoomCount());
 
