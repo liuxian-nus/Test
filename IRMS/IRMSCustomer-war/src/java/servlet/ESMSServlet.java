@@ -36,20 +36,25 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ESMSServlet", urlPatterns = {"/ESMSServlet", "/ESMSServlet/*"})
 public class ESMSServlet extends HttpServlet {
+
     @EJB
     private ShowScheduleSessionBean showScheduleSessionBean;
     @EJB
     private EventSessionBean eventSessionBean;
-
     @EJB
     private ShowSessionBean showSessionBean;
-    
     private List<ShowEntity> shows;
     private List<ShowScheduleEntity> showSchedule;
     private Long showId;
     private Long scheduleId;
     private EventEntity ee;
     private List<ShowTicketEntity> showTickets;
+    private int ticket1;
+    private int ticket2;
+    private int ticket3;
+    private int ticket4;
+    private int ticket5;
+    private int ticket6;
 
     /**
      * Processes requests for both HTTP
@@ -90,7 +95,7 @@ public class ESMSServlet extends HttpServlet {
                 } else if ("entertainmentSchedule".equals(page)) {
 
                     System.out.println("***entertainmentSchedule***");
-                    
+
                     showId = Long.parseLong(request.getParameter("showId"));
                     session.setAttribute("thisShow", showSessionBean.getShowById(showId));
                     showSchedule = showSessionBean.getAllShowSchedules(showId);
@@ -98,64 +103,68 @@ public class ESMSServlet extends HttpServlet {
                     System.out.println(showId);
                     System.out.println(showSchedule.size());
                     request.setAttribute("showSchedules", showSchedule);
-              
+
                     request.getRequestDispatcher("/entertainmentSchedule.jsp").forward(request, response);
                 } else if ("entertainmentVenue".equals(page)) {
                     System.out.println("***entertainmentVenue***");
                     //below set show ticket types and return back to jsp
-                    System.out.println(request.getAttribute("scheduleId"));
-                    scheduleId=Long.valueOf((String)request.getAttribute("scheduleId"));
+                    System.out.println(request.getParameter("scheduleId"));
+                    scheduleId = Long.valueOf(request.getParameter("scheduleId"));
                     System.out.println(scheduleId);
                     ShowScheduleEntity thisShowSchedule = showScheduleSessionBean.getShowScheduleById(scheduleId);
+                    session.setAttribute("thisSchedule", thisShowSchedule);
                     showTickets = thisShowSchedule.getShowTickets();
                     System.out.println(showTickets.isEmpty());
                     System.out.println(showTickets.size());
-                    
+
                     //below retrieve every ticket type and set into attribute
-                    if(!showTickets.isEmpty())
-                    {
-                    Iterator<ShowTicketEntity> itr =    showTickets.iterator();
-                    int i = 1;
-                    while(itr.hasNext())
-                    {
-                        ShowTicketEntity current = itr.next();
-                        request.setAttribute("showTicket"+i, current);
-                        System.out.println("Current ticket retrieved is "+i);
-                        System.out.println(current.getShowTicketPrice());
-                        
-                    }
+                    if (!showTickets.isEmpty()) {
+                        Iterator<ShowTicketEntity> itr = showTickets.iterator();
+                        int i = 1;
+                        while (itr.hasNext()) {
+                            ShowTicketEntity current = itr.next();
+                            request.setAttribute("showTicket" + i, current);
+                            System.out.println("Current ticket retrieved is " + i);
+                            System.out.println(current.getShowTicketPrice());
+
+                        }
                     }
 //                    request.setAttribute("showTickets", showTickets);
                     request.getRequestDispatcher("/entertainmentVenue.jsp").forward(request, response);
                 } else if ("entertainmentPay".equals(page)) {
                     System.out.println("***entertainmentPay***");
-
+                    ticket1 = Integer.parseInt(request.getParameter("ticket1"));
+                    ticket2 = Integer.parseInt(request.getParameter("ticket2"));
+                    ticket3 = Integer.parseInt(request.getParameter("ticket3"));
+                    ticket4 = Integer.parseInt(request.getParameter("ticket4"));
+                    ticket5 = Integer.parseInt(request.getParameter("ticket5"));
+                    ticket6 = Integer.parseInt(request.getParameter("ticket6"));
                     request.getRequestDispatcher("/entertainmentPay.jsp").forward(request, response);
                 } else if ("entertainmentRegisterResult".equals(page)) {
                     System.out.println("***entertainmentRegisterResult***");
-                     System.out.println("***entertainmentRegister***");
+                    System.out.println("***entertainmentRegister***");
                     ee = new EventEntity();
-          
+
                     String eventName = request.getParameter("eventName");
                     ee.setEventName(eventName);
                     String name = request.getParameter("name");
                     ee.setName(name);
-                    String eventType="show";
+                    String eventType = "show";
                     ee.setEventType(eventType);
                     String email = request.getParameter("e-mail");
                     ee.setEmail(email);
                     String phoneNumber = request.getParameter("contact");
                     ee.setEventContact(phoneNumber);
-                    String description=request.getParameter("description");
+                    String description = request.getParameter("description");
                     ee.setDescription(description);
-                    String Status="pending";
+                    String Status = "pending";
                     ee.setStatus(Status);
                     eventSessionBean.addEvent(ee);
                     request.getRequestDispatcher("/entertainmentRegisterResult.jsp").forward(request, response);
-                }else if ("entertainmentRegister".equals(page)) {
-          
-                    
-                  
+                } else if ("entertainmentRegister".equals(page)) {
+
+
+
                     request.getRequestDispatcher("/entertainmentRegister.jsp").forward(request, response);
                 } else {
                     System.out.println("other page");
