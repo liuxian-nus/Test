@@ -90,7 +90,7 @@ public class ESMSServlet extends HttpServlet {
 
                 if ("entertainment".equals(page)) {
                     System.out.println("***entertainment***");
-                    shows = showSessionBean.getAllShows();
+                    shows = showSessionBean.getAvailableShows();
                     request.setAttribute("shows", shows);
                     request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
                 } else if ("entertainmentSchedule".equals(page)) {
@@ -152,6 +152,7 @@ public class ESMSServlet extends HttpServlet {
                         ShowTicketEntity current = itr.next();
                         System.out.println("A ticket has been retrieved!"+i);
                         ticTotal+= current.getShowTicketPrice()*Integer.parseInt(request.getParameter("ticket"+i));
+                        i++;
                     }
                     
                     System.out.println("The total price calculated is : "+ticTotal);
