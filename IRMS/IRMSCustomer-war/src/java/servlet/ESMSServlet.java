@@ -55,6 +55,7 @@ public class ESMSServlet extends HttpServlet {
     private int ticket4;
     private int ticket5;
     private int ticket6;
+    ShowScheduleEntity thisShowSchedule;
 
     /**
      * Processes requests for both HTTP
@@ -111,7 +112,7 @@ public class ESMSServlet extends HttpServlet {
                     System.out.println(request.getParameter("scheduleId"));
                     scheduleId = Long.valueOf(request.getParameter("scheduleId"));
                     System.out.println(scheduleId);
-                    ShowScheduleEntity thisShowSchedule = showScheduleSessionBean.getShowScheduleById(scheduleId);
+                    thisShowSchedule = showScheduleSessionBean.getShowScheduleById(scheduleId);
                     session.setAttribute("thisSchedule", thisShowSchedule);
                     showTickets = thisShowSchedule.getShowTickets();
                     System.out.println(showTickets.isEmpty());
@@ -139,6 +140,22 @@ public class ESMSServlet extends HttpServlet {
                     ticket4 = Integer.parseInt(request.getParameter("ticket4"));
                     ticket5 = Integer.parseInt(request.getParameter("ticket5"));
                     ticket6 = Integer.parseInt(request.getParameter("ticket6"));
+                    
+                    Double ticTotal = 0.00;
+                    List <ShowTicketEntity> list = thisShowSchedule.getShowTickets();
+                    Iterator<ShowTicketEntity> itr = list.iterator();
+                    int i=1;
+                    
+                    while(itr.hasNext())
+                    {
+                        ShowTicketEntity current = itr.next();
+                        System.out.println("A ticket has been retrieved!"+i);
+                        ticTotal+= current.getShowTicketPrice()*Integer.parseInt(request.getParameter("ticket"+i));
+                    }
+                    
+                    System.out.println("The total price calculated is : "+ticTotal);
+                    
+                    request.setAttribute("ticTotal",ticTotal);
                     request.getRequestDispatcher("/entertainmentPay.jsp").forward(request, response);
                 } else if ("entertainmentRegisterResult".equals(page)) {
                     System.out.println("***entertainmentRegisterResult***");
