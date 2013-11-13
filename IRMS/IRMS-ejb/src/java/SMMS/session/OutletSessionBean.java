@@ -163,7 +163,7 @@ public class OutletSessionBean implements OutletSessionBeanRemote {
         List OutletList = new ArrayList<OutletEntity>();
         for (Object o : q.getResultList()) {
             OutletTransactionEntity m = (OutletTransactionEntity) o;
-            if (m.getTransactionOutlet().getOutletId() == outletId) {
+            if (m.getOutlet().getOutletId() == outletId) {
                 OutletList.add(m);
             }
         }

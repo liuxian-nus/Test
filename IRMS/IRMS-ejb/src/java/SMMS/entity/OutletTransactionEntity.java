@@ -65,13 +65,6 @@ public class OutletTransactionEntity implements Serializable {
         this.transactionAmount = transactionAmount;
     }
 
-    public OutletEntity getTransactionOutlet() {
-        return outlet;
-    }
-
-    public void setTransactionOutlet(OutletEntity transactionOutlet) {
-        this.outlet = transactionOutlet;
-    }
 
     public Long getId() {
         return transactionId;

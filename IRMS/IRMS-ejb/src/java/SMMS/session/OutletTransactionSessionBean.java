@@ -64,7 +64,7 @@ public class OutletTransactionSessionBean implements OutletTransactionSessionBea
         List TransactionList = new ArrayList<OutletTransactionEntity>();
         for (Object o : q.getResultList()) {
             OutletTransactionEntity m = (OutletTransactionEntity) o;
-            if (m.getTransactionOutlet().getOutletId()== outletId) {
+            if (m.getOutlet().getOutletId()== outletId) {
                 TransactionList.add(m);
             }
         }
@@ -80,7 +80,7 @@ public class OutletTransactionSessionBean implements OutletTransactionSessionBea
         double amount = 0.00;
         for (Object o : q.getResultList()) {
             OutletTransactionEntity m = (OutletTransactionEntity) o;
-            if (m.getTransactionOutlet().getId()== outletId) {
+            if (m.getOutlet().getId()== outletId) {
                 TransactionList.add(m);
                 amount= amount+m.getTransactionAmount();
             }

@@ -390,7 +390,7 @@ public class smmsInitManagedBean implements Serializable {
             otransaction = new OutletTransactionEntity();
             otransaction.setTransactionDate(date1);
             otransaction.setTransactionAmount(13.45);
-            otransaction.setTransactionOutlet(outletSessionBean.getOutletById(217));
+            otransaction.setOutlet(outletSessionBean.getOutletById(217));
             outletTransactionSessionBean.addTransaction(otransaction); //persisting transaction
             outletSessionBean.getOutletById(217).addTransaction(otransaction); //add transaction to outlet
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(217)); //update outlet
@@ -399,7 +399,7 @@ public class smmsInitManagedBean implements Serializable {
             OutletTransactionEntity otransaction1 = new OutletTransactionEntity();
             otransaction1.setTransactionDate(date2);
             otransaction1.setTransactionAmount(22.98);
-            otransaction1.setTransactionOutlet(outletSessionBean.getOutletById(217));
+            otransaction1.setOutlet(outletSessionBean.getOutletById(217));
             outletTransactionSessionBean.addTransaction(otransaction1); //persisting transaction
             outletSessionBean.getOutletById(217).addTransaction(otransaction1);
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(217));
@@ -407,7 +407,7 @@ public class smmsInitManagedBean implements Serializable {
             OutletTransactionEntity otransaction2 = new OutletTransactionEntity();
             otransaction2.setTransactionDate(date3);
             otransaction2.setTransactionAmount(102.98);
-            otransaction2.setTransactionOutlet(outletSessionBean.getOutletById(217));
+            otransaction2.setOutlet(outletSessionBean.getOutletById(217));
             outletTransactionSessionBean.addTransaction(otransaction2); //persisting transaction
             outletSessionBean.getOutletById(217).addTransaction(otransaction2);
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(217));
@@ -415,7 +415,7 @@ public class smmsInitManagedBean implements Serializable {
             OutletTransactionEntity otransaction3 = new OutletTransactionEntity();
             otransaction3.setTransactionDate(date4);
             otransaction3.setTransactionAmount(345.98);
-            otransaction3.setTransactionOutlet(outletSessionBean.getOutletById(217));
+            otransaction3.setOutlet(outletSessionBean.getOutletById(217));
             outletTransactionSessionBean.addTransaction(otransaction3); //persisting transaction
             outletSessionBean.getOutletById(217).addTransaction(otransaction3);
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(217));
@@ -423,7 +423,7 @@ public class smmsInitManagedBean implements Serializable {
             OutletTransactionEntity otransaction4 = new OutletTransactionEntity();
             otransaction4.setTransactionDate(date5);
             otransaction4.setTransactionAmount(11.98);
-            otransaction4.setTransactionOutlet(outletSessionBean.getOutletById(412));
+            otransaction4.setOutlet(outletSessionBean.getOutletById(412));
             outletTransactionSessionBean.addTransaction(otransaction4); //persisting transaction
             outletSessionBean.getOutletById(412).addTransaction(otransaction4);
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(412));
@@ -431,7 +431,7 @@ public class smmsInitManagedBean implements Serializable {
             OutletTransactionEntity otransaction5 = new OutletTransactionEntity();
             otransaction5.setTransactionDate(date6);
             otransaction5.setTransactionAmount(22.01);
-            otransaction5.setTransactionOutlet(outletSessionBean.getOutletById(412));
+            otransaction5.setOutlet(outletSessionBean.getOutletById(412));
             outletTransactionSessionBean.addTransaction(otransaction5); //persisting transaction
             outletSessionBean.getOutletById(412).addTransaction(otransaction5);
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(412));
@@ -440,7 +440,7 @@ public class smmsInitManagedBean implements Serializable {
             OutletTransactionEntity otransaction6 = new OutletTransactionEntity();
             otransaction6.setTransactionDate(date6);
             otransaction6.setTransactionAmount(18.01);
-            otransaction6.setTransactionOutlet(outletSessionBean.getOutletById(516));
+            otransaction6.setOutlet(outletSessionBean.getOutletById(516));
             outletTransactionSessionBean.addTransaction(otransaction6); //persisting transaction
             outletSessionBean.getOutletById(516).addTransaction(otransaction6);
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(516));
@@ -450,7 +450,7 @@ public class smmsInitManagedBean implements Serializable {
             OutletTransactionEntity otransaction7 = new OutletTransactionEntity();
             otransaction7.setTransactionDate(date5);
             otransaction7.setTransactionAmount(78.01);
-            otransaction7.setTransactionOutlet(outletSessionBean.getOutletById(516));
+            otransaction7.setOutlet(outletSessionBean.getOutletById(516));
             outletTransactionSessionBean.addTransaction(otransaction7); //persisting transaction
             outletSessionBean.getOutletById(516).addTransaction(otransaction7);
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(516));
@@ -459,7 +459,7 @@ public class smmsInitManagedBean implements Serializable {
             OutletTransactionEntity otransaction8 = new OutletTransactionEntity();
             otransaction8.setTransactionDate(date2);
             otransaction8.setTransactionAmount(189.32);
-            otransaction8.setTransactionOutlet(outletSessionBean.getOutletById(516));
+            otransaction8.setOutlet(outletSessionBean.getOutletById(516));
             outletTransactionSessionBean.addTransaction(otransaction8); //persisting transaction
             outletSessionBean.getOutletById(516).addTransaction(otransaction8);
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(516));
@@ -468,7 +468,7 @@ public class smmsInitManagedBean implements Serializable {
             OutletTransactionEntity otransaction9 = new OutletTransactionEntity();
             otransaction9.setTransactionDate(date3);
             otransaction9.setTransactionAmount(3264.01);
-            otransaction9.setTransactionOutlet(outletSessionBean.getOutletById(516));
+            otransaction9.setOutlet(outletSessionBean.getOutletById(516));
             outletTransactionSessionBean.addTransaction(otransaction9); //persisting transaction
             outletSessionBean.getOutletById(516).addTransaction(otransaction9);
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(516));
@@ -477,7 +477,7 @@ public class smmsInitManagedBean implements Serializable {
             OutletTransactionEntity otransaction10 = new OutletTransactionEntity();
             otransaction10.setTransactionDate(date5);
             otransaction10.setTransactionAmount(9253.01);
-            otransaction10.setTransactionOutlet(outletSessionBean.getOutletById(516));
+            otransaction10.setOutlet(outletSessionBean.getOutletById(516));
             outletTransactionSessionBean.addTransaction(otransaction10); //persisting transaction
             outletSessionBean.getOutletById(516).addTransaction(otransaction10);
             outletSessionBean.updateOutlet(outletSessionBean.getOutletById(516));
