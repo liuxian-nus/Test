@@ -113,6 +113,9 @@ public class CRMServlet extends HttpServlet {
                 request.getRequestDispatcher("/memberFeedbackResult.jsp").forward(request, response);
             } else if ("memberPromotionPurchase".equals(page)) {
                 System.out.println("***member Promotion Purchase page***");
+                promotionId = Long.parseLong(request.getParameter("promotionId"));
+                System.out.println(promotionId);
+                
                thisPromotion=promotionSessionBean.getPromotionById(promotionId);
                session.setAttribute("promotion",thisPromotion);
                 String pmDepartment=thisPromotion.getPromotionDepartment();
