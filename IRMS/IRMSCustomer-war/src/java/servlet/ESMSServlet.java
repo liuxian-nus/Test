@@ -123,11 +123,12 @@ public class ESMSServlet extends HttpServlet {
                         Iterator<ShowTicketEntity> itr = showTickets.iterator();
                         int i = 1;
                         while (itr.hasNext()) {
+                            
                             ShowTicketEntity current = itr.next();
                             request.setAttribute("showTicket" + i, current);
                             System.out.println("Current ticket retrieved is " + i);
                             System.out.println(current.getShowTicketPrice());
-
+                            i++;
                         }
                     }
 //                    request.setAttribute("showTickets", showTickets);
