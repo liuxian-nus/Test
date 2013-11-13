@@ -215,9 +215,15 @@ public class ATMSServlet extends HttpServlet {
                 session.setAttribute("attr", attr);
                 System.out.println("session set");
                 
+                String couponIdString=request.getParameter("couponId");
+                if(couponIdString!=""){
+                    System.out.println("coupon code entered");
+                    Long couponId=Long.parseLong(couponIdString);
+/*                    
+                }
                 Long couponId=Long.parseLong(request.getParameter("couponId"));
                 System.out.println("couponId:"+couponId);
-                if(couponId!=0){
+                if(couponId!=0){*/
                     System.out.println("start to use coupon");
                     coupon=couponSessionBean.getCouponById(couponId); 
                     if(coupon==null){

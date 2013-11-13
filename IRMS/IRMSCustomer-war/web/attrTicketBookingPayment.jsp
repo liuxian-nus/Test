@@ -4,8 +4,12 @@
     Author     : Jieqiong
 --%>
 
+<%@page import="CRMS.entity.MemberEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    MemberEntity member=(MemberEntity)session.getAttribute("member");
+%>
 <html>
     <head>
         <jsp:include page="base.jsp"></jsp:include>
@@ -30,7 +34,7 @@
                 </div>
                 <div>
                     <div class="large-6 large columns">
-                        <input required type="text" placeholder="Email" name="email">
+                        <input required type="text" value="${member.memberEmail}"placeholder="Email" name="email">
                     </div>
                 </div>
             </div>

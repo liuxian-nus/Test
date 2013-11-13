@@ -544,7 +544,7 @@
                                         <label for="right-label" class="left-align,inline"><strong>Coupon Code</strong></label>
                                     </div>
                                     <div class="large-3 large columns">
-                                        <input type="text" value="0" placeholder="Coupon Code" name="couponId">
+                                        <input type="text" placeholder="Coupon Code" name="couponId">
                                     </div>
                                     <div class="large-6 large columns"><p>${message}</p></div>
                                 </div>
@@ -1139,7 +1139,7 @@
                                         <label for="right-label" class="left-align,inline"><strong>Coupon Code</strong></label>
                                     </div>
                                     <div class="large-3 large columns">
-                                        <input type="text" value="0" placeholder="Coupon Code" name="couponId">
+                                        <input type="text" placeholder="Coupon Code" name="couponId">
                                     </div>
                                     <div class="large-6 large columns"><p>${message}</p></div>
                                 </div>
@@ -1322,7 +1322,7 @@
                                         <label for="right-label" class="left-align,inline"><strong>Coupon Code</strong></label>
                                     </div>
                                     <div class="large-3 large columns">
-                                        <input type="text" value="0" placeholder="Coupon Code" name="couponId">
+                                        <input type="text" placeholder="Coupon Code" name="couponId">
                                     </div>
                                     <div class="large-6 large columns"><p>${message}</p></div>
                                 </div>

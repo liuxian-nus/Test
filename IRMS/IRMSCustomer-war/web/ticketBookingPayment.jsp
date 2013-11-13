@@ -40,7 +40,6 @@
                     <p>${message}</p>
                 </div>
             </div>
-            <p>Please use your registered email if you are a member.</p>
             <div class="row">
                 <input type="submit" class="small button" value="Submit">
             </div>
