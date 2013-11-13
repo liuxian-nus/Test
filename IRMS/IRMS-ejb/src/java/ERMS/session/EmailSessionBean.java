@@ -9,6 +9,7 @@ import ATMS.entity.ExpressPassPurchaseEntity;
 import ATMS.entity.TicketPurchaseEntity;
 import CEMS.entity.EventBookingEntity;
 import CEMS.entity.EventEntity;
+import CEMS.entity.EventServiceBookingEntity;
 import CEMS.entity.EventServiceEntity;
 import CRMS.entity.FeedbackEntity;
 import CRMS.entity.MemberEntity;
@@ -344,7 +345,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         table.addCell("Event Type");
         table.addCell(event.getEventType());
         table.addCell("Service Booked");
-        table.addCell("");
+       
         
             //Below add a sub-table for service booked 
                 PdfPTable table2 = new PdfPTable(2);
@@ -353,7 +354,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 table2.setWidths(new int[]{1, 3});
 
                 //Add table header 
-                PdfPCell c2 = new PdfPCell(new Phrase("Service Booked: Categories"));
+                PdfPCell c2 = new PdfPCell(new Phrase("Bookings"));
                 c2.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table2.addCell(c2);
 
@@ -363,13 +364,52 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
                 table2.setHeaderRows(1);
                 
-                List <EventBookingEntity> services = event.getBookings();
-                Iterator <EventBookingEntity> itr = services.iterator();
+                List <EventBookingEntity> bookings = event.getBookings();
+                Iterator <EventBookingEntity> itr = bookings.iterator();
                 while(itr.hasNext())
                 {
                     EventBookingEntity current = itr.next();
                     
+                    table2.addCell(current.getBookingId().toString());//left
+                    
+                    List <EventServiceBookingEntity> services = current.getServiceBookings();
+                    Iterator <EventServiceBookingEntity> itr2 = services.iterator();
+                    
+                    PdfPTable table3 = null;
+                    
+                    while(itr2.hasNext())
+                    {
+                        if(services.isEmpty())
+                        {
+                            table.addCell(""); //add right
+                            break;
+                        }
+                        EventServiceBookingEntity thisService = itr2.next();
+                        
+                        //Below add a sub-table for service booked for each booking
+                                table3 = new PdfPTable(2);
+                                table3.setSpacingAfter(30);
+                                table3.setSpacingBefore(30);
+                                table3.setWidths(new int[]{1, 3});
+
+                                //Add table header 
+                                PdfPCell c3 = new PdfPCell(new Phrase("Service"));
+                                c3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                                table3.addCell(c3);
+
+                                c3 = new PdfPCell(new Phrase("Details & Remarks"));
+                                c3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                                table3.addCell(c3);
+
+                                table3.setHeaderRows(1);
+                                
+                                table3.addCell(thisService.getEventService().getServiceName());
+                                table3.addCell(Integer.toString(thisService.getEventServiceQuantity()));
+                    }
+                    table2.addCell(table3);//right
+                    
                 }
+                table.addCell(table2);
         
         document.add(table);
         document.close();
