@@ -30,7 +30,13 @@
                     <div class="large-6 columns">
                         <h5><strong>${promotion.promotionTitle}</strong></h5>
                         <p>
-                            ${promotion.promotionDescription}
+                        <h7><strong>Promotion Details: </strong></h7>${promotion.promotionDescription}
+                        </p>
+                        
+                        <p>
+                        <h7><strong>Promotion Start/End Date: </strong></h7><fmt:formatDate type="date" pattern="dd MMM yyyy" 
+                                                        value="${promotion.promotionStartDate}" /> <h7>-</h7> <fmt:formatDate type="date" pattern="dd MMM yyyy" 
+                                                        value="${promotion.promotionEndDate}" />
                         </p>
                     </div>
                     <div class="large-2 columns">
