@@ -92,7 +92,7 @@ public class ShowBillingManagedBean {
         bill = (Double) request.getSession().getAttribute("showBill");
         selectedShowContract = selectedShow.getShowContract();
         System.err.println("contract: " + selectedShowContract.getShowMerchantEmail());
-        emailSessionBean.sendShowContractBill(rentalFee, bill, ticketCommission, ticketRevenue, selectedShowContract);
+        emailSessionBean.sendShowContractBill(rentalFee, bill, ticketCommission, ticketRevenue, selectedShowContract,selectedShow);
         selectedShow.setShowPaymentStatus(true);
         System.err.println("Status: " + selectedShow.isShowPaymentStatus());
         showSessionBean.updateShow(selectedShow);
