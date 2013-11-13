@@ -42,11 +42,12 @@
                         <h:outputText value="Member: "/>
                         <p:selectOneRadio id="options" value="#{showTicketingManagedBean.isMember}" onchange="this.form.submit()">  
                             <f:selectItem itemLabel="Member" itemValue='true' />  
+                            <f:selectItem itemLabel="Not a Member" itemValue='false'/> 
                         </p:selectOneRadio> 
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Member Email: " rendered="#{showTicketingManagedBean.isMember}"/>
-                        <p:autoComplete id="name" value="#{showTicketingManagedBean.memberTransaction.memberEmail}" rendered="#{showTicketingManagedBean.isMember}" completeMethod="#{showTicketingManagedBean.completeMember}" />
+                        <p:autoComplete required="true" requiredMessage="Email cannot be empty" id="name" value="#{showTicketingManagedBean.memberTransaction.memberEmail}" rendered="#{showTicketingManagedBean.isMember}" completeMethod="#{showTicketingManagedBean.completeMember}" />
                         <h:outputText value=""/><br/>
 
 

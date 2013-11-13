@@ -91,7 +91,7 @@ public class ShowTicketingManagedBean {
         return results;
     }
 
-    public List<String> completeMember(String query) throws ExistException { 
+    public List<String> completeMember(String query) throws ExistException {
         List<String> results = new ArrayList<String>();
 
         List<MemberEntity> memberList = memberSessionBean.getAllMembers();
@@ -166,6 +166,21 @@ public class ShowTicketingManagedBean {
         System.out.println("showSchedule: " + showScheduleId);
         System.out.println("showTicket: " + showTicketId);
 
+        //email from page
+        String email1 = memberTransaction.getMemberEmail();
+        //email from database
+        String email2 = null;
+
+        if (email1 != null) {
+            MemberEntity me = memberSessionBean.getMemberByEmail(email1);
+            if (me != null) {
+                email2 = me.getMemberEmail();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Invalid member email.", ""));
+                return;
+            }
+        }
+
         selectedShow = showSessionBean.getShowById(showId);
         selectedShowSchedule = showScheduleSessionBean.getShowScheduleById(showScheduleId);
         selectedShowTicket = showTicketSessionBean.getShowTicketById(showTicketId);
@@ -181,6 +196,10 @@ public class ShowTicketingManagedBean {
             selectedShowTicketSale.setShowTicketType(selectedShowTicket.getShowTicketType());
             selectedShowTicketSale.setShowTicketQuantity(showTicketQuota);
             selectedShowTicketSale.setShowTicketPrice(selectedShowTicket.getShowTicketPrice());
+
+            if (email2 != null) {
+                selectedShowTicketSale.setMemberEmail(email2);
+            }
 
             showTicketSessionBean.updateQuantity(showTicketId, showTicketQuota);
             showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
