@@ -137,6 +137,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
 
         return thisPrice.getPrice() * thisReservation.getReservationRoomCount() * days;
     }
+
     public double calculateReservationTotalWithPromotion(ReservationEntity thisReservation, PromotionEntity thisPromotion) {
         RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, thisReservation.getReservationRoomType().toLowerCase());
         System.out.println("Calculate reservatino total price with promotion " + thisPromotion.getPromotionCode() + " " + thisPromotion.getPromotionTitle());
@@ -144,9 +145,10 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         DateMidnight end = new DateMidnight(thisReservation.getRcCheckOutDate());
         int days = Days.daysBetween(start, end).getDays();
 
-        return thisPrice.getPrice() * thisReservation.getReservationRoomCount() * days * (1-thisPromotion.getDiscount());
+        return thisPrice.getPrice() * thisReservation.getReservationRoomCount() * days * (1 - thisPromotion.getDiscount());
     }
 //for jsp reservation
+
     public void addReservation(ReservationEntity newReservation, double totalPrice) {
         Date today = new Date();
         System.out.println("in reservation session bean: add reservation");
@@ -162,6 +164,9 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
 //        int days = Days.daysBetween(start, end).getDays();
 
 //        thisReservation.setReservationTotal(this.calculateReservationTotal(thisReservation));//5 should be days between
+        if (thisReservation.getRcNationality().equals("129")) {
+            thisReservation.setRcNationality("Malaysian");
+        }
         thisReservation.setReservationTotal(totalPrice);
         thisReservation.setReservationStatus("guarantee"); //haven't implement yet
         em.persist(thisReservation);
@@ -186,6 +191,9 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
 //        DateMidnight start = new DateMidnight(thisReservation.getRcCheckInDate());
 //        DateMidnight end = new DateMidnight(thisReservation.getRcCheckOutDate());
 //        int days = Days.daysBetween(start, end).getDays();
+        if (((thisReservation.getRcNationality() != null)) && (thisReservation.getRcNationality().equals("129"))) {
+            thisReservation.setRcNationality("Malaysian");
+        }
 
         thisReservation.setReservationTotal(this.calculateReservationTotal(thisReservation));//5 should be days between
         thisReservation.setReservationStatus("confirmed");
@@ -210,6 +218,9 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         DateMidnight start = new DateMidnight(thisReservation.getRcCheckInDate());
         DateMidnight end = new DateMidnight(thisReservation.getRcCheckOutDate());
         int days = Days.daysBetween(start, end).getDays();
+        if (thisReservation.getRcNationality().equals("129")) {
+            thisReservation.setRcNationality("Malaysian");
+        }
 
         thisReservation.setReservationTotal(thisPrice.getPrice() * thisReservation.getReservationRoomCount() * days);//5 should be days between
         thisReservation.setReservationStatus("complementary");
@@ -220,6 +231,12 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         System.err.println("successfully added reservation: " + newReservation.getReservationId());
     }
 
+    public int calculateNights(ReservationEntity newReservation) {
+        DateMidnight start = new DateMidnight(newReservation.getRcCheckInDate());
+        DateMidnight end = new DateMidnight(newReservation.getRcCheckOutDate());
+        return Days.daysBetween(start, end).getDays();
+    }
+
     public void addReservationWithPromotion(ReservationEntity newReservation, String promotionCode) {
         Date today = new Date();
         System.out.println("in reservation session bean: add reservation with promotion");
@@ -227,6 +244,10 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         PromotionEntity thisPromotion = promotionSessionBean.getPromotionByCode(promotionCode);
         thisReservation.setReservationTotal(this.calculateReservationTotalWithPromotion(thisReservation, thisPromotion));//5 should be days between
         thisReservation.setReservationStatus("guarantee");
+        if (thisReservation.getRcNationality().equals("129")) {
+            thisReservation.setRcNationality("Malaysian");
+        }
+
         em.persist(thisReservation);
         String description = "Hotel Reservation from " + thisReservation.getRcCheckInDate() + " to " + thisReservation.getRcCheckOutDate() + " with a total room fee: " + thisReservation.getReservationTotal();
         if (newReservation.getRcMember() != null) {
@@ -239,6 +260,16 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
     public void cancelReservation(Long reservationId) {
         reservation = em.find(ReservationEntity.class, reservationId);
         reservation.setReservationStatus("cancelled");
+        em.merge(reservation);
+    }
+
+    public void cancelReservation(ReservationEntity reservation) {
+        reservation.setReservationStatus("cancelled");
+        em.merge(reservation);
+    }
+    
+    public void payRoomFee(ReservationEntity reservation) {
+        reservation.setReservationStatus("guarantee");
         em.merge(reservation);
     }
 

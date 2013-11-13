@@ -74,6 +74,9 @@
                         <h:outputText value="Email*:"/>
                         <h:inputText required ="true" requiredMessage="Email cannot be empty" value="#{reservationManagedBean.newReservation.rcEmail}"/>                                   
                         <h:outputText value=""/>
+                        <h:outputText value="Nationality*:"/>
+                        <h:inputText required ="true" requiredMessage="Nationality cannot be empty" value="#{reservationManagedBean.newReservation.rcNationality}"/>                                   
+                        <h:outputText value=""/>
                         <h:outputText value="Credit Card Number*:"/>
                         <h:inputText required ="true" requiredMessage="Credit Card cannot be empty" value="#{reservationManagedBean.newReservation.rcCreditCardNo}"/>                                   
                         <h:outputText value=""/>
@@ -111,6 +114,9 @@
                         <h:outputText value=""/>
                         <h:outputText value="Corporate (If applicable):"/>
                         <h:inputText value="#{reservationManagedBean.newReservation.reservationCorporate}"/>                                   
+                        <h:outputText value=""/>
+                        <h:outputText value="Membership (If applicable):"/>
+                        <h:inputText value="#{reservationManagedBean.memberEmail}"/>                                   
                         <h:outputText value=""/>
 
                         <p:spacer width="20"/>
@@ -168,15 +174,17 @@
                                     </p:column>
 
                                     <p:column style="width:100px">  
-                                        <p:commandButton rendered="#{reservations.reservationStatus != 'Canceled' and reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'cancelled' and reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
-                                        <p:commandButton rendered="#{reservations.reservationStatus != 'Canceled'and reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation4.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'cancelled' and reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation4.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
                                         <h:outputText rendered="#{reservations.reservationStatus == 'checkedIn'}" value="Checked In" >  
+                                        </h:outputText>  
+                                        <h:outputText rendered="#{reservations.reservationStatus == 'cancelled'}" value="Cancelled" >  
                                         </h:outputText>  
                                     </p:column>
                                 </p:dataTable>
@@ -233,16 +241,18 @@
                                     </p:column>
 
                                     <p:column style="width:100px">  
-                                        <p:commandButton rendered="#{reservations.reservationStatus != 'Canceled' and reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'cancelled' and reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
-                                        <p:commandButton rendered="#{reservations.reservationStatus != 'Canceled' and reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation2.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'cancelled' and reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation2.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
                                         <h:outputText rendered="#{reservations.reservationStatus == 'checkedIn'}" value="Checked In" >  
                                         </h:outputText>  
+                                        <h:outputText rendered="#{reservations.reservationStatus == 'cancelled'}" value="Cancelled" >  
+                                        </h:outputText> 
                                     </p:column>
                                 </p:dataTable>
 
@@ -296,16 +306,16 @@
                                     </p:column>
 
                                     <p:column style="width:100px">  
-                                        <p:commandButton rendered="#{reservations.reservationStatus!='Canceled'and reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus!='cancelled'and reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
-                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'and reservations.reservationStatus!='Canceled'}" oncomplete="confirmation3.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'and reservations.reservationStatus!='cancelled'}" oncomplete="confirmation3.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
                                         <h:outputText rendered="#{reservations.reservationStatus == 'checkedIn'}" value="Checked In" />  
-                                        <h:outputText rendered="#{reservations.reservationStatus == 'Canceled'}" value="Canceled" />  
+                                        <h:outputText rendered="#{reservations.reservationStatus == 'cancelled'}" value="cancelled" />  
 
                                     </p:column>
                                 </p:dataTable>

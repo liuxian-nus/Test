@@ -6,6 +6,8 @@ package ACMS.managedbean;
 
 import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
+import CRMS.entity.MemberEntity;
+import CRMS.session.MemberSessionBean;
 import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
 import com.lowagie.text.DocumentException;
@@ -36,6 +38,8 @@ public class ReservationManagedBean implements Serializable {
     private EmailSessionBean emailSessionBean;
     @EJB
     private ReservationSessionBean reservationSessionBean;
+    @EJB
+    private MemberSessionBean memberSessionBean;
     private List<ReservationEntity> reservationList;
     private ReservationEntity selectReservation;
     private ReservationEntity newReservation;
@@ -45,6 +49,7 @@ public class ReservationManagedBean implements Serializable {
     private List<ReservationEntity> today;
     private List<ReservationEntity> all;
     private List<ReservationEntity> overdue;
+    private String memberEmail;
 
     @PostConstruct
     public void init() {
@@ -90,15 +95,31 @@ public class ReservationManagedBean implements Serializable {
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
 //            selectReservation = (ReservationEntity) event.getComponent().getAttributes().get("cancelReservation");
-            System.out.println("N02: in displaying bean " + selectReservation.getReservationId());
-            selectReservation.setReservationStatus("cancelled");
-            reservationSessionBean.updateReservation(selectReservation);
-//            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
-            System.out.println("we are after setting contractId session attribute");
-//            FacesContext.getCurrentInstance().getExternalContext().redirect("operatorViewContract.xhtml");
+            System.out.println("cancelReservation: in displaying bean " + selectReservation.getReservationId());
+//            selectReservation.setReservationStatus("cancelled");
+            reservationSessionBean.cancelReservation(selectReservation);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
+            System.out.println("we are after setting reservation session attribute");
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when canceling the reservation", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when cancelling the reservation", ""));
         }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "This Reservation is successfully cancelled", ""));
+    }
+    
+     public void payRoomFee(ActionEvent event) {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+//            selectReservation = (ReservationEntity) event.getComponent().getAttributes().get("cancelReservation");
+            System.out.println("pay room fee: in displaying bean " + selectReservation.getReservationId());
+//            selectReservation.setReservationStatus("cancelled");
+            reservationSessionBean.payRoomFee(selectReservation);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
+            System.out.println("we are after setting reservation session attribute");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when updating payment status", ""));
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The outstanding room fee is cleared, now you may proceed to check-in", ""));
     }
 
     public void selectThisReservation(ActionEvent event) throws IOException {
@@ -245,7 +266,6 @@ public class ReservationManagedBean implements Serializable {
             return;
         }
     }
-//javax.el.PropertyNotFoundException: /acms/checkIncheckOut.xhtml @45,154 value="#{reservationManagedBean.selectReservation.rcName}": Target Unreachable, 'null' returned null
 
     public void addReservation(ActionEvent event) throws IOException, FileNotFoundException, DocumentException {
         try {
@@ -264,6 +284,10 @@ public class ReservationManagedBean implements Serializable {
             }
             if (newReservation.getReservationRoomType().equals("5")) {
                 newReservation.setReservationRoomType("chairman suite");
+            }
+            if(memberEmail!=null) {
+                MemberEntity thisMember = memberSessionBean.getMemberByEmail(memberEmail);
+                newReservation.setRcMember(thisMember);
             }
             reservationSessionBean.addReservation(newReservation);
             System.out.println("we are after add reservation in managedbean");
@@ -350,6 +374,15 @@ public class ReservationManagedBean implements Serializable {
         this.emailSessionBean = emailSessionBean;
     }
 
+    public String getMemberEmail() {
+        return memberEmail;
+    }
+
+    public void setMemberEmail(String memberEmail) {
+        this.memberEmail = memberEmail;
+    }
+
+    
     public ReservationSessionBean getReservationSessionBean() {
         return reservationSessionBean;
     }

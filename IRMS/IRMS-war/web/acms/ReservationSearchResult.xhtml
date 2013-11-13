@@ -47,10 +47,13 @@
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationStatus}" style="font-weight:bold" /> 
                         <h:outputText value="Total Price" />
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationTotal}" style="font-weight: bold" />
-                        
-                        <p:commandButton rendered="#{reservationSearchResultManagedBean.selectReservation.reservationStatus!='Canceled'and reservationSearchResultManagedBean.selectReservation.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-trash" value ="Cancel" title="Cancel">  
+
+                        <p:commandButton rendered="#{reservationSearchResultManagedBean.selectReservation.reservationStatus!='cancelled'and reservationSearchResultManagedBean.selectReservation.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-trash" value ="Cancel" title="Cancel">  
                         </p:commandButton>
-                        <p:commandButton  rendered="#{reservationSearchResultManagedBean.selectReservation.reservationStatus!='Canceled'and reservationSearchResultManagedBean.selectReservation.reservationStatus != 'checkedIn'}" value="Check Available Rooms" ajax="true" action="/acms/listAllRooms.xhtml" /> 
+                        <p:commandButton  rendered="#{reservationSearchResultManagedBean.selectReservation.reservationStatus!='cancelled'and reservationSearchResultManagedBean.selectReservation.reservationStatus != 'checkedIn' and reservationSearchResultManagedBean.selectReservation.reservationStatus != 'confirmed'}" 
+                                          value="Check Available Rooms" ajax="true" action="/acms/listAllRooms.xhtml" /> 
+                        <p:commandButton rendered="#{reservationSearchResultManagedBean.selectReservation.reservationStatus == 'confirmed'}" oncomplete="pay.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="Pay Room Fee" title="Pay Room Fee">  
+                        </p:commandButton>
                     </h:panelGrid>
                 </p:panel>
 
@@ -61,6 +64,15 @@
                     <p:commandButton value="Yes" update="display" actionListener="#{reservationManagedBean.cancelReservation}" oncomplete="confirmation.hide()">  
                     </p:commandButton>
                     <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
+                </p:dialog> 
+                
+                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Payment" widgetVar="pay"> 
+                    <br/>
+                    Is the room fee paid?
+                    <br/><br/>
+                    <p:commandButton value="Yes" update="display" actionListener="#{reservationManagedBean.payRoomFee}" oncomplete="pay.hide()">  
+                    </p:commandButton>
+                    <p:commandButton value="Not yet" onclick="pay.hide()" type="button"/>  
                 </p:dialog> 
             </h:form>   
         </f:view>  

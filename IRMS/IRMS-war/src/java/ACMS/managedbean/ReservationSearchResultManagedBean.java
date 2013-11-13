@@ -58,6 +58,8 @@ public class ReservationSearchResultManagedBean implements Serializable {
 
     public void initViewSelect(PhaseEvent event) {
         selectReservation = (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
+
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
@@ -74,7 +76,14 @@ public class ReservationSearchResultManagedBean implements Serializable {
     }
 
     public void initViewList(PhaseEvent event) {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+
         reservationList = (List<ReservationEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("reservationList");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);
+        String searchEmail = (String)request.getSession().getAttribute("rcEmail");
+        request.getSession().setAttribute("rcEmail", searchEmail);
+
     }
 
     public void cancelReservation(ActionEvent event) throws IOException {
@@ -85,7 +94,7 @@ public class ReservationSearchResultManagedBean implements Serializable {
             reservationId = (Long) request.getSession().getAttribute("reservationId");
             reservationSessionBean.cancelReservation(reservationId);
             System.out.println("we are after search roomID: " + reservationId);
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisReservation", reservationSessionBean.getReservationById(reservationId));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
             System.out.println("we are after setting parameter");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when cancelling reservation", ""));
