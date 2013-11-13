@@ -1,6 +1,6 @@
 <%-- 
-    Document   : entertainmentPay
-    Created on : Oct 31, 2013, 10:53:07 PM
+    Document   : entertainmentVenue
+    Created on : Oct 22, 2013, 8:35:47 PM
     Author     : lionetdd
 --%>
 
@@ -25,46 +25,31 @@
                     <li><p class="button small secondary"><strong>Confirm your reservation ></strong></li>
                 </ul>
             </div>
-            <div class="row">
-          <div class="row">
-                        <div class='large-12 columns'>
-                            <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h4><strong>Coral Island Members</strong></h4></label>
-                        </div>
+            <fieldset>
+            <legend>Booking Summary</legend>
+             <div class="large-4 columns">
+                        <a class="th radius" href="/IRMS-war/images/Harry-Potter.jpg" >
+                            <img src="/IRMS-war/images/Harry-Potter.jpg" width="100" height="100">
+                        </a>
                     </div>
-                    <c:choose>
-                        <c:when test="${member == null}">
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6>Redeem your points and save money now!</h6></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="large-4 columns">                               
-                                    <a href="member" class="small button">Log In</a>
-                                </div>
-                                <div class="large-8 columns">
-                                    <a href="memberRegister" style="color:#4d4d4d"> Not a member?</a>
-                                </div>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6><strong>Welcome back, ${member.memberName}</strong></h6></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6><strong>You have ${member.coin} coins.</strong></h6></label>
-                                </div>
-                            </div>
+                    <div class="large-8 columns">
+                        <h5><strong>${thisShow.showName}</strong></h5>
+                        <p>
+                            ${thisShow.showDescription}
+                            <br>
+                        <h6> <strong> Time Chosen: </strong> </h6> <fmt:formatDate type="both" pattern="dd MMM YYYY hh:mm a"value="${thisSchedule.startDateTime}" />
+                        <br>
+                        <h6><strong>Ticket Chosen: (No. of Tickets Bought/Price)</strong></h6>
+                        <c:forEach items="${totalTickets}" var="ticket" >
+                            <h6>${ticket.showTicketType} : ${ticket.showTicketQuantity} / ${ticket.showTicketPrice}</h6>
+                        </c:forEach>
+                            <p>
+                            <h6><strong>Ticket Total Price: </strong></h6>${ticTotal}
+                            </p>
+                        </p>
+                    </div>
+            </fieldset>
 
-                        </c:otherwise>
-                    </c:choose>
-
-
-                </div>
-        </div>
         <div class ="row">
             <div class="large-7 columns">
                 <div class="panel callout">
