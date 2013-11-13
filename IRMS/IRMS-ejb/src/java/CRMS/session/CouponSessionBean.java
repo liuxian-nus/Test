@@ -111,7 +111,8 @@ public class CouponSessionBean implements CouponSessionBeanRemote {
         CouponTypeEntity ct=coupon.getCouponType();
         double discount=ct.getDiscount();
         System.out.println("price after discount using coupon: "+price*discount);
-        return price*discount;
+      //  return price*discount;
+        return price-discount;
     }
     
     @Override

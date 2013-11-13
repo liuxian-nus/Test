@@ -60,7 +60,8 @@
         couponInfo="You have not used any coupon";
     }
     else{
-        couponInfo="You have used coupon "+coupon.getCouponId()+" to get a "+coupon.getCouponType().getDiscount()+" discount.";
+        couponInfo="You have used coupon "+coupon.getCouponId()+" to get a $"+coupon.getCouponType().getDiscount()+" deduction.";
+        
     }
 %>
 <html>

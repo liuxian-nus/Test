@@ -120,7 +120,7 @@ public class expressPassPurchaseManagedBean {
                 if (couponCodeValid) {
                     System.out.println("valid coupon code");
                     System.out.println("coupon: " + coupon.getStatus());
-                    fee *= coupon.getCouponType().getDiscount();
+                    fee=couponSessionBean.getDiscountPrice(coupon, fee);
                     System.out.println("fee after using coupon: " + fee);
                     coupon.setStatus("Used");
                     coupon.setDepartment("attraction");
@@ -213,7 +213,7 @@ public class expressPassPurchaseManagedBean {
                         if (couponCodeValid) {
                             System.out.println("valid coupon code");
                             System.out.println("coupon: " + coupon.getStatus());
-                            fee *= coupon.getCouponType().getDiscount();
+                            fee=couponSessionBean.getDiscountPrice(coupon, fee);
                             System.out.println("fee after using coupon: " + fee);
                             coupon.setStatus("Used");
                             coupon.setDepartment("attraction");

@@ -375,7 +375,8 @@ public class ATMSServlet extends HttpServlet {
                 System.out.println("quantities size: "+quantities.size());
                 
                 if(coupon!=null){
-                    fee*=coupon.getCouponType().getDiscount();
+                //    fee*=coupon.getCouponType().getDiscount();
+                    fee=couponSessionBean.getDiscountPrice(coupon, fee);
                     System.out.println("fee deducted to "+fee);
                     tpRemarks+="purchase with coupon "+coupon.getCouponId()+"\n";
                 }
@@ -484,7 +485,8 @@ public class ATMSServlet extends HttpServlet {
                     eppurchase.setEpQuantities(epquantities);
                     eppurchase.setEppStatus("In Progress");
                     if(coupon!=null){
-                        epFee*= coupon.getCouponType().getDiscount();
+                     //   epFee-= coupon.getCouponType().getDiscount();
+                        epFee=couponSessionBean.getDiscountPrice(coupon,epFee);
                         System.out.println("epfee deducted to " + epFee);
                         eppurchaseRemarks+="purchase with coupon "+coupon.getCouponId()+"\n";
                     }

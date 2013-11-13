@@ -866,13 +866,13 @@ public class initializationManagedBean implements Serializable {
     public void createCouponType() {
         System.err.println("go to create coupon type page...");
         ct = new CouponTypeEntity();
-        ct.setCouponName("90% discount for attraction/show");
+        ct.setCouponName("S$20 discount for attraction/show");
         ct.setCouponTypeRemarks("coupon generated when hotel reservation fee exceeded SGD$1000");
         Date startDate = new Date(113, 10, 1);
         Date endDate = new Date(115, 10, 1);
         ct.setCpStartDate(startDate);
         ct.setCpEndDate(endDate);
-        ct.setDiscount(0.9);
+        ct.setDiscount(20);
 
         try {
             System.out.println("Creating new coupon type....");
@@ -892,7 +892,7 @@ public class initializationManagedBean implements Serializable {
         coupon = new CouponEntity();
         ct = couponTypeSessionBean.getAllCouponTypes().get(0);
         System.out.println("ct discount " + ct.getDiscount());
-        Date issueDate = new Date(113, 11, 1);
+        Date issueDate = new Date();
         coupon.setCouponIssueDate(issueDate);
         member = memberSessionBean.getMemberByEmail("leijq369@gmail.com");
         coupon.setCouponOwner(member);

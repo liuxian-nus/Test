@@ -31,7 +31,7 @@ public class CouponTypeEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date cpEndDate; //we can also not set date. assume the coupon is always valid
     private String couponTypeRemarks;
-    private double discount; //less than one, for example, 0.9
+    private double discount; //amount that can be deduct
 
     public Long getCouponTypeId() {
         return couponTypeId;

@@ -125,7 +125,7 @@ public class ticketPurchaseManagedBean {
                 if (couponCodeValid) {
                     System.out.println("valid coupon code");
                     System.out.println("coupon: " + coupon.getStatus());
-                    fee *= coupon.getCouponType().getDiscount();
+                    fee=couponSessionBean.getDiscountPrice(coupon, fee);
                     System.out.println("fee after using coupon: " + fee);
                     coupon.setStatus("Used");
                     coupon.setDepartment("attraction");
@@ -232,7 +232,7 @@ public class ticketPurchaseManagedBean {
                         if (couponCodeValid) {
                             System.out.println("valid coupon code");
                             System.out.println("coupon: " + coupon.getStatus());
-                            fee *= coupon.getCouponType().getDiscount();
+                            fee=couponSessionBean.getDiscountPrice(coupon, fee);
                             System.out.println("fee after using coupon: " + fee);
                             coupon.setStatus("Used");
                             coupon.setDepartment("attraction");
@@ -428,6 +428,8 @@ public class ticketPurchaseManagedBean {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Coupon code is good to use", ""));
                 }
                 else if(couponStatus.equals("Used")){
+                    System.out.println("coupon code: "+couponCode);
+                    System.out.println("coupon status: "+coupon.getStatus());
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Coupon code has been used", ""));
                 }
                 else{
