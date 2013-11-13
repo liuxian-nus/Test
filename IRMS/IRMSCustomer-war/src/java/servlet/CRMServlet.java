@@ -5,17 +5,20 @@ package servlet;
  * and open the template in the editor.
  */
 import CRMS.entity.MemberEntity;
+import CRMS.entity.PromotionEntity;
 import CRMS.session.FeedbackSessionBean;
 import CRMS.session.MemberManagementSessionBean;
 import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import CRMS.session.MemberSessionBean;
+import CRMS.session.PromotionSessionBean;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -33,6 +36,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
+    
+    @EJB
+    private PromotionSessionBean promotionSessionBean;
 
     @EJB
     private FeedbackSessionBean feedbackSessionBean;
@@ -42,11 +48,17 @@ public class CRMServlet extends HttpServlet {
     private MemberSessionBean memberSession;
     @EJB
     private IndReservationSessionBeanRemote indReservationSessionBean;
+    
+    
     //private Set<RestaurantEntity> data = null;
     private String message = null;
     private MemberEntity member;
     private MemberEntity data;
     private String data2;
+    private List<PromotionEntity> allPromotions = new ArrayList();
+    private List<PromotionEntity> memberPromotions = new ArrayList();
+    private  String memberEmail=null;
+    
 
     //private String keyword=null;
     /**
@@ -99,9 +111,18 @@ public class CRMServlet extends HttpServlet {
                 request.getRequestDispatcher("/memberFeedbackResult.jsp").forward(request, response);
             } else if ("memberPromotion".equals(page)) {
                 System.out.println("***member promotion page***");
-
+                allPromotions=promotionSessionBean.getAllPromotions();
+                //MemberEntity thisMember=(MemberEntity)session.getAttribute("member");
+                memberEmail=(String)session.getAttribute("memberEmail");
+                if(memberEmail!=null)
+                {
+                memberPromotions=promotionSessionBean.getPromotionByMemberEmail(memberEmail);             
+                }else{
+                request.setAttribute("allPromotions",allPromotions);
+                request.setAttribute("memberPromotions", memberPromotions);
+                }
                 request.getRequestDispatcher("/memberPromotion.jsp").forward(request, response);
-
+                
             } else if ("memberInfo".equals(page)) {
 
 
