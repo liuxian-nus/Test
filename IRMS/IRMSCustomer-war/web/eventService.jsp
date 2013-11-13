@@ -45,7 +45,7 @@
                 $("table").tablesorter({
                     headers: {
                         // assign the secound column (we start counting zero) 
-                        4: {
+                        3: {
                             // disable it by setting the property sorter to false 
                             sorter: false
                         },
@@ -127,26 +127,29 @@
                     <div class="content" data-section-content>
                         <table class="tablesorter">
                             <thead>
-                            <th width="200">Serial Number</td>
-                            <th width="400">Event Service</td>
-                            <th width="200">Unit Price</td>
+                            <th width="200">Serial Number</th>
+                            <th width="200">Event Service</th>
+                            <th width="200">Unit Price</th>
+                            <th width="200"></th>    
                                 </thead>
                             <tbody>
                             
                                 <tr>
                                     <td width="200">001</td>
-                                    <td width="400">Deluxe Package</td>
+                                    <td width="200">Deluxe Package</td>
                                     <td width="200">$13.99/pax ($14.97w/GST)</td>
+                                    <td width="200"> <a class="button" href="cateringBook" >View Menu</a></td>
                                 </tr>
                                 <tr>
                                     <td width="200">002</td>
-                                    <td width="400">Premium Package</td>
+                                    <td width="200">Premium Package</td>
                                     <td width="200">$16.99/pax ($18.18w/GST)</td>
+                                    <td width="200"><a class="button" href="cateringBook" >View Menu</a></td>
                                 </tr>
                             
                             </tbody>
                         </table>
-                        <input type="submit" value ="View Menu" class="small button"/>
+                      
                     </div>
                 </section>                
                               
