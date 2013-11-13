@@ -4,13 +4,17 @@
  */
 package ESMS.managedBean;
 
+import ERMS.session.EmailSessionBean;
 import ESMS.entity.ShowContractEntity;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowTicketSaleEntity;
 import ESMS.session.ShowBillingSessionBean;
 import ESMS.session.ShowContractSessionBean;
 import ESMS.session.ShowSessionBean;
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.DocumentException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -34,6 +38,8 @@ public class ShowBillingManagedBean {
     ShowContractSessionBean showContractSessionBean;
     @EJB
     ShowSessionBean showSessionBean;
+    @EJB
+    EmailSessionBean emailSessionBean;
     private ShowEntity selectedShow;
     private ShowTicketSaleEntity selectedShowTicketSale;
     private ShowContractEntity selectedShowContract;
@@ -41,9 +47,10 @@ public class ShowBillingManagedBean {
     private List<ShowTicketSaleEntity> showTicketSales;
     private Long showId;
     private Double ticketRevenue = 0.0;
-    private Double ticketCommission;
-    private Double bill;
-    private Double rentalFee;
+    private Double ticketCommission = 0.0;
+    private Double bill = 0.0;
+    private Double rentalFee = 0.0;
+    private double deposit = 0.0;
 
     //Constructor
     public ShowBillingManagedBean() {
@@ -65,18 +72,32 @@ public class ShowBillingManagedBean {
         }
         ticketCommission = ticketRevenue * selectedShow.getShowContract().getShowTicketCommission();
         rentalFee = selectedShow.getShowContract().getShowVenueDuration() * selectedShow.getShowContract().getShowVenueRate();
-        bill = ticketCommission + selectedShow.getShowContract().getShowDeposit() - rentalFee;
+        if (selectedShow.getShowContract().getShowDeposit() != null) {
+            deposit = selectedShow.getShowContract().getShowDeposit();
+        }
+        bill = ticketCommission + deposit - rentalFee;
         request.getSession().setAttribute("billedShow", selectedShow);
+        request.getSession().setAttribute("ticketCommission", ticketCommission);
+        request.getSession().setAttribute("rentalFee", rentalFee);
+        request.getSession().setAttribute("ticketRevenue", ticketRevenue);
+        request.getSession().setAttribute("showBill", bill);
     }
 
-    public void oneMore(ActionEvent event) throws IOException {
+    public void oneMore(ActionEvent event) throws IOException, BadElementException, MalformedURLException, DocumentException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         selectedShow = (ShowEntity) request.getSession().getAttribute("billedShow");
+        ticketCommission = (Double) request.getSession().getAttribute("ticketCommission");
+        rentalFee = (Double) request.getSession().getAttribute("rentalFee");
+        ticketRevenue = (Double) request.getSession().getAttribute("ticketRevenue");
+        bill = (Double) request.getSession().getAttribute("showBill");
+        selectedShowContract = selectedShow.getShowContract();
+        System.err.println("contract: " + selectedShowContract.getShowMerchantEmail());
+        emailSessionBean.sendShowContractBill(rentalFee, bill, ticketCommission, ticketRevenue, selectedShowContract);
         selectedShow.setShowPaymentStatus(true);
         System.err.println("Status: " + selectedShow.isShowPaymentStatus());
         showSessionBean.updateShow(selectedShow);
         FacesContext.getCurrentInstance().getExternalContext().redirect("showBilling.xhtml");
-        
+
     }
 
     // Getters and Setters
