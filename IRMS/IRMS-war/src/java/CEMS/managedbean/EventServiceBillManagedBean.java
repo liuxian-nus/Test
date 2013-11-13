@@ -10,7 +10,12 @@ import CEMS.entity.EventServiceBookingEntity;
 import CEMS.session.EventBookingSessionBean;
 import CEMS.session.EventServiceBookingSessionBean;
 import CEMS.session.EventSessionBean;
+import ERMS.session.EmailSessionBean;
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.DocumentException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -18,6 +23,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -33,14 +39,16 @@ public class EventServiceBillManagedBean {
     EventServiceBookingSessionBean eventServiceBookingSessionBean;
     @EJB
     EventBookingSessionBean eventBookingSessionBean;
+    @EJB
+    EmailSessionBean emailSessionBean;
     private EventEntity selectedEvent;
     private EventServiceBookingEntity selectedEventServiceBooking;
     private EventBookingEntity selectedEventBooking;
     private List<EventServiceBookingEntity> eventServiceBooking;
     private List<EventBookingEntity> eventBooking;
-    private double serviceTotalCost=0.0;
-    private double venueRate=0.0;
-    private double finalBill=0.0;
+    private double serviceTotalCost = 0.0;
+    private double venueRate = 0.0;
+    private double finalBill = 0.0;
     private Long id;
 
     /**
@@ -53,6 +61,7 @@ public class EventServiceBillManagedBean {
     }
 
     public void showBill(ActionEvent event) {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         selectedEvent = eventSessionBean.getReservation(id);
         eventServiceBooking = eventServiceBookingSessionBean.getServiceByEventId(id);
         Iterator<EventServiceBookingEntity> itr = eventServiceBooking.iterator();
@@ -66,13 +75,22 @@ public class EventServiceBillManagedBean {
             selectedEventBooking = itr2.next();
             venueRate += selectedEventBooking.getVenueRate();
         }
-        finalBill = selectedEvent.getDeposit()-serviceTotalCost-venueRate;
-    }
-    
-     public void oneMore(ActionEvent event) throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("eventServiceBill.xhtml");
+        finalBill = selectedEvent.getDeposit() - serviceTotalCost - venueRate;
+        request.getSession().setAttribute("selectedEvent", selectedEvent);
+        request.getSession().setAttribute("venueRate", venueRate);
+        request.getSession().setAttribute("serviceTotalCost", serviceTotalCost);
+        request.getSession().setAttribute("eventBill", finalBill);
     }
 
+    public void oneMore(ActionEvent event) throws IOException, FileNotFoundException, MalformedURLException, BadElementException, DocumentException {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        selectedEvent = (EventEntity) request.getSession().getAttribute("selectedEvent");
+        venueRate = (Double) request.getSession().getAttribute("venueRate");
+        serviceTotalCost = (Double) request.getSession().getAttribute("serviceTotalCost");
+        finalBill = (Double) request.getSession().getAttribute("eventBill");
+        emailSessionBean.sendEventContractBill(serviceTotalCost, venueRate, finalBill, selectedEvent);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("eventServiceBill.xhtml");
+    }
 
     public Long getId() {
         return id;
