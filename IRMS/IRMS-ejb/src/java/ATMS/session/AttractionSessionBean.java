@@ -45,7 +45,11 @@ public class AttractionSessionBean {
     }
     
     public AttractionEntity getAttrById(String id){
-        return em.find(AttractionEntity.class,id);
+        if(id==null){
+            System.out.println("attrId not entered");
+            return null;
+        }
+        else return em.find(AttractionEntity.class,id);       
     }
     
     public void updateAttraction(AttractionEntity attr){

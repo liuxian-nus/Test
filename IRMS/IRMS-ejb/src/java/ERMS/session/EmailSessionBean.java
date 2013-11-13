@@ -743,7 +743,14 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAddress));
-            String attrName = eppe.getAttrEPs().get(0).getAttr().getAttrName();
+            String attrName="";
+            if(eppe.getAttrEPs().get(0).getAttr()!=null){
+                attrName = eppe.getAttrEPs().get(0).getAttr().getAttrName();
+            }
+            else {
+                attrName="All Attraction";
+            }
+            
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String dateString = sdf.format(eppe.getEpBookDate());
             message.setSubject("Your express pass from Coral Island Resort: " +attrName+" "+ eppe.getEppId());
@@ -1311,11 +1318,22 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
         //below add table contents
         table.addCell("Attraction");
-        if (!eppe.getAttrEPs().isEmpty()) {
+        if(eppe.getAttrEPs().get(0).getAttr()==null){
+            System.out.println("ep for vip");
+            table.addCell("All Attraction");
+        }else{
             table.addCell(eppe.getAttrEPs().get(0).getAttr().getAttrName());
-        } else {
-            table.addCell("Attraction Not Assigned Yet!");
         }
+        
+   /*     if (!eppe.getAttrEPs().isEmpty()) {
+            table.addCell(eppe.getAttrEPs().get(0).getAttr().getAttrName());
+        }else if(eppe.getAttrEPs().get(0).getAttr()==null) {
+            System.out.println("ep for vip");
+            table.addCell("All Attraction");
+        }
+        else {
+            table.addCell("Attraction Not Assigned Yet!");
+        }*/
 
         if (!eppe.getAttrEPs().isEmpty()) {
             Iterator<AttrExpressPassEntity> itr = eppe.getAttrEPs().iterator();
@@ -1353,6 +1371,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
         return OUTPUTFILE;
     }
+    
+    
     
     public void createFeedbackReply(FeedbackEntity feedback, String content) {
         Properties props = new Properties();

@@ -33,7 +33,34 @@
                 var newMin = new Date(minDate.setDate(minDate.getDate() + 1));            
                 }
                 });
-                });            
+                });   
+                 $(document).ready(function() {
+                $("#datepicker2").datepicker({
+                 minDate:0,
+                onClose: function(selectedDate) {
+                var minDate = $(this).datepicker('getDate');
+                var newMin = new Date(minDate.setDate(minDate.getDate() + 1));            
+                }
+                });
+                }); 
+                 $(document).ready(function() {
+                $("#datepicker3").datepicker({
+                 minDate:0,
+                onClose: function(selectedDate) {
+                var minDate = $(this).datepicker('getDate');
+                var newMin = new Date(minDate.setDate(minDate.getDate() + 1));            
+                }
+                });
+                });
+                 $(document).ready(function() {
+                $("#datepicker4").datepicker({
+                 minDate:0,
+                onClose: function(selectedDate) {
+                var minDate = $(this).datepicker('getDate');
+                var newMin = new Date(minDate.setDate(minDate.getDate() + 1));            
+                }
+                });
+                }); 
         </script>
     </head>
     <body>
@@ -437,7 +464,7 @@
                                 
                                 
                                 <p></p>
-                            <div class="row">
+                        <!--    <div class="row">
                                 <div class="large-3 columns">
                                     <label for="right-label" class="left-align,inline"><strong>Date</strong></label>
                                 </div>
@@ -500,6 +527,17 @@
                                 </div>
                             </div>
                                 
+                                <p></p>-->
+                               <div class="row">
+                                    <div class="large-3 columns">
+                                        <label for="customDropdown"><strong>Date</strong></label>
+                                    </div>
+                                    <div class="large-3 columns">
+                                        <input type="text" id="datepicker1" name="date" />
+                                    </div>
+                                    <div class="large-6 columns">                   
+                                    </div>
+                                </div>
                                 <p></p>
                                 <div class="row">
                                     <div class="large-3 large columns">
@@ -510,16 +548,7 @@
                                     </div>
                                     <div class="large-6 large columns"><p>${message}</p></div>
                                 </div>
-                                <div class="row">
-                                    <div class="large-3 columns">
-                                        <label for="customDropdown"><strong>Date</strong></label>
-                                    </div>
-                                    <div class="large-3 columns">
-                                        <input type="text" id="datepicker1" name="date" />
-                                    </div>
-                                    <div class="large-6 columns">                   
-                                    </div>
-                                </div>
+                                
                              
                                  <input type="hidden" name="attrId" value="OT"/>
                                  <div class="row">
@@ -911,72 +940,18 @@
                                         <option value="10">10</option>
                                     </select>
                                     </div>
-                                </div>
-                                
-                                
+                                </div>                             
                                 <p></p>
-                             <div class="row">
-                                <div class="large-3 columns">
-                                    <label for="right-label" class="left-align,inline"><strong>Date</strong></label>
+                               <div class="row">
+                                    <div class="large-3 columns">
+                                        <label for="customDropdown"><strong>Date</strong></label>
+                                    </div>
+                                    <div class="large-3 columns">
+                                        <input type="text" id="datepicker2" name="date" />
+                                    </div>
+                                    <div class="large-6 columns">                   
+                                    </div>
                                 </div>
-                                <div class="large-3 large columns">
-                                    <select required name="dateDay" id="customDropdown">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
-                                        <option value="24">24</option>
-                                        <option value="25">25</option>
-                                        <option value="26">26</option>
-                                        <option value="27">27</option>
-                                        <option value="28">28</option>
-                                        <option value="29">29</option>
-                                        <option value="30">30</option>
-                                        <option value="31">31</option>
-                                    </select>                   
-                                </div>
-                                <div class="small-3 columns">
-                                    <select required name="dateMonth" id="button dropdown">
-                                        <option value="1">Jan</option>
-                                        <option value="2">Feb</option>
-                                        <option value="3">Mar</option>
-                                        <option value="4">Apr</option>
-                                        <option value="5">May</option>
-                                        <option value="6">Jun</option>
-                                        <option value="7">Jul</option>
-                                        <option value="8">Aug</option>
-                                        <option value="9">Sep</option>
-                                        <option value="10">Oct</option>
-                                        <option value="11">Nov</option>
-                                        <option value="12">Dec</option>
-                                    </select>
-                                </div>
-                                <div class="small-3 columns">
-                                    <select required name="dateYear" id="customDropdown">
-                                        <option value="2013">2013</option>
-                                        <option value="2013">2014</option>
-                                    </select>
-                                </div>
-                            </div>
                                 <p></p>
                                 <div class="row">
                                     <div class="large-3 large columns">
@@ -990,9 +965,15 @@
                              
                              
                              <input type="hidden" name="attrId" value="IT"/>
-                             <input type="hidden" name="epq1" value="0"/>
+<!--                             <input type="hidden" name="epq1" value="0"/>
                              <input type="hidden" name="epq2" value="0"/>
                              <input type="hidden" name="epq3" value="0"/>
+                             <input type="hidden" name="epq4" value="0"/>
+                             <input type="hidden" name="epq5" value="0"/>
+                             <input type="hidden" name="epq6" value="0"/>
+                             <input type="hidden" name="epq7" value="0"/>
+                             <input type="hidden" name="epq8" value="0"/>
+                             <input type="hidden" name="epq9" value="0"/>-->
                                  <div class="row">
                                      <input type="submit" class="small button" value="Submit">
                                  </div>
@@ -1143,67 +1124,25 @@
                          </div>
                             <p></p>
                          <div class="row">
-                                <div class="large-3 columns">
-                                    <label for="right-label" class="left-align,inline"><strong>Date</strong></label>
+                                    <div class="large-3 columns">
+                                        <label for="customDropdown"><strong>Date</strong></label>
+                                    </div>
+                                    <div class="large-3 columns">
+                                        <input type="text" id="datepicker3" name="date" />
+                                    </div>
+                                    <div class="large-6 columns">                   
+                                    </div>
                                 </div>
-                                <div class="large-3 large columns">
-                                    <select required name="dateDay" id="customDropdown">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
-                                        <option value="24">24</option>
-                                        <option value="25">25</option>
-                                        <option value="26">26</option>
-                                        <option value="27">27</option>
-                                        <option value="28">28</option>
-                                        <option value="29">29</option>
-                                        <option value="30">30</option>
-                                        <option value="31">31</option>
-                                    </select>                   
+                                <p></p>
+                                <div class="row">
+                                    <div class="large-3 large columns">
+                                        <label for="right-label" class="left-align,inline"><strong>Coupon Code</strong></label>
+                                    </div>
+                                    <div class="large-3 large columns">
+                                        <input type="text" value="0" placeholder="Coupon Code" name="couponId">
+                                    </div>
+                                    <div class="large-6 large columns"><p>${message}</p></div>
                                 </div>
-                                <div class="small-3 columns">
-                                    <select required name="dateMonth" id="button dropdown">
-                                        <option value="1">Jan</option>
-                                        <option value="2">Feb</option>
-                                        <option value="3">Mar</option>
-                                        <option value="4">Apr</option>
-                                        <option value="5">May</option>
-                                        <option value="6">Jun</option>
-                                        <option value="7">Jul</option>
-                                        <option value="8">Aug</option>
-                                        <option value="9">Sep</option>
-                                        <option value="10">Oct</option>
-                                        <option value="11">Nov</option>
-                                        <option value="12">Dec</option>
-                                    </select>
-                                </div>
-                                <div class="small-3 columns">
-                                    <select required name="dateYear" id="customDropdown">
-                                        <option value="2013">2013</option>
-                                        <option value="2013">2014</option>
-                                    </select>
-                                </div>
-                            </div>
                             <input type="hidden" name="attrId" value="MU"/>
                             <input type="hidden" name="quantity7" value="0"/>
                             <input type="hidden" name="quantity8" value="0"/>
@@ -1368,67 +1307,25 @@
                          </div>
                             <p></p>
                          <div class="row">
-                                <div class="large-3 columns">
-                                    <label for="right-label" class="left-align,inline"><strong>Date</strong></label>
+                                    <div class="large-3 columns">
+                                        <label for="customDropdown"><strong>Date</strong></label>
+                                    </div>
+                                    <div class="large-3 columns">
+                                        <input type="text" id="datepicker4" name="date" />
+                                    </div>
+                                    <div class="large-6 columns">                   
+                                    </div>
                                 </div>
-                                <div class="large-3 large columns">
-                                    <select required name="dateDay" id="customDropdown">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
-                                        <option value="24">24</option>
-                                        <option value="25">25</option>
-                                        <option value="26">26</option>
-                                        <option value="27">27</option>
-                                        <option value="28">28</option>
-                                        <option value="29">29</option>
-                                        <option value="30">30</option>
-                                        <option value="31">31</option>
-                                    </select>                   
+                                <p></p>
+                                <div class="row">
+                                    <div class="large-3 large columns">
+                                        <label for="right-label" class="left-align,inline"><strong>Coupon Code</strong></label>
+                                    </div>
+                                    <div class="large-3 large columns">
+                                        <input type="text" value="0" placeholder="Coupon Code" name="couponId">
+                                    </div>
+                                    <div class="large-6 large columns"><p>${message}</p></div>
                                 </div>
-                                <div class="small-3 columns">
-                                    <select required name="dateMonth" id="button dropdown">
-                                        <option value="1">Jan</option>
-                                        <option value="2">Feb</option>
-                                        <option value="3">Mar</option>
-                                        <option value="4">Apr</option>
-                                        <option value="5">May</option>
-                                        <option value="6">Jun</option>
-                                        <option value="7">Jul</option>
-                                        <option value="8">Aug</option>
-                                        <option value="9">Sep</option>
-                                        <option value="10">Oct</option>
-                                        <option value="11">Nov</option>
-                                        <option value="12">Dec</option>
-                                    </select>
-                                </div>
-                                <div class="small-3 columns">
-                                    <select required name="dateYear" id="customDropdown">
-                                        <option value="2013">2013</option>
-                                        <option value="2013">2014</option>
-                                    </select>
-                                </div>
-                            </div>
                             <input type="hidden" name="attrId" value="AQ"/>
                             <input type="hidden" name="quantity7" value="0"/>
                             <input type="hidden" name="quantity8" value="0"/>
@@ -1436,6 +1333,12 @@
                              <input type="hidden" name="epq1" value="0"/>
                              <input type="hidden" name="epq2" value="0"/>
                              <input type="hidden" name="epq3" value="0"/>
+                             <input type="hidden" name="epq4" value="0"/>
+                             <input type="hidden" name="epq5" value="0"/>
+                             <input type="hidden" name="epq6" value="0"/>
+                             <input type="hidden" name="epq7" value="0"/>
+                             <input type="hidden" name="epq8" value="0"/>
+                             <input type="hidden" name="epq9" value="0"/>
                              <div class="row">
                                  <input type="submit" class="small button" value="Submit">
                              </div>

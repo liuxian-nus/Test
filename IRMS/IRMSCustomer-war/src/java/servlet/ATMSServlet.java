@@ -550,6 +550,7 @@ public class ATMSServlet extends HttpServlet {
                 }
                 if(member!=null){
                     System.out.println("is member");
+                    session.setAttribute("member",member);
                     if(coinPay){
                         enoughCoin=memberTransactionSessionBean.checkCoinAmount(member,totalPrice);
                         if(!enoughCoin){
@@ -601,9 +602,10 @@ public class ATMSServlet extends HttpServlet {
                 ticketPurchaseSessionBean.updateTicketPurchase(tp); 
                 System.out.println("tp status updated");
                 if(coupon!=null){
-                    coupon.setDepartment("attraction");
-                    coupon.setStatus("Used");
-                    couponSessionBean.updateCoupon(coupon);
+                    couponSessionBean.useCoupon(coupon, today, "attraction");
+//                    coupon.setDepartment("attraction");
+//                    coupon.setStatus("Used");
+//                    couponSessionBean.updateCoupon(coupon);
                     System.out.println("coupon updated");
                 }
                 if(hasEPPurchase){
@@ -628,6 +630,15 @@ public class ATMSServlet extends HttpServlet {
                     System.out.println("start send email for eppurchase");
                     emailSessionBean.emailAttractionTicketExpress(email,eppurchase);
                     System.out.println("email sent for eppurchase");
+                }
+                
+                if(member.isVIP()){
+                    System.out.println("member is VIP");
+                    eppurchase=expressPassPurchaseSessionBean.prepareEPForVIP();
+                    generateBarcodeSessionBean.generate(String.valueOf(eppurchase.getEppId()));
+                    emailSessionBean.emailAttractionTicketExpress(email,eppurchase);
+                    System.out.println("upgraded express pass sent");
+                    
                 }
                            
                 request.getRequestDispatcher("/attrTicketBookingConfirmation.jsp").forward(request, response);

@@ -128,7 +128,7 @@ public class TicketPurchaseSessionBean {
     public boolean checkTicketValidity(String tpIdString){
         System.out.println("ticketPurchaseSessionBean : checkTicketValidity");
         System.out.println("idString: "+tpIdString);
-        Long id=dropDummyZero(tpIdString);
+        Long id=dropDummyZeroAndLastDigit(tpIdString);
         tp=em.find(TicketPurchaseEntity.class, id);
         if(tp==null){
             System.out.println("ticket doesn't exist");
@@ -142,10 +142,13 @@ public class TicketPurchaseSessionBean {
         }
     }
     
-    public Long dropDummyZero(String tpIdString){
+    public Long dropDummyZeroAndLastDigit(String tpIdString){
         System.out.println("ticketPurchaseSessionBean : dropDummyZero");
+        tpIdString=tpIdString.substring(1,7);
+        System.out.println("tpIdString: "+tpIdString);
         Long tpId=Long.valueOf(tpIdString);
         System.out.println("tpId: "+tpId);
+        
         return tpId;    
     }
     

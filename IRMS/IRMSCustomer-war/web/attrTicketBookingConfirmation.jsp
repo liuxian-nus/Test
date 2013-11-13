@@ -4,6 +4,7 @@
     Author     : Jieqiong
 --%>
 
+<%@page import="CRMS.entity.MemberEntity"%>
 <%@page import="CRMS.entity.CouponEntity"%>
 <%@page import="CRMS.session.GenerateBarcodeSessionBean"%>
 <%@page import="ATMS.entity.TicketPurchaseEntity"%>
@@ -22,6 +23,11 @@
     String couponInfo="";
     if(coupon!=null){
         couponInfo+="You have used the coupon "+coupon.getCouponId()+" to make the purchase";
+    }
+    MemberEntity member=(MemberEntity)session.getAttribute("member");
+    String memberInfo="";
+    if(member.isVIP()){
+        memberInfo="As our VIP, a one-day express pass has been sent to you. It can be used in any attraction.";
     }
     
 %>
@@ -47,7 +53,11 @@
             <h6>The ticket information has been sent to your email.</h6>
             <h6>Thanks for purchasing ticket at <%=attr.getAttrName()%> in Coral Island Resort.</h6>
             <br>
-            <h6><%=couponInfo%></h6>    
+            <h6><%=couponInfo%></h6> 
+        <!--    <c:if test="${member.isVIP()}">
+                <h6>As our VIP, a one-day express pass has been sent to you. It can be used in any attraction.</h6>
+            </c:if>-->
+            <h6><%=memberInfo%></h6>
         </div>
                                 
         <jsp:include page="footer.jsp"></jsp:include>
