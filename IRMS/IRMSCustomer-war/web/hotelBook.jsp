@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <c:choose>
-                        <c:when test="${member.membername == null}">
+                        <c:when test="${member == null}">
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6>Redeem your points and save money now!</h6></label>
@@ -103,7 +103,7 @@
                         <c:otherwise>
                             <div class="row">
                                 <div class="large-12 columns">
-                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6><strong>Welcome back, ${member.membername}</strong></h6></label>
+                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6><strong>Welcome back, ${member.memberName}</strong></h6></label>
                                 </div>
                             </div>
                             <div class="row">
@@ -112,12 +112,6 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="large-4 columns">                               
-                                    <a href="member" class="small button">Pay with your coins.</a>
-                                </div>
-
-                            </div>
                         </c:otherwise>
                     </c:choose>
 
@@ -453,69 +447,73 @@
 
 
                             <div class="row">
-                                <div class="small-2 small-offset-9 columns">
-                                    <input type="submit" class="small button secondary" class="center-align" value="Continue">
+                                <div class="large-12 columns"> 
+                                    <input type="submit" class="small button secondary" name="paymentMethod"value="Continue with Payment">
+                                    <c:if test="${member != null}">
+                                        <input type="submit" class="small button secondary" name="paymentMethod"value="Pay with my coins">
+                                    </c:if>
+                                </div>   
+                            </div>
+
+                            <div class="row">
+                                <div class="large-12 columns">
+                                <p>${redeemMessage}</p>
+                                </div>
+                            </div>
+                            </div>
+                        </fieldset>
+                    </form>                     
+                </div>
+
+                <div class="large-5 columns">
+                    <div class="panel">
+                        <fieldset>
+                            <legend style="color:#4d4d4d">Booking Summary</legend>
+                            <p>${message}</p>
+                            <div class="row">
+                                <div class="large-7 columns">
+                                    <label for="right-label" class="left-align,inline"><h6>Rate: </h6></label>
+                                </div>
+                                <div class="large-5 columns">
+                                    <label for="right-label" class="right-align,inline"><strong>${roomPrice}</strong></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="large-7 columns">
+                                    <label for="right-label" class="left-align,inline"><h6>Number of nights:</h6></label>
+                                </div>
+                                <div class="large-5 columns">
+                                    <label for="right-label" class="right-align,inline"><strong>${data.reservationRoomCount}</strong></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="large-7 columns">
+                                    <label for="right-label" class="left-align,inline"><h6>Total:</h6></label>
+                                </div>
+                                <div class="large-5 columns">
+                                    <label for="right-label" class="right-align,inline"><strong>${totalPrice}</strong></label>
                                 </div>
                             </div>
 
 
-                        </fieldset>
-                    </form>                     
+                    </div>
+                    </fieldset>
+                    <br><br>
+
                 </div>
             </div>
 
 
 
+            <jsp:include page="footer.jsp"></jsp:include>
+            <script>
+                document.write('<script src=' +
+                        ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
+                        '.js><\/script>')
+            </script> 
 
-            <div class="large-5 columns">
-                <div class="panel">
-                    <fieldset>
-                        <legend style="color:#4d4d4d">Booking Summary</legend>
-                        <p>${message}</p>
-                        <div class="row">
-                            <div class="large-7 columns">
-                                <label for="right-label" class="left-align,inline"><h6>Rate: </h6></label>
-                            </div>
-                            <div class="large-5 columns">
-                                <label for="right-label" class="right-align,inline"><strong>${roomPrice}</strong></label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="large-7 columns">
-                                <label for="right-label" class="left-align,inline"><h6>Number of nights:</h6></label>
-                            </div>
-                            <div class="large-5 columns">
-                                <label for="right-label" class="right-align,inline"><strong>${data.reservationRoomCount}</strong></label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="large-7 columns">
-                                <label for="right-label" class="left-align,inline"><h6>Total:</h6></label>
-                            </div>
-                            <div class="large-5 columns">
-                                <label for="right-label" class="right-align,inline"><strong>${totalPrice}</strong></label>
-                            </div>
-                        </div>
-
-
-                </div>
-                </fieldset>
-                <br><br>
-
-            </div>
-        </div>
-    </div>
-
-
-    <jsp:include page="footer.jsp"></jsp:include>
-    <script>
-        document.write('<script src=' +
-                ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
-                '.js><\/script>')
-    </script> 
-
-    <script>
-        $(document).foundation();
-    </script>
-</body>
+            <script>
+                $(document).foundation();
+            </script>
+    </body>
 </html>
