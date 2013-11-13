@@ -66,6 +66,7 @@ public class ShowTicketingManagedBean {
     private int showTicketQuota;// number of tickets bought
     private boolean isMember;
     private MemberTransactionEntity memberTransaction;
+    private MemberEntity member;
 
     //Constructor
     public ShowTicketingManagedBean() {
@@ -220,6 +221,79 @@ public class ShowTicketingManagedBean {
             FacesContext.getCurrentInstance().getExternalContext().redirect("showTicketingBuy.xhtml");
 
         }
+    }
+
+    public void buyTicketWithCoins() throws IOException {
+        //email from page
+        String email1 = memberTransaction.getMemberEmail();
+        //email from database
+        String email2 = null;
+
+        //email cannot be empty
+        if (email1 == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Please enter member email.", ""));
+            return;
+        }
+
+        //email validation
+        if (email1 != null) {
+            MemberEntity me = memberSessionBean.getMemberByEmail(email1);
+            if (me != null) {
+                email2 = me.getMemberEmail();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Invalid member email.", ""));
+                return;
+            }
+        }
+
+        selectedShow = showSessionBean.getShowById(showId);
+        selectedShowSchedule = showScheduleSessionBean.getShowScheduleById(showScheduleId);
+        selectedShowTicket = showTicketSessionBean.getShowTicketById(showTicketId);
+
+        if (showTicketQuota > selectedShowTicket.getShowTicketQuota()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Not enough tickets.", ""));
+        } else {
+
+            System.out.println("selectedShow: " + selectedShow.getShowName());
+
+            selectedShowTicketSale.setShow(selectedShow);
+            selectedShowTicketSale.setShowStartDateTime(selectedShowSchedule.getStartDateTime());
+            selectedShowTicketSale.setShowTicketType(selectedShowTicket.getShowTicketType());
+            selectedShowTicketSale.setShowTicketQuantity(showTicketQuota);
+            selectedShowTicketSale.setShowTicketPrice(selectedShowTicket.getShowTicketPrice());
+
+            if (email2 != null) {
+                selectedShowTicketSale.setMemberEmail(email2);
+                member = memberSessionBean.getMemberByEmail(email2);
+            }
+
+            if (member.getCoin() > selectedShowTicket.getShowTicketPrice()) {
+
+                showTicketSessionBean.updateQuantity(showTicketId, showTicketQuota);
+                member.setCoin(member.getCoin() - selectedShowTicket.getShowTicketPrice());
+                memberSessionBean.updateMember(member);
+                showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
+
+                if (memberTransaction.getMemberEmail() != null) {
+                    Date dt = new Date();
+                    System.err.println("Date today: " + dt);
+                    memberTransaction.setMtDate(dt);
+                    memberTransaction.setMtDepartment("Entertainment Show");
+                    memberTransaction.setMtAmount(selectedShowTicket.getShowTicketPrice() * showTicketQuota);
+                    System.err.println("Transaction Amt: " + selectedShowTicket.getShowTicketPrice() * showTicketQuota);
+                    memberTransaction.setMtMode(false);
+                    memberTransaction.setPaymentStatus(false);
+                    memberTransactionSessionBean.addMemberTransaction(memberTransaction);
+                }
+
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful.", ""));
+                FacesContext.getCurrentInstance().getExternalContext().redirect("showTicketingBuy.xhtml");
+
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Not enough coins.", ""));
+            }
+        }
+
     }
 
     public void changeMode() {
