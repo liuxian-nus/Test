@@ -173,10 +173,11 @@ public class ReservationManagedBean implements Serializable {
 
     public void viewReservation(ActionEvent event) throws IOException, ExistException {
 
-        System.out.println("NO6 we are in searchByName function " + selectReservation.getReservationId());
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
+//            selectReservation = (ReservationEntity) request.getSession().getAttribute("viewReservation");
+            System.out.println("NO6 we are in searchByName function " + selectReservation.getReservationId());
 
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
             System.out.println("we are after setting parameter");

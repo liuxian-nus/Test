@@ -63,7 +63,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         for (Object o : q.getResultList()) {
             ReservationEntity re = (ReservationEntity) o;
             System.out.println("current" + currentDate.getDate());
-            System.out.println("checkinDate" + re.getRcCheckInDate().getDate());
+//            System.out.println("checkinDate" + re.getRcCheckInDate().getDate());
             if (re.getRcCheckInDate().getDate() == currentDate.getDate()) {
                 reservationList.add(re);
             }

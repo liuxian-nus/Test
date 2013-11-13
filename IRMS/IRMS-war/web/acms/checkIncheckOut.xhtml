@@ -47,16 +47,6 @@
                         </h:panelGrid> 
                     </p:fieldset>
                 </h:form>
-                <h:form id="formCheckIn4">
-                    <p:growl id="growl" showDetail="true" sticky="true" />  
-                    <p:fieldset legend="Search Reservation By Date" toggleable="true" toggleSpeed="500" collapsed="true"> 
-                        <h:panelGrid columns="3" cellpadding="10">  
-                            <p:commandButton  value="Show today's researvations" ajax="true" actionListener="#{reservationManagedBean.getTodayReservations}" update ="growl"/>
-                            <p:commandButton  value="Show past researvations" ajax="true" actionListener="#{reservationManagedBean.getBeforeReservations}" update ="growl"/>
-                            <p:commandButton  value="Show all researvations" ajax="true" actionListener="#{reservationManagedBean.getAllReservations}" update ="growl"/>
-                        </h:panelGrid> 
-                    </p:fieldset>
-                </h:form>
             </p:tab>  
 
             <!-- check out tab starts!! -->
@@ -178,11 +168,11 @@
                                     </p:column>
 
                                     <p:column style="width:100px">  
-                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'Canceled' and reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
-                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'Canceled'and reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
@@ -243,11 +233,11 @@
                                     </p:column>
 
                                     <p:column style="width:100px">  
-                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'Canceled' and reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
-                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation2.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'Canceled' and reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation2.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
                                             <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                         </p:commandButton>
 
