@@ -199,6 +199,10 @@ public class IRMSFilter implements Filter {
             if (path.contains("accountManagement")) {
                 return true;
             }
+        } else if (userType.contains("SuperUser")) {
+            if (path.contains("")) {
+                return true;
+            }
         } else if (userType.contains("ACMSAdmin")) {
             if (path.contains("acms")) {
                 return true;
@@ -206,36 +210,36 @@ public class IRMSFilter implements Filter {
         } else if (userType.contains("ACMSFrontDesk")) {
             if (path.contains("acms/ReservationSearchResult")) {
                 return true;
-            }else if (path.contains("acms/RoomSearchResult")) {
+            } else if (path.contains("acms/RoomSearchResult")) {
                 return true;
-            }else if (path.contains("acms/checkIncheckOut")) {
+            } else if (path.contains("acms/checkIncheckOut")) {
                 return true;
-            }else if (path.contains("acms/listAllRooms")) {
+            } else if (path.contains("acms/listAllRooms")) {
                 return true;
-            }else if (path.contains("acms/listReservations")) {
+            } else if (path.contains("acms/listReservations")) {
                 return true;
-            }else if (path.contains("acms/logBook")) {
+            } else if (path.contains("acms/logBook")) {
                 return true;
             }
         } else if (userType.contains("ACMSRoomService")) {
             if (path.contains("acms/RoomService")) {
                 return true;
-            }else if (path.contains("acms/logBook")) {
+            } else if (path.contains("acms/logBook")) {
                 return true;
             }
-        }else if (userType.contains("ACMSManager")) {
+        } else if (userType.contains("ACMSManager")) {
             if (path.contains("acms/overbookingManagement")) {
                 return true;
-            }else if (path.contains("acms/logBook")) {
+            } else if (path.contains("acms/logBook")) {
                 return true;
-            }else if (path.contains("acms/listAllRoomPrices")) {
+            } else if (path.contains("acms/listAllRoomPrices")) {
                 return true;
-            }else if (path.contains("acms/listReservations")) {
+            } else if (path.contains("acms/listReservations")) {
                 return true;
-            }else if (path.contains("acms/RoomManagement")) {
+            } else if (path.contains("acms/RoomManagement")) {
                 return true;
             }
-        }else if (userType.contains("FBMSAdmin")) {
+        } else if (userType.contains("FBMSAdmin")) {
             if (path.contains("fbms")) {
                 return true;
             }

@@ -179,6 +179,36 @@ public class initializationManagedBean implements Serializable {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+    
+    public void createSuperUser() {
+        System.out.println("go to create super user");
+        role = new RoleEntity();
+        role.setRoleId(00);
+        role.setRoleName("SuperUser");
+        System.out.println("Create role :" + role.getRoleName());
+
+        employee = new EmployeeEntity();
+        employee.setEmployeeId("00000"); //business assumption: maximum employee number 9999
+        employee.setEmployeeName("SuperUser");
+        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("00000"));
+        System.out.println("finished hashing");
+        employee.addRole(role);
+        employee.setIsFirstTimeLogin(false);
+        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+
+        try {
+            System.out.println("Saving Super User....");
+
+            employeeSessionBean.addEmployee(employee);
+            System.out.println("Super User saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
+            return;
+        }
+        System.out.println("Insert Employee into database");
+
+        addMessage("Super User Created!");
+    }
 
     public void createSuperAdmin() {
         System.out.println("go to create super admin");
@@ -1812,6 +1842,7 @@ public class initializationManagedBean implements Serializable {
     }
 
     public void initialize() throws ExistException {
+        createSuperUser();
         createESMSFront();
         createCEMSEvent();
         createEvent();
