@@ -46,19 +46,21 @@ public class OutletEntity implements Serializable {
     private int outletLevel;
     private int outletNo;
     private double outletArea;
-    
     @OneToMany(mappedBy = "outlet")
     private List<OutletTransactionEntity> outletTransaction = new ArrayList<OutletTransactionEntity>();
-    @OneToOne(mappedBy="outlet")
+    @OneToOne(mappedBy = "outlet")
     private ContractEntity contract;
+    @OneToMany(mappedBy = "outlet")
+    private List<SMItemEntity> item = new ArrayList<SMItemEntity>();
 
-    public OutletEntity(){}
-    
-     public void addTransaction(OutletTransactionEntity otransaction) {
+    public OutletEntity() {
+    }
+
+    public void addTransaction(OutletTransactionEntity otransaction) {
         this.outletTransaction.add(otransaction);
         System.out.println("OutletEntity-->new transaction added:" + this.outletTransaction.size());
     }
-    
+
     public ContractEntity getContract() {
         return contract;
     }
@@ -66,7 +68,6 @@ public class OutletEntity implements Serializable {
     public void setContract(ContractEntity contract) {
         this.contract = contract;
     }
-    
 
     public String getOutletName() {
         return outletName;
@@ -75,7 +76,6 @@ public class OutletEntity implements Serializable {
     public void setOutletName(String outletName) {
         this.outletName = outletName;
     }
-
 
     public List<OutletTransactionEntity> getOutletTransaction() {
         return outletTransaction;
@@ -163,6 +163,14 @@ public class OutletEntity implements Serializable {
 
     public void setId(int OutletId) {
         this.outletId = OutletId;
+    }
+
+    public List<SMItemEntity> getItem() {
+        return item;
+    }
+
+    public void setItem(List<SMItemEntity> item) {
+        this.item = item;
     }
 
 

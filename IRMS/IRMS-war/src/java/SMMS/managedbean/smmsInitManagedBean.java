@@ -22,8 +22,10 @@ import SMMS.session.OutletSessionBean;
 import SMMS.session.OutletTransactionSessionBean;
 import SMMS.session.SMItemSessionBean;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -38,9 +40,9 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @ViewScoped
 public class smmsInitManagedBean implements Serializable {
+
     @EJB
     private SMItemSessionBean sMItemSessionBean;
-
     @EJB
     private MerchantBillSessionBean merchantBillSessionBean;
     @EJB
@@ -322,8 +324,8 @@ public class smmsInitManagedBean implements Serializable {
             merchantSessionBean.addContractInMerchant(contract3.getContractId(), merchant3.getMerchantEmail());
 
             outlet3.setContract(contract3);
-            outlet3.setOutletType("Watches");
-            outlet3.setOutletName("Cartier");
+            outlet3.setOutletType("Handbags Shoes and Accessories");
+            outlet3.setOutletName("Pull and Bear");
             outlet3.setOutletStatus("unavailable");
             outletSessionBean.updateOutlet(outlet3);
             System.err.println("start adding bill lalalallalala!!!!!!!!!!");
@@ -374,8 +376,8 @@ public class smmsInitManagedBean implements Serializable {
     public void createTransaction() throws ExistException {
         System.out.println("go to create outlet transaction page...");
         Date date1 = new Date(2013, 6, 1);
-        date1.setYear(date1.getYear()-1990);
-        
+        date1.setYear(date1.getYear() - 1990);
+
         Date date2 = new Date(2013, 2, 1);
         Date date3 = new Date(2013, 1, 1);
         Date date4 = new Date(2013, 6, 11);
@@ -493,34 +495,74 @@ public class smmsInitManagedBean implements Serializable {
 
         addMessage("Transaction1! Created!");
     }
-    
-    public void createItem()
-    {
-        
+
+    public void createItem() throws ExistException {
+        OutletEntity outleta = outletSessionBean.getOutletById(217);
+        OutletEntity outlet2 = outletSessionBean.getOutletById(516);
+        List<SMItemEntity> items1 = new ArrayList<SMItemEntity>();
+        List<SMItemEntity> items2 = new ArrayList<SMItemEntity>();
+
         SMItemEntity item = new SMItemEntity();
         item.setItemName("Coke Zero");
         item.setItemPrice(3.30);
-        
+        item.setOutlet(outleta);
+
+
         SMItemEntity item2 = new SMItemEntity();
         item2.setItemName("IPhone 5S");
         item2.setItemPrice(5888.00);
-        
+        item2.setOutlet(outleta);
+
         SMItemEntity item3 = new SMItemEntity();
         item3.setItemName("Logic Mouse");
         item3.setItemPrice(23.09);
-        
+        item3.setOutlet(outleta);
+
         SMItemEntity item4 = new SMItemEntity();
         item4.setItemName("MacPro");
         item4.setItemPrice(1788.99);
-        
+        item4.setOutlet(outleta);
+
         SMItemEntity item5 = new SMItemEntity();
         item5.setItemName("Prada Wallet");
         item5.setItemPrice(568.00);
-        
+        item5.setOutlet(outleta);
+
         SMItemEntity item6 = new SMItemEntity();
-        item6.setItemName("Return to Tiffany");
-        item6.setItemPrice(458.00);
-        
+        item6.setItemName("Boots");
+        item6.setItemPrice(199.00);
+        item6.setOutlet(outlet2);
+
+
+        SMItemEntity item7 = new SMItemEntity();
+        item7.setItemName("Cotton Blazer");
+        item7.setItemPrice(56.00);
+        item7.setOutlet(outlet2);
+
+
+        SMItemEntity item8 = new SMItemEntity();
+        item8.setItemName("Winter Scarf");
+        item8.setItemPrice(19.99);
+        item8.setOutlet(outlet2);
+
+
+        SMItemEntity item9 = new SMItemEntity();
+        item9.setItemName("Canbridge Bag");
+        item9.setItemPrice(289.00);
+        item9.setOutlet(outlet2);
+
+
+        SMItemEntity item10 = new SMItemEntity();
+        item10.setItemName("Exclusive Perfume");
+        item10.setItemPrice(109.00);
+        item10.setOutlet(outlet2);
+
+
+        SMItemEntity item11 = new SMItemEntity();
+        item11.setItemName("Loft Jeans");
+        item11.setItemPrice(299.00);
+        item11.setOutlet(outlet2);
+
         try {
             System.out.println("Saving merchant....");
 
@@ -529,8 +571,32 @@ public class smmsInitManagedBean implements Serializable {
             sMItemSessionBean.addItem(item3);
             sMItemSessionBean.addItem(item4);
             sMItemSessionBean.addItem(item5);
-            sMItemSessionBean.addItem(item6);
             
+            sMItemSessionBean.addItem(item6);
+            sMItemSessionBean.addItem(item7);
+            sMItemSessionBean.addItem(item8);
+            sMItemSessionBean.addItem(item9);
+            sMItemSessionBean.addItem(item10);
+            sMItemSessionBean.addItem(item11);
+
+            items1.add(item);
+            items1.add(item2);
+            items1.add(item3);
+            items1.add(item4);
+            items1.add(item5);
+            outleta.setItem(items1);
+            outletSessionBean.updateOutlet(outleta);
+
+
+            items2.add(item6);
+            items2.add(item7);
+            items2.add(item8);
+            items2.add(item9);
+            items2.add(item10);
+            items2.add(item11);
+            outlet2.setItem(items2);
+            outletSessionBean.updateOutlet(outlet2);
+
             System.out.println("Items saved.....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding items", ""));

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -22,6 +23,16 @@ public class SMItemEntity implements Serializable {
     private Long id;
     private String itemName;
     private double itemPrice;
+    @ManyToOne
+    OutletEntity outlet = new OutletEntity();
+
+    public OutletEntity getOutlet() {
+        return outlet;
+    }
+
+    public void setOutlet(OutletEntity outlet) {
+        this.outlet = outlet;
+    }
 
     public Long getId() {
         return id;

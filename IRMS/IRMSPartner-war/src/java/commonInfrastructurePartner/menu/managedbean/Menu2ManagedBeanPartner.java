@@ -81,7 +81,7 @@ public class Menu2ManagedBeanPartner implements Serializable {
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
                 
-                 item = new MenuItem();
+                item = new MenuItem();
                 item.setValue("Manage Bills");
                 item.setUrl("/shoppingMall/manageBillPartner.xhtml");
                 item.setIcon("ui-icon ui-icon-pencil");

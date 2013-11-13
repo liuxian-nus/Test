@@ -6,17 +6,33 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-   
+
     <ui:define name="content">
-         <h:form>
+        <h:form>
             <p:growl id="msgs" sticky="true" showDetail="true"/>         
             <p:wizard flowListener="#{addOutletTransactionManagedBeanPartner.onFlowProcess}">
+
+                <p:tab id="outlet" title="Outlet">
+                    <p:panel header="Select Outlet">
+                        <h:messages errorClass="error"/>
+                        <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+                            <h:outputText value="Outlet ID*" />
+                            <h:selectOneMenu value ="#{addOutletTransactionManagedBeanPartner.outletId}" required ="true" requiredMessage="Outlet cannot be empty">
+                                <f:selectItem itemLabel="Select Outlet" itemValue="" />  
+                                <f:selectItems value="#{outletPartnerManagedBean.outlets}" var="allOutlets" itemLabel="#{allOutlets.id}" itemValue="#{allOutlets.id}" />  
+                                <p:ajax update="items" listener="#{addOutletTransactionManagedBeanPartner.handleOutletItemsListChanges()}" />
+                            </h:selectOneMenu> 
+
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+
 
                 <p:tab id="information" title="Add Transaction">
                     <p:panel header="Add Transactions">
                         <h:panelGrid columns="2" id="grid">
                             <h:outputLabel value="Item ID : *"></h:outputLabel>
-                            <h:selectOneMenu value ="#{addOutletTransactionManagedBeanPartner.itemId}" required ="true" requiredMessage="Item ID cannot be empty">
+                            <h:selectOneMenu id="items" value ="#{addOutletTransactionManagedBeanPartner.itemId}" required ="true" requiredMessage="Item ID cannot be empty">
                                 <f:selectItem itemLabel="Select Outlet" itemValue="" />  
                                 <f:selectItems value="#{addOutletTransactionManagedBeanPartner.allItems}" var="items" itemLabel="#{items.id}" itemValue="#{items.id}" />  
                                 <p:ajax update="amounts names" listener="#{addOutletTransactionManagedBeanPartner.handleItemChanges()}" />
@@ -90,15 +106,10 @@
                 </p:tab>
 
 
-                <p:tab id="personal" title="Outlet">
-                    <p:panel header="Select Outlet">
+                <p:tab id="personal" title="Member">
+                    <p:panel header="Select Member">
                         <h:messages errorClass="error"/>
                         <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
-                            <h:outputText value="Outlet ID*" />
-                            <h:selectOneMenu value ="#{addOutletTransactionManagedBeanPartner.outletId}" required ="true" requiredMessage="Outlet cannot be empty">
-                                <f:selectItem itemLabel="Select Outlet" itemValue="" />  
-                                <f:selectItems value="#{outletPartnerManagedBean.outlets}" var="allOutlets" itemLabel="#{allOutlets.id}" itemValue="#{allOutlets.id}" />  
-                            </h:selectOneMenu> 
 
                             <h:outputText value="Member: *" />
                             <h:selectOneMenu value ="#{addOutletTransactionManagedBeanPartner.memberId}" >

@@ -16,14 +16,14 @@
                         <p:panelGrid columns="6">
                             <h:outputText value="ID: "/>
                             <h:outputText value="#{outletResultPartnerManagedBean.outlet.id}"/>
-                            
+
                             <h:outputText value="Name: "/>
                             <h:outputText value="#{outletResultPartnerManagedBean.outlet.outletName}"/>
-                            
+
                             <h:outputText value="Type: "/>
                             <h:outputText value="#{outletResultPartnerManagedBean.outlet.outletType}"/>
                         </p:panelGrid>
-                        
+
                         <p:dataTable id="contract" value="#{outletResultPartnerManagedBean.transactions}" var="transaction" 
                                      paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
 
@@ -31,10 +31,14 @@
                                 <h:outputText value="#{transaction.transactionId}"/>
                             </p:column>
                             <p:column headerText="Date" style="width:100px;">
-                                <h:outputText value="#{transaction.transactionDate}"/>
+                                <h:outputText value="#{transaction.transactionDate}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd HH:mm"/>
+                                </h:outputText>
                             </p:column>
                             <p:column headerText="Amount" style="width:100px;">
-                                <h:outputText value="#{transaction.transactionAmount}"/>
+                                <h:outputText value="#{transaction.transactionAmount}">
+                                    <f:convertNumber pattern="#0.00"/>
+                                </h:outputText>
                             </p:column>                                 
                         </p:dataTable>  
                     </div>

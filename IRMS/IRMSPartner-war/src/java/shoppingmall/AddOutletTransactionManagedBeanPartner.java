@@ -54,6 +54,7 @@ public class AddOutletTransactionManagedBeanPartner {
     private SMItemEntity item;
     private OutletEntity outlet;
     private List<SMItemEntity> items;
+    private List<SMItemEntity> outletItems;
     private List<ItemTransactionEntity> itemtransactions;
     private ItemTransactionEntity itemtransaction;
     private double amount; //not useful at all lalala
@@ -77,6 +78,7 @@ public class AddOutletTransactionManagedBeanPartner {
         itemtransactions = new ArrayList<ItemTransactionEntity>();
         itemtransaction = new ItemTransactionEntity();
         mtransaction = new MemberTransactionEntity();
+        outletItems = new ArrayList<SMItemEntity>();
     }
 
     public String reinit() {
@@ -103,6 +105,12 @@ public class AddOutletTransactionManagedBeanPartner {
         }
     }
 
+    public void handleOutletItemsListChanges() throws ExistException {
+
+        outlet = outletSessionBean.getOutletById(outletId);
+        System.err.println("after setting transaction" + outlet.getId());
+    }
+
     public void handleAmountChanges() throws ExistException {
         System.out.println("in handling changes now");
         if (itemtransaction != null) {
@@ -126,7 +134,7 @@ public class AddOutletTransactionManagedBeanPartner {
         System.out.println("what is the date today????" + today);
         try {
 
-            outlet = outletSessionBean.getOutletById(outletId); //prepare outlet
+            //prepare outlet
             OutletTransactionEntity otransaction = new OutletTransactionEntity(); //prepare transaction
 
             Iterator itr = itemtransactions.iterator();
@@ -184,7 +192,9 @@ public class AddOutletTransactionManagedBeanPartner {
     }
 
     public List<SMItemEntity> getAllItems() {
-        return sMItemSessionBean.getAllItems();
+
+        System.out.println("here in changing item list" + outlet.getItem().size());
+        return outlet.getItem();
     }
 
     public List<ItemTransactionEntity> getItemtransactions() {
@@ -289,5 +299,13 @@ public class AddOutletTransactionManagedBeanPartner {
 
     public void setMtransaction(MemberTransactionEntity mtransaction) {
         this.mtransaction = mtransaction;
+    }
+
+    public List<SMItemEntity> getOutletItems() {
+        return outletItems;
+    }
+
+    public void setOutletItems(List<SMItemEntity> outletItems) {
+        this.outletItems = outletItems;
     }
 }
