@@ -533,8 +533,16 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.setLabel("Manage Contract payments");
 
                 item = new MenuItem();
-                item.setValue("Manage Contract Payments");
+                item.setValue("Manage Payments");
                 item.setUrl("/smms/paymentManagement.xhtml");
+                item.setIcon("ui-icon ui-icon-lightbulb");
+                submenu.getChildren().add(item);
+                model.addSubmenu(submenu);
+                
+                
+                item = new MenuItem();
+                item.setValue("Add Transaction");
+                item.setUrl("/smms/addItemTransaction.xhtml");
                 item.setIcon("ui-icon ui-icon-lightbulb");
                 submenu.getChildren().add(item);
                 model.addSubmenu(submenu);

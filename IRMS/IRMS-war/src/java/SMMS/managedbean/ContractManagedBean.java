@@ -294,7 +294,7 @@ public class ContractManagedBean implements Serializable {
         System.out.println("NO4: we are in ALL outlets bean BEFORE");
         List<Integer> results = new ArrayList<Integer>();
 
-        List<OutletEntity> merchantList = outletSessionBean.getAvailableOutlets();
+        List<OutletEntity> merchantList = outletSessionBean.getUnavailableOutlets();
         for (Object o : merchantList) {
             OutletEntity rve = (OutletEntity) o;
             results.add((rve.getOutletId()));

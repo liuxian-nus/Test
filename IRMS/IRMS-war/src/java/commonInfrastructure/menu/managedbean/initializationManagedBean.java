@@ -717,6 +717,12 @@ public class initializationManagedBean implements Serializable {
         functionality14.setFuncName("viewBillDetail");
         functionality14.setFuncDescription("view renew");
         functionalitySessionBean.addFunctionality(functionality14);
+        
+        
+        FunctionalityEntity functionality15 = new FunctionalityEntity();
+        functionality15.setFuncName("addItemTransaction");
+        functionality15.setFuncDescription("add transaction");
+        functionalitySessionBean.addFunctionality(functionality15);
 
         role = new RoleEntity();
         role.setRoleId(41);
@@ -735,6 +741,7 @@ public class initializationManagedBean implements Serializable {
         role.addFunctionality(functionality12);
         role.addFunctionality(functionality13);
         role.addFunctionality(functionality14);
+        role.addFunctionality(functionality15);
 
 
         System.out.println("Create role :" + role.getRoleName());

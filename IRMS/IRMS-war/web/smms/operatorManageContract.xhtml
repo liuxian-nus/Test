@@ -98,7 +98,7 @@
                             <!-- delete when new or rejected-->
                             <p:commandButton   oncomplete="confirmaDelete.show()" ajax="true" 
                                                rendered="#{(contract.last.eventStatus=='new')||(contract.last.eventStatus=='newRejected')||(contract.last.eventStatus=='renew')||(contract.last.eventStatus=='renewRejected')||(contract.last.eventStatus=='earlyTermination') ||(contract.last.eventStatus=='earlyTerminationRejected')}" 
-                                               icon="ui-icon ui-icon-circle-close" title="Cancel this contract">  
+                                               icon="ui-icon ui-icon-trash" title="Cancel this contract">  
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton> 
 
@@ -120,7 +120,7 @@
                             <!-- send for early termination when being requested-->
                             <p:commandButton  oncomplete="early.show()" ajax="true"  actionListener="#{operatorRequstContractManagedBean.renew}"
                                               rendered="#{(contract.last.eventStatus=='newActive')||(contract.last.eventStatus=='renewActive')}" 
-                                              icon="ui-icon ui-icon-scissors"  title="Early terminate the contract">   
+                                              icon="ui-icon ui-icon-power"  title="Early terminate the contract">   
                                 <f:setPropertyActionListener target="#{operatorRequstContractManagedBean.contract}" value="#{contract}" /> 
                             </p:commandButton> 
 

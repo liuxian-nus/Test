@@ -80,9 +80,13 @@ public class BillPartnerManagedBean {
         merchantBillSessionBean.updateBill(bill);
         System.out.println("after updating bills" + bill.getBillStatus());
         if ("newApproved".equals(bill.getContract().getStatus())) {
-
-            bill.getContract().getLast().setEventStatus("newActive");
-            System.out.println("whats the cevent id now" + bill.getBillId());
+            System.out.println("in new approved bean lalala");
+            cevent = bill.getContract().getLast();
+            System.out.println("whats the cevent id now" + cevent.getId());
+            cevent.setEventStatus("newActive");
+            contracteventSessionBean.updateContractEvent(cevent);
+//            bill.getContract().getLast().setEventStatus("newActive");
+            System.out.println("whats the cevent id now" + cevent.getId());
 //            cevent.setEventStatus("newActive");
             contractSessionBean.updateContract(bill.getContract());
             System.out.println("whats the cevent id now" + bill.getContract().getLast().getEventStatus());

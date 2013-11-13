@@ -30,6 +30,16 @@ public class OutletTransactionEntity implements Serializable {
     private double transactionAmount;
     @ManyToOne
     private OutletEntity outlet = new OutletEntity();
+   
+
+    public OutletEntity getOutlet() {
+        return outlet;
+    }
+
+    public void setOutlet(OutletEntity outlet) {
+        this.outlet = outlet;
+    }
+
 
     public Long getTransactionId() {
         return transactionId;

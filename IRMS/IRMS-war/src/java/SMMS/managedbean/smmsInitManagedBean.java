@@ -13,12 +13,14 @@ import SMMS.entity.ContracteventEntity;
 import SMMS.entity.MerchantEntity;
 import SMMS.entity.OutletEntity;
 import SMMS.entity.OutletTransactionEntity;
+import SMMS.entity.SMItemEntity;
 import SMMS.session.ContractSessionBean;
 import SMMS.session.ContracteventSessionBean;
 import SMMS.session.MerchantBillSessionBean;
 import SMMS.session.MerchantSessionBean;
 import SMMS.session.OutletSessionBean;
 import SMMS.session.OutletTransactionSessionBean;
+import SMMS.session.SMItemSessionBean;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +38,8 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @ViewScoped
 public class smmsInitManagedBean implements Serializable {
+    @EJB
+    private SMItemSessionBean sMItemSessionBean;
 
     @EJB
     private MerchantBillSessionBean merchantBillSessionBean;
@@ -487,11 +491,59 @@ public class smmsInitManagedBean implements Serializable {
 
         addMessage("Transaction1! Created!");
     }
+    
+    public void createItem()
+    {
+        
+        SMItemEntity item = new SMItemEntity();
+        item.setItemName("Coke Zero");
+        item.setItemPrice(3.30);
+        
+        SMItemEntity item2 = new SMItemEntity();
+        item2.setItemName("IPhone 5S");
+        item2.setItemPrice(5888.00);
+        
+        SMItemEntity item3 = new SMItemEntity();
+        item3.setItemName("Logic Mouse");
+        item3.setItemPrice(23.09);
+        
+        SMItemEntity item4 = new SMItemEntity();
+        item4.setItemName("MacPro");
+        item4.setItemPrice(1788.99);
+        
+        SMItemEntity item5 = new SMItemEntity();
+        item5.setItemName("Prada Wallet");
+        item5.setItemPrice(568.00);
+        
+        SMItemEntity item6 = new SMItemEntity();
+        item6.setItemName("Return to Tiffany");
+        item6.setItemPrice(458.00);
+        
+        try {
+            System.out.println("Saving merchant....");
+
+            sMItemSessionBean.addItem(item);
+            sMItemSessionBean.addItem(item2);
+            sMItemSessionBean.addItem(item3);
+            sMItemSessionBean.addItem(item4);
+            sMItemSessionBean.addItem(item5);
+            sMItemSessionBean.addItem(item6);
+            
+            System.out.println("Items saved.....");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding items", ""));
+            return;
+        }
+        System.out.println("Insert merchant into database");
+
+        addMessage("Items Created!");
+    }
 
     public void initla(ActionEvent event) throws ExistException {
         createMerchant();
         createOutlet();
         createContract();
         createTransaction();
+        createItem();
     }
 }
