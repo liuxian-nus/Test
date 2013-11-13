@@ -67,7 +67,7 @@ public class VenueBookingManagedBean implements Serializable {
     }
     
     public void checkSchedule(ActionEvent event) throws IOException{
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("venue", selectedVenue);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("venue123", selectedVenue);
 //        System.err.println("check schedule: "+selectedVenue.getVenueName());
         FacesContext.getCurrentInstance().getExternalContext().redirect("venueSchedule.xhtml");
     }

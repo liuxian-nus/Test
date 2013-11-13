@@ -62,8 +62,8 @@ public class VenueScheduleManagedBean {
 
     public void init(PhaseEvent event) {
         venue = new VenueEntity();
-        venue = (VenueEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("venue");
-
+        venue = (VenueEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("venue123");
+        eventModel = new DefaultScheduleModel();
         doThis();
     }
 
@@ -71,7 +71,11 @@ public class VenueScheduleManagedBean {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         eventBookings = new ArrayList<EventBookingEntity>();
 //        System.err.println("get flash venue: " + venue.getVenueId());
+        if (venue==null){
+            venue = venueSessionBean.getVenueById((Long)request.getSession().getAttribute("venueId"));
+        }
         eventBookings = (List<EventBookingEntity>) eventBookingSessionBean.getEventBookings(venue);
+       
 //        System.err.println("doThis size: " + eventBookings.size());
         Iterator<EventBookingEntity> itr = eventBookings.iterator();
         while (itr.hasNext()) {
@@ -84,14 +88,14 @@ public class VenueScheduleManagedBean {
 
     public void addEvent(ActionEvent actionEvent) {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-//        System.err.println("add eventBooking: " + event.getTitle());
+        System.err.println("add eventBooking: " + event.getTitle());
         eventId = Long.parseLong(event.getTitle());
-//        System.err.println("eventId" + eventId);
+        System.err.println("eventId" + eventId);
         if (event.getId() == null) {
 
             eventEntity = eventSessionBean.getReservation(eventId);
-//            System.err.println(eventEntity.getEventId());
-            System.err.println("Event style class"+event.getStyleClass());
+            System.err.println(eventEntity.getEventId());
+            System.err.println("Event style class" + event.getStyleClass());
             eventBooking = new EventBookingEntity();
             eventBooking.setEvent(eventEntity);
             double rate = Double.valueOf(event.getStyleClass());
