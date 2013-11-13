@@ -26,28 +26,44 @@
                 </ul>
             </div>
             <div class="row">
-                <fieldset>
-                    <legend>Booking Summary</legend>
-                    <div class="large-4 columns">
-                        <a class="th radius" href="/IRMS-war/images/Harry-Potter.jpg" >
-                            <img src="/IRMS-war/images/Harry-Potter.jpg" width="100" height="100">
-                        </a>
+          <div class="row">
+                        <div class='large-12 columns'>
+                            <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h4><strong>Coral Island Members</strong></h4></label>
+                        </div>
                     </div>
-                    <div class="large-8 columns">
-                        <h5><strong>${thisShow.showName}</strong></h5>
-                    <p>
-                        ${thisShow.showDescription}
-                        <br>
-                    <h6><strong>Time Chosen:</strong></h6>   
-                    <p><fmt:formatDate type="both" pattern="dd MMM YYYY hh:mm a"value="${thisSchedule.startDateTime}" />
-                    
-                    <br>
-                    Ticket Chosen:
-                    </p>
-                </div>
-                <a href="#" data-reveal-id="myModal">Click Me For A Modal</a>
+                    <c:choose>
+                        <c:when test="${member == null}">
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6>Redeem your points and save money now!</h6></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="large-4 columns">                               
+                                    <a href="member" class="small button">Log In</a>
+                                </div>
+                                <div class="large-8 columns">
+                                    <a href="memberRegister" style="color:#4d4d4d"> Not a member?</a>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6><strong>Welcome back, ${member.memberName}</strong></h6></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6><strong>You have ${member.coin} coins.</strong></h6></label>
+                                </div>
+                            </div>
 
-            </fieldset>
+                        </c:otherwise>
+                    </c:choose>
+
+
+                </div>
         </div>
         <div class ="row">
             <div class="large-7 columns">
