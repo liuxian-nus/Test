@@ -435,12 +435,6 @@ public class Menu2ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 item = new MenuItem();
-                item.setValue("Bundle Packages");
-                item.setUrl("/crms/bundlePackage.xhtml");
-                item.setIcon("ui-icon ui-icon-flag");
-                submenu.getChildren().add(item);
-
-                item = new MenuItem();
                 item.setValue("Coupon Types");
                 item.setUrl("/crms/listCouponTypes.xhtml");
                 item.setIcon("ui-icon ui-icon-document");
