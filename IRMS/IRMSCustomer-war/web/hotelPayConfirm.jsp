@@ -22,7 +22,7 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <h4>Your reservation has been confirmed!</h4> 
+         
             <div class="row">
                 <div class="small-11 small-centered columns">
                     <div class="panel">
@@ -33,15 +33,16 @@
                         <h6><strong>Reservation number : </strong>${data.reservationId}</h6>
                     <br>
                     <c:if test="${data.reservationHotelNo == 1}">
-                        <h6>Reservation for <strong class="right-align,inline"> Orchard Hotel</strong></h6>
+                        <h6><strong class="right-align,inline"> Reservation for </strong>Orchard Hotel</h6>
                     </c:if>
                     <c:if test="${data.reservationHotelNo == 2}">
-                        <h6>Hotel Reservation for <strong class="right-align,inline"> Marina Hotel</strong></h6>
+                        <strong class="right-align,inline"><h6>Hotel Reservation for </strong>Marina Hotel</h6>
                     </c:if>
                     <c:if test="${data.reservationHotelNo == 3}">
-                        <h6>Hotel Reservation for <strong class="right-align,inline"> BeachView Hotel</strong></h6>
+                        <strong class="right-align,inline"><h6>Hotel Reservation for </strong>BeachView Hotel</h6>
                     </c:if>
-                    <h6><strong class="right-align,inline"> Room Type:  ${data.reservationRoomType} </strong></h6>
+                    <br>
+                    <h6><strong class="right-align,inline"> Room Type:</strong>  ${data.reservationRoomType} </h6>
                     <br>
                     <h6><strong>Check-in Date : </strong><fmt:formatDate type="date" pattern="MMM dd yyyy" 
                                     value="${data.rcCheckInDate}" /></h6>
@@ -60,19 +61,14 @@
                     <h6><strong>Reservation mobile : </strong>${data.rcHP}</h6>
                     <br>
                     <br>
-                    
-                    <c:if test="${coupon!=null}">
-                        <h6><Strong>Here's a coupon for you: <%=coupon.getCouponId()%></strong></h6>
-                        <h6>You can use it to purchase attraction or show ticket with <%=coupon.getCouponType().getDiscount()%> discount.</h6>
-                        <h6>The coupon will be valid until <%=coupon.getCouponType().getCpEndDate()%></h6>
-                        <h6>One coupon can only be used for one payment.</h6>
-                        <h6>Thank you for reserving hotel at CIR!</h6>
-                    </c:if>
-                </div>
-             
+                    <!--
+                  
+                    -->
+              
+       
+                      </div>
+
             </div>
-                    <a href="hotelCancel" div class="button">Confirm </a> </div>
-        </div>
-        <jsp:include page="footer.jsp"></jsp:include>
-    </body>
+    <jsp:include page="footer.jsp"></jsp:include>
+</body>
 </html>
