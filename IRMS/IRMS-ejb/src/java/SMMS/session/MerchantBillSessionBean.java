@@ -148,18 +148,15 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
         }
 
         if (timer.getInfo().toString().equals("termination")) {
-            System.err.println("in setting overdue time lah ahahah");
-            System.err.println("in setting overdue time lah ahahah");
-            System.err.println("in setting overdue time lah ahahah");
-            System.err.println("in setting overdue time lah ahahah!!!!!!!!!!!!!!");
-            System.err.println("in setting overdue time lah ahahah" + contract.getContractId());
-            addTerminationBill(contract);
-            System.err.println("after setting product lalala" + bill.getBillId());
+            System.err.println("in setting overdue time lah papapappapa");
+            System.err.println("in setting overdue time lah papapapappa");
+            System.err.println("in setting overdue time lah papapapapapa");
+            System.err.println("in setting overdue time lah papapapapapap!!!!!!!!!!!!!!");
+            System.err.println("in setting overdue time lah papapapapappa" + contract.getContractId());
 
-
-            bill.setBillStatus("overdue");
-            updateBill(bill);
-            System.err.println("after setting product lalala" + bill.getBillStatus());
+            BillEntity billNew = new BillEntity();
+            billNew = addTerminationBill(contract);
+            System.err.println("after setting product lalala" + billNew.getBillId());
         }
 
         if (timer.getInfo().toString().equals("monthly")) {
@@ -175,7 +172,7 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 //        }
     }
 
-    public void addTerminationBill(ContractEntity contract) throws ExistException { //until today
+    public BillEntity addTerminationBill(ContractEntity contract) throws ExistException { //until today
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MINUTE, 8);  //here expire after 2 minutes
         Date dueDate = cal.getTime();
@@ -185,18 +182,19 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
         List<BillItemEntity> items = new ArrayList<BillItemEntity>();
         double total = 0.0;
+        BillEntity billTest = new BillEntity();
 
-        bill.setBillStatus("available");
-        bill.setBillType("Termination");
-        bill.setBillDate(today);
-        bill.setContract(contract);
-        bill.setDueDate(dueDate);
-        addBill(bill); //persisting the bill first lah
+        billTest.setBillStatus("available");
+        billTest.setBillType("Termination");
+        billTest.setBillDate(today);
+        billTest.setContract(contract);
+        billTest.setDueDate(dueDate);
+        addBill(billTest); //persisting the bill first lah
 
         item = new BillItemEntity();
         item.setType("Additional Administration fee");
         item.setAmount(2304.00);
-        item.setBill(bill);
+        item.setBill(billTest);
         addBillItem(item); // persisting the additional admin charge charge
         items.add(item);
         total = total + item.getAmount();
@@ -205,7 +203,7 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
         BillItemEntity item2 = new BillItemEntity();
         item2.setType("monthsly bill");
-        item2.setBill(bill);
+        item2.setBill(billTest);
         item2.setAmount(calculateMonthRate(contract));
         addBillItem(item2);
         items.add(item2);
@@ -214,19 +212,20 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
         BillItemEntity item3 = new BillItemEntity();
         item3.setType("commission fee");
-        item3.setBill(bill);
+        item3.setBill(billTest);
         item3.setAmount(calculateCommission(contract));
         addBillItem(item3);
         items.add(item3);
         total = total + item3.getAmount();
         System.err.println("here in adding first billitem" + total + item3.getAmount());
 
-        bill.setBillItem(items);
-        bill.setBillAmount(total);
-        updateBill(bill);
+        billTest.setBillItem(items);
+        billTest.setBillAmount(total);
+        updateBill(billTest);
 
-        setBill(bill);
+        setBill(billTest);
         System.err.println("before creating timer" + dueDate);
+        return billTest;
 
     }
 

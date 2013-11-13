@@ -202,8 +202,13 @@ public class smmsInitManagedBean implements Serializable {
         System.out.println("go to create Contract Page...");
 
         ContractEntity contract1 = new ContractEntity();
-        Date cidate = new Date(2014, 10, 1);
-        Date codate = new Date(2016, 10, 1);
+        Calendar calC1 = Calendar.getInstance();
+        calC1.set(2014, 10, 1);
+        Date cidate = calC1.getTime();
+        calC1.set(2018, 10, 1);
+        Date codate = calC1.getTime();
+        
+
         try {
 
             System.out.println("Saving cart....");
@@ -249,6 +254,7 @@ public class smmsInitManagedBean implements Serializable {
         ContractEntity contract2 = new ContractEntity();
         Date cidate1 = new Date(2014, 6, 1);
         Date codate1 = new Date(2018, 6, 1);
+        Calendar calC2 = Calendar.getInstance();
         try {
 
             System.out.println("Saving cart....");
@@ -270,7 +276,7 @@ public class smmsInitManagedBean implements Serializable {
             event2.setEventDownPayment(21000);
             event2.setEventStatus("newPending");
             event2.setEventContract(contract2);
-            event2.setEventTime(currentDate);
+            event2.setEventTime(calC2.getTime());
             contracteventSessionBean.addContractevent(event2);
             System.out.println("Contract4 saved....." + event2.getContracteventId());
 
@@ -293,8 +299,17 @@ public class smmsInitManagedBean implements Serializable {
 
 
         ContractEntity contract3 = new ContractEntity();
-        Date cidate3 = new Date(2010, 10, 1);
-        Date codate3 = new Date(2015, 10, 1);
+//        Date cidate3 = new Date(2010, 10, 1);
+//        Date codate3 = new Date(2015, 10, 1);    
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MINUTE, 2);  //here expire after 2 minutes
+        Date cidate3 = cal.getTime();
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.add(Calendar.MINUTE, 4);  //here expire after 2 minutes
+        Date codate3 = cal2.getTime();
+
         try {
 
             System.out.println("Saving cart....");
@@ -315,7 +330,7 @@ public class smmsInitManagedBean implements Serializable {
             event3.setEventCommissionRate(0.22);
             event3.setEventStatus("newActive");
             event3.setEventContract(contract3);
-            event3.setEventTime(currentDate);
+            event3.setEventTime(cal.getTime());
             contracteventSessionBean.addContractevent(event3);
             System.out.println("Contract saved....." + event3.getContracteventId());
 
@@ -330,6 +345,9 @@ public class smmsInitManagedBean implements Serializable {
             outletSessionBean.updateOutlet(outlet3);
             System.err.println("start adding bill lalalallalala!!!!!!!!!!");
             addDepositBill(contract3);
+            System.err.println("start adding TIMERRRR lalalallalala!!!!!!!!!!");
+            merchantBillSessionBean.setContract(contract3);
+            merchantBillSessionBean.createTerminationTimers(codate);
 
             System.out.println("Contract5 saved.....");
         } catch (Exception e) {
@@ -571,7 +589,7 @@ public class smmsInitManagedBean implements Serializable {
             sMItemSessionBean.addItem(item3);
             sMItemSessionBean.addItem(item4);
             sMItemSessionBean.addItem(item5);
-            
+
             sMItemSessionBean.addItem(item6);
             sMItemSessionBean.addItem(item7);
             sMItemSessionBean.addItem(item8);

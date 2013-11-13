@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -33,6 +34,15 @@ public class ReservationSearchResultManagedBean implements Serializable {
     private ReservationEntity selectReservation;
     private List<ReservationEntity> reservationList;
     private Long reservationId;
+//
+//    @PostConstruct
+//    public void init() {
+//        selectReservation = getParameterReservation();
+//    }
+
+    public ReservationEntity getParameterReservation() {
+        return (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
+    }
 
     public ReservationEntity getSelectReservation() {
         return selectReservation;
@@ -57,14 +67,15 @@ public class ReservationSearchResultManagedBean implements Serializable {
     }
 
     public void initViewSelect(PhaseEvent event) {
-        selectReservation = (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
-
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+
+        System.err.println("ni ma dan wei mao xian yizhi bu hao shi ni qu si ba !!!!!!!!!!!!!");
+        selectReservation = (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
+        selectReservation = (ReservationEntity) request.getSession().getAttribute("selectReservation");
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
-        request.getSession().setAttribute("cancelReservation", selectReservation);
-
+        System.err.println("in getting Listerning selectReservation" + selectReservation.getReservationId());
     }
 
     public Long getReservationId() {
@@ -81,7 +92,7 @@ public class ReservationSearchResultManagedBean implements Serializable {
 
         reservationList = (List<ReservationEntity>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("reservationList");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("reservationList", reservationList);
-        String searchEmail = (String)request.getSession().getAttribute("rcEmail");
+        String searchEmail = (String) request.getSession().getAttribute("rcEmail");
         request.getSession().setAttribute("rcEmail", searchEmail);
 
     }

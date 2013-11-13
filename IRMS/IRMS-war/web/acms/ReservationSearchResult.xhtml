@@ -9,8 +9,8 @@
 
 
     <ui:define name="content">
-        <f:view beforePhase="#{reservationSearchResultManagedBean.initViewSelect}"> 
-            <h:form id="form">
+        <f:view afterPhase="#{reservationSearchResultManagedBean.initViewSelect}">    
+        <h:form id="form">
                 <p:panel id="search" header="Search Result" style="height:495px;">
 
                     <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
@@ -75,7 +75,7 @@
                     <p:commandButton value="Not yet" onclick="pay.hide()" type="button"/>  
                 </p:dialog> 
             </h:form>   
-        </f:view>  
+        </f:view>
     </ui:define>
 </ui:composition>
 
