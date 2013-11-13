@@ -140,6 +140,7 @@ public class AddShowManagedBean {
             showContract = showContractSessionBean.thisShowContract(showContractId);
             System.err.println(showContract.getShowMerchantName());
             getShow().setShowContract(showContract);
+            showContract.setShow(show);
             System.err.println(getShow().getShowContract().getShowContractId());
         }
         showSessionBean.addShow(getShow());
