@@ -91,9 +91,11 @@ public class VenueScheduleManagedBean {
 
             eventEntity = eventSessionBean.getReservation(eventId);
 //            System.err.println(eventEntity.getEventId());
-
+            System.err.println("Event style class"+event.getStyleClass());
             eventBooking = new EventBookingEntity();
             eventBooking.setEvent(eventEntity);
+            double rate = Double.valueOf(event.getStyleClass());
+            eventBooking.setVenueRate(rate);
 //            System.err.println("1."+eventEntity.getEventId());
             Long venueId = (Long) request.getSession().getAttribute("venueId");
 //            System.err.println(venueId);

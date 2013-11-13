@@ -115,10 +115,11 @@ public class ManageEventManagedBean {
         FacesContext.getCurrentInstance().getExternalContext().redirect("manageEvent.xhtml");
     }
 
-    public void saveChanges(ActionEvent event) throws ExistException {
+    public void saveChanges(ActionEvent event) throws ExistException, IOException {
         selectedEvent.setEventManagerId(selectedManager);
         eventSessionBean.updateEvent(selectedEvent);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Changes saved.", ""));
+        FacesContext.getCurrentInstance().getExternalContext().redirect("manageEvent.xhtml");
     }
 
     public EventSessionBean getEventSessionBean() {
