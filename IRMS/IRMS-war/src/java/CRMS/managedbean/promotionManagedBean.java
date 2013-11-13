@@ -30,6 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.ToggleEvent;
+//import org.netbeans.api.project.ui.OpenProjects;
+//import org.netbeans.api.project.Project;
+//import org.openide.filesystems.FileObject; 
 
 /**
  *
@@ -197,7 +200,14 @@ public class promotionManagedBean {
         System.err.println("Uploading Image...");
         String[] fileNameParts = event.getFile().getFileName().split("\\.");
         File result = new File("C:\\Users\\Ser3na\\Documents\\IS3102\\Test.git\\IRMS\\IRMS-war\\web\\images\\" + fileNameParts[0] + "." + fileNameParts[1]);
-
+//        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+//        String path = request.getRequestURI().substring(request.getContextPath().length());
+//        Project proj = OpenProjects.getDefault().getMainProject();
+//        FileObject root = proj.getProjectDirectory();
+//        String path = root.getPath();
+//        System.err.println("Path: " + path);
+        String path2 = promotionManagedBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        System.err.println("path 2:"+path2);
         FileOutputStream out = new FileOutputStream(result);
 
         int a;
