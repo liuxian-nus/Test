@@ -47,6 +47,7 @@ public class ESMSServlet extends HttpServlet {
     private List<ShowEntity> shows;
     private List<ShowScheduleEntity> showSchedule;
     private Long showId;
+    private Long scheduleId;
     private EventEntity ee;
     private List<ShowTicketEntity> showTickets;
 
@@ -89,6 +90,7 @@ public class ESMSServlet extends HttpServlet {
                 } else if ("entertainmentSchedule".equals(page)) {
 
                     System.out.println("***entertainmentSchedule***");
+                    
                     showId = Long.parseLong(request.getParameter("showId"));
                     session.setAttribute("thisShow", showSessionBean.getShowById(showId));
                     showSchedule = showSessionBean.getAllShowSchedules(showId);
@@ -96,8 +98,15 @@ public class ESMSServlet extends HttpServlet {
                     System.out.println(showId);
                     System.out.println(showSchedule.size());
                     request.setAttribute("showSchedules", showSchedule);
+              
+                    request.getRequestDispatcher("/entertainmentSchedule.jsp").forward(request, response);
+                } else if ("entertainmentVenue".equals(page)) {
+                    System.out.println("***entertainmentVenue***");
                     //below set show ticket types and return back to jsp
-                    ShowScheduleEntity thisShowSchedule = showScheduleSessionBean.getShowScheduleById(Long.parseLong("4"));
+                    System.out.println(request.getAttribute("scheduleId"));
+                    scheduleId=Long.valueOf((String)request.getAttribute("scheduleId"));
+                    System.out.println(scheduleId);
+                    ShowScheduleEntity thisShowSchedule = showScheduleSessionBean.getShowScheduleById(scheduleId);
                     showTickets = thisShowSchedule.getShowTickets();
                     System.out.println(showTickets.isEmpty());
                     System.out.println(showTickets.size());
@@ -113,13 +122,10 @@ public class ESMSServlet extends HttpServlet {
                         request.setAttribute("showTicket"+i, current);
                         System.out.println("Current ticket retrieved is "+i);
                         System.out.println(current.getShowTicketPrice());
+                        
                     }
                     }
 //                    request.setAttribute("showTickets", showTickets);
-                    request.getRequestDispatcher("/entertainmentSchedule.jsp").forward(request, response);
-                } else if ("entertainmentVenue".equals(page)) {
-                    System.out.println("***entertainmentVenue***");
-
                     request.getRequestDispatcher("/entertainmentVenue.jsp").forward(request, response);
                 } else if ("entertainmentPay".equals(page)) {
                     System.out.println("***entertainmentPay***");
