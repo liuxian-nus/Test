@@ -74,11 +74,11 @@
             <script defer="defer">
             var text;
             var price1 = "${showTicket1.showTicketPrice}";
-            var price2 = 68;
-            var price3 = 268;
-            var price4 = 198;
-            var price5 = 168;
-            var price6 = 68;
+            var price2 = "${showTicket2.showTicketPrice}";
+            var price3 = "${showTicket3.showTicketPrice}";
+            var price4 = "${showTicket4.showTicketPrice}";
+            var price5 = "${showTicket5.showTicketPrice}";
+            var price6 = "${showTicket6.showTicketPrice}";
             var stage = new Kinetic.Stage({
                 container: 'container',
                 width: 500,
@@ -478,7 +478,7 @@
                             <tbody>
                                 <tr>
                                     <td width="300">&nbsp Area 1</td>
-                                    <td width="300">&nbsp $168</td>
+                                    <td width="300">&nbsp ${showTicket1.showTicketPrice}</td>
                                     <td width="300">   
                                         <select style="width:80px" required name="ticket1" id="ticket1"/>
                             <option value="0">0</option>            
@@ -507,7 +507,7 @@
                             </tr>
                             <tr>
                                 <td width="300">&nbsp Area 2</td>
-                                <td width="300">&nbsp $68</td>
+                                <td width="300">&nbsp ${showTicket2.showTicketPrice}</td>
                                 <td width="300">   
                                     <select style="width:80px" required name="ticket2" id="ticket2"/>
                             <option value="0">0</option>
@@ -538,7 +538,7 @@
 
                             <tr>
                                 <td width="300">&nbsp Area 3</td>
-                                <td width="300">&nbsp $268</td>
+                                <td width="300">&nbsp ${showTicket3.showTicketPrice}</td>
                                 <td width="300">   
                                     <select style="width:80px" required name="ticket3" id="ticket3"/>
                             <option value="0">0</option>
@@ -568,7 +568,7 @@
 
                             <tr>
                                 <td width="300">&nbsp Area 4</td>
-                                <td width="300">&nbsp $198</td>
+                                <td width="300">&nbsp ${showTicket4.showTicketPrice}</td>
                                 <td width="300">   
                                     <select style="width:80px" required name="ticket4" id="ticket4"/>
 
@@ -598,7 +598,7 @@
                             </tr>
                             <tr>
                                 <td width="300">&nbsp Area 5</td>
-                                <td width="300">&nbsp $168</td>
+                                <td width="300">&nbsp ${showTicket5.showTicketPrice}</td>
                                 <td width="300">   
                                     <select style="width:80px" required name="ticket5" id="ticket5"/>
 
@@ -628,7 +628,7 @@
                             </tr>
                             <tr>
                                 <td width="300">&nbsp Area 6</td>
-                                <td width="300">&nbsp $68</td>
+                                <td width="300">&nbsp ${showTicket6.showTicketPrice}</td>
                                 <td width="300">   
                                     <select style="width:80px" required name="ticket6" id="ticket6"/>
                             <option value="0">0</option>

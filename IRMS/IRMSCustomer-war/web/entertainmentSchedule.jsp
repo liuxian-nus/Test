@@ -30,14 +30,7 @@
             
         <jsp:include page="header.jsp"></jsp:include>
         <h5> Please select your ticket for <strong>${thisShow.showName}</strong> </h5>
-        
-       
-        <script type="text/javascript">
-       
-           var myCountdown1 = new Countdown({time:316});
-   
-            </script>
-            
+     
         <div class="row">
             <ul class="button-group round even-4">
                 <li><p style="color:white"class = "button small disabled"><strong>Select date and time ></strong></li>
