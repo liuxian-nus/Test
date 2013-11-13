@@ -5,6 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.io.*,java.util.*" %>
+<%@page import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +18,32 @@
     </head>
     <body>
          <jsp:include page="header.jsp"></jsp:include>
-  
+       <c:forEach items="${allPromotions}" var="promotion">            
+            <div class="panel">
+                <div class="row">
+                    <div class="large-4 columns">
+                        <a class="th radius" href="/IRMS-war/images/Harry-Potter.jpg" >
+                            <img src="${promotion.imagePath}" width="100" height="100">
+                        </a>
+
+                    </div>
+                    <div class="large-6 columns">
+                        <h5><strong>${promotion.promotionTitle}</strong></h5>
+                        <p>
+                            ${promotion.promotionDescription}
+                        </p>
+                    </div>
+                    <div class="large-2 columns">
+                        <form action="entertainmentSchedule">
+                            <input class="button" type="submit" value ="Buy Now"/>
+                            <input type="hidden" name="promotionId" value="${promotion.promotionId}"/>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+
+            <br>             
+        </c:forEach>
         <script>
             document.write('<script src=' +
                     ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
