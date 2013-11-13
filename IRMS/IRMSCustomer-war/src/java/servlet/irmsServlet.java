@@ -189,7 +189,10 @@ public class irmsServlet extends HttpServlet {
             } else if ("memberPromotion".equals(page)) {
                 request.getRequestDispatcher("/CRMServlet/memberPromotion").forward(request, response);
 
-            } else if ("memberForgetPassword".equals(page)) {
+            } else if ("memberPromotionPurchase".equals(page)) {
+                request.getRequestDispatcher("/CRMServlet/memberPromotionPurchase").forward(request, response);
+
+            }else if ("memberForgetPassword".equals(page)) {
                 request.getRequestDispatcher("/CRMServlet/memberForgetPassword").forward(request, response);
 
             } else if ("memberForgetPasswordResult".equals(page)) {
