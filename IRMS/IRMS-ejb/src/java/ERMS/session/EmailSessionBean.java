@@ -7,12 +7,16 @@ import ATMS.entity.AttrExpressPassEntity;
 import ATMS.entity.AttrTicketEntity;
 import ATMS.entity.ExpressPassPurchaseEntity;
 import ATMS.entity.TicketPurchaseEntity;
+import CEMS.entity.EventBookingEntity;
+import CEMS.entity.EventEntity;
+import CEMS.entity.EventServiceEntity;
 import CRMS.entity.FeedbackEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.PromotionEntity;
 import CRMS.session.FeedbackSessionBean;
 import CRMS.session.GenerateBarcodeSessionBean;
 import CRMS.session.MemberMessageSessionBean;
+import ESMS.entity.ShowContractEntity;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowTicketSaleEntity;
 import SMMS.entity.BillEntity;
@@ -82,6 +86,298 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     public EmailSessionBean() {
     }
 
+    public void sendShowContractBill(double rentalFee, double bill, double ticketCommission,double ticketRevenue,ShowContractEntity showContract) throws DocumentException, BadElementException, MalformedURLException, IOException
+    {
+        System.out.println("sendShowContractBill");
+        String email = showContract.getShowMerchantEmail();
+        
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+        
+        try {
+
+            Date today = new Date();
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            message.setSubject("Member Birthday Special Offer: Corel Island Resort  Welcomes you!");
+            String textbody = "Greeting from Coral Island Resort!"
+                    + "\nYour contract bill for show has been available now!"
+                    + "\nPlease look at the contract details below: "
+                    + "\n\n\nHere is the contract details:"
+                    + "\nClient Name: " + showContract.getShowMerchantName()
+                    + "\nClient Contact: " + showContract.getShowMerchantContact()
+                    + "\nShow Name: " + showContract.getShow().getShowName()
+                    + "\nShow Type: " + showContract.getShow().getShowType()
+                    + "\nShow Venue Rental Fee: " + rentalFee
+                    + "\nShow Ticket Commission Fee: " + ticketCommission
+                    + "\nTotal Ticket Revenue: "+ticketRevenue
+                    + "\nTotal Billing Amount: "+bill
+                    + "\nThe Billing Date: "+today
+                    + "\nThe bill has been attached within the email for your reference: if cannot view, please kindly let us know to mail it to you."
+                    + "\n\n For any queries, please contact our customer service managers @(0065)9272-8768. Thank you for your support!";
+            
+            //below generate a bill for contract bill
+            System.out.println("generateShowContractBill"); 
+       
+       //Below generate a PDF file 
+        Document document;
+        document = new Document(PageSize.A4, 50, 50, 50, 50);
+        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\ShowContractBill_"
+                + showContract.getShowMerchantName() + " "+showContract.getShowContractId() + ".pdf";
+
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+        document.open();
+        
+         //Below specify the font type 
+        Font catFont = new Font(Font.TIMES_ROMAN, 18,
+                Font.BOLD);
+        Font redFont = new Font(Font.TIMES_ROMAN, 12,
+                Font.NORMAL, Color.RED);
+        Font subFont = new Font(Font.TIMES_ROMAN, 16,
+                Font.BOLD);
+        Font tableFont;
+        tableFont = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.DARK_GRAY);
+        Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
+                Font.BOLDITALIC);
+
+        //Below specify contents 
+        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        Image image = Image.getInstance(imagePath);
+        document.add(image);
+
+        Paragraph preface = new Paragraph();
+        addEmptyLine(preface, 1);
+        preface.add(new Paragraph("Your contract bill is displayed as below: ", catFont));
+        addEmptyLine(preface, 1);
+
+        document.add(preface);
+        
+        //Below add a table 
+        PdfPTable table = new PdfPTable(2);
+        table.setSpacingAfter(30);
+        table.setSpacingBefore(30);
+        table.setWidths(new int[]{1, 3});
+
+        //Add table header 
+        PdfPCell c1 = new PdfPCell(new Phrase("Billing Info"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Details & Remarks"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        table.setHeaderRows(1);
+
+        //below add table contents
+        table.addCell("Client Name");
+        table.addCell(showContract.getShowMerchantName());
+        table.addCell("Show Contract Id (For reference)");
+        table.addCell(showContract.getShowContractId().toString());
+        table.addCell("Client Billing Address");
+        table.addCell(showContract.getShowMerchantAddress());
+        table.addCell("Show Name");
+        table.addCell(showContract.getShow().getShowName());
+        table.addCell("Ticket Revenue");
+        table.addCell(Double.toString(ticketRevenue));
+        table.addCell("Ticket Commission");
+        table.addCell(Double.toString(ticketCommission));
+        table.addCell("Venue Rent");
+        table.addCell(Double.toString(rentalFee));
+        table.addCell("Total Billing Amount");
+        table.addCell(Double.toString(bill));
+        
+        document.add(table);
+        document.close();
+            
+            
+            MimeBodyPart messageBodyPart;
+            MimeBodyPart textBodyPart;
+
+            Multipart multipart = new MimeMultipart();
+            messageBodyPart = new MimeBodyPart();
+            String file;
+            file = OUTPUTFILE;
+            //Below attach a file within the email 
+            String fileName = "CorelResort:Show Contract Bill";
+            messageBodyPart.setFileName(fileName);
+            messageBodyPart.attachFile(file);
+            //Below draft the contents of email 
+            textBodyPart = new MimeBodyPart();
+            textBodyPart.setText(textbody);
+
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(textBodyPart);
+
+            ((MimeMessage) message).setContent(multipart);
+
+
+            System.out.println("Sending");
+
+            Transport.send(message);
+
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+        
+    }
+    
+    public void sendEventContractBill(double serviceTotalCost,double venueRate,double finalBill,EventEntity event) throws DocumentException, DocumentException, BadElementException, MalformedURLException, FileNotFoundException, IOException
+    {
+        System.out.println("sendEventContractBill"); 
+        String email = event.getEmail();
+        
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+        
+         try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            message.setSubject("Corel Island Resort: Your event contract is available now!");
+            String textbody = "Greeting from Coral Island Resort!"
+                    + "\nDear Client: Your event contract is available now!"
+                    + "\nPlease look at the contract details below: "
+                    + "\n\n\nHere is the contract details:"
+                    + "\nClient Name: " + event.getTitle()+" "+event.getName()
+                    + "\nEvent Reference No.: " + event.getEventId()
+                    + "\nEvent Name: " + event.getEventName()
+                    + "\nEvent Type: " + event.getEventType()
+                    + "\nClient Billing Address: " + event.getAddress()
+                    + "\nTotal Service Cost: " + serviceTotalCost
+                    + "\nTotal Venue Cost: "+venueRate
+                    + "\nTotal Billing Amount: "+finalBill
+                    + "\nBilling Date: "+new Date()
+                    + "\nThe bill has been attached within the email for your reference: if cannot view, please kindly let us know to mail it to you."
+                    + "\n\n For any queries, please contact our customer service managers @(0065)9272-8768. Thank you for your support!";
+
+            System.out.println("EventContractBilling: text set already!"); 
+       
+       //Below generate a PDF file 
+        Document document;
+        document = new Document(PageSize.A4, 50, 50, 50, 50);
+        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\EventContractBill_"
+                + event.getName() + " " + event.getEventId() + ".pdf";
+
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+        document.open();
+        
+         //Below specify the font type 
+        Font catFont = new Font(Font.TIMES_ROMAN, 18,
+                Font.BOLD);
+        Font redFont = new Font(Font.TIMES_ROMAN, 12,
+                Font.NORMAL, Color.RED);
+        Font subFont = new Font(Font.TIMES_ROMAN, 16,
+                Font.BOLD);
+        Font tableFont;
+        tableFont = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.DARK_GRAY);
+        Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
+                Font.BOLDITALIC);
+
+        //Below specify contents 
+        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        Image image = Image.getInstance(imagePath);
+        document.add(image);
+
+        Paragraph preface = new Paragraph();
+        addEmptyLine(preface, 1);
+        preface.add(new Paragraph("Your event contract bill is displayed as below: ", catFont));
+        addEmptyLine(preface, 1);
+
+        document.add(preface);
+        
+        //Below add a table 
+        PdfPTable table = new PdfPTable(2);
+        table.setSpacingAfter(30);
+        table.setSpacingBefore(30);
+        table.setWidths(new int[]{1, 3});
+
+        //Add table header 
+        PdfPCell c1 = new PdfPCell(new Phrase("Contract Bill: Categories"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Details & Remarks"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        table.setHeaderRows(1);
+
+        //below add table contents
+        table.addCell("Client Name");
+        table.addCell(event.getName());
+        table.addCell("Client Billing Address");
+        table.addCell(event.getAddress());
+        table.addCell("Event ID");
+        table.addCell(event.getEventId().toString());
+        table.addCell("Event Name");
+        table.addCell(event.getEventName());
+        table.addCell("Event Type");
+        table.addCell(event.getEventType());
+        table.addCell("Service Booked");
+        table.addCell("");
+        
+            //Below add a sub-table for service booked 
+                PdfPTable table2 = new PdfPTable(2);
+                table2.setSpacingAfter(30);
+                table2.setSpacingBefore(30);
+                table2.setWidths(new int[]{1, 3});
+
+                //Add table header 
+                PdfPCell c2 = new PdfPCell(new Phrase("Service Booked: Categories"));
+                c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table2.addCell(c2);
+
+                c2 = new PdfPCell(new Phrase("Details & Remarks"));
+                c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table2.addCell(c2);
+
+                table2.setHeaderRows(1);
+                
+                List <EventBookingEntity> services = event.getBookings();
+                Iterator <EventBookingEntity> itr = services.iterator();
+                while(itr.hasNext())
+                {
+                    EventBookingEntity current = itr.next();
+                    
+                }
+        
+        document.add(table);
+        document.close();
+    }
+         catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void generateShowTicket(ShowTicketSaleEntity sts) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException
     {
        System.out.println("generateShowTicket"); 
