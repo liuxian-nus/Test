@@ -122,6 +122,33 @@
                         </table>
                     </div>
                 </section>
+                <section>
+                    <p class="title" data-section-title><a href="#">Food & Beverage </a></p>
+                    <div class="content" data-section-content>
+                        <table class="tablesorter">
+                            <thead>
+                            <th width="200">Serial Number</td>
+                            <th width="400">Event Service</td>
+                            <th width="200">Unit Price</td>
+                                </thead>
+                            <tbody>
+                            
+                                <tr>
+                                    <td width="200">001</td>
+                                    <td width="400">Deluxe Package</td>
+                                    <td width="200">$13.99/pax ($14.97w/GST)</td>
+                                </tr>
+                                <tr>
+                                    <td width="200">002</td>
+                                    <td width="400">Premium Package</td>
+                                    <td width="200">$16.99/pax ($18.18w/GST)</td>
+                                </tr>
+                            
+                            </tbody>
+                        </table>
+                        <input type="submit" value ="View Menu" class="small button"/>
+                    </div>
+                </section>                
                               
 
             </div>
