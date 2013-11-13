@@ -204,6 +204,7 @@ public class promotionManagedBean {
         String path2 = promotionManagedBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String[] fileNamePartsTest = path2.split("IRMS");
         String part1 = fileNamePartsTest[0];
+        part1 = part1.replaceAll("%20", " ");
         System.err.println("part 1:"+part1);
         File result = new File(part1 + "IRMS\\IRMS-war\\web\\images\\" + fileNameParts[0] + "." + fileNameParts[1]);
 
