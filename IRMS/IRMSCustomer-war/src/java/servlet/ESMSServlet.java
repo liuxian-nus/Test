@@ -10,6 +10,7 @@ import CEMS.session.EventSessionBean;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
+import ESMS.entity.ShowTicketSaleEntity;
 import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
 import java.io.IOException;
@@ -145,7 +146,9 @@ public class ESMSServlet extends HttpServlet {
                     Double ticTotal = 0.00;
                     List <ShowTicketEntity> list = thisShowSchedule.getShowTickets();
                     Iterator<ShowTicketEntity> itr = list.iterator();
+                    
                     List <Integer> totalQuant = new ArrayList();
+                    List <ShowTicketSaleEntity> totalTickets = new ArrayList();
                     int i=1;
                     
                     while(itr.hasNext())
@@ -154,12 +157,22 @@ public class ESMSServlet extends HttpServlet {
                         System.out.println("A ticket has been retrieved!"+i);
                         ticTotal+= current.getShowTicketPrice()*Integer.parseInt(request.getParameter("ticket"+i));
                         totalQuant.add(Integer.parseInt(request.getParameter("ticket"+i)));
+                        
+                        ShowTicketSaleEntity currentSale = new ShowTicketSaleEntity();
+                        currentSale.setShowTicketType(current.getShowTicketType());
+                        currentSale.setShowTicketQuantity(Integer.parseInt(request.getParameter("ticket"+i)));
+                        currentSale.setShowTicketPrice(current.getShowTicketPrice()*Integer.parseInt(request.getParameter("ticket"+i)));
+                        totalTickets.add(currentSale);
+                        
                         i++;
                     }
                     
                     System.out.println("The total price calculated is : "+ticTotal);
                     
+                    request.setAttribute("totalTickets", totalTickets);
                     request.setAttribute("ticTotal",ticTotal);
+                    
+                    //below no use any more
                     request.setAttribute("totalQuant", totalQuant);
                     request.setAttribute("showTickets", list);
                     request.setAttribute(temp, i);
