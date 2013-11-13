@@ -139,7 +139,7 @@ public class EventSessionBean {
                 System.out.println("EventSessionBean:CheckVenueAvailability: venue quota reached! ");
                 return null;
             }
-            Query q = em.createQuery("SELECT b FROM BookingEntity b WHERE b.venue.venueId ='" + venueId + "'");
+            Query q = em.createQuery("SELECT b FROM EventBookingEntity b WHERE b.venue.venueId ='" + venueId + "'");
             List<Date> unavailDates = new ArrayList<Date>();
 
             for (Object o : q.getResultList()) {
