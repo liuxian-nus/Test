@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template/generalTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:define name="content">
+
+        <h:form>
+            <p:growl id="msgs" sticky="true" showDetail="true"/>         
+            <p:wizard flowListener="#{addOutletTransactionManagedBean.onFlowProcess}">
+
+                <p:tab id="personal" title="Outlet">
+                    <p:panel header="Select Outlet">
+                        <h:messages errorClass="error"/>
+                        <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+                            <h:outputText value="Outlet ID*" />
+                            <h:selectOneMenu value ="#{addOutletTransactionManagedBean.outletId}" required ="true" requiredMessage="Outlet cannot be empty">
+                                <f:selectItem itemLabel="Select Outlet" itemValue="" />  
+                                <f:selectItems value="#{outletManagedBean.unavailableOutlets}" var="allOutlets" itemLabel="#{allOutlets.id}" itemValue="#{allOutlets.id}" />  
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="Member: *" />
+                            <h:selectOneMenu value ="#{addOutletTransactionManagedBean.memberId}" >
+                                <f:selectItem itemLabel="Select Outlet" itemValue="" />  
+                                <f:selectItems value="#{memberManagedBean.allMembers}" var="allOutlets" itemLabel="#{allOutlets.memberEmail}" itemValue="#{allOutlets.memberEmail}" />  
+                            </h:selectOneMenu> 
+
+
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+
+
+                <p:tab id="information" title="Add Transaction">
+                    <p:panel header="Add Transactions">
+                        <h:panelGrid columns="2" id="grid">
+                            <h:outputLabel value="Item ID : *"></h:outputLabel>
+                            <h:selectOneMenu value ="#{addOutletTransactionManagedBean.itemId}" required ="true" requiredMessage="Item ID cannot be empty">
+                                <f:selectItem itemLabel="Select Outlet" itemValue="" />  
+                                <f:selectItems value="#{addOutletTransactionManagedBean.allItems}" var="items" itemLabel="#{items.id}" itemValue="#{items.id}" />  
+                                <p:ajax update="amounts names" listener="#{addOutletTransactionManagedBean.handleItemChanges()}" />
+                            </h:selectOneMenu> 
+                            <h:outputText value=""/>
+                            <h:outputText value=""/>
+
+
+                            <h:outputLabel value="Item Amount : *" ></h:outputLabel>
+                            <h:outputText id="amounts" value="#{addOutletTransactionManagedBean.itemtransaction.item.itemPrice}" />
+                            <h:outputText value=""/>
+                            <h:outputText value=""/>
+                            
+                            <h:outputLabel value="Item Name : *" ></h:outputLabel>
+                            <h:outputText id="names" value="#{addOutletTransactionManagedBean.itemtransaction.item.itemName}" />
+                            <h:outputText value=""/>
+                            <h:outputText value=""/>
+
+                            <h:outputLabel value="Quantity : *" ></h:outputLabel>
+                            <p:inputText id="txt_author" required="true" 
+                                         value="#{addOutletTransactionManagedBean.itemtransaction.quantity}" >
+                                <p:ajax update="booksTable" listener="#{addOutletTransactionManagedBean.handleAmountChanges()}" />
+                            </p:inputText>
+                            <h:outputText value=""/>
+                            <h:outputText value=""/>
+
+                            <p:commandButton value="Reset" type="reset"/>
+                            <p:commandButton id="btn_add" value="Add" update="booksTable msgs @parent"
+                                             action="#{addOutletTransactionManagedBean.reinit}" >
+                                <p:collector value="#{addOutletTransactionManagedBean.itemtransaction}" 
+                                             addTo="#{addOutletTransactionManagedBean.itemtransactions}" />
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:outputPanel id="books">
+                        <p:dataTable id="booksTable" value="#{addOutletTransactionManagedBean.itemtransactions}" var="transaction">
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Name" />
+                                </f:facet>
+                                <h:outputText value="#{transaction.item.itemName}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Quantity" />
+                                </f:facet>
+                                <h:outputText value="#{transaction.quantity}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Total Amount" />
+                                </f:facet>
+                                <h:outputText value="#{transaction.total}" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Operation" />
+                                </f:facet>
+                                <p:commandLink value="Remove" update="booksTable" process="booksTable">
+                                    <p:collector value="#{transaction}"
+                                                 removeFrom="#{addOutletTransactionManagedBean.itemtransactions}" />
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+
+
+                </p:tab>
+
+
+            </p:wizard>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+<!--
+                          <p:autoComplete id="itemid" value="#{addOutletTransactionManagedBean.itemId}" required="true" requiredMessage="Item ID Cannot be Empty"   
+                                          completeMethod="#{addOutletTransactionManagedBean.completeItems()}" /> -->
