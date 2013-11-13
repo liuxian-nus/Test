@@ -6,7 +6,11 @@ package ATMS.session;
 
 import ATMS.entity.AttrExpressPassEntity;
 import ATMS.entity.ExpressPassPurchaseEntity;
+import Exception.ExistException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.TransactionAttribute;
@@ -22,9 +26,12 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class ExpressPassPurchaseSessionBean {
+    @EJB
+    private AttrExpressPassSessionBean attrExpressPassSessionBean;
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     private ExpressPassPurchaseEntity epp;
+    
     
     public ExpressPassPurchaseSessionBean(){
         
@@ -58,6 +65,27 @@ public class ExpressPassPurchaseSessionBean {
         double ticketPrice=ep.getAttrEPPrice();
         return ticketPrice*quantity;
     }
+    
+    public ExpressPassPurchaseEntity prepareEPForVIP() throws ExistException{
+        System.out.println("expressPassPurchaseSessionBean : prepareEPForVIP");
+        epp=new ExpressPassPurchaseEntity();
+        Date today=new Date();
+        
+        List<AttrExpressPassEntity> eps=epp.getAttrEPs();
+        AttrExpressPassEntity thisEP=attrExpressPassSessionBean.getEPById(Long.valueOf(String.valueOf(20)));
+        eps.add(thisEP);
+        epp.setAttrEPs(eps);
+        List<Integer> quantities=epp.getEpQuantities();
+        quantities.add(1);
+        epp.setEpQuantities(quantities);
+        epp.setEpFee(0);
+        epp.setEpBookDate(today);
+        epp.setEppStatus("Purchased");
+        epp.setEppRemarks("This express pass is for VIP only");
+        
+        addEPPurchase(epp);
+        return epp;
+    }
 
     public void persist(Object object) {
         em.persist(object);
@@ -83,6 +111,10 @@ public class ExpressPassPurchaseSessionBean {
 
     public void setEpp(ExpressPassPurchaseEntity epp) {
         this.epp = epp;
+    }
+
+    public void persist1(Object object) {
+        em.persist(object);
     }
 
 }

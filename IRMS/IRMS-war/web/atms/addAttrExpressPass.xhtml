@@ -14,7 +14,7 @@
                 <h:panelGrid columns="2">
 
                     <h:outputText value="Attraction Name:"/>
-                    <p:selectOneMenu value ="#{addExpressPassManagedBean.attrId}"  required ="true" requiredMessage="Attraction name cannot be empty">
+                    <p:selectOneMenu value ="#{addExpressPassManagedBean.attrId}">
                         <f:selectItem itemLabel="Select Attraction name" itemValue="" /> 
                         <f:selectItems value="#{addExpressPassManagedBean.attractionSessionBean.allAttractions}" var="allAttractions" itemLabel="#{allAttractions.attrName}" itemValue="#{allAttractions.attrId}" />  
                     </p:selectOneMenu>

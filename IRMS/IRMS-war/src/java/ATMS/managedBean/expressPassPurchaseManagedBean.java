@@ -19,6 +19,9 @@ import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
 import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.DocumentException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -248,7 +251,7 @@ public class expressPassPurchaseManagedBean {
             }
             generateBarcodeSessionBean.generate(String.valueOf(epp.getEppId()));
             String inputfile=emailSessionBean.createTicketExpress(epp);
-            System.out.println("ticket purchase success!");
+            System.out.println("express pass purchase success!");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when purchase ticket", ""));
             return;
@@ -343,6 +346,22 @@ public class expressPassPurchaseManagedBean {
             System.out.println("coupon code not entered");
             coupon=null;
         }
+    }
+    
+    public void prepareEPForVIP(ActionEvent event){
+        System.out.println("prepareEPForVIP");
+        try{
+            epp=expressPassPurchaseSessionBean.prepareEPForVIP();
+            System.out.println("start prepare ticket");
+            generateBarcodeSessionBean.generate(String.valueOf(epp.getEppId()));
+            String inputfile = emailSessionBean.createTicketExpress(epp);
+            System.out.println("express pass for VIP set success!");
+        }catch (Exception e){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when create EP for VIP", ""));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Express pass for VIP created.", ""));
+        
     }
     
     public void oneMore(ActionEvent event) throws IOException {

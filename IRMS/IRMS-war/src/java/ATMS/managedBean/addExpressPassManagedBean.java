@@ -52,8 +52,10 @@ public class addExpressPassManagedBean {
         try{
             System.out.println("into addEPManagedBean: saveNewEP"); 
             attr=attractionSessionBean.getAttrById(attrId);
-            System.out.println("attr: "+attr.getAttrName());
-            ep.setAttr(attr);
+           // System.out.println("attr: "+attr.getAttrName());
+            if(attr!=null){
+                ep.setAttr(attr);
+            }         
             attrExpressPassSessionBean.addEP(ep);
             System.out.println("new EP added");
         }catch (Exception e){

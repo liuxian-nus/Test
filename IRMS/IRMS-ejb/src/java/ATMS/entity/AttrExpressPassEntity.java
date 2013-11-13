@@ -17,11 +17,13 @@ import javax.persistence.TableGenerator;
  * @author Jieqiong
  */
 @Entity
-@TableGenerator(name="seqEP", initialValue = 1)
+//@TableGenerator(name="seqEP", initialValue = 100)
 public class AttrExpressPassEntity implements Serializable {
     private static final long serialVersionUID = 1L;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seqEP")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seqEP")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long attrEPId;
     private String attrEPName;
     @ManyToOne
