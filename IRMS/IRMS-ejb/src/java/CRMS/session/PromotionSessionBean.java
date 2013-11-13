@@ -63,6 +63,13 @@ public class PromotionSessionBean {
         em.persist(promotion);
         em.flush();
     }
+    
+    public void cancelPromotion(PromotionEntity promotion) {
+        System.out.println("in promotion session bean: cancel promotion");
+        promotion.setPromotionStatus("expired");
+        em.merge(promotion);
+        em.flush();
+    }
 
     public List<PromotionEntity> getNormalPromotions() {
         Query q = em.createQuery("SELECT p FROM PromotionEntity p");
@@ -75,7 +82,6 @@ public class PromotionSessionBean {
             PromotionEntity current = itr.next();
             if (!(current.isPromotionMemberExclusive())) {
                 returnList.add(current);
-                System.out.println("Promotion Entity has been added!");
             }
         }
         return returnList;

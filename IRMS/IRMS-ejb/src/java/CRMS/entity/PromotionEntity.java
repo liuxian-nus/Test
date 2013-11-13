@@ -51,7 +51,7 @@ public class PromotionEntity implements Serializable {
     private String imagePath;
     private double responseRate;
     private String promotionStatus;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     private List<MemberEntity> mcMemberTargets;
 
     /*  public void create(Date startDate, Date endDate, String remarks, Set<MemberEntity> memberTargets) {
@@ -173,6 +173,7 @@ public class PromotionEntity implements Serializable {
     }
 
     public String getPromotionStatus() {
+//        System.out.println("promotion status is: " + promotionStatus);
         return promotionStatus;
     }
 

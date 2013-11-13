@@ -52,15 +52,20 @@ public class promotionManagedBean {
     private EvaluationSessionBean evaluationSessionBean;
     private List<PromotionEntity> promotions = new ArrayList<PromotionEntity>();
     private List<PromotionEntity> exclusivePromotions = new ArrayList<PromotionEntity>();
-    private PromotionEntity newPromotion;
+    private PromotionEntity newPromotion = new PromotionEntity();
+    private PromotionEntity thisPromotion = new PromotionEntity();
     private Long promotionId;
     private List<MemberEntity> participateMembers = new ArrayList<MemberEntity>();
     private MemberEntity member;
-    private boolean isMemberExclusive;
     private String targetGroup;
+    private String imageName;//image name 
+    private String fileName; //full path for preview
 
     public promotionManagedBean() {
         newPromotion = new PromotionEntity();
+        thisPromotion = new PromotionEntity(); 
+        member = new MemberEntity();
+        
     }
 
     @PostConstruct
@@ -105,6 +110,17 @@ public class promotionManagedBean {
             e.printStackTrace();
         }
     }
+    
+        public void cancelPromotion(ActionEvent event)throws IOException {
+        try {
+            System.out.println("in terminating promotion" + thisPromotion.getPromotionTitle());
+            promotionSessionBean.cancelPromotion(thisPromotion);
+        }catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when terminating promotion", ""));
+         }
+          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Now this promotion is terminated", ""));
+
+    }
 
     public List<MemberEntity> getPromotionMembers(ActionEvent event) throws IOException, ExistException {
         System.err.println("looking for participating members of given promotion id");
@@ -121,14 +137,15 @@ public class promotionManagedBean {
     public void onRowToggle(ToggleEvent event) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Row State " + event.getVisibility(),
-                "Model:" + ((PromotionEntity) event.getData()).getPromotionTitle());
+                "Model:" + ((PromotionEntity) event.getData()).getPromotionId());
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void setMemberExclusive() throws IOException, ExistException {
         try {
-            this.isMemberExclusive = true;
+            newPromotion.setPromotionMemberExclusive(true);
+            newPromotion.setMcMemberTargets(memberSessionBean.getAllMembers());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion set to target to all members.", ""));
 
         } catch (Exception e) {
@@ -139,7 +156,8 @@ public class promotionManagedBean {
 
     public void setNotMemberExclusive() throws IOException, ExistException {
         try {
-            this.isMemberExclusive = false;
+            newPromotion.setPromotionMemberExclusive(false);
+            newPromotion.setMcMemberTargets(null);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion set to target to all customers.", ""));
 
         } catch (Exception e) {
@@ -150,7 +168,7 @@ public class promotionManagedBean {
 
     public void setVIPExclusive() throws IOException, ExistException {
         try {
-            this.isMemberExclusive = true;
+            newPromotion.setPromotionMemberExclusive(true);
             newPromotion.setMcMemberTargets(vipSessionBean.getVIPs());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion is set to target to VIP only.", ""));
 
@@ -162,7 +180,7 @@ public class promotionManagedBean {
 
     public void setRFMExclusive() throws IOException, ExistException {
         try {
-            this.isMemberExclusive = true;
+            newPromotion.setPromotionMemberExclusive(true);
             newPromotion.setMcMemberTargets(evaluationSessionBean.getTieredBasedOnRFM());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion is set to target to RFM only.", ""));
 
@@ -174,7 +192,7 @@ public class promotionManagedBean {
 
     public void setLifeValueExclusive() throws IOException, ExistException {
         try {
-            this.isMemberExclusive = true;
+            newPromotion.setPromotionMemberExclusive(true);
             newPromotion.setMcMemberTargets(evaluationSessionBean.getTieredBasedOnCustLifeValue());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion is set to target to life value only.", ""));
 
@@ -186,7 +204,7 @@ public class promotionManagedBean {
 
     public void setSizeOWExclusive() throws IOException, ExistException {
         try {
-            this.isMemberExclusive = true;
+            newPromotion.setPromotionMemberExclusive(true);
             newPromotion.setMcMemberTargets(evaluationSessionBean.getTieredBasedOnSizeOfWallet());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion is set to target to size of wallet only.", ""));
 
@@ -207,7 +225,8 @@ public class promotionManagedBean {
         part1 = part1.replaceAll("%20", " ");
         System.err.println("part 1:"+part1);
         File result = new File(part1 + "IRMS\\IRMS-war\\web\\images\\" + fileNameParts[0] + "." + fileNameParts[1]);
-
+        System.out.println("fileNameParts[0] is: " + fileNameParts[0]);
+        this.setImageName(fileNameParts[0]);//set image name for preview
         FileOutputStream out = new FileOutputStream(result);
 
         int a;
@@ -216,6 +235,7 @@ public class promotionManagedBean {
 
         InputStream is = event.getFile().getInputstream();
         String fileName = result.getName();
+        this.setFileName(fileName);
         promotionSessionBean.uploadImage(promotionId, fileName);
         System.err.println(fileName);
         while (true) {
@@ -248,14 +268,6 @@ public class promotionManagedBean {
         this.vipSessionBean = vipSessionBean;
     }
 
-    public boolean isIsMemberExclusive() {
-        return isMemberExclusive;
-    }
-
-    public void setIsMemberExclusive(boolean isMemberExclusive) {
-        this.isMemberExclusive = isMemberExclusive;
-    }
-
     public String getTargetGroup() {
         return targetGroup;
     }
@@ -276,6 +288,14 @@ public class promotionManagedBean {
         return promotions;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public void setPromotions(List<PromotionEntity> promotions) {
         this.promotions = promotions;
     }
@@ -284,6 +304,17 @@ public class promotionManagedBean {
         return newPromotion;
     }
 
+    public PromotionEntity getThisPromotion() {
+        System.out.println("target promotion: "+ thisPromotion.getPromotionTitle());
+        return thisPromotion;
+    }
+
+    public void setThisPromotion(PromotionEntity thisPromotion) {
+        this.thisPromotion = thisPromotion;
+    }
+    
+    
+
     public void setNewPromotion(PromotionEntity newPromotion) {
         this.newPromotion = newPromotion;
     }
@@ -291,6 +322,26 @@ public class promotionManagedBean {
     public Long getPromotionId() {
         return promotionId;
     }
+
+    public EvaluationSessionBean getEvaluationSessionBean() {
+        return evaluationSessionBean;
+    }
+
+    public void setEvaluationSessionBean(EvaluationSessionBean evaluationSessionBean) {
+        this.evaluationSessionBean = evaluationSessionBean;
+    }
+
+    public String getImageName() {
+        System.out.println("image name is : " +imageName);
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        System.out.println("imageName set to: " +imageName);
+        this.imageName = imageName;
+    }
+    
+    
 
     public void setPromotionId(Long promotionId) {
         this.promotionId = promotionId;
@@ -320,7 +371,4 @@ public class promotionManagedBean {
         this.member = member;
     }
 
-    public boolean isMemberExclusive() {
-        return isMemberExclusive;
-    }
 }

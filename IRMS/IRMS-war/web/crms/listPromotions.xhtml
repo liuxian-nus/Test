@@ -78,7 +78,7 @@
                     <h:panelGrid id="upload" columns="2">
 
                         <h:outputText value="Promotion Code: "/>
-                        <p:selectOneMenu value="#{promotionManagedBean.promotionId}">  
+                        <p:selectOneMenu value="#{promotionManagedBean.promotionId}" style="width: 150px">  
                             <f:selectItem itemLabel="Select Promotion" itemValue=""/>
                             <f:selectItems value="#{promotionManagedBean.promotions}" var="allShow" itemLabel="#{allShow.promotionId}: #{allShow.promotionCode}" itemValue="#{allShow.promotionId}" />  
                         </p:selectOneMenu>
@@ -106,12 +106,14 @@
 
             <p:tab id="tab1" title="Promotion List">  
                 <h:form id="form"> 
+                    <p:growl id="growl" showDetail="true" sticky="true" />                    
+
                     <p:dataTable id="promtions" value="#{promotionManagedBean.promotions}" var="promotions" paginator="true" rows="10">
                         <p:column style="width:2%">  
                             <p:rowToggler />  
                         </p:column> 
 
-                        <p:column id="idColumn" filterBy="#{promotions.promotionId}" headerText="ID" filterMatchMode="contains">  
+                        <p:column id="idColumn" style="width:20px" filterBy="#{promotions.promotionId}" headerText="ID" filterMatchMode="contains">  
                             <h:outputText value="#{promotions.promotionId}"/>
                         </p:column>
 
@@ -139,6 +141,22 @@
                         <p:column id="discountColumn" filterBy="#{promotions.discount}" headerText="Department: " filterMatchMode="contains">
                             <h:outputText value="#{promotions.discount}"/>
                         </p:column>
+                        <p:column style="width:100px">  
+                            <f:facet name="header">Action</f:facet>
+                            <p:commandButton rendered="#{promotions.promotionStatus == 'active'}" oncomplete="confirmation1.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Terminate" title="Terminate the Promotion">  
+                                <f:setPropertyActionListener target="#{promotionManagedBean.thisPromotion}" value="#{promotions}"/>  
+                            </p:commandButton>
+
+                            <h:outputText rendered="#{promotions.promotionStatus =='expired'}" value="Expired" >  
+                            </h:outputText>  
+                        </p:column>
+
+                        <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation1"> 
+                            <h:outputText value="Do you want to terminate the promotion?"/> 
+                            <p:commandButton value="Yes" onclick="growl;" update ="promotions" actionListener="#{promotionManagedBean.cancelPromotion}" oncomplete="confirmation1.hide()">  
+                            </p:commandButton>
+                            <p:commandButton value="Cancel" onclick="confirmation1.hide()" type="button" />  
+                        </p:dialog> 
 
                         <p:rowExpansion>  
                             <h:panelGrid id="display" columns="2" cellpadding="4" style="width:400px;"  
@@ -147,6 +165,8 @@
                                 <f:facet name="Title">  
                                     #{promotions.promotionTitle}
                                 </f:facet>  
+                                <p:graphicImage id="playerImage" value="/images/#{promotions.imagePath}" alt="#{promotions.imagePath}" title="#{promotions.promotionTitle}"/>  
+                                <h:outputText value="" />  
                                 <h:outputText value="Department:" />  
                                 <h:outputText id="department" value="#{promotions.promotionDepartment}"  style="width:400px;"  >  
                                 </h:outputText>
