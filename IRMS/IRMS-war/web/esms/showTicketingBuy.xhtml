@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-        <p:tabView style="width: 1000px;">
+        <p:tabView >
             <p:tab id="tab3" title="Buy Ticket">
                 <h:form id="tab3form">
                     <p:growl id="tab3msg"/>
@@ -39,6 +39,12 @@
                         <p:inputText value="#{showTicketingManagedBean.showTicketQuota}"/>
                         <h:outputText value=""/><br/>
 
+                        <h:outputText value="Coupon Code: "/>
+                        <p:inputText value="#{showTicketingManagedBean.couponId}"/>
+                        <h:outputText value="(if applicable)"/><br/>
+
+                        <h:outputText value=""/><br/>
+
                         <h:outputText value="Member: "/>
                         <p:selectOneRadio id="options" value="#{showTicketingManagedBean.isMember}" onchange="this.form.submit()">  
                             <f:selectItem itemLabel="Member" itemValue='true' />  
@@ -47,12 +53,52 @@
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Member Email: " rendered="#{showTicketingManagedBean.isMember}"/>
-                        <p:autoComplete required="true" requiredMessage="Email cannot be empty" id="name" value="#{showTicketingManagedBean.memberTransaction.memberEmail}" rendered="#{showTicketingManagedBean.isMember}" completeMethod="#{showTicketingManagedBean.completeMember}" />
+                        <p:autoComplete id="name" value="#{showTicketingManagedBean.memberTransaction.memberEmail}" rendered="#{showTicketingManagedBean.isMember}" completeMethod="#{showTicketingManagedBean.completeMember}" />
                         <h:outputText value=""/><br/>
 
 
                         <p:commandButton value="Buy ticket" ajax="true" actionListener="#{showTicketingManagedBean.buyTicket}" update="tab3msg"/>
-                        <p:commandButton value="Buy ticket with coins" ajax="true" actionListener="#{showTicketingManagedBean.buyTicketWithCoins}" update="tab3msg"/>
+                        
+                    </h:panelGrid>
+                </h:form>
+            </p:tab>
+
+            <p:tab id="tab1" title="Buy Ticket With Coins">
+                <h:form id="tab1form">
+                    <p:growl id="tab1msg"/>
+                    <h:panelGrid id="grid1" columns="2">
+                        <h:outputText value="Show Name: "/>
+                        <p:selectOneMenu value="#{showTicketingManagedBean.showId}" required="true" requiredMessage="Show name cannot be empty">  
+                            <f:selectItem itemLabel="Select Show" itemValue=""/>
+                            <f:selectItems value="#{showTicketingManagedBean.showSessionBean.availableShows}" var="allShow" itemLabel="#{allShow.showName}" itemValue="#{allShow.showId}" />  
+                            <p:ajax update="schedules1" listener="#{showTicketingManagedBean.handleShowChanges}" />
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Show Schedule: "/>
+                        <p:selectOneMenu id="schedules1" value="#{showTicketingManagedBean.showScheduleId}"  required="true" requiredMessage="Show schedule cannot be empty">  
+                            <f:selectItem itemLabel="Select Show Schedule" itemValue=""/>
+                            <f:selectItems value="#{showTicketingManagedBean.showSchedules}" var="allShowSchedule" itemLabel="#{allShowSchedule.startDateTime}" itemValue="#{allShowSchedule.showScheduleId}" /> 
+                            <p:ajax update="tickets1" listener="#{showTicketingManagedBean.handleShowScheduleChanges}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Show Ticket: "/>
+                        <p:selectOneMenu id="tickets1" value="#{showTicketingManagedBean.showTicketId}"  required="true" requiredMessage="Show ticket cannot be empty">  
+                            <f:selectItem itemLabel="Select Show Ticket" itemValue=""/>
+                            <f:selectItems value="#{showTicketingManagedBean.showTickets}" var="allShowTicket" itemLabel="#{allShowTicket.showTicketType}:#{allShowTicket.showTicketPrice}(per ticket): #{allShowTicket.showTicketQuota} left" itemValue="#{allShowTicket.showTicketId}" />            
+                        </p:selectOneMenu>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Show Ticket Quantity: "/>
+                        <p:inputText value="#{showTicketingManagedBean.showTicketQuota}"  required="true" requiredMessage="Quantity cannot be empty"/>
+                        <h:outputText value=""/><br/>
+
+                        <h:outputText value="Member Email: " />
+                        <p:autoComplete required="true" requiredMessage="Member email cannot be empty!" id="name1" value="#{showTicketingManagedBean.memberTransaction.memberEmail}" completeMethod="#{showTicketingManagedBean.completeMember}" />
+                        <h:outputText value=""/><br/>
+
+                        <p:commandButton value="Buy ticket with coins" ajax="true" actionListener="#{showTicketingManagedBean.buyTicketWithCoins}" update="tab1msg"/>
 
                     </h:panelGrid>
                 </h:form>

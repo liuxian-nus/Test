@@ -4,8 +4,10 @@
  */
 package ESMS.managedBean;
 
+import CRMS.entity.CouponEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.MemberTransactionEntity;
+import CRMS.session.CouponSessionBean;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
 import ERMS.entity.EmployeeEntity;
@@ -51,10 +53,15 @@ public class ShowTicketingManagedBean {
     MemberTransactionSessionBean memberTransactionSessionBean;
     @EJB
     MemberSessionBean memberSessionBean;
+    @EJB
+    CouponSessionBean couponSessionBean;
     private ShowEntity selectedShow;
     private ShowScheduleEntity selectedShowSchedule;
     private ShowTicketEntity selectedShowTicket;
     private ShowTicketSaleEntity selectedShowTicketSale;
+    private MemberTransactionEntity memberTransaction;
+    private MemberEntity member;
+    private CouponEntity coupon;
     private List<ShowEntity> showList;
     private List<ShowScheduleEntity> showSchedules;
     private List<ShowTicketEntity> showTickets = new ArrayList<ShowTicketEntity>();
@@ -65,8 +72,7 @@ public class ShowTicketingManagedBean {
     private boolean mode;
     private int showTicketQuota;// number of tickets bought
     private boolean isMember;
-    private MemberTransactionEntity memberTransaction;
-    private MemberEntity member;
+    private Long couponId;
 
     //Constructor
     public ShowTicketingManagedBean() {
@@ -161,12 +167,12 @@ public class ShowTicketingManagedBean {
         }
     }
 
-    public void buyTicket() throws IOException {
+    public void buyTicket() throws IOException, ExistException {
         System.err.println("buying ticket from ticket office: ");
         System.out.println("showId: " + showId);
         System.out.println("showSchedule: " + showScheduleId);
         System.out.println("showTicket: " + showTicketId);
-
+        System.out.println("coupon: " + couponId);
         //email from page
         String email1 = memberTransaction.getMemberEmail();
         //email from database
@@ -201,16 +207,28 @@ public class ShowTicketingManagedBean {
             if (email2 != null) {
                 selectedShowTicketSale.setMemberEmail(email2);
             }
+            
+            Date dt = new Date();
+            double transactionAmt = selectedShowTicket.getShowTicketPrice() * showTicketQuota;
+            if (couponId != null) {
+                coupon = couponSessionBean.getCouponById(couponId);
+                if (coupon != null && couponSessionBean.couponIsValid(coupon, dt)) {
+                    couponSessionBean.useCoupon(coupon, dt, "entertainment show");
+                    transactionAmt = couponSessionBean.getDiscountPrice(coupon, transactionAmt);
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Invalid coupon code.", ""));
+                    return;
+                }
+            }
 
             showTicketSessionBean.updateQuantity(showTicketId, showTicketQuota);
             showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
 
             if (memberTransaction.getMemberEmail() != null) {
-                Date dt = new Date();
+
                 System.err.println("Date today: " + dt);
                 memberTransaction.setMtDate(dt);
-                memberTransaction.setMtDepartment("Entertainment Show");
-                double transactionAmt = selectedShowTicket.getShowTicketPrice() * showTicketQuota;
+                memberTransaction.setMtDepartment("entertainment show");
                 memberTransaction.setMtAmount(transactionAmt);
                 System.err.println("Transaction Amt: " + transactionAmt);
                 memberTransaction.setMtMode(false);
@@ -272,10 +290,10 @@ public class ShowTicketingManagedBean {
                 member = memberSessionBean.getMemberByEmail(email2);
             }
 
-            if (member.getCoin() > selectedShowTicket.getShowTicketPrice()*showTicketQuota) {
+            if (member.getCoin() > selectedShowTicket.getShowTicketPrice() * showTicketQuota) {
 
                 showTicketSessionBean.updateQuantity(showTicketId, showTicketQuota);
-                member.setCoin(member.getCoin() - selectedShowTicket.getShowTicketPrice()*showTicketQuota);
+                member.setCoin(member.getCoin() - selectedShowTicket.getShowTicketPrice() * showTicketQuota);
                 memberSessionBean.updateMember(member);
                 showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
 
@@ -283,7 +301,7 @@ public class ShowTicketingManagedBean {
                     Date dt = new Date();
                     System.err.println("Date today: " + dt);
                     memberTransaction.setMtDate(dt);
-                    memberTransaction.setMtDepartment("Entertainment Show");
+                    memberTransaction.setMtDepartment("entertainment show");
                     memberTransaction.setMtAmount(selectedShowTicket.getShowTicketPrice() * showTicketQuota);
                     System.err.println("Transaction Amt: " + selectedShowTicket.getShowTicketPrice() * showTicketQuota);
                     memberTransaction.setMtMode(false);
@@ -298,7 +316,6 @@ public class ShowTicketingManagedBean {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Not enough coins.", ""));
             }
         }
-
     }
 
     public void changeMode() {
@@ -456,5 +473,45 @@ public class ShowTicketingManagedBean {
 
     public void setMemberTransaction(MemberTransactionEntity memberTransaction) {
         this.memberTransaction = memberTransaction;
+    }
+
+    public MemberTransactionSessionBean getMemberTransactionSessionBean() {
+        return memberTransactionSessionBean;
+    }
+
+    public void setMemberTransactionSessionBean(MemberTransactionSessionBean memberTransactionSessionBean) {
+        this.memberTransactionSessionBean = memberTransactionSessionBean;
+    }
+
+    public MemberSessionBean getMemberSessionBean() {
+        return memberSessionBean;
+    }
+
+    public void setMemberSessionBean(MemberSessionBean memberSessionBean) {
+        this.memberSessionBean = memberSessionBean;
+    }
+
+    public Long getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(Long couponId) {
+        this.couponId = couponId;
+    }
+
+    public MemberEntity getMember() {
+        return member;
+    }
+
+    public void setMember(MemberEntity member) {
+        this.member = member;
+    }
+
+    public CouponEntity getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(CouponEntity coupon) {
+        this.coupon = coupon;
     }
 }

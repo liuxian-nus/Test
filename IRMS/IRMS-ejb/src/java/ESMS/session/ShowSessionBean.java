@@ -44,7 +44,7 @@ public class ShowSessionBean implements ShowSessionBeanRemote {
         Iterator<ShowEntity> itr = temp.iterator();
         while (itr.hasNext()) {
             show = itr.next();
-            if (show.isShowStatus()==true) {
+            if (show.isShowStatus()==true && show.isShowPaymentStatus()==false) {
                 shows.add(show);
             }
         }
