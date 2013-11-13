@@ -68,7 +68,7 @@ public class OutletTransactionTesting {
         OutletTransactionEntity test = new OutletTransactionEntity();
         test.setTransactionAmount(transactionAmount);
         test.setTransactionDate(transactionDate);
-        test.setTransactionOutlet(oe);
+//        test.setTransactionOutlet(oe);
         
         OutletTransactionEntity added = OutletTransactionSessionBean.addTransaction(test);
         assertNotNull(added);
