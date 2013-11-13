@@ -340,7 +340,7 @@ public class EventSessionBean {
         Iterator<EventEntity> itr = eventList.iterator();
         while (itr.hasNext()) {
             ee = itr.next();
-            if (ee.getStatus().equalsIgnoreCase("Confirmed")&&ee.isPaymentStatus()==false) {
+            if (ee.getStatus().equalsIgnoreCase("Confirmed")&&ee.isPaymentStatus()==false&&(!ee.getEventType().equalsIgnoreCase("show"))) {
                 requests.add(ee);
             }
         }
