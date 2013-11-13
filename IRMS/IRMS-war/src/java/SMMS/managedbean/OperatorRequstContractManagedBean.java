@@ -11,6 +11,7 @@ import SMMS.entity.ContracteventEntity;
 import SMMS.session.ContractSessionBean;
 import SMMS.session.ContracteventSessionBean;
 import java.io.IOException;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -38,6 +39,11 @@ public class OperatorRequstContractManagedBean {
     private Long contractId;
     private ContracteventEntity cevent;
     private boolean editMode = false;
+    private Date eventStartDate;  
+    private Date eventEndDate;
+    private double eventMonthRate;
+    private double eventEarlyCharge;
+    private double eventCommissionRate;
 
     /**
      * Creates a new instance of OperatorRequstContractManagedBean
@@ -164,13 +170,22 @@ public class OperatorRequstContractManagedBean {
     public void renew(ActionEvent event) throws ExistException {
         System.out.println("in generating contract renew" + contract.getContractId());
         try {
-            cevent.setEventStatus("renew");
-            cevent.setEventContract(contract);
-            contracteventSessionBean.addContractevent(cevent);
-            System.out.println("after creating new contract event" + cevent.getContracteventId());
+            System.out.println("what is the commission now?" + eventCommissionRate);
+            System.out.println("what is the commission now?" + eventEarlyCharge);
+            System.out.println("what is the commission now?" + eventMonthRate);
+            ContracteventEntity cevent2 = new ContracteventEntity();
+            cevent2.setEventCommissionRate(eventCommissionRate);
+            cevent2.setEventEarlyCharge(eventEarlyCharge);
+            cevent2.setEventMonthRate(eventMonthRate);
+            cevent2.setEventStartDate(eventStartDate);
+            cevent2.setEventEndDate(eventEndDate);
+            cevent2.setEventStatus("renew");
+            cevent2.setEventContract(contract);
+            contracteventSessionBean.addContractevent(cevent2);
+            System.out.println("after creating new contract event" + cevent2.getContracteventId());
 
 
-            contractSessionBean.addContractevent(contract.getContractId(), cevent.getContracteventId());// adding new event to contract, merge contract entity
+            contractSessionBean.addContractevent(contract.getContractId(), cevent2.getContracteventId());// adding new event to contract, merge contract entity
             System.out.println("after adding contract event" + cevent.getContracteventId());
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when renewing new contract", ""));
@@ -237,5 +252,45 @@ public class OperatorRequstContractManagedBean {
         this.editMode = editMode;
         System.out.println("edit more is " + editMode);
 
+    }
+    
+    public Date getEventStartDate() {
+        return eventStartDate;
+    }
+
+    public void setEventStartDate(Date eventStartDate) {
+        this.eventStartDate = eventStartDate;
+    }
+
+    public Date getEventEndDate() {
+        return eventEndDate;
+    }
+
+    public void setEventEndDate(Date eventEndDate) {
+        this.eventEndDate = eventEndDate;
+    }
+
+    public double getEventMonthRate() {
+        return eventMonthRate;
+    }
+
+    public void setEventMonthRate(double eventMonthRate) {
+        this.eventMonthRate = eventMonthRate;
+    }
+
+    public double getEventEarlyCharge() {
+        return eventEarlyCharge;
+    }
+
+    public void setEventEarlyCharge(double eventEarlyCharge) {
+        this.eventEarlyCharge = eventEarlyCharge;
+    }
+
+    public double getEventCommissionRate() {
+        return eventCommissionRate;
+    }
+
+    public void setEventCommissionRate(double eventCommissionRate) {
+        this.eventCommissionRate = eventCommissionRate;
     }
 }

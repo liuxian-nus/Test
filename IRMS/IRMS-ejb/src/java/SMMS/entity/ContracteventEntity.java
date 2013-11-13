@@ -42,6 +42,7 @@ public class ContracteventEntity implements Serializable {
     private double eventDeposit;
     @ManyToOne(cascade={CascadeType.MERGE}) ///not necessarily need this lah
     private ContractEntity contract = new ContractEntity();
+    
 
 
     public Date getEventDownDate() {

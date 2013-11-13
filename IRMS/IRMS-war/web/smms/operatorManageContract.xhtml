@@ -204,23 +204,23 @@
                     <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Update" widgetVar="update"> 
                         <h:panelGrid columns="3" cellpadding="10" id="update">                         
                             <h:outputText value="Commission Rate:"/>
-                            <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventCommissionRate}"/>
+                            <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{operatorRequstContractManagedBean.eventCommissionRate}"/>
                             <h:outputText value=""/>
 
                             <h:outputText value="Monthly Rate:"/>
-                            <p:inputText  title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventMonthRate}"/>
+                            <p:inputText  title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{operatorRequstContractManagedBean.eventMonthRate}"/>
                             <h:outputText value=""/>
 
                             <h:outputText value="Early Termination charge:"/>
-                            <p:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventEarlyCharge}"/>
+                            <p:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{operatorRequstContractManagedBean.eventEarlyCharge}"/>
                             <h:outputText value=""/>
 
                             <h:outputText value="Starting Date:"/>
-                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventStartDate}" /> 
+                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.eventStartDate}" /> 
                             <h:outputText value=""/>
 
                             <h:outputText value="Ending Date:"/>
-                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventEndDate}" /> 
+                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.eventEndDate}" /> 
                             <h:outputText value=""/>
 
 
