@@ -170,7 +170,7 @@ public class ACMSServlet extends HttpServlet {
                     System.err.println("error occured when adding reservation in servlet");
                     e.printStackTrace();
                 }
-
+                /*
                 if (true) {//add in conditions later
                     System.out.println("start generate coupon");
                     CouponTypeEntity ct = couponTypeSessionBean.getAllCouponTypes().get(0);
@@ -181,7 +181,7 @@ public class ACMSServlet extends HttpServlet {
                     coupon = couponSessionBean.generateCoupon(today, member, ct);
                 }
                 session.setAttribute("coupon", coupon);
-
+                */
 
 
                 request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
@@ -191,7 +191,13 @@ public class ACMSServlet extends HttpServlet {
                 data = reservationSessionBean.getReservationById(reservationId);
                 System.out.println("***hotel modify***");
                 request.getRequestDispatcher("/hotelModify.jsp").forward(request, response);
-            } else if ("hotelCancel".equals(page)) {
+            } else if ("hotelPayPalConfirm".equals(page)) {
+                 System.out.println("***hotel paypal confirmation***");
+              
+                data = (ReservationEntity) session.getAttribute("data");
+                data.setRcCreditCardNo(request.getParameter("cardNo"));
+                request.getRequestDispatcher("/hotelPayPalConfirm.jsp").forward(request, response);
+            }else if ("hotelCancel".equals(page)) {
 
                 System.out.println("***hotel cancel***");
 
