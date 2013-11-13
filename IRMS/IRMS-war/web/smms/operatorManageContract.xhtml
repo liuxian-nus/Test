@@ -200,47 +200,36 @@
                     </p:dialog> 
 
 
-                    <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="update"> 
-                        <h:panelGrid columns="2" cellpadding="10" id="update">                         
+
+                    <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Update" widgetVar="update"> 
+                        <h:panelGrid columns="3" cellpadding="10" id="update">                         
                             <h:outputText value="Commission Rate:"/>
-                            <p:inplace rendered="#{operatorRequstContractManagedBean.editMode}" > 
-                                <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{operatorRequstContractManagedBean.contract.last.eventCommissionRate}"/>
-                            </p:inplace>
+                            <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventCommissionRate}"/>
                             <h:outputText value=""/>
 
                             <h:outputText value="Monthly Rate:"/>
-                            <p:inplace rendered="#{operatorRequstContractManagedBean.editMode}">
-                                <p:inputText title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{operatorRequstContractManagedBean.contract.last.eventMonthRate}"/>
-                            </p:inplace>
+                            <p:inputText  title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventMonthRate}"/>
                             <h:outputText value=""/>
 
                             <h:outputText value="Early Termination charge:"/>
-                            <p:inplace rendered="#{operatorRequstContractManagedBean.editMode}">
-                                <p:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{operatorRequstContractManagedBean.contract.last.eventEarlyCharge}"/>
-                            </p:inplace>
+                            <p:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventEarlyCharge}"/>
                             <h:outputText value=""/>
 
                             <h:outputText value="Starting Date:"/>
-                            <p:inplace id="selectableInplace" rendered="#{operatorRequstContractManagedBean.editMode}" label="contract start date" effectSpeed="fast" event="dblclick"> 
-                                <p:calendar pattern="yyyy-MM-dd" mindate="#{operatorRequstContractManagedBean.contract.last.eventEndDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.contract.last.eventStartDate}" /> 
-                            </p:inplace>
+                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventStartDate}" /> 
                             <h:outputText value=""/>
 
                             <h:outputText value="Ending Date:"/>
-                            <p:inplace rendered="#{operatorRequstContractManagedBean.editMode}" id="selectableInplace2" label="contract end date" effectSpeed="fast" event="dblclick"> 
-                                <p:calendar pattern="yyyy-MM-dd" mindate="#{operatorRequstContractManagedBean.contract.last.eventEndDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.contract.last.eventEndDate}" /> 
-                            </p:inplace>           
+                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventEndDate}" /> 
                             <h:outputText value=""/>
 
-                            <p:commandButton rendered="#{operatorRequstContractManagedBean.editMode}" value="Update" ajax="true" actionListener="#{operatorRequstContractManagedBean.updateContract}" onclick="update.hide()" />
 
-
-                            <p:commandButton rendered="#{operatorRequstContractManagedBean.editMode}" value="Cancel" onclick="update.hide()" type="button"/>  
+                            <p:commandButton value="Update" ajax="true" actionListener="#{operatorRequstContractManagedBean.renew}" onclick="update.hide()" />
+                            <p:commandButton value="Cancel" onclick="update.hide()" type="button"/>  
 
 
                         </h:panelGrid> 
-                    </p:dialog> 
-
+                    </p:dialog>  
 
                 </div>
             </p:panel>

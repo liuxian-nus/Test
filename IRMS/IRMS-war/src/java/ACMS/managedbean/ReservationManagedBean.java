@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -41,62 +42,15 @@ public class ReservationManagedBean implements Serializable {
     private String searchId;
     private String searchName;
     private String searchEmail;
+    private List<ReservationEntity> today;
+    private List<ReservationEntity> all;
+    private List<ReservationEntity> overdue;
 
-    public EmailSessionBean getEmailSessionBean() {
-        return emailSessionBean;
-    }
-
-    public void setEmailSessionBean(EmailSessionBean emailSessionBean) {
-        this.emailSessionBean = emailSessionBean;
-    }
-
-    public ReservationSessionBean getReservationSessionBean() {
-        return reservationSessionBean;
-    }
-
-    public void setReservationSessionBean(ReservationSessionBean reservationSessionBean) {
-        this.reservationSessionBean = reservationSessionBean;
-    }
-
-    public List<ReservationEntity> getReservationList() {
-        return reservationList;
-    }
-
-    public void setReservationList(List<ReservationEntity> reservationList) {
-        this.reservationList = reservationList;
-    }
-
-    public ReservationEntity getNewReservation() {
-        return newReservation;
-    }
-
-    public void setNewReservation(ReservationEntity newReservation) {
-        this.newReservation = newReservation;
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchEmail() {
-        return searchEmail;
-    }
-
-    public void setSearchEmail(String searchEmail) {
-        this.searchEmail = searchEmail;
-    }
-
-    public String getSearchId() {
-        System.out.println("No3: we are in setearchId" + searchId);
-        return searchId;
-    }
-
-    public void setSearchId(String searchId) {
-        this.searchId = searchId;
+    @PostConstruct
+    public void init() {
+        today = reservationSessionBean.getTodayReservations();
+        all = reservationSessionBean.getAllReservations();
+        overdue = reservationSessionBean.getBeforeReservations();
     }
 
     /**
@@ -135,10 +89,11 @@ public class ReservationManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            selectReservation = (ReservationEntity) event.getComponent().getAttributes().get("cancelReservation");
+//            selectReservation = (ReservationEntity) event.getComponent().getAttributes().get("cancelReservation");
             System.out.println("N02: in displaying bean " + selectReservation.getReservationId());
-
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
+            selectReservation.setReservationStatus("Canceled");
+            reservationSessionBean.updateReservation(selectReservation);
+//            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
             System.out.println("we are after setting contractId session attribute");
 //            FacesContext.getCurrentInstance().getExternalContext().redirect("operatorViewContract.xhtml");
         } catch (Exception e) {
@@ -210,6 +165,25 @@ public class ReservationManagedBean implements Serializable {
                 System.out.println("we are after setting reservationId session attribute");
                 FacesContext.getCurrentInstance().getExternalContext().redirect("listReservations.xhtml");
             }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
+            return;
+        }
+    }
+
+    public void viewReservation(ActionEvent event) throws IOException, ExistException {
+
+        System.out.println("NO6 we are in searchByName function " + selectReservation.getReservationId());
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        try {
+
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
+            System.out.println("we are after setting parameter");
+            request.getSession().setAttribute("rcEmail", searchEmail);
+            System.out.println("we are after setting reservationId session attribute");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
+
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
             return;
@@ -342,4 +316,85 @@ public class ReservationManagedBean implements Serializable {
 //     public boolean containReservation() {
 //        return ("Hotel".equals(employee.getEmployeeDepartment()));
 //    }
+
+    public List<ReservationEntity> getToday() {
+        return today;
+    }
+
+    public void setToday(List<ReservationEntity> today) {
+        this.today = today;
+    }
+
+    public List<ReservationEntity> getAll() {
+        return all;
+    }
+
+    public void setAll(List<ReservationEntity> all) {
+        this.all = all;
+    }
+
+    public List<ReservationEntity> getOverdue() {
+        return overdue;
+    }
+
+    public void setOverdue(List<ReservationEntity> overdue) {
+        this.overdue = overdue;
+    }
+
+    public EmailSessionBean getEmailSessionBean() {
+        return emailSessionBean;
+    }
+
+    public void setEmailSessionBean(EmailSessionBean emailSessionBean) {
+        this.emailSessionBean = emailSessionBean;
+    }
+
+    public ReservationSessionBean getReservationSessionBean() {
+        return reservationSessionBean;
+    }
+
+    public void setReservationSessionBean(ReservationSessionBean reservationSessionBean) {
+        this.reservationSessionBean = reservationSessionBean;
+    }
+
+    public List<ReservationEntity> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<ReservationEntity> reservationList) {
+        this.reservationList = reservationList;
+    }
+
+    public ReservationEntity getNewReservation() {
+        return newReservation;
+    }
+
+    public void setNewReservation(ReservationEntity newReservation) {
+        this.newReservation = newReservation;
+    }
+
+    public String getSearchName() {
+        return searchName;
+    }
+
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
+
+    public String getSearchEmail() {
+        return searchEmail;
+    }
+
+    public void setSearchEmail(String searchEmail) {
+        this.searchEmail = searchEmail;
+    }
+
+    public String getSearchId() {
+        System.out.println("No3: we are in setearchId" + searchId);
+        return searchId;
+    }
+
+    public void setSearchId(String searchId) {
+        this.searchId = searchId;
+    }
 }

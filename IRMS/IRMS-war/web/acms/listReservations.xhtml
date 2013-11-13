@@ -23,7 +23,7 @@
                             <p:column id="nameColumn" filterBy="#{reservations.rcName}" headerText ="Guest Name:" filterMatchMode="contains">
                                 <h:outputText value="#{reservations.rcName}"/> 
                             </p:column>
-                            
+
                             <p:column headerText ="Check In Date:">
                                 <h:outputText value="#{reservations.rcCheckInDate}">
                                     <f:convertDateTime pattern="dd-MM-yyyy" />
@@ -34,15 +34,19 @@
                                     <f:convertDateTime pattern="dd-MM-yyyy" />
                                 </h:outputText>
                             </p:column>
+                            <p:column id="status" filterBy="#{reservations.reservationStatus}" headerText ="Status:" filterMatchMode="contains">
+                                <h:outputText value="#{reservations.reservationStatus}"/> 
+                            </p:column>
+
                             <p:column style="width:100px">  
                                 <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-check" value ="View" title="View this reservation">  
                                     <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                 </p:commandButton>
-                                
-                                 <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+
+                                <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
                                     <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                 </p:commandButton>
-                                
+
                                 <h:outputText rendered="#{reservations.reservationStatus == 'checkedIn'}" value="Checked In" >  
                                 </h:outputText>  
                             </p:column>

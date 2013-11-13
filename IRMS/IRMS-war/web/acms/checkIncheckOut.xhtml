@@ -140,6 +140,212 @@
                 </h:form>
             </p:tab> 
 
+
+
+            <p:tab id="viewReservations" title="View Reservations">  
+                <h:form id="unpaidoverdue">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="All Reservations" toggleable="true" toggleSpeed="500" collapsed="true">  
+                        <p:panel id="bills" header="All Reservations" style="height:500px;">
+                            <div style="margin-top:20px;margin-bottom:20px;">
+
+                                <p:dataTable id="reservationList" value="#{reservationManagedBean.all}" var="reservations" paginator="true" rows="10">
+                                    <p:column headerText ="ID:">
+                                        <h:outputText value="#{reservations.reservationId}"/> 
+                                    </p:column>
+                                    <p:column id="emailColumn" filterBy="#{reservations.rcEmail}"   
+                                              headerText="Reservation Email" filterMatchMode="contains">  
+                                        <h:outputText value="#{reservations.rcEmail}" />  
+                                    </p:column>  
+
+                                    <p:column id="nameColumn" filterBy="#{reservations.rcName}" headerText ="Guest Name:" filterMatchMode="contains">
+                                        <h:outputText value="#{reservations.rcName}"/> 
+                                    </p:column>
+
+                                    <p:column headerText ="Check In Date:">
+                                        <h:outputText value="#{reservations.rcCheckInDate}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText ="Check Out Date:">
+                                        <h:outputText value="#{reservations.rcCheckOutDate}"> 
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column id="status" filterBy="#{reservations.reservationStatus}" headerText ="Status:" filterMatchMode="contains">
+                                        <h:outputText value="#{reservations.reservationStatus}"/> 
+                                    </p:column>
+
+                                    <p:column style="width:100px">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
+                                            <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
+                                        </p:commandButton>
+
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                            <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
+                                        </p:commandButton>
+
+                                        <h:outputText rendered="#{reservations.reservationStatus == 'checkedIn'}" value="Checked In" >  
+                                        </h:outputText>  
+                                    </p:column>
+                                </p:dataTable>
+
+
+                                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation"> 
+                                    <h:outputText value="Are you sure to cancel this reservation? "/>
+                                    <p:commandButton value="Yes" onclick="growl;" update ="reservationList" actionListener="#{reservationManagedBean.cancelReservation}" oncomplete="confirmation.hide()">  
+                                    </p:commandButton>
+                                    <p:commandButton value="Cancel" onclick="confirmation.hide()" type="button"/>  
+                                </p:dialog>  
+
+                            </div>
+                        </p:panel>
+
+                    </p:fieldset>
+                </h:form>
+                <br/>
+
+
+
+                <h:form id="todayReservation">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Today's Reservations" toggleable="true" toggleSpeed="500" collapsed="true">  
+                        <p:panel id="bills" header="Today's Reservations" style="height:500px;">
+                            <div style="margin-top:20px;margin-bottom:20px;">
+
+                                <p:dataTable id="reservationList" value="#{reservationManagedBean.today}" var="reservations" paginator="true" rows="10">
+                                    <p:column headerText ="ID:">
+                                        <h:outputText value="#{reservations.reservationId}"/> 
+                                    </p:column>
+                                    <p:column id="emailColumn" filterBy="#{reservations.rcEmail}"   
+                                              headerText="Reservation Email" filterMatchMode="contains">  
+                                        <h:outputText value="#{reservations.rcEmail}" />  
+                                    </p:column>  
+
+                                    <p:column id="nameColumn" filterBy="#{reservations.rcName}" headerText ="Guest Name:" filterMatchMode="contains">
+                                        <h:outputText value="#{reservations.rcName}"/> 
+                                    </p:column>
+
+                                    <p:column headerText ="Check In Date:">
+                                        <h:outputText value="#{reservations.rcCheckInDate}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText ="Check Out Date:">
+                                        <h:outputText value="#{reservations.rcCheckOutDate}"> 
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column id="status" filterBy="#{reservations.reservationStatus}" headerText ="Status:" filterMatchMode="contains">
+                                        <h:outputText value="#{reservations.reservationStatus}"/> 
+                                    </p:column>
+
+                                    <p:column style="width:100px">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
+                                            <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
+                                        </p:commandButton>
+
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'}" oncomplete="confirmation2.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                            <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
+                                        </p:commandButton>
+
+                                        <h:outputText rendered="#{reservations.reservationStatus == 'checkedIn'}" value="Checked In" >  
+                                        </h:outputText>  
+                                    </p:column>
+                                </p:dataTable>
+
+
+                                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation2"> 
+                                    <h:outputText value="Are you sure to cancel this reservation? "/>
+                                    <p:commandButton value="Yes" onclick="growl;" update ="reservationList" actionListener="#{reservationManagedBean.cancelReservation}" oncomplete="confirmation2.hide()">  
+                                    </p:commandButton>
+                                    <p:commandButton value="Cancel" onclick="confirmation2.hide()" type="button"/>  
+                                </p:dialog>  
+
+                            </div>
+                        </p:panel>
+
+                    </p:fieldset>
+                </h:form>
+                <br/>
+
+                <h:form id="overdueReservations">
+                    <p:growl id="growl" showDetail="true" sticky="true" />   
+                    <p:fieldset legend="Overdue Reservations" toggleable="true" toggleSpeed="500" collapsed="true">  
+                        <p:panel id="bills" header="Overdue Reservations" style="height:500px;">
+                            <div style="margin-top:20px;margin-bottom:20px;">
+
+                                <p:dataTable id="reservationList" value="#{reservationManagedBean.overdue}" var="reservations" paginator="true" rows="10">
+                                    <p:column headerText ="ID:">
+                                        <h:outputText value="#{reservations.reservationId}"/> 
+                                    </p:column>
+                                    <p:column id="emailColumn" filterBy="#{reservations.rcEmail}"   
+                                              headerText="Reservation Email" filterMatchMode="contains">  
+                                        <h:outputText value="#{reservations.rcEmail}" />  
+                                    </p:column>  
+
+                                    <p:column id="nameColumn" filterBy="#{reservations.rcName}" headerText ="Guest Name:" filterMatchMode="contains">
+                                        <h:outputText value="#{reservations.rcName}"/> 
+                                    </p:column>
+
+                                    <p:column headerText ="Check In Date:">
+                                        <h:outputText value="#{reservations.rcCheckInDate}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText ="Check Out Date:">
+                                        <h:outputText value="#{reservations.rcCheckOutDate}"> 
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column id="status" filterBy="#{reservations.reservationStatus}" headerText ="Status:" filterMatchMode="contains">
+                                        <h:outputText value="#{reservations.reservationStatus}"/> 
+                                    </p:column>
+
+                                    <p:column style="width:100px">  
+                                        <p:commandButton rendered="#{reservations.reservationStatus!='Canceled'and reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
+                                            <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
+                                        </p:commandButton>
+
+                                        <p:commandButton rendered="#{reservations.reservationStatus != 'checkedIn'and reservations.reservationStatus!='Canceled'}" oncomplete="confirmation3.show()" ajax="true"  icon="ui-icon ui-icon-close" value ="Cancel" title="Cancel this reservation">  
+                                            <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
+                                        </p:commandButton>
+
+                                        <h:outputText rendered="#{reservations.reservationStatus == 'checkedIn'}" value="Checked In" />  
+                                        <h:outputText rendered="#{reservations.reservationStatus == 'Canceled'}" value="Canceled" />  
+
+                                    </p:column>
+                                </p:dataTable>
+
+
+                                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation3"> 
+                                    <h:outputText value="Are you sure to cancel this reservation? "/>
+                                    <p:commandButton value="Yes" onclick="growl;" update ="reservationList" actionListener="#{reservationManagedBean.cancelReservation}" oncomplete="confirmation3.hide()">  
+                                    </p:commandButton>
+                                    <p:commandButton value="Cancel" onclick="confirmation3.hide()" type="button"/>  
+                                </p:dialog>  
+
+                            </div>
+                        </p:panel>
+
+                    </p:fieldset>
+                </h:form>
+                <br/>
+
+
+
+
+
+
+
+
+
+
+            </p:tab> 
+
         </p:tabView>
     </ui:define>
 

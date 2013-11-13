@@ -38,6 +38,12 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
     public ReservationSessionBean() {
     }
 
+    public void updateReservation(ReservationEntity reservation)
+    {
+        em.merge(reservation);
+        System.out.println("hahaha after updating");
+    }
+    
     @Override
     public List<ReservationEntity> getAllReservations() {
         Query q = em.createQuery("SELECT re FROM ReservationEntity re");

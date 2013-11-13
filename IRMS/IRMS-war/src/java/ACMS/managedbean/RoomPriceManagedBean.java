@@ -54,9 +54,7 @@ public class RoomPriceManagedBean {
         Object newValue = event.getNewValue();
         System.out.println("here in editing price" + newValue);
         if (newValue != null && !newValue.equals(oldValue)) {
-            System.out.println("here in editing price" + thisRoomPrice.getPriceType());
-            thisRoomPrice.setPrice(Double.valueOf((String) newValue));
-            roomPriceSessionBean.updatePrice(thisRoomPrice);
+            
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Room Price updated", "Original: " + oldValue + ", New:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
