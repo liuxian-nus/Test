@@ -49,10 +49,11 @@ public class CouponSessionBean implements CouponSessionBeanRemote {
     }
     
     @Override
-    public CouponEntity generateCoupon(Date date, MemberEntity member, CouponTypeEntity type){
+    public CouponEntity generateCoupon(MemberEntity member, CouponTypeEntity type){
         System.out.println("CouponSessionBean : generateCoupon");
         coupon=new CouponEntity();
-        coupon.setCouponIssueDate(date);
+        Date today=new Date();
+        coupon.setCouponIssueDate(today);
         coupon.setCouponOwner(member);
         coupon.setCouponType(type);
         coupon.setStatus("New");

@@ -181,11 +181,23 @@ public class ACMSServlet extends HttpServlet {
                     System.out.println(totalPrice);
                     MemberEntity thisMember = (MemberEntity) session.getAttribute("member");
                     data.setRcMember(thisMember);
-                    if (promotionCode == null) {
+                    if (promotionCode=="") {
+                        System.out.println("no promotion code entered");
                         reservationSessionBean.addReservation(data, totalPrice);
                     } else {
+                        System.out.println("Promotion code detected: " + promotionCode);
                         reservationSessionBean.addReservationWithPromotion(data, promotionCode);
                     }
+                    System.out.println("start generate coupon");
+                    if(totalPrice>=1000){
+                        System.out.println("total price>1000");
+                        CouponTypeEntity ct=couponTypeSessionBean.getAllCouponTypes().get(0);
+                        System.out.println("ct number: "+ct.getCouponName());
+                        coupon=couponSessionBean.generateCoupon(thisMember,ct);
+                        System.out.println("coupon generated");                                     
+                    }
+                    session.setAttribute("coupon",coupon);     
+                    
                 } catch (Exception e) {
                     System.err.println("error occured when adding reservation in servlet");
                     e.printStackTrace();
@@ -297,6 +309,7 @@ public class ACMSServlet extends HttpServlet {
         String sinDate = request.getParameter("in_date");
         String soutDate = request.getParameter("out_date");
         String sroomCount = request.getParameter("roomCount");
+        System.out.println("sroomCount: "+sroomCount);
         String speopleCount = request.getParameter("people");
         System.out.println("reservation data retrieved: " + shotel + sroomType + sinDate + soutDate + sroomCount + speopleCount);
         //change datatype

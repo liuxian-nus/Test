@@ -7,7 +7,13 @@
 <%@page import="CRMS.entity.CouponEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
+<%
+    CouponEntity coupon=(CouponEntity)session.getAttribute("coupon");
+    String couponInfo="";
+    if(coupon!=null){
+        couponInfo="Here is a coupon with coupon code "+coupon.getCouponId()+" for you. You may use this coupon to purchase";
+    }
+%>
 <html>
     <head>
 
@@ -65,9 +71,11 @@
                     <h6><strong>Reservation mobile : </strong>${data.rcHP}</h6>
                     <br>
                     <br>
-                    <!--
-                  
-                    -->
+                    <c:if test="${coupon!=null}">
+                        <h6><strong>Here is a coupon with coupon code ${coupon.getCouponId()}.</strong></h6>
+                        <h6><strong>You can use this coupon to purchase attraction or show ticket with $20 deduction.</strong></h6>
+                        <h6><strong>One coupon can only be used once.</strong></h6>
+                    </c:if>
               
        
                       </div>

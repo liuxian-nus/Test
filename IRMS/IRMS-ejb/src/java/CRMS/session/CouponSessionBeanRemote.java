@@ -30,7 +30,7 @@ public interface CouponSessionBeanRemote {
 
     boolean couponIsValid(CouponEntity coupon, Date date);
 
-    CouponEntity generateCoupon(Date date, MemberEntity member, CouponTypeEntity type);
+    CouponEntity generateCoupon(MemberEntity member, CouponTypeEntity type);
 
     List<CouponEntity> getAllCoupons();
 
