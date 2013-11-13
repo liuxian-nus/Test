@@ -199,15 +199,14 @@ public class promotionManagedBean {
     public void handleFileUpload(FileUploadEvent event) throws IOException {
         System.err.println("Uploading Image...");
         String[] fileNameParts = event.getFile().getFileName().split("\\.");
-        File result = new File("C:\\Users\\Ser3na\\Documents\\IS3102\\Test.git\\IRMS\\IRMS-war\\web\\images\\" + fileNameParts[0] + "." + fileNameParts[1]);
-//        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-//        String path = request.getRequestURI().substring(request.getContextPath().length());
-//        Project proj = OpenProjects.getDefault().getMainProject();
-//        FileObject root = proj.getProjectDirectory();
-//        String path = root.getPath();
-//        System.err.println("Path: " + path);
+        
+        //Get Path!!!!!!!yeah!!!!!!!!
         String path2 = promotionManagedBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        System.err.println("path 2:"+path2);
+        String[] fileNamePartsTest = path2.split("IRMS");
+        String part1 = fileNamePartsTest[0];
+        System.err.println("part 1:"+part1);
+        File result = new File(part1 + "IRMS\\IRMS-war\\web\\images\\" + fileNameParts[0] + "." + fileNameParts[1]);
+
         FileOutputStream out = new FileOutputStream(result);
 
         int a;
