@@ -330,6 +330,22 @@ public class EventSessionBean {
         }
         return requests;
     }
+    
+    public List<EventEntity> getBillEvents() {
+        Query q = em.createQuery("SELECT m FROM EventEntity m");
+        requests = new ArrayList<EventEntity>();
+        eventList = new ArrayList<EventEntity>();
+        eventList = q.getResultList();
+
+        Iterator<EventEntity> itr = eventList.iterator();
+        while (itr.hasNext()) {
+            ee = itr.next();
+            if (ee.getStatus().equalsIgnoreCase("Confirmed")&&ee.isPaymentStatus()==false) {
+                requests.add(ee);
+            }
+        }
+        return requests;
+    }
 
     public List<EventEntity> getCanceledEvents() {
         Query q = em.createQuery("SELECT m FROM EventEntity m");

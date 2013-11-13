@@ -13,7 +13,7 @@
                 <h:outputText value="Even Name: "/>
                 <p:selectOneMenu value="#{eventServiceBillManagedBean.id}">  
                     <f:selectItem itemLabel="Select Event" itemValue=""/>
-                    <f:selectItems value="#{eventServiceBillManagedBean.eventSessionBean.confirmedEvents}" var="eventList" 
+                    <f:selectItems value="#{eventServiceBillManagedBean.eventSessionBean.billEvents}" var="eventList" 
                                    itemLabel="#{eventList.eventId}: #{eventList.eventName}" itemValue="#{eventList.eventId}"/>  
                 </p:selectOneMenu>
 

@@ -51,7 +51,8 @@ public class LoginManagementManagedBean {
         EmployeeEntity systemUser = employeeManager.getEmployeeById(employeeId);
         System.out.println("1");
         if (systemUser == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid EmployeeId", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid User Account.", ""));
+            return;
         } else {
             setEmployeePassword(passwordHashSessionBean.hashPassword(getEmployeePassword()));//employeeId +
 //            System.out.println("2"+getEmployeePassword());

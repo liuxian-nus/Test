@@ -70,9 +70,6 @@ public class EmployeeSessionBean implements EmployeeSessionBeanRemote {
     @Override
     public EmployeeEntity getEmployeeById(String employeeId) throws ExistException {
         employee = em.find(EmployeeEntity.class, employeeId);
-        if (employee == null) {
-            throw new ExistException("Employee does not exist!");
-        }
         return employee;
     }
 

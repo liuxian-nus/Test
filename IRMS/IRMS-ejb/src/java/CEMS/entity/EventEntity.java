@@ -49,6 +49,7 @@ public class EventEntity implements Serializable {
     private String eventManagerId;
     private boolean isPublic;
     private double deposit;
+    private boolean paymentStatus;
     
     @OneToMany(cascade={CascadeType.MERGE},mappedBy="event")
     private List<EventBookingEntity> bookings;
@@ -248,6 +249,14 @@ public class EventEntity implements Serializable {
 
     public void setDeposit(double deposit) {
         this.deposit = deposit;
+    }
+
+    public boolean isPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(boolean paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     @Override

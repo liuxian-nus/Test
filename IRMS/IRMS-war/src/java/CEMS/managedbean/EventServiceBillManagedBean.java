@@ -89,6 +89,8 @@ public class EventServiceBillManagedBean {
         serviceTotalCost = (Double) request.getSession().getAttribute("serviceTotalCost");
         finalBill = (Double) request.getSession().getAttribute("eventBill");
         emailSessionBean.sendEventContractBill(serviceTotalCost, venueRate, finalBill, selectedEvent);
+//        selectedEvent.setPaymentStatus(true);
+//        eventSessionBean.updateEvent(selectedEvent);
         FacesContext.getCurrentInstance().getExternalContext().redirect("eventServiceBill.xhtml");
     }
 

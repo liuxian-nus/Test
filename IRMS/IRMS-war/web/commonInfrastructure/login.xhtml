@@ -9,16 +9,17 @@
     <ui:define name="content">
 
         <h:form> 
+            <p:growl id="msg"/>
             <p:panel id="loginP" header="Login" style="height:400px;">
                 <div style="margin-top:100px; margin-left:180px; text-align:justify;">
                     <h:panelGrid id="login" columns="3">
                         <h:outputText value ="User Account: "/>
-                        <h:inputText value ="#{loginManagementManagedBean.employeeId}"/>
+                        <h:inputText value ="#{loginManagementManagedBean.employeeId}" required="true" requiredMessage="Please enter user account."/>
                         <br/>
                         <h:outputText value ="Password: "/>
-                        <h:inputSecret value="#{loginManagementManagedBean.employeePassword}"/>
+                        <h:inputSecret value="#{loginManagementManagedBean.employeePassword}" required="true" requiredMessage="Please enter password."/>
                         <br/> 
-                        <p:commandButton value ="Submit" ajax ="true" actionListener = "#{loginManagementManagedBean.doLogin}" />
+                        <p:commandButton update="msg" value ="Submit" ajax ="true" actionListener = "#{loginManagementManagedBean.doLogin}" />
                         <a href="/IRMS-war/resetPassword.xhtml" style="margin-left:10px;"> 
                             Forget My Password 
                         </a>
