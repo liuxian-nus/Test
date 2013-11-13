@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -8,6 +9,7 @@ import CEMS.entity.EventEntity;
 import CEMS.session.EventSessionBean;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
+import ESMS.entity.ShowTicketEntity;
 import ESMS.session.ShowSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,6 +45,7 @@ public class ESMSServlet extends HttpServlet {
     private List<ShowScheduleEntity> showSchedule;
     private Long showId;
     private EventEntity ee;
+    private List<ShowTicketEntity> showTickets;
 
     /**
      * Processes requests for both HTTP
@@ -88,6 +91,24 @@ public class ESMSServlet extends HttpServlet {
                     showSchedule = showSessionBean.getAllShowSchedules(showId);
                     System.out.println(showSchedule.isEmpty());
                     request.setAttribute("showSchedules", showSchedule);
+                    //below set show ticket types and return back to jsp
+                    ShowScheduleEntity thisShowSchedule = showSchedule.get(0);
+                    showTickets = thisShowSchedule.getShowTickets();
+                    System.out.println(showTickets.isEmpty());
+                    
+                    //below retrieve every ticket type and set into attribute
+                    if(!showTickets.isEmpty())
+                    {
+                    Iterator<ShowTicketEntity> itr =    showTickets.iterator();
+                    int i = 1;
+                    while(itr.hasNext())
+                    {
+                        ShowTicketEntity current = itr.next();
+                        request.setAttribute("showTicket"+i, current);
+                        System.out.println("Current ticket retrieved is "+i);
+                    }
+                    }
+//                    request.setAttribute("showTickets", showTickets);
                     request.getRequestDispatcher("/entertainmentSchedule.jsp").forward(request, response);
                 } else if ("entertainmentVenue".equals(page)) {
                     System.out.println("***entertainmentVenue***");
