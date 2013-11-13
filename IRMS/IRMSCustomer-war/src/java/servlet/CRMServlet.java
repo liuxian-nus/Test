@@ -4,6 +4,8 @@ package servlet;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+import ACMS.entity.ReservationEntity;
+import ACMS.session.ReservationSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.PromotionEntity;
 import CRMS.session.FeedbackSessionBean;
@@ -36,6 +38,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
+    @EJB
+    private ReservationSessionBean reservationSessionBean;
     
     @EJB
     private PromotionSessionBean promotionSessionBean;
@@ -60,7 +64,7 @@ public class CRMServlet extends HttpServlet {
     private List<PromotionEntity> memberPromotions = new ArrayList();
     private  String memberEmail=null;
     private PromotionEntity thisPromotion;
-    
+    private List<ReservationEntity> hotelReservation; 
 
     //private String keyword=null;
     /**
@@ -161,7 +165,8 @@ public class CRMServlet extends HttpServlet {
                 } else {
                     System.out.println("email is not null");
                     String loginStatus = request.getParameter("loginStatus");
-
+                    hotelReservation = reservationSessionBean.getReservationByEmail(email);
+                    
                     if (loginStatus.equals("true")) {
                         System.out.println("has logged in before");
                         member = memberSession.getMemberByEmail(email);
@@ -183,6 +188,7 @@ public class CRMServlet extends HttpServlet {
                             request.setAttribute("data", member);
                             request.setAttribute("memberEmail", member.getMemberEmail());
                             request.setAttribute("loginStatus", "true");
+                            request.setAttribute("hotelReservation",hotelReservation);
                             request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
                         } else {
                             message = "Wrong password or username entered";
