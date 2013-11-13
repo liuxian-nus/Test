@@ -14,11 +14,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Promotion Page</title>
-         <jsp:include page="base.jsp"></jsp:include>
-    </head>
-    <body>
-         <jsp:include page="header.jsp"></jsp:include>
-       <c:forEach items="${allPromotions}" var="promotion">            
+        <jsp:include page="base.jsp"></jsp:include>
+        </head>
+        <body>
+        <jsp:include page="header.jsp"></jsp:include>
+        <c:forEach items="${allPromotions}" var="promotion">            
             <div class="panel">
                 <div class="row">
                     <div class="large-4 columns">
@@ -32,15 +32,15 @@
                         <p>
                         <h7><strong>Promotion Details: </strong></h7>${promotion.promotionDescription}
                         </p>
-                        
+
                         <p>
                         <h7><strong>Promotion Start/End Date: </strong></h7><fmt:formatDate type="date" pattern="dd MMM yyyy" 
-                                                        value="${promotion.promotionStartDate}" /> <h7>-</h7> <fmt:formatDate type="date" pattern="dd MMM yyyy" 
-                                                        value="${promotion.promotionEndDate}" />
+                                        value="${promotion.promotionStartDate}" /> <h7>-</h7> <fmt:formatDate type="date" pattern="dd MMM yyyy" 
+                                            value="${promotion.promotionEndDate}" />
                         </p>
                     </div>
                     <div class="large-2 columns">
-                        <form action="entertainmentSchedule">
+                        <form action="memberPromotionPurchase">
                             <input class="button" type="submit" value ="Buy Now"/>
                             <input type="hidden" name="promotionId" value="${promotion.promotionId}"/>
                         </form> 
@@ -61,6 +61,6 @@
         <script>
             $(document).foundation();
         </script>
-         <jsp:include page="footer.jsp"></jsp:include>
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>
