@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -28,7 +29,8 @@ import javax.persistence.Query;
  * @author liuxian, Jieqiong
  */
 @Stateless
-public class MemberSessionBean {
+@LocalBean
+public class MemberSessionBean implements MemberSessionBeanRemote {
 
     @EJB
     private EPasswordHashSessionBean ePasswordHashSessionBean;
@@ -42,6 +44,7 @@ public class MemberSessionBean {
 
     //member registration: used for jsf managed bean
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public MemberEntity addMember(MemberEntity member) {
         //member.create(memberEmail,memberPassword,memberName,memberHP,gender,nationality,memberDob,maritalStatus,isSubscriber);
         em.persist(member);
@@ -50,6 +53,7 @@ public class MemberSessionBean {
     //member registration: used for jsp servlet
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public MemberEntity addMember(String memberEmail, String memberName, String memberPassword, String memberPassword2,
             String memberHP, String gender, String nationality, Date memberDob, String maritalStatus,
             boolean isSubscriber, String question, String answer) {
@@ -98,6 +102,7 @@ public class MemberSessionBean {
         return member;
     }
 
+    @Override
     public MemberEntity getMemberByEmail(String email) {
         if (em == null) {
             System.err.println("EM IS NULL");
@@ -111,6 +116,7 @@ public class MemberSessionBean {
         return member;
     }
 
+    @Override
     public List<MemberEntity> getMemberByBirthMonth(int month) {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -123,6 +129,7 @@ public class MemberSessionBean {
         return memberList;
     }
 
+    @Override
     public List<MemberEntity> getMemberByNationality(String nationality) {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -135,6 +142,7 @@ public class MemberSessionBean {
         return memberList;
     }
 
+    @Override
     public List<MemberEntity> getMemberByGender(String gender) {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -147,6 +155,7 @@ public class MemberSessionBean {
         return memberList;
     }
 
+    @Override
     public List<MemberEntity> getMemberByMaritalStatus(String maritalStatus) {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -160,6 +169,7 @@ public class MemberSessionBean {
         return memberList;
     }
 
+    @Override
     public List<MemberEntity> getMemberBySubscription() {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -172,6 +182,7 @@ public class MemberSessionBean {
         return memberList;
     }
 
+    @Override
     public List<MemberEntity> getMemberByAgeRange(int ageYoung, int ageOld) {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -185,6 +196,7 @@ public class MemberSessionBean {
         return memberList;
     }
 
+    @Override
     public List<MemberEntity> getMemberByAge(int year) {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -203,6 +215,7 @@ public class MemberSessionBean {
 
     //cancel membership: member is not removed, it is inactivated
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public void removeMember(String memberEmail) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {
@@ -213,6 +226,7 @@ public class MemberSessionBean {
     }
 
     //used for mobile application ProfileViewController: memberDob as string
+
     public MemberEntity updateMember(String memberEmail, String name, String memberHP, String memberDob, String maritalStatus, String gender, String subscription) throws ExistException, ParseException {
         member = em.find(MemberEntity.class, memberEmail);
         System.out.println("member session bean: email is " + memberEmail);
@@ -274,6 +288,7 @@ public class MemberSessionBean {
     }
 
     //for mobile application 
+    @Override
     public boolean updatePassword(String memberEmail, String memberPassword) {
         System.out.println("updatePassword: member Email is: " + memberEmail);
         member = em.find(MemberEntity.class, memberEmail);
@@ -289,12 +304,14 @@ public class MemberSessionBean {
     }
     //used of jsf managed bean
 
+    @Override
     public boolean updateMember(MemberEntity member) {
         em.merge(member);
         System.out.println("MemberSessionBean: member " + member.getMemberEmail() + " is successfully updated");
         return true;
     }
     
+    @Override
     public void updateBirthdayEmail(MemberEntity member) {
         member.setBirthdayEmail(true);
         em.merge(member);
@@ -302,6 +319,7 @@ public class MemberSessionBean {
 
     //member subscribe/unsubscribe from email list
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public void updateSubscription(String memberEmail, boolean isSubscriber) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {
@@ -311,6 +329,7 @@ public class MemberSessionBean {
         em.merge(member);
     }
 
+    @Override
     public void updateVIP(String memberEmail) throws ExistException {
         member = em.find(MemberEntity.class, memberEmail);
         if (member == null) {
@@ -337,6 +356,7 @@ public class MemberSessionBean {
 //        else return false;
 //    }
 
+    @Override
     public List<MemberEntity> getAllMembers() {
         Query q = em.createQuery("SELECT m FROM MemberEntity m");
         List memberList = new ArrayList<MemberEntity>();
@@ -347,6 +367,7 @@ public class MemberSessionBean {
         return memberList;
     }
 
+    @Override
     public List<String> getAllNationalities() {
         List memberList = this.getAllMembers();
         List<String> nationalityList = new ArrayList();
@@ -365,6 +386,7 @@ public class MemberSessionBean {
         return nationalityList;
     }
 
+    @Override
     public void updateMemberTicketPurchase(MemberEntity member, TicketPurchaseEntity tp) {
         System.out.println("updateMemberTicketPurchase");
         List<TicketPurchaseEntity> tps = member.getTicketPurchases();
@@ -375,6 +397,7 @@ public class MemberSessionBean {
         return;
     }
 
+    @Override
     public void updateMemberExpressPassPurchase(MemberEntity member, ExpressPassPurchaseEntity epp) {
         System.out.println("updateMemberExpressPassPurchase");
         List<ExpressPassPurchaseEntity> epps = member.getExpressPassPurchases();
@@ -386,15 +409,18 @@ public class MemberSessionBean {
     }
 
     @Remove
+    @Override
     public void remove() {
         System.out.println("MemberManagerBean: remove()");
     }
 
+    @Override
     public void persist(Object object) {
         em.persist(object);
     }
 
     //used for mobile app log in
+    @Override
     public MemberEntity checkLogIn(String email, String password) {
         MemberEntity thisMember = em.find(MemberEntity.class, email);
         if (thisMember != null) {
@@ -413,6 +439,7 @@ public class MemberSessionBean {
     }
 
     //used for mobile app RegisterViewController
+
     public MemberEntity createNewMember(String email, String password, String password2, String name, String hp, String dob, String gender, String maritalStatus, String nationality, String securityQuestion, String answer) throws ParseException {
         MemberEntity newMember = new MemberEntity();
         member = em.find(MemberEntity.class, email);

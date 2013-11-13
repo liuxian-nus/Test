@@ -73,7 +73,7 @@
             <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.7.2.min.js"></script>
             <script defer="defer">
             var text;
-            var price1 = ${showTicket1.showTicketPrice};
+            var price1 = "${showTicket1.showTicketPrice}";
             var price2 = 68;
             var price3 = 268;
             var price4 = 198;

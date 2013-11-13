@@ -10,6 +10,7 @@ import CEMS.session.EventSessionBean;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
+import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,6 +36,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ESMSServlet", urlPatterns = {"/ESMSServlet", "/ESMSServlet/*"})
 public class ESMSServlet extends HttpServlet {
+    @EJB
+    private ShowScheduleSessionBean showScheduleSessionBean;
     @EJB
     private EventSessionBean eventSessionBean;
 
@@ -90,11 +93,14 @@ public class ESMSServlet extends HttpServlet {
                     session.setAttribute("thisShow", showSessionBean.getShowById(showId));
                     showSchedule = showSessionBean.getAllShowSchedules(showId);
                     System.out.println(showSchedule.isEmpty());
+                    System.out.println(showId);
+                    System.out.println(showSchedule.size());
                     request.setAttribute("showSchedules", showSchedule);
                     //below set show ticket types and return back to jsp
-                    ShowScheduleEntity thisShowSchedule = showSchedule.get(0);
+                    ShowScheduleEntity thisShowSchedule = showScheduleSessionBean.getShowScheduleById(Long.parseLong("4"));
                     showTickets = thisShowSchedule.getShowTickets();
                     System.out.println(showTickets.isEmpty());
+                    System.out.println(showTickets.size());
                     
                     //below retrieve every ticket type and set into attribute
                     if(!showTickets.isEmpty())
@@ -106,6 +112,7 @@ public class ESMSServlet extends HttpServlet {
                         ShowTicketEntity current = itr.next();
                         request.setAttribute("showTicket"+i, current);
                         System.out.println("Current ticket retrieved is "+i);
+                        System.out.println(current.getShowTicketPrice());
                     }
                     }
 //                    request.setAttribute("showTickets", showTickets);
