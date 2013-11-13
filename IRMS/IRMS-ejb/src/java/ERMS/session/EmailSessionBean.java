@@ -87,7 +87,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     public EmailSessionBean() {
     }
 
-    public void sendShowContractBill(double rentalFee, double bill, double ticketCommission,double ticketRevenue,ShowContractEntity showContract) throws DocumentException, BadElementException, MalformedURLException, IOException
+    public void sendShowContractBill(double rentalFee, double bill, double ticketCommission,double ticketRevenue,ShowContractEntity showContract,ShowEntity show) throws DocumentException, BadElementException, MalformedURLException, IOException
     {
         System.out.println("sendShowContractBill");
         String email = showContract.getShowMerchantEmail();
@@ -120,8 +120,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                     + "\n\n\nHere is the contract details:"
                     + "\nClient Name: " + showContract.getShowMerchantName()
                     + "\nClient Contact: " + showContract.getShowMerchantContact()
-                    + "\nShow Name: " + showContract.getShow().getShowName()
-                    + "\nShow Type: " + showContract.getShow().getShowType()
+                    + "\nShow Name: " + show.getShowName()
+                    + "\nShow Type: " + show.getShowType()
                     + "\nShow Venue Rental Fee: " + rentalFee
                     + "\nShow Ticket Commission Fee: " + ticketCommission
                     + "\nTotal Ticket Revenue: "+ticketRevenue
@@ -191,7 +191,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         table.addCell("Client Billing Address");
         table.addCell(showContract.getShowMerchantAddress());
         table.addCell("Show Name");
-        table.addCell(showContract.getShow().getShowName());
+        table.addCell(show.getShowName());
         table.addCell("Ticket Revenue");
         table.addCell(Double.toString(ticketRevenue));
         table.addCell("Ticket Commission");
