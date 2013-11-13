@@ -210,11 +210,16 @@ public class ShowTicketingManagedBean {
                 System.err.println("Date today: " + dt);
                 memberTransaction.setMtDate(dt);
                 memberTransaction.setMtDepartment("Entertainment Show");
-                memberTransaction.setMtAmount(selectedShowTicket.getShowTicketPrice() * showTicketQuota);
-                System.err.println("Transaction Amt: " + selectedShowTicket.getShowTicketPrice() * showTicketQuota);
+                double transactionAmt = selectedShowTicket.getShowTicketPrice() * showTicketQuota;
+                memberTransaction.setMtAmount(transactionAmt);
+                System.err.println("Transaction Amt: " + transactionAmt);
                 memberTransaction.setMtMode(false);
                 memberTransaction.setPaymentStatus(false);
                 memberTransactionSessionBean.addMemberTransaction(memberTransaction);
+                member = memberSessionBean.getMemberByEmail(email2);
+                memberTransactionSessionBean.addCoin(member, transactionAmt);
+                memberTransactionSessionBean.addPoint(member, transactionAmt);
+                memberTransactionSessionBean.updateVIP(member);
             }
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful.", ""));
@@ -267,10 +272,10 @@ public class ShowTicketingManagedBean {
                 member = memberSessionBean.getMemberByEmail(email2);
             }
 
-            if (member.getCoin() > selectedShowTicket.getShowTicketPrice()) {
+            if (member.getCoin() > selectedShowTicket.getShowTicketPrice()*showTicketQuota) {
 
                 showTicketSessionBean.updateQuantity(showTicketId, showTicketQuota);
-                member.setCoin(member.getCoin() - selectedShowTicket.getShowTicketPrice());
+                member.setCoin(member.getCoin() - selectedShowTicket.getShowTicketPrice()*showTicketQuota);
                 memberSessionBean.updateMember(member);
                 showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
 
