@@ -57,7 +57,7 @@ public class ACMSServlet extends HttpServlet {
     ReservationEntity data = new ReservationEntity();
     boolean isAvailable = false;
     int SessionTime;
-    String reservationId;
+    Long reservationId;
     CouponEntity coupon;
     String message = "";
     private String USER_AGENT;
@@ -124,31 +124,31 @@ public class ACMSServlet extends HttpServlet {
                 System.out.println("***hotel payment***");
                 data = (ReservationEntity) session.getAttribute("data");
                 data = continueRead1(request);
+                String paymentMethod= request.getParameter("paymentMethod");
+                System.out.println("PaymentMethod"+paymentMethod);
+                if(paymentMethod.equalsIgnoreCase("Continue with Payment")){
                 data = continueRead2(request);
                 SessionTime = (int) session.getMaxInactiveInterval();
                 System.out.println("Time left" + SessionTime);
                 request.setAttribute("SessionTime", SessionTime);
-
-                request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
-            } else if ("hotelRedeem".equals(page)) {
+                request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);    
+                }else{
                 System.out.println("***hotel payment by coin***");
-                data = (ReservationEntity) session.getAttribute("data");
-                data = continueRead1(request);
-//                data = continueRead2(request);
-                double coinAmount = reservationSessionBean.calculateTotalPrice(data);
+                
                 MemberEntity member = (MemberEntity) session.getAttribute("member");
-                boolean affordable = memberTransactionSessionBean.checkCoinAmount(member, coinAmount);
+                boolean affordable = memberTransactionSessionBean.checkCoinAmount(member, totalPrice);
                 if (affordable) {
-                    memberTransactionSessionBean.payByCoin(member, coinAmount);
+                    memberTransactionSessionBean.payByCoin(member, totalPrice);
                     reservationSessionBean.addReservationByCoin(data);
-                    SessionTime = (int) session.getMaxInactiveInterval();
-                    System.out.println("Time left" + SessionTime);
-                    request.setAttribute("SessionTime", SessionTime);
-
                     request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
                 } else {
-                    request.getRequestDispatcher("/hotelPayDenied.jsp").forward(request, response);
+                    request.setAttribute("redeemMessage","Sorry, your coins are not enough");
+                    request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
                 }
+                }
+             
+            } else if ("hotelRedeem".equals(page)) {
+                
             } else if ("hotelPayConfirm".equals(page)) {
                 System.out.println("***hotel payment confirmation***");
                 System.out.println("adding reservation to database....");
@@ -186,7 +186,7 @@ public class ACMSServlet extends HttpServlet {
 
                 request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
             } else if ("hotelModify".equals(page)) {
-                reservationId = request.getParameter("reservationId");
+                reservationId = Long.valueOf(request.getParameter("reservationId"));
                 System.out.println(reservationId);
                 data = reservationSessionBean.getReservationById(reservationId);
                 System.out.println("***hotel modify***");
@@ -198,7 +198,7 @@ public class ACMSServlet extends HttpServlet {
                 data.setRcCreditCardNo(request.getParameter("cardNo"));
                 request.getRequestDispatcher("/hotelPayPalConfirm.jsp").forward(request, response);
             }else if ("hotelCancel".equals(page)) {
-
+                reservationSessionBean.cancelReservation(reservationId);
                 System.out.println("***hotel cancel***");
 
                 request.getRequestDispatcher("/hotelCancel.jsp").forward(request, response);
