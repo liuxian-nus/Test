@@ -33,6 +33,7 @@ public class RoomSearchResultManagedBean implements Serializable {
     private RoomEntity thisRoom;
     private List<RoomEntity> rooms;
     private int roomId;
+    private double incidentalCharge;
 
     public RoomSearchResultManagedBean() {
     }
@@ -114,19 +115,22 @@ public class RoomSearchResultManagedBean implements Serializable {
 
     }
 
-   /* public void addIncidentalCharge(ActionEvent event) throws IOException {
-        System.out.println("We are adding incidental charges");
+    public void addIncidentalCharge(ActionEvent event) throws IOException {
+        System.out.println("We are adding incidental charges...");
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            roomId = (Integer) request.getSession().getAttribute("roomId");
-            roomSessionBean.addIncidentalCharge(roomId);
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", roomSessionBean.getRoomById(roomId));
+            RoomEntity room = (RoomEntity) request.getSession().getAttribute("room");
+            roomSessionBean.addIncidentalCharge(room,incidentalCharge);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", room);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding incidental charge", ""));
             return;
         }
-    }*/
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "An incidental charge has been added into the room.", ""));
+
+    }
+    
     
     /* public void sendBill() throws IOException {
      System.out.println("we are in clear service charge");
@@ -143,4 +147,21 @@ public class RoomSearchResultManagedBean implements Serializable {
      return;
      }
      }*/
+
+    public RoomSessionBean getRoomSessionBean() {
+        return roomSessionBean;
+    }
+
+    public void setRoomSessionBean(RoomSessionBean roomSessionBean) {
+        this.roomSessionBean = roomSessionBean;
+    }
+
+    public double getIncidentalCharge() {
+        return incidentalCharge;
+    }
+
+    public void setIncidentalCharge(double incidentalCharge) {
+        System.out.println("setter: incidental charge is: " + incidentalCharge);
+        this.incidentalCharge = incidentalCharge;
+    }
 }

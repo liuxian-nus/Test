@@ -78,7 +78,7 @@ public class RoomSessionBean implements RoomSessionBeanRemote {
 //        }
         return thisRoom;
     }
-
+    
     @Override
     public List<RoomEntity> getAvailableRooms() throws ExistException {
         //get all rooms
@@ -297,6 +297,11 @@ public class RoomSessionBean implements RoomSessionBeanRemote {
         daysBetween = Days.daysBetween(start, end).getDays();
         double roomCharge = room.getRoomPrice().getPrice() * daysBetween; // 5 should be outDate - inDate
         return roomCharge;
+    }
+    
+    public void addIncidentalCharge(RoomEntity room,double incidentalCharge) {
+        room.setRoomServiceCharge(room.getRoomServiceCharge()+incidentalCharge);
+        em.merge(room);
     }
 
     @Override
