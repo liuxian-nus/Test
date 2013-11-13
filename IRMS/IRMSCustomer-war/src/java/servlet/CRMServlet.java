@@ -55,9 +55,11 @@ public class CRMServlet extends HttpServlet {
     private MemberEntity member;
     private MemberEntity data;
     private String data2;
+    private Long promotionId;
     private List<PromotionEntity> allPromotions = new ArrayList();
     private List<PromotionEntity> memberPromotions = new ArrayList();
     private  String memberEmail=null;
+    private PromotionEntity thisPromotion;
     
 
     //private String keyword=null;
@@ -107,6 +109,26 @@ public class CRMServlet extends HttpServlet {
                 System.out.println("***member Feedback Result page***");
                 String memberEmail = (String) session.getAttribute("memberEmail");
                 addFeedback(request, memberEmail);
+                System.out.println("CRMServlet:Going to next page");
+                request.getRequestDispatcher("/memberFeedbackResult.jsp").forward(request, response);
+            } else if ("memberPromotionPurchase".equals(page)) {
+                System.out.println("***member Promotion Purchase page***");
+               thisPromotion=promotionSessionBean.getPromotionById(promotionId);
+               session.setAttribute("promotion",thisPromotion);
+                String pmDepartment=thisPromotion.getPromotionDepartment();
+                if(pmDepartment.equalsIgnoreCase("hotel")){
+                System.out.println("***member Promotion hotel***");
+                 request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
+                }else if(pmDepartment.equalsIgnoreCase("entertainment show")){
+                System.out.println("***member Promotion entertainment***");    
+                 request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
+                }else if(pmDepartment.equalsIgnoreCase("attraction")){
+                System.out.println("***member Promotion attraction***");    
+                 request.getRequestDispatcher("/ticketBooking.jsp").forward(request, response);
+                }else if(pmDepartment.equalsIgnoreCase("food and beverage")){
+                System.out.println("***member Promotion food and beverage***");    
+                
+                }
                 System.out.println("CRMServlet:Going to next page");
                 request.getRequestDispatcher("/memberFeedbackResult.jsp").forward(request, response);
             } else if ("memberPromotion".equals(page)) {
