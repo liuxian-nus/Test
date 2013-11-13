@@ -73,6 +73,7 @@
                                                         value="${schedule.startDateTime}" /></strong></p>
                                         <p style="margin-top:-20px;padding-left:28px;"><strong><fmt:formatDate type="date" pattern="E" 
                                                         value="${schedule.startDateTime}" /></strong></p>
+                                    ${schedule.showScheduleId}
                                     </div>
                                 </div>
                                 <div class="large-8 columns">

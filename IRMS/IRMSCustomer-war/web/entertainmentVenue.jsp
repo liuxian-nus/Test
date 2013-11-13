@@ -79,7 +79,13 @@
             var price4 = "${showTicket4.showTicketPrice}";
             var price5 = "${showTicket5.showTicketPrice}";
             var price6 = "${showTicket6.showTicketPrice}";
-            var stage = new Kinetic.Stage({
+            var ticket1= "${showTicket1.showTicketQuota}";
+            var ticket2= "${showTicket2.showTicketQuota}";
+            var ticket3= "${showTicket3.showTicketQuota}";
+            var ticket4= "${showTicket4.showTicketQuota}"; 
+            var ticket5= "${showTicket5.showTicketQuota}";
+            var ticket6= "${showTicket6.showTicketQuota}";
+    var stage = new Kinetic.Stage({
                 container: 'container',
                 width: 500,
                 height: 300,
@@ -144,12 +150,12 @@
             var text1 = new Kinetic.Text({
                 x: 15,
                 y: 100,
-                text: 'Area1 Price:$' + price1 + "  ",
+                text: 'Area1 Price:$' + price1+'\n Available Tickets:'+ticket1,
                 fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 padding: 5,
                 align: 'center'
             });
@@ -158,8 +164,8 @@
                 x: 15,
                 y: 100,
                 fill: '#FFC0CB',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 shadowColor: 'black',
                 shadowBlur: 10,
                 shadowOffset: [5, 5],
@@ -203,12 +209,12 @@
             var text2 = new Kinetic.Text({
                 x: 25,
                 y: 190,
-                text: 'Area2 Price:$' + price2,
+                text: 'Area2 Price:$' + price2+'\n Available Tickets:'+ticket2,
                 fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 padding: 5,
                 align: 'center'
             });
@@ -217,8 +223,8 @@
                 x: 25,
                 y: 190,
                 fill: '#FFC0CB',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 shadowColor: 'black',
                 shadowBlur: 10,
                 shadowOffset: [5, 5],
@@ -261,12 +267,12 @@
             var text3 = new Kinetic.Text({
                 x: 150,
                 y: 75,
-                text: 'Area3 Price:$' + price3,
+                text: 'Area3 Price:$' + price3+'\n Available Tickets:'+ticket3,
                 fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 padding: 5,
                 align: 'center'
             });
@@ -275,8 +281,8 @@
                 x: 150,
                 y: 75,
                 fill: '#FFC0CB',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 shadowColor: 'black',
                 shadowBlur: 10,
                 shadowOffset: [5, 5],
@@ -319,12 +325,12 @@
             var text4 = new Kinetic.Text({
                 x: 150,
                 y: 200,
-                text: 'Area4 Price:$' + price4,
+                text: 'Area4 Price:$' + price4+'\n Available Tickets:'+ticket4,
                 fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 padding: 5,
                 align: 'center'
             });
@@ -333,8 +339,8 @@
                 x: 150,
                 y: 200,
                 fill: '#FFC0CB',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 shadowColor: 'black',
                 shadowBlur: 10,
                 shadowOffset: [5, 5],
@@ -377,24 +383,24 @@
             });
 
             var text5 = new Kinetic.Text({
-                x: 400,
+                x: 300,
                 y: 100,
-                text: 'Area5 Price:$' + price5,
+                text: 'Area5 Price:$' + price5+'\n Available Tickets:'+ticket5,
                 fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 padding: 5,
                 align: 'center'
             });
 
             var rect5 = new Kinetic.Rect({
-                x: 400,
+                x: 300,
                 y: 100,
                 fill: '#FFC0CB',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 shadowColor: 'black',
                 shadowBlur: 10,
                 shadowOffset: [5, 5],
@@ -433,24 +439,24 @@
             });
 
             var text6 = new Kinetic.Text({
-                x: 400,
+                x: 300,
                 y: 200,
-                text: 'Area6 Price:$' + price4,
+                text: 'Area6 Price:$' + price6+'\n Available Tickets:'+ticket6,
                 fontSize: 12,
                 fontFamily: 'Calibri',
                 fill: '#555',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 padding: 5,
                 align: 'center'
             });
 
             var rect6 = new Kinetic.Rect({
-                x: 400,
+                x: 300,
                 y: 200,
                 fill: '#FFC0CB',
-                width: 100,
-                height: 25,
+                width: 150,
+                height: 45,
                 shadowColor: 'black',
                 shadowBlur: 10,
                 shadowOffset: [5, 5],
