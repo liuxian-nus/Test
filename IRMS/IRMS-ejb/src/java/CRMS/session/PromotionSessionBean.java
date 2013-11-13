@@ -56,15 +56,15 @@ public class PromotionSessionBean {
         }
         return returnList;
     }
-    
+
     public void uploadImage(Long showId, String fileName) {
         promotion = em.find(PromotionEntity.class, showId);
         promotion.setImagePath(fileName);
         em.persist(promotion);
         em.flush();
     }
-    
-        public List<PromotionEntity> getNormalPromotions() {
+
+    public List<PromotionEntity> getNormalPromotions() {
         Query q = em.createQuery("SELECT p FROM PromotionEntity p");
 
         List<PromotionEntity> resultList = q.getResultList();
@@ -87,7 +87,6 @@ public class PromotionSessionBean {
 //        timer.cancel();
 //        return "The promotion has been ended by endMarketingCampaign";
 //    }
-
     public List<PromotionEntity> getPromotionByMemberEmail(String email) throws ExistException {
         System.out.println("promotion session bean: get promotion by email: " + email);
         MemberEntity thisMember = em.find(MemberEntity.class, email);
@@ -98,19 +97,32 @@ public class PromotionSessionBean {
         List promotions = new ArrayList<PromotionEntity>();
         for (Object o : q.getResultList()) {
             PromotionEntity p = (PromotionEntity) o;
-            if ((p.getMcMemberTargets().contains(thisMember))&&(p.getMcMemberTargets()==null)) {
+            if ((p.getMcMemberTargets().contains(thisMember)) && (p.getMcMemberTargets() == null)) {
                 promotions.add(p);
             }
         }
         return promotions;
     }
-    
-    public PromotionEntity getPromotionById(Long promotionId)
-    {
-        PromotionEntity current = em.find(PromotionEntity.class, promotionId);
-        return current;
+
+    public PromotionEntity getPromotionById(Long promotionId) {
+        PromotionEntity thisPromotion = em.find(PromotionEntity.class, promotionId);
+        return thisPromotion;
     }
-    
+
+    public PromotionEntity getPromotionByCode(String promotionCode) {
+        Query q = em.createQuery("SELECT p FROM PromotionEntity p WHERE p.promotionCode = '" + promotionCode + "'");
+        System.out.println(q.getResultList().size() + " results found with this promotionCode");
+        PromotionEntity thisPromotion = (PromotionEntity) q.getResultList().get(0);
+//        PromotionEntity thisPromotion = em.find(PromotionEntity.class, promotionCode);
+        System.out.println("Promotion found: " + thisPromotion.getPromotionTitle());
+        return thisPromotion;
+    }
+
+    public double getDiscountByPromotionCode(String promotionCode) {
+        PromotionEntity thisPromotion = em.find(PromotionEntity.class, promotionCode);
+        return thisPromotion.getDiscount();
+    }
+
     public void deletePromotion(PromotionEntity thisPromotion) {
         thisPromotion.setPromotionStatus("deleted");
         em.merge(thisPromotion);
@@ -119,8 +131,7 @@ public class PromotionSessionBean {
     public void updatePromotion(PromotionEntity thisPromotion) {
         em.merge(thisPromotion);
     }
-    
-    
+
     class EndTask extends TimerTask {
 
         public void run() {
@@ -154,7 +165,7 @@ public class PromotionSessionBean {
             memberList.add(thisMember);
         }
         return memberList;
-        }
+    }
 
     public void createPromotion(PromotionEntity promotion) {
         // mc.create(startDate, endDate, remarks, memberTargets);

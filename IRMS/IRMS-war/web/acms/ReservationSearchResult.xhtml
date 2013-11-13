@@ -45,8 +45,9 @@
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationGuestCount}" style="font-weight:bold" />
                         <h:outputText value="Researvation Status: " />  
                         <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationStatus}" style="font-weight:bold" /> 
-
-
+                        <h:outputText value="Total Price" />
+                        <h:outputText value="#{reservationSearchResultManagedBean.selectReservation.reservationTotal}" style="font-weight: bold" />
+                        
                         <p:commandButton rendered="#{reservationSearchResultManagedBean.selectReservation.reservationStatus!='Canceled'and reservationSearchResultManagedBean.selectReservation.reservationStatus != 'checkedIn'}" oncomplete="confirmation.show()" ajax="true"  icon="ui-icon ui-icon-trash" value ="Cancel" title="Cancel">  
                         </p:commandButton>
                         <p:commandButton  rendered="#{reservationSearchResultManagedBean.selectReservation.reservationStatus!='Canceled'and reservationSearchResultManagedBean.selectReservation.reservationStatus != 'checkedIn'}" value="Check Available Rooms" ajax="true" action="/acms/listAllRooms.xhtml" /> 

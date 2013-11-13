@@ -10,6 +10,7 @@ import ACMS.session.RoomPriceSessionBean;
 import CRMS.entity.CouponEntity;
 import CRMS.entity.CouponTypeEntity;
 import CRMS.entity.MemberEntity;
+import CRMS.entity.PromotionEntity;
 import CRMS.session.CouponSessionBean;
 import CRMS.session.CouponTypeSessionBean;
 import CRMS.session.MemberSessionBean;
@@ -55,6 +56,7 @@ public class ACMSServlet extends HttpServlet {
     @EJB
     private MemberTransactionSessionBean memberTransactionSessionBean;
     ReservationEntity data = new ReservationEntity();
+    PromotionEntity promotion = new PromotionEntity();
     boolean isAvailable = false;
     int SessionTime;
     Long reservationId;
@@ -63,6 +65,7 @@ public class ACMSServlet extends HttpServlet {
     private String USER_AGENT;
     Double roomPrice;
     Double totalPrice;
+
     @Override
     public void init() {
         System.out.println("ACMSERVLET: init()");
@@ -99,18 +102,29 @@ public class ACMSServlet extends HttpServlet {
                 SessionTime = (int) session.getMaxInactiveInterval();
                 System.out.println("Timeleft" + SessionTime);
                 request.setAttribute("SessionTime", SessionTime);
-
+                MemberEntity thisMember = (MemberEntity) session.getAttribute("member");
+                if (thisMember != null) {
+                    String string = thisMember.getMemberName();
+                    String[] parts = string.split(" ");
+                    String firstName = parts[0];
+                    String lastName = parts[1];
+                    System.out.println(firstName);
+                    System.out.println(lastName);
+                    request.setAttribute("firstName", firstName);
+                    request.setAttribute("lastName", lastName);
+                }
                 if (isAvailable) {
                     String roomType = data.getReservationRoomType();
                     System.out.println("RoomType:" + roomType);
                     roomPrice = roomPriceSessionBean.getPriceValueByType(roomType);
-                    int roomCount=data.getReservationRoomCount();
-                    totalPrice=roomPrice*roomCount;
+                    int roomCount = data.getReservationRoomCount();
+                    totalPrice = roomPrice * roomCount;
                     session.setAttribute("roomPrice", roomPrice);
-                    session.setAttribute("totalPrice",totalPrice);
+                    session.setAttribute("totalPrice", totalPrice);
                     request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
                 } else {
                     message = "Sorry,the room is not available on your selected type";
+                    request.setAttribute("message", message);
                     request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
                 }
             } else if ("hotelBook".equals(page)) {
@@ -121,40 +135,43 @@ public class ACMSServlet extends HttpServlet {
                 data = (ReservationEntity) session.getAttribute("data");
                 request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
             } else if ("hotelPay".equals(page)) {
+
                 System.out.println("***hotel payment***");
                 data = (ReservationEntity) session.getAttribute("data");
                 data = continueRead1(request);
-                String paymentMethod= request.getParameter("paymentMethod");
-                System.out.println("PaymentMethod"+paymentMethod);
-                if(paymentMethod.equalsIgnoreCase("Continue with Payment")){
-                data = continueRead2(request);
-                SessionTime = (int) session.getMaxInactiveInterval();
-                System.out.println("Time left" + SessionTime);
-                request.setAttribute("SessionTime", SessionTime);
-                request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);    
-                }else{
-                System.out.println("***hotel payment by coin***");
-                
-                MemberEntity member = (MemberEntity) session.getAttribute("member");
-                boolean affordable = memberTransactionSessionBean.checkCoinAmount(member, totalPrice);
-                if (affordable) {
-                    memberTransactionSessionBean.payByCoin(member, totalPrice);
-                    reservationSessionBean.addReservationByCoin(data);
-                    request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
+                String paymentMethod = request.getParameter("paymentMethod");
+                System.out.println("PaymentMethod" + paymentMethod);
+                if (paymentMethod.equalsIgnoreCase("Continue with Payment")) {
+                    data = continueRead2(request);
+                    SessionTime = (int) session.getMaxInactiveInterval();
+                    System.out.println("Time left" + SessionTime);
+                    request.setAttribute("SessionTime", SessionTime);
+                    promotion = (PromotionEntity) session.getAttribute("promotion");
+                    request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("redeemMessage","Sorry, your coins are not enough");
-                    request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
+                    System.out.println("***hotel payment by coin***");
+
+                    MemberEntity member = (MemberEntity) session.getAttribute("member");
+                    boolean affordable = memberTransactionSessionBean.checkCoinAmount(member, totalPrice);
+                    if (affordable) {
+                        memberTransactionSessionBean.payByCoin(member, totalPrice);
+                        reservationSessionBean.addReservationByCoin(data, member);
+                        promotion = (PromotionEntity) session.getAttribute("promotion");
+
+                        request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("redeemMessage", "Sorry, your coins are not enough");
+                        request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);
+                    }
                 }
-                }
-             
+
             } else if ("hotelRedeem".equals(page)) {
-                
             } else if ("hotelPayConfirm".equals(page)) {
                 System.out.println("***hotel payment confirmation***");
                 System.out.println("adding reservation to database....");
                 data = (ReservationEntity) session.getAttribute("data");
                 data.setRcCreditCardNo(request.getParameter("cardNo"));
-
+                String promotionCode = request.getParameter("promotionCode");
                 String payment = request.getParameter("payment");
                 System.out.println(payment);
                 String cardNo = request.getParameter("cardNo");
@@ -162,28 +179,31 @@ public class ACMSServlet extends HttpServlet {
                 sendGet();
                 try {
                     System.out.println(totalPrice);
-                    MemberEntity thisMember= (MemberEntity)session.getAttribute("member");
-                  
+                    MemberEntity thisMember = (MemberEntity) session.getAttribute("member");
                     data.setRcMember(thisMember);
-                    reservationSessionBean.addReservation(data, totalPrice);
+                    if (promotionCode == null) {
+                        reservationSessionBean.addReservation(data, totalPrice);
+                    } else {
+                        reservationSessionBean.addReservationWithPromotion(data, promotionCode);
+                    }
                 } catch (Exception e) {
                     System.err.println("error occured when adding reservation in servlet");
                     e.printStackTrace();
                 }
                 /*
-                if (true) {//add in conditions later
-                    System.out.println("start generate coupon");
-                    CouponTypeEntity ct = couponTypeSessionBean.getAllCouponTypes().get(0);
-                    Date today = new Date(113, 10, 12);//dummy, should be changed to the date of making reservation
-                    String email = data.getRcEmail();
-                    MemberEntity member = memberSessionBean.getMemberByEmail(email);
-                    System.out.println("member info: " + member.getMemberEmail());
-                    coupon = couponSessionBean.generateCoupon(today, member, ct);
-                }
-                session.setAttribute("coupon", coupon);
-                */
+                 if (true) {//add in conditions later
+                 System.out.println("start generate coupon");
+                 CouponTypeEntity ct = couponTypeSessionBean.getAllCouponTypes().get(0);
+                 Date today = new Date(113, 10, 12);//dummy, should be changed to the date of making reservation
+                 String email = data.getRcEmail();
+                 MemberEntity member = memberSessionBean.getMemberByEmail(email);
+                 System.out.println("member info: " + member.getMemberEmail());
+                 coupon = couponSessionBean.generateCoupon(today, member, ct);
+                 }
+                 session.setAttribute("coupon", coupon);
+                 */
 
-
+                promotion = (PromotionEntity) session.getAttribute("promotion");
                 request.getRequestDispatcher("/hotelPayConfirm.jsp").forward(request, response);
             } else if ("hotelModify".equals(page)) {
                 reservationId = Long.valueOf(request.getParameter("reservationId"));
@@ -192,12 +212,12 @@ public class ACMSServlet extends HttpServlet {
                 System.out.println("***hotel modify***");
                 request.getRequestDispatcher("/hotelModify.jsp").forward(request, response);
             } else if ("hotelPayPalConfirm".equals(page)) {
-                 System.out.println("***hotel paypal confirmation***");
-              
+                System.out.println("***hotel paypal confirmation***");
+
                 data = (ReservationEntity) session.getAttribute("data");
                 data.setRcCreditCardNo(request.getParameter("cardNo"));
                 request.getRequestDispatcher("/hotelPayPalConfirm.jsp").forward(request, response);
-            }else if ("hotelCancel".equals(page)) {
+            } else if ("hotelCancel".equals(page)) {
                 reservationSessionBean.cancelReservation(reservationId);
                 System.out.println("***hotel cancel***");
 
@@ -360,13 +380,13 @@ public class ACMSServlet extends HttpServlet {
         } else if ((data.getReservationHotelNo() == 1) && (data.getReservationRoomType().equals("Deluxe Suite"))) {
             count = 50;
         } else if ((data.getReservationHotelNo() == 1) && (data.getReservationRoomType().equals("Orchard Suite"))) {
-            count = 30;
+            count = 10;
         } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Deluxe"))) {
             count = 100;
         } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Deluxe Suite"))) {
             count = 60;
         } else if ((data.getReservationHotelNo() == 2) && (data.getReservationRoomType().equals("Chairman Suite"))) {
-            count = 20;
+            count = 8;
         } else if ((data.getReservationHotelNo() == 3) && (data.getReservationRoomType().equals("Superior"))) {
             count = 60;
         } else if ((data.getReservationHotelNo() == 3) && (data.getReservationRoomType().equals("Deluxe"))) {
@@ -380,7 +400,11 @@ public class ACMSServlet extends HttpServlet {
         Iterator<ReservationEntity> itr = reservationList.iterator();
         while (itr.hasNext()) {
             ReservationEntity re = itr.next();
-            if ((re.getRcCheckOutDate().after(data.getRcCheckInDate())) && (re.getRcCheckInDate().before(data.getRcCheckOutDate()))) {
+            if (data == null) {
+                System.out.println("data is null");
+            }
+
+            if ((re.getRcCheckOutDate() != null) && (re.getRcCheckInDate() != null) && (re.getRcCheckOutDate().after(data.getRcCheckInDate())) && (re.getRcCheckInDate().before(data.getRcCheckOutDate()))) {
                 count--;
             }
         }

@@ -150,11 +150,11 @@
                                     </select>
                                 </div>
                                 <div class="large-5 columns">
-                                    <input required type="text" id="input-first-name"  placeholder="firstName" name="firstName">
+                                    <input required type="text" id="input-first-name"  placeholder="firstName" name="firstName" value ="${firstName}">
                                     <small class="error">Please enter your first name.</small>
                                 </div>
                                 <div class="large-5 columns">
-                                    <input required type="text" id="input-last-name"  placeholder="lastName" name="lastName">
+                                    <input required type="text" id="input-last-name"  placeholder="lastName" name="lastName" value="${lastName}">
                                     <small class="error">Please enter your last name.</small>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                             </div>
                             <div class="row">
                                 <div class="large-12 columns">
-                                    <input required type="text" id="input-email"  placeholder="email" name="email">
+                                    <input required type="text" id="input-email"  placeholder="email" name="email" value="${member.memberEmail}">
                                     <small class="error">Please enter your email.</small>
                                 </div>
                             </div>
@@ -176,7 +176,7 @@
                             </div>
                             <div class="row">
                                 <div class="large-12 columns">
-                                    <input required type="text" id="input-email"  placeholder="email" name="email">
+                                    <input required type="text" id="input-email"  placeholder="email" name="email" value="${member.memberEmail}">
                                     <small class="error">Please enter your email.</small>
                                 </div>
                             </div>
@@ -191,7 +191,7 @@
                             </div>
                             <div class="row">
                                 <div class="large-6 columns">
-                                    <input  required pattern="[0-9]{8}" required type="text" id="input-phoneNo"  placeholder="phoneNo" name="phoneNo">
+                                    <input  required pattern="[0-9]{8}" required type="text" id="input-phoneNo"  placeholder="phoneNo" name="phoneNo" value="${member.memberHP}">
                                     <small class="error">Please enter your phone number.</small>
                                 </div>
                                 <div class="large-6 columns">

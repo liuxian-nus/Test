@@ -15,7 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -24,6 +26,10 @@ import javax.xml.bind.annotation.XmlType;
  * @author Diana Wang
  */
 @Entity
+@Table(
+        uniqueConstraints=
+            @UniqueConstraint(columnNames={"promotionCode"})
+    )
 @XmlRootElement
 @XmlType(name="promotionEntity")
 public class PromotionEntity implements Serializable {

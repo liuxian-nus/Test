@@ -5,7 +5,10 @@ package ACMS.session;
 
 import ACMS.entity.RoomPriceEntity;
 import ACMS.entity.ReservationEntity;
+import CRMS.entity.MemberEntity;
+import CRMS.entity.PromotionEntity;
 import CRMS.session.MemberTransactionSessionBean;
+import CRMS.session.PromotionSessionBean;
 import Exception.ExistException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,16 +37,17 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
     private Date currentDate = new Date();
     @EJB
     private MemberTransactionSessionBean memberTransactionSessionBean;
+    @EJB
+    private PromotionSessionBean promotionSessionBean;
 
     public ReservationSessionBean() {
     }
 
-    public void updateReservation(ReservationEntity reservation)
-    {
+    public void updateReservation(ReservationEntity reservation) {
         em.merge(reservation);
         System.out.println("hahaha after updating");
     }
-    
+
     @Override
     public List<ReservationEntity> getAllReservations() {
         Query q = em.createQuery("SELECT re FROM ReservationEntity re");
@@ -64,8 +68,8 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
             ReservationEntity re = (ReservationEntity) o;
             System.out.println("current" + currentDate.getDate());
 //            System.out.println("checkinDate" + re.getRcCheckInDate().getDate());
-            
-            if ((re.getRcCheckInDate()!=null)&&(re.getRcCheckInDate().getDate() == currentDate.getDate())) {
+
+            if ((re.getRcCheckInDate() != null) && (re.getRcCheckInDate().getDate() == currentDate.getDate())) {
                 reservationList.add(re);
             }
         }
@@ -79,7 +83,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         List reservationList = new ArrayList<ReservationEntity>();
         for (Object o : q.getResultList()) {
             ReservationEntity re = (ReservationEntity) o;
-            if ((re.getRcCheckOutDate()!=null)&&(re.getRcCheckOutDate().before(currentDate))) {
+            if ((re.getRcCheckOutDate() != null) && (re.getRcCheckOutDate().before(currentDate))) {
                 reservationList.add(re);
             }
         }
@@ -130,10 +134,18 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         DateMidnight start = new DateMidnight(thisReservation.getRcCheckInDate());
         DateMidnight end = new DateMidnight(thisReservation.getRcCheckOutDate());
         int days = Days.daysBetween(start, end).getDays();
-      
+
         return thisPrice.getPrice() * thisReservation.getReservationRoomCount() * days;
     }
+    public double calculateReservationTotalWithPromotion(ReservationEntity thisReservation, PromotionEntity thisPromotion) {
+        RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, thisReservation.getReservationRoomType().toLowerCase());
+        System.out.println("Calculate reservatino total price with promotion " + thisPromotion.getPromotionCode() + " " + thisPromotion.getPromotionTitle());
+        DateMidnight start = new DateMidnight(thisReservation.getRcCheckInDate());
+        DateMidnight end = new DateMidnight(thisReservation.getRcCheckOutDate());
+        int days = Days.daysBetween(start, end).getDays();
 
+        return thisPrice.getPrice() * thisReservation.getReservationRoomCount() * days * (1-thisPromotion.getDiscount());
+    }
 //for jsp reservation
     public void addReservation(ReservationEntity newReservation, double totalPrice) {
         Date today = new Date();
@@ -154,11 +166,12 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         thisReservation.setReservationStatus("guarantee"); //haven't implement yet
         em.persist(thisReservation);
         String description = "Hotel Reservation from " + thisReservation.getRcCheckInDate() + " to " + thisReservation.getRcCheckOutDate() + " with a total room fee: " + thisReservation.getReservationTotal();
-        if(thisReservation.getRcMember()!=null)
-        memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", null, description, false);
+        if (thisReservation.getRcMember() != null) {
+            memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", null, description, false);
+        }
         System.err.println("successfully added reservation: " + newReservation.getReservationId());
     }
-    
+
     @Override
     public void addReservation(ReservationEntity newReservation) {
         Date today = new Date();
@@ -175,15 +188,16 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
 //        int days = Days.daysBetween(start, end).getDays();
 
         thisReservation.setReservationTotal(this.calculateReservationTotal(thisReservation));//5 should be days between
-        thisReservation.setReservationStatus("confirmed"); 
+        thisReservation.setReservationStatus("confirmed");
         em.persist(thisReservation);
         String description = "Hotel Reservation from " + thisReservation.getRcCheckInDate() + " to " + thisReservation.getRcCheckOutDate() + " with a total room fee: " + thisReservation.getReservationTotal();
-        if(newReservation.getRcMember()!=null)
-        memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", null, description, false);
+        if (newReservation.getRcMember() != null) {
+            memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", null, description, false);
+        }
         System.err.println("successfully added reservation: " + newReservation.getReservationId());
     }
 
-    public void addReservationByCoin(ReservationEntity newReservation) {
+    public void addReservationByCoin(ReservationEntity newReservation, MemberEntity member) {
         Date today = new Date();
         System.out.println("in reservation session bean: add reservation");
         ReservationEntity thisReservation = newReservation;
@@ -198,10 +212,26 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         int days = Days.daysBetween(start, end).getDays();
 
         thisReservation.setReservationTotal(thisPrice.getPrice() * thisReservation.getReservationRoomCount() * days);//5 should be days between
-        thisReservation.setReservationStatus("guarantee"); //haven't implement yet
+        thisReservation.setReservationStatus("complementary");
+        thisReservation.setRcMember(member);
         em.persist(thisReservation);
         String description = "Hotel Reservation from " + thisReservation.getRcCheckInDate() + " to " + thisReservation.getRcCheckOutDate() + " with a total room fee: " + thisReservation.getReservationTotal();
         memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", null, description, true);
+        System.err.println("successfully added reservation: " + newReservation.getReservationId());
+    }
+
+    public void addReservationWithPromotion(ReservationEntity newReservation, String promotionCode) {
+        Date today = new Date();
+        System.out.println("in reservation session bean: add reservation with promotion");
+        ReservationEntity thisReservation = newReservation;
+        PromotionEntity thisPromotion = promotionSessionBean.getPromotionByCode(promotionCode);
+        thisReservation.setReservationTotal(this.calculateReservationTotalWithPromotion(thisReservation, thisPromotion));//5 should be days between
+        thisReservation.setReservationStatus("guarantee");
+        em.persist(thisReservation);
+        String description = "Hotel Reservation from " + thisReservation.getRcCheckInDate() + " to " + thisReservation.getRcCheckOutDate() + " with a total room fee: " + thisReservation.getReservationTotal();
+        if (newReservation.getRcMember() != null) {
+            memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", promotionCode, description, false);
+        }
         System.err.println("successfully added reservation: " + newReservation.getReservationId());
     }
 

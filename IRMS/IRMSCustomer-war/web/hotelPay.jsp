@@ -164,7 +164,7 @@
                                 <div class="large-12 columns">
                                     <select name="payment" id="customDropdown">
                                         <option value="">Please Select</option>
-                                        <option value="Visa">Visa</option>
+                                        <option selected="selected" value="Visa">Visa</option>
                                         <option value="MasterCard">MasterCard</option>
                                         <option value="JCB">JCB</option>
                                         <option value="American Express">American Express</option>
@@ -248,7 +248,16 @@
                                     <small class="error">Please enter the card CVC number.</small>
                                 </div>
                             </div>
-
+                             <div class="row">
+                                <div class="large-12 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>Promotion Code</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <input id="input-promotionCode"  placeholder="Promotion Code" name="promotionCode">
+                                </div>
+                            </div>
 
 
                             <br>
@@ -330,9 +339,9 @@
                             <div class='large-12 columns'>
                                 <script type="text/javascript">
 
-                                    var myCountdown2 = new Countdown({
-                                        time: "${SessionTime}", width: 100, height: 50, rangeHi: "minute"
-                                    });
+                var myCountdown2 = new Countdown({
+                    time: "${SessionTime}", width: 100, height: 50, rangeHi: "minute"
+                });
                                 </script>
                             </div>
                         </div>
@@ -351,7 +360,7 @@
             function validate() {
                 if (document.getElementById('agree').checked) {
                     return true;
-                   
+
                 } else {
                     alert("Please agree with our terms and conditions before proceed with your booking.");
                     return false;

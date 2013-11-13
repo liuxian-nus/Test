@@ -43,6 +43,10 @@
                     </c:if>
                     <br>
                     <h6><strong class="right-align,inline"> Room Type:</strong>  ${data.reservationRoomType} </h6>
+                    <br>                   
+                    <h6><strong class="right-align,inline"> Promotion Code:</strong>  ${promotion.promotionCode} </h6>
+                    <br>
+                    <h6><strong class="right-align,inline"> Total Price:</strong>  ${data.reservationTotal} </h6>
                     <br>
                     <h6><strong>Check-in Date : </strong><fmt:formatDate type="date" pattern="MMM dd yyyy" 
                                     value="${data.rcCheckInDate}" /></h6>

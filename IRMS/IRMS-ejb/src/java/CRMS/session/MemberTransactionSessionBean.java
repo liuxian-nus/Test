@@ -54,9 +54,14 @@ public class MemberTransactionSessionBean {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public MemberTransactionEntity addMemberTransaction(MemberTransactionEntity mt) {
-        em.persist(mt);
-        return mt;
+    public MemberTransactionEntity addMemberTransaction(MemberTransactionEntity memberTransaction) {
+        MemberEntity member = em.find(MemberEntity.class, memberTransaction.getMemberEmail());
+        double pointNew = Math.round(member.getPoint() * 100.0) / 100.0;
+        double coinNew = Math.round(member.getCoin() * 100.0) / 100.0;
+        member.setPoint(pointNew);
+        member.setCoin(coinNew);
+        em.persist(memberTransaction);
+        return memberTransaction;
     }
 
     public void addMemberTransaction(MemberEntity member, double amount, Date mtDate, String mtDepartment, String mtPromotion, boolean coinPay, String mtDescription) {
@@ -75,6 +80,10 @@ public class MemberTransactionSessionBean {
             addPoint(member, amount);
             addCoin(member, amount);
             updateVIP(member.getPoint());
+            double pointNew = Math.round(member.getPoint() * 100.0) / 100.0;
+            double coinNew = Math.round(member.getCoin() * 100.0) / 100.0;
+            member.setPoint(pointNew);
+            member.setCoin(coinNew);
             System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
         } else {
 //            double tempCoin = member.getCoin();
@@ -87,8 +96,8 @@ public class MemberTransactionSessionBean {
         member.addMemberTransaction(mt);
         System.out.println("member transaction added");
     }
-    
-        public void addMemberTransaction(MemberEntity member,double amount,Date mtDate, String mtDepartment,String mtPromotion,String mtDescription, boolean coinPay) {
+
+    public void addMemberTransaction(MemberEntity member, double amount, Date mtDate, String mtDepartment, String mtPromotion, String mtDescription, boolean coinPay) {
         System.out.println("memberTransactionSessionBean : addMemberTransaction");
         mt = new MemberTransactionEntity();
         mt.setMemberEmail(member.getMemberEmail());
@@ -101,9 +110,14 @@ public class MemberTransactionSessionBean {
         mt.setPaymentStatus(true);//later add in paid or not paid
         em.persist(mt);
         if (!coinPay) {
+//            double roundOff = Math.round(a * 100.0) / 100.0;
             addPoint(member, amount);
             addCoin(member, amount);
             updateVIP(member.getPoint());
+            double pointNew = Math.round(member.getPoint() * 100.0) / 100.0;
+            double coinNew = Math.round(member.getCoin() * 100.0) / 100.0;
+            member.setPoint(pointNew);
+            member.setCoin(coinNew);
             System.out.println("Transaction of " + member.getMemberName() + "has been added successfully");
         } else {
 //            double tempCoin = member.getCoin();
