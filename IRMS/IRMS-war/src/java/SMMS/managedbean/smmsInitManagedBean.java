@@ -374,6 +374,8 @@ public class smmsInitManagedBean implements Serializable {
     public void createTransaction() throws ExistException {
         System.out.println("go to create outlet transaction page...");
         Date date1 = new Date(2013, 6, 1);
+        date1.setYear(date1.getYear()-1990);
+        
         Date date2 = new Date(2013, 2, 1);
         Date date3 = new Date(2013, 1, 1);
         Date date4 = new Date(2013, 6, 11);

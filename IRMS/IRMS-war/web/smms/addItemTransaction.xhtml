@@ -13,28 +13,6 @@
             <p:growl id="msgs" sticky="true" showDetail="true"/>         
             <p:wizard flowListener="#{addOutletTransactionManagedBean.onFlowProcess}">
 
-                <p:tab id="personal" title="Outlet">
-                    <p:panel header="Select Outlet">
-                        <h:messages errorClass="error"/>
-                        <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
-                            <h:outputText value="Outlet ID*" />
-                            <h:selectOneMenu value ="#{addOutletTransactionManagedBean.outletId}" required ="true" requiredMessage="Outlet cannot be empty">
-                                <f:selectItem itemLabel="Select Outlet" itemValue="" />  
-                                <f:selectItems value="#{outletManagedBean.unavailableOutlets}" var="allOutlets" itemLabel="#{allOutlets.id}" itemValue="#{allOutlets.id}" />  
-                            </h:selectOneMenu> 
-
-                            <h:outputText value="Member: *" />
-                            <h:selectOneMenu value ="#{addOutletTransactionManagedBean.memberId}" >
-                                <f:selectItem itemLabel="Select Outlet" itemValue="" />  
-                                <f:selectItems value="#{memberManagedBean.allMembers}" var="allOutlets" itemLabel="#{allOutlets.memberEmail}" itemValue="#{allOutlets.memberEmail}" />  
-                            </h:selectOneMenu> 
-
-
-                        </h:panelGrid>
-                    </p:panel>
-                </p:tab>
-
-
                 <p:tab id="information" title="Add Transaction">
                     <p:panel header="Add Transactions">
                         <h:panelGrid columns="2" id="grid">
@@ -52,7 +30,7 @@
                             <h:outputText id="amounts" value="#{addOutletTransactionManagedBean.itemtransaction.item.itemPrice}" />
                             <h:outputText value=""/>
                             <h:outputText value=""/>
-                            
+
                             <h:outputLabel value="Item Name : *" ></h:outputLabel>
                             <h:outputText id="names" value="#{addOutletTransactionManagedBean.itemtransaction.item.itemName}" />
                             <h:outputText value=""/>
@@ -110,10 +88,30 @@
                             </p:column>
                         </p:dataTable>
                     </p:outputPanel>
-
-
                 </p:tab>
 
+
+                <p:tab id="personal" title="Outlet">
+                    <p:panel header="Select Outlet">
+                        <h:messages errorClass="error"/>
+                        <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+                            <h:outputText value="Outlet ID*" />
+                            <h:selectOneMenu value ="#{addOutletTransactionManagedBean.outletId}" required ="true" requiredMessage="Outlet cannot be empty">
+                                <f:selectItem itemLabel="Select Outlet" itemValue="" />  
+                                <f:selectItems value="#{outletManagedBean.unavailableOutlets}" var="allOutlets" itemLabel="#{allOutlets.id}" itemValue="#{allOutlets.id}" />  
+                            </h:selectOneMenu> 
+
+                            <h:outputText value="Member: *" />
+                            <h:selectOneMenu value ="#{addOutletTransactionManagedBean.memberId}" >
+                                <f:selectItem itemLabel="Select Outlet" itemValue="" />  
+                                <f:selectItems value="#{memberManagedBean.allMembers}" var="allOutlets" itemLabel="#{allOutlets.memberEmail}" itemValue="#{allOutlets.memberEmail}" />  
+                            </h:selectOneMenu> 
+
+                            <p:commandButton   value="Add" ajax="true" actionListener="#{addOutletTransactionManagedBean.addTransaction}" />
+
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
 
             </p:wizard>
         </h:form>

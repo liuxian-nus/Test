@@ -4,6 +4,9 @@
  */
 package shoppingmall;
 
+import CRMS.entity.MemberEntity;
+import CRMS.session.MemberMessageSessionBean;
+import CRMS.session.MemberSessionBean;
 import Exception.ExistException;
 import SMMS.entity.ContractEntity;
 import SMMS.entity.OutletEntity;
@@ -26,6 +29,9 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean
 @ViewScoped
 public class OutletPartnerManagedBean {
+    @EJB
+    private MemberSessionBean memberSessionBean;
+    
     @EJB
     private OutletSessionBean outletSessionBean;
     private OutletEntity selected;
@@ -70,6 +76,11 @@ public class OutletPartnerManagedBean {
 
     public void setSelected(OutletEntity selected) {
         this.selected = selected;
+    }
+    
+    public List<MemberEntity> getMembers()
+    {
+        return memberSessionBean.getAllMembers();
     }
 
 }

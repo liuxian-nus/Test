@@ -39,9 +39,9 @@ import org.primefaces.event.FlowEvent;
 @ManagedBean
 @ViewScoped
 public class AddOutletTransactionManagedBean {
+
     @EJB
     private MemberTransactionSessionBean memberTransactionSessionBean;
-
     @EJB
     private SMItemSessionBean sMItemSessionBean;
     @EJB
@@ -124,30 +124,49 @@ public class AddOutletTransactionManagedBean {
 
         Calendar cal = Calendar.getInstance();
         Date today = cal.getTime(); //set today
+        System.out.println("what is the date today????" + today);
+        try {
 
-        outlet = outletSessionBean.getOutletById(outletId); //prepare outlet
-        OutletTransactionEntity otransaction = new OutletTransactionEntity(); //prepare transaction
+            outlet = outletSessionBean.getOutletById(outletId); //prepare outlet
+            OutletTransactionEntity otransaction = new OutletTransactionEntity(); //prepare transaction
 
-        Iterator itr = itemtransactions.iterator();
-        while (itr.hasNext()) {
-            ItemTransactionEntity current = (ItemTransactionEntity) itr.next();
-            total = current.getTotal() + total;
+            Iterator itr = itemtransactions.iterator();
+            while (itr.hasNext()) {
+                ItemTransactionEntity current = (ItemTransactionEntity) itr.next();
+                total = current.getTotal() + total;
+                System.out.println("what is the total total????" + total);
+            }
+            System.out.println("what is the total now?" + total);
+            otransaction.setOutlet(outlet);
+            otransaction.setTransactionAmount(total);
+            otransaction.setTransactionDate(today);
+            outletTransactionSessionBean.addTransaction(otransaction);
+
+
+            System.err.println("after setting outlet transaction" + otransaction.getId());
+
+
+            if (memberId != null) {
+                System.out.println("in member session");
+                member = memberSessionBean.getMemberByEmail(memberId);
+
+                mtransaction.setMemberEmail(memberId);
+                mtransaction.setMtAmount(total);
+                mtransaction.setMtDepartment("shopping mall");
+                mtransaction.setMtDate(today);
+                memberTransactionSessionBean.addMemberTransaction(memberId, mtransaction, true); //persisting member transaction
+                System.err.println("after setting member transaction " + mtransaction.getMtId());
+                memberTransactionSessionBean.addPoint(member, total);
+                memberTransactionSessionBean.addCoin(member, total);
+                memberTransactionSessionBean.updateVIP(member);
+                member.addMemberTransaction(mtransaction);
+            }
+
+            FacesMessage msg = new FacesMessage("Your transaction has been paid");
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage("Error occours during adding transaction");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
-        System.out.println("what is the total now?" + total);
-        otransaction.setOutlet(outlet);
-        otransaction.setTransactionAmount(total);
-        otransaction.setTransactionDate(today);
-        outletTransactionSessionBean.addTransaction(otransaction);
-
-        System.out.println("WHAT is the size of items");
-
-
-        if (memberId != null) {
-            System.out.println("in member session");
-            member = memberSessionBean.getMemberByEmail(memberId);
-            
-        }
-
         System.out.println("in adding transaction" + quantity + outletId + memberId);
     }
 
@@ -262,5 +281,13 @@ public class AddOutletTransactionManagedBean {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public MemberTransactionEntity getMtransaction() {
+        return mtransaction;
+    }
+
+    public void setMtransaction(MemberTransactionEntity mtransaction) {
+        this.mtransaction = mtransaction;
     }
 }

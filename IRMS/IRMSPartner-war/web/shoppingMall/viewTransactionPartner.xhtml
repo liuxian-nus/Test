@@ -13,6 +13,17 @@
                 <p:growl id="growl" showDetail="true" sticky="true" />   
                 <p:panel id="contracts" header="View Contracts" style="height:500px;">
                     <div style="margin-top:20px;margin-bottom:20px;">
+                        <p:panelGrid columns="6">
+                            <h:outputText value="ID: "/>
+                            <h:outputText value="#{outletResultPartnerManagedBean.outlet.id}"/>
+                            
+                            <h:outputText value="Name: "/>
+                            <h:outputText value="#{outletResultPartnerManagedBean.outlet.outletName}"/>
+                            
+                            <h:outputText value="Type: "/>
+                            <h:outputText value="#{outletResultPartnerManagedBean.outlet.outletType}"/>
+                        </p:panelGrid>
+                        
                         <p:dataTable id="contract" value="#{outletResultPartnerManagedBean.transactions}" var="transaction" 
                                      paginator="true" rows="6" draggableColumns="true" scrollable="true" resizableColumns="true">
 
