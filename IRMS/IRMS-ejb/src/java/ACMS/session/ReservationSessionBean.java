@@ -123,10 +123,35 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         DateMidnight start = new DateMidnight(thisReservation.getRcCheckInDate());
         DateMidnight end = new DateMidnight(thisReservation.getRcCheckOutDate());
         int days = Days.daysBetween(start, end).getDays();
-
+      
         return thisPrice.getPrice() * thisReservation.getReservationRoomCount() * days;
     }
 
+
+    public void addReservation(ReservationEntity newReservation, double totalPrice) {
+        Date today = new Date();
+        System.out.println("in reservation session bean: add reservation");
+        ReservationEntity thisReservation = newReservation;
+//        thisReservation.getRcCheckInDate().setYear(newReservation.getRcCheckInDate().getYear() - 1900);
+//        thisReservation.getRcCheckInDate().setMonth(newReservation.getRcCheckInDate().getMonth() - 1);
+//        thisReservation.getRcCheckOutDate().setYear(newReservation.getRcCheckOutDate().getYear() - 1900);
+//        thisReservation.getRcCheckOutDate().setMonth(newReservation.getRcCheckOutDate().getMonth() - 1);
+//        RoomPriceEntity thisPrice = em.find(RoomPriceEntity.class, thisReservation.getReservationRoomType());
+//
+//        DateMidnight start = new DateMidnight(thisReservation.getRcCheckInDate());
+//        DateMidnight end = new DateMidnight(thisReservation.getRcCheckOutDate());
+//        int days = Days.daysBetween(start, end).getDays();
+
+//        thisReservation.setReservationTotal(this.calculateReservationTotal(thisReservation));//5 should be days between
+        thisReservation.setReservationTotal(totalPrice);
+        thisReservation.setReservationStatus("guarantee"); //haven't implement yet
+        em.persist(thisReservation);
+        String description = "Hotel Reservation from " + thisReservation.getRcCheckInDate() + " to " + thisReservation.getRcCheckOutDate() + " with a total room fee: " + thisReservation.getReservationTotal();
+        if(thisReservation.getRcMember()!=null)
+        memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", null, description, false);
+        System.err.println("successfully added reservation: " + newReservation.getReservationId());
+    }
+    
     @Override
     public void addReservation(ReservationEntity newReservation) {
         Date today = new Date();
