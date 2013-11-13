@@ -39,11 +39,11 @@ public class OperatorRequstContractManagedBean {
     private Long contractId;
     private ContracteventEntity cevent;
     private boolean editMode = false;
-    private Date eventStartDate;  
+    private Date eventStartDate;
     private Date eventEndDate;
-    private double eventMonthRate;
-    private double eventEarlyCharge;
-    private double eventCommissionRate;
+    private double eventMonthRate = 0.0;
+    private double eventEarlyCharge = 0.0;
+    private double eventCommissionRate = 0.0;
 
     /**
      * Creates a new instance of OperatorRequstContractManagedBean
@@ -167,7 +167,7 @@ public class OperatorRequstContractManagedBean {
 
     }
 
-    public void renew(ActionEvent event) throws ExistException {
+    public void renew(ActionEvent event) throws ExistException, IOException {
         System.out.println("in generating contract renew" + contract.getContractId());
         try {
             System.out.println("what is the commission now?" + eventCommissionRate);
@@ -192,6 +192,7 @@ public class OperatorRequstContractManagedBean {
             return;
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Contract has been changed to renewed.", ""));
+        FacesContext.getCurrentInstance().getExternalContext().redirect("operatorManageContract.xhtml");
     }
 
     public void terminate(ActionEvent event) {
@@ -253,7 +254,7 @@ public class OperatorRequstContractManagedBean {
         System.out.println("edit more is " + editMode);
 
     }
-    
+
     public Date getEventStartDate() {
         return eventStartDate;
     }
