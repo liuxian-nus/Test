@@ -440,7 +440,7 @@ public class AllMenuManagedBean {
                 submenu.getChildren().add(item);
 
                 item = new MenuItem();
-                item.setValue("Manage Express Combos");
+                item.setValue("Manage Express Pass");
                 item.setUrl("/atms/manageAttrExpressPass.xhtml");
                 item.setIcon("ui-icon ui-icon-search");
                 submenu.getChildren().add(item);

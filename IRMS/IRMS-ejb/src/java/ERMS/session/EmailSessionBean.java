@@ -1530,6 +1530,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\TicketPurchase_");
             String resultName = part+"\\pdf\\TicketPurchase_";
+            System.out.println("resultName: "+resultName);
             
         //Below generate a PDF file 
         Document document;
@@ -1628,7 +1629,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         Long tpId = tpe.getTpId();
         String tpIdString = generateBarcodeSessionBean.makeToSevenDigit(String.valueOf(tpId));
         System.out.println("tpIdString: " + tpIdString);
-        String ticketPath = "C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + tpIdString + ".jpg";
+        String ticketPath=part+"\\barcode"+ tpIdString + ".jpg";
+     //   String ticketPath = "C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + tpIdString + ".jpg";
         System.out.println("ticketPath: " + ticketPath);
 
         Image barcode = Image.getInstance(ticketPath);
@@ -1716,7 +1718,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             String part = fileNameParts[0];
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
-            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ExpressTicketConfirmation_");
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ExpressTicket_");
             String resultName = part+"\\pdf\\ExpressTicketConfirmation_";
         
         //Below generate a PDF file 
@@ -1819,7 +1821,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         Long eppId = eppe.getEppId();
         String eppIdString = generateBarcodeSessionBean.makeToSevenDigit(String.valueOf(eppId));
         System.out.println("eppIdString: " + eppIdString);
-        String ticketPath = "C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + eppIdString + ".jpg";
+        String ticketPath=part+"\\barcode"+ eppIdString + ".jpg";
+     //   String ticketPath = "C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + eppIdString + ".jpg";
         System.out.println("ticketPath: " + ticketPath);
 
         Image barcode = Image.getInstance(ticketPath);

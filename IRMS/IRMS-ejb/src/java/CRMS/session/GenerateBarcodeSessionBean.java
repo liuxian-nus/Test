@@ -59,7 +59,7 @@ public class GenerateBarcodeSessionBean {
             String part = fileNameParts[0];
             part = part.replaceAll("%20", " ");
             System.err.println("part 1:" + part);
-            File result = new File(part + "barcode\\" + fileNameParts[0] + "." + fileNameParts[1]);
+            File result = new File(part + "\\barcode\\" );//+ fileNameParts[0] + "." + fileNameParts[1]);
             System.out.println("fileNameParts[0] is: " + fileNameParts[0]);
             String file = result.getPath();
             System.err.println("file: "+file);
