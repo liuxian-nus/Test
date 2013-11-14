@@ -273,7 +273,7 @@
                             <div class="row">
                                 <div class="large-12 columns">
                                     <input type="submit" onclick="return validate()" class="small button" class="center-align" value="Pay & Book Now!">
-                                    <p>${message}</p>
+                                    <p>${message2}</p>
                                 </div>
                             </div>
                             <!--  <div class="button" onclick="paypal()">Register</div>-->
@@ -331,6 +331,22 @@
                                 <label for="right-label" class="right-align,inline"><strong>${data.rcEmail}</strong></label>
                             </div>
                         </div>
+                             <div class="row">
+                                <div class="large-6 columns">
+                                    <label for="right-label" class="left-align,inline"><h6>Promotion: </h6></label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label for="right-label" class="right-align,inline"><strong>${promotion.promotionTitle}</strong></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="large-6 columns">
+                                    <label for="right-label" class="left-align,inline"><h6>Promotion Code: </h6></label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label for="right-label" class="right-align,inline"><strong>${promotion.promotionCode}</strong></label>
+                                </div>
+                            </div>
                         <div class='row'>
                             <div class='large-12 columns'>
                                 <label for="right-label" class="left-align,inline"><h6>Your reservation session will be time out in :</h6></label>

@@ -65,6 +65,7 @@ public class ACMSServlet extends HttpServlet {
     Long reservationId;
     CouponEntity coupon;
     String message = "";
+    String message2="";
     private String USER_AGENT;
     Double roomPrice;
     Double totalPrice;
@@ -197,8 +198,8 @@ public class ACMSServlet extends HttpServlet {
                         if (validity) {
                             reservationSessionBean.addReservationWithPromotion(data, promotionCode);
                         } else {
-                            message = "Sorry,the promotion code is not valid";
-                            request.setAttribute("message", message);
+                            message2 = "Sorry,the promotion code is not valid";
+                            request.setAttribute("message2", message2);
                             request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
                         }
                     }

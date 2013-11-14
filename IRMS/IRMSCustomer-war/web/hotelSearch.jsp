@@ -160,12 +160,18 @@
                                 <br>
                                 <div class="row">
                                     <div class="large-12 columns">
-                                        <input type="submit" class="small button" value="Search Availability">
+                                        <label for="right-label" class="right-align,inline"><strong>${promotion.promotionTitle}</strong></label>
+                                </div>
+                            </div>
+                                <br><br>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <input type="submit" class="small button" value="Search Availability">
 
 
-                                    </div>
-                                    <div class="row">
-                                        <div class="large-10 large-offset-1 columns">
+                                </div>
+                                <div class="row">
+                                    <div class="large-10 large-offset-1 columns">
                                         ${message}
                                     </div>
                                 </div>
@@ -288,13 +294,13 @@
         </div>
         <jsp:include page="footer.jsp"></jsp:include>
         <script>
-                    document.write('<script src=' +
-                            ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
-                            '.js><\/script>');
+                document.write('<script src=' +
+                        ('__proto__' in {} ? 'global/js/vendor/zepto' : 'global/js/vendor/jquery') +
+                        '.js><\/script>');
         </script> 
 
         <script>
-        $(document).foundation();</script>
+            $(document).foundation();</script>
         <script>
             function loadRoomType() {
                 var hotel = document.getElementById('hotel').value;

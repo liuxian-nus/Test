@@ -31,6 +31,8 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class MemberSessionBean implements MemberSessionBeanRemote {
+    @EJB
+    private CPasswordHashSessionBean cPasswordHashSessionBean;
 
     @EJB
     private EPasswordHashSessionBean ePasswordHashSessionBean;
@@ -425,7 +427,8 @@ public class MemberSessionBean implements MemberSessionBeanRemote {
         MemberEntity thisMember = em.find(MemberEntity.class, email);
         if (thisMember != null) {
 //            if (ePasswordHashSessionBean.hashPassword(password).equals(thisMember.getMemberPassword())) {
-            if (password.equals(thisMember.getMemberPassword())) {
+            
+            if (cPasswordHashSessionBean.hashPassword(password).equals(thisMember.getMemberPassword())) {
                 System.out.println("member log in from mobile successful!");
                 return thisMember;
             } else {
