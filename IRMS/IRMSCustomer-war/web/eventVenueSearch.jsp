@@ -75,7 +75,7 @@
                     </td>
                 <td width="200">
                     <br>
-                    <form action="eventVenueBook"><input class="small button" type="submit" value ="Make Reservation"/>
+                    <form action="eventVenue1"><input class="small button" type="submit" value ="View Detail"/>
                         <input type="hidden" name="venueId" value="${data.venueId}"/>
                     </form> 
                 </td>
