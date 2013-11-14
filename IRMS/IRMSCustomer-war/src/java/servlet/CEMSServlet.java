@@ -101,7 +101,7 @@ public class CEMSServlet extends HttpServlet {
                 
                 System.out.println("***eventService***");
                 eventServiceSessionBean.getEventServiceByCategory("Food and Beverage Services");
-                AVList = eventServiceSessionBean.getEventServiceByCategory("Audio and Video Requirements");
+                AVList = eventServiceSessionBean.getEventServiceByCategory("AV");
                  request.setAttribute("AVList",AVList);
                  System.out.println("AVList"+AVList.size());
                  
@@ -162,6 +162,7 @@ public class CEMSServlet extends HttpServlet {
                 request.setAttribute("eventList", events);
                 request.getRequestDispatcher("/eventList.jsp").forward(request, response);
             }else if (page.contains("eventInfo")) {
+                System.err.println("xinqi "+page);
 				System.out.println(page.substring(10));
 				long eventId = Integer.valueOf(page.substring(10));
 				System.out.println(eventId);
