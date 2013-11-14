@@ -114,7 +114,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email));
-            message.setSubject("Member Birthday Special Offer: Corel Island Resort  Welcomes you!");
+            message.setSubject("Corel Island Resort: Your event contract is available now!");
             String textbody = "Greeting from Coral Island Resort!"
                     + "\nYour contract bill for show has been available now!"
                     + "\nPlease look at the contract details below: "
@@ -147,7 +147,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
        //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = resultName + showContract.getShowMerchantName() + " "+showContract.getShowContractId() + ".pdf";
+        String OUTPUTFILE = resultName + showContract.getShowMerchantName() + "_"+showContract.getShowContractId() + ".pdf";
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         document.open();
