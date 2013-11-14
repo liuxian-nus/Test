@@ -38,6 +38,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
+
     @EJB
     private ReservationSessionBean reservationSessionBean;
     
@@ -153,7 +154,6 @@ public class CRMServlet extends HttpServlet {
                 request.getRequestDispatcher("/memberPromotion.jsp").forward(request, response);
                 
             } else if ("memberInfo".equals(page)) {
-
 
                 System.out.println(request.getParameter("email"));
                 System.out.println(request.getParameter("password"));
