@@ -471,10 +471,20 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     {
        System.out.println("generateShowTicket"); 
        
+       //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ShowContractBill_");
+            String resultName = result.getName();
+       
        //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\ShowTicketSale_"
+        String OUTPUTFILE = resultName
                 + sts.getShow().getShowName() + " " + sts.getShowTicketSaleId() + ".pdf";
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
