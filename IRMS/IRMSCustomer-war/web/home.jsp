@@ -156,7 +156,7 @@
                                 fjs.parentNode.insertBefore(js, fjs);
                             }
                         }(document, "script", "twitter-wjs");</script>
-                    <a href="https://twitter.com/share?text=We%20love%20Bao%20Shen" class="twitter-share-button" data-related="jasoncosta" data-lang="en" data-size="large" data-count="none">Tweet</a>
+                    <a href="https://twitter.com/share?text=I%20like%20Coral%20Island%20Resort" class="twitter-share-button" data-related="jasoncosta" data-lang="en" data-size="large" data-count="none">Tweet</a>
                 </div>
                 <!--
                 <div class="cleaner hr_divider"></div>
