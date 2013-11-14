@@ -156,7 +156,7 @@ public class CRMServlet extends HttpServlet {
 
                 }
                 System.out.println("CRMServlet:Going to next page");
-                request.getRequestDispatcher("/memberFeedbackResult.jsp").forward(request, response);
+                request.getRequestDispatcher("/promotionView.jsp").forward(request, response);
             } else if ("memberPromotion".equals(page)) {
                 System.out.println("***member promotion page***");
                 allPromotions = promotionSessionBean.getAllPromotions();
