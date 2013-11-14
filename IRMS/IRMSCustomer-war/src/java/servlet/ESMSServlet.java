@@ -43,18 +43,17 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ESMSServlet", urlPatterns = {"/ESMSServlet", "/ESMSServlet/*"})
 public class ESMSServlet extends HttpServlet {
+
     @EJB
     private PromotionSessionBean promotionSessionBean;
     @EJB
     private ShowTicketSaleSessionBean showTicketSaleSessionBean;
-
     @EJB
     private ShowScheduleSessionBean showScheduleSessionBean;
     @EJB
     private EventSessionBean eventSessionBean;
     @EJB
     private ShowSessionBean showSessionBean;
-    
     private List<ShowEntity> shows;
     private List<ShowScheduleEntity> showSchedule;
     private Long showId;
@@ -72,6 +71,10 @@ public class ESMSServlet extends HttpServlet {
     private ShowTicketSaleEntity thisShowTicketSale;
     private ShowEntity thisShow;
     private PromotionEntity promotion;
+    List<ShowTicketSaleEntity> totalTickets;
+    List <ShowTicketSaleEntity> purchasedTickets;
+    private  Double ticTotal;
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -113,8 +116,8 @@ public class ESMSServlet extends HttpServlet {
                     System.out.println("***entertainmentSchedule***");
 
                     showId = Long.parseLong(request.getParameter("showId"));
-                    thisShow=showSessionBean.getShowById(showId);
-                    session.setAttribute("thisShow",  thisShow);
+                    thisShow = showSessionBean.getShowById(showId);
+                    session.setAttribute("thisShow", thisShow);
                     showSchedule = showSessionBean.getAllShowSchedules(showId);
                     System.out.println(showSchedule.isEmpty());
                     System.out.println(showId);
@@ -139,7 +142,7 @@ public class ESMSServlet extends HttpServlet {
                         Iterator<ShowTicketEntity> itr = showTickets.iterator();
                         int i = 1;
                         while (itr.hasNext()) {
-                            
+
                             ShowTicketEntity current = itr.next();
                             request.setAttribute("showTicket" + i, current);
                             System.out.println("Current ticket retrieved is " + i);
@@ -157,36 +160,43 @@ public class ESMSServlet extends HttpServlet {
                     ticket4 = Integer.parseInt(request.getParameter("ticket4"));
                     ticket5 = Integer.parseInt(request.getParameter("ticket5"));
                     ticket6 = Integer.parseInt(request.getParameter("ticket6"));
-                    
-                    Double ticTotal = 0.00;
-                    List <ShowTicketEntity> list = thisShowSchedule.getShowTickets();
+
+                    ticTotal = 0.00;
+                    List<ShowTicketEntity> list = thisShowSchedule.getShowTickets();
                     Iterator<ShowTicketEntity> itr = list.iterator();
-                    
-                    List <Integer> totalQuant = new ArrayList();
-                    List <ShowTicketSaleEntity> totalTickets = new ArrayList();
-                    int i=1;
-                    
-                    while(itr.hasNext())
-                    {
+
+                    List<Integer> totalQuant = new ArrayList();
+                    totalTickets = new ArrayList();
+                    int i = 1;
+                    MemberEntity thisMember = (MemberEntity) session.getAttribute("member");
+                    while (itr.hasNext()) {
                         ShowTicketEntity current = itr.next();
-                        System.out.println("A ticket has been retrieved!"+i);
-                        ticTotal+= current.getShowTicketPrice()*Integer.parseInt(request.getParameter("ticket"+i));
-                        totalQuant.add(Integer.parseInt(request.getParameter("ticket"+i)));
-                        
+                        System.out.println("A ticket has been retrieved!" + i);
+                        ticTotal += current.getShowTicketPrice() * Integer.parseInt(request.getParameter("ticket" + i));
+                        totalQuant.add(Integer.parseInt(request.getParameter("ticket" + i)));
+
                         ShowTicketSaleEntity currentSale = new ShowTicketSaleEntity();
+                        currentSale.setShow(thisShow);
+                        currentSale.setShowStartDateTime(thisShowSchedule.getStartDateTime());
+                        // thisShowTicketSale.setShowTicketPrice(thisShowSchedule.getShowTickets());
                         currentSale.setShowTicketType(current.getShowTicketType());
-                        currentSale.setShowTicketQuantity(Integer.parseInt(request.getParameter("ticket"+i)));
-                        currentSale.setShowTicketPrice(current.getShowTicketPrice()*Integer.parseInt(request.getParameter("ticket"+i)));
+                        currentSale.setShowTicketQuantity(Integer.parseInt(request.getParameter("ticket" + i)));
+                        currentSale.setShowTicketPrice(current.getShowTicketPrice() * Integer.parseInt(request.getParameter("ticket" + i)));
+                         
+                        if (thisMember != null) {
+                            
+                            thisShowTicketSale.setMemberEmail(thisMember.getMemberEmail());
+                        }
                         totalTickets.add(currentSale);
-                        
+
                         i++;
                     }
-                    
-                    System.out.println("The total price calculated is : "+ticTotal);
-                    
+
+                    System.out.println("The total price calculated is : " + ticTotal);
+
                     session.setAttribute("totalTickets", totalTickets);
-                    request.setAttribute("ticTotal",ticTotal);
-                    
+                    request.setAttribute("ticTotal", ticTotal);
+
                     //below no use any more
                     request.setAttribute("totalQuant", totalQuant);
                     request.setAttribute("showTickets", list);
@@ -215,66 +225,53 @@ public class ESMSServlet extends HttpServlet {
                     request.getRequestDispatcher("/entertainmentRegisterResult.jsp").forward(request, response);
                 } else if ("entertainmentPayConfirm".equals(page)) {
 
-                     System.out.println("***hotel payment confirmation***");
-                System.out.println("adding reservation to database....");
-              
-                String promotionCode = request.getParameter("promotionCode");
-                String payment = request.getParameter("payment");
-                System.out.println(payment);
-                String cardNo = request.getParameter("cardNo");
-                System.out.println(cardNo);
-          
-                try {
-                   
-                    MemberEntity thisMember = (MemberEntity) session.getAttribute("member");
-                    thisShowTicketSale.setShow(thisShow);
-                    thisShowTicketSale.setShowStartDateTime(thisShowSchedule.getStartDateTime());
-                   // thisShowTicketSale.setShowTicketPrice(thisShowSchedule.getShowTickets());
-                    thisShowTicketSale.setShowTicketQuantity(ticket1+ticket2+ticket3+ticket4+ticket5+ticket6);
-                    thisShowTicketSale.setShowTicketType(promotionCode);
-                    if(thisMember!=null)
-                    {
-                        thisShowTicketSale.setMemberEmail(thisMember.getMemberEmail());
-                        
-                    }
-                     showTicketSaleSessionBean.addShowTicketSale(thisShowTicketSale);
-                  /*
-                    if (promotionCode == "") {
-                        System.out.println("no promotion code entered");
-                        showTicketSaleSessionBean.addShowTicketSale(thisShowTicketSale);
-                    } else {
-                        System.out.println("Promotion code detected: " + promotionCode);
-                        PromotionEntity thisPromotion = promotionSessionBean.getPromotionByCode(promotionCode);
-                        boolean validity = promotionSessionBean.verifyPromotion(thisPromotion, "hotel");
-                        if (validity) {
-                           
-                        } else {
-                            String message2 = "Sorry,the promotion code is not valid";
-                            request.setAttribute("message2", message2);
-                            request.getRequestDispatcher("/entertainmentPay.jsp").forward(request, response);
-                        }
-                    }
-               */
-                } catch (Exception e) {
-                    System.err.println("error occured when adding reservation in servlet");
-                    e.printStackTrace();
-                }
-                /*
-                 if (true) {//add in conditions later
-                 System.out.println("start generate coupon");
-                 CouponTypeEntity ct = couponTypeSessionBean.getAllCouponTypes().get(0);
-                 Date today = new Date(113, 10, 12);//dummy, should be changed to the date of making reservation
-                 String email = data.getRcEmail();
-                 MemberEntity member = memberSessionBean.getMemberByEmail(email);
-                 System.out.println("member info: " + member.getMemberEmail());
-                 coupon = couponSessionBean.generateCoupon(today, member, ct);
-                 }
-                 session.setAttribute("coupon", coupon);
-                 */
+                    System.out.println("***hotel payment confirmation***");
+                    System.out.println("adding reservation to database....");
 
-                    promotion = (PromotionEntity) session.getAttribute("promotion");
+                    String promotionCode = request.getParameter("promotionCode");
+                  
+                    try {
+
+
+                        showTicketSaleSessionBean.addShowTicketSale(thisShowTicketSale);
+                        
+                         if (promotionCode == "") {
+                         System.out.println("no promotion code entered");
+                         promotion = (PromotionEntity) session.getAttribute("promotion");
+                         ticTotal=ticTotal*(1-promotion.getDiscount());
+                         } else {
+                       
+                         }
+                        
+                    } catch (Exception e) {
+                        System.err.println("error occured when adding reservation in servlet");
+                        e.printStackTrace();
+                    }
+                    /*
+                     if (true) {//add in conditions later
+                     System.out.println("start generate coupon");
+                     CouponTypeEntity ct = couponTypeSessionBean.getAllCouponTypes().get(0);
+                     Date today = new Date(113, 10, 12);//dummy, should be changed to the date of making reservation
+                     String email = data.getRcEmail();
+                     MemberEntity member = memberSessionBean.getMemberByEmail(email);
+                     System.out.println("member info: " + member.getMemberEmail());
+                     coupon = couponSessionBean.generateCoupon(today, member, ct);
+                     }
+                     session.setAttribute("coupon", coupon);
+                     */
+                    Iterator <ShowTicketSaleEntity> itr = totalTickets.iterator();
+                    while(itr.hasNext())
+                    {
+                        ShowTicketSaleEntity current = itr.next();
+                        if(current.getShowTicketQuantity()!=0)
+                            this.purchasedTickets.add(current);
+                            
+                    }
+                    
+                    request.setAttribute("ticTotal",ticTotal);
+                   
                     request.getRequestDispatcher("/entertainmentPayConfirm.jsp").forward(request, response);
-                }else if ("entertainmentRegister".equals(page)) {
+                } else if ("entertainmentRegister".equals(page)) {
 
 
 
