@@ -35,41 +35,36 @@
 
                         <div class="row">
                             <div class="large-6 columns">
-                                <label>Start Date</label>
+                                <label>Start Date:</label>
                                 <input type="text" value="${viewedEvent.getStartDate()}" disabled>
                             </div>
                             <div class="large-6 columns">
-                                <label>End Start</label>
+                                <label>End Date:</label>
                                 <input type="text" value="${viewedEvent.getEndDate()}" disabled>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="large-4 columns">
-                                <label>Event Corporate</label>
+                                <label>Event Corporate:</label>
                                 <input type="text" value="${viewedEvent.getEventCorporate()}" disabled>
                             </div>
                             <div class="large-4 columns">
-                                <label>Event Type</label>
+                                <label>Event Type:</label>
                                 <input type="text" value="${viewedEvent.getEventType()}" disabled>
                             </div>
                             <div class="large-4 columns">
-                                <label>Event Contact</label>
+                                <label>Event Contact Person:</label>
                                 <input type="text" value="${viewedEvent.getEventContact()}" disabled>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="large-12 columns">
-                                <label>Status</label>
-                                <input type="text" value="${viewedEvent.getStatus()}" disabled>
-                            </div>
-                        </div>
+          
 
                         <div class="row">
                             <div class="large-12 columns">
-                                <label>Notes</label>
-                                <textarea value="${viewedEvent.getNotes()}" disabled></textarea>
+                             
+                                <h5> ${viewedEvent.description}</h5>
                             </div>
                         </div>
                     </fieldset>         
