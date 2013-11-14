@@ -255,7 +255,7 @@
                             </div>
                             <div class="row">
                                 <div class="large-12 columns">
-                                    <input id="input-promotionCode"  placeholder="Promotion Code" name="promotionCode">
+                                    <input id="input-promotionCode"  placeholder="Promotion Code" name="promotionCode" value="${promotion.promotionCode}">
                                 </div>
                             </div>
 
