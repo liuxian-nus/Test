@@ -38,6 +38,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -133,11 +134,20 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             //below generate a bill for contract bill
             System.out.println("generateShowContractBill"); 
        
+            //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ShowContractBill_");
+            String resultName = result.getName();
+            
        //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\ShowContractBill_"
-                + showContract.getShowMerchantName() + " "+showContract.getShowContractId() + ".pdf";
+        String OUTPUTFILE = resultName + showContract.getShowMerchantName() + " "+showContract.getShowContractId() + ".pdf";
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         document.open();
@@ -155,7 +165,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 Font.BOLDITALIC);
 
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+         String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
 
@@ -282,13 +293,22 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                     + "\n\n For any queries, please contact our customer service managers @(0065)9272-8768. Thank you for your support!";
 
             System.out.println("EventContractBilling: text set already!"); 
+            
+             //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\EventContractBill_");
+            String resultName = result.getName();
        
        //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\EventContractBill_"
-                + event.getName() + " " + event.getEventId() + ".pdf";
-
+        String OUTPUTFILE = resultName + event.getName() + " " + event.getEventId() + ".pdf";
+        System.err.println("OUTPUTFILE: "+OUTPUTFILE);
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         document.open();
         
@@ -305,7 +325,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 Font.BOLDITALIC);
 
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
 
