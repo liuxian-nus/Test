@@ -472,7 +472,7 @@
                         </div>
                         <div class="large-6 columns">
                             <div class="large-5 columns">
-                                <label for="right-label" class="left-align,inline"><strong>Notes</label>
+                                <label for="right-label" class="left-align,inline"><strong>Accommondation Requirement </label>
                             </div>
                             <div>
                                 <div class="large-7 columns">
