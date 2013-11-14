@@ -232,15 +232,15 @@ public class ESMSServlet extends HttpServlet {
                   
                     try {
 
-
+                        
                         showTicketSaleSessionBean.addShowTicketSale(thisShowTicketSale);
                         
                          if (promotionCode == "") {
                          System.out.println("no promotion code entered");
-                         promotion = (PromotionEntity) session.getAttribute("promotion");
-                         ticTotal=ticTotal*(1-promotion.getDiscount());
+                      
                          } else {
-                       
+                          promotion = (PromotionEntity) session.getAttribute("promotion");
+                         ticTotal=ticTotal*(1-promotion.getDiscount());
                          }
                         
                     } catch (Exception e) {
