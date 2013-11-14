@@ -118,60 +118,9 @@ public class CRMServlet extends HttpServlet {
 
             if ("member".equals(page)) {
                 System.out.println("***member page***");
-                if(session.getAttribute("member")==null)
-                {
+               
                 request.getRequestDispatcher("/member.jsp").forward(request, response);
-                }
-                else{
-                    System.out.println(request.getParameter("email"));
-                System.out.println(request.getParameter("password"));
-                
-                String email = request.getParameter("email");
-
-                if (email == null) {
-                    request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
-                } else {
-                    System.out.println("email is not null");
-                    String loginStatus = request.getParameter("loginStatus");
-                    hotelReservation = reservationSessionBean.getReservationByEmail(email);
-                    showReservation = showTicketSaleSessionBean.getShowTicketSalesByEmail(email);
-                    ticketReservation = ticketPurchaseSessionBean.getPurchasedTicketsByEmail(email);
-                    //  restaurantReservation = indReservationSessionBean.getIndreservationByEmail(email);
-
-                    if (loginStatus.equals("true")) {
-                        System.out.println("has logged in before");
-                        member = memberSession.getMemberByEmail(email);
-                        System.out.println(member.getMemberName());
-                        request.setAttribute("data", member);
-                        request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
-                    } else {
-                        String password = request.getParameter("password");
-                        System.out.println(email);
-                        System.out.println(password);
-
-                        boolean isLogin = memberManagementSessionBean.login(email, password);
-                        if (isLogin) {
-                            System.out.println(isLogin);
-                            member = memberSession.getMemberByEmail(email);
-                            System.out.println(member.getMemberName());
-                            session.setAttribute("member", member);
-                            session.setAttribute("memberEmail", email);
-                            request.setAttribute("data", member);
-                            request.setAttribute("memberEmail", member.getMemberEmail());
-                            request.setAttribute("loginStatus", "true");
-                            request.setAttribute("hotelReservation", hotelReservation);
-                            request.setAttribute("showReservation", showReservation);
-                            request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
-                        } else {
-                            message = "Wrong password or username entered";
-                            request.setAttribute("message", message);
-                            request.getRequestDispatcher("/member.jsp").forward(request, response);
-
-                        }
-                    }
-          
-                }
-            } 
+            
             }else if ("memberFeedback".equals(page)) {
                 System.out.println("***member feedback page***");
                 request.getRequestDispatcher("/memberFeedback.jsp").forward(request, response);
@@ -205,9 +154,10 @@ public class CRMServlet extends HttpServlet {
                 } else if (pmDepartment.equalsIgnoreCase("food and beverage")) {
                     System.out.println("***member Promotion food and beverage***");
 
-                }
+                }else{
                 System.out.println("CRMServlet:Going to next page");
                 request.getRequestDispatcher("/promotionView.jsp").forward(request, response);
+                }
             } else if ("memberPromotion".equals(page)) {
                 System.out.println("***member promotion page***");
                 allPromotions = promotionSessionBean.getAllPromotions();
