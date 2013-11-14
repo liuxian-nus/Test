@@ -155,7 +155,7 @@ public class Menu3ManagedBean implements Serializable {
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
-                
+
                 submenu = new Submenu();
                 submenu.setLabel("Event Management");
 
@@ -163,6 +163,18 @@ public class Menu3ManagedBean implements Serializable {
                 item.setValue("Event Management");
                 item.setUrl("/cems/eventService.xhtml");
                 item.setIcon("ui-icon ui-icon-suitcase");
+                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
+
+                submenu = new Submenu();
+                submenu.setLabel("Catering Request");
+                submenu.setIcon("ui-icon ui-icon-contact");
+
+                item = new MenuItem();
+                item.setValue("Food and Baverage");
+                item.setUrl("/fbms/addGroupCatering.xhtml");
+                item.setIcon("ui-icon ui-icon-plus");
                 submenu.getChildren().add(item);
 
                 model.addSubmenu(submenu);
@@ -182,7 +194,7 @@ public class Menu3ManagedBean implements Serializable {
             if (userType.contains("ESMSFront")) {
                 submenu = new Submenu();
                 submenu.setLabel("List Show");
-                
+
                 item = new MenuItem();
                 item.setValue("Search show");
                 item.setUrl("/esms/showTicketing.xhtml");
@@ -208,7 +220,7 @@ public class Menu3ManagedBean implements Serializable {
                 model.addSubmenu(submenu);
 
             }
-            
+
             if (userType.contains("ATMSTicketing")) {
                 submenu = new Submenu();
                 submenu.setLabel("Ticket Purchase");

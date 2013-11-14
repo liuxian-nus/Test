@@ -250,6 +250,8 @@ public class IRMSFilter implements Filter {
         } else if (userType.contains("CEMSEvent")) {
             if (path.contains("cems/eventService")) {
                 return true;
+            } else if (path.contains("fbms/addGroupCatering")) {
+                return true;
             }
         } else if (userType.contains("CEMSAdmin")) {
             if (path.contains("cems")) {
