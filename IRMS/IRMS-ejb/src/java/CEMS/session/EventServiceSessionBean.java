@@ -32,21 +32,25 @@ public class EventServiceSessionBean {
     }
     
     public List<EventServiceEntity> getEventServiceByCategory(String category) throws NoResultException {
-        Query q = em.createQuery("SELECT es FROM EventServiceEntity es WHERE es.serviceCategory = '" + category + "'");
-        System.out.println("EventSerSessionBean"+q.getResultList().isEmpty());
+//        Query q = em.createQuery("SELECT es FROM EventServiceEntity es WHERE es.serviceCategory = '" + category + "'");
+//        System.out.println("EventSerSessionBean"+q.getResultList().isEmpty());
+        System.out.println("In getEventServiceByCategory");
+        Query q2 = em.createQuery("SELECT M FROM EventServiceEntity M");
         
-//        Query q2 = em.createQuery("SELECT M FROM EVENTSERVICEENTITY M");
-//        
-//        Iterator<EventServiceEntity> itr = q2.getResultList().iterator();
-//        List <EventServiceEntity> resultList = new ArrayList();
-//        while (itr.hasNext())
-//        {
-//            EventServiceEntity current = itr.next();
-//            if(current.getServiceCategory().equalsIgnoreCase(category))
-//                resultList.add(current);
-//        }
-//        return resultList;
-        return q.getResultList();
+        Iterator<EventServiceEntity> itr = q2.getResultList().iterator();
+        List <EventServiceEntity> resultList = new ArrayList();
+        while (itr.hasNext())
+        {
+            EventServiceEntity current = itr.next();
+            if(current.getServiceCategory().equalsIgnoreCase(category))
+            {
+                resultList.add(current);
+                System.out.println("a service has been got!");
+            }
+        }
+        System.out.println(resultList.size());
+        return resultList;
+//        return q.getResultList();
     }
 
     public EventServiceEntity getEventServiceById(Long serviceId) {
