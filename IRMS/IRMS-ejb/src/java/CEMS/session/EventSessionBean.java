@@ -54,7 +54,7 @@ public class EventSessionBean {
         ee.setTitle(title);
         System.out.println("EventSessionBean: makeReservation: event has been created!" + ee.getEventId() + ee.getEventName());
 
-        ee.setStatus("In Progress: booking completed!");
+        ee.setStatus("PENDING");
         em.persist(ee);
         System.out.println("EventSessionBean: makeReservation: event status has been changed " + ee.getEventId() + ee.getStatus());
 

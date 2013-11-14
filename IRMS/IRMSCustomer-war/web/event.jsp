@@ -27,13 +27,12 @@
                                 <div class="large-4 columns">
                                     <!-- <label for="customDropdown">Event Type</label>-->
                                     <select id="customDropdown" class="button dropdown secondary small" name="venueFunction">
-                                        <option>Conference</option>
-                                        <option>Dinner</option>
-                                        <option>Dinner and Dance</option>
+                                        <option>Convention</option>
                                         <option>Exhibition</option>
-                                        <option>Meeting</option>
+                                        <option>Auditorium</option>
                                         <option>Seminar</option>
-                                        <option>Wedding</option>
+                                        <option>Banquet</option>
+                                        <option>Meeting</option>
                                     </select>
 
                                 </div>
