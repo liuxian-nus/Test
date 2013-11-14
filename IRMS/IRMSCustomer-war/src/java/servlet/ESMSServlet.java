@@ -267,7 +267,7 @@ public class ESMSServlet extends HttpServlet {
                             this.purchasedTickets.add(current);
                             
                     }
-                    
+                    request.setAttribute("totalTickets", totalTickets);
                     request.setAttribute("ticTotal",ticTotal);
                    
                     request.getRequestDispatcher("/entertainmentPayConfirm.jsp").forward(request, response);
