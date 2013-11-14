@@ -47,6 +47,7 @@ public class RoomSearchResultManagedBean implements Serializable {
     }
 
     public RoomEntity getThisRoom() {
+        System.out.println("room search result check service: get this room" + thisRoom.getRoomId());
         return thisRoom;
     }
 
@@ -59,7 +60,9 @@ public class RoomSearchResultManagedBean implements Serializable {
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
         thisRoom = (RoomEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("thisRoom");
-        request.getSession().setAttribute("roomId", thisRoom.getRoomId());
+        System.out.println("this room found: " + thisRoom.getRoomId());
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", thisRoom);
+
     }
 
     public void intiViewAgain(PhaseEvent event) {
@@ -120,8 +123,10 @@ public class RoomSearchResultManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-            RoomEntity room = (RoomEntity) request.getSession().getAttribute("room");
-            roomSessionBean.addIncidentalCharge(room,incidentalCharge);
+            roomId = (Integer) request.getSession().getAttribute("roomId");
+            RoomEntity room = roomSessionBean.getRoomById(roomId);
+//            RoomEntity room = (RoomEntity) request.getSession().getAttribute("room");
+            roomSessionBean.addIncidentalCharge(room, incidentalCharge);
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("thisRoom", room);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding incidental charge", ""));
@@ -130,8 +135,7 @@ public class RoomSearchResultManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "An incidental charge has been added into the room.", ""));
 
     }
-    
-    
+
     /* public void sendBill() throws IOException {
      System.out.println("we are in clear service charge");
      HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -147,7 +151,6 @@ public class RoomSearchResultManagedBean implements Serializable {
      return;
      }
      }*/
-
     public RoomSessionBean getRoomSessionBean() {
         return roomSessionBean;
     }

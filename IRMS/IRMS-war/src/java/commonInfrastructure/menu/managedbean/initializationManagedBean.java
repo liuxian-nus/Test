@@ -1581,108 +1581,108 @@ public class initializationManagedBean implements Serializable {
         addMessage("Show Created!");
     }
 
-    public void createHotelEmployees() {
-        System.out.println("go to create hotel employee user");
-
-        /*
-         functionality = new FunctionalityEntity();
-         functionality.setFuncName("overbookingManagement");
-         functionality.setFuncDescription("manage overbooking");
-         functionalitySessionBean.addFunctionality(functionality);
-
-         FunctionalityEntity functionality2 = new FunctionalityEntity();
-         functionality2.setFuncName("listAllRooms");
-         functionality2.setFuncDescription("oversee all room situation");
-         functionalitySessionBean.addFunctionality(functionality2);
-
-         FunctionalityEntity functionality3 = new FunctionalityEntity();
-         functionality3.setFuncName("listAllRoomPrices");
-         functionality3.setFuncDescription("manage room price");
-         functionalitySessionBean.addFunctionality(functionality3);
-
-         FunctionalityEntity functionality4 = new FunctionalityEntity();
-         functionality4.setFuncName("listReservations");
-         functionality4.setFuncDescription("oversee all reservations");
-         functionalitySessionBean.addFunctionality(functionality4);
-         *  role.addFunctionality(functionality);
-         role.addFunctionality(functionality2);
-         role.addFunctionality(functionality3);
-         role.addFunctionality(functionality4);*/
-
-
-        role = new RoleEntity();
-        role.setRoleId(21);
-        role.setRoleName("ACMSOps1"); //manager instead  
-        System.out.println("Create role :" + role.getRoleName());
-
-        RoleEntity role1 = new RoleEntity();
-        role1.setRoleId(22);
-        role1.setRoleName("ACMSOps2"); //manager instead  
-
-        RoleEntity role2 = new RoleEntity();
-        role2.setRoleId(23);
-        role2.setRoleName("ACMSOps3"); //manager instead  
-
-        RoleEntity role3 = new RoleEntity();
-        role3.setRoleId(24);
-        role3.setRoleName("ACMSOps4"); //manager instead  
-
-        employee = new EmployeeEntity();
-        employee.setEmployeeId("B0100"); //business assumption: maximum employee number 9999
-        employee.setEmployeeName("ACMSOps1");
-        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0100"));
-        System.out.println("finished hashing");
-        employee.addRole(role);
-        employee.setEmployeeDepartment("Hotel");
-        employee.setIsFirstTimeLogin(false);
-        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
-
-        EmployeeEntity employee1 = new EmployeeEntity();
-        employee1.setEmployeeId("B0200"); //business assumption: maximum employee number 9999
-        employee1.setEmployeeName("ACMSOps2");
-        employee1.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0200"));
-        System.out.println("finished hashing");
-        employee1.addRole(role1);
-        employee1.setEmployeeDepartment("Hotel");
-        employee1.setIsFirstTimeLogin(false);
-        System.out.println("Create employee :" + employee1.getEmployeeId() + "," + employee1.getEmployeeName() + "," + employee.getEmployeePassword());
-
-        EmployeeEntity employee2 = new EmployeeEntity();
-        employee2.setEmployeeId("B0300"); //business assumption: maximum employee number 9999
-        employee2.setEmployeeName("ACMSOps3");
-        employee2.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0300"));
-        System.out.println("finished hashing");
-        employee2.addRole(role2);
-        employee2.setIsFirstTimeLogin(false);
-        employee2.setEmployeeDepartment("Hotel");
-        System.out.println("Create employee :" + employee2.getEmployeeId() + "," + employee2.getEmployeeName() + "," + employee.getEmployeePassword());
-
-        EmployeeEntity employee3 = new EmployeeEntity();
-        employee3.setEmployeeId("B0400"); //business assumption: maximum employee number 9999
-        employee3.setEmployeeName("ACMSOps4");
-        employee3.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0400"));
-        System.out.println("finished hashing");
-        employee3.addRole(role3);
-        employee3.setEmployeeDepartment("Hotel");
-        employee3.setIsFirstTimeLogin(false);
-        System.out.println("Create employee :" + employee3.getEmployeeId() + "," + employee3.getEmployeeName() + "," + employee.getEmployeePassword());
-
-
-
-        try {
-            System.out.println("Saving ACMSAdmin....");
-            employeeSessionBean.addEmployee(employee);
-            employeeSessionBean.addEmployee(employee1);
-            employeeSessionBean.addEmployee(employee2);
-            employeeSessionBean.addEmployee(employee3);
-            System.out.println("employees saved.....");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
-            return;
-        }
-        System.out.println("Insert Employee into database");
-        addMessage("Hotel staffs Created!");
-    }
+//    public void createHotelEmployees() {
+//        System.out.println("go to create hotel employee user");
+//
+//        /*
+//         functionality = new FunctionalityEntity();
+//         functionality.setFuncName("overbookingManagement");
+//         functionality.setFuncDescription("manage overbooking");
+//         functionalitySessionBean.addFunctionality(functionality);
+//
+//         FunctionalityEntity functionality2 = new FunctionalityEntity();
+//         functionality2.setFuncName("listAllRooms");
+//         functionality2.setFuncDescription("oversee all room situation");
+//         functionalitySessionBean.addFunctionality(functionality2);
+//
+//         FunctionalityEntity functionality3 = new FunctionalityEntity();
+//         functionality3.setFuncName("listAllRoomPrices");
+//         functionality3.setFuncDescription("manage room price");
+//         functionalitySessionBean.addFunctionality(functionality3);
+//
+//         FunctionalityEntity functionality4 = new FunctionalityEntity();
+//         functionality4.setFuncName("listReservations");
+//         functionality4.setFuncDescription("oversee all reservations");
+//         functionalitySessionBean.addFunctionality(functionality4);
+//         *  role.addFunctionality(functionality);
+//         role.addFunctionality(functionality2);
+//         role.addFunctionality(functionality3);
+//         role.addFunctionality(functionality4);*/
+//
+//
+//        role = new RoleEntity();
+//        role.setRoleId(21);
+//        role.setRoleName("ACMSOps1"); //manager instead  
+//        System.out.println("Create role :" + role.getRoleName());
+//
+//        RoleEntity role1 = new RoleEntity();
+//        role1.setRoleId(22);
+//        role1.setRoleName("ACMSOps2"); //manager instead  
+//
+//        RoleEntity role2 = new RoleEntity();
+//        role2.setRoleId(23);
+//        role2.setRoleName("ACMSOps3"); //manager instead  
+//
+//        RoleEntity role3 = new RoleEntity();
+//        role3.setRoleId(24);
+//        role3.setRoleName("ACMSOps4"); //manager instead  
+//
+//        employee = new EmployeeEntity();
+//        employee.setEmployeeId("B0100"); //business assumption: maximum employee number 9999
+//        employee.setEmployeeName("ACMSOps1");
+//        employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0100"));
+//        System.out.println("finished hashing");
+//        employee.addRole(role);
+//        employee.setEmployeeDepartment("Hotel");
+//        employee.setIsFirstTimeLogin(false);
+//        System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
+//
+//        EmployeeEntity employee1 = new EmployeeEntity();
+//        employee1.setEmployeeId("B0200"); //business assumption: maximum employee number 9999
+//        employee1.setEmployeeName("ACMSOps2");
+//        employee1.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0200"));
+//        System.out.println("finished hashing");
+//        employee1.addRole(role1);
+//        employee1.setEmployeeDepartment("Hotel");
+//        employee1.setIsFirstTimeLogin(false);
+//        System.out.println("Create employee :" + employee1.getEmployeeId() + "," + employee1.getEmployeeName() + "," + employee.getEmployeePassword());
+//
+//        EmployeeEntity employee2 = new EmployeeEntity();
+//        employee2.setEmployeeId("B0300"); //business assumption: maximum employee number 9999
+//        employee2.setEmployeeName("ACMSOps3");
+//        employee2.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0300"));
+//        System.out.println("finished hashing");
+//        employee2.addRole(role2);
+//        employee2.setIsFirstTimeLogin(false);
+//        employee2.setEmployeeDepartment("Hotel");
+//        System.out.println("Create employee :" + employee2.getEmployeeId() + "," + employee2.getEmployeeName() + "," + employee.getEmployeePassword());
+//
+//        EmployeeEntity employee3 = new EmployeeEntity();
+//        employee3.setEmployeeId("B0400"); //business assumption: maximum employee number 9999
+//        employee3.setEmployeeName("ACMSOps4");
+//        employee3.setEmployeePassword(ePasswordHashSessionBean.hashPassword("B0400"));
+//        System.out.println("finished hashing");
+//        employee3.addRole(role3);
+//        employee3.setEmployeeDepartment("Hotel");
+//        employee3.setIsFirstTimeLogin(false);
+//        System.out.println("Create employee :" + employee3.getEmployeeId() + "," + employee3.getEmployeeName() + "," + employee.getEmployeePassword());
+//
+//
+//
+//        try {
+//            System.out.println("Saving ACMSAdmin....");
+//            employeeSessionBean.addEmployee(employee);
+//            employeeSessionBean.addEmployee(employee1);
+//            employeeSessionBean.addEmployee(employee2);
+//            employeeSessionBean.addEmployee(employee3);
+//            System.out.println("employees saved.....");
+//        } catch (Exception e) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
+//            return;
+//        }
+//        System.out.println("Insert Employee into database");
+//        addMessage("Hotel staffs Created!");
+//    }
 
     public void createShowContract() {
         showContract = new ShowContractEntity();
@@ -1775,7 +1775,7 @@ public class initializationManagedBean implements Serializable {
         createPushingcart();
         createContract();
         createESMSAdmin();
-        createHotelEmployees();
+//        createHotelEmployees();
         createCouponType();
         createCoupon();
         createAccount();

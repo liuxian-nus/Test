@@ -77,23 +77,23 @@
                     <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button"/>  
                 </p:dialog>  
 
-                <p:dialog width="500" showEffect="explode" hideEffect="explode" header="Room Service" widgetVar="checkService"> 
+                <p:dialog width="600" showEffect="explode" hideEffect="explode" header="Room Service" widgetVar="checkService"> 
                     <br/>
-                    <p:dataTable id="roomServices" value="#{roomSearchResultManagedBean.thisRoom.roomServiceExe}" var="roomService" paginator="true" rows="3">
+                    <p:dataTable id="roomServices" value="#{roomSearchResultManagedBean.thisRoom.roomServiceExe}" var="servicelist" paginator="true" rows="5">
                         <p:column headerText="Category: ">
-                            <h:outputText value="#{roomServiceExe.roomService.category}"/>
+                            <h:outputText value="#{servicelist.roomService.category}"/>
                         </p:column>                         
                         <p:column headerText="Room Service: ">
-                            <h:outputText value="#{roomServiceExe.roomService.roomServiceName}"/>
+                            <h:outputText value="#{servicelist.roomService.roomServiceName}"/>
                         </p:column>
-                        <p:column headerText="Service Price: ">
-                            <h:outputText value="#{roomServiceExe.roomService.roomServicePrice}"/>
+                        <p:column headerText="Price: ">
+                            <h:outputText value="#{servicelist.roomService.roomServicePrice}"/>
                         </p:column> 
-                        <p:column headerText="Service Quantity: ">
-                            <h:outputText value="#{roomServiceExe.roomServiceQuantity}"/>
+                        <p:column headerText="Quantity: ">
+                            <h:outputText value="#{servicelist.roomServiceQuantity}"/>
                         </p:column> 
                         <p:column headerText="Total (as per item): ">
-                            <h:outputText value="#{roomServiceExe.roomServiceQuantity * roomServiceExe.roomService.roomServicePrice}"/>
+                            <h:outputText value="#{servicelist.roomServiceQuantity * servicelist.roomService.roomServicePrice}"/>
                         </p:column> 
 
                     </p:dataTable>
@@ -109,7 +109,7 @@
                         </p:column>                         
 
                     <br/><br/>
-                    <p:commandButton value="Yes" update="growl" action="#{roomSearchResultManagedBean.addIncidentalCharge}" oncomplete="add.hide()">  
+                    <p:commandButton value="Yes" onclick="growl;" actionListener="#{roomSearchResultManagedBean.addIncidentalCharge}" oncomplete="add.hide()" update="form">  
                     </p:commandButton>
                     <p:commandButton value="Not yet" onclick="add.hide()" type="button"/>  
                 </p:dialog>             

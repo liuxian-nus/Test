@@ -36,6 +36,7 @@ public class RoomServiceEntity implements Serializable {
     }
 
     public double getRoomServicePrice() {
+        System.out.println("this room service price is: " + roomServicePrice);
         return roomServicePrice;
     }
 

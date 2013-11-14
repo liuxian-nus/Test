@@ -143,7 +143,8 @@ public class RoomSessionBean implements RoomSessionBeanRemote {
         List roomList = new ArrayList<RoomEntity>();
         for (Object o : q.getResultList()) {
             RoomEntity r = (RoomEntity) o;
-            if (r.getRoomStatus() == "occupied") {
+            if (r.getRoomStatus().equals("occupied")) {
+                System.out.println("one occupied room found" + r.getRoomId());
                 roomList.add(r);
             }
         }
@@ -206,6 +207,7 @@ public class RoomSessionBean implements RoomSessionBeanRemote {
             throw new ExistException("RoomSessionBean-->ExistException-->Invalid room Id!");
         }
         String description = "Hotel Stay from " + room.getCheckInDate() + " to " + room.getCheckOutDate() + " with a total service charge: " + room.getRoomServiceCharge();
+        if (room.getRoomMember()!=null)
         mtSessionBean.addMemberTransaction(room.getRoomMember(), room.getRoomServiceCharge(), room.getCheckOutDate(), "Hotel", null, description, false);
         room.setRoomServiceCharge(0);
         room.setRoomServiceExe(null);

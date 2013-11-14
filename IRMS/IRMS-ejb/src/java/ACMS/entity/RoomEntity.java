@@ -108,6 +108,7 @@ public class RoomEntity implements Serializable {
     }
 
     public List<RoomServiceExeEntity> getRoomServiceExe() {
+        System.out.println("in get room service execution");
         return roomServiceExe;
     }
 
