@@ -22,7 +22,7 @@
                             <f:selectItems value="#{manageEventManagedBean.reservedEvents}" var="selectedEvent" itemLabel="ID:#{selectedEvent.eventId}; Event: #{selectedEvent.eventName} by #{selectedEvent.name}" itemValue="#{selectedEvent.eventId}"/>  
                         </p:selectOneMenu>
 
-                        <h:outputLabel for="styleClass" value="Venue booking rate " />  
+                        <h:outputLabel for="styleClass" value="Venue booking rate: " />  
                         <h:inputText id="styleClass" value="#{venueScheduleManagedBean.event.styleClass}">
                             <f:convertNumber type="number" />
                         </h:inputText>
