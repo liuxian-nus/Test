@@ -299,16 +299,14 @@ public class smmsInitManagedBean implements Serializable {
 
 
         ContractEntity contract3 = new ContractEntity();
-//        Date cidate3 = new Date(2010, 10, 1);
-//        Date codate3 = new Date(2015, 10, 1);    
+        Date cidate3 = new Date(2010, 10, 1);
+        Date codate3 = new Date(2013, 10, 1);
 
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, 2);  //here expire after 2 minutes
-        Date cidate3 = cal.getTime();
-
-        Calendar cal2 = Calendar.getInstance();
-        cal2.add(Calendar.MINUTE, 4);  //here expire after 2 minutes
-        Date codate3 = cal2.getTime();
+        Date today = cal.getTime();
+//        Calendar cal2 = Calendar.getInstance();
+//        cal2.add(Calendar.MINUTE, 4);  //here expire after 2 minutes
+//        Date codate3 = cal2.getTime();
 
         try {
 
@@ -328,9 +326,9 @@ public class smmsInitManagedBean implements Serializable {
             event3.setEventDeposit(55000.00);
             event3.setEventMonthRate(9000.00);
             event3.setEventCommissionRate(0.22);
-            event3.setEventStatus("newActive");
+            event3.setEventStatus("Terminated");
             event3.setEventContract(contract3);
-            event3.setEventTime(cal.getTime());
+            event3.setEventTime(today);
             contracteventSessionBean.addContractevent(event3);
             System.out.println("Contract saved....." + event3.getContracteventId());
 
@@ -363,7 +361,7 @@ public class smmsInitManagedBean implements Serializable {
     public void addDepositBill(ContractEntity contract) {
         Calendar cal = Calendar.getInstance();
         Date today = cal.getTime();
-        cal.add(Calendar.MINUTE, 3);  //here expire after 2 minutes
+        cal.add(Calendar.MINUTE, 7);  //here expire after 2 minutes
         Date dueDate = cal.getTime();
         System.out.println("in setting due date" + dueDate);
         System.out.println("getting contract meh" + contract.getId());

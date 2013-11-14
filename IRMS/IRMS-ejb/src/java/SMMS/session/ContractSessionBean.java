@@ -79,9 +79,7 @@ public class ContractSessionBean implements ContractSessionBeanRemote {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public boolean updateContract(ContractEntity contract) throws ExistException {
-        if ((contract.getStatus() != "new") || (contract.getStatus() != "rejected")) {
-            throw new ExistException("contract cannot be updated because it has been approved!");
-        }
+     
         em.merge(contract);
         return true;
     }

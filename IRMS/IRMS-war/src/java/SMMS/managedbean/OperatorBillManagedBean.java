@@ -13,6 +13,7 @@ import SMMS.entity.ContractEntity;
 import SMMS.session.ContractSessionBean;
 import SMMS.session.MerchantBillSessionBean;
 import SMMS.session.MerchantSessionBean;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -154,10 +155,11 @@ public class OperatorBillManagedBean {
         merchantBillSessionBean.addYearlyBill();
     }
 
-    public void sendTerminateBill(ActionEvent event) throws ExistException {
+    public void sendTerminateBill(ActionEvent event) throws ExistException, IOException {
 
         System.out.println("what is the current contract now" + contract.getContractId());
         merchantBillSessionBean.addTerminationBill(contract);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("paymentManagement.xhtml");
     }
 
     public void viewBill(ActionEvent event) {

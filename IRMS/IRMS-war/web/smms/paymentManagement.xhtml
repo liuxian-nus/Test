@@ -27,7 +27,9 @@
                                         <h:outputText value="#{aBill.billId}"/>
                                     </p:column>
                                     <p:column headerText="Issue Date" style="width:100px;">
-                                        <h:outputText value="#{aBill.billDate}"/>
+                                        <h:outputText value="#{aBill.billDate}">
+                                            <f:convertDateTime pattern="yyyy-mm-dd"/>
+                                        </h:outputText>
                                     </p:column>
                                     <p:column headerText="Amount" style="width:100px;">
                                         <h:outputText value="#{aBill.billAmount}"/>
@@ -43,12 +45,12 @@
                                     </p:column>
 
                                     <p:column style="width:100px">  
-                                        <p:commandButton   oncomplete="confirmSend.show()" ajax="true" value="Issue"
+                                        <p:commandButton   oncomplete="confirmSend.show()" ajax="true" 
                                                            icon="ui-icon ui-icon-check"  title="Send Bill to Merchant">  
                                             <f:setPropertyActionListener target="#{operatorBillManagedBean.bill}" value="#{aBill}" /> 
                                         </p:commandButton> 
 
-                                        <p:commandButton   actionListener="#{operatorBillManagedBean.viewBill}" ajax="true" value="View"
+                                        <p:commandButton   actionListener="#{operatorBillManagedBean.viewBill}" ajax="true" 
                                                            icon="ui-icon ui-icon-Tag"  title="View Bill Detail">  
                                             <f:setPropertyActionListener target="#{operatorBillManagedBean.bill}" value="#{aBill}" /> 
                                         </p:commandButton> 
@@ -239,7 +241,7 @@
                     <p:fieldset legend="Generate Yearly Bill" toggleable="true" toggleSpeed="500" collapsed="true">  
                         <p:panel id="bills" header="Search" style="height:500px;">
                             <h:panelGrid columns="2" cellpadding="10">      
-                                <p:commandButton  value="Search" ajax="true" oncomplete="yearly.show()" update ="growl"/>
+                                <p:commandButton  value="Generate" ajax="true" oncomplete="yearly.show()" update ="growl"/>
                             </h:panelGrid>
 
                             <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="yearly"> 
@@ -272,17 +274,17 @@
                                     <p:rowToggler />  
                                 </p:column> 
 
-                                <p:column headerText="Contract ID" style="width:30px;">
+                                <p:column headerText="Contract ID" style="width:60px;">
                                     <h:outputText value="#{contract.contractId}"/>
                                 </p:column>
-                                <p:column headerText="Merchant" style="width:50px;">
+                                <p:column headerText="Merchant" style="width:80px;">
                                     <h:outputText value="#{contract.merchant.merchantName}"/>
                                 </p:column>
-                                <p:column headerText="Outlet" style="width:50px;">
+                                <p:column headerText="Outlet" style="width:100px;">
                                     <h:outputText value="#{contract.outlet.id}"/>
                                 </p:column>
 
-                                <p:column headerText="Status" style="width:50px;">
+                                <p:column headerText="Status" style="width:100px;">
                                     <h:outputText value="#{contract.last.eventStatus}"/>
                                 </p:column>
 

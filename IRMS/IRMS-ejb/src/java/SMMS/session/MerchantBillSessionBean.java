@@ -180,62 +180,61 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
             bill.setBillStatus("overdue");
             updateBill(bill);
             System.err.println("after setting product lalala" + bill.getBillStatus());
-            cancelTerminationTimer();
 //            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The bill " + bill.getBillId() + "has been set to status : overdue", ""));
         }
 
-        if (timer.getInfo().toString().equals("setActive")) {
-            System.out.println("in setting ACTIVE time ah lah ahahah");
-            System.out.println("in setting ACTIVE time ah lah ahahah");
-            System.out.println("in setting ACTIVE time ah lah ahahah");
-            System.out.println("in setting ACTIVE time ah lah ahahah");
-            System.out.println("in setting ACTIVE time ah lah ahahah" + contract.getContractId());
+//        if (timer.getInfo().toString().equals("setActive")) {
+//            System.out.println("in setting ACTIVE time ah lah ahahah");
+//            System.out.println("in setting ACTIVE time ah lah ahahah");
+//            System.out.println("in setting ACTIVE time ah lah ahahah");
+//            System.out.println("in setting ACTIVE time ah lah ahahah");
+//            System.out.println("in setting ACTIVE time ah lah ahahah" + contract.getContractId());
+//
+//            ContracteventEntity cevent = new ContracteventEntity();
+//            cevent.setEventStatus("newActive");
+//            contracteventSessionBean.updateContractEvent(cevent);
+////            contractSessionBean.updateContract(contract);
+//            System.err.println("the current status for this event " + cevent.getEventStatus());
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The contract " + contract.getContractId() + "has been set to status : active", ""));
+//
+//        }
 
-            ContracteventEntity cevent = new ContracteventEntity();
-            cevent.setEventStatus("newActive");
-            contracteventSessionBean.updateContractEvent(cevent);
-//            contractSessionBean.updateContract(contract);
-            System.err.println("the current status for this event " + cevent.getEventStatus());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The contract " + contract.getContractId() + "has been set to status : active", ""));
-
-        }
-
-        if (timer.getInfo().toString().equals("termination")) {
-            System.err.println("in termination time papapa ni ke bu ke yi hao shi le ao coa  papapappapa");
-            System.err.println("in setting overdue time lah papapapappa");
-            System.err.println("in setting overdue time lah papapapapapa");
-            System.err.println("in setting overdue time lah papapapapapap!!!!!!!!!!!!!!");
-            System.err.println("in setting overdue time lah papapapapappa" + contract.getContractId());
-
-            BillEntity billNew = new BillEntity();
-            billNew = addTerminationBill(contract);
-            System.err.println("after setting product lalala" + billNew.getBillId());
-        }
-
-        if (timer.getInfo().toString().equals("monthly")) {
-            System.err.println("in setting overdue time lah ahahah");
-            System.err.println("in setting overdue time lah ahahah");
-            System.err.println("in setting overdue time lah ahahah");
-            System.err.println("in setting overdue time lah ahahah!!!!!!!!!!!!!!");
-            System.err.println("in setting overdue time lah ahahah" + contract.getContractId());
-            addTerminationBill(contract);
-            System.err.println("after setting product lalala" + bill.getBillId());
-        }
-
-        if (timer.getInfo().toString().equals("schedule")) {
-            System.err.println("in setting SCHEDULE time lah ahahah");
-            System.err.println("in setting SCHEDULE time lah ahahah");
-            System.err.println("in setting SCHEDULE time lah ahahah");
-            Query q = em.createQuery("SELECT m FROM ContractEntity m");
-            List OutletList = new ArrayList<ContractEntity>();
-            for (Object o : q.getResultList()) {
-                ContractEntity m = (ContractEntity) o;
-                System.err.println("here in contract" + m.getId());
-                if (!"Terminated".equalsIgnoreCase(m.getLast().getEventStatus())) {
-                    addMonthlyBill(m);
-                }
-            }
-        }
+//        if (timer.getInfo().toString().equals("termination")) {
+//            System.err.println("in termination time papapa ni ke bu ke yi hao shi le ao coa  papapappapa");
+//            System.err.println("in setting overdue time lah papapapappa");
+//            System.err.println("in setting overdue time lah papapapapapa");
+//            System.err.println("in setting overdue time lah papapapapapap!!!!!!!!!!!!!!");
+//            System.err.println("in setting overdue time lah papapapapappa" + contract.getContractId());
+//
+//            BillEntity billNew = new BillEntity();
+//            billNew = addTerminationBill(contract);
+//            System.err.println("after setting product lalala" + billNew.getBillId());
+//        }
+//
+//        if (timer.getInfo().toString().equals("monthly")) {
+//            System.err.println("in setting overdue time lah ahahah");
+//            System.err.println("in setting overdue time lah ahahah");
+//            System.err.println("in setting overdue time lah ahahah");
+//            System.err.println("in setting overdue time lah ahahah!!!!!!!!!!!!!!");
+//            System.err.println("in setting overdue time lah ahahah" + contract.getContractId());
+//            addTerminationBill(contract);
+//            System.err.println("after setting product lalala" + bill.getBillId());
+//        }
+//
+//        if (timer.getInfo().toString().equals("schedule")) {
+//            System.err.println("in setting SCHEDULE time lah ahahah");
+//            System.err.println("in setting SCHEDULE time lah ahahah");
+//            System.err.println("in setting SCHEDULE time lah ahahah");
+//            Query q = em.createQuery("SELECT m FROM ContractEntity m");
+//            List OutletList = new ArrayList<ContractEntity>();
+//            for (Object o : q.getResultList()) {
+//                ContractEntity m = (ContractEntity) o;
+//                System.err.println("here in contract" + m.getId());
+//                if (!"Terminated".equalsIgnoreCase(m.getLast().getEventStatus())) {
+//                    addMonthlyBill(m);
+//                }
+//            }
+//        }
 
 //        }
     }
@@ -552,7 +551,7 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
         List TransactionList = new ArrayList<BillEntity>();
         for (Object o : q.getResultList()) {
             BillEntity m = (BillEntity) o;
-            if (m.getBillStatus() == "unpaid") {
+            if ("unpaid".equals(m.getBillStatus())) {
                 TransactionList.add(m);
             }
         }
