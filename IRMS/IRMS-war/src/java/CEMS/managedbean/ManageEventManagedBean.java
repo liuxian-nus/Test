@@ -5,6 +5,7 @@
 package CEMS.managedbean;
 
 import CEMS.entity.EventEntity;
+import CEMS.session.EventBookingSessionBean;
 import CEMS.session.EventSessionBean;
 import ERMS.entity.EmployeeEntity;
 import ERMS.session.EmployeeSessionBean;
@@ -33,6 +34,8 @@ public class ManageEventManagedBean {
     EventSessionBean eventSessionBean;
     @EJB
     EmployeeSessionBean employeeSessionBean;
+    @EJB
+    EventBookingSessionBean eventBookingSessionBean;
     private EventEntity selectedEvent;
     private List<EventEntity> events;
     private List<EventEntity> pendingEvents;
@@ -90,9 +93,9 @@ public class ManageEventManagedBean {
 //        System.err.println("id: " + getId());
         eventSessionBean.deleteEvent(getId());
     }
-    
-    public void saveDeposit(ActionEvent event){
-        System.err.println("Deposit: "+selectedEvent.getDeposit());
+
+    public void saveDeposit(ActionEvent event) {
+        System.err.println("Deposit: " + selectedEvent.getDeposit());
         eventSessionBean.updateEvent(selectedEvent);
     }
 
@@ -100,15 +103,19 @@ public class ManageEventManagedBean {
 //        System.err.println("onCellEdit Now");
         Object oldValue = event.getOldValue();
         Object newValue = event.getNewValue();
+        String ov = oldValue.toString();
+        String nv = newValue.toString();
+        System.err.println(ov + "  " + nv);
 
-//        System.err.println("old: " + oldValue);
-//        System.err.println("new: " + newValue);
-//        System.err.println("Selected event: " + selectedEvent);
-
+        selectedEvent.setStatus((String) newValue);
+        System.err.println("ID: "+selectedEvent.getEventId());
         if (newValue != null && !newValue.equals(oldValue)) {
-            selectedEvent.setStatus((String) newValue);
-//            System.err.println("event: " + selectedEvent.getEventName());
-            eventSessionBean.updateEvent(selectedEvent);
+            if (ov.equalsIgnoreCase("Confirmed") && nv.equalsIgnoreCase("Cancel")) {
+                eventBookingSessionBean.deleteEventBookingList(selectedEvent.getBookings());
+                System.err.println("size of booking: " + selectedEvent.getBookings().size());
+            } else {
+                eventSessionBean.updateEvent(selectedEvent);
+            }
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Status Changed", "Previously: " + oldValue + ", Now:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }

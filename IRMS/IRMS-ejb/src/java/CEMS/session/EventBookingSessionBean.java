@@ -94,4 +94,17 @@ public class EventBookingSessionBean {
         em.persist(eventBooking);
         return eventBooking;
     }
+
+    public boolean deleteEventBookingList(List<EventBookingEntity> list) {
+        if (list != null) {
+            Iterator<EventBookingEntity> itr = list.iterator();
+            while (itr.hasNext()) {
+                EventBookingEntity eventBooking = itr.next();
+                System.err.println("deleting: "+eventBooking);
+                em.remove(eventBooking);
+                return true;
+            }
+        }
+        return false;
+    }
 }
