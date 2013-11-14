@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import com.lowagie.text.pdf.PdfWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,21 +34,22 @@ public class IndReservationSessionBean implements IndReservationSessionBeanRemot
     
     public IndReservationSessionBean(){}
     
-    public IndReservationEntity getIndreservationByEmail(String email)
+    public List<IndReservationEntity> getIndreservationByEmail(String email)
     {
         System.out.println("in getIndreservationByEmail");
         
         Query q = em.createQuery("SELECT I from INDRESERVATIONENTITY I");
         List <IndReservationEntity> IndList = q.getResultList();
+        List <IndReservationEntity> resultList = new ArrayList();
         
         Iterator <IndReservationEntity> itr = IndList.iterator();
         while(itr.hasNext())
         {
             IndReservationEntity current = itr.next();
             if(current.getEmail().equalsIgnoreCase(email))
-                return current;
+                resultList.add(current);
         }
-        return null;
+        return resultList;
     }
     
     @Override
