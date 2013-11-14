@@ -18,10 +18,11 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <h1>Black Pearl Banquet Rooms</h1> 
+       
         <div class="row">
+             <strong> Print the following promotion and enjoy your staying at Coral Island Resort: </strong>
             <div class="large-6 columns">
-                <strong> Print the following promotion and enjoy your staying at Coral Island Resort: </strong>
+               
                 <br>
                 <div class="panel"> 
                     <img src="{promotion.imagePath}"/>
@@ -30,8 +31,8 @@
                 </div>
                 <div>
                     <ul ><li>Promotion Code:${promotion.promotionCode} </li>
-                        <li> Valid Between: <fmt:formatDate type="both" pattern="dd MMM yyyy"value=" ${promotion.promotionStartDate}" /> and <fmt:formatDate type="both" pattern="dd MMM yyyy"value="${promotion.promotionEndDate}" />  </li>
-                        <li> At Coral Island Resort ${promotion.promotionDepartment}</li>
+                        <li> Valid Between:  ${promotion.promotionStartDate} and ${promotion.promotionEndDate}  </li>
+                        <li> At Coral Island Resort ${promotion.promotionDepartment} departments</li>
                         <li> Enjoy ${promotion.discount} per cent discount</li>
                     </ul>
                  
@@ -46,7 +47,7 @@
                 <h6>${promotion.promotionDescription}</h6>
                 </div>
             </div>
-            <a href="eventRegister" class="button">Request For Proposal</a>
+         
         </div>
     </body>
     <jsp:include page="footer.jsp"></jsp:include>
