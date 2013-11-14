@@ -9,10 +9,16 @@ import CRMS.entity.MemberEntity;
 import CRMS.entity.PromotionEntity;
 import CRMS.session.MemberTransactionSessionBean;
 import CRMS.session.PromotionSessionBean;
+import ERMS.session.EmailSessionBean;
 import Exception.ExistException;
+import com.lowagie.text.DocumentException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -39,6 +45,8 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
     private MemberTransactionSessionBean memberTransactionSessionBean;
     @EJB
     private PromotionSessionBean promotionSessionBean;
+    @EJB
+    private EmailSessionBean emailSessionBean;
 
     public ReservationSessionBean() {
     }
@@ -149,7 +157,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
     }
 //for jsp reservation
 
-    public void addReservation(ReservationEntity newReservation, double totalPrice) {
+    public void addReservation(ReservationEntity newReservation, double totalPrice) throws IOException, FileNotFoundException, DocumentException {
         Date today = new Date();
         System.out.println("in reservation session bean: add reservation");
         ReservationEntity thisReservation = newReservation;
@@ -174,6 +182,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         if (thisReservation.getRcMember() != null) {
             memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", null, description, false);
         }
+        emailSessionBean.emailReservationConfirmation(thisReservation.getRcEmail(), thisReservation);
         System.err.println("successfully added reservation: " + newReservation.getReservationId());
     }
 
@@ -202,10 +211,17 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         if (newReservation.getRcMember() != null) {
             memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", null, description, false);
         }
+        try {
+            emailSessionBean.emailReservationConfirmation(thisReservation.getRcEmail(), thisReservation);
+        } catch (IOException ex) {
+            Logger.getLogger(ReservationSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(ReservationSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.err.println("successfully added reservation: " + newReservation.getReservationId());
     }
 
-    public void addReservationByCoin(ReservationEntity newReservation, MemberEntity member) {
+    public void addReservationByCoin(ReservationEntity newReservation, MemberEntity member) throws IOException, FileNotFoundException, DocumentException {
         Date today = new Date();
         System.out.println("in reservation session bean: add reservation");
         ReservationEntity thisReservation = newReservation;
@@ -226,6 +242,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         thisReservation.setReservationStatus("complementary");
         thisReservation.setRcMember(member);
         em.persist(thisReservation);
+        emailSessionBean.emailReservationConfirmation(thisReservation.getRcEmail(), thisReservation);
         String description = "Hotel Reservation from " + thisReservation.getRcCheckInDate() + " to " + thisReservation.getRcCheckOutDate() + " with a total room fee: " + thisReservation.getReservationTotal();
         memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", null, description, true);
         System.err.println("successfully added reservation: " + newReservation.getReservationId());
@@ -237,7 +254,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         return Days.daysBetween(start, end).getDays();
     }
 
-    public void addReservationWithPromotion(ReservationEntity newReservation, String promotionCode) {
+    public void addReservationWithPromotion(ReservationEntity newReservation, String promotionCode) throws IOException, FileNotFoundException, DocumentException {
         Date today = new Date();
         System.out.println("in reservation session bean: add reservation with promotion");
         ReservationEntity thisReservation = newReservation;
@@ -249,6 +266,7 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         }
 
         em.persist(thisReservation);
+        emailSessionBean.emailReservationConfirmation(thisReservation.getRcEmail(), thisReservation);
         String description = "Hotel Reservation from " + thisReservation.getRcCheckInDate() + " to " + thisReservation.getRcCheckOutDate() + " with a total room fee: " + thisReservation.getReservationTotal();
         if (newReservation.getRcMember() != null) {
             memberTransactionSessionBean.addMemberTransaction(thisReservation.getRcMember(), thisReservation.getReservationTotal(), today, "Hotel", promotionCode, description, false);
@@ -261,13 +279,17 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         reservation = em.find(ReservationEntity.class, reservationId);
         reservation.setReservationStatus("cancelled");
         em.merge(reservation);
+//        emailSessionBean.cancelNotification(reservation.getRcEmail(),reservation);
+
     }
 
     public void cancelReservation(ReservationEntity reservation) {
         reservation.setReservationStatus("cancelled");
         em.merge(reservation);
+//                emailSessionBean.cancelNotification(reservation.getRcEmail(),reservation);
+
     }
-    
+
     public void payRoomFee(ReservationEntity reservation) {
         reservation.setReservationStatus("guarantee");
         em.merge(reservation);
