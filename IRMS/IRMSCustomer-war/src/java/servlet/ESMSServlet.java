@@ -184,7 +184,7 @@ public class ESMSServlet extends HttpServlet {
                     
                     System.out.println("The total price calculated is : "+ticTotal);
                     
-                    request.setAttribute("totalTickets", totalTickets);
+                    session.setAttribute("totalTickets", totalTickets);
                     request.setAttribute("ticTotal",ticTotal);
                     
                     //below no use any more
@@ -229,7 +229,7 @@ public class ESMSServlet extends HttpServlet {
                     MemberEntity thisMember = (MemberEntity) session.getAttribute("member");
                     thisShowTicketSale.setShow(thisShow);
                     thisShowTicketSale.setShowStartDateTime(thisShowSchedule.getStartDateTime());
-                    thisShowTicketSale.setShowTicketPrice(ticket1);
+                   // thisShowTicketSale.setShowTicketPrice(thisShowSchedule.getShowTickets());
                     thisShowTicketSale.setShowTicketQuantity(ticket1+ticket2+ticket3+ticket4+ticket5+ticket6);
                     thisShowTicketSale.setShowTicketType(promotionCode);
                     if(thisMember!=null)
@@ -237,7 +237,8 @@ public class ESMSServlet extends HttpServlet {
                         thisShowTicketSale.setMemberEmail(thisMember.getMemberEmail());
                         
                     }
-                  
+                     showTicketSaleSessionBean.addShowTicketSale(thisShowTicketSale);
+                  /*
                     if (promotionCode == "") {
                         System.out.println("no promotion code entered");
                         showTicketSaleSessionBean.addShowTicketSale(thisShowTicketSale);
@@ -253,7 +254,7 @@ public class ESMSServlet extends HttpServlet {
                             request.getRequestDispatcher("/entertainmentPay.jsp").forward(request, response);
                         }
                     }
-               
+               */
                 } catch (Exception e) {
                     System.err.println("error occured when adding reservation in servlet");
                     e.printStackTrace();
