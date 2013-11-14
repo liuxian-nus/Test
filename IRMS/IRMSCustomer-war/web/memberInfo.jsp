@@ -87,11 +87,11 @@
                             <div class="content">
                                 <table class="tablesorter">
                                     <thead>
-                                    <th width="200">Check-in Date</td>
-                                    <th width="200">Check-out Date</td>
-                                    <th width="200">Reservation Id</td>    
-                                    <th width="200">Hotel Room</td>
-                                    <th width="200">Reservation Status</td>
+                                    <th width="200">Check-in Date</th>
+                                    <th width="200">Check-out Date</th>
+                                    <th width="200">Reservation Id</th>    
+                                    <th width="200">Hotel Room</th>
+                                    <th width="200">Reservation Status</th>
                                         </thead>
                                     <tbody>
                                         <c:forEach items="${hotelReservation}" var="data">
@@ -110,21 +110,81 @@
                         <section>
                             <p class="title"><a href="#section1-2">Restaurant Reservations</a></p>
                             <div class="content">
+                                <table class="tablesorter">
+                                    <thead>
                                     
+                                    <th width="200">Reservation Time</th>
+                                    <th width="200">Reservation Id</th>
+                                    <th width="200">Restaurant</th>    
+                                    <th width="200">Number of People</th>
+                                     <th width="200">Status</th>    
+                                        </thead>
+                                    <tbody>
+                                        <c:forEach items="${restaurantReservation}" var="data">
+                                            <tr>
+                                                 <td width="200">&nbsp${data.indReservationId}</td>
+                                                <td width="200">&nbsp${data.indReservationDateTime}</td>
+                                                 <td width="200">&nbsp${data.restaurant.restName}</td>
+                                                <td width="200">&nbsp${data.numberPeople}</td>
+                                                <td width="200">&nbsp${data.status}</td>
+                                             
+                                                
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                         </section>
                         <section>
                             <p class="title"><a href="#section1-2">Show Tickets</a></p>
                             <div class="content">
-                                <p>Detail awesome stuff numeroe duo.</p>
+                                        <table class="tablesorter">
+                                    <thead>
+                                    <th width="200">Show Date</th>
+                                    <th width="200">Show Name</th>
+                                    <th width="200">Ticket Type </th>    
+                                    <th width="200">Number of Tickets</th>
+                               
+                                        </thead>
+                                    <tbody>
+                                        <c:forEach items="${showReservation}" var="data">
+                                            <tr>
+                                                <td width="200">&nbsp${data.showStartDateTime}</td>
+                                                 <td width="200">&nbsp${data.showName}</td>
+                                                <td width="200">&nbsp${data.showTicketType}</td>
+                                                <td width="200">&nbsp${data.showTicketQuantity}</td>
+                                         </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                         </section>
+                        <!--
                         <section>
                             <p class="title"><a href="#section1-2">Attraction Tickets</a></p>
                             <div class="content">
-                                <p>Detail awesome stuff numeroe duo.</p>
+                                          <table class="tablesorter">
+                                    <thead>
+                                    <th width="200">Show Date</td>
+                                    <th width="200">Show Name</td>
+                                    <th width="200">Ticket Type </td>    
+                                    <th width="200">Number of Tickets</td>
+                               
+                                        </thead>
+                                    <tbody>
+                                        <c:forEach items="${showReservation}" var="data">
+                                            <tr>
+                                                <td width="200">&nbsp${data.showStartDateTime}</td>
+                                                 <td width="200">&nbsp${data.showName}</td>
+                                                <td width="200">&nbsp${data.showTicketType}</td>
+                                                <td width="200">&nbsp${data.showTicketQuantity}</td>
+                                         </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                         </section>
+                        -->
                     </div>
 
                 </div>
