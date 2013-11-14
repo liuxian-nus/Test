@@ -11,6 +11,7 @@ import CRMS.session.CouponSessionBean;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.MemberTransactionSessionBean;
 import ERMS.entity.EmployeeEntity;
+import ERMS.session.EmailSessionBean;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
@@ -20,7 +21,11 @@ import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSaleSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.DocumentException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,6 +60,9 @@ public class ShowTicketingManagedBean {
     MemberSessionBean memberSessionBean;
     @EJB
     CouponSessionBean couponSessionBean;
+    @EJB
+    EmailSessionBean emailSessionBean;
+    
     private ShowEntity selectedShow;
     private ShowScheduleEntity selectedShowSchedule;
     private ShowTicketEntity selectedShowTicket;
@@ -167,7 +175,7 @@ public class ShowTicketingManagedBean {
         }
     }
 
-    public void buyTicket() throws IOException, ExistException {
+    public void buyTicket() throws IOException, ExistException, FileNotFoundException, BadElementException, DocumentException {
         System.err.println("buying ticket from ticket office: ");
         System.out.println("showId: " + showId);
         System.out.println("showSchedule: " + showScheduleId);
@@ -223,7 +231,8 @@ public class ShowTicketingManagedBean {
 
             showTicketSessionBean.updateQuantity(showTicketId, showTicketQuota);
             showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
-
+          
+            emailSessionBean.generateShowTicket(selectedShowTicketSale);
             if (memberTransaction.getMemberEmail() != null) {
 
                 System.err.println("Date today: " + dt);
@@ -246,7 +255,7 @@ public class ShowTicketingManagedBean {
         }
     }
 
-    public void buyTicketWithCoins() throws IOException {
+    public void buyTicketWithCoins() throws IOException, MalformedURLException, FileNotFoundException, BadElementException, DocumentException {
         //email from page
         String email1 = memberTransaction.getMemberEmail();
         //email from database
@@ -297,6 +306,7 @@ public class ShowTicketingManagedBean {
                 memberSessionBean.updateMember(member);
                 showTicketSaleSessionBean.addShowTicketSale(selectedShowTicketSale);
 
+                emailSessionBean.generateShowTicket(selectedShowTicketSale);
                 if (memberTransaction.getMemberEmail() != null) {
                     Date dt = new Date();
                     System.err.println("Date today: " + dt);

@@ -81,10 +81,21 @@ public class AddShowManagedBean {
 
         System.err.println("Uploading Image...");
         String[] fileNameParts = event.getFile().getFileName().split("\\.");
-        File result = new File("C:\\Users\\Ser3na\\Documents\\IS3102\\Test.git\\IRMS\\IRMS-war\\web\\images\\" + fileNameParts[0] + "." + fileNameParts[1]);
+        
+        String path2 = AddShowManagedBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String[] fileNamePartsTest = path2.split("IRMS");
+        String part1 = fileNamePartsTest[0];
+        part1 = part1.replaceAll("%20", " ");
+        System.err.println("part 1:"+part1);
+        File result = new File(part1 + "IRMS\\IRMS-war\\web\\images\\" + fileNameParts[0] + "." + fileNameParts[1]);
+//        System.out.println("fileNameParts[0] is: " + fileNameParts[0]);
+//        this.setImageName(fileNameParts[0]);
+        System.err.println("result.getPath(): "+result.getPath());
+        FileOutputStream out = new FileOutputStream(result);
+//        File result = new File("C:\\Users\\Ser3na\\Documents\\IS3102\\Test.git\\IRMS\\IRMS-war\\web\\images\\" + fileNameParts[0] + "." + fileNameParts[1]);
 //        File result = new File("c:\\photo\\" + fileNameParts[0] + "." + fileNameParts[1]);
 
-        FileOutputStream out = new FileOutputStream(result);
+//        FileOutputStream out = new FileOutputStream(result);
 
         int a;
         int BUFFER_SIZE = 8192;
@@ -93,8 +104,11 @@ public class AddShowManagedBean {
         InputStream is = event.getFile().getInputstream();
 //        showSessionBean.uploadFile(showId, buffer);
 //        String fileName = "c:\\photo\\" + result.getName();
-        String fileName = result.getName();
+        String fileName = "/IRMS-war/images/"+result.getName();
+//        String fileName2 = result.getPath();
         showSessionBean.uploadImage(showId, fileName);
+//        showSessionBean.uploadImage(showId, fileName2);
+        
         System.err.println(fileName);
         while (true) {
             a = is.read(buffer);

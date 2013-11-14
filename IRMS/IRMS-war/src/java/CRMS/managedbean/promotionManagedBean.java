@@ -234,7 +234,7 @@ public class promotionManagedBean {
         byte[] buffer = new byte[BUFFER_SIZE];
 
         InputStream is = event.getFile().getInputstream();
-        String fileName = result.getName();
+        String fileName = "/IRMS-war/images/"+result.getName();
         this.setFileName(fileName);
         promotionSessionBean.uploadImage(promotionId, fileName);
         System.err.println(fileName);
