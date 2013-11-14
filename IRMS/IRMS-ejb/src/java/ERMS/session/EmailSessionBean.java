@@ -88,11 +88,10 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     public EmailSessionBean() {
     }
 
-    public void sendShowContractBill(double rentalFee, double bill, double ticketCommission,double ticketRevenue,ShowContractEntity showContract,ShowEntity show) throws DocumentException, BadElementException, MalformedURLException, IOException
-    {
+    public void sendShowContractBill(double rentalFee, double bill, double ticketCommission, double ticketRevenue, ShowContractEntity showContract, ShowEntity show) throws DocumentException, BadElementException, MalformedURLException, IOException {
         System.out.println("sendShowContractBill");
         String email = showContract.getShowMerchantEmail();
-        
+
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -106,7 +105,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 return new PasswordAuthentication("is3102.it09", "weloveTWK");
             }
         });
-        
+
         try {
 
             Date today = new Date();
@@ -125,97 +124,97 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                     + "\nShow Type: " + show.getShowType()
                     + "\nShow Venue Rental Fee: " + rentalFee
                     + "\nShow Ticket Commission Fee: " + ticketCommission
-                    + "\nTotal Ticket Revenue: "+ticketRevenue
-                    + "\nTotal Billing Amount: "+bill
-                    + "\nThe Billing Date: "+today
+                    + "\nTotal Ticket Revenue: " + ticketRevenue
+                    + "\nTotal Billing Amount: " + bill
+                    + "\nThe Billing Date: " + today
                     + "\nThe bill has been attached within the email for your reference: if cannot view, please kindly let us know to mail it to you."
                     + "\n\n For any queries, please contact our customer service managers @(0065)9272-8768. Thank you for your support!";
-            
+
             //below generate a bill for contract bill
-            System.out.println("generateShowContractBill"); 
-       
+            System.out.println("generateShowContractBill");
+
             //get class path here
             String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            System.err.println("classPath: "+classPath);
+            System.err.println("classPath: " + classPath);
             String[] fileNameParts = classPath.split("IRMS");
             String part = fileNameParts[0];
             part = part.replaceAll("%20", " ");
-            System.err.println("part: "+part);
+            System.err.println("part: " + part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ShowContractBill_");
-            String resultName = part+"\\pdf\\ShowContractBill_";
-            
-       //Below generate a PDF file 
-        Document document;
-        document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = resultName + showContract.getShowMerchantName() + "_"+showContract.getShowContractId() + ".pdf";
+            String resultName = part + "\\pdf\\ShowContractBill_";
 
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
-        document.open();
-        
-         //Below specify the font type 
-        Font catFont = new Font(Font.TIMES_ROMAN, 18,
-                Font.BOLD);
-        Font redFont = new Font(Font.TIMES_ROMAN, 12,
-                Font.NORMAL, Color.RED);
-        Font subFont = new Font(Font.TIMES_ROMAN, 16,
-                Font.BOLD);
-        Font tableFont;
-        tableFont = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.DARK_GRAY);
-        Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
-                Font.BOLDITALIC);
+            //Below generate a PDF file 
+            Document document;
+            document = new Document(PageSize.A4, 50, 50, 50, 50);
+            String OUTPUTFILE = resultName + showContract.getShowMerchantName() + "_" + showContract.getShowContractId() + ".pdf";
 
-        //Below specify contents 
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+            document.open();
+
+            //Below specify the font type 
+            Font catFont = new Font(Font.TIMES_ROMAN, 18,
+                    Font.BOLD);
+            Font redFont = new Font(Font.TIMES_ROMAN, 12,
+                    Font.NORMAL, Color.RED);
+            Font subFont = new Font(Font.TIMES_ROMAN, 16,
+                    Font.BOLD);
+            Font tableFont;
+            tableFont = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.DARK_GRAY);
+            Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
+                    Font.BOLDITALIC);
+
+            //Below specify contents 
 //        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
-         String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
-        Image image = Image.getInstance(imagePath);
-        document.add(image);
+            String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+            Image image = Image.getInstance(imagePath);
+            document.add(image);
 
-        Paragraph preface = new Paragraph();
-        addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Your contract bill is displayed as below: ", catFont));
-        addEmptyLine(preface, 1);
+            Paragraph preface = new Paragraph();
+            addEmptyLine(preface, 1);
+            preface.add(new Paragraph("Your contract bill is displayed as below: ", catFont));
+            addEmptyLine(preface, 1);
 
-        document.add(preface);
-        
-        //Below add a table 
-        PdfPTable table = new PdfPTable(2);
-        table.setSpacingAfter(30);
-        table.setSpacingBefore(30);
-        table.setWidths(new int[]{1, 3});
+            document.add(preface);
 
-        //Add table header 
-        PdfPCell c1 = new PdfPCell(new Phrase("Billing Info"));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
+            //Below add a table 
+            PdfPTable table = new PdfPTable(2);
+            table.setSpacingAfter(30);
+            table.setSpacingBefore(30);
+            table.setWidths(new int[]{1, 3});
 
-        c1 = new PdfPCell(new Phrase("Details & Remarks"));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
+            //Add table header 
+            PdfPCell c1 = new PdfPCell(new Phrase("Billing Info"));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
 
-        table.setHeaderRows(1);
+            c1 = new PdfPCell(new Phrase("Details & Remarks"));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
 
-        //below add table contents
-        table.addCell("Client Name");
-        table.addCell(showContract.getShowMerchantName());
-        table.addCell("Show Contract Id (For reference)");
-        table.addCell(showContract.getShowContractId().toString());
-        table.addCell("Client Billing Address");
-        table.addCell(showContract.getShowMerchantAddress());
-        table.addCell("Show Name");
-        table.addCell(show.getShowName());
-        table.addCell("Ticket Revenue");
-        table.addCell(Double.toString(ticketRevenue));
-        table.addCell("Ticket Commission");
-        table.addCell(Double.toString(ticketCommission));
-        table.addCell("Venue Rent");
-        table.addCell(Double.toString(rentalFee));
-        table.addCell("Total Billing Amount");
-        table.addCell(Double.toString(bill));
-        
-        document.add(table);
-        document.close();
-            
-            
+            table.setHeaderRows(1);
+
+            //below add table contents
+            table.addCell("Client Name");
+            table.addCell(showContract.getShowMerchantName());
+            table.addCell("Show Contract Id (For reference)");
+            table.addCell(showContract.getShowContractId().toString());
+            table.addCell("Client Billing Address");
+            table.addCell(showContract.getShowMerchantAddress());
+            table.addCell("Show Name");
+            table.addCell(show.getShowName());
+            table.addCell("Ticket Revenue");
+            table.addCell(Double.toString(ticketRevenue));
+            table.addCell("Ticket Commission");
+            table.addCell(Double.toString(ticketCommission));
+            table.addCell("Venue Rent");
+            table.addCell(Double.toString(rentalFee));
+            table.addCell("Total Billing Amount");
+            table.addCell(Double.toString(bill));
+
+            document.add(table);
+            document.close();
+
+
             MimeBodyPart messageBodyPart;
             MimeBodyPart textBodyPart;
 
@@ -247,14 +246,13 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             throw new RuntimeException(e);
         }
 
-        
+
     }
-    
-    public void sendEventContractBill(double serviceTotalCost,double venueRate,double finalBill,EventEntity event) throws DocumentException, DocumentException, BadElementException, MalformedURLException, FileNotFoundException, IOException
-    {
-        System.out.println("sendEventContractBill"); 
+
+    public void sendEventContractBill(double serviceTotalCost, double venueRate, double finalBill, EventEntity event) throws DocumentException, DocumentException, BadElementException, MalformedURLException, FileNotFoundException, IOException {
+        System.out.println("sendEventContractBill");
         String email = event.getEmail();
-        
+
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -268,8 +266,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 return new PasswordAuthentication("is3102.it09", "weloveTWK");
             }
         });
-        
-         try {
+
+        try {
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
@@ -280,168 +278,165 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                     + "\nDear Client: Your event contract is available now!"
                     + "\nPlease look at the contract details below: "
                     + "\n\n\nHere is the contract details:"
-                    + "\nClient Name: " + event.getTitle()+" "+event.getName()
+                    + "\nClient Name: " + event.getTitle() + " " + event.getName()
                     + "\nEvent Reference No.: " + event.getEventId()
                     + "\nEvent Name: " + event.getEventName()
                     + "\nEvent Type: " + event.getEventType()
                     + "\nClient Billing Address: " + event.getAddress()
                     + "\nTotal Service Cost: " + serviceTotalCost
-                    + "\nTotal Venue Cost: "+venueRate
-                    + "\nTotal Billing Amount: "+finalBill
-                    + "\nBilling Date: "+new Date()
+                    + "\nTotal Venue Cost: " + venueRate
+                    + "\nTotal Billing Amount: " + finalBill
+                    + "\nBilling Date: " + new Date()
                     + "\nThe bill has been attached within the email for your reference: if cannot view, please kindly let us know to mail it to you."
                     + "\n\n For any queries, please contact our customer service managers @(0065)9272-8768. Thank you for your support!";
 
-            System.out.println("EventContractBilling: text set already!"); 
-            
-             //get class path here
+            System.out.println("EventContractBilling: text set already!");
+
+            //get class path here
             String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            System.err.println("classPath: "+classPath);
+            System.err.println("classPath: " + classPath);
             String[] fileNameParts = classPath.split("IRMS");
             String part = fileNameParts[0];
             part = part.replaceAll("%20", " ");
-            System.err.println("part: "+part);
+            System.err.println("part: " + part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\EventContractBill_");
-            String resultName = part+"\\pdf\\EventContractBill_";
-       
-       //Below generate a PDF file 
-        Document document;
-        document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = resultName + event.getName() + " " + event.getEventId() + ".pdf";
-        System.err.println("OUTPUTFILE: "+OUTPUTFILE);
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
-        document.open();
-        
-         //Below specify the font type 
-        Font catFont = new Font(Font.TIMES_ROMAN, 18,
-                Font.BOLD);
-        Font redFont = new Font(Font.TIMES_ROMAN, 12,
-                Font.NORMAL, Color.RED);
-        Font subFont = new Font(Font.TIMES_ROMAN, 16,
-                Font.BOLD);
-        Font tableFont;
-        tableFont = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.DARK_GRAY);
-        Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
-                Font.BOLDITALIC);
+            String resultName = part + "\\pdf\\EventContractBill_";
 
-        //Below specify contents 
+            //Below generate a PDF file 
+            Document document;
+            document = new Document(PageSize.A4, 50, 50, 50, 50);
+            String OUTPUTFILE = resultName + event.getName() + " " + event.getEventId() + ".pdf";
+            System.err.println("OUTPUTFILE: " + OUTPUTFILE);
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
+            document.open();
+
+            //Below specify the font type 
+            Font catFont = new Font(Font.TIMES_ROMAN, 18,
+                    Font.BOLD);
+            Font redFont = new Font(Font.TIMES_ROMAN, 12,
+                    Font.NORMAL, Color.RED);
+            Font subFont = new Font(Font.TIMES_ROMAN, 16,
+                    Font.BOLD);
+            Font tableFont;
+            tableFont = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, Color.DARK_GRAY);
+            Font smallItalic = new Font(Font.TIMES_ROMAN, 12,
+                    Font.BOLDITALIC);
+
+            //Below specify contents 
 //        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
-        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
-        Image image = Image.getInstance(imagePath);
-        document.add(image);
+            String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+            Image image = Image.getInstance(imagePath);
+            document.add(image);
 
-        Paragraph preface = new Paragraph();
-        addEmptyLine(preface, 1);
-        preface.add(new Paragraph("Your event contract bill is displayed as below: ", catFont));
-        addEmptyLine(preface, 1);
+            Paragraph preface = new Paragraph();
+            addEmptyLine(preface, 1);
+            preface.add(new Paragraph("Your event contract bill is displayed as below: ", catFont));
+            addEmptyLine(preface, 1);
 
-        document.add(preface);
-        
-        //Below add a table 
-        PdfPTable table = new PdfPTable(2);
-        table.setSpacingAfter(30);
-        table.setSpacingBefore(30);
-        table.setWidths(new int[]{1, 3});
+            document.add(preface);
 
-        //Add table header 
-        PdfPCell c1 = new PdfPCell(new Phrase("Contract Bill: Categories"));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
+            //Below add a table 
+            PdfPTable table = new PdfPTable(2);
+            table.setSpacingAfter(30);
+            table.setSpacingBefore(30);
+            table.setWidths(new int[]{1, 3});
 
-        c1 = new PdfPCell(new Phrase("Details & Remarks"));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
+            //Add table header 
+            PdfPCell c1 = new PdfPCell(new Phrase("Contract Bill: Categories"));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
 
-        table.setHeaderRows(1);
+            c1 = new PdfPCell(new Phrase("Details & Remarks"));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
 
-        //below add table contents
-        table.addCell("Client Name");
-        table.addCell(event.getName());
-        table.addCell("Client Billing Address");
-        table.addCell(event.getAddress());
-        table.addCell("Event ID");
-        table.addCell(event.getEventId().toString());
-        table.addCell("Event Name");
-        table.addCell(event.getEventName());
-        table.addCell("Event Type");
-        table.addCell(event.getEventType());
-        table.addCell("Service Booked");
-       
-        
+            table.setHeaderRows(1);
+
+            //below add table contents
+            table.addCell("Client Name");
+            table.addCell(event.getName());
+            table.addCell("Client Billing Address");
+            table.addCell(event.getAddress());
+            table.addCell("Event ID");
+            table.addCell(event.getEventId().toString());
+            table.addCell("Event Name");
+            table.addCell(event.getEventName());
+            table.addCell("Event Type");
+            table.addCell(event.getEventType());
+            table.addCell("Service Booked");
+
+
             //Below add a sub-table for service booked 
-                PdfPTable table2 = new PdfPTable(2);
-                table2.setSpacingAfter(30);
-                table2.setSpacingBefore(30);
-                table2.setWidths(new int[]{1, 3});
+            PdfPTable table2 = new PdfPTable(2);
+            table2.setSpacingAfter(30);
+            table2.setSpacingBefore(30);
+            table2.setWidths(new int[]{1, 3});
 
-                //Add table header 
-                PdfPCell c2 = new PdfPCell(new Phrase("Bookings"));
-                c2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table2.addCell(c2);
+            //Add table header 
+            PdfPCell c2 = new PdfPCell(new Phrase("Bookings"));
+            c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table2.addCell(c2);
 
-                c2 = new PdfPCell(new Phrase("Details & Remarks"));
-                c2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table2.addCell(c2);
+            c2 = new PdfPCell(new Phrase("Details & Remarks"));
+            c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table2.addCell(c2);
 
-                table2.setHeaderRows(1);
-                
-                List <EventBookingEntity> bookings = event.getBookings();
-                Iterator <EventBookingEntity> itr = bookings.iterator();
-                while(itr.hasNext())
-                {
-                    EventBookingEntity current = itr.next();
-                    System.out.println("the first while loop: "+current.toString());
-                    
-                    table2.addCell(current.getBookingId().toString());//left
-                    
-                    List <EventServiceBookingEntity> services = current.getServiceBookings();
-                    Iterator <EventServiceBookingEntity> itr2 = services.iterator();
-                    
-                    PdfPTable table3 = null;
-                    
-                    while(itr2.hasNext())
-                    {
-                        if(services.isEmpty())
-                        {
-                            System.out.println("service is empty!");
-                            table.addCell(""); //add right
-                            break;
-                        }
-                        EventServiceBookingEntity thisService = itr2.next();
-                        System.out.println("The current service booked for this booking is "+thisService.toString());
-                        
-                        //Below add a sub-table for service booked for each booking
-                                table3 = new PdfPTable(2);
-                                table3.setSpacingAfter(30);
-                                table3.setSpacingBefore(30);
-                                table3.setWidths(new int[]{1, 3});
+            table2.setHeaderRows(1);
 
-                                //Add table header 
-                                PdfPCell c3 = new PdfPCell(new Phrase("Service"));
-                                c3.setHorizontalAlignment(Element.ALIGN_CENTER);
-                                table3.addCell(c3);
+            List<EventBookingEntity> bookings = event.getBookings();
+            Iterator<EventBookingEntity> itr = bookings.iterator();
+            while (itr.hasNext()) {
+                EventBookingEntity current = itr.next();
+                System.out.println("the first while loop: " + current.toString());
 
-                                c3 = new PdfPCell(new Phrase("Details & Remarks"));
-                                c3.setHorizontalAlignment(Element.ALIGN_CENTER);
-                                table3.addCell(c3);
+                table2.addCell(current.getBookingId().toString());//left
 
-                                table3.setHeaderRows(1);
-                                
-                                table3.addCell(thisService.getEventService().getServiceName());
-                                table3.addCell(Integer.toString(thisService.getEventServiceQuantity()));
+                List<EventServiceBookingEntity> services = current.getServiceBookings();
+                Iterator<EventServiceBookingEntity> itr2 = services.iterator();
+
+                PdfPTable table3 = null;
+
+                while (itr2.hasNext()) {
+                    if (services.isEmpty()) {
+                        System.out.println("service is empty!");
+                        table.addCell(""); //add right
+                        break;
                     }
-                    table2.addCell(table3);//right
-                    System.out.println("Table3 service table has been added into booking table");
-                    
+                    EventServiceBookingEntity thisService = itr2.next();
+                    System.out.println("The current service booked for this booking is " + thisService.toString());
+
+                    //Below add a sub-table for service booked for each booking
+                    table3 = new PdfPTable(2);
+                    table3.setSpacingAfter(30);
+                    table3.setSpacingBefore(30);
+                    table3.setWidths(new int[]{1, 3});
+
+                    //Add table header 
+                    PdfPCell c3 = new PdfPCell(new Phrase("Service"));
+                    c3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table3.addCell(c3);
+
+                    c3 = new PdfPCell(new Phrase("Details & Remarks"));
+                    c3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table3.addCell(c3);
+
+                    table3.setHeaderRows(1);
+
+                    table3.addCell(thisService.getEventService().getServiceName());
+                    table3.addCell(Integer.toString(thisService.getEventServiceQuantity()));
                 }
-                table.addCell(table2);
-        
-                System.out.println("Table2 booking table has been added into total table");
-        document.add(table);
-        document.close();
-        
-        
-        MimeBodyPart messageBodyPart;
+                table2.addCell(table3);//right
+                System.out.println("Table3 service table has been added into booking table");
+
+            }
+            table.addCell(table2);
+
+            System.out.println("Table2 booking table has been added into total table");
+            document.add(table);
+            document.close();
+
+
+            MimeBodyPart messageBodyPart;
             MimeBodyPart textBodyPart;
 
             Multipart multipart = new MimeMultipart();
@@ -467,26 +462,25 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             Transport.send(message);
 
             System.out.println("Done");
-    }
-         catch (MessagingException e) {
+        } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }
-    public void generateShowTicket(ShowTicketSaleEntity sts) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException
-    {
-       System.out.println("generateShowTicket"); 
-       
-       //get class path here
-            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            System.err.println("classPath: "+classPath);
-            String[] fileNameParts = classPath.split("IRMS");
-            String part = fileNameParts[0];
-            part = part.replaceAll("%20", " ");
-            System.err.println("part: "+part);
-            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ShowTicket_");
-            String resultName = part+"\\pdf\\ShowTicket_";
-       
-       //Below generate a PDF file 
+
+    public void generateShowTicket(ShowTicketSaleEntity sts) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+        System.out.println("generateShowTicket");
+
+        //get class path here
+        String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        System.err.println("classPath: " + classPath);
+        String[] fileNameParts = classPath.split("IRMS");
+        String part = fileNameParts[0];
+        part = part.replaceAll("%20", " ");
+        System.err.println("part: " + part);
+        File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ShowTicket_");
+        String resultName = part + "\\pdf\\ShowTicket_";
+
+        //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
         String OUTPUTFILE = resultName
@@ -494,8 +488,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         document.open();
-        
-         //Below specify the font type 
+
+        //Below specify the font type 
         Font catFont = new Font(Font.TIMES_ROMAN, 18,
                 Font.BOLD);
         Font redFont = new Font(Font.TIMES_ROMAN, 12,
@@ -519,7 +513,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         addEmptyLine(preface, 1);
 
         document.add(preface);
-        
+
         //Below add a table 
         PdfPTable table = new PdfPTable(2);
         table.setSpacingAfter(30);
@@ -550,12 +544,13 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         table.addCell(sts.getShow().getShowLanguage());
         table.addCell("Show Duration");
         table.addCell(Integer.toString(sts.getShow().getShowDuration()));
-        
+
         document.add(table);
         document.close();
-        
-        
+
+
     }
+
     @Override
     public void sendBirthdayCongrats(MemberEntity member) {
         System.out.println("sendBirthdayCongrats");
@@ -1078,7 +1073,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                     + "\nPlease refer to the attachment for your e-ticket: print the pdf file and bring it on the show date"
                     + "\nThank you for your support!"
                     + "\n\n\n For any queries, please call (+65)9272-8760";
-            
+
             String textForMobile = "Thank you for booking ticket for Coral Island Resort Attraction services!"
                     + "\nYour ticket purchase ID is " + tpe.getTpId()
                     + "\nTicket is purchased for " + dateString
@@ -1144,17 +1139,16 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmailAddress));
-            String attrName="";
-            if(eppe.getAttrEPs().get(0).getAttr()!=null){
+            String attrName = "";
+            if (eppe.getAttrEPs().get(0).getAttr() != null) {
                 attrName = eppe.getAttrEPs().get(0).getAttr().getAttrName();
+            } else {
+                attrName = "All Attraction";
             }
-            else {
-                attrName="All Attraction";
-            }
-            
+
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String dateString = sdf.format(eppe.getEpBookDate());
-            message.setSubject("Your express pass from Coral Island Resort: " +attrName+" "+ eppe.getEppId());
+            message.setSubject("Your express pass from Coral Island Resort: " + attrName + " " + eppe.getEppId());
             String text = "Thank you for booking express pass for Coral Island Resort Attraction services!"
                     + "\nYour Ticket ID is " + eppe.getEppId()
                     + "\nTicket purchase date is " + dateString
@@ -1162,8 +1156,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                     + "\nPlease refer to the attachment for your e-ticket: print the pdf file and bring it on the show date"
                     + "\nThank you for your support!"
                     + "\n\n\n For any queries, please call (+65)9272-8760";
-            
-            String textForMobile="Thank you for booking express pass for Coral Island Resort Attraction services!"
+
+            String textForMobile = "Thank you for booking express pass for Coral Island Resort Attraction services!"
                     + "\nYour Ticket ID is " + eppe.getEppId()
                     + "\nTicket purchase date is " + dateString
                     + "\nThe fee of tickets you have purchased is " + eppe.getEpFee();
@@ -1311,15 +1305,15 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
     private String createBill(String toEmailAdress, RoomEntity room) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
         //get class path here
-            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            System.err.println("classPath: "+classPath);
-            String[] fileNameParts = classPath.split("IRMS");
-            String part = fileNameParts[0];
-            part = part.replaceAll("%20", " ");
-            System.err.println("part: "+part);
-            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Corporate_Bill_");
-            String resultName = part+"\\pdf\\Corporate_Bill_";
-        
+        String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        System.err.println("classPath: " + classPath);
+        String[] fileNameParts = classPath.split("IRMS");
+        String part = fileNameParts[0];
+        part = part.replaceAll("%20", " ");
+        System.err.println("part: " + part);
+        File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Corporate_Bill_");
+        String resultName = part + "\\pdf\\Corporate_Bill_";
+
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
@@ -1341,7 +1335,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 Font.BOLDITALIC);
 
         //Below specify contents 
-        
+
         String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
 //        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
@@ -1419,22 +1413,31 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     }
 
     private String createBill(String toEmailAdress, ReservationEntity newReservation) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
-        
+
         //get class path here
-            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            System.err.println("classPath: "+classPath);
-            String[] fileNameParts = classPath.split("IRMS");
-            String part = fileNameParts[0];
-            part = part.replaceAll("%20", " ");
-            System.err.println("part: "+part);
-            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\RoomReservationConfirmation_");
-            String resultName = part+"\\pdf\\RoomReservationConfirmation_";
-            
+        String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        System.err.println("classPath: " + classPath);
+        String[] fileNameParts = classPath.split("IRMS");
+        String part = fileNameParts[0];
+        part = part.replaceAll("%20", " ");
+        part = part.substring(1);
+        System.err.println("part: " + part);
+        File result = new File(part + "IRMS\\IRMS-war\\web\\images\\RoomReservationConfirmation_");
+        String resultName = part + "pdf/RoomReservationConfirmation_";
+
+
+
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
         String OUTPUTFILE = resultName + newReservation.getRcName()
                 + newReservation.getReservationId() + ".pdf";
+        
+        System.out.println(OUTPUTFILE);
+        File tempFile = new File(OUTPUTFILE);
+        if (!tempFile.exists()) {
+            tempFile.createNewFile();
+        }
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         document.open();
@@ -1452,10 +1455,10 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 Font.BOLDITALIC);
 
         //Below specify contents 
-        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+        //String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
 //        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
-        Image image = Image.getInstance(imagePath);
-        document.add(image);
+        //Image image = Image.getInstance(imagePath);
+        //document.add(image);
 
         Paragraph preface = new Paragraph();
         addEmptyLine(preface, 1);
@@ -1510,7 +1513,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
         Chunk c;
         c = new Chunk("via localhost:8080/IRMSCustomer-war/");
-        c.setAction(new PdfAction(new URL("localhost:8080/IRMSCustomer-war/")));
+        c.setAction(new PdfAction(new URL("http://is3102.cloudapp.net/IRMSCustomer-war/")));
         p.add(c);
         document.add(p);
         document.add(new Paragraph(""));
@@ -1522,16 +1525,16 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     public String createTicket(TicketPurchaseEntity tpe) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
 
         //get class path here
-            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            System.err.println("classPath: "+classPath);
-            String[] fileNameParts = classPath.split("IRMS");
-            String part = fileNameParts[0];
-            part = part.replaceAll("%20", " ");
-            System.err.println("part: "+part);
-            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\TicketPurchase_");
-            String resultName = part+"\\pdf\\TicketPurchase_";
-            System.out.println("resultName: "+resultName);
-            
+        String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        System.err.println("classPath: " + classPath);
+        String[] fileNameParts = classPath.split("IRMS");
+        String part = fileNameParts[0];
+        part = part.replaceAll("%20", " ");
+        System.err.println("part: " + part);
+        File result = new File(part + "IRMS\\IRMS-war\\web\\images\\TicketPurchase_");
+        String resultName = part + "\\pdf\\TicketPurchase_";
+        System.out.println("resultName: " + resultName);
+
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
@@ -1540,7 +1543,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         document.open();
-        
+
         String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
 //        String imagePath = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
@@ -1629,8 +1632,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         Long tpId = tpe.getTpId();
         String tpIdString = generateBarcodeSessionBean.makeToSevenDigit(String.valueOf(tpId));
         System.out.println("tpIdString: " + tpIdString);
-        String ticketPath=part+"\\barcode"+ tpIdString + ".jpg";
-     //   String ticketPath = "C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + tpIdString + ".jpg";
+        String ticketPath = part + "\\barcode" + tpIdString + ".jpg";
+        //   String ticketPath = "C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + tpIdString + ".jpg";
         System.out.println("ticketPath: " + ticketPath);
 
         Image barcode = Image.getInstance(ticketPath);
@@ -1643,15 +1646,15 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
     private String createTicketCombo(AttrComboEntity combo) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
         //get class path here
-            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            System.err.println("classPath: "+classPath);
-            String[] fileNameParts = classPath.split("IRMS");
-            String part = fileNameParts[0];
-            part = part.replaceAll("%20", " ");
-            System.err.println("part: "+part);
-            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ComboTicketConfirmation_");
-            String resultName = part+"\\pdf\\ComboTicketConfirmation_";
-        
+        String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        System.err.println("classPath: " + classPath);
+        String[] fileNameParts = classPath.split("IRMS");
+        String part = fileNameParts[0];
+        part = part.replaceAll("%20", " ");
+        System.err.println("part: " + part);
+        File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ComboTicketConfirmation_");
+        String resultName = part + "\\pdf\\ComboTicketConfirmation_";
+
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
@@ -1712,15 +1715,15 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
     public String createTicketExpress(ExpressPassPurchaseEntity eppe) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
         //get class path here
-            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            System.err.println("classPath: "+classPath);
-            String[] fileNameParts = classPath.split("IRMS");
-            String part = fileNameParts[0];
-            part = part.replaceAll("%20", " ");
-            System.err.println("part: "+part);
-            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ExpressTicket_");
-            String resultName = part+"\\pdf\\ExpressTicketConfirmation_";
-        
+        String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        System.err.println("classPath: " + classPath);
+        String[] fileNameParts = classPath.split("IRMS");
+        String part = fileNameParts[0];
+        part = part.replaceAll("%20", " ");
+        System.err.println("part: " + part);
+        File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ExpressTicket_");
+        String resultName = part + "\\pdf\\ExpressTicketConfirmation_";
+
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
@@ -1747,7 +1750,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 //        String imagePath = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
-        
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String dateString = sdf.format(eppe.getEpBookDate());
 
@@ -1777,22 +1780,22 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
         //below add table contents
         table.addCell("Attraction");
-        if(eppe.getAttrEPs().get(0).getAttr()==null){
+        if (eppe.getAttrEPs().get(0).getAttr() == null) {
             System.out.println("ep for vip");
             table.addCell("All Attraction");
-        }else{
+        } else {
             table.addCell(eppe.getAttrEPs().get(0).getAttr().getAttrName());
         }
-        
-   /*     if (!eppe.getAttrEPs().isEmpty()) {
-            table.addCell(eppe.getAttrEPs().get(0).getAttr().getAttrName());
-        }else if(eppe.getAttrEPs().get(0).getAttr()==null) {
-            System.out.println("ep for vip");
-            table.addCell("All Attraction");
-        }
-        else {
-            table.addCell("Attraction Not Assigned Yet!");
-        }*/
+
+        /*     if (!eppe.getAttrEPs().isEmpty()) {
+         table.addCell(eppe.getAttrEPs().get(0).getAttr().getAttrName());
+         }else if(eppe.getAttrEPs().get(0).getAttr()==null) {
+         System.out.println("ep for vip");
+         table.addCell("All Attraction");
+         }
+         else {
+         table.addCell("Attraction Not Assigned Yet!");
+         }*/
 
         if (!eppe.getAttrEPs().isEmpty()) {
             Iterator<AttrExpressPassEntity> itr = eppe.getAttrEPs().iterator();
@@ -1817,12 +1820,12 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             table.addCell(Double.toString(eppe.getEpFee()));
         }
         document.add(table);
-        
+
         Long eppId = eppe.getEppId();
         String eppIdString = generateBarcodeSessionBean.makeToSevenDigit(String.valueOf(eppId));
         System.out.println("eppIdString: " + eppIdString);
-        String ticketPath=part+"\\barcode"+ eppIdString + ".jpg";
-     //   String ticketPath = "C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + eppIdString + ".jpg";
+        String ticketPath = part + "\\barcode" + eppIdString + ".jpg";
+        //   String ticketPath = "C:\\Users\\Administrator\\Desktop\\IS3102\\Code\\IRMS\\IRMSCustomer-war\\web\\images\\attractionTicket\\" + eppIdString + ".jpg";
         System.out.println("ticketPath: " + ticketPath);
 
         Image barcode = Image.getInstance(ticketPath);
@@ -1831,9 +1834,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
         return OUTPUTFILE;
     }
-    
-    
-    
+
     public void createFeedbackReply(FeedbackEntity feedback, String content) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -1869,7 +1870,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             throw new RuntimeException(e);
         }
     }
-    
+
     public void sendShowInvitation(ShowEntity show, MemberEntity superVIP) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
