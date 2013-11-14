@@ -191,12 +191,12 @@ public class ACMSServlet extends HttpServlet {
                         System.out.println("Promotion code detected: " + promotionCode);
                         PromotionEntity thisPromotion = promotionSessionBean.getPromotionByCode(promotionCode);
                         boolean validity = promotionSessionBean.verifyPromotion(thisPromotion, "hotel");
-                        if (validity) {       
+                        if (validity) {
                             reservationSessionBean.addReservationWithPromotion(data, promotionCode);
-                        }
-                        else {
-                        message = "Sorry,the promotion code is not valid";
-                        request.setAttribute("message", message);
+                        } else {
+                            message = "Sorry,the promotion code is not valid";
+                            request.setAttribute("message", message);
+                            request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
                         }
                     }
                     System.out.println("start generate coupon");

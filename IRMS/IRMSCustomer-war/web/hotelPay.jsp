@@ -154,7 +154,7 @@
                 <div class="panel callout">
                     <form data-abide id="paymentForm" action="hotelPayConfirm" method="POST">
                         <fieldset>
-                            <p>${message}</p>
+                           
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label for="right-label" class="left-align,inline"><strong>Select Payment Method</label>
