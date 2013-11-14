@@ -157,8 +157,8 @@ public class CEMSServlet extends HttpServlet {
 
             } else if ("eventList".equals(page)) {
                 System.out.println("***eventList***");
-				//List<EventEntity> events = eventSessionBean.getConfirmedEvents();
-                List<EventEntity> events = eventSessionBean.listEvents();
+                List<EventEntity> events = eventSessionBean.getConfirmedEvents();
+                //List<EventEntity> events = eventSessionBean.listEvents();
                 request.setAttribute("eventList", events);
                 request.getRequestDispatcher("/eventList.jsp").forward(request, response);
             }else if (page.contains("eventInfo")) {
