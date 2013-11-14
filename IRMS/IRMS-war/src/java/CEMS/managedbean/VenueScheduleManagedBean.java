@@ -116,7 +116,7 @@ public class VenueScheduleManagedBean {
         }
         event = new DefaultScheduleEvent();
     }
-
+    
     public void onDateSelect(SelectEvent selectEvent) {
 //        System.err.println("onDateSelect...");
         event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());

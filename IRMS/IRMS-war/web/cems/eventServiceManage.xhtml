@@ -20,6 +20,10 @@
                             <p:inputText id="globalFilter" onkeyup="serviceTable.filter();" style="width:150px" />  
                         </p:outputPanel>  
                     </f:facet>  
+                    
+                    <p:column id="idColumn" filterBy="#{services.serviceId}" headerText="Service Id" filterMatchMode="contains">
+                        <h:outputText value="#{services.serviceId}"/>
+                    </p:column>
 
                     <p:column id="nameColumn" filterBy="#{services.serviceName}" headerText="Service Name" filterMatchMode="contains">
                         <h:outputText value="#{services.serviceName}"/>
