@@ -216,7 +216,7 @@ public class CEMSServlet extends HttpServlet {
 
 
         //  System.out.println(al.get(0));
-        System.out.println("CEMSServlet: event search venue has been completed!");
+        System.out.println("CEMSServlet: event search venue has been completed!"+al.isEmpty());
 
 
 

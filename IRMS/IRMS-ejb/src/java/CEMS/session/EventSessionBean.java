@@ -189,23 +189,30 @@ public class EventSessionBean {
         Query q = em.createQuery("SELECT v FROM VenueEntity v WHERE v.venueCapacity >= '" + venueCapacity + "'");
         System.out.println("EventSessionBean:SearchVenue: qualified venues have been retrieved 1");
         List<VenueEntity> qualifedVenues = new ArrayList<VenueEntity>();
-        Query q2 = em.createQuery("SELECT f FROM VenueFunctionEntity f WHERE f.functionName = '" + venueFunction + "'");
-        VenueFunctionEntity currentFunction = new VenueFunctionEntity();
-
-        for (Object o : q2.getResultList()) {
-            VenueFunctionEntity vfe = (VenueFunctionEntity) o;
-            currentFunction = vfe;
-        }
-
-        for (Object o : q.getResultList()) {
-            VenueEntity venue = (VenueEntity) o;
-            List<VenueFunctionEntity> functions = venue.getVenueFunction();
-
-            if (functions.contains(currentFunction)) {
-                qualifedVenues.add(venue);
-                System.out.println("EventSessionBean:SearchVenue: one qualified venues have been added!");
+       
+        
+        Iterator <VenueEntity> itr = q.getResultList().iterator();
+        
+        while(itr.hasNext())
+        {
+            VenueEntity current = itr.next();
+            List <VenueFunctionEntity> funcList = current.getVenueFunction();
+            Iterator <VenueFunctionEntity> itr2 = funcList.iterator();
+            
+            while(itr2.hasNext())
+            {
+                VenueFunctionEntity currentFunction = itr2.next();
+                if(currentFunction.getFunctionName().equalsIgnoreCase(venueFunction))
+                {
+                    System.out.println("A qualified venue has been returned!");
+                    qualifedVenues.add(current);
+                    break;
+                }
             }
+            System.out.println("VenueEntity: "+current.getVenueName());
         }
+
+        
         System.out.println("EventSessionBean:SearchVenue: qualified venues have been retrieved 2");
         return qualifedVenues;
     }
