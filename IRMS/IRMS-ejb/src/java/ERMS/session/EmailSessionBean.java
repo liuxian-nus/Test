@@ -592,7 +592,16 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                     + "\nWe also prepare a surprise gift for you on your birthday: please come to let us celebrate for you on the day"
                     + "\n\n For any queries, please contact our customer service managers @(0065)9272-8768. Thank you for your support!";
             message.setText(textbody);
-
+            String textShort =  "\nWe have EXCLUSIVE OFFER for your birthday now!"
+                    + " Please look at the promotion details below: "
+                    + "\n\n\nHere is the promotion details:"
+                    + "\nPromotion Code: " + promotion.getPromotionCode()
+                    + "\nPromotion Title: " + promotion.getPromotionTitle()
+                    + "\nPromotion Start Date: " + promotion.getPromotionStartDate()
+                    + "\nPromotion End Date: " + promotion.getPromotionEndDate()
+                    + "\nPromotion Discount (If Available)" + promotion.getDiscount()
+                    + "\nWe also prepare a surprise gift for you on your birthday: please come to let us celebrate for you on the day"
+                    + "\n\n For any queries, please contact our customer service managers @(0065)9272-8768. Thank you for your support!";
             Transport.send(message);
             Date today = new Date();
             //createNewMessage(MemberEntity member, String title, String content, String category, Date sentDate)
@@ -658,11 +667,20 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                         + "\nPromotion Discount (If Available)" + promotion.getDiscount()
                         + "\n\n For any queries, please contact our customer service managers @(0065)9272-8768. Thank you for your support!";
                 message.setText(textbody);
-
+                String textShort = "We have new promotions available now!"
+                        + " Please look at the promotion details below: "
+                        + "\n\n\nHere is the promotion details:"
+                        + "\nPromotion Code: " + promotion.getPromotionCode()
+                        + "\nPromotion Title: " + promotion.getPromotionTitle()
+                        + "\nPromotion Description: " + promotion.getPromotionDescription()
+                        + "\nPromotion Start Date: " + promotion.getPromotionStartDate()
+                        + "\nPromotion End Date: " + promotion.getPromotionEndDate()
+                        + "\nPromotion Exclusive For Member?" + memExclu
+                        + "\nPromotion Discount (If Available)" + promotion.getDiscount();
                 Transport.send(message);
                 Date today = new Date();
                 //createNewMessage(MemberEntity member, String title, String content, String category, Date sentDate)
-                memberMessageSessionBean.createNewMessage(current, "You are invited in a new promotion event", textbody, "notification", today);
+                memberMessageSessionBean.createNewMessage(current, "You are invited in a new promotion event", textShort, "notification", today);
                 System.out.println("Done");
 
             } catch (MessagingException e) {
@@ -926,7 +944,9 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                     + "\n\nIn case of any issues and inqueries, you may contact our corporate service manager "
                     + "\n@ 65-8180 1380"
                     + "\n\n\nBest Regards,\nThe Coral Island Management Team";
-
+            String textShort = "Greeting from Coral Island Resort!"
+                    + "\nYou have successfully make a reservation in Coral Island Resort Group. Thank you for your new reservation!"
+                    + "\nHere is your Reservation Id:" + newReservation.getReservationId();
             String INPUTFILE;
             INPUTFILE = createBill(toEmailAddress, newReservation);
 
@@ -956,7 +976,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
             Transport.send(message);
             Date today = new Date();
-            memberMessageSessionBean.createNewMessage(toEmailAddress, "Your Hotel Reservation", text, "bookingSummary", today);
+            memberMessageSessionBean.createNewMessage(toEmailAddress, "Your Hotel Reservation", textShort, "bookingSummary", today);
             System.out.println("Done");
 
         } catch (MessagingException e) {
@@ -1891,13 +1911,22 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(superVIP.getMemberEmail()));
-            message.setSubject("");
-            String textbody = "";
+            message.setSubject("You are invited to an exclusive show event");
+            String textbody = "Dear " + superVIP.getMemberName() + "!"
+                    + "\n Thank you for being supportive to us all the time, and you are valued as a precious asset to us"
+                    + "\nThus we've invited you to an exclusive show, with details listed below"
+                    + "\n Name: " + show.getShowName()
+                    + "\n Language: " +show.getShowLanguage()
+                    +"\n Duration: "+show.getShowDuration()
+                    +"\n Description: " + show.getShowDescription()
+                    +"\n Type: " + show.getShowType()
+                    +"\n You may choose to come for any schedule! Thank you!"
+                    + "\n Please login immediately and make the payment.\n\n\nBest Regards,\nThe Coral Island Management Team";
             message.setText(textbody);
 
             Transport.send(message);
             Date today = new Date();
-            memberMessageSessionBean.createNewMessage(superVIP.getMemberEmail(), "Your Are invited to a ", textbody, "notification", today);
+            memberMessageSessionBean.createNewMessage(superVIP.getMemberEmail(), "Your Are invited to an exclusive show event ", textbody, "notification", today);
             System.out.println("Done");
         } catch (MessagingException e) {
             throw new RuntimeException(e);
