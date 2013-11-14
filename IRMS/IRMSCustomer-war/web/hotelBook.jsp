@@ -10,6 +10,9 @@
 <%@ page import="java.io.*,java.util.*" %>
 <%@page import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
+<%
+    Integer numberOfNights=(Integer)session.getAttribute("numberOfNights");
+%>
 <html>
     <head>
         <link rel="stylesheet" href="/IRMSCustomer-war/css/flipclock.css" type="text/css" media="screen">
@@ -483,7 +486,7 @@
                                     <label for="right-label" class="left-align,inline"><h6>Number of nights:</h6></label>
                                 </div>
                                 <div class="large-5 columns">
-                                    <label for="right-label" class="right-align,inline"><strong>${data.reservationRoomCount}</strong></label>
+                                    <label for="right-label" class="right-align,inline"><strong>${numberOfNights}</strong></label>
                                 </div>
                             </div>
                             <div class="row">

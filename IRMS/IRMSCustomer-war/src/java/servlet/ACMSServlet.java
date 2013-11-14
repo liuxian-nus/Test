@@ -99,6 +99,9 @@ public class ACMSServlet extends HttpServlet {
             } else if ("searchAvailable".equals(page)) {
                 System.out.println("***search hotel availability***");
                 data = createTempReservation(request);
+                int numberOfNights = reservationSessionBean.calculateNights(data);
+                System.out.println("numberOfNights: "+numberOfNights);
+                session.setAttribute("numberOfNights",numberOfNights);
                 isAvailable = checkAvailability(data);
                 System.out.println("data search has been performed and result has been returned by bean");
                 session.setAttribute("data", data);
@@ -121,7 +124,7 @@ public class ACMSServlet extends HttpServlet {
                     System.out.println("RoomType:" + roomType);
                     roomPrice = roomPriceSessionBean.getPriceValueByType(roomType);
                     int roomCount = data.getReservationRoomCount();
-                    totalPrice = roomPrice * roomCount;
+                    totalPrice = roomPrice * numberOfNights;
                     session.setAttribute("roomPrice", roomPrice);
                     session.setAttribute("totalPrice", totalPrice);
                     request.getRequestDispatcher("/hotelBook.jsp").forward(request, response);

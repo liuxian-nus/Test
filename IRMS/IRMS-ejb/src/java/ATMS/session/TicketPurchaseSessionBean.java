@@ -9,9 +9,11 @@ import ATMS.entity.AttrTicketEntity;
 import ATMS.entity.QuotaEntity;
 import ATMS.entity.TicketPurchaseEntity;
 import CRMS.entity.MemberEntity;
+import CRMS.session.MemberSessionBean;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.TransactionAttribute;
@@ -27,6 +29,8 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class TicketPurchaseSessionBean {
+    @EJB
+    private MemberSessionBean memberSessionBean;
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     
@@ -37,7 +41,29 @@ public class TicketPurchaseSessionBean {
     private List<TicketPurchaseEntity> ArrayList;
     
     
+    
+    
     public TicketPurchaseSessionBean(){
+    }
+    
+    public List<TicketPurchaseEntity> getPurchasedTicketsByEmail(String email){
+        member=memberSessionBean.getMemberByEmail(email);
+        List<TicketPurchaseEntity> selectedTps=new ArrayList<TicketPurchaseEntity>();
+        Date today=new Date();
+        if(member!=null){
+            System.out.println("member exists");
+            List<TicketPurchaseEntity> tps=member.getTicketPurchases();      
+            for(int i=0;i<tps.size();i++){
+                System.out.println("i:"+i);
+                TicketPurchaseEntity tp=tps.get(i);
+                if(tp.getAttrTPStatus().equals("Purchased")&&tp.getAttrTicketBookDate().after(today)){
+                    System.out.println("tp selected");
+                    selectedTps.add(tp);
+                }
+            }
+            return selectedTps;
+        }
+        else return null;
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
