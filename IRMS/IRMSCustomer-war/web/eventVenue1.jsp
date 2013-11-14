@@ -10,8 +10,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+         <jsp:include page="base.jsp"></jsp:include>
     </head>
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <h1>Black Pearl Banquet Rooms</h1> 
         <div class="row">
             <div class="large-6 columns">
@@ -56,4 +58,5 @@
             <a href="eventRegister" class="button">Request For Proposal</a>
 
     </body>
+    <jsp:include page="footer.jsp"></jsp:include>
 </html>
