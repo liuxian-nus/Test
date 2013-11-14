@@ -279,14 +279,14 @@ public class ReservationSessionBean implements ReservationSessionBeanRemote {
         reservation = em.find(ReservationEntity.class, reservationId);
         reservation.setReservationStatus("cancelled");
         em.merge(reservation);
-//        emailSessionBean.cancelNotification(reservation.getRcEmail(),reservation);
+        emailSessionBean.cancelNotification(reservation.getRcEmail(),reservation);
 
     }
 
     public void cancelReservation(ReservationEntity reservation) {
         reservation.setReservationStatus("cancelled");
         em.merge(reservation);
-//                emailSessionBean.cancelNotification(reservation.getRcEmail(),reservation);
+        emailSessionBean.cancelNotification(reservation.getRcEmail(),reservation);
 
     }
 

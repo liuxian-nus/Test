@@ -56,6 +56,7 @@ public class VIPSessionBean {
        
     public List<MemberEntity> getVIPs() {
         Query q = em.createQuery("SELECT m FROM MemberEntity m WHERE m.isVIP =" + true);
+        System.out.println("get VIPs list: " + q.getResultList().size());
         return q.getResultList();
     }
     

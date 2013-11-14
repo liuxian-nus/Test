@@ -86,6 +86,7 @@ public class MemberManagedBean {
         nationalityList = memberSessionBean.getAllNationalities();
         nationalityOptions = createNationalityOptions(nationalityList);
         genderOptions = createGenderOptions();
+        System.out.println("MemberManagedBean init");
         vips = vIPSessionBean.getVIPs();
         supervips = vIPSessionBean.getSuperVIPs();
         try {

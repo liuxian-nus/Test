@@ -120,7 +120,7 @@
                         <h:outputText value=""/><br/>
 
                         <h:outputText value="Model Number: "/>
-                        <p:selectOneMenu value="#{evaluationManagedBean.modelNumber}">  
+                        <p:selectOneMenu value="#{evaluationManagedBean.modelNumber}" style="width:150px">  
                             <f:selectItem itemLabel="Select RFM Model" itemValue=""/>
                             <f:selectItems value="#{evaluationManagedBean.allRFMModels}" var="allRFMModel" itemLabel="#{allRFMModel.id}" itemValue="#{allRFMModel.id}" />  
                         </p:selectOneMenu>

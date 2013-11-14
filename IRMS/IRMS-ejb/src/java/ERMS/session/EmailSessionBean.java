@@ -577,7 +577,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         });
 
         try {
-            PromotionEntity promotion = em.find(PromotionEntity.class, 83102);
+            PromotionEntity promotion = em.find(PromotionEntity.class, Long.valueOf(83102));
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
@@ -1905,5 +1905,53 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
     public void persist(Object object) {
         em.persist(object);
+    }
+
+    public void cancelNotification(String toEmailAddress, ReservationEntity newReservation) {
+Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("is3102.it09", "weloveTWK");
+            }
+        });
+
+            try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("is3102.it09@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmailAddress));
+            message.setSubject("Your Reservation Has Been Cancelled");
+            String textbody = "Greeting from Coral Island Resort!"
+                    + "\nYou have successfully cancelled the following reservation: "
+                    + "\nHere is your Reservation Id:" + newReservation.getReservationId()
+                    + "\nBelow is your reservation detail:"
+                    + "\nName: " + newReservation.getRcName()
+                    + "\nEmail Address: " + newReservation.getRcEmail()
+                    + "\nCheckIn Date: " + newReservation.getRcCheckInDate()
+                    + "\nCheckOut Date: " + newReservation.getRcCheckOutDate()
+                    + "\nRoom Count " + newReservation.getReservationRoomCount()
+                    + "\nRoom Type" + newReservation.getReservationRoomType()
+                    + "\n\n We would like you help improve our service by filling in the feed back servey.Thank you!"
+                    + "\n\nIn case of any issues and inqueries, you may contact our corporate service manager "
+                    + "\n@ 65-8180 1380"
+                    + "\n\n\nBest Regards,\nThe Coral Island Management Team";
+            message.setText(textbody);
+
+
+            Transport.send(message);
+            Date today = new Date();
+            memberMessageSessionBean.createNewMessage(toEmailAddress, "Your initial password", textbody, "memberSummary", today);
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

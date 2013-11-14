@@ -89,7 +89,7 @@
             <!--here is the Super VIP Table-->
             <p:tab id="tab2" title="Super VIP List">  
                 <h:form>  
-                    <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.supervips}" widgetVar="membersTable"   
+                    <p:dataTable id="dataTable2" var="memberList" value="#{memberManagedBean.supervips}" widgetVar="membersTable"   
                                  emptyMessage="No Super VIPs found with given criteria" filteredValue="#{memberManagedBean.filteredMember}">  
 
                         <f:facet name="header">  
@@ -188,7 +188,7 @@
                         </p:selectOneMenu>
                         <br/>
                         <br/><br/>
-                        <p:commandButton value="Yes" update="dataTable" onclick ="growl" actionListener="#{memberManagedBean.assignEmployee}" oncomplete="assign.hide()"/>
+                        <p:commandButton value="Yes" update="dataTable2" onclick ="growl" actionListener="#{memberManagedBean.assignEmployee}" oncomplete="assign.hide()"/>
                         <p:commandButton value="Cancel" onclick="assign.hide()" type="button"/>  
 
                     </p:dialog> 

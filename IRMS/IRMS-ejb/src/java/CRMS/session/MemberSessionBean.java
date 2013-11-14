@@ -315,7 +315,7 @@ public class MemberSessionBean implements MemberSessionBeanRemote {
     
     @Override
     public void updateBirthdayEmail(MemberEntity member) {
-        member.setBirthdayEmail(true);
+        member.setBirthdayEmail(true); 
         em.merge(member);
     }
 
