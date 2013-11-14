@@ -16,7 +16,9 @@ import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.PromotionSessionBean;
+import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowTicketSaleEntity;
+import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSaleSessionBean;
 import FBMS.entity.IndReservationEntity;
 import FBMS.session.IndReservationSessionBean;
@@ -45,20 +47,18 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
     @EJB
-    private IndReservationSessionBean indReservationSessionBean;
+    private ShowSessionBean showSessionBean;
 
+    @EJB
+    private IndReservationSessionBean indReservationSessionBean;
     @EJB
     private TicketPurchaseSessionBean ticketPurchaseSessionBean;
-   
     @EJB
     private ShowTicketSaleSessionBean showTicketSaleSessionBean;
-
     @EJB
     private ReservationSessionBean reservationSessionBean;
-    
     @EJB
     private PromotionSessionBean promotionSessionBean;
-
     @EJB
     private FeedbackSessionBean feedbackSessionBean;
     @EJB
@@ -66,8 +66,6 @@ public class CRMServlet extends HttpServlet {
     @EJB
     private MemberSessionBean memberSession;
     
-    
- 
     //private Set<RestaurantEntity> data = null;
     private String message = null;
     private MemberEntity member;
@@ -76,12 +74,13 @@ public class CRMServlet extends HttpServlet {
     private Long promotionId;
     private List<PromotionEntity> allPromotions = new ArrayList();
     private List<PromotionEntity> memberPromotions = new ArrayList();
-    private  String memberEmail=null;
+    private String memberEmail = null;
     private PromotionEntity thisPromotion;
-    private List<ReservationEntity> hotelReservation; 
+    private List<ReservationEntity> hotelReservation;
     private List<ShowTicketSaleEntity> showReservation;
     private List<TicketPurchaseEntity> ticketReservation;
     private List<IndReservationEntity> restaurantReservation;
+    private List<ShowEntity> shows;
 
     //private String keyword=null;
     /**
@@ -136,39 +135,41 @@ public class CRMServlet extends HttpServlet {
                 System.out.println("***member Promotion Purchase page***");
                 promotionId = Long.parseLong(request.getParameter("promotionId"));
                 System.out.println(promotionId);
-                
-               thisPromotion=promotionSessionBean.getPromotionById(promotionId);
-               session.setAttribute("promotion",thisPromotion);
-                String pmDepartment=thisPromotion.getPromotionDepartment();
-                if(pmDepartment.equalsIgnoreCase("hotel")){
-                System.out.println("***member Promotion hotel***");
-                 request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
-                }else if(pmDepartment.equalsIgnoreCase("entertainment show")){
-                System.out.println("***member Promotion entertainment***");    
-                 request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
-                }else if(pmDepartment.equalsIgnoreCase("attraction")){
-                System.out.println("***member Promotion attraction***");    
-                 request.getRequestDispatcher("/ticketBooking.jsp").forward(request, response);
-                }else if(pmDepartment.equalsIgnoreCase("food and beverage")){
-                System.out.println("***member Promotion food and beverage***");    
-                
+
+                thisPromotion = promotionSessionBean.getPromotionById(promotionId);
+                session.setAttribute("promotion", thisPromotion);
+                String pmDepartment = thisPromotion.getPromotionDepartment();
+                if (pmDepartment.equalsIgnoreCase("hotel")) {
+                    System.out.println("***member Promotion hotel***");
+                    request.getRequestDispatcher("/hotelSearch.jsp").forward(request, response);
+                } else if (pmDepartment.equalsIgnoreCase("entertainment show")) {
+                    System.out.println("***member Promotion entertainment***");
+                    System.out.println("***entertainment***");
+                    shows = showSessionBean.getAvailableShows();
+                    request.setAttribute("shows", shows);
+                    request.getRequestDispatcher("/entertainment.jsp").forward(request, response);
+                } else if (pmDepartment.equalsIgnoreCase("attraction")) {
+                    System.out.println("***member Promotion attraction***");
+                    request.getRequestDispatcher("/ticketBooking.jsp").forward(request, response);
+                } else if (pmDepartment.equalsIgnoreCase("food and beverage")) {
+                    System.out.println("***member Promotion food and beverage***");
+
                 }
                 System.out.println("CRMServlet:Going to next page");
                 request.getRequestDispatcher("/memberFeedbackResult.jsp").forward(request, response);
             } else if ("memberPromotion".equals(page)) {
                 System.out.println("***member promotion page***");
-                allPromotions=promotionSessionBean.getAllPromotions();
+                allPromotions = promotionSessionBean.getAllPromotions();
                 //MemberEntity thisMember=(MemberEntity)session.getAttribute("member");
-                memberEmail=(String)session.getAttribute("memberEmail");
-                if(memberEmail!=null)
-                {
-                memberPromotions=promotionSessionBean.getPromotionByMemberEmail(memberEmail);             
-                }else{
-                request.setAttribute("allPromotions",allPromotions);
-                request.setAttribute("memberPromotions", memberPromotions);
+                memberEmail = (String) session.getAttribute("memberEmail");
+                if (memberEmail != null) {
+                    memberPromotions = promotionSessionBean.getPromotionByMemberEmail(memberEmail);
+                } else {
+                    request.setAttribute("allPromotions", allPromotions);
+                    request.setAttribute("memberPromotions", memberPromotions);
                 }
                 request.getRequestDispatcher("/memberPromotion.jsp").forward(request, response);
-                
+
             } else if ("memberInfo".equals(page)) {
 
                 System.out.println(request.getParameter("email"));
@@ -184,8 +185,8 @@ public class CRMServlet extends HttpServlet {
                     hotelReservation = reservationSessionBean.getReservationByEmail(email);
                     showReservation = showTicketSaleSessionBean.getShowTicketSalesByEmail(email);
                     ticketReservation = ticketPurchaseSessionBean.getPurchasedTicketsByEmail(email);
-                  //  restaurantReservation = indReservationSessionBean.getIndreservationByEmail(email);
-                    
+                    //  restaurantReservation = indReservationSessionBean.getIndreservationByEmail(email);
+
                     if (loginStatus.equals("true")) {
                         System.out.println("has logged in before");
                         member = memberSession.getMemberByEmail(email);
@@ -207,8 +208,8 @@ public class CRMServlet extends HttpServlet {
                             request.setAttribute("data", member);
                             request.setAttribute("memberEmail", member.getMemberEmail());
                             request.setAttribute("loginStatus", "true");
-                            request.setAttribute("hotelReservation",hotelReservation);
-                            request.setAttribute("showReservation",showReservation);
+                            request.setAttribute("hotelReservation", hotelReservation);
+                            request.setAttribute("showReservation", showReservation);
                             request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
                         } else {
                             message = "Wrong password or username entered";

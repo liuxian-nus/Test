@@ -143,6 +143,11 @@ public class CEMSServlet extends HttpServlet {
                 System.out.println(data1.toString() + unavailDates.isEmpty());
                 request.getRequestDispatcher("/eventVenueBook.jsp").forward(request, response);
 
+            } else if ("eventVenue1".equalsIgnoreCase(page)) {
+                System.out.println("*****eventVenue1*****");
+             
+                request.getRequestDispatcher("/eventVenue1.jsp").forward(request, response);
+
             } else if ("eventList".equals(page)) {
                 System.out.println("***eventList***");
 				//List<EventEntity> events = eventSessionBean.getConfirmedEvents();
