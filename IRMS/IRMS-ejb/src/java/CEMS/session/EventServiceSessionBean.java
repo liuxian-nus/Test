@@ -5,6 +5,8 @@
 package CEMS.session;
 
 import CEMS.entity.EventServiceEntity;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,6 +33,19 @@ public class EventServiceSessionBean {
     
     public List<EventServiceEntity> getEventServiceByCategory(String category) throws NoResultException {
         Query q = em.createQuery("SELECT es FROM EventServiceEntity es WHERE es.serviceCategory = '" + category + "'");
+        System.out.println("EventSerSessionBean"+q.getResultList().isEmpty());
+        
+//        Query q2 = em.createQuery("SELECT M FROM EVENTSERVICEENTITY M");
+//        
+//        Iterator<EventServiceEntity> itr = q2.getResultList().iterator();
+//        List <EventServiceEntity> resultList = new ArrayList();
+//        while (itr.hasNext())
+//        {
+//            EventServiceEntity current = itr.next();
+//            if(current.getServiceCategory().equalsIgnoreCase(category))
+//                resultList.add(current);
+//        }
+//        return resultList;
         return q.getResultList();
     }
 

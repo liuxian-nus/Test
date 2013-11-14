@@ -103,7 +103,7 @@ public class CEMSServlet extends HttpServlet {
                 eventServiceSessionBean.getEventServiceByCategory("Food and Beverage Services");
                 AVList = eventServiceSessionBean.getEventServiceByCategory("Audio and Video Requirements");
                  request.setAttribute("AVList",AVList);
-                FLList = eventServiceSessionBean.getEventServiceByCategory("Floral and Landscaping Services");
+                FLList = eventServiceSessionBean.getEventServiceByCategory("Equipment");
                  request.setAttribute("FLList",FLList);
                 PEList = eventServiceSessionBean.getEventServiceByCategory("Personnel Services");
                 request.setAttribute("PEList",PEList);
