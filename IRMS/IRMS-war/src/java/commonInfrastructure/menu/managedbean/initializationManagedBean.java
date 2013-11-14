@@ -249,34 +249,34 @@ public class initializationManagedBean implements Serializable {
         addMessage("Super Admin Created!");
     }
     
-    public void createATMCTicketing() {
-        System.out.println("go to create ATMCTicketing");
+    public void createATMSTicketing() {
+        System.out.println("go to create ATMSTicketing");
 
         role = new RoleEntity();
         role.setRoleId(61);
-        role.setRoleName("ATMCTicketing");
+        role.setRoleName("ATMSTicketing");
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
         employee.setEmployeeId("F1000"); //business assumption: maximum employee number 9999
-        employee.setEmployeeName("ATMCTicketing");
+        employee.setEmployeeName("ATMSTicketing");
         employee.setEmployeePassword(ePasswordHashSessionBean.hashPassword("F1000"));
         employee.addRole(role);
         employee.setIsFirstTimeLogin(false);
         System.out.println("Create employee :" + employee.getEmployeeId() + "," + employee.getEmployeeName() + "," + employee.getEmployeePassword());
 
         try {
-            System.out.println("Saving ATMCTicketing....");
+            System.out.println("Saving ATMSTicketing....");
 
             employeeSessionBean.addEmployee(employee);
-            System.out.println("ATMCTicketing saved.....");
+            System.out.println("ATMSTicketing saved.....");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding admin", ""));
             return;
         }
         System.out.println("Insert Employee into database");
 
-        addMessage("ATMCTicketing Created!");
+        addMessage("ATMSTicketing Created!");
     }
 
     public void createCEMSEvent() {
@@ -1872,7 +1872,7 @@ public class initializationManagedBean implements Serializable {
     }
 
     public void initialize() throws ExistException {
-        createATMCTicketing();
+        createATMSTicketing();
         createSuperUser();
         createESMSFront();
         createCEMSEvent();
