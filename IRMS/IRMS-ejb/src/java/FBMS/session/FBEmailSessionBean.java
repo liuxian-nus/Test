@@ -451,7 +451,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Table_Reservation_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\Table_Reservation_";
             
         //Below generate a PDF file
         Document document;
@@ -581,7 +581,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Catering_Reservation_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\Catering_Reservation_";
         
         //Below generate a PDF file
         Document document;
@@ -666,7 +666,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Goods_Issued_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\Goods_Issued_";
         
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
@@ -766,7 +766,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Catering_Invoice_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\Catering_Invoice_";
         
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
@@ -873,7 +873,7 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Catering_Invoice_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\Catering_Invoice_";
         
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
