@@ -312,35 +312,9 @@ public class initializationManagedBean implements Serializable {
     public void createACMSAdmin() {
         System.out.println("go to create ACMS user");
 
-        /*
-         functionality = new FunctionalityEntity();
-         functionality.setFuncName("overbookingManagement");
-         functionality.setFuncDescription("manage overbooking");
-         functionalitySessionBean.addFunctionality(functionality);
-
-         FunctionalityEntity functionality2 = new FunctionalityEntity();
-         functionality2.setFuncName("listAllRooms");
-         functionality2.setFuncDescription("oversee all room situation");
-         functionalitySessionBean.addFunctionality(functionality2);
-
-         FunctionalityEntity functionality3 = new FunctionalityEntity();
-         functionality3.setFuncName("listAllRoomPrices");
-         functionality3.setFuncDescription("manage room price");
-         functionalitySessionBean.addFunctionality(functionality3);
-
-         FunctionalityEntity functionality4 = new FunctionalityEntity();
-         functionality4.setFuncName("listReservations");
-         functionality4.setFuncDescription("oversee all reservations");
-         functionalitySessionBean.addFunctionality(functionality4);
-         */
-
         role = new RoleEntity();
         role.setRoleId(20);
         role.setRoleName("ACMSAdmin"); //manager instead
-/*        role.addFunctionality(functionality);
-         role.addFunctionality(functionality2);
-         role.addFunctionality(functionality3);
-         role.addFunctionality(functionality4);*/
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
@@ -367,46 +341,9 @@ public class initializationManagedBean implements Serializable {
     public void createACMSFrontDesk() {
         System.err.println("go to create ACMS user");
 
-        functionality = new FunctionalityEntity();
-        functionality.setFuncName("checkIncheckOut");
-        functionality.setFuncDescription("front desk: perform check in, check out, and make/cancel reservation");
-        functionalitySessionBean.addFunctionality(functionality);
-
-        FunctionalityEntity functionality2 = new FunctionalityEntity();
-        functionality2.setFuncName("listAllRooms");
-        functionality2.setFuncDescription("check in");
-        functionalitySessionBean.addFunctionality(functionality2);
-
-        FunctionalityEntity functionality3 = new FunctionalityEntity();
-        functionality3.setFuncName("listReservations");
-        functionality3.setFuncDescription("manage reservations");
-        functionalitySessionBean.addFunctionality(functionality3);
-
-        FunctionalityEntity functionality4 = new FunctionalityEntity();
-        functionality4.setFuncName("RoomSearchResult");
-        functionality4.setFuncDescription("check room details for check out");
-        functionalitySessionBean.addFunctionality(functionality4);
-
-        FunctionalityEntity functionality5 = new FunctionalityEntity();
-        functionality5.setFuncName("ReservationSearchResult");
-        functionality5.setFuncDescription("reservation detail for check in");
-        functionalitySessionBean.addFunctionality(functionality5);
-
-        FunctionalityEntity functionality6 = new FunctionalityEntity();
-        functionality6.setFuncName("logBook");
-        functionality6.setFuncDescription("employee shift log book");
-        functionalitySessionBean.addFunctionality(functionality6);
-
-
         role = new RoleEntity();
         role.setRoleId(21);
         role.setRoleName("ACMSFrontDesk");
-        role.addFunctionality(functionality);
-        role.addFunctionality(functionality2);
-        role.addFunctionality(functionality3);
-        role.addFunctionality(functionality4);
-        role.addFunctionality(functionality5);
-        role.addFunctionality(functionality6);
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
@@ -433,21 +370,9 @@ public class initializationManagedBean implements Serializable {
     public void createACMSRoomService() {
         System.err.println("go to create ACMS user");
 
-        functionality = new FunctionalityEntity();
-        functionality.setFuncName("RoomService");
-        functionality.setFuncDescription("list and manage room service");
-        functionalitySessionBean.addFunctionality(functionality);
-
-        /*        FunctionalityEntity functionality3 = new FunctionalityEntity();
-         functionality3.setFuncName("logBook");
-         functionality3.setFuncDescription("employee shift log book");
-         functionalitySessionBean.addFunctionality(functionality3);
-         */
         role = new RoleEntity();
         role.setRoleId(22);
         role.setRoleName("ACMSRoomService");
-        role.addFunctionality(functionality);
-//       role.addFunctionality(functionality3);
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
@@ -474,28 +399,10 @@ public class initializationManagedBean implements Serializable {
 
     public void createACMSManager() {
         System.err.println("go to create ACMS user");
-
-        functionality = new FunctionalityEntity();
-        functionality.setFuncName("overbookingManagement");
-        functionality.setFuncDescription("overbooking management");
-        functionalitySessionBean.addFunctionality(functionality);
-
-        FunctionalityEntity functionality2 = new FunctionalityEntity();
-        functionality2.setFuncName("RoomManagement");
-        functionality2.setFuncDescription("overbooking management");
-        functionalitySessionBean.addFunctionality(functionality2);
-
-        FunctionalityEntity functionality3 = new FunctionalityEntity();
-        functionality3.setFuncName("listAllRoomPrices");
-        functionality3.setFuncDescription("overbooking management");
-        functionalitySessionBean.addFunctionality(functionality3);
-
+        
         role = new RoleEntity();
         role.setRoleId(23);
         role.setRoleName("ACMSManager");
-        role.addFunctionality(functionality);
-        role.addFunctionality(functionality2);
-        role.addFunctionality(functionality3);
         System.out.println("Create role :" + role.getRoleName());
 
         employee = new EmployeeEntity();
@@ -988,41 +895,7 @@ public class initializationManagedBean implements Serializable {
             roomSessionBean.createTestRoom(1, 1, 3, "superior", "available");
             roomSessionBean.createTestRoom(1, 1, 4, "superior", "available");
             roomSessionBean.createTestRoom(1, 1, 5, "superior", "available");
-            /*
-             RoomEntity room1 = new RoomEntity();
-             room1.setRoomId(1, 1, 1);
-             room1.setRoomType("deluxe");
-             room1.setRoomStatus("available");
-             rmSessionBean.createTestRoom(room1);
-             RoomEntity room2 = new RoomEntity();
-             room2.setRoomId(1, 1, 2);
-             room2.setRoomType("deluxe");
-             room2.setRoomStatus("available");
-             rmSessionBean.createTestRoom(room2);
-             RoomEntity room3 = new RoomEntity();
-             room3.setRoomId(1, 1, 3);
-             room3.setRoomType("deluxe");
-             room3.setRoomStatus("reserved");
-             rmSessionBean.createTestRoom(room3);
-             RoomEntity room4 = new RoomEntity();
-             room4.setRoomId(1, 1, 4);
-             room4.setRoomType("deluxe");
-             room4.setRoomStatus("occupied");
-             rmSessionBean.createTestRoom(room4);
-             *//*
-             Query query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-             + "VALUES (1,1,1,'Deluxe');");
-             query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-             + "VALUES (1,1,2,'Deluxe');");
-             query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-             + "VALUES (1,1,3,'Deluxe');");
-             query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-             + "VALUES (1,1,4,'Deluxe');");
-             query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-             + "VALUES (1,1,5,'Deluxe');");
-             query = em.createQuery("INSERT INTO roomentity(ROOMEHOTEL,ROOMLEVEL,ROOMNO,ROOMTYPE)\n"
-             + "VALUES (1,1,6,'Deluxe');");
-             */
+       
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when adding room to Orchard Hotel", ""));
             return;
@@ -1882,8 +1755,8 @@ public class initializationManagedBean implements Serializable {
         createShow();
         createSuperAdmin();
         createACMSAdmin();
-//        createACMSFrontDesk();
-//        createACMSRoomService();
+        createACMSFrontDesk();
+        createACMSRoomService();
         createMember();
         createVIP();
         createFBMSAdmin();

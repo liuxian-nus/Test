@@ -545,10 +545,16 @@ public class MemberManagedBean {
     }
 
     public void onRowToggle(ToggleEvent event) {
+        try {
+        System.out.println("List member on row toggle" + ((MemberEntity)event.getData()).getMemberEmail());
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Row State " + event.getVisibility(),
                 "Model:" + ((MemberEntity) event.getData()).getMemberEmail());
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        } catch (Exception e) {
+            System.out.println("exception in onRowToggle event");
+            e.printStackTrace();
+        }
     }
 }
