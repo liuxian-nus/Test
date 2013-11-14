@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="large-4 columns">
                         <a class="th radius" href="/IRMS-war/images/Harry-Potter.jpg" >
-                            <img src="/IRMS-war/images/Harry-Potter.jpg" width="100" height="100">
+                            <img src="${show.imagePath}" width="100" height="100">
                         </a>
 
                     </div>
