@@ -8,8 +8,9 @@
 
     <ui:define name="content">
         <h:form id="form">
+            <p:growl id="msgs" showDetail="true" />
             <p:panel id="showContract" header="View Show Contract" >
-                <p:growl id="msgs" showDetail="true" />
+                
                 <p:dataTable id="showContracts" value="#{viewShowContractManagedBean.getShowContracts()}" 
                              var="contractList" paginator="true" rows="10" draggableColumns="true" 
                              scrollable="true" resizableColumns="true">
@@ -59,7 +60,7 @@
                         <br/>
                         Are you sure to delete?
                         <br/><br/>
-                        <p:commandButton value="Yes" update="showContracts" actionListener="#{viewShowContractManagedBean.deleteShowContract}" oncomplete="confirmation.hide()">  
+                        <p:commandButton value="Yes" update="showContracts" onclick="msgs" actionListener="#{viewShowContractManagedBean.deleteShowContract}" oncomplete="confirmation.hide()">  
                             <f:attribute name="code1" value="#{viewShowContractManagedBean.showContract.showContractId}" />
                         </p:commandButton>
                         <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />  

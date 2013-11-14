@@ -9,8 +9,10 @@ import ESMS.session.ShowContractSessionBean;
 import Exception.ExistException;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -20,22 +22,28 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @ViewScoped
 public class ViewShowContractManagedBean {
+
     @EJB
     private ShowContractSessionBean showContractSessionBean;
     private ShowContractEntity showContract;
     private Long id;
-            
+
     public ViewShowContractManagedBean() {
         showContract = new ShowContractEntity();
     }
-    
+
     public List<ShowContractEntity> getShowContracts() throws ExistException {
         return showContractSessionBean.getAllShowContracts();
     }
-    
+
     public void deleteShowContract(ActionEvent event) {
         setId((Long) event.getComponent().getAttributes().get("code1"));
-        showContractSessionBean.deleteShowContract(getId());
+        if (!showContractSessionBean.deleteShowContract(getId())) {
+//            FacesMessage msg = new FacesMessage("Cannot delete an in-use contract.");
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cannot delete an in-use contract.", ""));
+
+        };
     }
 
     public ShowContractSessionBean getShowContractSessionBean() {
@@ -61,5 +69,4 @@ public class ViewShowContractManagedBean {
     public void setId(Long id) {
         this.id = id;
     }
-    
 }

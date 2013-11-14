@@ -37,6 +37,9 @@ public class ShowContractSessionBean implements ShowContractSessionBeanRemote {
     @Override
     public boolean deleteShowContract(Long showContractId) {
         showContract = em.find(ShowContractEntity.class, showContractId);
+        if (showContract.getShow() != null) {
+            return false;
+        }
         if (showContract == null) {
             System.out.println("deleteShow: show Contract does not exist!");
             return false;
@@ -57,9 +60,9 @@ public class ShowContractSessionBean implements ShowContractSessionBeanRemote {
         Query q = em.createQuery("SELECT m FROM ShowContractEntity m");
         return q.getResultList();
     }
-    
+
     @Override
-    public ShowContractEntity thisShowContract(Long showContractId){
+    public ShowContractEntity thisShowContract(Long showContractId) {
         showContract = em.find(ShowContractEntity.class, showContractId);
         return showContract;
     }

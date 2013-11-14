@@ -72,7 +72,7 @@ public class AddShowManagedBean {
             show = showSessionBean.getShowById(showId);
             showSchedules = show.getShowSchedules();
         } else {
-            FacesMessage msg = new FacesMessage("Error occours during ");
+            FacesMessage msg = new FacesMessage("Error occours during show changes.");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
