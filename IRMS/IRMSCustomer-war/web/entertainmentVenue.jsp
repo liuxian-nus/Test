@@ -487,7 +487,7 @@
                                     <td width="300">&nbsp ${showTicket1.showTicketPrice}</td>
                                     <td width="300">   
                                         <select style="width:80px" required name="ticket1" id="ticket1"/>
-                            <option value="0">0</option>            
+                            <option value="0"selected>0</option>            
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -516,7 +516,7 @@
                                 <td width="300">&nbsp ${showTicket2.showTicketPrice}</td>
                                 <td width="300">   
                                     <select style="width:80px" required name="ticket2" id="ticket2"/>
-                            <option value="0">0</option>
+                            <option value="0"selected>0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -547,7 +547,7 @@
                                 <td width="300">&nbsp ${showTicket3.showTicketPrice}</td>
                                 <td width="300">   
                                     <select style="width:80px" required name="ticket3" id="ticket3"/>
-                            <option value="0">0</option>
+                            <option value="0"selected>0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -578,7 +578,7 @@
                                 <td width="300">   
                                     <select style="width:80px" required name="ticket4" id="ticket4"/>
 
-                            <option value="0">0</option>
+                            <option value="0"selected>0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -608,7 +608,7 @@
                                 <td width="300">   
                                     <select style="width:80px" required name="ticket5" id="ticket5"/>
 
-                            <option value="0">0</option>
+                            <option value="0" selected>0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -637,7 +637,7 @@
                                 <td width="300">&nbsp ${showTicket6.showTicketPrice}</td>
                                 <td width="300">   
                                     <select style="width:80px" required name="ticket6" id="ticket6"/>
-                            <option value="0">0</option>
+                            <option value="0"selected>0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
