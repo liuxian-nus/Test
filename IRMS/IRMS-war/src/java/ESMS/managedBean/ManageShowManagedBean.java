@@ -4,6 +4,9 @@
  */
 package ESMS.managedBean;
 
+import CRMS.entity.MemberEntity;
+import CRMS.session.VIPSessionBean;
+import ERMS.session.EmailSessionBean;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
@@ -12,6 +15,8 @@ import ESMS.session.ShowSessionBean;
 import ESMS.session.ShowTicketSessionBean;
 import Exception.ExistException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -35,12 +40,17 @@ public class ManageShowManagedBean {
     private ShowScheduleSessionBean showScheduleSessionBean;
     @EJB
     private ShowTicketSessionBean showTicketSessionBean;
+    @EJB
+    private EmailSessionBean emailSessionBean;
+    @EJB
+    private VIPSessionBean vipSessionBean;
     private ShowEntity selectedShow;
     private ShowScheduleEntity selectedShowSchedule;
     private ShowTicketEntity selectedShowTicket;
     private boolean editMode;
     private boolean editSchedule;
     private boolean editTicket;
+    private boolean invitationStatus;
     private Long id;
     private ShowEntity filteredShows;
 
@@ -57,6 +67,26 @@ public class ManageShowManagedBean {
      */
     public ManageShowManagedBean() {
         selectedShow = new ShowEntity();
+    }
+
+    public void sendInvitation() {
+        MemberEntity VIP = new MemberEntity();
+        List<MemberEntity> VIPs = new ArrayList<MemberEntity>();
+        VIPs = vipSessionBean.getSuperVIPs();
+
+//        int number = showTicketSessionBean.getShowTicketById(selectedShow.getShowId()).getShowTicketQuota();
+        int number=1000;
+        if (number > VIPs.size()) {
+            Iterator<MemberEntity> itr = VIPs.iterator();
+            while (itr.hasNext()) {
+                VIP = itr.next();
+                emailSessionBean.sendShowInvitation(selectedShow, VIP);
+                System.err.println("selectedShow: " + selectedShow.getShowId());
+//                showTicketSessionBean.updateQuantity(selectedShow.getShowId(), 1);
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Not enough ticket. ", ""));
+        }
     }
 
     public void onEdit(RowEditEvent event) {
@@ -93,7 +123,7 @@ public class ManageShowManagedBean {
     public List<ShowEntity> getShows() throws ExistException {
         return showSessionBean.getAllShows();
     }
-    
+
     public List<ShowEntity> getAvailableShows() throws ExistException {
         return showSessionBean.getAvailableShows();
     }
@@ -202,5 +232,13 @@ public class ManageShowManagedBean {
 
     public void setFilteredShows(ShowEntity filteredShows) {
         this.filteredShows = filteredShows;
+    }
+
+    public boolean isInvitationStatus() {
+        return invitationStatus;
+    }
+
+    public void setInvitationStatus(boolean invitationStatus) {
+        this.invitationStatus = invitationStatus;
     }
 }
