@@ -41,7 +41,7 @@ public class LogBookManagedBean {
     private LogBookEntity newLog;
     private List<LogBookEntity> logList;
     private Long logId;
-    private int schedule; 
+    private String schedule; 
     private String employeeId;
     private Date currentDate = new Date();
 
@@ -50,6 +50,7 @@ public class LogBookManagedBean {
     public LogBookManagedBean() {
          newLog = new LogBookEntity();
          thisLog = new LogBookEntity();
+         schedule = "0";
     }
     
      @PostConstruct
@@ -77,7 +78,7 @@ public class LogBookManagedBean {
         System.out.println("get log entity" + newLog.getLogText());
         EmployeeEntity employee = employeeSessionBean.getEmployeeById(employeeId);
         newLog.setEmployee(employee);
-        newLog.setLogShift(schedule);
+        newLog.setLogShift(Integer.valueOf(schedule));
         newLog.setResolved(false);
         newLog.setPublishDate(currentDate);
         logBookSessionBean.addLog(newLog);
@@ -102,7 +103,9 @@ public class LogBookManagedBean {
     }
     
      public void deleteLog(ActionEvent event) throws ExistException{
+         System.out.println("IN DELETE");
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        System.out.println("IN DELETE 2");
         Long id=(Long)event.getComponent().getAttributes().get("deleteLog");
         
         System.out.println("Delete Log number "+ thisLog.getLogBookId());
@@ -165,11 +168,11 @@ public class LogBookManagedBean {
     }
     
     public int getSchedule() {
-        return schedule;
+        return Integer.valueOf(schedule);
     }
 
     public void setSchedule(int schedule) {
-        this.schedule = schedule;
+        this.schedule = String.valueOf(schedule);
     }
 
     public String getEmployeeId() {
