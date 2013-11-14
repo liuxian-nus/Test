@@ -76,10 +76,16 @@ public class MemberManagedBean {
      * Creates a new instance of SearchMemberManagedBean
      */
     public MemberManagedBean() {
+        member = new MemberEntity();
+      
     }
 
     @PostConstruct
     public void init() throws ExistException {
+        memberList = new ArrayList<MemberEntity>();
+        memberSelect =  new ArrayList<MemberEntity>();
+        vips =  new ArrayList<MemberEntity>();
+        supervips =  new ArrayList<MemberEntity>();
         memberList = memberSessionBean.getAllMembers();
         Date today = new Date();
         memberSelect = memberSessionBean.getMemberByBirthMonth(today.getMonth());
