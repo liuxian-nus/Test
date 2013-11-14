@@ -9,7 +9,7 @@
 
 
     <ui:define name="content">
-        <f:view afterPhase="#{reservationSearchResultManagedBean.initViewSelect}">    
+        <f:view beforePhase="#{reservationSearchResultManagedBean.initViewSelect}">    
         <h:form id="form">
                 <p:panel id="search" header="Search Result" style="height:495px;">
 

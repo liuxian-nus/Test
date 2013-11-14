@@ -124,28 +124,27 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
     }
 
-    public void createSchedule2() throws ExistException {
-        System.err.println("NO1hahaha here in creating scheduled22 bean ala ");
-        System.err.println("hahaha here in creating scheduled2 22bean ala ");
-        System.err.println("hahaha here in creating scheduled2222 bean ala ");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, 4);
-        Date today = cal.getTime();
-
-//        ScheduleExpression schedule = new ScheduleExpression();
-//        schedule.minute(2);
-        TimerService timerService = ctx.getTimerService();
-        TimerConfig config = new TimerConfig("schedule", true);
-//        ScheduleExpression minute = schedule.minute(3);
-        Timer timer = (Timer) timerService.createSingleActionTimer(today, config);
-//        createCalendarTimer(schedule, config);
-
-        System.err.println("hahaha here in creating scheduled bean ala ");
-
-
-
-    }
-
+//    public void createSchedule2() throws ExistException {
+//        System.err.println("NO1hahaha here in creating scheduled22 bean ala ");
+//        System.err.println("hahaha here in creating scheduled2 22bean ala ");
+//        System.err.println("hahaha here in creating scheduled2222 bean ala ");
+//        Calendar cal = Calendar.getInstance();
+//        cal.add(Calendar.MINUTE, 4);
+//        Date today = cal.getTime();
+//
+////        ScheduleExpression schedule = new ScheduleExpression();
+////        schedule.minute(2);
+//        TimerService timerService = ctx.getTimerService();
+//        TimerConfig config = new TimerConfig("schedule", true);
+////        ScheduleExpression minute = schedule.minute(3);
+//        Timer timer = (Timer) timerService.createSingleActionTimer(today, config);
+////        createCalendarTimer(schedule, config);
+//
+//        System.err.println("hahaha here in creating scheduled bean ala ");
+//
+//
+//
+//    }
 //    // generate
 //    public void createMonthlyBillTimers(Date startdate) {
 //        //method1
@@ -182,7 +181,7 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
             updateBill(bill);
             System.err.println("after setting product lalala" + bill.getBillStatus());
             cancelTerminationTimer();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The bill " + bill.getBillId() + "has been set to status : overdue", ""));
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The bill " + bill.getBillId() + "has been set to status : overdue", ""));
         }
 
         if (timer.getInfo().toString().equals("setActive")) {
@@ -231,6 +230,7 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
             List OutletList = new ArrayList<ContractEntity>();
             for (Object o : q.getResultList()) {
                 ContractEntity m = (ContractEntity) o;
+                System.err.println("here in contract" + m.getId());
                 if (!"Terminated".equalsIgnoreCase(m.getLast().getEventStatus())) {
                     addMonthlyBill(m);
                 }
@@ -293,8 +293,23 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
         setBill(billTest);
         System.err.println("before creating timer" + dueDate);
+        contract.setFinalBillPaid(false);
+        contractSessionBean.updateContract(contract);
         return billTest;
 
+    }
+    
+    public void addYearlyBill() throws ExistException
+    {
+         Query q = em.createQuery("SELECT m FROM ContractEntity m");
+            List OutletList = new ArrayList<ContractEntity>();
+            for (Object o : q.getResultList()) {
+                ContractEntity m = (ContractEntity) o;
+                System.err.println("here in contract" + m.getId());
+                if (!"Terminated".equalsIgnoreCase(m.getLast().getEventStatus())) {
+                    addMonthlyBill(m);
+                }
+            }
     }
 
     public BillEntity addMonthlyBill(ContractEntity contract) throws ExistException { //until today

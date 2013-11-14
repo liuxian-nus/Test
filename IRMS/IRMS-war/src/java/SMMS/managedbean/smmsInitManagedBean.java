@@ -347,7 +347,7 @@ public class smmsInitManagedBean implements Serializable {
             addDepositBill(contract3);
             System.err.println("start adding TIMERRRR lalalallalala!!!!!!!!!!");
             merchantBillSessionBean.setContract(contract3);
-            merchantBillSessionBean.createTerminationTimers(codate);
+//            merchantBillSessionBean.createTerminationTimers(codate);
 
             System.out.println("Contract5 saved.....");
         } catch (Exception e) {
@@ -632,8 +632,8 @@ public class smmsInitManagedBean implements Serializable {
         createContract();
         createTransaction();
         createItem();
-        merchantBillSessionBean.createSchedule();
-        merchantBillSessionBean.createSchedule2();
+//        merchantBillSessionBean.createSchedule();
+//        merchantBillSessionBean.createSchedule2();
 
     }
 }

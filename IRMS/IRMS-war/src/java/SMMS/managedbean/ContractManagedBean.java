@@ -60,6 +60,7 @@ public class ContractManagedBean implements Serializable {
     private List<ContractEntity> contracts;
     private String outletType;
     private String outletName;
+    private List<ContractEntity> terminates;
 
     public ContractManagedBean() {
 
@@ -72,6 +73,7 @@ public class ContractManagedBean implements Serializable {
     @PostConstruct
     public void init() {
         contracts = contractSessionBean.getAllContracts();
+        terminates = contractSessionBean.getAllTerminatedContracts();
     }
 
     public String getOutletType() {
@@ -104,6 +106,14 @@ public class ContractManagedBean implements Serializable {
 
     public void setCurrentDate(Date currentDate) {
         this.currentDate = currentDate;
+    }
+
+    public List<ContractEntity> getTerminates() {
+        return terminates;
+    }
+
+    public void setTerminates(List<ContractEntity> terminates) {
+        this.terminates = terminates;
     }
 
     public ContracteventSessionBean getContracteventSessionBean() {

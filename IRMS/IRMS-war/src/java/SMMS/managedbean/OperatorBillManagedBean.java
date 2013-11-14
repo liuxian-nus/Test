@@ -32,9 +32,9 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean
 @ViewScoped
 public class OperatorBillManagedBean {
+
     @EJB
     private ContractSessionBean contractSessionBean;
-
     @EJB
     private EmailSessionBean emailSessionBean;
     @EJB
@@ -49,7 +49,8 @@ public class OperatorBillManagedBean {
     private BillEntity bill;
     private String searchId;
     private BillEntity selected;
-    private List<BillEntity> bills ;
+    private List<BillEntity> bills;
+    private ContractEntity contract;
 
     /**
      * Creates a new instance of OperatorBillManagedBean
@@ -61,12 +62,11 @@ public class OperatorBillManagedBean {
         overdueBills = merchantBillSessionBean.getOverdueBills();
     }
 
-   
-
     public OperatorBillManagedBean() {
         bill = new BillEntity();
         selected = new BillEntity();
         bills = new ArrayList<BillEntity>();
+        contract = new ContractEntity();
 
     }
 
@@ -86,11 +86,19 @@ public class OperatorBillManagedBean {
         this.unpaidBills = unpaidBills;
     }
 
+    public ContractEntity getContract() {
+        return contract;
+    }
+
+    public void setContract(ContractEntity contract) {
+        this.contract = contract;
+    }
+
     public List<BillEntity> getOverdueBills() {
         return overdueBills;
     }
-    
-     public List<BillEntity> getBills() {
+
+    public List<BillEntity> getBills() {
         return bills;
     }
 
@@ -141,7 +149,17 @@ public class OperatorBillManagedBean {
         System.out.println("email sent");
 
     }
-    
+
+    public void sendYearlyBill(ActionEvent event) throws ExistException {
+        merchantBillSessionBean.addYearlyBill();
+    }
+
+    public void sendTerminateBill(ActionEvent event) throws ExistException {
+
+        System.out.println("what is the current contract now" + contract.getContractId());
+        merchantBillSessionBean.addTerminationBill(contract);
+    }
+
     public void viewBill(ActionEvent event) {
         System.out.println("No1:in displaying bean " + bill.getBillId());
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -193,7 +211,6 @@ public class OperatorBillManagedBean {
 //            return;
 //        }
 //    }
-
     public void searchByContract(ActionEvent event) {
         System.out.println("No1:in searching bill by Id bean " + searchId);
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -210,7 +227,7 @@ public class OperatorBillManagedBean {
             return;
         }
     }
-    
+
     public List<String> completeBillsContract() throws ExistException {
         System.out.println("NO4: we are in ALL contracts bean BEFORE");
         List<String> results = new ArrayList<String>();
@@ -223,8 +240,7 @@ public class OperatorBillManagedBean {
         System.out.println("NO5: we are in complete bean AFTER");
         return results;
     }
-    
-    
+
     public List<String> completeBillsId() throws ExistException {
         System.out.println("NO4: we are in ALL contracts bean BEFORE");
         List<String> results = new ArrayList<String>();

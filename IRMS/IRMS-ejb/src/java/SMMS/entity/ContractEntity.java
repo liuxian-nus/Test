@@ -41,6 +41,15 @@ public class ContractEntity implements Serializable {
     @OneToOne(cascade = {CascadeType.MERGE})
     private OutletEntity outlet;
     private String status;
+    private boolean finalBillPaid = true;  //!finalBillPaid
+
+    public boolean isFinalBillPaid() {
+        return finalBillPaid;
+    }
+
+    public void setFinalBillPaid(boolean finalBillPaid) {
+        this.finalBillPaid = finalBillPaid;
+    }
     
     public ContractEntity(){}
 

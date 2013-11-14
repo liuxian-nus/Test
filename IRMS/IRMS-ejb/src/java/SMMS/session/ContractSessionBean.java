@@ -129,6 +129,17 @@ public class ContractSessionBean implements ContractSessionBeanRemote {
         }
         return ContractList;
     }
+    
+         public List<ContractEntity> getAllTerminatedContracts() {
+        Query q = em.createQuery("SELECT m FROM ContractEntity m");
+        List ContractList = new ArrayList<ContractEntity>();
+        for (Object o : q.getResultList()) {
+            ContractEntity m = (ContractEntity) o;
+            if("Terminated".equalsIgnoreCase(m.getLast().getEventStatus()))
+            ContractList.add(m);
+        }
+        return ContractList;
+    }
 
     @Override
     public int getSize(ContractEntity newct) {

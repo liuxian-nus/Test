@@ -100,13 +100,14 @@ public class ReservationManagedBean implements Serializable {
             reservationSessionBean.cancelReservation(selectReservation);
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
             System.out.println("we are after setting reservation session attribute");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when cancelling the reservation", ""));
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "This Reservation is successfully cancelled", ""));
     }
-    
-     public void payRoomFee(ActionEvent event) {
+
+    public void payRoomFee(ActionEvent event) {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
@@ -285,7 +286,7 @@ public class ReservationManagedBean implements Serializable {
             if (newReservation.getReservationRoomType().equals("5")) {
                 newReservation.setReservationRoomType("chairman suite");
             }
-            if(memberEmail!=null) {
+            if (memberEmail != null) {
                 MemberEntity thisMember = memberSessionBean.getMemberByEmail(memberEmail);
                 newReservation.setRcMember(thisMember);
             }
@@ -306,6 +307,7 @@ public class ReservationManagedBean implements Serializable {
         System.out.println("email already sent");
 //        FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
         newReservation = new ReservationEntity();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("checkIncheckOut.xhtml");
     }
 
     public List<ReservationEntity> getReservatioinList() {
@@ -382,7 +384,6 @@ public class ReservationManagedBean implements Serializable {
         this.memberEmail = memberEmail;
     }
 
-    
     public ReservationSessionBean getReservationSessionBean() {
         return reservationSessionBean;
     }

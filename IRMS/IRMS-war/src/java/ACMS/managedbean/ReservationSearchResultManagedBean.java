@@ -40,9 +40,9 @@ public class ReservationSearchResultManagedBean implements Serializable {
 //        selectReservation = getParameterReservation();
 //    }
 
-    public ReservationEntity getParameterReservation() {
-        return (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
-    }
+//    public ReservationEntity getParameterReservation() {
+//        return (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
+//    }
 
     public ReservationEntity getSelectReservation() {
         return selectReservation;
@@ -72,7 +72,6 @@ public class ReservationSearchResultManagedBean implements Serializable {
 
         System.err.println("ni ma dan wei mao xian yizhi bu hao shi ni qu si ba !!!!!!!!!!!!!");
         selectReservation = (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
-        selectReservation = (ReservationEntity) request.getSession().getAttribute("selectReservation");
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
         System.err.println("in getting Listerning selectReservation" + selectReservation.getReservationId());
