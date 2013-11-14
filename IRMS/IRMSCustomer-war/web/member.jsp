@@ -19,8 +19,8 @@
     <body>
         <jsp:include page="header.jsp"></jsp:include>
                     <div class="row">
-                <div clas="large-9" colums></div>
-                <div class="large-3" columns>
+               
+                <div class="large-4 columns">
                     <form id="member" action="memberInfo" method="POST">
                         <fieldset>
                             <legend>Member</legend>
@@ -49,14 +49,30 @@
                                   <li><input type="submit" class="button" value="Login"></li>
                                   <li><a href="memberRegister" class="button">Register</a></li>
                                   <li><a href="memberForgetPassword" >Forget Password</a></li>
-                                  
-                            
-    
+                                              
                             </ul>
  
                         </fieldset>         
                     </form>
                 </div>
+                     <div class="large-7 large-offset-1 columns">
+                         <div class="row">
+                           <img src="/IRMSCustomer-war/images/templatemo_image_01_new.png" alt="Image 01"/>
+                         </div>
+                         <div class="row">
+                             <ul>
+                                 <br>
+                                 <li><strong>Enjoy Coral Island Resort Member Exclusive Promotions</strong></li>
+                                 <br>
+                                 <li><strong>Get rebase for every dollar you spend at Coral Island Resort</strong></li>
+                                 <br>
+                                 <li><strong>Accumulate your points to upgrade to VIP members</strong></li>
+                                 
+                             </ul>
+                         
+                         </div>
+                         
+                     </div>
             </div>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
