@@ -6,23 +6,64 @@
 
 <%@page import="CRMS.entity.MemberEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.io.*,java.util.*" %>
+<%@page import="java.text.SimpleDateFormat"%>
 
 <!DOCTYPE html>
 
 <%
-    MemberEntity member=(MemberEntity)request.getAttribute("data");
-    session.setAttribute("member",member);
+    MemberEntity member = (MemberEntity) request.getAttribute("data");
+    session.setAttribute("member", member);
 %> 
 <html>
     <head>
-        <jsp:include page="base.jsp"></jsp:include>
+        <script type='text/javascript' src="/IRMSCustomer-war/js/jquery.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/foundation.min.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/vendor/custom.modernizr.js"></script>
 
-        </head>
-        <body onload="checkInfo()">
-            <script type="text/javascript">
-            $(document).ready(infoCheck());
-            </script>
+        <script type="text/javascript" src="/IRMSCustomer-war/js/jquery.tablesorter.js"></script>
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/style.css" type="text/css" media="screen" /> 
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/foundation.min.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/foundation.css" type="text/css" media="screen" />
+        <link href="/IRMSCustomer-war/css/templatemo_style.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="/IRMSCustomer-war/css/ddsmoothmenu.css" />
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/nivo-slider.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/normalize.css" type="text/css" media="screen" /> 
+        <script type="text/javascript" src="/IRMSCustomer-war/js/ddsmoothmenu.js"></script>
+
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/style.css" type="text/css" media="screen" /> 
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/foundation.min.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/foundation.css" type="text/css" media="screen" />
+        <link href="/IRMSCustomer-war/css/templatemo_style.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="/IRMSCustomer-war/css/ddsmoothmenu.css" />
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/nivo-slider.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="/IRMSCustomer-war/css/normalize.css" type="text/css" media="screen" /> 
+        <script type="text/javascript" src="/IRMSCustomer-war/js/ddsmoothmenu.js"></script>
+
+
+    </head>
+    <body onload="checkInfo()">
+        <script type="text/javascript">
+        $(document).ready(infoCheck());
+        </script>
+        <script type='text/javascript'>
+
+            $(document).ready(function() {
+                $("table").tablesorter({
+                    headers: {
+                        // assign the secound column (we start counting zero) 
+                        sortInitialOrder: 'desc',
+                        sortList: [[3, 1]] // etc.
+
+                                // assign the third column (we start counting zero) 
+
+                    }
+                });
+            });
+        </script>
         <jsp:include page="header.jsp"></jsp:include>
         <h3>Welcome, ${member.memberName}!</h3>
         <form action="logOut">
@@ -40,6 +81,51 @@
                 <p class="title" data-section-title><a href="#"><strong>Member Service </strong></a></p>
                 <div class="content" data-section-content>
                     <p style="color:#4d4d4d">You have ${data.coin} coins accumulated.</p>
+                    <div class="section-container auto" data-section>
+                        <section>
+                            <p class="title"><a href="#section1-1">Hotel Reservations</a></p>
+                            <div class="content">
+                                <table class="tablesorter">
+                                    <thead>
+                                    <th width="200">Check-in Date</td>
+                                    <th width="200">Check-out Date</td>
+                                    <th width="200">Reservation Id</td>    
+                                    <th width="200">Hotel Room</td>
+                                    <th width="200">Reservation Status</td>
+                                        </thead>
+                                    <tbody>
+                                        <c:forEach items="${hotelReservation}" var="data">
+                                            <tr>
+                                                <td width="200">&nbsp${data.rcCheckInDate}</td>
+                                                <td width="200">&nbsp${data.rcCheckOutDate}</td>
+                                                <td width="200">&nbsp${data.reservationRoomType}</td>
+                                                <td width="200">&nbsp${data.reservationStatus}</td>
+                                                <td width="200">&nbsp${data.reservationId}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                        <section>
+                            <p class="title"><a href="#section1-2">Restaurant Reservations</a></p>
+                            <div class="content">
+                                    
+                            </div>
+                        </section>
+                        <section>
+                            <p class="title"><a href="#section1-2">Show Tickets</a></p>
+                            <div class="content">
+                                <p>Detail awesome stuff numeroe duo.</p>
+                            </div>
+                        </section>
+                        <section>
+                            <p class="title"><a href="#section1-2">Attraction Tickets</a></p>
+                            <div class="content">
+                                <p>Detail awesome stuff numeroe duo.</p>
+                            </div>
+                        </section>
+                    </div>
 
                 </div>
             </section>
@@ -627,7 +713,7 @@
                             <p style="color:black">${message}</p>
 
                             <input type="hidden" name="email" value="${data.memberEmail}"/>
-                        <!--    <input type="hidden" name="isLogin" value="true"/>-->
+                            <!--    <input type="hidden" name="isLogin" value="true"/>-->
 
                             <br>
 
@@ -644,7 +730,66 @@
                     </form>
                 </div>
             </section>
+            <section>
+                <p class="title" data-section-title><a href="#"><strong>Member Feedback </strong></a></p>
+                <div class="content" data-section-content>
+                    <form id="search-form" action="memberFeedbackResult" method="POST">
 
+                        <fieldset> 
+                            <legend>Feedback Form</legend>
+                            <h6>Thank you for your feedback.Your voice is appreciated.</h6>
+                            <div class="row">
+                                <div class="large-8 columns">
+                                    <label>Feedback Title</label>
+                                    <input name="title" type="text" placeholder="Please put your feedback keywords here">
+                                </div>
+
+
+                                <div class="large-4 columns">
+                                    <label for="customDropdown1">Department</label>
+                                    <select id="customDropdown1" class="medium" name="department">
+                                        <option DISABLED>Please select which department you would like to suggest to</option>
+                                        <option>Accommodation & Hotel Department</option>
+                                        <option>Attraction Management Department</option>
+                                        <option>Convention Hall & Event Department</option>
+                                        <option>Entertainment & Show Department</option>
+                                        <option>FB Catering Department</option>
+                                        <option>Shopping Mall Management Department</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label>Feedback Content</label>
+                                    <textarea name ="content" rows="10" cols="50" placeholder="Please put your feedback here"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="large-8 columns">
+                                    <label>Feedback Rating</label>
+                                    <div class="row">
+                                        <label style="float: left"for="radio1"><input name="rating" type="radio" id="radio1" value="1" style="display:inline" CHECKED><span class="custom radio checked"></span>1 Very Poor </label>
+                                        <label style="float: left"for="radio1"><input name="rating" type="radio" id="radio1" value="2" style="display:inline"><span class="custom radio"></span>2 Poor </label>
+                                        <label style="float: left"for="radio1"><input name="rating" type="radio" id="radio1" value="3" style="display:inline"><span class="custom radio"></span>3 Average </label>
+                                        <label style="float: left"for="radio1"><input name="rating" type="radio" id="radio1" value="4" style="display:inline"><span class="custom radio"></span>4 Good </label>
+                                        <label style="float: left"for="radio1"><input name="rating" type="radio" id="radio1" value="5" style="display:inline"><span class="custom radio"></span>5 Very Good </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <input type="submit" class="small button" value="Submit">
+
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>
+            </section>
 
 
         </div>
@@ -772,25 +917,25 @@
 
         </script>
         <script>
-        function checkPass()
-        {
-        console.log("********in checkpass function******");
-        //Store the password field objects into variables ...
-        var pass1 = document.getElementById('newPwd1');
-        var pass2 = document.getElementById('newPwd2');
-        console.log(pass1);
-        //Store the Confimation Message Object ...
-        var message = document.getElementById('confirmMessage');
+            function checkPass()
+            {
+                console.log("********in checkpass function******");
+                //Store the password field objects into variables ...
+                var pass1 = document.getElementById('newPwd1');
+                var pass2 = document.getElementById('newPwd2');
+                console.log(pass1);
+                //Store the Confimation Message Object ...
+                var message = document.getElementById('confirmMessage');
 
-        if (pass1.value !== pass2.value) {
+                if (pass1.value !== pass2.value) {
 
-        //The passwords do not match.
-        //Set the color to the bad color and
-        //notify the user.
-        message.innerHTML = "Passwords Do Not Match!"
-      
-        }
-        }
+                    //The passwords do not match.
+                    //Set the color to the bad color and
+                    //notify the user.
+                    message.innerHTML = "Passwords Do Not Match!"
+
+                }
+            }
         </script>
     </body>
 </html>
