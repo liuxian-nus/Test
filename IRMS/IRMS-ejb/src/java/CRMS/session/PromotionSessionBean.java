@@ -63,7 +63,7 @@ public class PromotionSessionBean {
         em.persist(promotion);
         em.flush();
     }
-    
+
     public void cancelPromotion(PromotionEntity promotion) {
         System.out.println("in promotion session bean: cancel promotion");
         promotion.setPromotionStatus("expired");
@@ -118,14 +118,22 @@ public class PromotionSessionBean {
     public PromotionEntity getPromotionByCode(String promotionCode) {
         Query q = em.createQuery("SELECT p FROM PromotionEntity p WHERE p.promotionCode = '" + promotionCode + "'");
         System.out.println(q.getResultList().size() + " results found with this promotionCode");
+        if (q.getResultList().size() ==0) {
+            System.out.println("getPromotionByCode return null");
+            return null;
+        }
+        else {
         PromotionEntity thisPromotion = (PromotionEntity) q.getResultList().get(0);
 //        PromotionEntity thisPromotion = em.find(PromotionEntity.class, promotionCode);
         System.out.println("Promotion found: " + thisPromotion.getPromotionTitle());
         return thisPromotion;
+        }
     }
 
     public double getDiscountByPromotionCode(String promotionCode) {
-        PromotionEntity thisPromotion = em.find(PromotionEntity.class, promotionCode);
+        Query q = em.createQuery("SELECT p FROM PromotionEntity p WHERE p.promotionCode = '" + promotionCode + "'");
+        System.out.println(q.getResultList().size() + " results found with this promotionCode");
+        PromotionEntity thisPromotion = (PromotionEntity) q.getResultList().get(0);
         return thisPromotion.getDiscount();
     }
 
@@ -136,6 +144,21 @@ public class PromotionSessionBean {
 
     public void updatePromotion(PromotionEntity thisPromotion) {
         em.merge(thisPromotion);
+    }
+
+    public boolean verifyPromotion(PromotionEntity thisPromotion, String department) {
+        System.out.println("in verifying the promotion");
+        if (thisPromotion == null) {
+            System.out.println("this promotion doesn't exist, return false");
+            return false;
+        }
+        if ((thisPromotion.getPromotionStatus().equals("active")) && (thisPromotion.getPromotionDepartment().toLowerCase().equals(department))) {
+            System.out.println("return true");
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     class EndTask extends TimerTask {

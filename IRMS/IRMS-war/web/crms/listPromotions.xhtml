@@ -151,12 +151,7 @@
                             </h:outputText>  
                         </p:column>
 
-                        <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation1"> 
-                            <h:outputText value="Do you want to terminate the promotion?"/> 
-                            <p:commandButton value="Yes" onclick="growl;" update ="promotions" actionListener="#{promotionManagedBean.cancelPromotion}" oncomplete="confirmation1.hide()">  
-                            </p:commandButton>
-                            <p:commandButton value="Cancel" onclick="confirmation1.hide()" type="button" />  
-                        </p:dialog> 
+
 
                         <p:rowExpansion>  
                             <h:panelGrid id="display" columns="2" cellpadding="4" style="width:400px;"  
@@ -185,6 +180,14 @@
                             </h:panelGrid>  
                         </p:rowExpansion>           
                     </p:dataTable>
+                    <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmation1"> 
+                        <h:outputText value="Do you want to terminate the promotion?"/> 
+                        <br /> 
+
+                        <p:commandButton value="Yes" onclick="growl;" update ="form" actionListener="#{promotionManagedBean.cancelPromotion}" oncomplete="confirmation1.hide()">  
+                        </p:commandButton>
+                        <p:commandButton value="Cancel" onclick="confirmation1.hide()" type="button" />  
+                    </p:dialog>
                 </h:form> 
             </p:tab>  
 

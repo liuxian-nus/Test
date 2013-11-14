@@ -273,6 +273,7 @@
                             <div class="row">
                                 <div class="large-12 columns">
                                     <input type="submit" onclick="return validate()" class="small button" class="center-align" value="Pay & Book Now!">
+                                    <p>${message}</p>
                                 </div>
                             </div>
                             <!--  <div class="button" onclick="paypal()">Register</div>-->
