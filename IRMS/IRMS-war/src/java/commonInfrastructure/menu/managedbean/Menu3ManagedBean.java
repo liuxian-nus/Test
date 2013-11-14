@@ -208,6 +208,25 @@ public class Menu3ManagedBean implements Serializable {
                 model.addSubmenu(submenu);
 
             }
+            
+            if (userType.contains("ATMSTicketing")) {
+                submenu = new Submenu();
+                submenu.setLabel("Ticket Purchase");
+
+                item = new MenuItem();
+                item.setValue("Ticket Purchase");
+                item.setUrl("/atms/attrTicketPurchase.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+
+                item = new MenuItem();
+                item.setValue("Express Pass Purchase");
+                item.setUrl("/atms/attrExpressPassPurchase.xhtml");
+                item.setIcon("ui-icon ui-icon-search");
+                submenu.getChildren().add(item);
+
+                model.addSubmenu(submenu);
+            }
 
         }
         return model;
