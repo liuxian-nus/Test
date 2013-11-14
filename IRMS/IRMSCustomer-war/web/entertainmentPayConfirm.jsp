@@ -20,30 +20,31 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <h4>Your reservation has been confirmed!</h4> 
+            <h4>Your ticket reservation has been confirmed.</h4> 
             <div class="row">
                 <div class="small-11 small-centered columns">
                     <div class="panel">
 
-                        <h6><strong>Here is your ticket:</strong></h6>
-                        <br>
 
-                    <h6><strong class="right-align,inline"> Ticket ID:</strong>  ${data.showTicketSaleId} </h6>
-                    <br>
-                    <h6><strong class="right-align,inline"> Ticket ID:</strong>  ${data.show.showName} </h6>
+                        <h6><strong class="right-align,inline"> Show Name:</strong>  ${thisShow.showName} </h6>
                     <br>
                     <h6><strong>Show Time : </strong><fmt:formatDate type="date" pattern="MMM dd yyyy hh:mm a" 
-                                    value="${data.showStartDateTime}" /></h6>
+                                    value="${thisSchedule.showStartDateTime}" /></h6>
                     <br>   
-               
+                    <h6><strong>Here are your tickets:</strong></h6>
+                    <br>
+
+                    
+                    <h6><strong class="right-align,inline"> Ticket ID:</strong>  ${data.showTicketSaleId} </h6>
+                    <br>
                     <h6><strong>Number of tickets : </strong>${data.showTicketQuantity}</h6>
                     <br>
                     <h6><strong>Ticket Price : </strong>${data.showTicketPrice}</h6>
                     <br>
-                                
-                      </div>
+
+                </div>
 
             </div>
-    <jsp:include page="footer.jsp"></jsp:include>
-</body>
+            <jsp:include page="footer.jsp"></jsp:include>
+    </body>
 </html>
