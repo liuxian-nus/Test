@@ -21,41 +21,41 @@ import javax.persistence.Query;
 @LocalBean
 public class FunctionalitySessionBean {
 
-    @PersistenceContext(unitName="IRMS-ejbPU")
+    @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
-    
-    public FunctionalityEntity getFunctionality(Long funcId) throws ExistException
-    {
+
+    public FunctionalityEntity getFunctionality(Long funcId) throws ExistException {
         FunctionalityEntity functionality = em.find(FunctionalityEntity.class, funcId);
-        System.err.println("getFunctionality: "+functionality.getFuncId());
-         if(functionality==null) throw new ExistException ("FunctionalitySessionBean-->ExistException-->Function doesn't exist!");
+        System.err.println("getFunctionality: " + functionality.getFuncId());
+        if (functionality == null) {
+            throw new ExistException("FunctionalitySessionBean-->ExistException-->Function doesn't exist!");
+        }
         return functionality;
     }
-    
-    public void addFunctionality(FunctionalityEntity functionality)
-    {
-        FunctionalityEntity temp = em.find(FunctionalityEntity.class, functionality.getFuncName());
-        if (temp == null){
-        em.persist(functionality);
-        em.flush();
+
+    public void addFunctionality(FunctionalityEntity functionality) {
+        Query query = em.createQuery("SELECT s1 FROM FunctionalityEntity s1 WHERE s1.funcName = ?1");
+        query.setParameter(1, functionality.getFuncName());
+        if (query.getResultList().size() == 0) {
+            em.persist(functionality);
+            em.flush();
+        } else {
+            System.out.println("this functionality already exist in the database");
         }
-        else System.out.println("this functionality already exist in the database");
     }
-    public void updateFunctionality(FunctionalityEntity functionality)
-    {
+
+    public void updateFunctionality(FunctionalityEntity functionality) {
         em.merge(functionality);
         em.flush();
     }
 
-    public void removeFunctionality(Long funcId)
-    {
+    public void removeFunctionality(Long funcId) {
         FunctionalityEntity functionality = em.find(FunctionalityEntity.class, funcId);
         em.remove(functionality);
     }
-    
-    public List<FunctionalityEntity> getAllFunctionalities(){
+
+    public List<FunctionalityEntity> getAllFunctionalities() {
         Query query = em.createQuery("SELECT s1 FROM FunctionalityEntity s1");
         return query.getResultList();
     }
-    
 }
