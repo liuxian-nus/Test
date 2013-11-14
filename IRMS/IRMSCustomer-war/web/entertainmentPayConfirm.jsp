@@ -34,14 +34,15 @@
                     <h6><strong>Here are your tickets:</strong></h6>
                     <br>
 
-                    
+                    <c:forEach items="${totalTickets}" var="data">
                     <h6><strong class="right-align,inline"> Ticket ID:</strong>  ${data.showTicketSaleId} </h6>
                     <br>
                     <h6><strong>Number of tickets : </strong>${data.showTicketQuantity}</h6>
                     <br>
                     <h6><strong>Ticket Price : </strong>${data.showTicketPrice}</h6>
                     <br>
-
+                    </c:forEach>
+                    <h6>${ticTotal}</h6>
                 </div>
 
             </div>
