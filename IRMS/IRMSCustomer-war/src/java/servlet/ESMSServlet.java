@@ -11,6 +11,7 @@ import CEMS.session.EventSessionBean;
 import CRMS.entity.CouponTypeEntity;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.PromotionEntity;
+import CRMS.session.PromotionSessionBean;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
@@ -43,6 +44,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ESMSServlet", urlPatterns = {"/ESMSServlet", "/ESMSServlet/*"})
 public class ESMSServlet extends HttpServlet {
     @EJB
+    private PromotionSessionBean promotionSessionBean;
+    @EJB
     private ShowTicketSaleSessionBean showTicketSaleSessionBean;
 
     @EJB
@@ -68,6 +71,7 @@ public class ESMSServlet extends HttpServlet {
     private ShowScheduleEntity thisShowSchedule;
     private ShowTicketSaleEntity thisShowTicketSale;
     private ShowEntity thisShow;
+    private PromotionEntity promotion;
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -221,7 +225,7 @@ public class ESMSServlet extends HttpServlet {
                 System.out.println(cardNo);
           
                 try {
-                    System.out.println(totalPrice);
+                   
                     MemberEntity thisMember = (MemberEntity) session.getAttribute("member");
                     thisShowTicketSale.setShow(thisShow);
                     thisShowTicketSale.setShowStartDateTime(thisShowSchedule.getStartDateTime());
@@ -242,11 +246,11 @@ public class ESMSServlet extends HttpServlet {
                         PromotionEntity thisPromotion = promotionSessionBean.getPromotionByCode(promotionCode);
                         boolean validity = promotionSessionBean.verifyPromotion(thisPromotion, "hotel");
                         if (validity) {
-                            reservationSessionBean.addReservationWithPromotion(data, promotionCode);
+                           
                         } else {
-                            message2 = "Sorry,the promotion code is not valid";
+                            String message2 = "Sorry,the promotion code is not valid";
                             request.setAttribute("message2", message2);
-                            request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
+                            request.getRequestDispatcher("/entertainmentPay.jsp").forward(request, response);
                         }
                     }
                
