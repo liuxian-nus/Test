@@ -14,11 +14,12 @@
         </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <h1>Member Feedback Result</h1>
+   
         <h3>${member.memberName}, Thank you for your feedback!</h3>
-        <h6>We will get back to you to make us serve you better!</h6>
-        <h6>Please Support us more by liking us on Facebook /Following us on Twitter! Thank you!</h6>
-        <a href="memberInfo" >Go back to my member account</a>
+        <h5>We will get back to you to make us serve you better!</h5>
+        <br>
+        <h5>Please Support us more by liking us on Facebook /Following us on Twitter! Thank you!</h5>
+        <a href="memberInfo" >Go back to my member account</a> <br>
        <a href="home" >Home</a>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
