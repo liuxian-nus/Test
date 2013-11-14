@@ -142,7 +142,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ShowContractBill_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\ShowContractBill_";
             
        //Below generate a PDF file 
         Document document;
@@ -302,7 +302,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\EventContractBill_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\EventContractBill_";
        
        //Below generate a PDF file 
         Document document;
@@ -484,7 +484,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ShowTicket_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\ShowTicket_";
        
        //Below generate a PDF file 
         Document document;
@@ -1318,7 +1318,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Corporate_Bill_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\Corporate_Bill_";
         
         //Below generate a PDF file 
         Document document;
@@ -1428,7 +1428,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\RoomReservationConfirmation_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\RoomReservationConfirmation_";
             
         //Below generate a PDF file 
         Document document;
@@ -1529,7 +1529,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\TicketPurchase_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\TicketPurchase_";
             
         //Below generate a PDF file 
         Document document;
@@ -1648,7 +1648,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ComboTicketConfirmation_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\ComboTicketConfirmation_";
         
         //Below generate a PDF file 
         Document document;
@@ -1717,7 +1717,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
             File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ExpressTicketConfirmation_");
-            String resultName = result.getName();
+            String resultName = part+"\\pdf\\ExpressTicketConfirmation_";
         
         //Below generate a PDF file 
         Document document;
