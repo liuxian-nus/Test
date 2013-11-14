@@ -108,15 +108,21 @@ public class ReservationManagedBean implements Serializable {
     }
 
     public void payRoomFee(ActionEvent event) {
+
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+
+        selectReservation = (ReservationEntity) request.getSession().getAttribute("selectReservationSB");
         try {
 //            selectReservation = (ReservationEntity) event.getComponent().getAttributes().get("cancelReservation");
             System.out.println("pay room fee: in displaying bean " + selectReservation.getReservationId());
 //            selectReservation.setReservationStatus("cancelled");
-            reservationSessionBean.payRoomFee(selectReservation);
+            if (selectReservation!=null) {
+                reservationSessionBean.payRoomFee(selectReservation);
+            }
+            request.getSession().setAttribute("selectReservationSBid",Long.valueOf(selectReservation.getReservationId()));
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
-            System.out.println("we are after setting reservation session attribute");
+            System.out.println("payRoomFee: "+selectReservation.getReservationId());
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when updating payment status", ""));
         }
@@ -194,19 +200,18 @@ public class ReservationManagedBean implements Serializable {
     }
 
     public void viewReservation() throws IOException, ExistException {
-
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         try {
-//            selectReservation = (ReservationEntity) request.getSession().getAttribute("viewReservation");
+            //包神的不知道啥，不敢删掉
             System.out.println("NO6 we are in searchByName function " + selectReservation.getReservationId());
-
             FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectReservation", selectReservation);
             System.out.println("we are after setting parameter");
             request.getSession().setAttribute("rcEmail", searchEmail);
-            System.out.println("we are after setting reservationId session attribute");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
 
+            //setAttribute(selectReservationSB) 
+            request.getSession().setAttribute("selectReservationSB", selectReservation);
+            System.out.println("we are after setting reservationId session attribute: " + selectReservation.getReservationId());
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ReservationSearchResult.xhtml");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error occurs when searching", ""));
             return;

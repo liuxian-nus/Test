@@ -69,11 +69,8 @@ public class ReservationSearchResultManagedBean implements Serializable {
     public void initViewSelect(PhaseEvent event) {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 
-
-        System.err.println("ni ma dan wei mao xian yizhi bu hao shi ni qu si ba !!!!!!!!!!!!!");
         selectReservation = (ReservationEntity) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectReservation");
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-
         System.err.println("in getting Listerning selectReservation" + selectReservation.getReservationId());
     }
 

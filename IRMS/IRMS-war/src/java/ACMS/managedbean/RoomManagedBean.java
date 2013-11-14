@@ -4,6 +4,7 @@
  */
 package ACMS.managedbean;
 
+import ACMS.entity.ReservationEntity;
 import ACMS.entity.RoomEntity;
 import ACMS.session.RoomSessionBean;
 import ACMS.entity.RoomServiceEntity;
@@ -145,7 +146,9 @@ public class RoomManagedBean implements Serializable {
     public List<RoomEntity> getCheckInRooms() throws ExistException {
         System.err.println("we are in checkin managedbean");
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
+//        Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
+        ReservationEntity reeee = (ReservationEntity) request.getSession().getAttribute("selectReservationSB");
+        Long getRerservationId = reeee.getReservationId();
         System.out.println(" getting chekin rooms" + getRerservationId);
 //        request.getSession().setAttribute("reservationId", getRerservationId);
         return rm.getCheckInRooms(getRerservationId);
@@ -180,8 +183,10 @@ public class RoomManagedBean implements Serializable {
 
         System.err.println("we are in checkin managedbean");
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
+//        Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
         String getGuestName = (String) request.getSession().getAttribute("guestName");
+        ReservationEntity reee = (ReservationEntity) request.getSession().getAttribute("selectReservationSB");
+        Long getRerservationId = reee.getReservationId();
 
         try {
             System.err.println("Reservation ID" + getRerservationId);
