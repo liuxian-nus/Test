@@ -121,9 +121,9 @@ public class CRMServlet extends HttpServlet {
                
                 request.getRequestDispatcher("/member.jsp").forward(request, response);
             
-            }else if ("memberFeedback".equals(page)) {
+            }else if ("promotionView".equals(page)) {
                 System.out.println("***member feedback page***");
-                request.getRequestDispatcher("/memberFeedback.jsp").forward(request, response);
+                request.getRequestDispatcher("/promotionView.jsp").forward(request, response);
 
             } else if ("memberFeedbackResult".equals(page)) {
                 System.out.println("***member Feedback Result page***");
@@ -153,7 +153,7 @@ public class CRMServlet extends HttpServlet {
                     request.getRequestDispatcher("/ticketBooking.jsp").forward(request, response);
                 } else if (pmDepartment.equalsIgnoreCase("food and beverage")) {
                     System.out.println("***member Promotion food and beverage***");
-
+                     request.getRequestDispatcher("/promotionView.jsp").forward(request, response);
                 }else{
                 System.out.println("CRMServlet:Going to next page");
                 request.getRequestDispatcher("/promotionView.jsp").forward(request, response);
