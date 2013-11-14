@@ -58,18 +58,18 @@ public class MemberManagedBean {
     private int ageOld;
     private String nationality;
     private String maritalStatus;
-    private List<MemberEntity> memberList;
-    private List<MemberEntity> memberSelect;
+    private List<MemberEntity> memberList = new ArrayList<MemberEntity>();
+    private List<MemberEntity> memberSelect = new ArrayList<MemberEntity>();
     private List<String> nationalityList;
-    private List<MemberEntity> filteredMember;
+    private List<MemberEntity> filteredMember = new ArrayList<MemberEntity>();
     private SelectItem[] nationalityOptions;
     private SelectItem[] genderOptions;
     private CartesianChartModel categoryModelMaritalStatus;
     private CartesianChartModel categoryModelNationality;
     private CartesianChartModel categoryModelAge;
     private PieChartModel pieModel;
-    private List<MemberEntity> vips;
-    private List<MemberEntity> supervips;
+    private List<MemberEntity> vips = new ArrayList<MemberEntity>();
+    private List<MemberEntity> supervips = new ArrayList<MemberEntity>();
     private String employeeId;
 
     /**
@@ -95,6 +95,7 @@ public class MemberManagedBean {
         System.out.println("MemberManagedBean init");
         vips = vIPSessionBean.getVIPs();
         supervips = vIPSessionBean.getSuperVIPs();
+        System.err.println("size 1: "+vips.size()+"size 2: "+supervips.size());
         try {
             createCategoryModelAge();
             createCategoryModelMaritalStatus();
@@ -527,6 +528,30 @@ public class MemberManagedBean {
         this.memberSelect = memberSelect;
     }
 
+    public EmployeeSessionBean getEmployeeSessionBean() {
+        return employeeSessionBean;
+    }
+
+    public void setEmployeeSessionBean(EmployeeSessionBean employeeSessionBean) {
+        this.employeeSessionBean = employeeSessionBean;
+    }
+
+    public VIPSessionBean getvIPSessionBean() {
+        return vIPSessionBean;
+    }
+
+    public void setvIPSessionBean(VIPSessionBean vIPSessionBean) {
+        this.vIPSessionBean = vIPSessionBean;
+    }
+
+    public EmailSessionBean getEmailSessionBean() {
+        return emailSessionBean;
+    }
+
+    public void setEmailSessionBean(EmailSessionBean emailSessionBean) {
+        this.emailSessionBean = emailSessionBean;
+    }
+
     public List<MemberEntity> getVips() {
         return vips;
     }
@@ -534,6 +559,8 @@ public class MemberManagedBean {
     public void setVips(List<MemberEntity> vips) {
         this.vips = vips;
     }
+    
+    
 
     public List<MemberEntity> getSupervips() {
         return supervips;
