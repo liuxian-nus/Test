@@ -34,8 +34,12 @@ public class FunctionalitySessionBean {
     
     public void addFunctionality(FunctionalityEntity functionality)
     {
+        FunctionalityEntity temp = em.find(FunctionalityEntity.class, functionality.getFuncName());
+        if (temp == null){
         em.persist(functionality);
         em.flush();
+        }
+        else System.out.println("this functionality already exist in the database");
     }
     public void updateFunctionality(FunctionalityEntity functionality)
     {
