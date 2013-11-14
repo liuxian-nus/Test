@@ -390,6 +390,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 while(itr.hasNext())
                 {
                     EventBookingEntity current = itr.next();
+                    System.out.println("the first while loop: "+current.toString());
                     
                     table2.addCell(current.getBookingId().toString());//left
                     
@@ -402,10 +403,12 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                     {
                         if(services.isEmpty())
                         {
+                            System.out.println("service is empty!");
                             table.addCell(""); //add right
                             break;
                         }
                         EventServiceBookingEntity thisService = itr2.next();
+                        System.out.println("The current service booked for this booking is "+thisService.toString());
                         
                         //Below add a sub-table for service booked for each booking
                                 table3 = new PdfPTable(2);
@@ -428,10 +431,12 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                                 table3.addCell(Integer.toString(thisService.getEventServiceQuantity()));
                     }
                     table2.addCell(table3);//right
+                    System.out.println("Table3 service table has been added into booking table");
                     
                 }
                 table.addCell(table2);
         
+                System.out.println("Table2 booking table has been added into total table");
         document.add(table);
         document.close();
         
@@ -1305,10 +1310,20 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     }
 
     private String createBill(String toEmailAdress, RoomEntity room) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+        //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Corporate_Bill_");
+            String resultName = result.getName();
+        
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Corporate_Bill " + room.getRoomCorporate()
+        String OUTPUTFILE = resultName + room.getRoomCorporate()
                 + room.getReservation().getReservationId() + ".pdf";
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         document.open();
@@ -1326,7 +1341,9 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 Font.BOLDITALIC);
 
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        
+        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
 
@@ -1402,11 +1419,21 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     }
 
     private String createBill(String toEmailAdress, ReservationEntity newReservation) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
-
+        
+        //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\RoomReservationConfirmation_");
+            String resultName = result.getName();
+            
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\RoomReservationConfirmation " + newReservation.getRcName()
+        String OUTPUTFILE = resultName + newReservation.getRcName()
                 + newReservation.getReservationId() + ".pdf";
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
@@ -1425,7 +1452,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 Font.BOLDITALIC);
 
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
 
@@ -1493,16 +1521,27 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
 
     public String createTicket(TicketPurchaseEntity tpe) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
 
+        //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\TicketPurchase_");
+            String resultName = result.getName();
+            
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf "
+        String OUTPUTFILE = resultName
                 + tpe.getTpId() + ".pdf";
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         document.open();
-
-        String imagePath = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf\\coral_island_banner_customer.png";
+        
+        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
 
@@ -1601,10 +1640,20 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     }
 
     private String createTicketCombo(AttrComboEntity combo) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+        //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ComboTicketConfirmation_");
+            String resultName = result.getName();
+        
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\ComboTicketConfirmation "
+        String OUTPUTFILE = resultName
                 + combo.getAttrComboName() + " " + combo.getAttrComboId() + ".pdf";
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
@@ -1623,7 +1672,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 Font.BOLDITALIC);
 
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
 
@@ -1659,10 +1709,20 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
     }
 
     public String createTicketExpress(ExpressPassPurchaseEntity eppe) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+        //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ExpressTicketConfirmation_");
+            String resultName = result.getName();
+        
         //Below generate a PDF file 
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf "
+        String OUTPUTFILE = resultName
                 + eppe.getEppId() + ".pdf";
 
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
@@ -1681,7 +1741,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 Font.BOLDITALIC);
 
         //Below specify contents 
-        String imagePath = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf\\coral_island_banner_customer.png";
+        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Administrator\\Desktop\\IS3102\\pdf\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
         
