@@ -6,6 +6,8 @@ package servlet;
  */
 import ACMS.entity.ReservationEntity;
 import ACMS.session.ReservationSessionBean;
+import ATMS.entity.TicketPurchaseEntity;
+import ATMS.session.TicketPurchaseSessionBean;
 import CRMS.entity.MemberEntity;
 import CRMS.entity.PromotionEntity;
 import CRMS.session.FeedbackSessionBean;
@@ -14,6 +16,10 @@ import FBMS.entity.RestaurantEntity;
 import FBMS.session.IndReservationSessionBeanRemote;
 import CRMS.session.MemberSessionBean;
 import CRMS.session.PromotionSessionBean;
+import ESMS.entity.ShowTicketSaleEntity;
+import ESMS.session.ShowTicketSaleSessionBean;
+import FBMS.entity.IndReservationEntity;
+import FBMS.session.IndReservationSessionBean;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -38,6 +44,14 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/CRMServlet", "/CRMServlet/*"})
 public class CRMServlet extends HttpServlet {
+    @EJB
+    private IndReservationSessionBean indReservationSessionBean;
+
+    @EJB
+    private TicketPurchaseSessionBean ticketPurchaseSessionBean;
+   
+    @EJB
+    private ShowTicketSaleSessionBean showTicketSaleSessionBean;
 
     @EJB
     private ReservationSessionBean reservationSessionBean;
@@ -51,10 +65,9 @@ public class CRMServlet extends HttpServlet {
     private MemberManagementSessionBean memberManagementSessionBean;
     @EJB
     private MemberSessionBean memberSession;
-    @EJB
-    private IndReservationSessionBeanRemote indReservationSessionBean;
     
     
+ 
     //private Set<RestaurantEntity> data = null;
     private String message = null;
     private MemberEntity member;
@@ -66,6 +79,9 @@ public class CRMServlet extends HttpServlet {
     private  String memberEmail=null;
     private PromotionEntity thisPromotion;
     private List<ReservationEntity> hotelReservation; 
+    private List<ShowTicketSaleEntity> showReservation;
+    private List<TicketPurchaseEntity> ticketReservation;
+    private List<IndReservationEntity> restaurantReservation;
 
     //private String keyword=null;
     /**
@@ -166,6 +182,9 @@ public class CRMServlet extends HttpServlet {
                     System.out.println("email is not null");
                     String loginStatus = request.getParameter("loginStatus");
                     hotelReservation = reservationSessionBean.getReservationByEmail(email);
+                    showReservation = showTicketSaleSessionBean.getShowTicketSalesByEmail(email);
+                    ticketReservation = ticketPurchaseSessionBean.getPurchasedTicketsByEmail(email);
+                  //  restaurantReservation = indReservationSessionBean.getIndreservationByEmail(email);
                     
                     if (loginStatus.equals("true")) {
                         System.out.println("has logged in before");
@@ -189,6 +208,7 @@ public class CRMServlet extends HttpServlet {
                             request.setAttribute("memberEmail", member.getMemberEmail());
                             request.setAttribute("loginStatus", "true");
                             request.setAttribute("hotelReservation",hotelReservation);
+                            request.setAttribute("showReservation",showReservation);
                             request.getRequestDispatcher("/memberInfo.jsp").forward(request, response);
                         } else {
                             message = "Wrong password or username entered";
