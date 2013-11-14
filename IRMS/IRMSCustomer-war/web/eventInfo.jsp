@@ -26,47 +26,47 @@
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label>Event Name</label>
-                                    <input type="text" value="${viewedEntity.getEventName()}">
+                                    <input type="text" value="${viewedEvent.getEventName()}" disabled>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="large-6 columns">
                                 <label>Start Date</label>
-                                <input type="text" value="${viewedEntity.getStartDate()}">
+                                <input type="text" value="${viewedEvent.getStartDate()}" disabled>
                             </div>
                             <div class="large-6 columns">
                                 <label>End Start</label>
-                                <input type="text" value="${viewedEntity.getEndDate()}">
+                                <input type="text" value="${viewedEvent.getEndDate()}" disabled>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="large-4 columns">
                                 <label>Event Corporate</label>
-                                <input type="text" value="${viewedEntity.getEventCorporate()}">
+                                <input type="text" value="${viewedEvent.getEventCorporate()}" disabled>
                             </div>
                             <div class="large-4 columns">
                                 <label>Event Type</label>
-                                <input type="text" value="${viewedEntity.getEventType()}">
+                                <input type="text" value="${viewedEvent.getEventType()}" disabled>
                             </div>
                             <div class="large-4 columns">
                                 <label>Event Contact</label>
-                                <input type="text" value="${viewedEntity.getEventContact()}">
+                                <input type="text" value="${viewedEvent.getEventContact()}" disabled>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="large-12 columns">
                                 <label>Status</label>
-                                <input type="text" value="${viewedEntity.getStatus()}">
+                                <input type="text" value="${viewedEvent.getStatus()}" disabled>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="large-12 columns">
                                 <label>Notes</label>
-                                <textarea value="${viewedEntity.getNotes()}"></textarea>
+                                <textarea value="${viewedEvent.getNotes()}" disabled></textarea>
                             </div>
                         </div>
                     </fieldset>         

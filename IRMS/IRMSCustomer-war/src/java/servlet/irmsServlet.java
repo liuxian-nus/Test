@@ -268,6 +268,8 @@ public class irmsServlet extends HttpServlet {
                 request.getRequestDispatcher("/SMMSServlet/shopping").forward(request, response);
             } else if ("eventService".equals(page)) {
                 request.getRequestDispatcher("/CEMSServlet/eventService").forward(request, response);
+            } else if (page.contains("eventInfo")){
+                request.getRequestDispatcher("/CEMSServlet/"+page).forward(request, response);
             }else {
                 System.out.println("other page");
 

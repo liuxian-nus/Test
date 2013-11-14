@@ -157,16 +157,16 @@ public class CEMSServlet extends HttpServlet {
 
             } else if ("eventList".equals(page)) {
                 System.out.println("***eventList***");
-				List<EventEntity> events = eventSessionBean.getConfirmedEvents();
-                //List<EventEntity> events = eventSessionBean.listEvents();
+				//List<EventEntity> events = eventSessionBean.getConfirmedEvents();
+                List<EventEntity> events = eventSessionBean.listEvents();
                 request.setAttribute("eventList", events);
                 request.getRequestDispatcher("/eventList.jsp").forward(request, response);
             }else if (page.contains("eventInfo")) {
-                System.err.println("xinqi "+page);
-				System.out.println(page.substring(10));
 				long eventId = Integer.valueOf(page.substring(10));
-				System.out.println(eventId);
 				viewedEvent = eventSessionBean.getReservation(eventId);
+                                
+                                System.out.println(viewedEvent.getEmail());
+                                
 				request.setAttribute("viewedEvent", viewedEvent);
                 request.getRequestDispatcher("/eventInfo.jsp").forward(request, response);
             }else {
