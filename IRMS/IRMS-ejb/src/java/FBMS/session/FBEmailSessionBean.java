@@ -4,6 +4,7 @@
  */
 package FBMS.session;
 
+import ERMS.session.EmailSessionBean;
 import FBMS.entity.CourseEntity;
 import FBMS.entity.IndReservationEntity;
 import FBMS.entity.OrderEntity;
@@ -24,6 +25,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -441,11 +443,20 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
 
     public String createBill(String toEmailAddress, IndReservationEntity ire) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
 
-
+        //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\able_Reservation_");
+            String resultName = result.getName();
+            
         //Below generate a PDF file
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Table_Reservation" + ire.getRestaurant().getRestName()
+        String OUTPUTFILE = resultName + ire.getRestaurant().getRestName()
                 + ire.getId() + ".pdf";
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         // document = addMetaData(document);
@@ -474,6 +485,16 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
     }
 
     private Document addContent(Document document) throws DocumentException, BadElementException, MalformedURLException, IOException {
+        
+        
+        //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+        
         //Below specify different types of font
         Font catFont = new Font(Font.TIMES_ROMAN, 18,
                 Font.BOLD);
@@ -485,7 +506,8 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
                 Font.BOLDITALIC);
         
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+                String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
 
@@ -551,10 +573,20 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
     }
 
     private String createBill(String toEmailAddress, OrderEntity oe) throws DocumentException, FileNotFoundException, BadElementException, MalformedURLException, IOException {
+       //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Catering_Reservation_");
+            String resultName = result.getName();
+        
         //Below generate a PDF file
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Catering_Reservation" + oe.getName()
+        String OUTPUTFILE = resultName + oe.getName()
                 + oe.getOrderId() + ".pdf";
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         // document = addMetaData(document);
@@ -626,10 +658,20 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
     }
 
     private String createIssueGoodsPDF(String toEmailAddress, OrderEntity order) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+         //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Goods_Issued_");
+            String resultName = result.getName();
+        
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
         
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Goods_Issued" + order.getName()
+        String OUTPUTFILE = resultName + order.getName()
                 + order.getId() + ".pdf";
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         
@@ -646,7 +688,8 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
                 Font.BOLDITALIC);
         
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
         
@@ -715,10 +758,20 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
     }
 
     private String createInvoicePDF(String toEmailAddress, OrderEntity order) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+        //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Catering_Invoice_");
+            String resultName = result.getName();
+        
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
         
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Catering_Invoice" + order.getName()
+        String OUTPUTFILE = resultName + order.getName()
                 + order.getId() + ".pdf";
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         
@@ -736,7 +789,8 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
         
         
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
         
@@ -810,10 +864,21 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
     }
 
     private String createReceiptPDF(String toEmailAddress, ReceiptEntity re) throws FileNotFoundException, DocumentException, BadElementException, MalformedURLException, IOException {
+       
+        //get class path here
+            String classPath = EmailSessionBean.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.err.println("classPath: "+classPath);
+            String[] fileNameParts = classPath.split("IRMS");
+            String part = fileNameParts[0];
+            part = part.replaceAll("%20", " ");
+            System.err.println("part: "+part);
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\Catering_Invoice_");
+            String resultName = result.getName();
+        
         Document document;
         document = new Document(PageSize.A4, 50, 50, 50, 50);
         
-        String OUTPUTFILE = "C:\\Users\\Diana Wang\\Documents\\Diana\\Catering_Invoice" + re.getReceiptDate()
+        String OUTPUTFILE = resultName+ re.getReceiptDate()
                 + re.getReceiptId() + ".pdf";
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(OUTPUTFILE));
         
@@ -831,7 +896,8 @@ public class FBEmailSessionBean implements FBEmailSessionBeanRemote, Serializabl
         
         
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
         
