@@ -478,7 +478,7 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
             String part = fileNameParts[0];
             part = part.replaceAll("%20", " ");
             System.err.println("part: "+part);
-            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ShowContractBill_");
+            File result = new File(part + "IRMS\\IRMS-war\\web\\images\\ShowTicket_");
             String resultName = result.getName();
        
        //Below generate a PDF file 
@@ -503,7 +503,8 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
                 Font.BOLDITALIC);
 
         //Below specify contents 
-        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
+        String imagePath = part + "IRMS\\IRMS-war\\web\\images\\coral_island_banner_customer.png";
+//        String imagePath = "C:\\Users\\Diana Wang\\Documents\\NetBeansProjects\\coral_island_banner_customer.png";
         Image image = Image.getInstance(imagePath);
         document.add(image);
 
