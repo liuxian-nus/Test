@@ -292,8 +292,16 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
         setBill(billTest);
         System.err.println("before creating timer" + dueDate);
+        
+        ContracteventEntity cevent = new ContracteventEntity();
+        cevent= contract.getLast();
+        cevent.setEventStatus("Post Terminated");
+        contracteventSessionBean.updateContractEvent(cevent);
+        
         contract.setFinalBillPaid(false);
         contractSessionBean.updateContract(contract);
+        
+        System.err.println("whats the current status now" + contract.getId() + cevent.getEventStatus());
         return billTest;
 
     }

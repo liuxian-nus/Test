@@ -45,7 +45,7 @@
                                     </p:column>
 
                                     <p:column style="width:100px">  
-                                        <p:commandButton   oncomplete="confirmSend.show()" ajax="true" 
+                                        <p:commandButton   oncomplete="confirmSend2.show()" ajax="true" 
                                                            icon="ui-icon ui-icon-check"  title="Send Bill to Merchant">  
                                             <f:setPropertyActionListener target="#{operatorBillManagedBean.bill}" value="#{aBill}" /> 
                                         </p:commandButton> 
@@ -58,18 +58,21 @@
                                     </p:column>  
                                 </p:dataTable>  
 
-                                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmSend"> 
+
+                                <p:dialog width="300" showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="confirmSend2"> 
                                     <br/>
                                     Are you sure to send to merchant?
                                     <br/><br/>
                                     <h:panelGrid columns="2" id="approveNew">
-                                        <p:commandButton value="Yes" update="availableBill" onclick ="growl" actionListener="#{operatorBillManagedBean.sendBill}" oncomplete="confirmSend.hide()"/>
-                                        <p:commandButton value="Not yet" onclick="confirmSend.hide()" type="button"/>  
+                                        <p:commandButton value="Yes"  onclick ="growl" actionListener="#{operatorBillManagedBean.sendBill}" oncomplete="confirmSend2.hide()"/>
+                                        <p:commandButton value="Not yet" onclick="confirmSend2.hide()" type="button"/>  
                                     </h:panelGrid>
                                 </p:dialog> 
 
+
                             </div>
                         </p:panel>
+
 
                     </p:fieldset>
                 </h:form>

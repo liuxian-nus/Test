@@ -135,13 +135,17 @@ public class OperatorBillManagedBean {
         this.selected = selected;
     }
 
-    public void sendBill(ActionEvent event) throws ExistException { //for available
+    public void sendBill(ActionEvent event) throws ExistException, IOException { //for available
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+
         System.out.println("in sending bill" + bill.getBillId());
         bill.setBillStatus("unpaid");
         merchantBillSessionBean.updateBill(bill);
         System.out.println("after setting" + bill.getBillStatus());
         emailSessionBean.emailMerchantBill(bill.getContract().getMerchant().getMerchantEmail(), bill);
         System.out.println("email sent");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("paymentManagement.xhtml");
     }
 
     public void sendReminder(ActionEvent event) { //for unpaid

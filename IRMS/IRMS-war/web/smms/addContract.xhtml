@@ -27,27 +27,37 @@
                         </p:selectOneMenu>                            
                         <h:outputText value=""/>
 
-                        <h:outputText value="Outlet Type: " />  
-                        <p:selectOneMenu value ="#{contractManagedBean.outletType}" required ="true" requiredMessage="Outlet type cannot be empty">
+
+                        <h:outputText value="Conract Department:"/>
+                        <p:selectOneMenu value ="#{contractManagedBean.contractType}"  required ="true" requiredMessage="Contract department cannot be empty">
+                            <f:selectItem itemLabel="Select Outlet" itemValue="" />  
+                            <f:selectItem itemLabel="Shopping Mall" itemValue="shoppingMall" />  
+                            <f:selectItem itemLabel="Food and Beverage" itemValue="FoodAndBeverage" />
+                            <p:ajax rendered="outletType" />                        
+                        </p:selectOneMenu>                            
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Outlet Type " />  
+                        <p:selectOneMenu id="outletType" value ="#{contractManagedBean.outletType}" required ="true" requiredMessage="Outlet type cannot be empty">
                             <f:selectItem itemLabel="Select Outlet Type" itemValue="" />  
-                            <f:selectItem itemLabel="Banks" itemValue="banks" />  
-                            <f:selectItem itemLabel="Bars and Nightclubs" itemValue="clubs" />
-                            <f:selectItem itemLabel="Cafes" itemValue="cafes" />  
-                            <f:selectItem itemLabel="Celebrity Chef Restaurants" itemValue="celebRestaurants" />  
-                            <f:selectItem itemLabel="Childrens Fashion and Maternity" itemValue="children" />  
-                            <f:selectItem itemLabel="Electronics and Telecommunications" itemValue="electronics" />
-                            <f:selectItem itemLabel="General" itemValue="general" />  
-                            <f:selectItem itemLabel="Gourmet and Speciality Food" itemValue="gourmet" />  
-                            <f:selectItem itemLabel="Handbags Shoes and Accessories" itemValue="handbags" />  
-                            <f:selectItem itemLabel="Jewelry" itemValue="jewely" />
-                            <f:selectItem itemLabel="Lifestyle and Gifts " itemValue="lifestyle" />  
-                            <f:selectItem itemLabel="Lingerie" itemValue="lingerie" />  
-                            <f:selectItem itemLabel="Men's Fashion" itemValue="menfashion" />  
-                            <f:selectItem itemLabel="Restaurants" itemValue="restaurants" />
-                            <f:selectItem itemLabel="Sports Beauty and Wellness" itemValue="sports" />  
-                            <f:selectItem itemLabel="Watches" itemValue="watches" />
-                            <f:selectItem itemLabel="Womens Fashion" itemValue="fashion" />  
-                            <f:selectItem itemLabel="Others" itemValue="others" />  
+                            <f:selectItem itemLabel="Banks" itemValue="banks" rendered="#{contractManagedBean.contractType=='shoppingMall'}" />  
+                            <f:selectItem itemLabel="Bars and Nightclubs" itemValue="clubs" rendered="#{contractManagedBean.contractType=='FoodAndBeverage'}"/>
+                            <f:selectItem itemLabel="Cafes" itemValue="cafes"  rendered="#{contractManagedBean.contractType=='FoodAndBeverage'}"/>  
+                            <f:selectItem itemLabel="Celebrity Chef Restaurants" itemValue="celebRestaurants"  rendered="#{contractManagedBean.contractType=='FoodAndBeverage'}"/>  
+                            <f:selectItem itemLabel="Childrens Fashion and Maternity" itemValue="children" rendered="#{contractManagedBean.contractType=='shoppingMall'}" />  
+                            <f:selectItem itemLabel="Electronics and Telecommunications" itemValue="electronics" rendered="#{contractManagedBean.contractType=='shoppingMall'}"/>
+                            <f:selectItem itemLabel="General" itemValue="general" rendered="#{contractManagedBean.contractType=='shoppingMall'}"/>  
+                            <f:selectItem itemLabel="Gourmet and Speciality Food" itemValue="gourmet"  rendered="#{contractManagedBean.contractType=='FoodAndBeverage'}"/>  
+                            <f:selectItem itemLabel="Handbags Shoes and Accessories" itemValue="handbags" rendered="#{contractManagedBean.contractType=='shoppingMall'}"/>  
+                            <f:selectItem itemLabel="Jewelry" itemValue="jewely" rendered="#{contractManagedBean.contractType=='shoppingMall'}" />
+                            <f:selectItem itemLabel="Lifestyle and Gifts " itemValue="lifestyle" rendered="#{contractManagedBean.contractType=='shoppingMall'}"/>  
+                            <f:selectItem itemLabel="Lingerie" itemValue="lingerie" rendered="#{contractManagedBean.contractType=='shoppingMall'}"/>  
+                            <f:selectItem itemLabel="Men's Fashion" itemValue="menfashion" rendered="#{contractManagedBean.contractType=='shoppingMall'}"/>  
+                            <f:selectItem itemLabel="Restaurants" itemValue="restaurants"  rendered="#{contractManagedBean.contractType=='FoodAndBeverage'}"/>
+                            <f:selectItem itemLabel="Sports Beauty and Wellness" itemValue="sports" rendered="#{contractManagedBean.contractType=='shoppingMall'}"/>  
+                            <f:selectItem itemLabel="Watches" itemValue="watches" rendered="#{contractManagedBean.contractType=='shoppingMall'}"/>
+                            <f:selectItem itemLabel="Womens Fashion" itemValue="fashion" rendered="#{contractManagedBean.contractType=='shoppingMall'}"/>  
+                            <f:selectItem itemLabel="Others" itemValue="others" rendered="#{contractManagedBean.contractType=='shoppingMall'}"/>  
                         </p:selectOneMenu> 
                         <h:outputText value=""/>
 

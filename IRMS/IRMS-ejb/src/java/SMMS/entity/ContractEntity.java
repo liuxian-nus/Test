@@ -42,6 +42,15 @@ public class ContractEntity implements Serializable {
     private OutletEntity outlet;
     private String status;
     private boolean finalBillPaid = true;  //!finalBillPaid
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public boolean isFinalBillPaid() {
         return finalBillPaid;

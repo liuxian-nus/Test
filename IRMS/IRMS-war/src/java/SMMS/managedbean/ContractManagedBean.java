@@ -61,7 +61,9 @@ public class ContractManagedBean implements Serializable {
     private String outletType;
     private String outletName;
     private List<ContractEntity> terminates;
+    private String contractType;
 
+    
     public ContractManagedBean() {
 
         contract = new ContractEntity();
@@ -139,6 +141,15 @@ public class ContractManagedBean implements Serializable {
     public void setMerchantSessionBean(MerchantSessionBean merchantSessionBean) {
         this.merchantSessionBean = merchantSessionBean;
     }
+    
+    public String getContractType() {
+        return contractType;
+    }
+
+    public void setContractType(String contractType) {
+        this.contractType = contractType;
+    }
+
 
     public ContractSessionBean getContractSessionBean() {
         return contractSessionBean;
@@ -228,6 +239,17 @@ public class ContractManagedBean implements Serializable {
         this.contracts = contracts;
     }
 
+//    public void handleItemChanges() throws ExistException {
+//        if (contractType != null) {
+//            item = sMItemSessionBean.getItemById(itemId);
+//            itemtransaction.setItem(item);
+//            sMItemSessionBean.addItemTransaction(itemtransaction);
+//            System.err.println("after setting transaction" + itemtransaction.getId());
+//        } else {
+//            FacesMessage msg = new FacesMessage("Error occours during ajaxing");
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//        }
+//    }
     /**
      * Creates a new instance of ContractManagedBean
      */
@@ -242,6 +264,7 @@ public class ContractManagedBean implements Serializable {
 
             contract.setMerchant(merchant); //adding new merchant
             contract.setOutlet(outlet); //adding new outlet
+            contract.setType(contractType);
             System.out.println("NO3: contract outlet id setting done" + contract.getOutlet().getOutletId());
             contractSessionBean.addContract(contract);//persist contract entity
             System.out.println("after persisting contract" + contract.getContractId());
