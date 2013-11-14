@@ -146,12 +146,14 @@ public class RoomManagedBean implements Serializable {
     public List<RoomEntity> getCheckInRooms() throws ExistException {
         System.err.println("we are in checkin managedbean");
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if(request.getSession().getAttribute("selectReservationSB") != null){
 //        Long getRerservationId = (Long) request.getSession().getAttribute("reservationId");
         ReservationEntity reeee = (ReservationEntity) request.getSession().getAttribute("selectReservationSB");
         Long getRerservationId = reeee.getReservationId();
         System.out.println(" getting chekin rooms" + getRerservationId);
 //        request.getSession().setAttribute("reservationId", getRerservationId);
         return rm.getCheckInRooms(getRerservationId);
+        }else return null;
     }
 
     public void searchById(ActionEvent event) throws IOException, ExistException {

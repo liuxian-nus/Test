@@ -40,7 +40,7 @@
                             </p:column>
 
                             <p:column style="width:100px"> 
-                                <p:commandButton rendered="#{reservations.reservationStatus != 'cancelled' and reservations.reservationStatus != 'checkedIn'}"  actionListener="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
+                                <p:commandButton rendered="#{reservations.reservationStatus != 'cancelled' and reservations.reservationStatus != 'checkedIn'}"  action="#{reservationManagedBean.viewReservation}" ajax="true"  icon="ui-icon ui-icon-search" value ="View" title="View this reservation">  
                                     <f:setPropertyActionListener target="#{reservationManagedBean.selectReservation}" value="#{reservations}"/>  
                                 </p:commandButton>
 
