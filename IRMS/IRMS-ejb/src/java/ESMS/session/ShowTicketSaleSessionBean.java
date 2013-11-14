@@ -5,6 +5,8 @@
 package ESMS.session;
 
 import ESMS.entity.ShowTicketSaleEntity;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -24,8 +26,22 @@ public class ShowTicketSaleSessionBean implements ShowTicketSaleSessionBeanRemot
     @PersistenceContext(unitName = "IRMS-ejbPU")
     private EntityManager em;
     private ShowTicketSaleEntity showTicketSale;
+    private List<ShowTicketSaleEntity> showTicketSales = new ArrayList<ShowTicketSaleEntity>();
+    private List<ShowTicketSaleEntity> temp = new ArrayList<ShowTicketSaleEntity>();
     
     public ShowTicketSaleSessionBean(){}
+    
+    public List<ShowTicketSaleEntity> getShowTicketSalesByEmail(String memberEmail){
+        temp = getAllShowTicketSales();
+        Iterator<ShowTicketSaleEntity> itr = temp.iterator();
+        while (itr.hasNext()) {
+            showTicketSale = itr.next();
+            if (showTicketSale.getMemberEmail().equalsIgnoreCase(memberEmail)) {
+               showTicketSales.add(showTicketSale);
+            }
+        }
+        return showTicketSales;
+    }
     
     @Override
     public ShowTicketSaleEntity addShowTicketSale(ShowTicketSaleEntity showTicketSale) {
