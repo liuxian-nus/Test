@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,6 +33,7 @@ public class MemberMessageEntity implements Serializable {
     private Long messageId;
     private String messageTitle;
     private String messageCategory;
+    @Lob
     private String messageContent;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date messageSentDate;
