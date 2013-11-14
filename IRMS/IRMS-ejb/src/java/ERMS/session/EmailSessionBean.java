@@ -434,6 +434,34 @@ public class EmailSessionBean implements EmailSessionBeanRemote {
         
         document.add(table);
         document.close();
+        
+        
+        MimeBodyPart messageBodyPart;
+            MimeBodyPart textBodyPart;
+
+            Multipart multipart = new MimeMultipart();
+            messageBodyPart = new MimeBodyPart();
+            String file;
+            file = OUTPUTFILE;
+            //Below attach a file within the email 
+            String fileName = "CorelResort:Show Contract Bill";
+            messageBodyPart.setFileName(fileName);
+            messageBodyPart.attachFile(file);
+            //Below draft the contents of email 
+            textBodyPart = new MimeBodyPart();
+            textBodyPart.setText(textbody);
+
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(textBodyPart);
+
+            ((MimeMessage) message).setContent(multipart);
+
+
+            System.out.println("Sending");
+
+            Transport.send(message);
+
+            System.out.println("Done");
     }
          catch (MessagingException e) {
             throw new RuntimeException(e);
