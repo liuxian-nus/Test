@@ -33,7 +33,7 @@
             <legend>Booking Summary</legend>
              <div class="large-4 columns">
                         <a class="th radius" href="/IRMS-war/images/Harry-Potter.jpg" >
-                            <img src="/IRMS-war/images/Harry-Potter.jpg" width="100" height="100">
+                            <img src="${thisShow.imagePath}" width="100" height="100">
                         </a>
                     </div>
                     <div class="large-8 columns">
@@ -41,7 +41,7 @@
                         <p>
                             ${thisShow.showDescription}
                             <br>
-                        <h6> <strong> Time Chosen: </strong> </h6> <fmt:formatDate type="both" pattern="dd MMM YYYY hh:mm a"value="${thisSchedule.startDateTime}" />
+                        <h6> <strong> Time Chosen: </strong> </h6> <fmt:formatDate type="both" pattern="dd MMM yyyy hh:mm a"value="${thisSchedule.startDateTime}" />
                        
                        </p>
                     </div>

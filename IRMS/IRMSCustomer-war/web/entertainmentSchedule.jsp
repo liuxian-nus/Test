@@ -48,7 +48,7 @@
 
                    <h5><strong>${thisShow.showName}</strong></h5>
                         <a class="th radius" href="/IRMS-war/images/Harry-Potter.jpg" >
-                            <img src="/IRMS-war/images/Harry-Potter.jpg" width="100px" height="100px">
+                            <img src="${thisShow.imagePath}" width="100" height="100">
                         </a>                  
                         <p>
                             ${thisShow.showDescription}
@@ -73,7 +73,7 @@
                                                         value="${schedule.startDateTime}" /></strong></p>
                                         <p style="margin-top:-20px;padding-left:28px;"><strong><fmt:formatDate type="date" pattern="E" 
                                                         value="${schedule.startDateTime}" /></strong></p>
-                                    ${schedule.showScheduleId}
+                                   
                                     </div>
                                 </div>
                                 <div class="large-8 columns">

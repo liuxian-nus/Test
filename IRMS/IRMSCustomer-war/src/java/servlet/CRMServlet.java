@@ -164,9 +164,10 @@ public class CRMServlet extends HttpServlet {
                 memberEmail = (String) session.getAttribute("memberEmail");
                 if (memberEmail != null) {
                     memberPromotions = promotionSessionBean.getPromotionByMemberEmail(memberEmail);
+                    request.setAttribute("memberPromotions", memberPromotions);
                 } else {
                     request.setAttribute("allPromotions", allPromotions);
-                    request.setAttribute("memberPromotions", memberPromotions);
+                    
                 }
                 request.getRequestDispatcher("/memberPromotion.jsp").forward(request, response);
 

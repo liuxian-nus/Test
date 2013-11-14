@@ -150,6 +150,10 @@ public class irmsServlet extends HttpServlet {
                 System.out.println("***entertainment payment page***");
                 request.getRequestDispatcher("/ESMSServlet/entertainmentPay").forward(request, response);
 
+            }else if ("entertainmentPayConfirm".equals(page)) {
+                System.out.println("***entertainment payment page***");
+                request.getRequestDispatcher("/ESMSServlet/entertainmentPay").forward(request, response);
+
             } else if ("entertainmentRegister".equals(page)) {
                 System.out.println("***entertainment register page***");
                 request.getRequestDispatcher("/ESMSServlet/entertainmentRegister").forward(request, response);

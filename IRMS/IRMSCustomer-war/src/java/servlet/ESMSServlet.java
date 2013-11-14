@@ -5,14 +5,19 @@
  */
 package servlet;
 
+import ACMS.entity.ReservationEntity;
 import CEMS.entity.EventEntity;
 import CEMS.session.EventSessionBean;
+import CRMS.entity.CouponTypeEntity;
+import CRMS.entity.MemberEntity;
+import CRMS.entity.PromotionEntity;
 import ESMS.entity.ShowEntity;
 import ESMS.entity.ShowScheduleEntity;
 import ESMS.entity.ShowTicketEntity;
 import ESMS.entity.ShowTicketSaleEntity;
 import ESMS.session.ShowScheduleSessionBean;
 import ESMS.session.ShowSessionBean;
+import ESMS.session.ShowTicketSaleSessionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -37,6 +42,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ESMSServlet", urlPatterns = {"/ESMSServlet", "/ESMSServlet/*"})
 public class ESMSServlet extends HttpServlet {
+    @EJB
+    private ShowTicketSaleSessionBean showTicketSaleSessionBean;
 
     @EJB
     private ShowScheduleSessionBean showScheduleSessionBean;
@@ -44,20 +51,23 @@ public class ESMSServlet extends HttpServlet {
     private EventSessionBean eventSessionBean;
     @EJB
     private ShowSessionBean showSessionBean;
+    
     private List<ShowEntity> shows;
     private List<ShowScheduleEntity> showSchedule;
     private Long showId;
     private Long scheduleId;
     private EventEntity ee;
     private List<ShowTicketEntity> showTickets;
+    private ShowTicketEntity thisShowTicket;
     private int ticket1;
     private int ticket2;
     private int ticket3;
     private int ticket4;
     private int ticket5;
     private int ticket6;
-    ShowScheduleEntity thisShowSchedule;
-
+    private ShowScheduleEntity thisShowSchedule;
+    private ShowTicketSaleEntity thisShowTicketSale;
+    private ShowEntity thisShow;
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -99,7 +109,8 @@ public class ESMSServlet extends HttpServlet {
                     System.out.println("***entertainmentSchedule***");
 
                     showId = Long.parseLong(request.getParameter("showId"));
-                    session.setAttribute("thisShow", showSessionBean.getShowById(showId));
+                    thisShow=showSessionBean.getShowById(showId);
+                    session.setAttribute("thisShow",  thisShow);
                     showSchedule = showSessionBean.getAllShowSchedules(showId);
                     System.out.println(showSchedule.isEmpty());
                     System.out.println(showId);
@@ -198,7 +209,67 @@ public class ESMSServlet extends HttpServlet {
                     ee.setStatus(Status);
                     eventSessionBean.addEvent(ee);
                     request.getRequestDispatcher("/entertainmentRegisterResult.jsp").forward(request, response);
-                } else if ("entertainmentRegister".equals(page)) {
+                } else if ("entertainmentPayConfirm".equals(page)) {
+
+                     System.out.println("***hotel payment confirmation***");
+                System.out.println("adding reservation to database....");
+              
+                String promotionCode = request.getParameter("promotionCode");
+                String payment = request.getParameter("payment");
+                System.out.println(payment);
+                String cardNo = request.getParameter("cardNo");
+                System.out.println(cardNo);
+          
+                try {
+                    System.out.println(totalPrice);
+                    MemberEntity thisMember = (MemberEntity) session.getAttribute("member");
+                    thisShowTicketSale.setShow(thisShow);
+                    thisShowTicketSale.setShowStartDateTime(thisShowSchedule.getStartDateTime());
+                    thisShowTicketSale.setShowTicketPrice(ticket1);
+                    thisShowTicketSale.setShowTicketQuantity(ticket1+ticket2+ticket3+ticket4+ticket5+ticket6);
+                    thisShowTicketSale.setShowTicketType(promotionCode);
+                    if(thisMember!=null)
+                    {
+                        thisShowTicketSale.setMemberEmail(thisMember.getMemberEmail());
+                        
+                    }
+                  
+                    if (promotionCode == "") {
+                        System.out.println("no promotion code entered");
+                        showTicketSaleSessionBean.addShowTicketSale(thisShowTicketSale);
+                    } else {
+                        System.out.println("Promotion code detected: " + promotionCode);
+                        PromotionEntity thisPromotion = promotionSessionBean.getPromotionByCode(promotionCode);
+                        boolean validity = promotionSessionBean.verifyPromotion(thisPromotion, "hotel");
+                        if (validity) {
+                            reservationSessionBean.addReservationWithPromotion(data, promotionCode);
+                        } else {
+                            message2 = "Sorry,the promotion code is not valid";
+                            request.setAttribute("message2", message2);
+                            request.getRequestDispatcher("/hotelPay.jsp").forward(request, response);
+                        }
+                    }
+               
+                } catch (Exception e) {
+                    System.err.println("error occured when adding reservation in servlet");
+                    e.printStackTrace();
+                }
+                /*
+                 if (true) {//add in conditions later
+                 System.out.println("start generate coupon");
+                 CouponTypeEntity ct = couponTypeSessionBean.getAllCouponTypes().get(0);
+                 Date today = new Date(113, 10, 12);//dummy, should be changed to the date of making reservation
+                 String email = data.getRcEmail();
+                 MemberEntity member = memberSessionBean.getMemberByEmail(email);
+                 System.out.println("member info: " + member.getMemberEmail());
+                 coupon = couponSessionBean.generateCoupon(today, member, ct);
+                 }
+                 session.setAttribute("coupon", coupon);
+                 */
+
+                    promotion = (PromotionEntity) session.getAttribute("promotion");
+                    request.getRequestDispatcher("/entertainmentPayConfirm.jsp").forward(request, response);
+                }else if ("entertainmentRegister".equals(page)) {
 
 
 

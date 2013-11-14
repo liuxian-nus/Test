@@ -29,7 +29,7 @@
             <legend>Booking Summary</legend>
              <div class="large-4 columns">
                         <a class="th radius" href="/IRMS-war/images/Harry-Potter.jpg" >
-                            <img src="/IRMS-war/images/Harry-Potter.jpg" width="100" height="100">
+                            <img src="${thisShow.imagePath}" width="100" height="100">
                         </a>
                     </div>
                     <div class="large-8 columns">
@@ -37,7 +37,7 @@
                         <p>
                             ${thisShow.showDescription}
                             <br>
-                        <h6> <strong> Time Chosen: </strong> </h6> <fmt:formatDate type="both" pattern="dd MMM YYYY hh:mm a"value="${thisSchedule.startDateTime}" />
+                        <h6> <strong> Time Chosen: </strong> </h6> <fmt:formatDate type="both" pattern="dd MMM yyyy hh:mm a"value="${thisSchedule.startDateTime}" />
                         <br>
                         <h6><strong>Ticket Chosen: (No. of Tickets Bought/Price)</strong></h6>
                         <c:forEach items="${totalTickets}" var="ticket" >
@@ -53,9 +53,9 @@
         <div class ="row">
             <div class="large-7 columns">
                 <div class="panel callout">
-                    <form data-abide action="hotelPayConfirm" method="POST">
+                    <form data-abide id="paymentForm" action="entertainmentPayConfirm" method="POST">
                         <fieldset>
-                            <p>${message}</p>
+                           
                             <div class="row">
                                 <div class="large-12 columns">
                                     <label for="right-label" class="left-align,inline"><strong>Select Payment Method</label>
@@ -65,7 +65,7 @@
                                 <div class="large-12 columns">
                                     <select name="payment" id="customDropdown">
                                         <option value="">Please Select</option>
-                                        <option value="Visa">Visa</option>
+                                        <option selected="selected" value="Visa">Visa</option>
                                         <option value="MasterCard">MasterCard</option>
                                         <option value="JCB">JCB</option>
                                         <option value="American Express">American Express</option>
@@ -104,7 +104,7 @@
                             </div>
                             <div class="row">
                                 <div class="small-4 columns">
-                                    <select name="mm" id="button dropdown">
+                                    <select name="cardMonth" id="button dropdown">
                                         <option value="0">Month</option>
                                         <option value="1">Jan</option>
                                         <option value="2">Feb</option>
@@ -121,14 +121,14 @@
                                     </select>
                                 </div>
                                 <div class="small-6 columns">
-                                    <select name="yyyy" id="button dropdown">
+                                    <select name="cardYear" id="button dropdown">
                                         <option value="">Year</option>
                                         <option value="2013">2013</option>
                                         <option value="2014">2014</option>
                                         <option value="2015">2015</option>
                                         <option value="2016">2016</option>
                                         <option value="2017">2017</option>
-                                        <option value="2018">2018/option>
+                                        <option value="2018">2018</option>
                                         <option value="2019">2019</option>
                                         <option value="2020">2020</option>
                                         <option value="2021">2021</option>
@@ -149,104 +149,75 @@
                                     <small class="error">Please enter the card CVC number.</small>
                                 </div>
                             </div>
-                            </select>
+                             <div class="row">
+                                <div class="large-12 columns">
+                                    <label for="right-label" class="left-align,inline"><strong>Promotion Code</label>
+                                </div>
                             </div>
-                            <br>
                             <div class="row">
                                 <div class="large-12 columns">
-                                    <label for="right-label" class="left-align,inline"><strong>I agree with the booking conditions and general terms by booking this room</label>
+                                    <input id="input-promotionCode"  placeholder="Promotion Code" name="promotionCode">
                                 </div>
                             </div>
-                            <div class="row">
-                                <input type="submit" class="small button" class="center-align" value="Pay & Book Now!">
-                            </div>
-                        </fieldset>
-                    </form>                     
-                </div>
 
-                <div class="large-5 columns">
-                    <div class="panel">
-                        <fieldset>
-                            <legend style="color:#4d4d4d">Booking Summary</legend>
-                            <p>${message}</p>
-                            <div class="row">
-                                <div class="large-5 columns">
-                                    <label for="right-label" class="left-align,inline"><h6>Rate: </h6></label>
-                                </div>
-                                <div class="large-7 columns">
-                                    <label for="right-label" class="right-align,inline"><strong></strong></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="large-7 columns">
-                                    <label for="right-label" class="left-align,inline"><h6>Number of nights:</h6></label>
-                                </div>
-                                <div class="large-5 columns">
-                                    <label for="right-label" class="right-align,inline"><strong></strong></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="large-5 columns">
-                                    <label for="right-label" class="left-align,inline"><h6>Total:</h6></label>
-                                </div>
-                                <div class="large-7 columns">
-                                    <label for="right-label" class="right-align,inline"><strong></strong></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="large-7 columns">
-                                    <label for="right-label" class="left-align,inline"><h6>Service Charge:</h6></label>
-                                </div>
-                                <div class="large-5 columns">
-                                    <label for="right-label" class="right-align,inline"><strong></strong></label>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <br><br>
-                        <div class="row">
-                            <div class="large-2 columns"></div>
-                            <div class="large-10 columns">
-                                <label for="right-label" class="left-align,inline"><strong>15% of the total room reservation fee will be deducted from your credit card after making the reservation. This service charge will not be refundable nor transferable</strong></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="myModal" class="reveal-modal">
-                <form id="member" action="memberInfo" method="POST">
-                        <fieldset>
-                            <legend>Member</legend>
-                                  <p>${message}</p>
-                        
-                            <div class="row">
-                                <div class="large-6 columns">
-                                    <label>E-mail</label>
-                                    <input id="input-name" type="text" name="email">
-                                </div>
-                            </div>
-                             
-                            <div class="row">
-                                <div class="large-6 columns">
-                                    <label>Password</label>
-                                    <input id="input-name" type="password" name="password">
-                                </div>
-                            </div>
-                            
-                            <input type="hidden" name="loginStatus" value="false"/>
-                          
 
                             <br>
-                            <ul class="button-group">
+                            <div class="row">
+                                <div class="small-1 columns">
+                                    <input type="checkbox" name="agree" value="true" id="agree">
+                                </div>
+                                <div class="small-11 columns"> 
+                                    <strong><label><strong>I agree with the booking conditions and general terms by booking this room</label>
+                                </div>
+                            </div>
 
-                                  <li><input type="submit" class="button" value="Login" onclick="closeReveal()"></li>
-                           
-                            </ul>
- 
-                        </fieldset>         
-                    </form>
-                <a class="close-reveal-modal">&#215;</a>
-                <a class="button" >Submit</a>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <input type="submit" onclick="return validate()" class="small button" class="center-align" value="Pay & Book Now!">
+                                    <p>${message}</p>
+                                </div>
+                            </div>
+                            <!--  <div class="button" onclick="paypal()">Register</div>-->
+                        </fieldset>
+                    </form>                           
+                </div>
             </div>
+                <div class="large-5 columns">
+                    <div class="panel">
+                         <c:choose>
+                        <c:when test="${member == null}">
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6>Redeem your points and save money now!</h6></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="large-4 columns">                               
+                                    <a href="member" class="small button">Log In</a>
+                                </div>
+                                <div class="large-8 columns">
+                                    <a href="memberRegister" style="color:#4d4d4d"> Not a member?</a>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6><strong>Welcome back, ${member.memberName}</strong></h6></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <label for="right-label" class="left-align,inline" style="color:#4d4d4d"><h6><strong>You have ${member.coin} coins.</strong></h6></label>
+                                </div>
+                            </div>
+
+                        </c:otherwise>
+                    </c:choose>
+
+                </div>
+            </div>
+            
                             
             <jsp:include page="footer.jsp"></jsp:include>
      
