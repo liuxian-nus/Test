@@ -1502,7 +1502,7 @@ public class initializationManagedBean implements Serializable {
 
             //setting to active ah yao si le 
             merchantBillSessionBean.setContract(contract2);
-            merchantBillSessionBean.createActiveTimers(cidate1);
+//            merchantBillSessionBean.createActiveTimers(cidate1);
             System.out.println("Contract2 saved updated....." + event2.getContracteventId());
 
 

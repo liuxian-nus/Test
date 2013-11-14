@@ -8,6 +8,7 @@ import Exception.ExistException;
 import SMMS.entity.BillEntity;
 import SMMS.entity.BillItemEntity;
 import SMMS.entity.ContractEntity;
+import SMMS.entity.ContracteventEntity;
 import SMMS.entity.OutletTransactionEntity;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +20,8 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Schedule;
+import javax.ejb.ScheduleExpression;
 import javax.ejb.SessionContext;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
@@ -26,6 +29,8 @@ import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -39,6 +44,8 @@ import org.joda.time.DateTime;
 @LocalBean
 public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
+    @EJB
+    private ContracteventSessionBean contracteventSessionBean;
     @EJB
     private OutletSessionBean outletSessionBean;
     @EJB
@@ -73,16 +80,15 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
         System.out.println("in session bean test" + timer.getInfo().toString());
     }
 
-    //one time, bill would be set at that contract start date 4 minutes will be set to active
-    @Override
-    public void createActiveTimers(Date startDate) {
-        System.out.println("in session bean create timers");
-        TimerService timerService = ctx.getTimerService();
-        TimerConfig config = new TimerConfig("setActive", true);
-        Timer timer = (Timer) timerService.createSingleActionTimer(startDate, config);
-        System.out.println("in session bean test" + timer.getInfo().toString());
-    }
-
+//    //one time, bill would be set at that contract start date 4 minutes will be set to active
+//    @Override
+//    public void createActiveTimers(Date startDate) {
+//        System.out.println("in session bean create timers");
+//        TimerService timerService = ctx.getTimerService();
+//        TimerConfig config = new TimerConfig("setActive", true);
+//        Timer timer = (Timer) timerService.createSingleActionTimer(startDate, config);
+//        System.out.println("in session bean test" + timer.getInfo().toString());
+//    }
     public void createTerminationTimers(Date endDate) { //when it comes to end date
         System.out.println("in session bean create timers");
         TimerService timerService = ctx.getTimerService();
@@ -97,6 +103,47 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
         TimerConfig config = new TimerConfig("monthly", true);
         Timer timer = (Timer) timerService.createSingleActionTimer(startDate, config);
         System.out.println("in session bean test" + timer.getInfo().toString());
+    }
+
+    public void createSchedule() throws ExistException {
+        System.err.println("NO1hahaha here in creating scheduled bean ala ");
+        System.err.println("hahaha here in creating scheduled bean ala ");
+        System.err.println("hahaha here in creating scheduled bean ala ");
+
+
+        ScheduleExpression schedule = new ScheduleExpression();
+        schedule.minute(2);
+        TimerService timerService = ctx.getTimerService();
+        TimerConfig config = new TimerConfig("schedule", true);
+//        ScheduleExpression minute = schedule.minute(3);
+        Timer timer = (Timer) timerService.createCalendarTimer(schedule, config);
+
+        System.err.println("hahaha here in creating scheduled bean ala ");
+
+
+
+    }
+
+    public void createSchedule2() throws ExistException {
+        System.err.println("NO1hahaha here in creating scheduled22 bean ala ");
+        System.err.println("hahaha here in creating scheduled2 22bean ala ");
+        System.err.println("hahaha here in creating scheduled2222 bean ala ");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MINUTE, 4);
+        Date today = cal.getTime();
+
+//        ScheduleExpression schedule = new ScheduleExpression();
+//        schedule.minute(2);
+        TimerService timerService = ctx.getTimerService();
+        TimerConfig config = new TimerConfig("schedule", true);
+//        ScheduleExpression minute = schedule.minute(3);
+        Timer timer = (Timer) timerService.createSingleActionTimer(today, config);
+//        createCalendarTimer(schedule, config);
+
+        System.err.println("hahaha here in creating scheduled bean ala ");
+
+
+
     }
 
 //    // generate
@@ -134,6 +181,8 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
             bill.setBillStatus("overdue");
             updateBill(bill);
             System.err.println("after setting product lalala" + bill.getBillStatus());
+            cancelTerminationTimer();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The bill " + bill.getBillId() + "has been set to status : overdue", ""));
         }
 
         if (timer.getInfo().toString().equals("setActive")) {
@@ -142,13 +191,18 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
             System.out.println("in setting ACTIVE time ah lah ahahah");
             System.out.println("in setting ACTIVE time ah lah ahahah");
             System.out.println("in setting ACTIVE time ah lah ahahah" + contract.getContractId());
-            contract.setStatus("newApproved");
-            contractSessionBean.updateContract(contract);
-            System.err.println("the current status is " + contract.getStatus());
+
+            ContracteventEntity cevent = new ContracteventEntity();
+            cevent.setEventStatus("newActive");
+            contracteventSessionBean.updateContractEvent(cevent);
+//            contractSessionBean.updateContract(contract);
+            System.err.println("the current status for this event " + cevent.getEventStatus());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The contract " + contract.getContractId() + "has been set to status : active", ""));
+
         }
 
         if (timer.getInfo().toString().equals("termination")) {
-            System.err.println("in setting overdue time lah papapappapa");
+            System.err.println("in termination time papapa ni ke bu ke yi hao shi le ao coa  papapappapa");
             System.err.println("in setting overdue time lah papapapappa");
             System.err.println("in setting overdue time lah papapapapapa");
             System.err.println("in setting overdue time lah papapapapapap!!!!!!!!!!!!!!");
@@ -169,6 +223,20 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
             System.err.println("after setting product lalala" + bill.getBillId());
         }
 
+        if (timer.getInfo().toString().equals("schedule")) {
+            System.err.println("in setting SCHEDULE time lah ahahah");
+            System.err.println("in setting SCHEDULE time lah ahahah");
+            System.err.println("in setting SCHEDULE time lah ahahah");
+            Query q = em.createQuery("SELECT m FROM ContractEntity m");
+            List OutletList = new ArrayList<ContractEntity>();
+            for (Object o : q.getResultList()) {
+                ContractEntity m = (ContractEntity) o;
+                if (!"Terminated".equalsIgnoreCase(m.getLast().getEventStatus())) {
+                    addMonthlyBill(m);
+                }
+            }
+        }
+
 //        }
     }
 
@@ -186,6 +254,63 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
         billTest.setBillStatus("available");
         billTest.setBillType("Termination");
+        billTest.setBillDate(today);
+        billTest.setContract(contract);
+        billTest.setDueDate(dueDate);
+        addBill(billTest); //persisting the bill first lah
+
+        item = new BillItemEntity();
+        item.setType("Additional Administration fee");
+        item.setAmount(2304.00);
+        item.setBill(billTest);
+        addBillItem(item); // persisting the additional admin charge charge
+        items.add(item);
+        total = total + item.getAmount();
+        System.err.println("here in adding first billitem" + total + item.getAmount());
+
+
+        BillItemEntity item2 = new BillItemEntity();
+        item2.setType("monthsly bill");
+        item2.setBill(billTest);
+        item2.setAmount(calculateMonthRate(contract));
+        addBillItem(item2);
+        items.add(item2);
+        total = total + item2.getAmount();
+        System.err.println("here in adding first billitem" + total + item2.getAmount());
+
+        BillItemEntity item3 = new BillItemEntity();
+        item3.setType("commission fee");
+        item3.setBill(billTest);
+        item3.setAmount(calculateCommission(contract));
+        addBillItem(item3);
+        items.add(item3);
+        total = total + item3.getAmount();
+        System.err.println("here in adding first billitem" + total + item3.getAmount());
+
+        billTest.setBillItem(items);
+        billTest.setBillAmount(total);
+        updateBill(billTest);
+
+        setBill(billTest);
+        System.err.println("before creating timer" + dueDate);
+        return billTest;
+
+    }
+
+    public BillEntity addMonthlyBill(ContractEntity contract) throws ExistException { //until today
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MINUTE, 8);  //here expire after 2 minutes
+        Date dueDate = cal.getTime();
+        System.out.println("in setting due date" + dueDate);
+
+        Date today = cal.getTime();
+
+        List<BillItemEntity> items = new ArrayList<BillItemEntity>();
+        double total = 0.0;
+        BillEntity billTest = new BillEntity();
+
+        billTest.setBillStatus("available");
+        billTest.setBillType("Yearly Bill");
         billTest.setBillDate(today);
         billTest.setContract(contract);
         billTest.setDueDate(dueDate);
@@ -288,6 +413,28 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
         for (Object obj : timers) {
             Timer timer = (Timer) obj;
             if (timer.getInfo().toString().equals(obj)) {
+                timer.cancel();
+            }
+        }
+    }
+
+    public void cancelTerminationTimer() {
+        TimerService timerService = ctx.getTimerService();
+        Collection timers = timerService.getTimers();
+        for (Object obj : timers) {
+            Timer timer = (Timer) obj;
+            if (timer.getInfo().toString().equals("setOverdue")) {
+                timer.cancel();
+            }
+        }
+    }
+
+    public void cancelActiveTimer() {
+        TimerService timerService = ctx.getTimerService();
+        Collection timers = timerService.getTimers();
+        for (Object obj : timers) {
+            Timer timer = (Timer) obj;
+            if (timer.getInfo().toString().equals("setActive")) {
                 timer.cancel();
             }
         }
@@ -515,5 +662,10 @@ public class MerchantBillSessionBean implements MerchantBillSessionBeanRemote {
 
     public void setCurrentDate(Date currentDate) {
         this.currentDate = currentDate;
+    }
+
+    @Override
+    public void createActiveTimers(Date startDate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

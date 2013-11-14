@@ -60,9 +60,18 @@ public class OperatorRequstContractManagedBean {
         System.out.println("in updating contract renew" + contract.getContractId());
         try {
 //            contract = (ContractEntity) request.getSession().getAttribute("contractId");
+            ContracteventEntity thisEvent = new ContracteventEntity();
+            thisEvent = contract.getLast();
+            thisEvent.setEventCommissionRate(eventCommissionRate);
+            thisEvent.setEventEarlyCharge(eventEarlyCharge);
+            thisEvent.setEventStartDate(eventStartDate);
+            thisEvent.setEventEndDate(eventEndDate);
+            thisEvent.setEventMonthRate(eventMonthRate);
+            contracteventSessionBean.updateContractEvent(thisEvent);
+            System.err.println("ahaha after updating contract event" + thisEvent.getEventStatus());
             System.out.println("in updating contract renew" + contract.getContractId());
             contractSessionBean.updateContract(contract);
-            System.out.println("now the status is" + contract.getLast().getEventCommissionRate());
+            System.out.println("now the status is" + contract.getLast().getEventStatus());
 //            cevent = contract.getLast();            
 //            cevent.setEventContract(contract);
 //            contracteventSessionBean.addContractevent(cevent);

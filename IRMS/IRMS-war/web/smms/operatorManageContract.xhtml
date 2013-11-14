@@ -172,37 +172,37 @@
 
 
 
-                    <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Confirmation" widgetVar="renew"> 
-                        <h:panelGrid columns="3" cellpadding="10" id="renew">                         
+                    <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Update Current Contract" widgetVar="update"> 
+                        <h:panelGrid columns="3" cellpadding="10" id="update">                         
 
                             <h:outputText value="Commission Rate:"/>
-                            <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventCommissionRate}"/>
+                            <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{operatorRequstContractManagedBean.eventCommissionRate}"/>
                             <h:outputText value=""/>
 
                             <h:outputText value="Monthly Rate:"/>
-                            <p:inputText  title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventMonthRate}"/>
+                            <p:inputText  title="Please enter monthly rate" required ="true" requiredMessage="Monthly rate cannot be empty" value="#{operatorRequstContractManagedBean.eventMonthRate}"/>
                             <h:outputText value=""/>
 
                             <h:outputText value="Early Termination charge:"/>
-                            <p:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{operatorRequstContractManagedBean.cevent.eventEarlyCharge}"/>
+                            <p:inputText  title="Please enter early termination charge" required ="true" requiredMessage="Early termination cannot be empty" value="#{operatorRequstContractManagedBean.eventEarlyCharge}"/>
                             <h:outputText value=""/>
 
                             <h:outputText value="Starting Date:"/>
-                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventStartDate}" /> 
+                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.eventStartDate}" /> 
                             <h:outputText value=""/>
 
                             <h:outputText value="Ending Date:"/>
-                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.cevent.eventEndDate}" /> 
+                            <p:calendar pattern="yyyy-MM-dd" mindate="#{contractManagedBean.currentDate}" showButtonPanel="true" navigator="true"  value="#{operatorRequstContractManagedBean.eventEndDate}" /> 
                             <h:outputText value=""/>
 
-                            <p:commandButton oncomplete="renew.hide()" update="contract" value="Add" ajax="true" actionListener="#{operatorRequstContractManagedBean.renew}" />
+                            <p:commandButton oncomplete="update.hide()" update="contract" value="Add" ajax="true" actionListener="#{operatorRequstContractManagedBean.updateContract}" />
                         </h:panelGrid> 
                     </p:dialog> 
 
 
 
-                    <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Update" widgetVar="update"> 
-                        <h:panelGrid columns="3" cellpadding="10" id="update">                         
+                    <p:dialog width="600"  showEffect="explode" hideEffect="explode" header="Renew the Contract" widgetVar="renew"> 
+                        <h:panelGrid columns="3" cellpadding="10" id="renew">                         
                             <h:outputText value="Commission Rate:"/>
                             <h:inputText  title="Please enter commission rate" required ="true" requiredMessage="Commission rate cannot be empty" value="#{operatorRequstContractManagedBean.eventCommissionRate}"/>
                             <h:outputText value=""/>
@@ -224,8 +224,8 @@
                             <h:outputText value=""/>
 
 
-                            <p:commandButton value="Update" ajax="true" actionListener="#{operatorRequstContractManagedBean.renew}" onclick="update.hide()" />
-                            <p:commandButton value="Cancel" onclick="update.hide()" type="button"/>  
+                            <p:commandButton value="Update" ajax="true" actionListener="#{operatorRequstContractManagedBean.renew}" onclick="renew.hide()" />
+                            <p:commandButton value="Cancel" onclick="renew.hide()" type="button"/>  
 
 
                         </h:panelGrid> 

@@ -207,7 +207,7 @@ public class smmsInitManagedBean implements Serializable {
         Date cidate = calC1.getTime();
         calC1.set(2018, 10, 1);
         Date codate = calC1.getTime();
-        
+
 
         try {
 
@@ -362,7 +362,8 @@ public class smmsInitManagedBean implements Serializable {
 
     public void addDepositBill(ContractEntity contract) {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, 10);  //here expire after 2 minutes
+        Date today = cal.getTime();
+        cal.add(Calendar.MINUTE, 3);  //here expire after 2 minutes
         Date dueDate = cal.getTime();
         System.out.println("in setting due date" + dueDate);
         System.out.println("getting contract meh" + contract.getId());
@@ -375,7 +376,7 @@ public class smmsInitManagedBean implements Serializable {
         System.out.println("NO 2: getting contract meh" + contract.getId());
         bill2.setBillType("deposit");
         System.out.println("NO3: getting contract meh" + contract.getId());
-        bill2.setBillDate(currentDate);
+        bill2.setBillDate(today);
         System.out.println("NO4: getting contract meh" + contract.getId());
         bill2.setDueDate(dueDate);
         System.out.println("NO5: getting contract meh" + contract.getId());
@@ -631,5 +632,8 @@ public class smmsInitManagedBean implements Serializable {
         createContract();
         createTransaction();
         createItem();
+        merchantBillSessionBean.createSchedule();
+        merchantBillSessionBean.createSchedule2();
+
     }
 }
