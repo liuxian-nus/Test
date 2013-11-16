@@ -108,7 +108,7 @@ public class ManagerApproveContractManagedBean implements Serializable {
         if ("newApproved".equals(cevent.getEventStatus())) {
             System.err.println("in new");
             addDepositBill(contract); //send deposit bill
-            merchantBillSessionBean.createActiveTimers(contract.getLast().getEventStartDate()); //set bill overdue
+//            merchantBillSessionBean.createActiveTimers(contract.getLast().getEventStartDate()); //set bill overdue
             emailSessionBean.emailMerchantBill(contract.getMerchant().getMerchantEmail(), bill);
         }
 

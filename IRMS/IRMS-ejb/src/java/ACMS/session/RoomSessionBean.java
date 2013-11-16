@@ -160,7 +160,7 @@ public class RoomSessionBean implements RoomSessionBeanRemote {
         System.err.println("in getOccupiedrooms session bean");
         Query q = em.createQuery("SELECT r FROM RoomEntity r where r.roomStatus='available'");
         ReservationEntity aiyou = reservationSessionBean.getReservationById(reservationId);
-        System.out.println("gett reservation" + aiyou.getReservationId() + aiyou.getReservationRoomType());
+        System.out.println("get reservation" + aiyou.getReservationId() + aiyou.getReservationRoomType());
 
         List roomList = new ArrayList<RoomEntity>();
         for (Object o : q.getResultList()) {
