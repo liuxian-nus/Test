@@ -10,14 +10,9 @@
         <p:tabView id="tabView">  
             <p:tab id="tab1" title="Member List">  
                 <h:form>  
-                    <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.memberList}" widgetVar="membersTable"   
-                                 emptyMessage="No members found with given criteria" filteredValue="#{memberManagedBean.filteredMember}">  
+                    <p:dataTable id="dataTable" var="memberList" value="#{memberManagedBean.memberList}">  
 
                         <f:facet name="header">  
-                            <p:outputPanel>  
-                                <h:outputText value="Search all fields:" />  
-                                <p:inputText id="globalFilter" onkeyup="membersTable.filter();" style="width:150px" />  
-                            </p:outputPanel>  
                         </f:facet>  
                         <p:column style="width:2%">  
                             <p:rowToggler />  

@@ -77,15 +77,15 @@ public class MemberManagedBean {
      */
     public MemberManagedBean() {
         member = new MemberEntity();
-      
+
     }
 
     @PostConstruct
     public void init() throws ExistException {
         memberList = new ArrayList<MemberEntity>();
-        memberSelect =  new ArrayList<MemberEntity>();
-        vips =  new ArrayList<MemberEntity>();
-        supervips =  new ArrayList<MemberEntity>();
+        memberSelect = new ArrayList<MemberEntity>();
+        vips = new ArrayList<MemberEntity>();
+        supervips = new ArrayList<MemberEntity>();
         memberList = memberSessionBean.getAllMembers();
         Date today = new Date();
         memberSelect = memberSessionBean.getMemberByBirthMonth(today.getMonth());
@@ -95,7 +95,7 @@ public class MemberManagedBean {
         System.out.println("MemberManagedBean init");
         vips = vIPSessionBean.getVIPs();
         supervips = vIPSessionBean.getSuperVIPs();
-        System.err.println("size 1: "+vips.size()+"size 2: "+supervips.size());
+        System.err.println("size 1: " + vips.size() + "size 2: " + supervips.size());
         try {
             createCategoryModelAge();
             createCategoryModelMaritalStatus();
@@ -433,10 +433,12 @@ public class MemberManagedBean {
     }
 
     public List<MemberEntity> getMemberList() {
+        System.err.println("Size of the memberlist is !!!!!!!!!!!!!!!!!" + memberList.size());
         return memberList;
     }
 
     public List<MemberEntity> getFilteredMember() {
+        System.err.println("We come to get filteredmember?????" + filteredMember.size());
         return filteredMember;
     }
 
@@ -559,8 +561,6 @@ public class MemberManagedBean {
     public void setVips(List<MemberEntity> vips) {
         this.vips = vips;
     }
-    
-    
 
     public List<MemberEntity> getSupervips() {
         return supervips;
@@ -580,12 +580,12 @@ public class MemberManagedBean {
 
     public void onRowToggle(ToggleEvent event) {
         try {
-        System.out.println("List member on row toggle" + ((MemberEntity)event.getData()).getMemberEmail());
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Row State " + event.getVisibility(),
-                "Model:" + ((MemberEntity) event.getData()).getMemberEmail());
+            System.out.println("List member on row toggle" + ((MemberEntity) event.getData()).getMemberEmail());
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Row State " + event.getVisibility(),
+                    "Model:" + ((MemberEntity) event.getData()).getMemberEmail());
 
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         } catch (Exception e) {
             System.out.println("exception in onRowToggle event");
             e.printStackTrace();

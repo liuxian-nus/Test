@@ -384,7 +384,7 @@ public class Menu2ManagedBean implements Serializable {
 
                 item = new MenuItem();
                 item.setValue("VIP Management");
-                item.setUrl("/crms/listAllVIPs.xhtml");
+                item.setUrl("/crms/searchVIP.xhtml");
                 item.setIcon("ui-icon ui-icon-script");
                 submenu.getChildren().add(item);
 
